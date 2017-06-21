@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/include_netout_layout"
+        layout="@layout/layout_netout_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+            android:id="@+id/rel_artcle_detail_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true">
+
+            <ImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:background="@mipmap/activity_back" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="装修宝典"
+            android:textColor="@color/text_black"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/detail_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="13dp"
+            android:layout_marginRight="13dp"
+            android:src="@mipmap/icon_article_share" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/title_bar"
+        android:background="@color/bg_divide" />
+    <!-- 返回bar -->
+    <RelativeLayout
+        android:id="@+id/rel_artcle_back_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:id="@+id/new_detail_need_zx"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/detail_need_zx"
+            android:gravity="center"
+            android:text="我要装修"
+            android:textColor="@color/bg_white"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="#D4DCEF" />
+
+        <RelativeLayout
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:id="@+id/iv_article_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="22dp" />
+
+            <ImageView
+                android:id="@+id/iv_article_collect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="17dp"
+                android:layout_toLeftOf="@+id/iv_article_share"
+                android:src="@mipmap/like_before" />
+
+            <ImageView
+
+                android:id="@+id/new_detail_good"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="17dp"
+                android:layout_toLeftOf="@+id/iv_article_collect"
+                android:src="@mipmap/good_before" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <com.tobosu.mydecorate.view.MyScrollView
+        android:id="@+id/article_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rel_artcle_back_bar"
+        android:layout_marginTop="50dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+
+                <ImageView
+                    android:id="@+id/iv_detail_top_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/occupied1"
+                    android:scaleType="fitXY"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/new_detail_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_detail_top_image"
+                    android:layout_marginTop="25dp"
+                    android:layout_toEndOf="@+id/iv_detail_top_image"
+                    android:layout_toRightOf="@+id/iv_detail_top_image"
+                    android:text="优雅的欧式设计 现代人最喜欢的装修风格"
+                    android:textColor="@color/text_black"
+                    android:textSize="26sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/new_detail_title"
+                    android:layout_marginTop="30dp">
+
+                    <ImageView
+                        android:id="@+id/new_detail_icon"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:src="@mipmap/icon_head_default" />
+
+                    <TextView
+                        android:id="@+id/new_detail_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_toEndOf="@+id/new_detail_icon"
+                        android:layout_toRightOf="@+id/new_detail_icon"
+                        android:text="灵感家居"
+                        android:textColor="@color/text_black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/new_detail_name"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignStart="@+id/new_detail_name"
+                        android:text="3小时前"
+                        android:textColor="@color/text_gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="68dp"
+                        android:layout_height="36dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="15dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/detail_guanzhu"
+                        android:gravity="center"
+                        android:text="关注"
+                        android:textColor="@color/bg_white"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+            <!-- html内容 -->
+            <LinearLayout
+                android:id="@+id/new_layout_html_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:orientation="vertical"></LinearLayout>
+
+            <!-- 分享 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_marginLeft="36dp"
+                    android:layout_weight="1"
+                    android:background="#A5AAB0" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="  分享  " />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_marginRight="36dp"
+                    android:layout_weight="1"
+                    android:background="#A5AAB0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:id="@+id/rel_share_weixin"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/iv_weixin_share"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:background="@mipmap/share_weixin" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_weixin_share"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="14dp"
+                        android:text="微信好友"
+                        android:textColor="#A5AAB0"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rel_share_weixin_circle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/iv_weixin_circle_share"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:background="@mipmap/share_weixin_circle" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_weixin_circle_share"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="14dp"
+                        android:text="朋友圈"
+                        android:textColor="#A5AAB0"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rel_share_weibo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:id="@+id/iv_weibo_share"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:background="@mipmap/share_weibo" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_weibo_share"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="14dp"
+                        android:text="新浪微博"
+                        android:textColor="#A5AAB0"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_get_order"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:background="@mipmap/get_order"
+                android:scaleType="fitXY"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="15dp"
+                android:background="#FAFAF7" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:background="#FFFFFF"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="更多相关内容"
+                android:textColor="#8A8F99"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#FAFAF7" />
+
+
+            <!-- 更多相关 -->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/my_recycle_article"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+
+            <!-- 推荐关注用户 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="9dp"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:id="@+id/recommend_concern_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true">
+
+                    <ImageView
+                        android:id="@+id/iv_related_user_pic"
+                        android:layout_width="57dp"
+                        android:layout_height="57dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="16dp"
+                        android:background="@mipmap/ic_launcher" />
+
+                    <TextView
+                        android:id="@+id/tv_related_user"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_related_user_pic"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp"
+                        android:text="灵感美加"
+                        android:textColor="#666970"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rel_related_weixin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/recommend_concern_user"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="7dp">
+
+                    <TextView
+                        android:id="@+id/tv_weixin_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:text="微信号"
+                        android:textColor="#AAB0B5"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_related_user_weixin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/tv_weixin_title"
+                        android:gravity="center"
+                        android:textColor="#AAB0B5"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_copy_weixin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/tv_related_user_weixin"
+                        android:background="@drawable/shape_bg_button_copy_weixin"
+                        android:gravity="center"
+                        android:text="点击复制"
+                        android:textColor="#AAB0B5"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_concern_related_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rel_related_weixin"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/shape_bg_button_article_concern"
+                    android:gravity="center"
+                    android:text="关注"
+                    android:textColor="#FEBB52"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+
+            <!-- 本来返回是放在这里的 -->
+        </LinearLayout>
+    </com.tobosu.mydecorate.view.MyScrollView>
+</RelativeLayout>

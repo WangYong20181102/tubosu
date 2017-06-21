@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+
+        <RelativeLayout
+            android:id="@+id/rel_changeusername_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:background="@mipmap/activity_back"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="用户昵称"
+            android:textColor="#3D424C"
+            android:textSize="20sp"
+            android:layout_centerInParent="true"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tv_save_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="13dp"
+            android:text="保存"
+            android:textColor="#3D424C"
+            android:textSize="18sp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_alignParentBottom="true"
+            android:background="#F2F3F5"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel_changename_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <EditText
+            android:id="@+id/et_change_username"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:paddingLeft="10dp"
+            android:ellipsize="end"
+            android:paddingRight="10dp"
+            android:lines="1"
+            android:inputType="text"
+            android:maxLength="8"
+            android:background="@null"
+            android:textSize="18sp"/>
+
+        <ImageView
+            android:id="@+id/iv_shut"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="18dp"
+            android:background="@mipmap/icon_shut"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_alignParentBottom="true"
+            android:background="#F2F3F5"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_below="@+id/rel_changename_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:textSize="10dp"
+        android:textColor="#BAB8B1"
+        android:text="2-8个字符 支持中英文、数字、减号和下划线。"/>
+
+</LinearLayout>

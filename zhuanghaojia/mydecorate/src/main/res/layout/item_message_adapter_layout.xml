@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="90dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="horizontal">
+
+        <com.tobosu.mydecorate.view.RoundImageView
+            android:id="@+id/msg_head"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="19dp"
+            android:layout_gravity="center_vertical"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/msg_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="#3D424C"
+                android:singleLine="true"
+                android:maxEms="13"
+                android:ellipsize="end"
+                android:text="我是标题哦"/>
+
+            <ImageView
+                android:id="@+id/msg_iv_read_flag"
+                android:layout_width="7dp"
+                android:layout_height="7dp"
+                android:layout_toRightOf="@+id/msg_title"
+                android:layout_alignTop="@+id/title"
+                android:background="@mipmap/new_version"/>
+            <TextView
+                android:id="@+id/msg_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="19dp"
+                android:textColor="#8A8F99"
+                android:textSize="10sp"
+                android:text="2016-20-12"/>
+            <TextView
+                android:id="@+id/msg_text_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="37dp"
+                android:layout_marginRight="19dp"
+                android:textColor="#C0C4CC"
+                android:ellipsize="end"
+                android:maxEms="26"
+                android:maxLines="2"
+                android:singleLine="false"
+                android:layout_below="@+id/title"
+                android:textSize="13sp"
+                android:text="这是一条很长的描述话语，请看清楚"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="#e4dcde"
+        android:layout_alignParentBottom="true"
+        android:layout_height="1dp"/>
+</RelativeLayout>
+
+

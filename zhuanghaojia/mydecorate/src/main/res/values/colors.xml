@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="color_darkgray">#1e1f1f</color>
+    <color name="color_icon">#FFBD25</color>
+
+    <color name="bottom_text_color_normal">#8A8E99</color>
+    <color name="bottom_text_color_selected">#FE9D00</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="blue">#8acdfd</color>
+
+    <color name="app_bg">#FF9C00</color>
+
+    <color name="dividing_line_bg">#E5E5E5</color>
+
+    <color name="dividing_line_bg1">#F2F3F5</color>
+    <color name="activity_bg_color">#F8DE68</color>
+
+
+    <color name="category_tab_text">#ff707070</color>
+
+    <color name="category_tab_highlight_text">#EDA646</color>
+    <color name="category_tab_highlight_text_dark">#ffd43d3d</color>
+    <color name="category_tab_highlight_bg">#EDA646</color>
+    <color name="category_tab_highlight_dark_bg">#fffafafa</color>
+    <color name="top_category_bar_background">#ffeeeeee</color>
+    <color name="divider">#ffdddddd</color>
+
+    <color name="concern_color">#C0C4CC</color>
+
+    <color name="concern_color_normal">#FEBB52</color>
+
+    <color name="color_neutralgrey">#74777a</color>
+
+
+    <color name="color_ff">#F0F0F0</color>
+    <color name="color_00">#8A000000</color>
+
+    <color name="home_divide_color">#FAFAF7</color>
+
+    <color name="framelayout1_textview_color">#BF8A63</color>
+
+    <color name="style_textcolor_selected">#FFFFFF</color>
+    <color name="style_textcolor_unselected">#BF8A63</color>
+
+    <color name="big_title">#BF8A63</color>
+</resources>

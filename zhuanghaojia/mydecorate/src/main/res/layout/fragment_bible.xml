@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!-- 顶部bar -->
+    <RelativeLayout
+        android:id="@+id/rel_article_list_fragment_bar"
+        android:layout_width="match_parent"
+        android:background="@color/app_bg"
+        android:layout_height="60dp">
+
+        <TextView
+            android:id="@+id/tv_decorate_bible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="14dp"
+            android:text="装修宝典"/>
+
+        <TextView
+            android:id="@+id/tv_go_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="2dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:gravity="center_vertical"
+            android:drawableLeft="@mipmap/decorate_search"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/shape_search_article_textview_bg"
+            android:layout_toRightOf="@+id/tv_decorate_bible"
+            android:layout_toLeftOf="@+id/iv_poporders"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textColorHint="#B4A994"
+            android:hint="厨房改造装修注意事项"/>
+
+        <ImageView
+            android:id="@+id/iv_poporders"
+            android:layout_width="@dimen/top_category_height"
+            android:layout_height="@dimen/top_category_height"
+            android:background="@mipmap/pop"
+            android:layout_marginRight="10dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="center"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+
+    <!-- 标题栏 -->
+    <LinearLayout
+        android:id="@+id/ll_layout_title_list"
+        android:layout_width="match_parent"
+        android:layout_height="40.0dip"
+        android:background="#fff3f3f3"
+        android:layout_below="@+id/rel_article_list_fragment_bar"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:id="@+id/rl_column"
+            android:layout_width="match_parent"
+            android:layout_height="40.0dip"
+            android:layout_weight="1.0" >
+
+            <com.tobosu.mydecorate.view.ColumnHorizontalScrollView
+                android:id="@+id/mColumnHorizontalScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="40.0dip"
+                android:scrollbars="none" >
+
+                <LinearLayout
+                    android:id="@+id/mRadioGroup_content"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40.0dip"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10.0dip"
+                    android:paddingRight="10.0dip" />
+            </com.tobosu.mydecorate.view.ColumnHorizontalScrollView>
+
+            <ImageView
+                android:id="@+id/shade_left"
+                android:layout_width="10.0dip"
+                android:layout_height="40.0dip"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@mipmap/channel_leftblock"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/shade_right"
+                android:layout_width="10.0dip"
+                android:layout_height="40.0dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@mipmap/channel_rightblock"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_more_columns"
+            android:layout_width="wrap_content"
+            android:layout_height="40.0dip" >
+
+            <ImageView
+                android:id="@+id/iv_more_columns"
+                android:layout_width="40.0dip"
+                android:layout_height="40.0dip"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/channel_glide_day_bg" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/category_line"
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dip"
+        android:layout_below="@+id/ll_layout_title_list"
+        android:background="#ffdddddd" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/mViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/category_line"/>
+
+</RelativeLayout>
