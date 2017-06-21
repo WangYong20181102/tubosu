@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:fitsSystemWindows="true" >
+
+    <RelativeLayout
+        android:id="@+id/rel_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_icon" >
+
+        <ImageView
+            android:id="@+id/iv_preferential_applyfor_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:src="@drawable/back_up" />
+
+        <TextView
+            android:id="@+id/preferential_applyfor_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/preferential_applyfor_text"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:id="@+id/rel_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EDEDED"
+        android:layout_below="@+id/rel_bar">
+
+        <TextView 
+	        android:id="@+id/tv_tips"
+	        android:layout_width="match_parent"
+	        android:layout_height="35dip"
+	        android:textSize="12sp"
+	        android:gravity="center" />
+    </RelativeLayout>
+    
+    <com.tbs.tobosutype.xlistview.XListView
+		android:id="@+id/preferential_list"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/white"
+		android:listSelector="@android:color/transparent"
+		android:layout_below="@+id/rel_tip"
+		android:divider="@color/white" >
+ 	</com.tbs.tobosutype.xlistview.XListView>
+            
+    <include layout="@layout/layout_loading_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    
+    <ImageView 
+        android:id="@+id/no_data_view"
+        android:layout_width="70dip"
+        android:layout_height="110dip"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:src="@drawable/img_nocontent"/>
+
+</RelativeLayout>

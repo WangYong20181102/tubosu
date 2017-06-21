@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_icon" >
+
+        <ImageView
+            android:id="@+id/iv_back_binding"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:src="@drawable/back_up" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="绑定手机号"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dividing_line_bg" />
+
+    <TextView
+        android:id="@+id/fast_logging_input_bundlephone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:text="绑定手机号后，可直接使用手机号码登陆"
+        android:textColor="@color/color_red"
+        android:textSize="13sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="20dp" >
+
+        <TextView
+            android:id="@+id/tv_input_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/fast_logging_input_bundlephone"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_input_phone"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/tv_input_phone"
+            android:background="@null"
+            android:drawableBottom="@drawable/binding_phone_edittext_bg"
+            android:ems="11"
+            android:inputType="phone"
+            android:textColor="@color/color_neutralgrey"
+            android:textSize="15sp" >
+            <requestFocus />
+        </EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="20dp" >
+
+        <TextView
+            android:id="@+id/tv_input_verification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="短信验证码"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_input_verification"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/tv_input_verification"
+            android:background="@null"
+            android:drawableBottom="@drawable/binding_phone_edittext_bg"
+            android:ems="4"
+            android:inputType="phone"
+            android:textColor="@color/color_neutralgrey"
+            android:textSize="15sp" >
+        </EditText>
+
+        <Button
+            android:id="@+id/bt_obtain_verif"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/user_login_btn_background"
+            android:text="@string/fast_logging_obtain_verif"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/bt_obtain_enter"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/user_login_btn_background"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+</LinearLayout>

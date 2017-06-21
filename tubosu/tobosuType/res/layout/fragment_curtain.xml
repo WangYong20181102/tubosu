@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 窗 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
+                <TextView
+                    android:id="@+id/window_height_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_centerVertical="true"
+                    android:text="窗户高度(m)"
+                    android:textSize="18sp"
+                    android:textColor="#7F8E9C"/>
+
+                <EditText
+                    android:id="@+id/et_window_height"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="13dp"
+                    android:layout_marginLeft="10dp"
+                    android:maxLength="5"
+                    android:digits=".0123456789"
+                    android:background="#FFFFFF"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/window_height_left"
+                    android:layout_marginRight="22dp"
+                    android:textSize="18sp"
+                    android:textColor="#000000"/>
+
+                <ImageView
+                    android:id="@+id/iv_clear_window_height"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="2dp"
+                    android:layout_alignRight="@+id/et_window_height"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/clear_text"
+                    android:visibility="gone"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EAE8E8"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="22dp"
+                    android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
+                <TextView
+                    android:id="@+id/window_width_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_centerVertical="true"
+                    android:text="窗户宽度(m)"
+                    android:textSize="18sp"
+                    android:textColor="#7F8E9C"/>
+
+                <EditText
+                    android:id="@+id/et_window_width"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="13dp"
+                    android:layout_marginLeft="10dp"
+                    android:maxLength="5"
+                    android:digits=".0123456789"
+                    android:background="#FFFFFF"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/window_width_left"
+                    android:layout_marginRight="22dp"
+                    android:textSize="18sp"
+                    android:textColor="#000000"/>
+
+                <ImageView
+                    android:id="@+id/iv_clear_window_width"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="2dp"
+                    android:layout_alignRight="@+id/et_window_width"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/clear_text"
+                    android:visibility="gone"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#EAE8E8"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="22dp"
+                    android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp" >
+                <TextView
+                    android:id="@+id/curtain_width_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_centerVertical="true"
+                    android:text="布料宽度(m)"
+                    android:textSize="18sp"
+                    android:textColor="#7F8E9C"/>
+
+                <EditText
+                    android:id="@+id/et_curtain_width"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="13dp"
+                    android:layout_marginLeft="10dp"
+                    android:digits=".0123456789"
+                    android:maxLength="5"
+                    android:background="#FFFFFF"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/curtain_width_left"
+                    android:layout_marginRight="22dp"
+                    android:textSize="18sp"
+                    android:textColor="#000000"/>
+
+                <ImageView
+                    android:id="@+id/iv_clear_curtain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="2dp"
+                    android:layout_alignRight="@+id/et_curtain_width"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/clear_text"
+                    android:visibility="gone"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:layout_height="1dp"
+                    android:background="#EAE8E8"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="22dp"
+                    android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="60dp" >
+                <TextView
+                    android:id="@+id/window_num_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_centerVertical="true"
+                    android:text="窗户扇数(个)"
+                    android:textSize="18sp"
+                    android:textColor="#7F8E9C"/>
+
+                <EditText
+                    android:id="@+id/et_window_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginBottom="13dp"
+                    android:layout_marginLeft="10dp"
+                    android:digits=".0123456789"
+                    android:maxLength="5"
+                    android:background="#FFFFFF"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/window_num_left"
+                    android:layout_marginRight="22dp"
+                    android:textSize="18sp"
+                    android:textColor="#000000"/>
+
+                <ImageView
+                    android:id="@+id/iv_clear_window_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="2dp"
+                    android:layout_alignRight="@+id/et_window_num"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/clear_text"
+                    android:visibility="gone"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="#faf5f5"
+                    android:layout_alignParentBottom="true"/>
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="#faf5f5"
+                android:layout_alignParentBottom="true"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/curtain_unit_price"
+                    android:background="@drawable/unit_price_textview_bg"
+                    style="@style/textview_unit_price_style"/>
+
+                <EditText
+                    android:id="@+id/et_curtain_unit_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginRight="20dp"
+                    android:digits="0.123456789"
+                    android:maxLength="6"
+                    android:background="@drawable/shape_brick_unit_price_bg"
+                    android:layout_toRightOf="@+id/curtain_unit_price"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:textSize="23sp"
+                    android:textColor="#91D6F8"/>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        <!-- 计算器 -->
+        <LinearLayout
+            android:id="@+id/ll_calculater_curtainlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:orientation="horizontal">
+            <!-- 1 4 7 . -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/btn_num1"
+                    android:text="1"
+                    android:background="@drawable/selector_calculater_button_bg1"
+                    style="@style/calculaterButtonStyle"/>
+
+                <Button
+                    android:id="@+id/btn_num4"
+                    android:text="4"
+                    android:background="@drawable/selector_calculater_button_bg456789"
+                    style="@style/calculaterButtonStyle"/>
+
+                <Button
+                    android:id="@+id/btn_num7"
+                    android:text="7"
+                    android:background="@drawable/selector_calculater_button_bg456789"
+                    style="@style/calculaterButtonStyle"/>
+
+                <Button
+                    android:id="@+id/btn_dot"
+                    android:text="."
+                    android:background="@drawable/selector_calculater_button_bg_0"
+                    style="@style/calculaterButtonStyle"/>
+            </LinearLayout>
+
+            <!-- 2 5 8 0-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/btn_num2"
+                    android:text="2"
+                    android:background="@drawable/selector_calculater_button_bg3"
+                    style="@style/calculaterButtonStyle"/>
+
+                <Button
+                    android:id="@+id/btn_num5"
+                    android:text="5"
+                    android:background="@drawable/selector_calculater_button_bg456789"
+                    style="@style/calculaterButtonStyle"/>
+
+                <Button
+                    android:id="@+id/btn_num8"
+                    android:text="8"
+                    android:background="@drawable/selector_calculater_button_bg456789"
+                    style="@style/calculaterButtonStyle"/>
+
+                <Button
+                    android:id="@+id/btn_num0"
+                    android:background="@drawable/selector_calculater_button_bg_0"
+                    android:text="0"
+                    style="@style/calculaterButtonStyle"/>
+            </LinearLayout>
+
+            <!-- 3 6 9 x -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/btn_num3"
+                    android:text="3"
+                    android:background="@drawable/selector_calculater_button_bg3"
+                    style="@style/calculaterButtonStyle"/>
+
+                <Button
+                    android:id="@+id/btn_num6"
+                    android:text="6"
+                    android:background="@drawable/selector_calculater_button_bg456789"
+                    style="@style/calculaterButtonStyle"/>
+
+                <Button
+                    android:id="@+id/btn_num9"
+                    android:text="9"
+                    android:background="@drawable/selector_calculater_button_bg456789"
+                    style="@style/calculaterButtonStyle"/>
+
+
+
+                <RelativeLayout
+                    android:id="@+id/rel_backoff"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_calculater_button_bg_0" >
+                    <Button
+                        android:id="@+id/btn_backoff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/calculate_back"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+
+            <!-- 上项 下项 计算 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/btn_up"
+                        android:background="@drawable/shape_calculater_num_item_bg2"
+                        android:text="上一项"
+                        style="@style/calculaterButtonStyle1"/>
+
+                    <Button
+                        android:id="@+id/btn_down"
+                        android:background="@drawable/shape_calculater_num_item_bg3"
+                        android:text="下一项"
+                        style="@style/calculaterButtonStyle1"/>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_calculate"
+                    style="@style/calculaterButtonStyle2"
+                    android:background="#ff882e"
+                    android:text="计算" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <!-- 计算结果布局 -->
+        <RelativeLayout
+            android:id="@+id/rel_calculate_curtainresult"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="22dp"
+            android:visibility="visible"
+            android:scaleType="fitXY"
+            android:background="@drawable/calculate_result_bg">
+
+            <TextView
+                android:id="@+id/tv_curtain_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#5B90AB"
+                android:textSize="19sp"
+                android:gravity="center_horizontal"
+                android:layout_margin="11dp"
+                android:text="*计算结果仅供参考"/>
+
+            <LinearLayout
+                android:id="@+id/ll_curtainresult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_curtain_text"
+                android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1">
+                    <TextView
+                        android:id="@+id/tv_curtain_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#406A80"
+                        android:textSize="32sp"
+                        android:gravity="center_horizontal"
+                        android:text="58"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_curtain_num"
+                        android:layout_marginTop="3dp"
+                        android:textColor="#438DB3"
+                        android:textSize="17sp"
+                        android:gravity="center_horizontal"
+                        android:text="窗帘数量/平米"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1">
+                    <RelativeLayout
+                        android:id="@+id/rel_curtain_total_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tv_curtain_total_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#406A80"
+                            android:textSize="32sp"
+                            android:gravity="center_horizontal"
+                            android:text=""/>
+                        <TextView
+                            android:id="@+id/tv_curtainempty"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#406A80"
+                            android:layout_toRightOf="@+id/tv_curtain_total_price"
+                            android:layout_alignBottom="@+id/tv_curtain_total_price"
+                            android:textSize="18sp"
+                            android:visibility="gone"
+                            android:gravity="center_horizontal"
+                            android:text="(未填)"/>
+                    </RelativeLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rel_curtain_total_price"
+                        android:layout_marginTop="3dp"
+                        android:textColor="#438DB3"
+                        android:textSize="17dp"
+                        android:gravity="center_horizontal"
+                        android:text="窗帘价格/元"/>
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_curtainresult"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tv_curtain_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:textColor="#406A80"
+                    android:layout_marginLeft="44dp"
+                    android:layout_marginRight="44dp"
+                    android:textSize="17sp"
+                    android:background="@drawable/shape_share_bg"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="立即分享"/>
+                <TextView
+                    android:id="@+id/tv_curtain_recalculate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:textColor="#406A80"
+                    android:textSize="17sp"
+                    android:layout_marginLeft="44dp"
+                    android:layout_marginRight="44dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_recalculate_bg"
+                    android:gravity="center"
+                    android:text="重新计算"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

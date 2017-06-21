@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+    
+	<!-- 已不使用 但暂时保留 ** 目前已使用gridview代替 -->
+    <Gallery
+        android:id="@+id/preferential_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:animationDuration="2000"
+        android:gravity="center"
+        android:spacing="10dp"
+        android:unselectedAlpha="0.6" />
+
+</LinearLayout>

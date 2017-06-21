@@ -1,0 +1,163 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" >
+
+        <ImageView
+            android:id="@+id/imageactivity_item_company_logo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:adjustViewBounds="true"
+            android:padding="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/image_company" />
+
+        <TextView
+            android:id="@+id/imageactivity_item_company_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/imageactivity_item_company_logo"
+            android:text="飞鱼装饰"
+            android:textColor="@color/color_darkgray"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/imageactivity_item_biz_license"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignTop="@+id/imageactivity_item_company_name"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/imageactivity_item_company_name"
+            android:padding="5dp"
+            android:src="@drawable/image_business_license"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/image_item_bao"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/imageactivity_item_biz_license"
+            android:padding="5dp"
+            android:src="@drawable/image_bao"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/image_item_showtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imageactivity_item_company_logo"
+            android:layout_alignLeft="@+id/imageactivity_item_company_name"
+            android:layout_below="@+id/imageactivity_item_biz_license"
+            android:gravity="bottom"
+            android:paddingBottom="5dp"
+            android:text="10小时前"
+            android:textColor="#999"
+            android:textSize="13dp" />
+
+        <ImageView
+            android:id="@+id/image_item_fav"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="12dp"
+            android:src="@drawable/image_love_nor" />
+    </RelativeLayout>
+
+    <!-- 三张图片 start -->
+    <RelativeLayout
+        android:id="@+id/rel_company_3pictures"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/relativeLayout1"
+        android:layout_marginTop="5dp" >
+
+        <ImageView
+            android:id="@+id/imageactivity_item_pics_1"
+            android:layout_width="240dp"
+            android:layout_height="180dp"
+            android:layout_marginRight="1dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/first_checkness" />
+
+        <ImageView
+            android:id="@+id/imageactivity_item_pics_2"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/imageactivity_item_pics_1"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/first_checkness" />
+
+        <ImageView
+            android:id="@+id/imageactivity_item_pics_3"
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:layout_alignLeft="@+id/imageactivity_item_pics_2"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/imageactivity_item_pics_2"
+            android:layout_marginTop="1dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/first_checkness" />
+
+        <ImageView
+            android:id="@+id/iv_image_item_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/image_store"
+            android:visibility="invisible" />
+    </RelativeLayout>
+    <!-- 三张图片 end -->
+
+    <TextView
+        android:id="@+id/imageactivity_item_company_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/rel_company_3pictures"
+        android:padding="10dp"
+        android:text="【幸福花园】三居室.100m.5-8万" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_below="@+id/imageactivity_item_company_location"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dividing_line_bg" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/bg_gray" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dividing_line_bg" />
+    </LinearLayout>
+
+</RelativeLayout>

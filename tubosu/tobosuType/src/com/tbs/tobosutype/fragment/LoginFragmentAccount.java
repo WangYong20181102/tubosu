@@ -1,0 +1,438 @@
+package com.tbs.tobosutype.fragment;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.activity.FindPwdActivity1;
+import com.tbs.tobosutype.activity.LoginActivity;
+import com.tbs.tobosutype.activity.MainActivity;
+import com.tbs.tobosutype.customview.LoadingWindow;
+import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.MyApplication;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.HttpServer;
+import com.tbs.tobosutype.utils.MD5Util;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
+import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
+import com.umeng.socialize.exception.SocializeException;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Date;
+import java.util.Map;
+
+/**
+ * 账号登陆
+ *
+ * @author dec
+ */
+public class LoginFragmentAccount extends Fragment implements OnClickListener {
+    private static final String TAG = LoginFragmentAccount.class.getSimpleName();
+    private ImageView ivBack;
+
+    /**
+     * 账号
+     */
+    private EditText et_login_useraccount;
+
+    /**
+     * 密码
+     */
+    private EditText et_login_useraccount_password;
+
+    /**
+     * 找回密码
+     */
+    private TextView tv_find_password;
+
+    /**
+     * 账户登录
+     */
+    private TextView tv_accountlogin;
+
+    /**
+     * 账号页面 微信登录
+     */
+    private LinearLayout ll_obtain_weixin_login_account;
+
+	/*-------------账号登陆相关------------*/
+    /**
+     * 登录接口
+     */
+    private String userLoginUrl = AllConstants.TOBOSU_URL + "tapp/passport/app_login";
+    private RequestParams userLoginParams;
+    /*-------------账号登陆相关------------*/
+
+
+    /*-------------微信登陆相关------------*/
+    private LoadingWindow wechatWindow;
+    private UMSocialService mController = UMServiceFactory.getUMSocialService(AllConstants.DESCRIPTOR);
+
+    private String weiXinUserName;
+    private String weiXinImageUrl;
+    private String weiXinUserId;
+
+    /**
+     * 微信第三方登陆接口
+     */
+    private String weixinLoginUrl = AllConstants.TOBOSU_URL + "tapp/passport/login_third_party";
+
+    /**
+     * 微信参数对象
+     */
+    private RequestParams weixinLoginParams;
+
+	
+	/*-------------微信登陆相关------------*/
+
+    /**
+     * 跳转到手机登录
+     */
+    private RelativeLayout rel_jump_phone_login;
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_login_account, null);
+        initView(view);
+        return view;
+    }
+
+
+    private void initView(View view) {
+        ivBack = (ImageView) view.findViewById(R.id.login_account_back);
+        ivBack.setOnClickListener(this);
+        et_login_useraccount = (EditText) view.findViewById(R.id.et_login_useraccount);
+        et_login_useraccount_password = (EditText) view.findViewById(R.id.et_login_useraccount_password);
+        tv_find_password = (TextView) view.findViewById(R.id.tv_find_password);
+        tv_find_password.setOnClickListener(this);
+        tv_accountlogin = (TextView) view.findViewById(R.id.tv_accountlogin);
+        tv_accountlogin.setOnClickListener(this);
+        ll_obtain_weixin_login_account = (LinearLayout) view.findViewById(R.id.ll_obtain_weixin_login_account);
+        ll_obtain_weixin_login_account.setOnClickListener(this);
+        rel_jump_phone_login = (RelativeLayout) view.findViewById(R.id.rel_jump_phone_login);
+        rel_jump_phone_login.setOnClickListener(this);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.login_account_back:
+                if (LoginActivity.fromTab == -2) {
+                    // 不是来自MainActivity的一级菜单的时候
+                    getActivity().finish();
+//					Util.setLog("LoginActivity", "===========back======= fromTab = -2 =================");
+                    Log.e("LoginActivity", "===========accountback======= fromTab = -2 =================");
+                } else {
+//					Util.setLog("LoginActivity", "===========back======= fromTab != -2 =================");
+                    Log.e("LoginActivity", "===========accountback======= fromTab != -2 =================");
+                    Intent it = new Intent();
+                    Bundle b = new Bundle();
+                    b.putInt("back", LoginActivity.fromTab);
+                    it.putExtra("backBundle", b);
+                    getActivity().setResult(0x000018, it);
+                    getActivity().finish();
+                    getActivity().overridePendingTransition(R.anim.activity_close, 0);
+                }
+                break;
+            case R.id.tv_find_password: // 找回密码
+                startActivity(new Intent(getActivity(), FindPwdActivity1.class));
+                break;
+            case R.id.tv_accountlogin: // 登录
+                userLogin();
+                hideEdittext();
+                break;
+            case R.id.ll_obtain_weixin_login_account: // 微信登录
+                loginWeixin();
+                hideEdittext();
+                break;
+            case R.id.rel_jump_phone_login: // 跳转手机快速登录
+                Intent i = new Intent(LoginActivity.POSITION_SWITCH_ACTION_PHONE);
+                getActivity().sendBroadcast(i);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+
+    private String encode_pass = "";
+
+    /***
+     * 用户注册 登录
+     */
+    private void userLogin() {
+
+        // 账户登录页面
+        String userName = et_login_useraccount.getText().toString().trim();
+        if (TextUtils.isEmpty(userName)) {
+            Toast.makeText(getActivity(), "账户信息不能为空！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String passWord = et_login_useraccount_password.getText().toString().trim();
+        encode_pass = MD5Util.md5(passWord);
+
+        if (TextUtils.isEmpty(passWord)) {
+            Toast.makeText(getActivity(), "密码不能为空！", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        userLoginParams = AppInfoUtil.getPublicParams(getActivity());
+        userLoginParams.put("mobile", userName);
+        userLoginParams.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
+        userLoginParams.put("pass", encode_pass);
+        requestUserLogin();
+    }
+
+
+    /***
+     * 用户登录接口请求
+     */
+    private void requestUserLogin() {
+        if (!AllConstants.checkNetwork(getActivity())) {
+            AllConstants.toastNetOut(getActivity());
+            return;
+        }
+
+        HttpServer.getInstance().requestPOST(userLoginUrl, userLoginParams, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(new String(body));
+                    if (jsonObject.getInt("error_code") == 0) {
+                        Log.e("登录日志", "====" + jsonObject);
+                        parseJson(jsonObject);
+                    } else {
+                        Toast.makeText(getActivity(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+
+            }
+        });
+    }
+
+    /***
+     * 微信登录接口请求
+     */
+    private void loginWeixin() {
+        //FIXME
+        wechatWindow = new LoadingWindow(getActivity());
+        UMWXHandler wxHandler = new UMWXHandler(getActivity(), "wx20c4f4560dcd397a", "9b06e848d40bcb04205d75335df6b814");
+        wxHandler.addToSocialSDK();
+        weixinThirdParty(SHARE_MEDIA.WEIXIN);
+    }
+
+    /***
+     * 微信第三方登录
+     *
+     * @param platform
+     */
+    private void weixinThirdParty(final SHARE_MEDIA platform) {
+        mController.doOauthVerify(getActivity(), platform, new UMAuthListener() {
+
+            @Override
+            public void onStart(SHARE_MEDIA platform) {
+
+            }
+
+            @Override
+            public void onError(SocializeException e, SHARE_MEDIA platform) {
+
+            }
+
+            @Override
+            public void onComplete(Bundle value, SHARE_MEDIA platform) {
+                // 获取uid
+                if (!TextUtils.isEmpty(value.getString("uid"))) {
+                    getUserInfo(platform);
+                    //FIXME
+                    if (wechatWindow != null && wechatWindow.isShowing()) {
+                        wechatWindow.dismiss();
+                        wechatWindow = null;
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "登陆失败...", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA platform) {
+                Toast.makeText(getActivity(), "登陆取消", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /***
+     * 获取微信用户的信息
+     *
+     * @param platform
+     */
+    private void getUserInfo(final SHARE_MEDIA platform) {
+        mController.getPlatformInfo(getActivity(), platform, new UMDataListener() {
+
+            @Override
+            public void onStart() {
+                Toast.makeText(getActivity(), "获取平台数据开始...", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onComplete(int status, Map<String, Object> info) {
+                if (status == 200 && info != null) {
+                    weiXinUserName = (String) info.get("nickname");
+                    weiXinImageUrl = (String) info.get("headimgurl");
+                    weiXinUserId = (String) info.get("unionid");
+                    requestWeixinLogin();
+                } else {
+                    Toast.makeText(getActivity(), "获取用户信息失败！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
+        });
+    }
+
+    /***
+     * 微信用户登录接口请求
+     */
+    private void requestWeixinLogin() {
+        weixinLoginParams = AppInfoUtil.getPublicParams(getActivity());
+        weixinLoginParams.put("kind", "weixin");
+        weixinLoginParams.put("icon", weiXinImageUrl);
+        weixinLoginParams.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
+        weixinLoginParams.put("nickname", weiXinUserName);
+        weixinLoginParams.put("account", weiXinUserId);
+
+        HttpServer.getInstance().requestPOST(weixinLoginUrl, weixinLoginParams, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
+                try {
+                    JSONObject jsonObject = new JSONObject(new String(body));
+                    if (jsonObject.getInt("error_code") == 0) {
+                        parseJson(jsonObject);
+                    } else {
+                        Toast.makeText(getActivity(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+
+            }
+        });
+    }
+
+    /***
+     * 将json解析为用户信息
+     *
+     * @param jsonObject
+     * @throws JSONException
+     */
+    private void parseJson(JSONObject jsonObject) throws JSONException {
+        String mark = "";
+        String token = "";
+        long time = new Date().getTime();
+        try {
+            JSONObject data = jsonObject.getJSONObject("data");
+            String icon = data.getString("icon");
+            String nickname = data.getString("name");
+            mark = data.getString("mark");
+            token = data.getString("token");
+            String userid = data.getString("uid");
+            String cityname = data.getString("cityname");
+            String cellphone = data.getString("cellphone");
+            String typeId = data.getString("type_id");//登录用户的类型
+
+            SharedPreferences saveInfo = getActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE); // 登录成功后 存储用户标记mark
+            SharedPreferences.Editor editor = saveInfo.edit();
+            editor.putString("nickname", nickname);
+            editor.putString("icon", icon);
+            editor.putString("mark", mark);
+            editor.putString("encode_pass", encode_pass);
+            editor.putString("userid", userid);
+            editor.putLong("login_time", time);
+            editor.putString("token", token);
+            editor.putString("cityname", cityname);
+            editor.putString("cellphone", cellphone);
+            editor.putString("typeid", typeId);
+
+            editor.commit();
+            AppInfoUtil.setToken(getActivity(), token);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("LoginFragmentAccount -- 解析错误--");
+        }
+
+        Intent favIntent = getActivity().getIntent();
+
+        if (favIntent.getBooleanExtra("isFav", false)) {
+            favIntent.putExtra("token", token);
+            getActivity().setResult(0, favIntent);
+            getActivity().finish();
+        } else {
+            if ("1".equals(mark) || "3".equals(mark)) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MainActivity.class);
+                AppInfoUtil.ISJUSTLOGIN = true;
+                getActivity().startActivity(intent);
+
+                Intent i = new Intent();
+                i.setAction(AllConstants.LOGIN_ACTION);
+                getActivity().sendBroadcast(i);
+
+
+                getActivity().finish();
+            } else {
+                Toast.makeText(getActivity(), "登录失败", Toast.LENGTH_SHORT).show();
+            }
+        }
+        et_login_useraccount_password.setText("");
+        et_login_useraccount.setText("");
+    }
+
+
+    private void hideEdittext() {
+        InputMethodManager im = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        im.hideSoftInputFromWindow(getActivity().getCurrentFocus().getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+}

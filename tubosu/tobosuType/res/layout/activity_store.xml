@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:id="@+id/store_details"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/color_icon" >
+
+                <ImageView
+                    android:id="@+id/store_back"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:padding="5dp"
+                    android:src="@drawable/back_up" />
+
+                <TextView
+                    android:id="@+id/store_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/my_store"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/store_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:padding="10dp"
+                    android:text="@string/my_edit"
+                    android:textColor="#444"
+                    android:textSize="20sp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/stroe_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:text="@string/stroe_cancel"
+                    android:textColor="@color/color_darkgray"
+                    android:textSize="18sp"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/dividing_line_bg" />
+
+            <LinearLayout
+                android:id="@+id/store_layout_tabtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_icon_bg_normal"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/store_images"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/stroe_images"
+                    android:textColor="@color/color_icon" />
+
+                <TextView
+                    android:id="@+id/stroe_decorates"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="@string/stroe_decorates"
+                    android:textColor="@color/color_black" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/store_layout_tabline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_icon_bg_normal"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/store_images_underline"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/store_on"
+                    android:contentDescription="@string/descr_image" />
+
+                <ImageView
+                    android:id="@+id/stroe_decorates_underline"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/store_off"
+                    android:contentDescription="@string/descr_image" />
+            </LinearLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/store_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </android.support.v4.view.ViewPager>
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/store_edit_del"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#fff"
+            android:gravity="center"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/btn_store_edit_del"
+                android:layout_width="160dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:src="@drawable/store_edit_del_selector" />
+
+            <TextView
+                android:id="@+id/store_edit_delnum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="删除"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+        </FrameLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/store_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ProgressBar
+            android:id="@+id/img"
+            android:layout_width="107dp"
+            android:layout_height="70dp"
+            android:indeterminateDrawable="@drawable/page_loading" />
+    </LinearLayout>
+
+</FrameLayout>

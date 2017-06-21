@@ -1,0 +1,133 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true" >
+	
+    
+    <LinearLayout
+        android:id="@+id/select_city_layout"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical" >
+        <!-- 顶部标题栏 start -->
+	    <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="50dp"
+	        android:background="@color/color_icon" >
+	
+	        <ImageView
+	            android:id="@+id/city_title_back"
+	            android:layout_width="30dp"
+	            android:layout_height="30dp"
+	            android:layout_alignParentLeft="true"
+	            android:layout_centerVertical="true"
+	            android:padding="5dp"
+	            android:src="@drawable/back_up" />
+	
+	        <TextView
+	            android:id="@+id/city_title_name"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerHorizontal="true"
+	            android:layout_centerVertical="true"
+	            android:text="选择城市"
+	            android:textColor="@color/white"
+	            android:textSize="18sp" />
+	    </RelativeLayout>
+	    <!-- 顶部标题栏 end -->
+	
+	
+		<!-- 正在加载网络布局 start -->
+	    <include
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        layout="@layout/layout_loading_data" />
+		<!-- 正在加载网络布局 end -->
+		
+		
+		<!-- 主体城市列表listview部分 start -->
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:orientation="horizontal" >
+			<!-- 左边城市列表部分 start -->
+	        <FrameLayout
+	            android:layout_width="0dp"
+	            android:layout_height="match_parent"
+	            android:layout_weight="10"
+	            android:background="@android:color/white" >
+	
+	            <RelativeLayout
+	                android:id="@+id/city_content_container"
+	                android:layout_width="match_parent"
+	                android:layout_height="match_parent" >
+	
+	                <com.tbs.tobosutype.customview.PinnedHeaderListView
+	                    android:id="@+id/pinned_header_citys_list"
+	                    style="@style/base_listview_style"
+	                    android:layout_width="match_parent"
+	                    android:layout_height="match_parent"
+	                    android:cacheColorHint="#00000000"
+	                    android:focusableInTouchMode="true" />
+	
+	                <include
+	                    android:id="@+id/citys_list_empty"
+	                    android:layout_width="match_parent"
+	                    android:layout_height="match_parent"
+	                    layout="@layout/base_load_empty_layout" />
+	            </RelativeLayout>
+	
+	            
+	            <!-- 搜索的城市不存在布局 start -->
+	            <FrameLayout
+	                android:id="@+id/search_content_container"
+	                android:layout_width="match_parent"
+	                android:layout_height="match_parent" >
+	
+	                <ListView
+	                    android:id="@+id/getcity_listview"
+	                    style="@style/base_listview_style"
+	                    android:layout_width="match_parent"
+	                    android:layout_height="match_parent"
+	                    android:cacheColorHint="#00000000"
+	                    android:focusableInTouchMode="true" />
+	
+	                <ImageView
+	                    android:id="@+id/search_empty"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_horizontal"
+	                    android:layout_marginTop="10.0dip"
+	                    android:src="@drawable/selectcity_empty"
+	                    android:visibility="gone" />
+	            </FrameLayout>
+	            <!-- 搜索的城市不存在布局 end -->
+	        </FrameLayout>
+	        <!-- 左边城市列表部分 end -->
+			
+	        
+	        <!-- 右边字母列表 start -->
+	        <ImageView
+	            android:layout_width="1dp"
+	            android:layout_height="match_parent"
+	            android:background="@color/dividing_line_bg" />
+	
+	        <com.tbs.tobosutype.customview.BladeView
+	            android:id="@+id/citys_bladeview"
+	            android:layout_width="0dp"
+	            android:layout_height="match_parent"
+	            android:layout_weight="1"
+	            android:background="@android:color/white" />
+	        <!-- 右边字母列表 end -->
+	    </LinearLayout>
+	    <!-- 主体城市列表listview部分 end -->
+    </LinearLayout>
+    
+    <include 
+       android:id="@+id/select_city_activity_netoutview"
+       layout="@layout/layout_net_out_view"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:visibility="gone"  />
+
+</RelativeLayout>

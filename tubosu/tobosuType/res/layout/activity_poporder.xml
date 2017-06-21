@@ -1,0 +1,749 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/poporder_bg">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2.9">
+
+            <!-- =============================bar部分================================ -->
+            <RelativeLayout
+                android:id="@+id/rel_bar"
+                android:layout_width="match_parent"
+                android:layout_height="44dp">
+                <RelativeLayout
+                    android:id="@+id/rel_poporder_back"
+                    android:layout_width="49dp"
+                    android:layout_height="49dp"
+                    android:layout_centerVertical="true">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="12dp"
+                        android:background="@drawable/activity_back"/>
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/iv_poporder_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="26dp"
+                    android:background="@drawable/close"/>
+            </RelativeLayout>
+            <!-- =============================bar部分================================ -->
+
+            <!-- ============================= 两动标题 部分================================ -->
+            <RelativeLayout
+                android:id="@+id/rel_gif_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rel_bar">
+                <TextView
+                    android:id="@+id/tv_question_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center_horizontal"
+                    android:textColor="#9E7151"
+                    android:text="由谁来装修? 这是个问题"/>
+
+
+
+                <RelativeLayout
+                    android:id="@+id/rel_left_gif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="26dp">
+
+                    <ImageView
+                        android:id="@+id/gif_left"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:background="@color/transparent"
+                        android:layout_centerInParent="true"/>
+
+                    <TextView
+                        android:id="@+id/tv_prepare_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:layout_centerInParent="true"
+                        android:text="准备装修"
+                        android:textColor="@color/white"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rel_right_gif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="26dp">
+
+                    <ImageView
+                        android:id="@+id/gif_right"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:background="@color/transparent"
+                        android:layout_centerInParent="true"/>
+                    <TextView
+                        android:id="@+id/tv_ongoing_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:layout_centerInParent="true"
+                        android:text="正在装修"
+                        android:textColor="@color/white"/>
+                </RelativeLayout>
+            </RelativeLayout>
+            <!-- ============================= 两动标题 部分================================ -->
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rel_mid_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2.8">
+
+
+            <!-- ###################################################### -->
+            <RelativeLayout
+                android:id="@+id/re_prepare_direction"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <!-- 装修风格 -->
+                <RelativeLayout
+                    android:id="@+id/rel_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tv_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="你喜欢的风格？"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="#716A64"
+                        android:textSize="17sp"/>
+
+                    <GridView
+                        android:id="@+id/gv_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:layout_marginTop="30dp"
+                        android:verticalSpacing="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_below="@+id/tv_style"
+                        android:numColumns="3"/>
+
+                </RelativeLayout>
+
+
+                <!-- 面积 -->
+                <RelativeLayout
+                    android:id="@+id/rel_prsquare"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true">
+                    <TextView
+                        android:id="@+id/tv_prsquare"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="你的房屋面积不小于？"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="#716A64"
+                        android:textSize="17sp"/>
+                    <GridView
+                        android:id="@+id/gv_prsquare"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:layout_marginTop="30dp"
+                        android:verticalSpacing="10dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_below="@+id/tv_prsquare"
+                        android:numColumns="4"/>
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rel_prbudget"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rel_prsquare"
+                    android:layout_marginTop="18dp">
+                    <TextView
+                        android:id="@+id/tv_prbudget"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="你的预算大概在？ (万元)"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="#716A64"
+                        android:textSize="17sp"/>
+                    <GridView
+                        android:id="@+id/gv_prbudge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:layout_marginTop="20dp"
+                        android:verticalSpacing="10dp"
+                        android:layout_below="@+id/tv_prbudget"
+                        android:numColumns="4"/>
+                </RelativeLayout>
+            </RelativeLayout>
+            <!-- ###################################################### -->
+
+
+            <!-- ************************************************-->
+            <!-- 装修中 阶段 -->
+            <RelativeLayout
+                android:id="@+id/re_ongoing_direction"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <!-- ongoing 装修阶段  stage -->
+                <RelativeLayout
+                    android:id="@+id/rl_going_stage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible">
+
+                    <TextView
+                        android:id="@+id/tv_stage_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="你的装修阶段？"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="#716A64"
+                        android:textSize="17sp"/>
+
+
+                    <com.tbs.tobosutype.customview.TextSeekBar
+                        android:id="@+id/stage_seekbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_stage_text"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="29dp"
+                        app:tickCount="6"/>
+
+                    <LinearLayout
+                        android:id="@+id/linearlayout_stagetext"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/stage_seekbar">
+                        <TextView
+                            android:id="@+id/tv_stage_0"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textColor="#FE905F"
+                            android:text="拆改"/>
+                        <TextView
+                            android:id="@+id/tv_stage_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textColor="#A79186"
+                            android:text="水电"/>
+                        <TextView
+                            android:id="@+id/tv_stage_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textColor="#A79186"
+                            android:text="泥木"/>
+                        <TextView
+                            android:id="@+id/tv_stage_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:textColor="#A79186"
+                            android:text="油漆"/>
+
+                        <TextView
+                            android:id="@+id/tv_stage_4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingLeft="10dp"
+                            android:textColor="#A79186"
+                            android:text="竣工"/>
+                        <TextView
+                            android:id="@+id/tv_stage_5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="13sp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingLeft="10dp"
+                            android:textColor="#A79186"
+                            android:text="软装"/>
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+                <!-- 装修中  你喜欢的风格 -->
+                <RelativeLayout
+                    android:id="@+id/rl_going_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:visibility="invisible">
+
+                    <TextView
+                        android:id="@+id/tv_going_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="你喜欢的风格？"
+                        android:layout_centerHorizontal="true"
+                        android:textColor="#716A64"
+                        android:textSize="17sp"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_going_style"
+                        android:layout_marginTop="26dp">
+
+                        <GridView
+                            android:id="@+id/gv_going_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#00FFFFFF"
+                            android:layout_marginTop="10dp"
+                            android:verticalSpacing="10dp"
+                            android:numColumns="3"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+            </RelativeLayout>
+            <!-- ************************************************-->
+
+
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_alignParentBottom="true"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_gravity="bottom"
+                android:text="一切交给土拨鼠装修 开启幸福生活"
+                android:background="@drawable/shape_framelayout1_textview_bg"/>
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <RelativeLayout
+                android:id="@+id/rel_dont_care"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:visibility="invisible"
+                android:layout_marginBottom="10dp"
+                android:gravity="center_horizontal"
+                android:layout_alignParentBottom="true">
+                <TextView
+                    android:id="@+id/tv_dont_care"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"
+                    android:text="无所谓"
+                    android:textColor="#997A6C"/>
+                <ImageView
+                    android:layout_toRightOf="@+id/tv_dont_care"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="21dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/kankan"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+    <!-- ******************************** FrameLayout 准备装修 最后一页  **************************** -->
+    <FrameLayout
+        android:id="@+id/framelayout_prepare_final"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- 上面部分 -->
+            <RelativeLayout
+                android:id="@+id/rel_final"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!-- 中间动图 -->
+                <RelativeLayout
+                    android:id="@+id/rel_prepare_final_center"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_marginTop="100dp"
+                    android:layout_centerHorizontal="true">
+                    <ImageView
+                        android:id="@+id/image_result"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:background="@color/transparent"
+                        android:layout_centerInParent="true"/>
+
+                    <TextView
+                        android:id="@+id/tv_prepare_result"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_centerInParent="true"
+                        android:text="意向结果？"
+                        android:textColor="@color/white"/>
+                </RelativeLayout>
+
+                <!-- 左上动图  -->
+                <RelativeLayout
+                    android:id="@+id/rel_prepare_left_up"
+                    android:layout_width="98dp"
+                    android:layout_height="98dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="50dp">
+                    <ImageView
+                        android:id="@+id/image_prepare_left_up"
+                        android:layout_width="98dp"
+                        android:layout_height="98dp"
+                        android:background="@color/transparent"
+                        android:layout_centerInParent="true"/>
+
+                    <TextView
+                        android:id="@+id/tv_prepare_left_up_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:layout_centerInParent="true"
+                        android:text="xxx"
+                        android:textColor="@color/white"/>
+                </RelativeLayout>
+
+                <!-- 左下动图  -->
+                <RelativeLayout
+                    android:id="@+id/rel_prepare_left_down"
+                    android:layout_width="98dp"
+                    android:layout_height="98dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_below="@+id/rel_prepare_left_up"
+                    android:layout_marginTop="50dp">
+                    <ImageView
+                        android:id="@+id/image_prepare_left_down"
+                        android:layout_width="98dp"
+                        android:layout_height="98dp"
+                        android:background="@color/transparent"
+                        android:layout_centerInParent="true"/>
+
+                    <TextView
+                        android:id="@+id/tv_prepare_left_down_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:layout_centerInParent="true"
+                        android:text="xxx"
+                        android:textColor="@color/white"/>
+                </RelativeLayout>
+
+
+                <!-- 右中动图  -->
+                <RelativeLayout
+                    android:id="@+id/rel_prepare_right"
+                    android:layout_width="98dp"
+                    android:layout_height="98dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true">
+                    <ImageView
+                        android:id="@+id/image_parepare_right"
+                        android:layout_width="98dp"
+                        android:layout_height="98dp"
+                        android:background="@color/transparent"
+                        android:layout_centerInParent="true"/>
+
+                    <TextView
+                        android:id="@+id/tv_prepare_right_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:layout_centerInParent="true"
+                        android:text="xxx"
+                        android:textColor="@color/white"/>
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <!-- 下面 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_margin="26dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerInParent="true"
+                android:text="填写手机号，即可获得意向匹配结果"
+                android:textColor="#4C3320"/>
+
+            <LinearLayout
+                android:id="@+id/ll_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/iv_location_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/city_icon"/>
+
+                <TextView
+                    android:id="@+id/tv_city_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="#4C3320"/>
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/et_cellphone"
+                android:layout_width="290dp"
+                android:layout_height="40dp"
+                android:paddingLeft="13dp"
+                android:maxEms="11"
+                android:inputType="phone"
+                android:layout_gravity="center_horizontal"
+                android:hint="请输入你的手机号"
+                android:layout_margin="20dp"
+                android:textColorHint="@color/concern_color"
+                android:textColor="@color/color_00"
+                android:background="@drawable/shape_poporder_edittext_bg"/>
+
+            <TextView
+                android:id="@+id/tv_summit_order"
+                android:layout_width="290dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:background="@drawable/shape_poporder_sumit_bg"
+                android:layout_gravity="center_horizontal"
+                android:textSize="16sp"
+                android:text="免费领取"
+                android:textColor="#FFF"/>
+
+            <RelativeLayout
+                android:id="@+id/rel_dont_need_order"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|center_horizontal">
+                <TextView
+                    android:id="@+id/tv_dont_need"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:textSize="16sp"
+                    android:layout_alignParentBottom="true"
+                    android:text="暂不需要"
+                    android:textColor="#997A6C"/>
+                <ImageView
+                    android:layout_toRightOf="@+id/tv_dont_need"
+                    android:layout_marginLeft="10dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="21dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/kankan"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+    <!-- ******************************** FrameLayout 准备装修 最后一页  **************************** -->
+
+
+
+
+    <!-- ****************************FrameLayout 正在装修 最后一页 ******************************* -->
+    <LinearLayout
+        android:id="@+id/llayout_going_final"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:orientation="vertical">
+
+        <!-- 上面部分 -->
+        <RelativeLayout
+            android:id="@+id/rel_ongoning_final"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- 中间动图 -->
+            <RelativeLayout
+                android:id="@+id/rel_ongoning_final_center"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginTop="100dp"
+                android:layout_centerHorizontal="true">
+                <ImageView
+                    android:id="@+id/image_ongoning_result"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:background="@color/transparent"
+                    android:layout_centerInParent="true"/>
+
+                <TextView
+                    android:id="@+id/tv_ongoning_final_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_centerInParent="true"
+                    android:text="意向结果？"
+                    android:textColor="@color/white"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <!-- 下面 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_margin="16dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:text="4份免费设计等你抢，机会不多"
+            android:textColor="#4C3320"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_margin="13dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerInParent="true"
+            android:text="每日仅限前30名"
+            android:textColor="#4C3320"/>
+
+        <LinearLayout
+            android:id="@+id/ll_location1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/city_icon"/>
+            <TextView
+                android:id="@+id/tv_city_location1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="16sp"
+                android:textColor="#4C3320"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_cellphone1"
+            android:layout_width="290dp"
+            android:layout_height="40dp"
+            android:paddingLeft="13dp"
+            android:maxEms="11"
+            android:inputType="phone"
+            android:layout_gravity="center_horizontal"
+            android:hint="请输入你的手机号"
+            android:layout_margin="20dp"
+            android:textColorHint="@color/concern_color"
+            android:textColor="@color/color_00"
+            android:background="@drawable/shape_poporder_edittext_bg"/>
+
+        <TextView
+            android:id="@+id/tv_summit_order1"
+            android:layout_width="290dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:background="@drawable/shape_poporder_sumit_bg"
+            android:layout_gravity="center_horizontal"
+            android:textSize="16sp"
+            android:text="免费领取"
+            android:textColor="#FFF"/>
+
+        <RelativeLayout
+            android:id="@+id/rel_dont_need_order1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom|center_horizontal">
+            <TextView
+                android:id="@+id/tv_dont_need1"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:textSize="16sp"
+                android:layout_alignParentBottom="true"
+                android:text="暂不需要"
+                android:textColor="#997A6C"/>
+            <ImageView
+                android:layout_toRightOf="@+id/tv_dont_need1"
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="21dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/kankan"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <!-- ****************************FrameLayout 正在装修 最后一页 ******************************* -->
+
+
+</RelativeLayout>

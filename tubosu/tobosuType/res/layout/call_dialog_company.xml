@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:weightSum="10" >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/color_icon" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/contactNumberText"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:text="手机"
+            android:textColor="@color/color_darkgray"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/lineImage"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dividing_line_bg" />
+
+        <TextView
+            android:id="@+id/telText"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:text="固话"
+            android:textColor="@color/color_darkgray"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/dividing_line" />
+
+    <TextView
+        android:id="@+id/cancelButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="取消"
+        android:textColor="@color/color_neutralgrey"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dividing_line_bg" />
+
+</LinearLayout>

@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/decorate_detail_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true" >
+
+    <FrameLayout
+	    android:id="@+id/rel_layout_decorate_bar"
+	    android:layout_width="match_parent"
+	    android:layout_height="50dip" >
+	
+	    <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent" >
+	
+	        <ImageView
+	            android:id="@+id/decorate_goback"
+				android:layout_width="20dp"
+				android:layout_height="20dp"
+				android:layout_marginLeft="10dp"
+				android:layout_centerVertical="true"
+				android:src="@drawable/back_up" />
+	
+	        <ImageView
+	            android:id="@+id/decorate_detail_fav"
+	            android:layout_width="20dp"
+	            android:layout_height="20dp"
+	            android:layout_centerVertical="true"
+	            android:layout_marginRight="14dp"
+				android:layout_toLeftOf="@+id/find_decorate_detail_share"
+	            android:background="@drawable/image_love_nor1" />
+	
+	        <ImageView
+	            android:id="@+id/find_decorate_detail_share"
+	            android:layout_width="20dp"
+	            android:layout_height="20dp"
+	            android:layout_alignParentRight="true"
+	            android:layout_centerVertical="true"
+	            android:layout_marginRight="20dp"
+	            android:clickable="true"
+	            android:background="@drawable/share" />
+	    </RelativeLayout>
+	</FrameLayout>
+
+	<com.tbs.tobosutype.customview.ScrollViewExtend
+		android:id="@+id/scrollView_decorate_company_details"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@android:color/white"
+		android:layout_above="@+id/decorate_detail_bottom"
+		android:layout_alignParentTop="true"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentStart="true">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="40dp"
+			android:orientation="vertical" >
+
+			<!-- 装修公司顶部布局 start -->
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/bg_gray">
+				<RelativeLayout
+					android:id="@+id/rl_decorate_detail"
+					android:layout_width="match_parent"
+					android:layout_height="224dp"
+					android:background="@drawable/decorate_detail_bg" >
+
+					<ImageView
+						android:id="@+id/decorate_detail_company_logo"
+						android:layout_width="120dp"
+						android:layout_height="60dp"
+						android:layout_centerHorizontal="true"
+						android:layout_marginTop="60dp"
+						android:adjustViewBounds="true"
+						android:contentDescription="@string/descr_image"
+						android:scaleType="fitXY"
+						android:background="@drawable/decorate_detail_default" />
+
+					<TextView
+						android:id="@+id/decorate_detail_company"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_below="@+id/decorate_detail_company_logo"
+						android:layout_centerHorizontal="true"
+						android:layout_marginTop="10dp"
+						android:ellipsize="end"
+						android:maxLines="1"
+						android:textColor="#fff"
+						android:textSize="15sp" />
+
+					<LinearLayout
+						android:id="@+id/layout_pic"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_below="@+id/decorate_detail_company"
+						android:layout_marginTop="4dp"
+						android:gravity="center_horizontal"
+						android:orientation="horizontal" >
+
+						<ImageView
+							android:id="@+id/decorate_detail_business_license"
+							android:layout_width="80dp"
+							android:layout_height="22dp"
+							android:background="@drawable/decorate_detail_license_select" />
+
+						<ImageView
+							android:id="@+id/decorate_detail_bao"
+							android:layout_width="80dp"
+							android:layout_height="22dp"
+							android:layout_marginLeft="5dp"
+							android:background="@drawable/decorate_detail_bao_select" />
+
+						<ImageView
+							android:id="@+id/decorate_detail_vouchers"
+							android:layout_width="80dp"
+							android:layout_height="22dp"
+							android:layout_marginLeft="5dp"
+							android:background="@drawable/decorate_detail_vouchers_nor"
+							android:visibility="gone" />
+					</LinearLayout>
+
+				</RelativeLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="77dp"
+					android:layout_marginRight="20dp"
+					android:background="@color/white"
+					android:layout_marginLeft="20dp"
+					android:layout_below="@+id/rl_decorate_detail"
+					android:layout_marginTop="-34dp"
+					android:layout_marginBottom="18dp"
+					android:orientation="horizontal">
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:orientation="vertical"
+						android:layout_weight="1"
+						android:layout_gravity="center_vertical"
+						android:gravity="center_vertical"
+						android:background="@color/white">
+						<TextView
+							android:id="@+id/tv_designer_num"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:gravity="center"
+							android:layout_gravity="center_horizontal"
+							android:textColor="@color/color_black"
+							android:textSize="21sp"
+							android:text="--"/>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="10dp"
+							android:gravity="center"
+							android:layout_gravity="center_horizontal"
+							android:textColor="@color/color_designer_textview_bg"
+							android:textSize="13sp"
+							android:text="设计师/人"/>
+					</LinearLayout>
+
+					<View
+						android:layout_width="1dp"
+						android:layout_height="match_parent"
+						android:layout_marginTop="17dp"
+						android:layout_gravity="center_vertical"
+						android:layout_marginBottom="17dp"
+						android:background="@color/color_designer_textview_bg"/>
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:orientation="vertical"
+						android:layout_weight="1"
+						android:layout_gravity="center_vertical"
+						android:gravity="center_vertical"
+						android:background="@color/white">
+						<TextView
+							android:id="@+id/tv_images_num"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:gravity="center"
+							android:layout_gravity="center_horizontal"
+							android:textColor="@color/color_black"
+							android:textSize="21sp"
+							android:text="--"/>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="10dp"
+							android:gravity="center"
+							android:layout_gravity="center_horizontal"
+							android:textColor="@color/color_designer_textview_bg"
+							android:textSize="13sp"
+							android:text="效果图/套"/>
+					</LinearLayout>
+
+					<View
+						android:layout_width="1dp"
+						android:layout_height="match_parent"
+						android:layout_marginTop="17dp"
+						android:layout_marginBottom="17dp"
+						android:background="@color/color_designer_textview_bg"/>
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:orientation="vertical"
+						android:layout_weight="1"
+						android:layout_gravity="center_vertical"
+						android:gravity="center_vertical"
+						android:background="@color/white">
+						<TextView
+							android:id="@+id/tv_price"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:gravity="center"
+							android:layout_gravity="center_horizontal"
+							android:textColor="@color/color_black"
+							android:textSize="21sp"
+							android:text="--"/>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="10dp"
+							android:gravity="center"
+							android:layout_gravity="center_horizontal"
+							android:textColor="@color/color_designer_textview_bg"
+							android:textSize="13sp"
+							android:text="半包均价/元"/>
+					</LinearLayout>
+
+				</LinearLayout>
+			</RelativeLayout>
+			<!-- 装修公司顶部布局 end -->
+
+			<!-- 装修一平米送一平米布局 start -->
+			<RelativeLayout
+				android:id="@+id/ll_activity"
+				android:layout_width="match_parent"
+				android:layout_height="40dp"
+				android:layout_gravity="center"
+				android:layout_marginTop="5dp"
+				android:visibility="visible" >
+
+				<ImageView
+					android:id="@+id/hui"
+					android:layout_width="16dp"
+					android:layout_height="16dp"
+					android:layout_centerVertical="true"
+					android:layout_marginLeft="10dp"
+					android:contentDescription="@string/descr_image"
+					android:background="@drawable/hui" />
+
+				<TextView
+					android:id="@+id/tv_activity_title"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_centerVertical="true"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="30dp"
+					android:layout_toRightOf="@+id/hui"
+					android:ellipsize="end"
+					android:maxLines="1"
+					android:text="装修一平米，送一平米"
+					android:textColor="@color/color_icon"
+					android:textSize="12sp" />
+
+				<ImageView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentRight="true"
+					android:layout_centerVertical="true"
+					android:layout_marginRight="14dp"
+					android:contentDescription="@string/descr_image"
+					android:background="@drawable/right" />
+			</RelativeLayout>
+			<!-- 装修一平米送一平米布局 end -->
+			<ImageView
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:background="#F7F7F7" />
+
+			<LinearLayout
+				android:id="@+id/ll_image_laylout"
+				android:layout_width="match_parent"
+				android:layout_height="40dp"
+				android:visibility="gone"
+				android:orientation="horizontal">
+
+				<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:layout_weight="1" >
+					<ImageView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_centerInParent="true"
+						android:contentDescription="@string/descr_image"
+						android:background="@drawable/tem05" />
+				</RelativeLayout>
+
+				<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:layout_weight="1" >
+					<ImageView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_centerInParent="true"
+						android:contentDescription="@string/descr_image"
+						android:background="@drawable/tem05" />
+				</RelativeLayout>
+				<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:layout_weight="1" >
+					<ImageView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_centerInParent="true"
+						android:contentDescription="@string/descr_image"
+						android:background="@drawable/tem05" />
+				</RelativeLayout>
+				<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:layout_weight="1" >
+					<ImageView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_centerInParent="true"
+						android:contentDescription="@string/descr_image"
+						android:background="@drawable/tem05" />
+				</RelativeLayout>
+
+				<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:layout_weight="1" >
+					<ImageView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_centerInParent="true"
+						android:contentDescription="@string/descr_image"
+						android:background="@drawable/tem05" />
+				</RelativeLayout>
+			</LinearLayout>
+
+
+			<ImageView
+				android:layout_width="match_parent"
+				android:layout_height="10dp"
+				android:background="#F7F7F7" />
+
+			<!-- 设计图册 start -->
+			<LinearLayout
+				android:id="@+id/ll_company_detail_design_chart"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:visibility="visible" >
+
+
+				<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="40dp"
+						android:layout_marginLeft="15dp"
+						android:gravity="center_vertical"
+						android:text="设计案例" />
+
+					<TextView
+						android:id="@+id/tv_design_chart_count"
+						android:layout_width="wrap_content"
+						android:layout_height="40dp"
+						android:layout_alignParentRight="true"
+						android:layout_marginRight="15dp"
+						android:gravity="center_vertical"
+						android:text="共13套 >"
+						android:textColor="@color/color_icon" />
+				</RelativeLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="162dp"
+					android:layout_margin="10dp"
+					android:orientation="horizontal" >
+
+					<ImageView
+						android:id="@+id/iv_design_chart1"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:scaleType="centerCrop" />
+
+					<ImageView
+						android:id="@+id/iv_design_chart2"
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_marginLeft="10dp"
+						android:visibility="gone"
+						android:layout_weight="1"
+						android:scaleType="fitXY" />
+
+					<ImageView
+						android:id="@+id/iv_design_chart3"
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_marginLeft="10dp"
+						android:visibility="gone"
+						android:layout_weight="1"
+						android:scaleType="fitXY" />
+				</LinearLayout>
+			</LinearLayout>
+			<!-- 设计图册 end -->
+
+
+			<!-- 公司介绍 布局 start -->
+			<include
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				layout="@layout/dividing_line" />
+
+			<!-- 公司信息布局 start -->
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical" >
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical" >
+
+					<TextView
+						android:id="@+id/decorate_detail_title"
+						android:layout_width="match_parent"
+						android:layout_height="40dp"
+						android:layout_marginLeft="15dp"
+						android:gravity="center_vertical"
+						android:text="@string/decorate_detail_title" />
+
+					<ImageView
+						android:layout_width="match_parent"
+						android:layout_height="1dp"
+						android:layout_marginLeft="15dp"
+						android:background="@color/dividing_line_bg" />
+
+					<TextView
+						android:id="@+id/decorate_detail_introduce"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginBottom="5dp"
+						android:layout_marginLeft="10dp"
+						android:layout_marginTop="5dp"
+						android:ellipsize="end"
+						android:lineSpacingExtra="4dp"
+						android:lineSpacingMultiplier="1.2"
+						android:lines="3"
+						android:text="华浔品味装饰成立于1998年，是一家集设计、施工、服务于一体的装饰公司，专业从事家居、
+写字专业从事家居、写字专业从事家居、写字专业"
+						android:textColor="@color/color_neutralgrey"
+						android:textSize="12sp"
+						android:typeface="serif" />
+					<!-- 显示三张图 start -->
+
+					<LinearLayout
+						android:id="@+id/ll_company_image"
+						android:layout_width="match_parent"
+						android:layout_height="70dp"
+						android:layout_margin="10dp"
+						android:orientation="horizontal"
+						android:visibility="gone" >
+
+						<ImageView
+							android:id="@+id/iv_company_image1"
+							android:layout_width="0dp"
+							android:layout_height="match_parent"
+							android:layout_weight="1"
+							android:scaleType="fitXY" />
+
+						<ImageView
+							android:id="@+id/iv_company_image2"
+							android:layout_width="0dp"
+							android:layout_height="match_parent"
+							android:layout_marginLeft="10dp"
+							android:layout_weight="1"
+							android:scaleType="fitXY" />
+
+						<RelativeLayout
+							android:layout_width="0dp"
+							android:layout_height="match_parent"
+							android:layout_marginLeft="10dp"
+							android:layout_weight="1" >
+
+							<ImageView
+								android:id="@+id/iv_company_image3"
+								android:layout_width="match_parent"
+								android:layout_height="match_parent"
+								android:scaleType="fitXY" />
+
+							<TextView
+								android:id="@+id/tv_company_image_count"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_alignParentBottom="true"
+								android:layout_alignParentRight="true"
+								android:background="@color/color_darkgray"
+								android:paddingBottom="2dp"
+								android:paddingLeft="5dp"
+								android:paddingRight="5dp"
+								android:paddingTop="2dp"
+								android:text="共12张"
+								android:textColor="#fff"
+								android:textSize="14sp" />
+						</RelativeLayout>
+						<!-- 显示三张图  end -->
+					</LinearLayout>
+
+
+					<!-- 公司地址信息布局 start -->
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="40dp"
+						android:layout_gravity="center"
+						android:layout_marginTop="5dp" >
+
+						<ImageView
+							android:id="@+id/decorate_detail_location"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_gravity="center_vertical"
+							android:contentDescription="@string/descr_image"
+							android:padding="10dp"
+							android:background="@drawable/location" />
+
+						<TextView
+							android:id="@+id/decorate_detail_address"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:gravity="center_vertical"
+							android:text="深圳市福田区XXXXXX路XXXX大厦XXXX楼XXXX房"
+							android:textColor="@color/color_neutralgrey"
+							android:textSize="12sp" />
+					</LinearLayout>
+					<!-- 公司地址信息布局 end -->
+
+					<ImageView
+						android:layout_width="match_parent"
+						android:layout_height="1dp"
+						android:background="@color/dividing_line_bg" />
+
+					<!-- 电话联系信息布局 start -->
+
+					<RelativeLayout
+						android:id="@+id/decorate_detail_phonelayout"
+						android:layout_width="match_parent"
+						android:layout_height="40dp" >
+
+						<ImageView
+							android:id="@+id/decorate_detail_phone"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_centerVertical="true"
+							android:contentDescription="@string/descr_image"
+							android:padding="10dp"
+							android:background="@drawable/decorate_detail_phone" />
+
+						<TextView
+							android:id="@+id/decorate_detail_phonenum"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_centerVertical="true"
+							android:layout_toRightOf="@+id/decorate_detail_phone"
+							android:text="400-606-2221" />
+
+						<ImageView
+							android:id="@+id/decorate_detail_right"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_alignParentRight="true"
+							android:layout_centerVertical="true"
+							android:layout_marginRight="14dp"
+							android:contentDescription="@string/descr_image"
+							android:background="@drawable/right" />
+					</RelativeLayout>
+					<!-- 电话联系信息布局 end -->
+
+					<ImageView
+						android:layout_width="match_parent"
+						android:layout_height="1dp"
+						android:background="@color/dividing_line_bg" />
+
+				</LinearLayout>
+				<!-- 公司介绍 布局 end -->
+
+				<include
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					layout="@layout/dividing_line"
+					android:visibility="gone" />
+
+				<include
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					layout="@layout/dividing_line" />
+				<!-- 业主评价 布局 start -->
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:visibility="gone" >
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="40dp"
+						android:layout_marginLeft="15dp"
+						android:gravity="center_vertical"
+						android:text="业 主评价(12)" />
+
+					<ImageView
+						android:layout_width="match_parent"
+						android:layout_height="1dp"
+						android:layout_marginLeft="15dp"
+						android:background="@color/dividing_line_bg" />
+
+					<ListView
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content" >
+					</ListView>
+				</LinearLayout>
+				<!-- 业主评价 布局 end -->
+
+				<!-- 服务项目 start -->
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:layout_marginBottom="10dp">
+
+					<TextView
+						android:id="@+id/textView1"
+						android:layout_width="wrap_content"
+						android:layout_height="40dp"
+						android:layout_marginLeft="15dp"
+						android:gravity="center_vertical"
+						android:text="@string/decorate_detail_project" />
+
+					<ImageView
+						android:layout_width="match_parent"
+						android:layout_height="1dp"
+						android:layout_marginBottom="3dip"
+						android:layout_marginLeft="15dp"
+						android:background="@color/dividing_line_bg" />
+
+					<!-- 家居装修 start -->
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginBottom="5dp"
+						android:gravity="center"
+						android:orientation="horizontal" >
+
+						<TextView
+							android:id="@+id/textView2"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_gravity="center_vertical"
+							android:layout_marginLeft="15dp"
+							android:paddingRight="10dp"
+							android:text="@string/decorate_detail_family"
+							android:textSize="12sp" />
+
+						<com.tbs.tobosutype.customview.CustomGridView
+							android:id="@+id/decorate_detail_gridView_family"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:clipToPadding="true"
+							android:horizontalSpacing="2dip"
+							android:numColumns="5"
+							android:verticalSpacing="2dip" >
+						</com.tbs.tobosutype.customview.CustomGridView>
+
+						<TextView
+							android:id="@+id/decorate_detail_family_empty"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:gravity="center"
+							android:text="暂无家装服务项目"
+							android:textColor="@color/color_lightgray"
+							android:textSize="12sp" />
+					</LinearLayout>
+					<!-- 家居装修 end -->
+
+
+					<!-- 工厂装修 start -->
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginBottom="10dp"
+						android:gravity="center"
+						android:orientation="horizontal" >
+
+						<TextView
+							android:id="@+id/textView3"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_gravity="center_vertical"
+							android:layout_marginLeft="15dp"
+							android:paddingRight="10dp"
+							android:text="@string/decorate_detail_factory"
+							android:textSize="12sp" />
+
+						<com.tbs.tobosutype.customview.CustomGridView
+							android:id="@+id/decorate_detail_gridView_factory"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:clipToPadding="true"
+							android:horizontalSpacing="2dp"
+							android:numColumns="5"
+							android:verticalSpacing="2dp" >
+						</com.tbs.tobosutype.customview.CustomGridView>
+
+						<TextView
+							android:id="@+id/decorate_detail_factory_empty"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:gravity="center"
+							android:text="暂无工装服务项目"
+							android:textColor="@color/color_lightgray"
+							android:textSize="12sp" />
+					</LinearLayout>
+					<!-- 工厂装修 end -->
+
+					<include
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						layout="@layout/dividing_line" />
+
+					<!-- 土拨鼠认证服务布局 start -->
+
+					<include
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						layout="@layout/layout_certification_services" />
+					<!-- 土拨鼠认证服务布局 end -->
+				</LinearLayout>
+				<!-- 服务项目 end -->
+			</LinearLayout>
+			<!-- 公司信息布局 end -->
+		</LinearLayout>
+	</com.tbs.tobosutype.customview.ScrollViewExtend>
+
+	<!-- 底部 联系方式 start -->
+
+	<RelativeLayout
+		android:id="@+id/decorate_detail_bottom"
+		android:layout_width="match_parent"
+		android:layout_height="50dp"
+		android:background="@color/white"
+		android:layout_alignParentBottom="true"
+		android:visibility="gone" >
+
+		<ImageView
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/dividing_line_bg" />
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:gravity="center_vertical"
+			android:orientation="horizontal" >
+
+			<TextView
+				android:id="@+id/decorate_detail_cellphone"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:clickable="true"
+				android:drawableTop="@drawable/decorate_tel"
+				android:gravity="center"
+				android:text="电话"
+				android:textColor="@color/color_neutralgrey" />
+
+			<TextView
+				android:id="@+id/tv_qq"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:clickable="true"
+				android:drawableTop="@drawable/decorate_qq"
+				android:gravity="center"
+				android:text="QQ"
+				android:textColor="@color/color_neutralgrey"
+				android:visibility="visible" />
+
+			<ImageView
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1" />
+
+			<TextView
+				android:id="@+id/decorate_detail_freeyuyue"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="20dp"
+				android:layout_weight="3"
+				android:background="@drawable/textview_bg_yuyue"
+				android:clickable="true"
+				android:gravity="center"
+				android:padding="10dp"
+				android:text="@string/decorate_detail_design_freeyuyue"
+				android:textColor="@color/white"
+				android:textSize="14sp" />
+		</LinearLayout>
+	</RelativeLayout>
+
+
+	<!-- 底部 联系方式 end -->
+	<include
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		layout="@layout/layout_loading_data"/>
+
+
+
+</RelativeLayout>

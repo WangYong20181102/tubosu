@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <!-- 第一个大图 -->
+    <ImageView
+        android:id="@+id/iv_yuyue_findv_decorate_acitivty"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/descr_image"
+        android:scaleType="fitXY"
+        android:src="@drawable/img_guide_order" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/line"
+        android:contentDescription="@string/descr_image" />
+
+    <!-- 实体认证 装修保 用券抵现 start -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/ll_business_license"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/image_business_license" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="实体认证"
+                android:textColor="@color/color_darkgray"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_image_bao"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/image_bao" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="装修保"
+                android:textColor="@color/color_darkgray"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_images_vouchers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/images_vouchers" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="用券抵现"
+                android:textColor="@color/color_darkgray"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- 实体认证 装修保 用券抵现 end -->
+    
+	
+    <!-- 实体认证 装修保 用券抵现 下面的 广告位 -->
+    <ImageView
+        android:id="@+id/iv_advertising_banner_decoration"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/decoration_services"
+        android:scaleType="fitXY"
+        android:visibility="gone" />
+
+    <!-- 推荐品牌布局 start -->
+    <LinearLayout
+        android:id="@+id/LL_recommand_basic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/dividing_line" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"
+            android:gravity="center_vertical"
+            android:text="推荐品牌"
+            android:textColor="@color/color_darkgray" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dip"
+            android:background="@color/dividing_line_bg" />
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/layout_decorateclass_brand_custom_gridview" />
+
+        <ImageView
+		    android:layout_width="match_parent"
+		    android:layout_height="10dp"
+		    android:layout_marginTop="10dip"
+		    android:background="@color/bg_gray" />
+
+    </LinearLayout>
+    <!-- 推荐品牌布局 end -->
+	
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/headview_decorate_company_items" />
+
+</LinearLayout>

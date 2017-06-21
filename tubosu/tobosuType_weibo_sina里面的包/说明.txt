@@ -1,0 +1,1 @@
+sina文件夹 原来应该放在路径： E:\tempfile\code\MyApplication2\tobosuType\src\com下

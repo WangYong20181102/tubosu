@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/img_new_bg"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.tbs.tobosutype.activity.ImageNewActivity">
+
+    <include
+        android:id="@+id/imgNewLoading"
+        layout="@layout/layout_loading_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include
+        android:id="@+id/imgNetout"
+        layout="@layout/layout_net_out_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/imgNewReLL"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/bg_fd_title">
+
+        <ImageView
+            android:id="@+id/imgNewHuxing_jt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imgNewHuxing"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/imgNewHuxing"
+            android:layout_marginLeft="11dp"
+            android:layout_marginStart="11dp"
+            android:src="@drawable/newimg_jt"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/imgNewHuxing"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="68dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="户型"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/imgNewFengge_jt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/newimg_jt"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/imgNewFengge"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@+id/imgNewHuxing"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="风格"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/imgNewMianji_jt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imgNewMianji"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/imgNewMianji"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/newimg_jt"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/imgNewMianji"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@+id/imgNewFengge"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="68dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="面积"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/imgNewSwipLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/imgNewRecycleView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

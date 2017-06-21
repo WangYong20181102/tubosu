@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_icon" >
+
+        <ImageView
+            android:id="@+id/allorder_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:src="@drawable/back_up" />
+
+        <TextView
+            android:id="@+id/allorder_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/allorder_title"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/allorder_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/allorder_title"
+            android:background="@drawable/first_down" />
+    </RelativeLayout>
+    
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+	    <com.tbs.tobosutype.xlistview.XListView
+	        android:id="@+id/allorder_listview"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:background="@color/white"
+	        android:divider="@color/white" >
+	    </com.tbs.tobosutype.xlistview.XListView>
+	    
+	    <!-- 加载更多时出现圆形进度条 -->
+	    <include
+	        android:id="@+id/amin_allorder_loading"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        layout="@layout/layout_loading_data" />
+	
+	    <ImageView
+	        android:id="@+id/iv_empty_orderdata"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        android:layout_centerInParent="true"
+	        android:visibility="gone"
+	        android:background="@drawable/img_nocontent" />
+    </RelativeLayout>
+    
+    
+</LinearLayout>

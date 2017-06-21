@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAB250"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_choose_style_top" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="30dip"
+        android:background="#FFFFFF" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <RelativeLayout
+                android:id="@+id/rel_farm_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/iv_farm_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/decorate_style_01" />
+
+                <TextView
+                    android:id="@+id/tv_farm_style"
+                    style="@style/chooseHouseStyleTextStyle"
+                    android:layout_below="@+id/iv_farm_style"
+                    android:text="田园" />
+                <ImageView
+                    android:id="@+id/iv_farm_style_ok"
+                    android:layout_width="23dip"
+                    android:layout_height="23dip"
+                    android:layout_marginRight="15dip"
+                    android:layout_marginTop="15dip"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rel_modern_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/iv_modern_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/decorate_style_02" />
+
+                <TextView
+                    android:id="@+id/tv_modern_style"
+                    style="@style/chooseHouseStyleTextStyle"
+                    android:layout_below="@+id/iv_modern_style"
+                    android:text="现代" />
+                <ImageView
+                    android:id="@+id/iv_modern_style_ok"
+                    android:layout_width="23dip"
+                    android:layout_height="23dip"
+                    android:layout_marginRight="15dip"
+                    android:layout_marginTop="15dip"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rel_med_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/iv_med_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/decorate_style_03" />
+
+                <TextView
+                    android:id="@+id/tv_med_style"
+                    style="@style/chooseHouseStyleTextStyle"
+                    android:layout_below="@+id/iv_med_style"
+                    android:text="地中海" />
+                <ImageView
+                    android:id="@+id/iv_med_style_ok"
+                    android:layout_width="23dip"
+                    android:layout_height="23dip"
+                    android:layout_marginRight="15dip"
+                    android:layout_marginTop="15dip"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="40dip"
+            android:orientation="horizontal" >
+
+            <RelativeLayout
+                android:id="@+id/rel_chinese_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/iv_chinese_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/decorate_style_04" />
+
+                <TextView
+                    android:id="@+id/tv_chinese_style"
+                    style="@style/chooseHouseStyleTextStyle"
+                    android:layout_below="@+id/iv_chinese_style"
+                    android:text="中式" />
+                <ImageView
+                    android:id="@+id/iv_chinese_style_ok"
+                    android:layout_width="23dip"
+                    android:layout_height="23dip"
+                    android:layout_marginRight="15dip"
+                    android:layout_marginTop="15dip"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rel_usa_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/iv_usa_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/decorate_style_05" />
+
+                <TextView
+                    android:id="@+id/tv_usa_style"
+                    style="@style/chooseHouseStyleTextStyle"
+                    android:layout_below="@+id/iv_usa_style"
+                    android:text="美式" />
+                <ImageView
+                    android:id="@+id/iv_usa_style_ok"
+                    android:layout_width="23dip"
+                    android:layout_height="23dip"
+                    android:layout_marginRight="15dip"
+                    android:layout_marginTop="15dip"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rel_europ_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <ImageView
+                    android:id="@+id/iv_europ_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/decorate_style_06" />
+
+                <TextView
+                    android:id="@+id/tv_europ_style"
+                    style="@style/chooseHouseStyleTextStyle"
+                    android:layout_below="@+id/iv_europ_style"
+                    android:text="欧式" />
+                <ImageView
+                    android:id="@+id/iv_europ_style_ok"
+                    android:layout_width="23dip"
+                    android:layout_height="23dip"
+                    android:layout_marginRight="15dip"
+                    android:layout_marginTop="15dip"
+                    android:layout_alignParentRight="true" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
