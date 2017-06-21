@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#FFFFFF"
+    android:layout_height="82dp">
+
+    <com.tobosu.mydecorate.view.RoundImageView
+        android:id="@+id/riv_my_writer"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/riv_my_writer"
+        android:layout_marginLeft="26dp" >
+
+        <TextView
+            android:id="@+id/tv_my_writer_tile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#080E1A"
+            android:layout_marginTop="7dp"
+            android:text="花好月圆"
+            android:textSize="16sp"/>
+
+        <ImageView
+            android:id="@+id/is_read"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_toRightOf="@+id/tv_my_writer_tile"
+            android:layout_alignTop="@+id/tv_my_writer_tile"
+            android:background="@mipmap/new_version"/>
+
+        <TextView
+            android:id="@+id/tv_my_writer_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_my_writer_tile"
+            android:textColor="#8A8F99"
+            android:layout_marginTop="5dp"
+            android:text="16篇文章"
+            android:textSize="12sp"/>
+        <TextView
+            android:id="@+id/tv_my_writer_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_my_writer_num"
+            android:textColor="#8A8F99"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:text="9"
+            android:textSize="10sp"/>
+        <TextView
+            android:id="@+id/tv_my_writer_time_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_my_writer_time"
+            android:layout_below="@+id/tv_my_writer_num"
+            android:textColor="#8A8F99"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:text="小时"
+            android:textSize="10sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_my_writer_time_unit"
+            android:layout_below="@+id/tv_my_writer_num"
+            android:textColor="#8A8F99"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:text="更新"
+            android:textSize="10sp"/>
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F0F0F0"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

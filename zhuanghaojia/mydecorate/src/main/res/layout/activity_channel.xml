@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <RelativeLayout
+            android:id="@+id/rel_change_channel_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:background="@mipmap/activity_back"/>
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/iv_chanel_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:background="@mipmap/activity_back"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="频道管理"
+            android:textColor="#3D424C"
+            android:textSize="20sp"
+            android:layout_centerInParent="true"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_alignParentBottom="true"
+            android:background="#F2F3F5"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="58dp">
+        <TextView
+            android:id="@+id/tvch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的频道"
+            android:layout_marginLeft="6dp"
+            android:textSize="18sp"
+            android:paddingLeft="5dp"
+            android:textColor="#3D424C"
+            android:layout_centerVertical="true"
+            android:gravity="left|center_vertical"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(点击进入频道)"
+            android:layout_marginLeft="4dp"
+            android:layout_toRightOf="@+id/tvch"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:paddingLeft="5dp"
+            android:textColor="#9EA3AB"
+            android:gravity="left|center_vertical"/>
+
+        <RelativeLayout
+            android:id="@+id/rel_edit_title"
+            android:layout_width="wrap_content"
+            android:layout_height="58dp"
+            android:layout_marginRight="14dp"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:id="@+id/sdf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="4dp"
+                android:background="@mipmap/sdf"/>
+
+            <TextView
+                android:id="@+id/tv_edit_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/sdf"
+                android:text="编辑"
+                android:textSize="14sp"
+                android:textColor="#3D424C"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <com.tobosu.mydecorate.view.DragGrid
+        android:id="@+id/userGridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dip"
+        android:layout_marginRight="14dip"
+        android:gravity="center"
+        android:horizontalSpacing="14dip"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="4"
+        android:scrollbars="vertical"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="14.0px" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="58dp">
+        <TextView
+            android:id="@+id/more_category_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="删除的频道"
+            android:layout_marginLeft="6dp"
+            android:textSize="18sp"
+            android:paddingLeft="5dp"
+            android:textColor="#3D424C"
+            android:layout_centerVertical="true"
+            android:gravity="left|center_vertical"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(点击添加)"
+            android:layout_marginLeft="4dp"
+            android:layout_toRightOf="@+id/more_category_text"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:paddingLeft="5dp"
+            android:textColor="#9EA3AB"
+            android:gravity="left|center_vertical"/>
+    </RelativeLayout>
+
+    <com.tobosu.mydecorate.view.OtherGridView
+        android:id="@+id/otherGridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dip"
+        android:layout_marginRight="14dip"
+        android:gravity="center"
+        android:horizontalSpacing="14dip"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="4"
+        android:scrollbars="vertical"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="14.0px" />
+
+
+    <include
+        android:id="@+id/category_layout"
+        layout="@layout/channel_item"
+        android:visibility="gone" />
+
+
+
+    <com.tobosu.mydecorate.view.DragGridView
+        android:id="@+id/drv_chanel"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:listSelector="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        android:verticalSpacing="10dip"
+        android:horizontalSpacing="10dip"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:numColumns="3" >
+    </com.tobosu.mydecorate.view.DragGridView>
+
+</LinearLayout>

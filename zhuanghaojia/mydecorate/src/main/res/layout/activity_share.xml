@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/image_detail_share_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="分享到"
+            android:textColor="@color/color_neutralgrey"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/image_detail_share_weixin_circle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:drawableTop="@drawable/share_weixin_circle"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:text="朋友圈"
+                android:textColor="@color/color_neutralgrey"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/image_detail_share_weixin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:drawableTop="@drawable/share_weixin"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:text="微信好友"
+                android:textColor="@color/color_neutralgrey"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/image_detail_share_sina"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:drawableTop="@drawable/share_sina"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:text="新浪微博"
+                android:textColor="@color/color_neutralgrey"
+                android:textSize="11sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/image_detail_share_qq"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:drawableTop="@drawable/share_qq"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:text="QQ"
+                android:textColor="@color/color_neutralgrey"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/image_detail_share_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/share_cancel_bg"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="取消"
+            android:textColor="@color/color_neutralgrey"
+            android:textSize="16sp" />
+    </LinearLayout>
+</RelativeLayout>
