@@ -39,3 +39,4 @@ Thumbs.db
 
 #NDK
 obj/
+/AppTest/local.properties
