@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <RelativeLayout
+            android:id="@+id/rel_username_login_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:background="@mipmap/activity_back"/>
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="土拨鼠账号登录"
+            android:textColor="#3D424C"
+            android:textSize="20sp"
+            android:layout_centerInParent="true"
+            android:gravity="center"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_alignParentBottom="true"
+            android:background="#D4DCEF"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dip"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_alignParentTop="true" >
+        <ImageView
+            android:id="@+id/iv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/icon_user"/>
+        <EditText
+            android:id="@+id/et_user_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/iv_username"
+            android:layout_centerVertical="true"
+            android:textSize="14sp"
+            android:background="@null"
+            android:paddingLeft="3dip"
+            android:inputType="text"
+            android:textColorHint="#B9B9B9"
+            android:hint="请输入你的用户名或手机号"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#ECECEC"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dip"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:layout_alignParentTop="true" >
+        <ImageView
+            android:id="@+id/iv_passw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/icon_password"/>
+        <EditText
+            android:id="@+id/et_useraccount_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/iv_passw"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:textSize="14sp"
+            android:paddingLeft="3dip"
+            android:inputType="textPassword"
+            android:textColorHint="#B9B9B9"
+            android:hint="请输入密码" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#ECECEC"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_user_login"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:text="登 录"
+        android:background="@drawable/shape_bg_button_login"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"/>
+
+</LinearLayout>

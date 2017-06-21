@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RoundAngleImageView">
+        <attr name="roundWidth" format="dimension" />
+        <attr name="roundHeight" format="dimension" />
+    </declare-styleable>
+
+    <attr name="item_count" format="integer"></attr>
+
+    <declare-styleable name="ViewPagerIndicator">
+        <attr name="item_count" />
+    </declare-styleable>
+    <declare-styleable name="round_image_view">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_incolor" format="color" />
+        <attr name="border_outcolor" format="color"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="XEditText">
+        <attr name="x_separator" format="string"/>
+        <attr name="x_customizeMarkerEnable" format="boolean"/>
+        <attr name="x_showMarkerTime">
+            <enum name="after_input" value="0"/>
+            <enum name="before_input" value="1"/>
+            <enum name="always" value="2"/>
+        </attr>
+        <attr name="x_iOSStyleEnable" format="boolean"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="SeekBar">
+        <attr name="tickCount" format="integer" />
+        <attr name="tickHeight" format="dimension" />
+        <attr name="barWeight" format="dimension" />
+        <attr name="barColor" format="reference|color" />
+        <attr name="connectingLineWeight" format="dimension" />
+        <attr name="connectingLineColor" format="reference|color" />
+        <attr name="thumbRadius" format="dimension" />
+        <attr name="thumbImageNormal" format="reference" />
+        <attr name="thumbImagePressed" format="reference" />
+        <attr name="thumbColorNormal" format="reference|color"/>
+        <attr name="thumbColorPressed" format="reference|color"/>
+    </declare-styleable>
+
+
+</resources>
