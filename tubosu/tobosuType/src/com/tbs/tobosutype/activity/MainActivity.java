@@ -130,7 +130,9 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 		AppInfoUtil.setActivityTheme(MainActivity.this);
+//		AppInfoUtil.setActivityTheme(this, R.color.whole_color_theme);
         setContentView(R.layout.activity_main);
 //        AppInfoUtil.setTranslucentStatus(this);
         mContext = MainActivity.this;

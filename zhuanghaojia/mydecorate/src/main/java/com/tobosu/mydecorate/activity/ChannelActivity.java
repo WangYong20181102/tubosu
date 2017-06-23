@@ -77,6 +77,7 @@ public class ChannelActivity extends Activity implements AdapterView.OnItemClick
 
     private boolean isLastOne = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
