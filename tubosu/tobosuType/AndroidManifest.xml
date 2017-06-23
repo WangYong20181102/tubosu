@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tbs.tobosutype"
-    android:versionCode="18"
-    android:versionName="3.0">
+    android:versionCode="19"
+    android:versionName="3.1">
     <uses-sdk
-        android:minSdkVersion="11"
-        android:targetSdkVersion="21" />
+        android:minSdkVersion="19"
+        android:targetSdkVersion="25" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -153,6 +153,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.MyActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.MyCompanyActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="singleTask"
@@ -180,6 +184,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FreeActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".activity.GetPriceActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
@@ -303,6 +312,23 @@
             android:name=".activity.ImageDetailNewActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.DecorateAccountActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.KeepAccountActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.EditAccountAcitivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+
+
+
 
         <!-- 友盟帐号 -->
         <meta-data

@@ -28,6 +28,11 @@ import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * 智能报价 页面
+ * author: L
+ */
+
 public class FreeDesign extends Activity {
     private Context mContext;
     private String TAG = "FreeDesign";

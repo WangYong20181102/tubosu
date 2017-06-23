@@ -53,7 +53,6 @@ import java.util.Map;
  */
 public class LoginFragmentAccount extends Fragment implements OnClickListener {
     private static final String TAG = LoginFragmentAccount.class.getSimpleName();
-    private ImageView ivBack;
 
     /**
      * 账号
@@ -65,10 +64,6 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
      */
     private EditText et_login_useraccount_password;
 
-    /**
-     * 找回密码
-     */
-    private TextView tv_find_password;
 
     /**
      * 账户登录
@@ -110,10 +105,6 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
 	
 	/*-------------微信登陆相关------------*/
 
-    /**
-     * 跳转到手机登录
-     */
-    private RelativeLayout rel_jump_phone_login;
 
 
     @Override
@@ -125,45 +116,18 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
 
 
     private void initView(View view) {
-        ivBack = (ImageView) view.findViewById(R.id.login_account_back);
-        ivBack.setOnClickListener(this);
         et_login_useraccount = (EditText) view.findViewById(R.id.et_login_useraccount);
         et_login_useraccount_password = (EditText) view.findViewById(R.id.et_login_useraccount_password);
-        tv_find_password = (TextView) view.findViewById(R.id.tv_find_password);
-        tv_find_password.setOnClickListener(this);
         tv_accountlogin = (TextView) view.findViewById(R.id.tv_accountlogin);
         tv_accountlogin.setOnClickListener(this);
         ll_obtain_weixin_login_account = (LinearLayout) view.findViewById(R.id.ll_obtain_weixin_login_account);
         ll_obtain_weixin_login_account.setOnClickListener(this);
-        rel_jump_phone_login = (RelativeLayout) view.findViewById(R.id.rel_jump_phone_login);
-        rel_jump_phone_login.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.login_account_back:
-                if (LoginActivity.fromTab == -2) {
-                    // 不是来自MainActivity的一级菜单的时候
-                    getActivity().finish();
-//					Util.setLog("LoginActivity", "===========back======= fromTab = -2 =================");
-                    Log.e("LoginActivity", "===========accountback======= fromTab = -2 =================");
-                } else {
-//					Util.setLog("LoginActivity", "===========back======= fromTab != -2 =================");
-                    Log.e("LoginActivity", "===========accountback======= fromTab != -2 =================");
-                    Intent it = new Intent();
-                    Bundle b = new Bundle();
-                    b.putInt("back", LoginActivity.fromTab);
-                    it.putExtra("backBundle", b);
-                    getActivity().setResult(0x000018, it);
-                    getActivity().finish();
-                    getActivity().overridePendingTransition(R.anim.activity_close, 0);
-                }
-                break;
-            case R.id.tv_find_password: // 找回密码
-                startActivity(new Intent(getActivity(), FindPwdActivity1.class));
-                break;
             case R.id.tv_accountlogin: // 登录
                 userLogin();
                 hideEdittext();
@@ -171,10 +135,6 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
             case R.id.ll_obtain_weixin_login_account: // 微信登录
                 loginWeixin();
                 hideEdittext();
-                break;
-            case R.id.rel_jump_phone_login: // 跳转手机快速登录
-                Intent i = new Intent(LoginActivity.POSITION_SWITCH_ACTION_PHONE);
-                getActivity().sendBroadcast(i);
                 break;
             default:
                 break;
@@ -415,9 +375,9 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
                 AppInfoUtil.ISJUSTLOGIN = true;
                 getActivity().startActivity(intent);
 
-                Intent i = new Intent();
-                i.setAction(AllConstants.LOGIN_ACTION);
-                getActivity().sendBroadcast(i);
+//                Intent i = new Intent();
+//                i.setAction(AllConstants.LOGIN_ACTION);
+//                getActivity().sendBroadcast(i);
 
 
                 getActivity().finish();

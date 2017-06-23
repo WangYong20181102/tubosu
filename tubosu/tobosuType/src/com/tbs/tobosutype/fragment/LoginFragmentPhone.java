@@ -62,8 +62,6 @@ import java.util.regex.Pattern;
  */
 public class LoginFragmentPhone extends Fragment implements OnClickListener, OnKeyListener {
     private static final String TAG = LoginFragmentPhone.class.getSimpleName();
-    private ImageView ivBack;
-
     /**
      * 本页页面
      */
@@ -96,9 +94,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
      */
     private LinearLayout ll_obtain_weixin_login2;
 
-    private TextView tv_loginfromhere;
 
-    private RelativeLayout rel_has_account;
 
     /*-------------手机登录相关------------*/
     private RequestParams fastLoginParams;
@@ -145,8 +141,6 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
     }
 
     private void initView(View view) {
-        ivBack = (ImageView) view.findViewById(R.id.login_phone_back);
-        ivBack.setOnClickListener(this);
         et_login_userphone = (EditText) view.findViewById(R.id.et_login_userphone);
         et_login_userphone_verify_code = (EditText) view.findViewById(R.id.et_login_userphone_verify_code);
         tv_get_verifycode = (TextView) view.findViewById(R.id.tv_get_verifycode);
@@ -155,10 +149,6 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
         tv_phonelogin.setOnClickListener(this);
         ll_obtain_weixin_login2 = (LinearLayout) view.findViewById(R.id.ll_obtain_weixin_login2);
         ll_obtain_weixin_login2.setOnClickListener(this);
-        tv_loginfromhere = (TextView) view.findViewById(R.id.tv_loginfromhere);
-        tv_loginfromhere.setText(Html.fromHtml("<u>" + "在此登录" + "</u>"));
-        rel_has_account = (RelativeLayout) view.findViewById(R.id.rel_has_account);
-        rel_has_account.setOnClickListener(this);
     }
 
     @Override
@@ -178,25 +168,6 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.login_phone_back:
-                if (LoginActivity.fromTab == -2) {
-                    // 不是来自MainActivity的一级菜单的时候
-                    getActivity().finish();
-//					Util.setLog("LoginActivity", "===========back======= fromTab = -2 =================");
-                    Log.e("LoginActivity", "===========phoneback======= fromTab = -2 =================");
-                } else {
-                    Util.setLog("LoginActivity", "===========back======= fromTab != -2 =================");
-                    Log.e("LoginActivity", "===========phoneback======= fromTab != -2 =================");
-                    Intent it = new Intent();
-                    Bundle b = new Bundle();
-                    b.putInt("back", LoginActivity.fromTab);
-                    it.putExtra("backBundle", b);
-                    getActivity().setResult(0x000018, it);
-                    getActivity().finish();
-                    getActivity().overridePendingTransition(R.anim.activity_close, 0);
-
-                }
-                break;
             case R.id.tv_get_verifycode: // 验证码
                 getVerificationCode();
                 break;
@@ -209,8 +180,6 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
 //			hideEdittext();
                 break;
             case R.id.rel_has_account: // 去账号登录界面
-                Intent i = new Intent(LoginActivity.POSITION_SWITCH_ACTION_ACCOUNT);
-                getActivity().sendBroadcast(i);
                 break;
             default:
                 break;
@@ -240,7 +209,8 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
             fastLoginParams.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
             fastLoginParams.put("mobile", et_login_userphone.getText().toString().trim());
             fastLoginParams.put("msg_code", et_login_userphone_verify_code.getText().toString().trim());
-            fastLoginParams.put("platform_type", "1"); // 1是土拨鼠  2是账号家
+            fastLoginParams.put("platform_type", "1"); // 1是土拨鼠  2是装好家
+            fastLoginParams.put("system_type", "1"); // 1是安卓， 2是ios
             Log.e("手机登录 账号", "=====" + et_login_userphone.getText().toString().trim());
             Log.e("手机登录 验证码", "=====" + et_login_userphone_verify_code.getText().toString().trim());
             requestFastLogin();
@@ -493,9 +463,9 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
                 AppInfoUtil.ISJUSTLOGIN = true;
                 getActivity().startActivity(intent);
 
-                Intent i = new Intent();
-                i.setAction(AllConstants.LOGIN_ACTION);
-                getActivity().sendBroadcast(i);
+//                Intent i = new Intent();
+//                i.setAction(AllConstants.LOGIN_ACTION);
+//                getActivity().sendBroadcast(i);
 
 
                 getActivity().finish();

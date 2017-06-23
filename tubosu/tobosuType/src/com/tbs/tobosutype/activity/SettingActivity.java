@@ -58,7 +58,7 @@ public class SettingActivity extends Activity {
 	private RelativeLayout myset_layout_version_upgrade;
 	
 	/**客服电话布局*/
-	private TextView tv_company_service_tel;
+	private RelativeLayout rel_company_tel;
 	
 	/**土拨鼠微信布局*/
 	private RelativeLayout myset_layout_tbs_weixin;
@@ -82,6 +82,8 @@ public class SettingActivity extends Activity {
 	private boolean isPush = false;
 	
 	private ImageView iv_push_flag;
+
+	private RelativeLayout relFeedback;
 	
 	/**申请合作布局*/
 	private RelativeLayout rel_applyfor_cooperation; //FIXME 未做
@@ -128,12 +130,13 @@ public class SettingActivity extends Activity {
 		rel_clear_cache = (RelativeLayout) findViewById(R.id.rel_clear_cache);
 		tv_cache = (TextView) findViewById(R.id.tv_cache);
 		myset_layout_version_upgrade = (RelativeLayout) findViewById(R.id.myset_layout_version_upgrade);
-		tv_company_service_tel = (TextView) findViewById(R.id.tv_company_service_tel);
+		rel_company_tel = (RelativeLayout) findViewById(R.id.rel_company_tel);
 		myset_layout_tbs_weixin = (RelativeLayout) findViewById(R.id.myset_layout_tbs_weixin);
 		rel_layout_share = (RelativeLayout) findViewById(R.id.rel_layout_share);
 		rel_good_praise = (RelativeLayout) findViewById(R.id.rel_good_praise);
 		iv_push_flag =  (ImageView) findViewById(R.id.iv_push_flag);
-		
+		relFeedback = (RelativeLayout) findViewById(R.id.rel_feedback);
+
 		pushSharedPreferences = getSharedPreferences("Push_Config", MODE_PRIVATE);//将需要记录的数据保存在config.xml文件中 
 		
 		isPush = pushSharedPreferences.getBoolean("Is_Push_Message", true);
@@ -171,16 +174,22 @@ public class SettingActivity extends Activity {
 		myset_version_upgrade.setText(AppInfoUtil.getAppVersionName(context));
 		
 		
-		Intent intent = getIntent();
-		String url = intent.getStringExtra("url");
-		if (!TextUtils.isEmpty(url)) {
-			downLoadApk(url);
-		}
+//		Intent intent = getIntent();
+//		String url = intent.getStringExtra("url");
+//		if (!TextUtils.isEmpty(url)) {
+//			downLoadApk(url);
+//		}
 		
 	}
 
 	
 	private void initEvent() {
+		relFeedback.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(context, FeedbackActivity.class));
+			}
+		});
 		
 		myset_back.setOnClickListener(new OnClickListener() {
 
@@ -213,48 +222,48 @@ public class SettingActivity extends Activity {
 					Log.d("pushMSG", "点击后是" + (isPush ? "开启的":"关闭的"));
 					XGPushConfig.enableDebug(getApplicationContext(), false);// 关闭debug开关
 //					XGPushManager.unregisterPush(getApplicationContext(), new XGIOperateCallback() {
-//						
+//
 //						@Override
 //						public void onSuccess(Object obj, int i) {
-//							
+//
 //						}
-//						
+//
 //						@Override
 //						public void onFail(Object obj, int i, String s) {
-//							 Log.e(TAG, "手动注销失败, code - " + i + " message - " + obj.toString());  
+//							 Log.e(TAG, "手动注销失败, code - " + i + " message - " + obj.toString());
 //						}
 //					});
 					XGPushManager.unregisterPush(getApplicationContext());
-//					Log.d(TAG, "手动注销成功, token - " + obj.toString());  
+//					Log.d(TAG, "手动注销成功, token - " + obj.toString());
 					if(pushSharedPreferences==null){
 						pushSharedPreferences =  getSharedPreferences("Push_Config", MODE_PRIVATE);
 					}
-					Editor editor = pushSharedPreferences.edit();  
+					Editor editor = pushSharedPreferences.edit();
 					editor.putBoolean("Is_Push_Message", false);
 					editor.commit();
 					iv_push_flag.setBackgroundResource(R.drawable.icon_push_no);
-					
+
 				}else{
 					isPush = true;
 					Log.d("pushMSG", "点击后是" + (isPush ? "开启的":"关闭的"));
 					XGPushConfig.enableDebug(getApplicationContext(), true);// 打开debug开关
 					XGPushManager.registerPush(getApplicationContext(), new XGIOperateCallback() {
-			            @Override  
-			            public void onSuccess(Object o, int i) {  
-			                Log.d(TAG, "手动设置推送注册成功, token是" + o);  
+			            @Override
+			            public void onSuccess(Object o, int i) {
+			                Log.d(TAG, "手动设置推送注册成功, token是" + o);
 			                if(pushSharedPreferences==null){
 			                	pushSharedPreferences =  getSharedPreferences("Push_Config", MODE_PRIVATE);
 			                }
-			                Editor editor = pushSharedPreferences.edit();  
-			                editor.putBoolean("Is_Push_Message", true);  
+			                Editor editor = pushSharedPreferences.edit();
+			                editor.putBoolean("Is_Push_Message", true);
 			                editor.commit();
-			            }  
-			  
-			            @Override  
-			            public void onFail(Object o, int i, String s) {  
-			                Log.e(TAG, "手动设置推送注册失败, code - " + i + " 失败信息是 - " + s);  
-			            }  
-			        });  
+			            }
+
+			            @Override
+			            public void onFail(Object o, int i, String s) {
+			                Log.e(TAG, "手动设置推送注册失败, code - " + i + " 失败信息是 - " + s);
+			            }
+			        });
 					iv_push_flag.setBackgroundResource(R.drawable.icon_push_yes);
 				}
 			}
@@ -301,8 +310,8 @@ public class SettingActivity extends Activity {
 				new ShareUtil(context, rel_layout_share, "土拨鼠装修网！", "土拨鼠装修网！", "http://www.tobosu.com/");
 			}
 		});
-		
-		tv_company_service_tel.setOnClickListener(new OnClickListener() {
+
+		rel_company_tel.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {

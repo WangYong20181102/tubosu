@@ -106,12 +106,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
      */
     private ImageView home_top_logo;
 
-    private MainActivity mainActivity;
 
-    /**
-     * 首页反馈
-     */
-    private TextView tv_home_feedback;
+    private ImageView ivHomePop;
 
     /**
      * 精选图片
@@ -259,22 +255,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
      */
     private SharedPreferences saveCitySharePre;
 
-    /**
-     * 底部获取免费设计布局
-     */
-    private RelativeLayout rel_getdesign_pic;
 
-    /**
-     * 再次在首页底部无视获取免费设计按钮  左边的 x 图标
-     */
-    private ImageView iv_get_design_pic_cancel;
-
-    /**
-     * 悬浮按钮 获取免费设计按钮
-     */
-    private ImageView iv_free_toggle;
-
-    private FrameLayout framlayout_toggle;
 
     /**
      * 点这里获取4套免费设计
@@ -326,7 +307,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         headLayout = (RelativeLayout) findViewById(R.id.rl_head);
         home_city = (TextView) headLayout.findViewById(R.id.tv_home_choose_city);
         home_select_city = (ImageView) headLayout.findViewById(R.id.iv_home_select_city);
-        tv_home_feedback = (TextView) headLayout.findViewById(R.id.tv_home_feedback);
+        ivHomePop = (ImageView) headLayout.findViewById(R.id.iv_home_pop);
         home_top_logo = (ImageView) findViewById(R.id.home_top_logo);
         drawable = getResources().getDrawable(R.drawable.color_first_head);
         drawable.setAlpha(START_ALPHA);
@@ -362,13 +343,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 //		localDiscountHorizontalScrollView = (HorizontalScrollView) findViewById(R.id.local_discount_horizontalScrollView);
 
 
-        rel_getdesign_pic = (RelativeLayout) findViewById(R.id.rel_getdesign_pic);
-        iv_get_design_pic_cancel = (ImageView) findViewById(R.id.iv_get_design_pic_cancel);
-        iv_free_toggle = (ImageView) findViewById(R.id.iv_free_toggle);
-        framlayout_toggle = (FrameLayout) findViewById(R.id.framlayout_toggle);
-        framlayout_toggle.bringToFront();
-
-        initGetDesignSetting();
         initType();
     }
 
@@ -395,52 +369,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
     }
 
-    private void initGetDesignSetting() {
-        if (getSharedPreferences("Cancel_Get_Design", 0).getInt("cancel_String", 10) == 0) {
-            this.rel_getdesign_pic.setVisibility(View.GONE);
-            this.iv_free_toggle.setVisibility(View.GONE);
-            return;
-        }
-        if (getSharedPreferences("Cancel_Get_Design", 0).getInt("cancel_String", 10) == 1) {
-            this.rel_getdesign_pic.setVisibility(View.VISIBLE);
-            if (getSharedPreferences("Toggle_Icon", 0).getInt("icon_flag", 10) == 10) {
-                this.iv_get_design_pic_cancel.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View paramAnonymousView) {
-                        HomeActivity.this.rel_getdesign_pic.setVisibility(View.GONE);
-                        MobclickAgent.onEvent(HomeActivity.this, "click_receive immediately_fail");
-                        HomeActivity.this.getSharedPreferences("Toggle_Icon", MODE_PRIVATE).edit().putInt("icon_flag", 0).commit();
-                        HomeActivity.this.iv_free_toggle.setVisibility(View.VISIBLE);
-                        HomeActivity.this.iv_free_toggle.setOnClickListener(new View.OnClickListener() {
-                            public void onClick(View paramAnonymous2View) {
-                                HomeActivity.this.getSharedPreferences("From_Home_Activity", MODE_PRIVATE).edit().putInt("home_activity_int", 3).commit();
-                                HomeActivity.this.startActivity(new Intent(HomeActivity.this, PopOrderActivity.class));
-                            }
-                        });
-                    }
-                });
-                this.tv_cancel_get_design = ((TextView) findViewById(R.id.tv_cancel_get_design));
-                this.tv_cancel_get_design.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View paramAnonymousView) {
-                        HomeActivity.this.getSharedPreferences("From_Home_Activity", MODE_PRIVATE).edit().putInt("home_activity_int", 3).commit();
-                        HomeActivity.this.startActivity(new Intent(HomeActivity.this, PopOrderActivity.class));
-                    }
-                });
-                return;
-            }
-            this.rel_getdesign_pic.setVisibility(View.GONE);
-            MobclickAgent.onEvent(this, "click_receive immediately_fail");
-            getSharedPreferences("Toggle_Icon", MODE_PRIVATE).edit().putInt("icon_flag", 0).commit();
-            this.iv_free_toggle.setVisibility(View.VISIBLE);
-            this.iv_free_toggle.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View paramAnonymousView) {
-                    HomeActivity.this.getSharedPreferences("From_Home_Activity", MODE_PRIVATE).edit().putInt("home_activity_int", 3).commit();
-                    HomeActivity.this.startActivity(new Intent(HomeActivity.this, PopOrderActivity.class));
-                }
-            });
-            return;
-        }
-        Util.setLog("xxxxx", "--->>" + getSharedPreferences("Cancel_Get_Design", MODE_PRIVATE).getInt("cancel_String", 10));
-    }
 
 //	/***
 //	 * 本地优惠请求网络获取数据  2017-01-13 要求删除
@@ -607,7 +535,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         home_city.setOnClickListener(this);
         home_decorate_class_all.setOnClickListener(this);
         tv_home_project_more.setOnClickListener(this);
-        mainActivity = new MainActivity();
         scrollViewExtend.setOnScrollChangedListener(scrollChangedListener);
         mLocationClient = MyApplication.getInstance().mLocationClient;
         initLocation();
@@ -615,11 +542,11 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         mLocationClient.requestLocation();
 
 
-        tv_home_feedback.setOnClickListener(new OnClickListener() {
+        ivHomePop.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, FeedbackActivity.class);
+                Intent intent = new Intent(HomeActivity.this, PopOrderActivity.class);
                 startActivity(intent);
             }
         });
@@ -990,15 +917,14 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
                 // 计算器
                 MobclickAgent.onEvent(context, "click_index_decoration_com");
                 startActivity(new Intent(HomeActivity.this, CalculaterActivity.class));
-//			mainActivity.setTab(2);
-//			MainActivity.setChecked(2);
                 break;
             case R.id.layout_homeactivity_yuyue_decoration:
                 // 走设计与报价 走安卓发单接口
 
                 //MobclickAgent 友盟统计
                 MobclickAgent.onEvent(context, "click_index_design_quote");
-                Intent freeIntent = new Intent(context, FreeActivity.class);
+//                Intent freeIntent = new Intent(context, FreeActivity.class);
+                Intent freeIntent = new Intent(context, GetPriceActivity.class);
                 startActivity(freeIntent);
 
                 break;
@@ -1017,14 +943,11 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
                 break;
             case R.id.tv_home_choose_city:
             case R.id.iv_home_select_city:
-
-
                 Intent selectCityIntent = new Intent(context, SelectCtiyActivity.class);
                 Bundle cityBundle = new Bundle();
                 cityBundle.putString("fromHomeActivity", "101");
                 selectCityIntent.putExtra("HomeActivitySelectcityBundle", cityBundle);
                 startActivityForResult(selectCityIntent, 3);
-
 
 //                Intent selectCityIntent = new Intent(context, SelectCtiyActivity.class);
 //                selectCityIntent.putExtra("isSelectCity", true);

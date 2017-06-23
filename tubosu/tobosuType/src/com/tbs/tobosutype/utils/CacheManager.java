@@ -395,23 +395,23 @@ public class CacheManager {
 
 
 
-    private static final String FRAGMENTPREFERENCE = "fragmentpreference";
-    private static final String TABPOSTION = "tabpostion";
+    private static final String OUTCOME_PRE = "outcome_pre";
+    private static final String OUTCOME_RECORD = "outcome_record";
     /**
      *
      * @param context
-     * @param tabposition  若存入是-1则表示当前app已经退出账户，处于需要登录状态
+     * @param firstTime  若存入是1则表示当前用户已经进入过该页面
      */
-    public static void setTabPostion(Context context, int tabposition){
-        context.getSharedPreferences(FRAGMENTPREFERENCE, Context.MODE_PRIVATE).edit().putInt(TABPOSTION, tabposition).commit();
+    public static void setFirstTimeRecord(Context context, int firstTime){
+        context.getSharedPreferences(OUTCOME_PRE, Context.MODE_PRIVATE).edit().putInt(OUTCOME_RECORD, firstTime).commit();
     }
 
     /**
-     * 若存入是-1则表示当前app已经退出账户，处于需要登录状态
+     * 若存入是-1则表示当前用户从来都没有进入过该页面
      * @param context
      * @return
      */
-    public static int getTabposition(Context context){
-        return context.getSharedPreferences(FRAGMENTPREFERENCE, Context.MODE_PRIVATE).getInt(TABPOSTION, -1); // -1代表没有存入过。
+    public static int getFirstTimeRecord(Context context){
+        return context.getSharedPreferences(OUTCOME_PRE, Context.MODE_PRIVATE).getInt(OUTCOME_RECORD, -1);
     }
 }

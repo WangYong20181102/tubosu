@@ -2,31 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_backgroud" >
+    android:background="@color/white">
 
-
-    <ImageView
-        android:id="@+id/login_account_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="33dp"
-        android:background="@drawable/login_back"/>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
         android:orientation="vertical">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="100dip"
-                android:background="@drawable/login_logo_xh"/>
-        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,80 +19,73 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#323333"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="20dip"
+                    android:layout_centerVertical="true"
+                    android:text="账号:"/>
+
                 <EditText
                     android:id="@+id/et_login_useraccount"
                     android:layout_width="match_parent"
-                    android:layout_height="36dip"
+                    android:layout_height="40dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginTop="10dip"
-                    android:singleLine="true"
+                    android:layout_toRightOf="@+id/tv_a"
+                    android:maxLines="1"
                     android:background="@null"
-                    android:paddingLeft="36dip"
+                    android:textColorHint="#b9b7b7"
                     android:hint="请输入账号"
                     android:textSize="14sp"
-                    android:layout_marginLeft="40dip"
-                    android:layout_marginRight="40dip"/>
+                    android:layout_marginLeft="10dip"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_marginLeft="40dip"
+                    android:layout_marginLeft="20dip"
                     android:layout_marginRight="40dip"
                     android:layout_below="@+id/et_login_useraccount"
                     android:background="#9A948B"/>
-                <ImageView
-                    android:layout_width="19dip"
-                    android:layout_height="20dip"
-                    android:layout_marginLeft="10dip"
-                    android:layout_marginBottom="10dip"
-                    android:background="@drawable/icon_login_user"
-                    android:layout_alignLeft="@+id/et_login_useraccount"
-                    android:layout_centerVertical="true"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dip">
+                <TextView
+                    android:id="@+id/tv_pas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#323333"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="20dip"
+                    android:layout_centerVertical="true"
+                    android:text="验证码:"/>
                 <EditText
                     android:id="@+id/et_login_useraccount_password"
                     android:layout_width="match_parent"
-                    android:layout_height="36dip"
+                    android:layout_height="40dip"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="40dip"
+                    android:layout_marginLeft="10dip"
+                    android:layout_toRightOf="@+id/tv_pas"
                     android:layout_marginRight="40dip"
                     android:background="@null"
-                    android:layout_marginTop="10dip"
-                    android:singleLine="true"
-                    android:paddingLeft="36dip"
+                    android:maxLines="1"
+                    android:textColorHint="#b9b7b7"
                     android:inputType="textPassword"
                     android:hint="请输密码"
                     android:textSize="14sp"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:layout_marginLeft="40dip"
+                    android:layout_marginLeft="20dip"
                     android:layout_marginRight="40dip"
                     android:layout_below="@+id/et_login_useraccount_password"
                     android:background="#9A948B"/>
-                <ImageView
-                    android:layout_width="17dip"
-                    android:layout_height="20dip"
-                    android:layout_marginLeft="10dip"
-                    android:layout_marginBottom="10dip"
-                    android:background="@drawable/icon_login_password"
-                    android:layout_alignLeft="@+id/et_login_useraccount_password"
-                    android:layout_centerVertical="true"/>
 
             </RelativeLayout>
-            <TextView
-                android:id="@+id/tv_find_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="40dip"
-                android:text="找回密码"
-                android:layout_marginTop="10dip"
-                android:textSize="14sp"
-                android:textColor="#402911"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -122,8 +99,8 @@
                     android:layout_marginRight="40dip"
                     android:text="登 录"
                     android:textSize="20sp"
-                    android:background="@drawable/login_btn_background"
-                    android:textColor="#331A00"/>
+                    android:background="@drawable/text_verifycode_bg"
+                    android:textColor="@color/white"/>
             </RelativeLayout>
 
             <LinearLayout
@@ -151,29 +128,6 @@
                     android:textSize="18sp" />
             </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/rel_jump_phone_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="13dip"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal">
-
-                <TextView
-                    android:id="@+id/tv_login_byphone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="手机快捷登录     "
-                    android:textSize="13sp"
-                    android:textColor="#331A00"/>
-                <ImageView
-                    android:id="@+id/tv_loginfromhere"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/tv_login_byphone"
-                    android:background="@drawable/icon_login_go"/>
-            </RelativeLayout>
 
         </LinearLayout>
     </LinearLayout>

@@ -23,52 +23,52 @@ import java.util.Map;
 public class CustomHttpRequest
 {
 
-	
+
 	public enum METHOD
 	{
 		METHOD_GET(0),
 		METHOD_POST(1);
-		
+
 		private final int value;
 		METHOD(int value)
 		{
 			this.value = value;
 		}
 		public int getValue()
-		{ 
-			return value; 
-		} 
+		{
+			return value;
+		}
 	}
-	
+
 	private boolean iFixSaveFileType;
-	
+
 	private String iRequestUrl;
 	private	METHOD iMethod;
 	private	IHttpCallback iCallback;
-	protected	HttpRequestBase iRequestMethod;
+	protected HttpRequestBase iRequestMethod;
 	private	String iSaveFilename;
 	private int iRequestId = -1;
 	private boolean iIsCancel = false;
 	private boolean iIsSetPostData = false;
 
 	private Hashtable<String, Object> iResponseMap;
-	
+
 	private int iCompeleteSize = 0;
 	private int iTotalSize = -1;
-	
+
 	public static final int KStopThreadRequestId = Integer.MAX_VALUE;
-	
+
 	public CustomHttpRequest(String url,IHttpCallback callback)
 	{
 		this(-1, url, METHOD.METHOD_POST, callback);
-	
+
 	}
-	
+
 	public CustomHttpRequest(int aRequestId, String url,IHttpCallback callback)
 	{
 		this(aRequestId, url, METHOD.METHOD_POST, callback);
 	}
-	
+
 	public CustomHttpRequest(int aRequestId, String url, METHOD method, IHttpCallback callback)
 	{
 		if (!url.startsWith("http://"))
@@ -93,12 +93,12 @@ public class CustomHttpRequest
 		iResponseMap = new Hashtable<String, Object>();
 		setDefaultHeader();
 	}
-	
+
 	public CustomHttpRequest(int aRequestId)
 	{
 		iRequestId = aRequestId;
 	}
-	
+
 	public void addHeaderField(String key, String value)
 	{
 		if(iRequestMethod != null)
@@ -147,12 +147,12 @@ public class CustomHttpRequest
 	{
 		return iSaveFilename;
 	}
-	
+
 	public void setFixSaveFileType(boolean isFix)
 	{
 		iFixSaveFileType = isFix;
 	}
-	
+
 	public boolean isFixSaveFileType()
 	{
 		return iFixSaveFileType;
@@ -172,7 +172,7 @@ public class CustomHttpRequest
 	{
 		return iRequestId;
 	}
-	
+
 	public void setPostData(byte[] postData) throws Exception
 	{
 		if(iMethod != METHOD.METHOD_POST || iIsSetPostData)
@@ -186,14 +186,14 @@ public class CustomHttpRequest
 			iIsSetPostData = true;
 		}
 	}
-	
+
 	public void setPostData(Map< String, String> params) throws Exception
 	{
 		if(iMethod != METHOD.METHOD_POST || iIsSetPostData)
 		{
 			throw new Exception("the method should be METHOD.METHOD_POST or is already set post data");
 		}
-		
+
 		List< BasicNameValuePair> postData = new ArrayList<BasicNameValuePair>();
 		for (Map.Entry< String, String> entry : params.entrySet()) {
 			postData.add(new BasicNameValuePair(entry.getKey(),
@@ -203,14 +203,14 @@ public class CustomHttpRequest
 		((HttpPost) iRequestMethod).setEntity(entity);
 		iIsSetPostData = true;
 	}
-	
+
 	public void setMultiPartFile(String filename, String name, Hashtable<String, String> params) throws Exception
 	{
 		if(iMethod != METHOD.METHOD_POST || iIsSetPostData)
 		{
 			throw new Exception("the method should be METHOD.METHOD_POST or is already set post data");
 		}
-		
+
 		String boundary = getBoundary();
 		iRequestMethod.setHeader("Content-Type","multipart/form-data; boundary=" + boundary);
 		File file = new File(filename);
@@ -235,7 +235,7 @@ public class CustomHttpRequest
 		header.append("Content-Type: application/octet-stream;\r\n");
 		header.append("Content-Transfer-Encoding: binary\r\n");
 		header.append("\r\n");
-		
+
 		byte[] head_data = header.toString().getBytes();
 		byte[] end_data = ("\r\n--" + boundary + "--\r\n").getBytes();
 		InputStream in = new FileInputStream(file);
@@ -245,10 +245,10 @@ public class CustomHttpRequest
 		sequenceentry.addByteArray(end_data, -1);
 		HttpEntity entry = sequenceentry;
 		((HttpPost) iRequestMethod).setEntity(entry);
-		
+
 		iIsSetPostData = true;
 	}
-	
+
 	public void setHttpStatusCode(int code)
 	{
 		if(iResponseMap != null)
@@ -274,13 +274,13 @@ public class CustomHttpRequest
 		{
 			//asda//Log.d("test",(String)iResponseMap.get("header_obj"));
 			//Map<String, String> map = new HashMap();     
-			  
-			for (@SuppressWarnings("rawtypes") Map.Entry entry : iResponseMap.entrySet()) {     
-			  
-			    Object key = entry.getKey( );  
-			    Log.d("test", (String)key);
-			  
-			}  
+
+			for (@SuppressWarnings("rawtypes") Map.Entry entry : iResponseMap.entrySet()) {
+
+				Object key = entry.getKey( );
+				Log.d("test", (String)key);
+
+			}
 			return iResponseMap.get("body_obj");
 		}
 		else
@@ -292,17 +292,17 @@ public class CustomHttpRequest
 		if(buildHeader)
 			iRequestMethod.setHeader("Range", "bytes="+iCompeleteSize+"-");
 	}
-	
+
 	public int getCompeleteSize()
 	{
 		return iCompeleteSize;
 	}
-	
+
 	public void setTotalSize(int size)
 	{
 		iTotalSize  = size;
 	}
-	
+
 	public int getTotalSize()
 	{
 		return iTotalSize;
@@ -330,7 +330,7 @@ public class CustomHttpRequest
 	{
 		return iIsCancel;
 	}
-	
+
 	private String getBoundary() {
 		return String.valueOf(System.currentTimeMillis()) + "----------";
 	}

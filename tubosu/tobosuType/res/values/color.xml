@@ -73,4 +73,15 @@
     <color name="style_textcolor_selected">#FFFFFF</color>
     <color name="style_textcolor_unselected">#BF8A63</color>
 
+
+    <color name="budget_green">#03b418</color>
+    <color name="budget_blue">#3a85ef</color>
+    <color name="budget_orange">#E38B1F</color>
+    <color name="budget_yellow">#FFF500</color>
+    <color name="budget_red">#f12f45</color>
+
+    <color name="topbar_3">#339EFE</color>
+    <color name="text_10">#333333</color>
+    <color name="text_11">#999999</color>
+
 </resources>

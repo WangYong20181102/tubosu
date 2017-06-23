@@ -37,18 +37,13 @@
         android:background="@drawable/first_down"
         android:padding="2dp" />
 
-    <TextView
-        android:id="@+id/tv_home_feedback"
+    <ImageView
+        android:id="@+id/iv_home_pop"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:clickable="true"
-        android:gravity="center"
-        android:padding="3dp"
-        android:text="反馈"
-        android:textColor="@color/white"
-        android:textSize="16.0sp" />
+        android:layout_marginRight="14dp"
+       android:background="@drawable/fadan"/>
 
 </RelativeLayout>

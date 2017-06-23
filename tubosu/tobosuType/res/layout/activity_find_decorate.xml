@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white" >>
+    android:background="@color/activity_bg_color" >
 
     <LinearLayout
         android:id="@+id/linearlayout_find_decorate"
@@ -103,6 +103,7 @@
        android:id="@+id/find_decorate_netoutview"
        layout="@layout/layout_net_out_view"
        android:layout_width="match_parent"
+       android:visibility="gone"
        android:layout_height="match_parent" />
 
 </RelativeLayout>

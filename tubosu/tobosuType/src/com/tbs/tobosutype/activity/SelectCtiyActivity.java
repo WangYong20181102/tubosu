@@ -223,7 +223,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
 
     private String fromFindDecorateCompany = "";
     private String fromFreeDesign = "";
-
+    private String fromGetPrice = "";
     private int from = -1;
 
     private String fromHome = "";
@@ -252,6 +252,14 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             city_title_back.setVisibility(View.VISIBLE);
         }
 
+
+
+        if(getIntent() != null && getIntent().getBundleExtra("GetPriceSelectcityBundle") != null){
+            Bundle b = getIntent().getBundleExtra("GetPriceSelectcityBundle");
+            fromGetPrice = b.getString("fromGetPrice");
+            city_title_back = (ImageView) findViewById(R.id.city_title_back);
+            city_title_back.setVisibility(View.VISIBLE);
+        }
 
 //        b.putString("fromHomeActivity", "101");
 //        selectCityIntent.putExtra("HomeActivitySelectcityBundle", b);
@@ -548,6 +556,17 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             return;
         }
 
+
+        if(fromGetPrice.equals("647")){
+            // 来自免费设计页面
+            Intent cityData = new Intent();
+            Bundle b = new Bundle();
+            b.putString("ci", cityName);
+            cityData.putExtra("city_bundle", b);
+            setResult(124, cityData);
+            finish();
+            return;
+        }
 
         if(fromFindDecorateCompany.equals("64")){
             // 来自找装修公司页面

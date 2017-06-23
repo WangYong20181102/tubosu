@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <GridView
+        android:id="@+id/gv_material"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:verticalSpacing="6dp"
+        android:paddingLeft="7dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:paddingRight="7dp"
+        android:gravity="center"
+        android:numColumns="5"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#F5F5F5"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+        <TextView
+            android:id="@+id/tv_material_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="开支名称:"
+            android:textSize="16sp"
+            android:textColor="@color/color_black"
+            android:layout_marginLeft="14dp"/>
+
+        <EditText
+            android:id="@+id/et_material_cost_material"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
+            android:paddingLeft="14dp"
+            android:hint="请输入本次开支名称"
+            android:background="@color/white"
+            android:textSize="18sp"
+            android:layout_toRightOf="@+id/tv_material_name"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_alignParentBottom="true"
+            android:background="#CCCCCC"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+        <TextView
+            android:id="@+id/tv_material_cs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="开支费用:"
+            android:textSize="16sp"
+            android:textColor="@color/color_black"
+            android:layout_marginLeft="14dp"/>
+
+        <EditText
+            android:id="@+id/et_material_cost_money"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
+            android:paddingLeft="14dp"
+            android:textSize="18sp"
+            android:digits="0.123456789"
+            android:hint="请输入本次开支金额"
+            android:background="@color/white"
+            android:layout_toRightOf="@+id/tv_material_cs"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_alignParentBottom="true"
+            android:background="#CCCCCC"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+        <TextView
+            android:id="@+id/tv_material_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="开支时间:"
+            android:textSize="16sp"
+            android:textColor="@color/color_black"
+            android:layout_marginLeft="14dp"/>
+
+        <TextView
+            android:id="@+id/tv_material_cost_time"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="21dp"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:hint="请输入本次开支时间"
+            android:background="@color/white"
+            android:layout_toRightOf="@+id/tv_material_time"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_alignParentBottom="true"
+            android:background="#CCCCCC"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+        <TextView
+            android:id="@+id/tv_material_cont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="开支内容:"
+            android:textSize="16sp"
+            android:textColor="@color/color_black"
+            android:layout_marginLeft="14dp"/>
+
+        <EditText
+            android:id="@+id/et_material_cost_content"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
+            android:paddingLeft="14dp"
+            android:textSize="18sp"
+            android:hint="请输入备注信息"
+            android:background="@color/white"
+            android:layout_toRightOf="@+id/tv_material_cont"/>
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_alignParentBottom="true"
+            android:background="#CCCCCC"/>
+    </RelativeLayout>
+
+</LinearLayout>

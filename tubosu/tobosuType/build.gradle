@@ -39,17 +39,20 @@ android {
             storePassword 'tubosu'
         }
     }
-    compileSdkVersion 21
+    compileSdkVersion 25
     buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.tbs.tobosutype" // 程序的包名
-        minSdkVersion 11
-        targetSdkVersion 21
-        versionCode 18
-        versionName "3.0"
+        minSdkVersion 19
+        targetSdkVersion 25
+        versionCode 19
+        versionName "3.1"
         multiDexEnabled true  // 消去重复的jar 引用
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "aisi"]//多渠道打包标识 默认爱思
     }
+
+    useLibrary 'org.apache.http.legacy'
+
     productFlavors {
         aisi {}
         anbei {}
@@ -157,10 +160,10 @@ android.applicationVariants.all { variant ->
             def fileName
             if (variant.buildType.name == "release") {
 //                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_${variant.productFlavors[0].name}.apk"
-                fileName = "tobosuType_v3.0_${variant.productFlavors[0].name}.apk"
+                fileName = "tobosuType_v3.1_${variant.productFlavors[0].name}.apk"
             } else {
 //                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_beta.apk"
-                fileName = "tobosuType_v3.0_${variant.productFlavors[0].name}_beta.apk"
+                fileName = "tobosuType_v3.1_${variant.productFlavors[0].name}_beta.apk"
             }
             output.outputFile = new File(outputDirectory, fileName)
         }

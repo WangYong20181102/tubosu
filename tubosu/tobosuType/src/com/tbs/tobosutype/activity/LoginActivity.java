@@ -1,17 +1,18 @@
 package com.tbs.tobosutype.activity;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
-import android.widget.RelativeLayout;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomDialog;
@@ -28,20 +29,19 @@ import java.util.List;
  *
  */
 public class LoginActivity extends FragmentActivity {
-	public static final String POSITION_SWITCH_ACTION_PHONE = "login_switch_position_action_phone";
-	public static final String POSITION_SWITCH_ACTION_ACCOUNT = "login_switch_position_action_account";
-	public static final int POSITION_ACCOUNT = 0;
-	public static final int POSITION_PHONE = 1;
+	private static final String TAG = LoginActivity.class.getSimpleName();
 	private Context mContext;
-	/**退出app*/
-//	private ImageView login_back;
+	private ImageView ivBack;
+	private TextView tvFindBackPass;
+	private TextView tvFastLogin;
+	private ImageView ivFastLogin;
+	private TextView tvAccountLogin;
+	private ImageView ivAccountLogin;
+
 	private List<Fragment> fragmentList = new ArrayList<Fragment>();
 	private FragmentPagerAdapter mAdapter;
 	private ViewPager mViewPager;
-	
-	private RelativeLayout relBack;
 
-	private boolean isRegister = true;
 
 	/**
 	 * 初始化为-2
@@ -50,28 +50,22 @@ public class LoginActivity extends FragmentActivity {
 	
 //	/**忘记密码按钮*/
 //	private TextView login_frogetPwd;
-	
 //	private List<String> mDatas = Arrays.asList("手机快速登录", "账户登录");
 //	private ViewPagerIndicator mIndicator;
 //	private LoginFragment fragment;
 	
 	private LoginFragmentAccount accountFragment;
-	
 	private LoginFragmentPhone phoneFragment;
-	
-	private SwitchViewpagerBroadcastReceiver switchReceiver;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-//		AppInfoUtil.setTranslucentStatus(this);
 		mContext = LoginActivity.this;
 
-
         initData();
-		initReceiver();
 		initView();
 		initFratgmentData();
+		setClick();
 	}
 
 
@@ -85,19 +79,14 @@ public class LoginActivity extends FragmentActivity {
 
     }
 
-	private void initReceiver() {
-		if(isRegister){
-			switchReceiver = new SwitchViewpagerBroadcastReceiver();
-			IntentFilter filter = new IntentFilter();
-			filter.addAction(POSITION_SWITCH_ACTION_ACCOUNT);
-			filter.addAction(POSITION_SWITCH_ACTION_PHONE);
-			registerReceiver(switchReceiver, filter);
-		}
-
-	}
-
 	private void initView() {
-		
+		ivBack = (ImageView) findViewById(R.id.login_back);
+		tvFindBackPass = (TextView) findViewById(R.id.tv_find_password);
+		tvFastLogin = (TextView) findViewById(R.id.fast_login);
+		ivFastLogin = (ImageView) findViewById(R.id.iv_fast_login);
+		tvAccountLogin = (TextView) findViewById(R.id.account_login);
+		ivAccountLogin = (ImageView) findViewById(R.id.iv_account_login);
+
 		mViewPager = (ViewPager) findViewById(R.id.login_vp);
 
 		// 来自点击收藏时 跳转 intent.putExtra("isFav", true);
@@ -128,7 +117,6 @@ public class LoginActivity extends FragmentActivity {
 		accountFragment = new LoginFragmentAccount();
 		fragmentList.add(accountFragment);
 
-
 		mAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
 			@Override
 			public int getCount() {
@@ -140,27 +128,26 @@ public class LoginActivity extends FragmentActivity {
 				return fragmentList.get(position);
 			}
 		};
-		
-//		mIndicator.setTabItemTitles(mDatas);
-		mViewPager.setAdapter(mAdapter);
-		mViewPager.setCurrentItem(0);
-	}
 
+		mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+			@Override
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-	
-	/**
-	 * 切换页面的广播
-	 */
-	private class SwitchViewpagerBroadcastReceiver extends BroadcastReceiver{
-
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			if(POSITION_SWITCH_ACTION_PHONE.equals(intent.getAction())){
-				mViewPager.setCurrentItem(0);
-			}else if(POSITION_SWITCH_ACTION_ACCOUNT.equals(intent.getAction())){
-				mViewPager.setCurrentItem(1);
 			}
-		}
+
+			@Override
+			public void onPageSelected(int position) {
+				setStyle(position);
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int state) {
+
+			}
+		});
+		
+		mViewPager.setAdapter(mAdapter);
+		setStyle(0);
 	}
 
 	public void startCount() {
@@ -190,7 +177,7 @@ public class LoginActivity extends FragmentActivity {
 				setResult(0x000018, it);
 				finish();
 			}
-			overridePendingTransition(R.anim.activity_close,0);
+//			overridePendingTransition(R.anim.activity_close,0);
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
@@ -227,23 +214,49 @@ public class LoginActivity extends FragmentActivity {
 		}
 	}
 	
-	
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-
-		try{
-			if(isRegister==true){
-				if(switchReceiver!=null){
-					unregisterReceiver(switchReceiver);
-					isRegister = false;
-				}
+	private void setClick(){
+		ivBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
 			}
-		}catch (IllegalArgumentException e){
-			e.printStackTrace();
-		}
+		});
+		tvFindBackPass.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(mContext, FindPwdActivity1.class));
+			}
+		});
 
-
+		tvFastLogin.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				setStyle(0);
+			}
+		});
+		tvAccountLogin.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				setStyle(1);
+			}
+		});
 	}
 
+	private void setStyle(int po){
+		mViewPager.setCurrentItem(po);
+		switch (po){
+			case 0:
+				tvFastLogin.setTextColor(Color.parseColor("#FEB20E"));
+				tvAccountLogin.setTextColor(Color.parseColor("#898C8F"));
+				ivFastLogin.setVisibility(View.VISIBLE);
+				ivAccountLogin.setVisibility(View.GONE);
+				break;
+			case 1:
+				tvFastLogin.setTextColor(Color.parseColor("#898C8F"));
+				tvAccountLogin.setTextColor(Color.parseColor("#FEB20E"));
+				ivFastLogin.setVisibility(View.GONE);
+				ivAccountLogin.setVisibility(View.VISIBLE);
+				break;
+		}
+	}
 }

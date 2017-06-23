@@ -13,6 +13,11 @@
             android:layout_height="wrap_content"
             android:background="@color/bg_gray"
             android:orientation="vertical" >
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="1dp"
+				android:background="@color/activity_bg_color">
+			</RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"

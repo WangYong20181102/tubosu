@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_gray" >
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -12,7 +11,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-			
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/activity_bg_color">
+            </RelativeLayout>
+
             <!-- 顶部用户信息布局 start -->
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -89,7 +93,7 @@
 	                
 					<!-- 业主所在省市 -->
 	                <TextView
-	                    android:id="@+id/tv_location "
+	                    android:id="@+id/tv_location"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:layout_alignBottom="@id/my_owner_pic"
@@ -109,7 +113,7 @@
 
             <!-- 有订单时显示的一些信息布局 start -->
             <LinearLayout
-                android:id="@+id/linearlayout_have_order_information "
+                android:id="@+id/linearlayout_have_order_information"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
                 android:background="@color/white"
@@ -417,14 +421,14 @@
                         android:background="@color/bg_gray" />
 					<!-- 第二行第二个格 -->
                     <LinearLayout
-                        android:id="@+id/my_layout_networkset"
+                        android:id="@+id/my_layout_ower_msg"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical"
                         android:paddingLeft="1dp"
-                        android:visibility="invisible" >
+                        android:visibility="visible" >
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -435,7 +439,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="代金券"
+                            android:text="消息"
                             android:textColor="@color/color_darkgray"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -444,10 +448,32 @@
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:background="@color/bg_gray" />
-                    
-                    <!-- 无 第二行第三个格 -->
-                    
-                    
+                    <!-- 第二行第三个格  装修开支-->
+
+                    <LinearLayout
+                        android:id="@+id/my_layout_ower_outcome"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingLeft="1dp"
+                        android:visibility="visible" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/my_vouchers_img" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="装修开支"
+                            android:textColor="@color/color_darkgray"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
                 </LinearLayout>
                 <!-- 方格第二行 end -->
             </LinearLayout>

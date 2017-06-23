@@ -139,7 +139,7 @@ public class FreeActivity extends Activity {
 		settings.setDefaultTextEncodingName("GBK");
 		settings.setLayoutAlgorithm(LayoutAlgorithm.NARROW_COLUMNS);
 		settings.setAppCacheEnabled(true);
-		webView.setScrollBarStyle(0);
+//		webView.setScrollBarStyle(0);
 		
 		webView.loadUrl(AllConstants.PIPE);
 		

@@ -5,7 +5,7 @@
     <color name="color_white">#fff</color>
     <color name="color_red">#ff1919</color>
     <color name="color_yellow">#ffae00</color>
-    <color name="activity_bg_color">#fffafafa</color>
+    <color name="activity_bg_color">#ff882e</color>
     <color name="top_category_bar_background">#ffeeeeee</color>
     <color name="divider">#ffdddddd</color>
     <color name="category_tab_text">#ff707070</color>
@@ -15,6 +15,7 @@
     <color name="category_tab_highlight_bg">#ffd43d3d</color>
     <color name="category_tab_highlight_dark_bg">#fffafafa</color>
     <drawable name="color_first_head">#ff882e</drawable>
+    <drawable name="color_app_bg">#ff882e</drawable>
     <color name="selection_ripple">#a5c5ccf5</color>
     <color name="selection_mask">#8f000000</color>
 </resources>

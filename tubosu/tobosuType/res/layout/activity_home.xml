@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
-    android:background="@android:color/white" >
+    android:background="@color/activity_bg_color" >
     android:orientation="vertical" >
 
     <com.tbs.tobosutype.customview.ScrollViewExtend
@@ -699,54 +699,8 @@
                 <!-- 2017-01-07 修改 end  -->
                 <!-- 第五栏 效果图精选   end -->
             </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/rel_getdesign_pic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/icon_get_design_pic"
-                android:visibility="gone" >
-
-                <ImageView
-                    android:id="@+id/iv_get_design_pic_cancel"
-                    android:layout_width="16dip"
-                    android:layout_height="16dip"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dip"
-                    android:background="@drawable/icon_get_design_pic_cancel" />
-
-                <TextView
-                    android:id="@+id/tv_cancel_get_design"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:layout_toRightOf="@+id/iv_get_design_pic_cancel"
-                    android:gravity="fill_vertical"
-                    android:text="点这里，获取4套免费设计"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
         </LinearLayout>
     </com.tbs.tobosutype.customview.ScrollViewExtend>
-
-    <FrameLayout
-        android:id="@+id/framlayout_toggle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" >
-
-        <ImageView
-            android:id="@+id/iv_free_toggle"
-            android:layout_width="50dip"
-            android:layout_height="50dip"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginRight="20dip"
-            android:background="@drawable/icon_free_toggle"
-            android:clickable="true"
-            android:visibility="gone" />
-    </FrameLayout>
 
     <!-- 顶部标题栏 -->
 

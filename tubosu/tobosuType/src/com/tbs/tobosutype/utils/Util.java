@@ -1,12 +1,18 @@
 package com.tbs.tobosutype.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import java.util.regex.Matcher;
@@ -214,6 +220,26 @@ public class Util {
 
     public static void setLog(String tag, String log){
         System.out.println("---当前页面是" + tag + "-->>>" + "--打印信息>>>" + log + "<<");
+    }
+
+    public static void setErrorLog(String tag, String log){
+        Log.e("---当前页面是" + tag + "-->>>", "--打印信息>>>" + log + "<<");
+    }
+
+
+    public static void setActivityStatusColor(Activity context){
+        context.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = context.getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+            window.setNavigationBarColor(Color.TRANSPARENT);
+        }
     }
 //
 //    /**

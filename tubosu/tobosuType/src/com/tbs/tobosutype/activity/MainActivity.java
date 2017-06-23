@@ -130,15 +130,14 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//		AppInfoUtil.setActivityTheme(this, R.color.whole_color_theme);
+		AppInfoUtil.setActivityTheme(MainActivity.this);
         setContentView(R.layout.activity_main);
-        AppInfoUtil.setTranslucentStatus(this);
+//        AppInfoUtil.setTranslucentStatus(this);
         mContext = MainActivity.this;
 
         userInfo = getSharedPreferences("userInfo", 0);
 
         initView();
-//        initRadioButtonParameters();
         initReceiver();
         initEvent();
 
@@ -173,6 +172,10 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 		 *                        FOUR2.登陆的是装修公司界面
 		 *                        FOUR3.登陆的是业主界面
 		 **/
+        intent = new Intent().setClass(this, MyActivity.class);
+        spec = tabHost.newTabSpec("FOUR").setIndicator("我").setContent(intent);
+        tabHost.addTab(spec);
+
         intent = new Intent().setClass(this, MyCompanyActivity.class);
         spec = tabHost.newTabSpec("FOUR2").setIndicator("我").setContent(intent);
         tabHost.addTab(spec);
@@ -208,7 +211,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         tv_decorate_textview = (TextView) findViewById(R.id.tv_decorate_textview);
         tv_my_textview = (TextView) findViewById(R.id.tv_my_textview);
 
-        tabPosition = CacheManager.getTabposition(mContext);
         setFragmentPosition(0);
     }
 
@@ -217,8 +219,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         receiver = new NetStateReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(AllConstants.NET_STATE_ACTION);
-        filter.addAction(AllConstants.LOGIN_ACTION);
-        filter.addAction(AllConstants.LOGOUT_ACTION);
+//        filter.addAction(AllConstants.LOGIN_ACTION);
+//        filter.addAction(AllConstants.LOGOUT_ACTION);
         registerReceiver(receiver, filter);
     }
 
@@ -354,24 +356,23 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     tv_my_textview.setTextColor(Color.parseColor("#ff9c00"));
                 } else if ("0".equals(mark)) {
                     Util.setLog(TAG, "==========mark 0 =========");
-//                    tabHost.setCurrentTab(fragmentPostion);
-//                    tabHost.setCurrentTabByTag("ONE");
-//
-//                    img_home.setBackgroundResource(R.drawable.menu_icon_0_pressed);
-//                    img_image.setBackgroundResource(R.drawable.menu_icon_1_normal);
-//                    img_decorate.setBackgroundResource(R.drawable.menu_icon_2_normal);
-//                    img_my.setBackgroundResource(R.drawable.menu_icon_3_normal);
-//
-//                    tv_home_textview.setTextColor(Color.parseColor("#ff9c00"));
-//                    tv_image_textview.setTextColor(Color.parseColor("#A8AAAC"));
-//                    tv_decorate_textview.setTextColor(Color.parseColor("#A8AAAC"));
-//                    tv_my_textview.setTextColor(Color.parseColor("#A8AAAC"));
+                    tabHost.setCurrentTab(fragmentPostion);
+                    tabHost.setCurrentTabByTag("FOUR");
+
+                    img_home.setBackgroundResource(R.drawable.menu_icon_0_normal);
+                    img_image.setBackgroundResource(R.drawable.menu_icon_1_normal);
+                    img_decorate.setBackgroundResource(R.drawable.menu_icon_2_normal);
+                    img_my.setBackgroundResource(R.drawable.menu_icon_3_pressed);
+
+                    tv_home_textview.setTextColor(Color.parseColor("#A8AAAC"));
+                    tv_image_textview.setTextColor(Color.parseColor("#A8AAAC"));
+                    tv_decorate_textview.setTextColor(Color.parseColor("#A8AAAC"));
+                    tv_my_textview.setTextColor(Color.parseColor("#ff9c00"));
                 }
                 break;
             default:
                 break;
         }
-        CacheManager.setTabPostion(mContext, fragmentPostion);
     }
 
 
@@ -447,7 +448,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
             operTab();
         }
         MobclickAgent.onResume(this);
-
     }
 
     /**
@@ -575,28 +575,22 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                 MobclickAgent.onEvent(mContext, "click_app_preson_center");
                 if ("1".equals(mark)) {
                     tabHost.setCurrentTabByTag("FOUR3");
-                    setFragmentPosition(3);
-                    tabPosition = 3;
+//                    setFragmentPosition(3);
                 } else if ("3".equals(mark)) {
                     tabHost.setCurrentTabByTag("FOUR2");
-                    setFragmentPosition(3);
+//                    setFragmentPosition(3);
                     tabPosition = 3;
                 } else if ("0".equals(mark)) {
                     tabHost.setCurrentTabByTag("FOUR");
-//                 tabPosition = -1;
-                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
-                    Bundle b = new Bundle();
-                    b.putInt("tabPosition", tabPosition);
-                    loginIntent.putExtra("tabPositionBundle", b);
-                    startActivityForResult(loginIntent, 0x00016);
-                    overridePendingTransition(R.anim.activity_open, 0);
+//                    setFragmentPosition(3);
+                    tabPosition = 3;
                 }
+                setFragmentPosition(3);
                 break;
             default:
                 break;
         }
 
-        CacheManager.setTabPostion(mContext, tabPosition);
         initData();
         operTab();
     }
@@ -619,12 +613,12 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                 netStateHandler.sendMessage(m);
             }
 
-            // 以下跟网络无关 只是我不想再写一个广播类了
-            else if (intent.getAction().equals(AllConstants.LOGOUT_ACTION)) {
-                setFragmentPosition(0);
-            } else if (intent.getAction().equals(AllConstants.LOGIN_ACTION)) {
-                setFragmentPosition(3);
-            }
+//            // 以下跟网络无关 只是我不想再写一个广播类了
+//            else if (intent.getAction().equals(AllConstants.LOGOUT_ACTION)) {
+//                setFragmentPosition(0);
+//            } else if (intent.getAction().equals(AllConstants.LOGIN_ACTION)) {
+//                setFragmentPosition(3);
+//            }
         }
     }
 

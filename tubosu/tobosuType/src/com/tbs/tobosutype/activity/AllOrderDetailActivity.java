@@ -283,7 +283,7 @@ public class AllOrderDetailActivity extends Activity implements OnClickListener 
 	 */
 	public void requestOrderDetailPost() {
 		HttpServer.getInstance().requestPOST(orderDetailUrl, orderDetailParams, new AsyncHttpResponseHandler() {
-			
+
 				@Override
 				public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
 				}

@@ -37,6 +37,7 @@ import com.tbs.tobosutype.customview.SelectPersonalPopupWindow;
 import com.tbs.tobosutype.global.AllConstants;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.DensityUtil;
 import com.tbs.tobosutype.utils.FileUtil;
 import com.tbs.tobosutype.utils.HttpServer;
@@ -100,6 +101,12 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 	
 	/**我要反馈布局*/
 	private LinearLayout my_layout_feedback;
+
+    /**消息*/
+    private LinearLayout my_layout_ower_msg;
+
+	/**开支*/
+	private LinearLayout my_layout_ower_outcome;
 	
 	/**头像下面显示一些订单信息的布局*/
 	private LinearLayout linearlayout_have_order_information;
@@ -194,6 +201,8 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 		linearlayout_have_order_information = (LinearLayout) findViewById(R.id.linearlayout_have_order_information);
 		ll_not_order_information = (LinearLayout) findViewById(R.id.ll_not_order_information);
 		my_layout_feedback = (LinearLayout) findViewById(R.id.my_layout_feedback);
+        my_layout_ower_msg = (LinearLayout) findViewById(R.id.my_layout_ower_msg);
+		my_layout_ower_outcome = (LinearLayout) findViewById(R.id.my_layout_ower_outcome);
 		iv_myowner_set = (ImageView) findViewById(R.id.iv_myowner_set);
 		ll_decorate_security = (LinearLayout) findViewById(R.id.ll_decorate_security);
 		iv_system_message_user = (ImageView) findViewById(R.id.iv_system_message_user);
@@ -249,6 +258,8 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 		myowner_layout_personal_data.setOnClickListener(this);
 		myowner_layout_store_pic.setOnClickListener(this);
 		my_layout_feedback.setOnClickListener(this);
+        my_layout_ower_msg.setOnClickListener(this);
+		my_layout_ower_outcome.setOnClickListener(this);
 		iv_myowner_set.setOnClickListener(this);
 		tv_find_order.setOnClickListener(this);
 		tv_delstatusDes.setOnClickListener(this);
@@ -439,6 +450,18 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 		case R.id.my_layout_feedback:
 			Intent intent = new Intent(mContext, FeedbackActivity.class);
 			startActivity(intent);
+			break;
+        case R.id.my_layout_ower_msg:
+            startActivity(new Intent(mContext, SystemMessageActivity.class));
+            break;
+		case R.id.my_layout_ower_outcome:
+			if(CacheManager.getFirstTimeRecord(mContext) == -1){
+				startActivity(new Intent(mContext, KeepAccountActivity.class));
+				CacheManager.setFirstTimeRecord(mContext, 1);
+			}else {
+				startActivity(new Intent(mContext, DecorateAccountActivity.class));
+			}
+
 			break;
 		case R.id.my_owner_pic:
 			menuWindow = new SelectPersonalPopupWindow(this, itemsPersonOnClick);

@@ -4,6 +4,7 @@ package com.tbs.tobosutype.activity;
  * 这四个页面的父类
  */
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -14,6 +15,9 @@ import com.tbs.tobosutype.protocol.JpyProtocol;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 
 public class BaseActivity extends Activity implements JpyProtocol.MDataUpdateNotify {
+	protected String TAG = BaseActivity.class.getSimpleName();
+	protected Context mContext;
+
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
 
 	@Override

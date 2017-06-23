@@ -24,6 +24,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
 import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 
@@ -184,6 +185,9 @@ public class FreeDesignPrice extends Activity {
                             customWaitDialog.show();
                             fastLoginParams = AppInfoUtil.getPublicParams(mContext);
                             fastLoginParams.put("mobile", mPhoneNum);
+                            fastLoginParams.put("platform_type", "1");
+                            fastLoginParams.put("system_type", "1");
+                            fastLoginParams.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
                             fastLoginParams.put("msg_code", fdpInputCode.getText().toString().trim());
                             fastLoginParams.put("urlhistory", AllConstants.PIPE); // 渠道代码
                             fastLoginParams.put("comeurl", AllConstants.PIPE); //订单发布页面
