@@ -50,10 +50,20 @@ public class AllConstants {
 
     public static final String ACTION_HOME_SELECT_CITY = "action_home_select_city";
 
-    /**线上测试环境*/
-//	public static final String TOBOSU_WEIXIN_URL = "http://www.wxdev.tobosu.com/";
 
-//    /**测试环境*/
+    /**人力*/
+    public static final String ACTION_MANPOWER_FRAGMENT_DATA = "action_manpower_fragment_data";
+    /**建材*/
+    public static final String ACTION_MATERIAL_FRAGMENT_DATA = "action_material_fragment_data";
+    /**五金*/
+    public static final String ACTION_STEEL_FRAGMENT_DATA = "action_steel_fragment_data";
+    /**家具*/
+    public static final String ACTION_FURNITURE_FRAGMENT_DATA = "action_furniture_fragment_data";
+    /**厨卫*/
+    public static final String ACTION_KITCHEN_FRAGMENT_DATA = "action_kitchen_fragment_data";
+
+
+    /**测试环境*/
 //	public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
     /**
@@ -65,8 +75,6 @@ public class AllConstants {
      * 测试环境
      */
 //    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
-
-//	 public static final String TOBOSU_URL = "www.api.tobosu.com/";
 
 
     /**

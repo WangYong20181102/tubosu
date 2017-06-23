@@ -203,7 +203,7 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 
 	private void initNumAnimation(){
 		for(int i=0;i<=cheatNum; i++){
-			setNumBg(imgArray, numReIdList,i);
+//			setNumBg(imgArray, numReIdList,i);
 		}
 	}
 

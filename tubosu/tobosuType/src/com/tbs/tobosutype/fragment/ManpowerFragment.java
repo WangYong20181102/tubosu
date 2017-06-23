@@ -1,5 +1,9 @@
 package com.tbs.tobosutype.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -16,8 +20,12 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.activity.EditAccountAcitivity;
 import com.tbs.tobosutype.adapter.WriteAccountAdapter;
 import com.tbs.tobosutype.customview.DateChooseWheelViewDialog;
+import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.model.Constant;
+import com.tbs.tobosutype.utils.Util;
 
 /**
  * Created by Lie on 2017/6/21.
@@ -53,10 +61,10 @@ public class ManpowerFragment  extends Fragment {
 
 
     private void initData() {
+        receiver = new ManPowerReceiver();
+        IntentFilter filter = new IntentFilter(AllConstants.ACTION_MANPOWER_FRAGMENT_DATA);
+        getActivity().registerReceiver(receiver, filter);
 
-
-        timeText = tvCostTime.getText().toString();
-        contentText = etCostContent.getText().toString();
     }
 
     private void initAdapter() {
@@ -92,54 +100,54 @@ public class ManpowerFragment  extends Fragment {
     }
 
     private void setClick(){
-        etCostManpower.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                nameText = etCostManpower.getText().toString();
-            }
-        });
-        etCostMoney.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                moneyText = etCostMoney.getText().toString();
-            }
-        });
-        etCostContent.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                contentText = etCostContent.getText().toString();
-            }
-        });
+//        etCostManpower.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                nameText = etCostManpower.getText().toString();
+//            }
+//        });
+//        etCostMoney.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                moneyText = etCostMoney.getText().toString();
+//            }
+//        });
+//        etCostContent.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                contentText = etCostContent.getText().toString();
+//            }
+//        });
         tvCostTime.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -151,7 +159,7 @@ public class ManpowerFragment  extends Fragment {
                         String t[] = time.split(" ");
                         tvCostTime.setText(t[0]);
                         tvCostTime.setBackgroundResource(R.drawable.shape_time_textview_selected_bg);
-                        timeText = t[0];
+//                        timeText = t[0];
                     }
                 });
                 chooseTimeDialog.setDateDialogTitle("开支时间");
@@ -160,4 +168,28 @@ public class ManpowerFragment  extends Fragment {
         });
     }
 
+
+    private ManPowerReceiver receiver;
+    private class ManPowerReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if(AllConstants.ACTION_MANPOWER_FRAGMENT_DATA.equals(intent.getAction())){
+                EditAccountAcitivity.mainTimeText = tvCostTime.getText().toString();
+                EditAccountAcitivity.mainContentText = etCostContent.getText().toString();
+                EditAccountAcitivity.mainMoneyText = etCostMoney.getText().toString();
+                EditAccountAcitivity.mainNameText = etCostManpower.getText().toString();
+                Util.setToast(getActivity(), "=>>" + timeText +"="+contentText+"="+moneyText+"="+nameText);
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(receiver!=null){
+            getActivity().unregisterReceiver(receiver);
+        }
+    }
 }

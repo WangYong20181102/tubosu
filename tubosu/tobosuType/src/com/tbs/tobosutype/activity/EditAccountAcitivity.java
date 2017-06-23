@@ -2,6 +2,7 @@ package com.tbs.tobosutype.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -18,6 +19,7 @@ import com.tbs.tobosutype.fragment.KitchenFragment;
 import com.tbs.tobosutype.fragment.ManpowerFragment;
 import com.tbs.tobosutype.fragment.MaterialFragment;
 import com.tbs.tobosutype.fragment.SteelFragment;
+import com.tbs.tobosutype.global.AllConstants;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.Util;
 
@@ -48,10 +50,10 @@ public class EditAccountAcitivity extends FragmentActivity{
     private int saveData = -1;
 
 
-    private String mainNameText = "";
-    private String mainMoneyText = "";
-    private String mainTimeText = "";
-    private String mainContentText = "";
+    public static String mainNameText = "";
+    public static String mainMoneyText = "";
+    public static String mainTimeText = "";
+    public static String mainContentText = "";
 
     private ManpowerFragment manpowerFragment;
     private MaterialFragment materialFragment;
@@ -142,32 +144,37 @@ public class EditAccountAcitivity extends FragmentActivity{
         tvSaveEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 // 请求网络
                 if(saveData==0){
-                    mainNameText = manpowerFragment.nameText;
-                    mainMoneyText = manpowerFragment.moneyText;
-                    mainTimeText = manpowerFragment.timeText;
-                    mainContentText = manpowerFragment.contentText;
+                    Intent intent = new Intent(AllConstants.ACTION_MANPOWER_FRAGMENT_DATA);
+                    sendBroadcast(intent);
+
+//                    mainNameText = manpowerFragment.nameText;
+//                    mainMoneyText = manpowerFragment.moneyText;
+//                    mainTimeText = manpowerFragment.timeText;
+//                    mainContentText = manpowerFragment.contentText;
                 }else if(saveData==1){
-                    mainNameText = materialFragment.nameText;
-                    mainMoneyText = materialFragment.moneyText;
-                    mainTimeText = materialFragment.timeText;
-                    mainContentText = materialFragment.contentText;
+//                    mainNameText = materialFragment.nameText;
+//                    mainMoneyText = materialFragment.moneyText;
+//                    mainTimeText = materialFragment.timeText;
+//                    mainContentText = materialFragment.contentText;
                 }if(saveData==2){
-                    mainNameText = steelFragment.nameText;
-                    mainMoneyText = steelFragment.moneyText;
-                    mainTimeText = steelFragment.timeText;
-                    mainContentText = steelFragment.contentText;
+//                    mainNameText = steelFragment.nameText;
+//                    mainMoneyText = steelFragment.moneyText;
+//                    mainTimeText = steelFragment.timeText;
+//                    mainContentText = steelFragment.contentText;
                 }if(saveData==3){
-                    mainNameText = furnitureFragment.nameText;
-                    mainMoneyText = furnitureFragment.moneyText;
-                    mainTimeText = furnitureFragment.timeText;
-                    mainContentText = furnitureFragment.contentText;
+//                    mainNameText = furnitureFragment.nameText;
+//                    mainMoneyText = furnitureFragment.moneyText;
+//                    mainTimeText = furnitureFragment.timeText;
+//                    mainContentText = furnitureFragment.contentText;
                 }if(saveData==4){
-                    mainNameText = kitchenFragment.nameText;
-                    mainMoneyText = kitchenFragment.moneyText;
-                    mainTimeText = kitchenFragment.timeText;
-                    mainContentText = kitchenFragment.contentText;
+//                    mainNameText = kitchenFragment.nameText;
+//                    mainMoneyText = kitchenFragment.moneyText;
+//                    mainTimeText = kitchenFragment.timeText;
+//                    mainContentText = kitchenFragment.contentText;
                 }
 
                 Util.setErrorLog(TAG,"******" + saveData + "=" + mainNameText);
