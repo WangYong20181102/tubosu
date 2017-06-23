@@ -3,12 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical" >
+    android:orientation="vertical">
+
     <RelativeLayout
+        android:id="@+id/rl_banner"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:background="@color/color_icon" >
+        android:background="@color/color_icon">
 
         <ImageView
             android:id="@+id/project_viewpager_back"
@@ -36,7 +38,6 @@
     <com.tbs.tobosutype.customview.MyProjectViewPagerLayout
         android:id="@+id/myviewpager_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </com.tbs.tobosutype.customview.MyProjectViewPagerLayout>
+        android:layout_height="match_parent"></com.tbs.tobosutype.customview.MyProjectViewPagerLayout>
 
 </LinearLayout>

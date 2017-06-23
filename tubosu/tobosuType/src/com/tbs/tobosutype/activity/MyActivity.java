@@ -1,6 +1,7 @@
 package com.tbs.tobosutype.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,6 +25,7 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
     private LinearLayout myUnloginPersonalData;
     private LinearLayout myUnloginStore;
     private RelativeLayout relUnlogin;
+    private RelativeLayout rl_search;
     private ImageView ivSetting;
 
     @Override
@@ -47,6 +49,8 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
         myUnloginPersonalData = (LinearLayout) findViewById(R.id.my_unlogin_personal_data);
         myUnloginStore = (LinearLayout) findViewById(R.id.my_unlogin_store);
         relUnlogin = (RelativeLayout) findViewById(R.id.rel_go_login);
+        rl_search = (RelativeLayout) findViewById(R.id.rl_search);
+        rl_search.setBackgroundColor(Color.parseColor("#ff882e"));
         ivSetting = (ImageView) findViewById(R.id.iv_unlogin_setting);
     }
 

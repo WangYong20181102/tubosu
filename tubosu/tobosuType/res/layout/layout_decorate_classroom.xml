@@ -51,8 +51,8 @@
     </RelativeLayout>
 
     <include
+        layout="@layout/layout_decorateclass_brand_custom_gridview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp" 
-        layout="@layout/layout_decorateclass_brand_custom_gridview" />
+        android:layout_marginBottom="10dp" />
 </LinearLayout>
