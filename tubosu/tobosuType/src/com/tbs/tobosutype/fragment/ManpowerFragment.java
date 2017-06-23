@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.EditAccountAcitivity;
 import com.tbs.tobosutype.adapter.WriteAccountAdapter;
+import com.tbs.tobosutype.bean.SaveDataEntity;
 import com.tbs.tobosutype.customview.DateChooseWheelViewDialog;
 import com.tbs.tobosutype.global.AllConstants;
 import com.tbs.tobosutype.model.Constant;
@@ -33,7 +34,6 @@ import com.tbs.tobosutype.utils.Util;
 
 public class ManpowerFragment  extends Fragment {
     private String[] stringArr = {"开工款","施工费","交通","设计","监工","餐饮"};
-
     private WriteAccountAdapter adapter;
     private GridView gvManpower;
 
@@ -41,12 +41,6 @@ public class ManpowerFragment  extends Fragment {
     private EditText etCostMoney;
     private TextView tvCostTime;
     private EditText etCostContent;
-
-    public String nameText ="";
-    public String moneyText ="";
-    public String timeText ="";
-    public String contentText ="";
-
 
 
     @Override
@@ -100,54 +94,7 @@ public class ManpowerFragment  extends Fragment {
     }
 
     private void setClick(){
-//        etCostManpower.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                nameText = etCostManpower.getText().toString();
-//            }
-//        });
-//        etCostMoney.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                moneyText = etCostMoney.getText().toString();
-//            }
-//        });
-//        etCostContent.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                contentText = etCostContent.getText().toString();
-//            }
-//        });
+
         tvCostTime.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -176,13 +123,32 @@ public class ManpowerFragment  extends Fragment {
         public void onReceive(Context context, Intent intent) {
 
             if(AllConstants.ACTION_MANPOWER_FRAGMENT_DATA.equals(intent.getAction())){
-                EditAccountAcitivity.mainTimeText = tvCostTime.getText().toString();
-                EditAccountAcitivity.mainContentText = etCostContent.getText().toString();
-                EditAccountAcitivity.mainMoneyText = etCostMoney.getText().toString();
-                EditAccountAcitivity.mainNameText = etCostManpower.getText().toString();
-                Util.setToast(getActivity(), "=>>" + timeText +"="+contentText+"="+moneyText+"="+nameText);
+                String name = etCostManpower.getText().toString().trim();
+                String typeId = "";
+                if(!"".equals(name) && isOtherType(name)){
+                    typeId = "6";
+                }else {
+                    typeId = "1";
+                }
+                SaveDataEntity entity = new SaveDataEntity(name,
+                        etCostMoney.getText().toString().trim(),tvCostTime.getText().toString().trim(),
+                        etCostContent.getText().toString().trim(), typeId);
+                Intent dataIntent = new Intent(AllConstants.ACTION_GET_FRAGMENT_DATA);
+                dataIntent.putExtra("dataArray", entity.getDataArray());
+                getActivity().sendBroadcast(dataIntent);
             }
         }
+    }
+
+    private boolean isOtherType(String type){
+        for(int i=0; i<stringArr.length; i++){
+            if(type.equals(stringArr[i])){
+                return false;
+            }else {
+                return true;
+            }
+        }
+        return true;
     }
 
     @Override

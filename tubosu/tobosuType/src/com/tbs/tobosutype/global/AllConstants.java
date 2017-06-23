@@ -50,7 +50,8 @@ public class AllConstants {
 
     public static final String ACTION_HOME_SELECT_CITY = "action_home_select_city";
 
-
+    /**获取数据*/
+    public static final String ACTION_GET_FRAGMENT_DATA = "action_get_fragment_data";
     /**人力*/
     public static final String ACTION_MANPOWER_FRAGMENT_DATA = "action_manpower_fragment_data";
     /**建材*/
@@ -76,12 +77,30 @@ public class AllConstants {
      */
 //    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
+    /**
+     * 编辑装修开支
+     */
+    public static final String EDIT_DECORATE_OUTCOME_URL = TOBOSU_URL + "mapp/RenovateExpense/add_renovate_expense";
+
+    /**
+     * 装修开支详情
+     */
+    public static final String OUTCOME_DETAIL_URL = TOBOSU_URL + "mapp/RenovateExpense/renovate_expense_detail";
+
+    /**
+     * 装修开支主页
+     */
+    public static final String OUTCOME_HOMEPAGE_URL = TOBOSU_URL + "mapp/RenovateExpense/get_renovate_expense";
+
+    /**
+     * 装修公司开支记录
+     */
+    public static final String OUTCOME_RECORD_URL = TOBOSU_URL + "mapp/RenovateExpense/get_decorate_record";
 
     /**
      * 装修公司优惠报名订单列表接口
      */
     public static final String DECORATION_COMPANY_PREFERENTIAL_APPLYFOR = TOBOSU_URL + "tapp/company/activitySignupList";
-
 
     /**
      * 第三方绑定接口

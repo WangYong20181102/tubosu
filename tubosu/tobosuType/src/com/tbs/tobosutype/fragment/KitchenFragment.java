@@ -1,5 +1,9 @@
 package com.tbs.tobosutype.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -15,7 +19,9 @@ import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.WriteAccountAdapter;
+import com.tbs.tobosutype.bean.SaveDataEntity;
 import com.tbs.tobosutype.customview.DateChooseWheelViewDialog;
+import com.tbs.tobosutype.global.AllConstants;
 
 /**
  * Created by Lie on 2017/6/21.
@@ -32,11 +38,6 @@ public class KitchenFragment extends Fragment {
     private TextView tvCostTime;
     private EditText etCostContent;
 
-    public String nameText ="";
-    public String moneyText ="";
-    public String timeText ="";
-    public String contentText ="";
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_kitchen, null, false);
@@ -48,10 +49,9 @@ public class KitchenFragment extends Fragment {
     }
 
     private void initData() {
-        nameText = etCostKitchen.getText().toString();
-        moneyText = etCostMoney.getText().toString();
-        timeText = tvCostTime.getText().toString();
-        contentText = etCostContent.getText().toString();
+        receiver = new KitchenReceiver();
+        IntentFilter filter = new IntentFilter(AllConstants.ACTION_KITCHEN_FRAGMENT_DATA);
+        getActivity().registerReceiver(receiver, filter);
     }
 
     private void initAdapter() {
@@ -104,5 +104,49 @@ public class KitchenFragment extends Fragment {
                 chooseTimeDialog.showDateChooseDialog();
             }
         });
+    }
+
+    private KitchenReceiver receiver;
+    private class KitchenReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if(AllConstants.ACTION_KITCHEN_FRAGMENT_DATA.equals(intent.getAction())){
+                String name = etCostKitchen.getText().toString().trim();
+                String typeId = "";
+                if(!"".equals(name) && isOtherType(name)){
+                    typeId  = "6";
+                }else{
+                    typeId = "5";
+                }
+                SaveDataEntity entity = new SaveDataEntity(name,
+                        etCostMoney.getText().toString().trim(),tvCostTime.getText().toString().trim(),
+                        etCostContent.getText().toString().trim(), typeId);
+                Intent dataIntent = new Intent(AllConstants.ACTION_GET_FRAGMENT_DATA);
+                dataIntent.putExtra("dataArray", entity.getDataArray());
+                getActivity().sendBroadcast(dataIntent);
+            }
+        }
+    }
+
+    private boolean isOtherType(String type){
+        for(int i=0; i<stringArr.length; i++){
+            if(type.equals(stringArr[i])){
+                return false;
+            }else {
+                return true;
+            }
+        }
+        return true;
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(receiver!=null){
+            getActivity().unregisterReceiver(receiver);
+        }
     }
 }
