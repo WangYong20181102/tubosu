@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_banner"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/color_icon" >
+        android:background="@color/color_icon">
 
         <ImageView
             android:id="@+id/free_activity_back"
@@ -22,19 +23,19 @@
             android:id="@+id/title_name"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_centerInParent="true"
-            android:text="装好家"
             android:layout_marginLeft="4dip"
             android:layout_marginRight="4dip"
             android:ellipsize="end"
+            android:gravity="center"
             android:singleLine="true"
+            android:text="装好家"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
     </RelativeLayout>
 
-    
+
     <!-- 内容区 -->
     <WebView
         android:id="@+id/wv_free_activity"

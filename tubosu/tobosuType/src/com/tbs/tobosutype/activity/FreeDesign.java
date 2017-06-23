@@ -3,6 +3,7 @@ package com.tbs.tobosutype.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -43,6 +44,7 @@ public class FreeDesign extends Activity {
     private TextView fdTextCity;//选择的城市
     private ImageView fdCitySelect;//选择城市按钮
     private RelativeLayout fdCity;//城市选择框
+    private RelativeLayout fd_title;//顶部banner
 
     private EditText fdTextMyHomeAreaNum;//我家的面积大小
 
@@ -99,6 +101,8 @@ public class FreeDesign extends Activity {
         fdCitySelect = (ImageView) findViewById(R.id.fd_city_select);
         fdTextMyHomeAreaNum = (EditText) findViewById(R.id.fd_text_my_home_area_num);
         fdCity = (RelativeLayout) findViewById(R.id.fd_city);
+        fd_title = (RelativeLayout) findViewById(R.id.fd_title);
+        fd_title.setBackgroundColor(Color.parseColor("#ff882e"));
 
         fdTextMyHomeRoomNum = (EditText) findViewById(R.id.fd_text_my_home_room_num);
         fdTextMyHomeRoomNum.setTag("myRoomNum");

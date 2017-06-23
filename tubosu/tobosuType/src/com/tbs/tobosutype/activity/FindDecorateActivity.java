@@ -453,7 +453,7 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
             builder.create().show();
             getSharedPreferences("FirstLookDecorat", 0).edit().putBoolean("FirstLookDecorat", false).commit();
         }
-        rel_find_decorate_titlebar.setBackgroundResource(R.color.color_icon);
+        rel_find_decorate_titlebar.setBackgroundColor(Color.parseColor("#ff882e"));
     }
 
     /**

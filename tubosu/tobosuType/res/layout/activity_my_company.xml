@@ -2,121 +2,121 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true" >
+    android:fitsSystemWindows="true">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/bg_gray"
-            android:orientation="vertical" >
-			<RelativeLayout
-				android:layout_width="match_parent"
-				android:layout_height="1dp"
-				android:background="@color/activity_bg_color">
-			</RelativeLayout>
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/activity_bg_color"></RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:background="@drawable/my_top_bg" >
-                
-				<RelativeLayout
-				    android:id="@+id/rel_mycompany_msg_set"
-				    android:layout_width="match_parent"
-				    android:layout_height="wrap_content" >
-					<ImageView
-	                    android:id="@+id/iv_system_message_company"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:layout_alignParentRight="true"
-	                    android:layout_marginRight="15dp"
-	                    android:layout_marginTop="10dp"
-	                    android:background="@drawable/my_lingdan_img1" />
-	                
-	                <TextView
-	                    android:id="@+id/tv_not_see_sysmsg"
-	                    android:layout_width="10dp"
-	                    android:layout_height="10dp"
-	                    android:layout_alignParentRight="true"
-	                    android:layout_alignTop="@+id/iv_system_message_company"
-	                    android:layout_marginRight="10dp"
-	                    android:background="@drawable/not_see_orders_count_bg"
-	                    android:gravity="center"
-	                    android:singleLine="true"
-	                    android:textColor="@android:color/white"
-	                    android:textSize="5sp"
-	                    android:visibility="gone" />
-	
-	                <ImageView
-	                    android:id="@+id/mycompany_set"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:layout_marginRight="15dp"
-	                    android:layout_marginTop="10dp"
-	                    android:layout_toLeftOf="@+id/iv_system_message_company"
-	                    android:background="@drawable/my_setting_img" />
-				</RelativeLayout>
-                
-				<RelativeLayout 
-				    android:id="@+id/rel_mycompany_info"
-				    android:layout_width="match_parent"
-				    android:layout_height="wrap_content"
-				    android:layout_marginTop="20dip"
-				    android:layout_below="@+id/rel_mycompany_msg_set">
-	                
-				    <com.tbs.tobosutype.customview.RoundImageView
-	                    android:id="@+id/my_decorate_pic"
-	                    android:layout_width="70dp"
-	                    android:layout_height="70dp"
-	                    android:layout_marginBottom="20dp"
-	                    android:layout_marginLeft="31dp"
-	                    android:scaleType="fitXY"
-	                    android:src="@drawable/myset_logo" />
-	
-	                <TextView
-	                    android:id="@+id/my_decorate_name"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:layout_alignTop="@+id/my_decorate_pic"
-	                    android:layout_marginLeft="8dp"
-	                    android:layout_marginTop="5dp"
-	                    android:layout_toRightOf="@+id/my_decorate_pic"
-	                    android:gravity="center"
-	                    android:textColor="@color/white"
-	                    android:textSize="15sp" />
-	
-	                <ImageView
-	                    android:id="@+id/image_business_license"
-	                    android:layout_width="60dp"
-	                    android:layout_height="20dp"
-	                    android:layout_below="@+id/my_decorate_name"
-	                    android:layout_marginLeft="8dp"
-	                    android:layout_marginTop="5dp"
-	                    android:layout_toRightOf="@+id/my_decorate_pic"
-	                    android:background="@drawable/decorate_detail_license_select" />
-	
-	                <ImageView
-	                    android:id="@+id/image_bao"
-	                    android:layout_width="60dp"
-	                    android:layout_height="20dp"
-	                    android:layout_alignTop="@+id/image_business_license"
-	                    android:layout_marginLeft="5dp"
-	                    android:layout_toRightOf="@+id/image_business_license"
-	                    android:background="@drawable/decorate_detail_bao_select" />
-	                
-				</RelativeLayout>
+                android:background="@drawable/my_top_bg">
+
+                <RelativeLayout
+                    android:id="@+id/rel_mycompany_msg_set"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_system_message_company"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="10dp" />
+
+                    <TextView
+                        android:id="@+id/tv_not_see_sysmsg"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignTop="@+id/iv_system_message_company"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/not_see_orders_count_bg"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="5sp"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/mycompany_set"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toLeftOf="@+id/iv_system_message_company"
+                        android:background="@drawable/my_setting_img" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rel_mycompany_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rel_mycompany_msg_set"
+                    android:layout_marginTop="20dip">
+
+                    <com.tbs.tobosutype.customview.RoundImageView
+                        android:id="@+id/my_decorate_pic"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="31dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/myset_logo" />
+
+                    <TextView
+                        android:id="@+id/my_decorate_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/my_decorate_pic"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/my_decorate_pic"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/image_business_license"
+                        android:layout_width="60dp"
+                        android:layout_height="20dp"
+                        android:layout_below="@+id/my_decorate_name"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/my_decorate_pic"
+                        android:background="@drawable/decorate_detail_license_select" />
+
+                    <ImageView
+                        android:id="@+id/image_bao"
+                        android:layout_width="60dp"
+                        android:layout_height="20dp"
+                        android:layout_alignTop="@+id/image_business_license"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@+id/image_business_license"
+                        android:background="@drawable/decorate_detail_bao_select" />
+
+                </RelativeLayout>
             </RelativeLayout>
 
-            
+
             <RelativeLayout
                 android:id="@+id/my_layout_allorder"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:background="@color/white" >
+                android:background="@color/white">
 
                 <TextView
                     android:id="@+id/my_all_order"
@@ -161,48 +161,49 @@
                 android:layout_width="match_parent"
                 android:layout_height="88dp"
                 android:background="@color/white"
-                android:orientation="horizontal" >
+                android:orientation="horizontal">
 
-                <RelativeLayout 
+                <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center" >
+                    android:gravity="center">
+
                     <TextView
-	                    android:id="@+id/tv_notyet_order_num"
-	                    android:layout_width="10dp"
-	                    android:layout_height="10dp"
-	                    android:layout_marginRight="10dp"
-	                    android:background="@drawable/not_see_orders_count_bg"
-	                    android:gravity="center"
-	                    android:layout_alignRight="@+id/my_notyet_order"
-	                    android:singleLine="true"
-	                    android:textColor="@android:color/white"
-	                    android:textSize="8sp"
-	                    android:visibility="gone" />
-                    
-	                <LinearLayout
-	                    android:id="@+id/my_notyet_order"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:orientation="vertical" >
-	
-	                    <ImageView
-	                        android:layout_width="wrap_content"
-	                        android:layout_height="wrap_content"
-	                        android:background="@drawable/not_amount_room_img" />
-	
-	                    <TextView
-	                        android:layout_width="wrap_content"
-	                        android:layout_height="wrap_content"
-	                        android:layout_marginTop="5dp"
-	                        android:text="未量房"
-	                        android:layout_gravity="center_horizontal"
-	                        android:textColor="@color/color_darkgray"
-	                        android:textSize="12sp" />
-	                </LinearLayout>
+                        android:id="@+id/tv_notyet_order_num"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_alignRight="@+id/my_notyet_order"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/not_see_orders_count_bg"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:textColor="@android:color/white"
+                        android:textSize="8sp"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/my_notyet_order"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/not_amount_room_img" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="5dp"
+                            android:text="未量房"
+                            android:textColor="@color/color_darkgray"
+                            android:textSize="12sp" />
+                    </LinearLayout>
                 </RelativeLayout>
-                
+
 
                 <LinearLayout
                     android:id="@+id/my_yet_order"
@@ -210,7 +211,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -232,7 +233,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -263,12 +264,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:id="@+id/my_layout_network"
@@ -277,7 +278,7 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingLeft="1dp" >
+                        android:paddingLeft="1dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -292,7 +293,7 @@
                             android:textColor="@color/color_darkgray"
                             android:textSize="13sp" />
                     </LinearLayout>
-                    
+
 
                     <ImageView
                         android:layout_width="1dp"
@@ -305,7 +306,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -332,7 +333,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -359,7 +360,7 @@
                     android:layout_height="100dp"
                     android:orientation="horizontal"
                     android:visibility="visible"
-                    android:weightSum="3" >
+                    android:weightSum="3">
 
                     <LinearLayout
                         android:id="@+id/my_layout_feedback"
@@ -367,7 +368,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -382,7 +383,7 @@
                             android:textColor="@color/color_darkgray"
                             android:textSize="13sp" />
                     </LinearLayout>
-                    
+
 
                     <ImageView
                         android:layout_width="1dp"
@@ -390,23 +391,23 @@
                         android:background="@color/bg_gray" />
 
                     <LinearLayout
+                        android:id="@+id/ll_msgnote"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:visibility="invisible"
-                        android:orientation="vertical" >
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/evaluation_management_img" />
+                            android:background="@drawable/msgnote" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="评价管理"
+                            android:text="系统消息"
                             android:textColor="@color/color_darkgray"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -421,8 +422,9 @@
     </ScrollView>
 
     <include
+        layout="@layout/layout_loading_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-		layout="@layout/layout_loading_data" />
+        android:visibility="gone" />
 
 </RelativeLayout>

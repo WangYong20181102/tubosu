@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_banner"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/color_icon" >
+        android:background="@color/color_icon">
 
         <ImageView
             android:id="@+id/iv_back_webview_activity"
@@ -45,10 +46,6 @@
             android:visibility="visible" />
     </RelativeLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/dividing_line_bg" />
 
     <WebView
         android:id="@+id/my_webview"

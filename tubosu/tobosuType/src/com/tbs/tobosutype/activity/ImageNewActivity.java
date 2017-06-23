@@ -188,6 +188,7 @@ public class ImageNewActivity extends Activity {
 //        imgNewRecycleView.setLayoutManager(mStaggeredGridLayoutManager);
         imgNewRecycleView.setOnScrollListener(scrollListener);//添加上拉加载
         imgNewRecycleView.setOnTouchListener(onTouchLis);
+        imgNewReLL.setBackgroundColor(Color.parseColor("#ff882e"));
     }
 
     //初始化图库的公共参数
