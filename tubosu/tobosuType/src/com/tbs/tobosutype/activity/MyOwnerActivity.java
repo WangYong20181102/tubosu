@@ -41,6 +41,7 @@ import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.DensityUtil;
 import com.tbs.tobosutype.utils.FileUtil;
 import com.tbs.tobosutype.utils.HttpServer;
+import com.tbs.tobosutype.utils.Util;
 import com.tbs.tobosutype.utils.WriteUtil;
 import com.tencent.android.tpush.XGCustomPushNotificationBuilder;
 import com.tencent.android.tpush.XGPushManager;
@@ -102,8 +103,8 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 	/**我要反馈布局*/
 	private LinearLayout my_layout_feedback;
 
-    /**消息*/
-    private LinearLayout my_layout_ower_msg;
+//    /**消息*/
+//    private LinearLayout my_layout_ower_msg;
 
 	/**开支*/
 	private LinearLayout my_layout_ower_outcome;
@@ -201,7 +202,7 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 		linearlayout_have_order_information = (LinearLayout) findViewById(R.id.linearlayout_have_order_information);
 		ll_not_order_information = (LinearLayout) findViewById(R.id.ll_not_order_information);
 		my_layout_feedback = (LinearLayout) findViewById(R.id.my_layout_feedback);
-        my_layout_ower_msg = (LinearLayout) findViewById(R.id.my_layout_ower_msg);
+//        my_layout_ower_msg = (LinearLayout) findViewById(R.id.my_layout_ower_msg);
 		my_layout_ower_outcome = (LinearLayout) findViewById(R.id.my_layout_ower_outcome);
 		iv_myowner_set = (ImageView) findViewById(R.id.iv_myowner_set);
 		ll_decorate_security = (LinearLayout) findViewById(R.id.ll_decorate_security);
@@ -258,7 +259,7 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 		myowner_layout_personal_data.setOnClickListener(this);
 		myowner_layout_store_pic.setOnClickListener(this);
 		my_layout_feedback.setOnClickListener(this);
-        my_layout_ower_msg.setOnClickListener(this);
+//        my_layout_ower_msg.setOnClickListener(this);
 		my_layout_ower_outcome.setOnClickListener(this);
 		iv_myowner_set.setOnClickListener(this);
 		tv_find_order.setOnClickListener(this);
@@ -423,19 +424,21 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.rel_my_owenr_user_layout:
 		case R.id.myowner_layout_personal_data:
-			Intent personalIntent = new Intent(mContext, MyOwnerAccountManagerActivity.class);
-			Bundle bundle = new Bundle();
-			bundle.putString("nickname", nickname);
-			bundle.putString("icon", icon);
-			bundle.putString("token", token);
-			bundle.putString("gender", gender);
-			bundle.putString("cityname", cityname);
-			bundle.putString("wechat_check", wechat_check);
-			bundle.putString("cellphone", cellphone);
-			bundle.putString("province", province);
-			bundle.putString("icommunity", icommunity);
-			personalIntent.putExtra("data", bundle);
-			startActivity(personalIntent);
+			if(Util.isNetAvailable(mContext)){
+				Intent personalIntent = new Intent(mContext, MyOwnerAccountManagerActivity.class);
+				Bundle bundle = new Bundle();
+				bundle.putString("nickname", nickname);
+				bundle.putString("icon", icon);
+				bundle.putString("token", token);
+				bundle.putString("gender", gender);
+				bundle.putString("cityname", cityname);
+				bundle.putString("wechat_check", wechat_check);
+				bundle.putString("cellphone", cellphone);
+				bundle.putString("province", province);
+				bundle.putString("icommunity", icommunity);
+				personalIntent.putExtra("data", bundle);
+				startActivity(personalIntent);
+			}
 			break;
 		case R.id.myowner_layout_store_pic:
 //			Intent storeIntent = new Intent(mContext, MyStoreActivity.class);
@@ -451,9 +454,9 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 			Intent intent = new Intent(mContext, FeedbackActivity.class);
 			startActivity(intent);
 			break;
-        case R.id.my_layout_ower_msg:
-            startActivity(new Intent(mContext, SystemMessageActivity.class));
-            break;
+//        case R.id.my_layout_ower_msg:
+//            startActivity(new Intent(mContext, SystemMessageActivity.class));
+//            break;
 		case R.id.my_layout_ower_outcome:
 			if(CacheManager.getFirstTimeRecord(mContext) == -1){
 				startActivity(new Intent(mContext, KeepAccountActivity.class));
