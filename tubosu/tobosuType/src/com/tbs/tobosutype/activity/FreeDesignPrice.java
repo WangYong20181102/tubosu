@@ -23,6 +23,7 @@ import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
+import com.tbs.tobosutype.customview.MyChatView;
 import com.tbs.tobosutype.global.AllConstants;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
@@ -31,6 +32,9 @@ import com.tbs.tobosutype.utils.HttpServer;
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FreeDesignPrice extends Activity {
@@ -41,6 +45,8 @@ public class FreeDesignPrice extends Activity {
     private RequestParams fastLoginParams;//快速注册参数
     private String fastLoginUrl = AllConstants.TOBOSU_URL + "tapp/passport/fast_register";//快速注册接口
     private CustomWaitDialog customWaitDialog;
+    private MyChatView myChatView;
+    private List<Float> floatList = new ArrayList<>();
 
     //要从上个界面传来的数据  显示在这个界面
     private int mPrice;//半包总价格
@@ -102,7 +108,7 @@ public class FreeDesignPrice extends Activity {
     //绑定控件
     private void bindView() {
         fdpLL = (LinearLayout) findViewById(R.id.fdp_ll);
-
+        myChatView = (MyChatView) findViewById(R.id.fdp_my_chat_view);
         fdpBack = (ImageView) findViewById(R.id.fdp_back);
         fdpPrice = (TextView) findViewById(R.id.fdp_price);
 
@@ -127,10 +133,17 @@ public class FreeDesignPrice extends Activity {
     }
 
     private void initView() {
+        floatList.add(9.19f);
+        floatList.add(26.37f);
+        floatList.add(9f);
+        floatList.add(20f);
+        floatList.add(12.63f);
+        floatList.add(22.81f);
         //设置点击事件监听
         fdpBack.setOnClickListener(occl);
         fdpGetcode.setOnClickListener(occl);
         fdpOksend.setOnClickListener(occl);
+        myChatView.setFloatList(floatList);
         //获取上一个界面的传来的数据
         mPhoneNum = intent.getStringExtra("mPhoneNum");
         mPrice = intent.getIntExtra("mPrice", 0);

@@ -11,6 +11,9 @@ import android.view.View;
 
 import com.tbs.tobosutype.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/3/28 0028.
  */
@@ -18,7 +21,16 @@ import com.tbs.tobosutype.R;
 public class MyChatView extends View {
     //-------------必须给的数据相关-------------
     //分配比例大小，总比例大小为100
-    private float[] strPercent = new float[]{9.19f, 26.37f, 9f, 20f, 12.63f, 22.81f};
+    public List<Float> floatList = new ArrayList<>();
+
+    public List<Float> getFloatList() {
+        return floatList;
+    }
+
+    public void setFloatList(List<Float> floatList) {
+        this.floatList = floatList;
+    }
+
     //圆的直径
     private float mRadius;
     //圆的粗细
@@ -32,7 +44,7 @@ public class MyChatView extends View {
     //边框颜色和标注颜色
 
     //厨房  卧室  阳台 其他 卫生间 客厅
-    private int[] mColor = new int[]{Color.parseColor("#82d09c"), Color.parseColor("#62AAE5"),
+    public int[] mColor = new int[]{Color.parseColor("#82d09c"), Color.parseColor("#62AAE5"),
             Color.parseColor("#dcb09e"), Color.parseColor("#f1c663"),
             Color.parseColor("#96b6d6"), Color.parseColor("#ff7f5b")};
     //文字颜色
@@ -99,11 +111,11 @@ public class MyChatView extends View {
     private void drawCycle(Canvas canvas) {
         float startPercent = 0;
         float sweepPercent = 0;
-        for (int i = 0; i < strPercent.length; i++) {
+        for (int i = 0; i < floatList.size(); i++) {
             cyclePaint.setColor(mColor[i]);
             startPercent = sweepPercent + startPercent;
             //这里采用比例占100的百分比乘于360的来计算出占用的角度，使用先乘再除可以算出值
-            sweepPercent = strPercent[i] * 360 / 100;
+            sweepPercent = floatList.get(i) * 360 / 100;
             canvas.drawArc(new RectF(0, 0, mRadius, mRadius), startPercent, sweepPercent, false, cyclePaint);
         }
     }

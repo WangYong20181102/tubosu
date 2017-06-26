@@ -189,20 +189,20 @@
                         android:gravity="center">
 
                         <TextView
-                            android:id="@+id/fdp_weishengjian"
+                            android:id="@+id/da_rengong"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="112dp"
                             android:layout_marginTop="15dp"
-                            android:text="卫生间12.63%"
+                            android:text="人工20.00%"
                             android:textColor="#97b6d6"
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/fdp_text_weishengjian"
+                            android:id="@+id/da_text_rengong"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/fdp_weishengjian"
+                            android:layout_below="@+id/da_rengong"
                             android:layout_marginLeft="125dp"
                             android:layout_marginTop="2dp"
                             android:text="¥8632"
@@ -210,7 +210,7 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/fdp_keting"
+                            android:id="@+id/da_jiancai"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -222,12 +222,12 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/fdp_text_keting"
+                            android:id="@+id/da_text_jiancai"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:layout_below="@+id/fdp_keting"
+                            android:layout_below="@+id/da_jiancai"
                             android:layout_marginRight="42dp"
                             android:layout_marginTop="2dp"
                             android:text="¥14522"
@@ -235,7 +235,7 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/fdp_qita"
+                            android:id="@+id/da_chuwei"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
@@ -245,10 +245,10 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/fdp_text_qita"
+                            android:id="@+id/da_text_chuwei"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/fdp_qita"
+                            android:layout_below="@+id/da_chuwei"
                             android:layout_marginLeft="20dp"
                             android:layout_marginTop="2dp"
                             android:text="¥12666"
@@ -256,7 +256,7 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/fdp_chufang"
+                            android:id="@+id/da_wujin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -268,12 +268,12 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/fdp_text_chufang"
+                            android:id="@+id/da_text_wujin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:layout_below="@+id/fdp_chufang"
+                            android:layout_below="@+id/da_wujin"
                             android:layout_marginRight="32dp"
                             android:layout_marginTop="2dp"
                             android:text="¥7589"
@@ -281,7 +281,7 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/fdp_woshi"
+                            android:id="@+id/da_jiaju"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="140dp"
@@ -291,10 +291,10 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/fdp_text_woshi"
+                            android:id="@+id/da_text_jiaju"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/fdp_woshi"
+                            android:layout_below="@+id/da_jiaju"
                             android:layout_marginLeft="150dp"
                             android:layout_marginTop="2dp"
                             android:text="¥16588"
@@ -302,7 +302,7 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/fdp_yangtai"
+                            android:id="@+id/da_qita"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
@@ -312,10 +312,10 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/fdp_text_yangtai"
+                            android:id="@+id/da_text_qita"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/fdp_yangtai"
+                            android:layout_below="@+id/da_qita"
                             android:layout_marginLeft="25dp"
                             android:layout_marginTop="2dp"
                             android:text="¥4589"
@@ -325,6 +325,10 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="5dp"
                             android:gravity="center"
                             android:orientation="horizontal">
 
@@ -342,7 +346,7 @@
                         </LinearLayout>
 
                         <com.tbs.tobosutype.customview.MyChatView
-                            android:id="@+id/fdp_my_chat_view"
+                            android:id="@+id/da_my_chat_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
@@ -354,8 +358,15 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
 
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/decorate_expence_recycleview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        </android.support.v7.widget.RecyclerView>
                     </LinearLayout>
                 </LinearLayout>
                 <!--记账的记录为空时显示-->
