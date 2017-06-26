@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -21,24 +20,20 @@ import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.activity.LoginActivity;
 import com.tbs.tobosutype.activity.MainActivity;
 import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
 import com.tbs.tobosutype.customview.LoadingWindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
-import com.tbs.tobosutype.utils.Util;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
@@ -102,13 +97,13 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
     /**
      * 快速登录接口 和 注册接口
      */
-    private String fastLoginUrl = AllConstants.TOBOSU_URL + "tapp/passport/fast_register";
+    private String fastLoginUrl = Constant.TOBOSU_URL + "tapp/passport/fast_register";
     /*-------------手机登录相关------------*/
 
 
     /*-------------微信登陆相关------------*/
     private LoadingWindow wechatWindow;
-    private UMSocialService mController = UMServiceFactory.getUMSocialService(AllConstants.DESCRIPTOR);
+    private UMSocialService mController = UMServiceFactory.getUMSocialService(Constant.DESCRIPTOR);
 
     private String weiXinUserName;
     private String weiXinImageUrl;
@@ -117,7 +112,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
     /**
      * 微信第三方登陆接口
      */
-    private String weixinLoginUrl = AllConstants.TOBOSU_URL + "tapp/passport/login_third_party";
+    private String weixinLoginUrl = Constant.TOBOSU_URL + "tapp/passport/login_third_party";
 
     /**
      * 微信参数对象
@@ -222,8 +217,8 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
      */
     private void requestFastLogin() {
         Log.e("登录日志", "====进入请求接口");
-        if (!AllConstants.checkNetwork(getActivity())) {
-            AllConstants.toastNetOut(getActivity());
+        if (!Constant.checkNetwork(getActivity())) {
+            Constant.toastNetOut(getActivity());
             return;
         }
 
@@ -464,7 +459,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
                 getActivity().startActivity(intent);
 
 //                Intent i = new Intent();
-//                i.setAction(AllConstants.LOGIN_ACTION);
+//                i.setAction(Constant.LOGIN_ACTION);
 //                getActivity().sendBroadcast(i);
 
 

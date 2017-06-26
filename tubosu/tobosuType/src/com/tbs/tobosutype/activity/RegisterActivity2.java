@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.http.HttpPost;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HintInput;
@@ -40,10 +40,10 @@ public class RegisterActivity2 extends Activity implements OnClickListener {
 	private Button reg_two_button;
 	
 	/***注册接口*/
-	private String registerUrl = AllConstants.TOBOSU_URL + "tapp/passport/fast_register?";
+	private String registerUrl = Constant.TOBOSU_URL + "tapp/passport/fast_register?";
 
 	/****/
-	private String urlBase = AllConstants.TOBOSU_URL + "tapp/passport/get_pic_code?version=";
+	private String urlBase = Constant.TOBOSU_URL + "tapp/passport/get_pic_code?version=";
 	private String phone, smsVerif;
 	private String token;
 

@@ -27,7 +27,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HintInput;
 import com.tbs.tobosutype.utils.HttpServer;
@@ -47,7 +47,7 @@ public class BindingPhoneActivity extends Activity implements OnClickListener {
     private String phone;
     int count = 60;
 
-    private String bangdingCellphoneUrl = AllConstants.TOBOSU_URL + "tapp/passport/app_bangding_cellphone";
+    private String bangdingCellphoneUrl = Constant.TOBOSU_URL + "tapp/passport/app_bangding_cellphone";
     RequestParams bangdingCellphoneParms;
     private String verfication;
     private String token;

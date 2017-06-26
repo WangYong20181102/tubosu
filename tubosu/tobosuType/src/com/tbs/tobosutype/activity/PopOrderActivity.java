@@ -36,7 +36,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.PopAdapter;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.customview.TextSeekBar;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.Util;
@@ -60,8 +60,8 @@ import static com.tbs.tobosutype.utils.CacheManager.getOngoingStyle;
 
 public class PopOrderActivity extends Activity {
     private static final String TAG = PopOrderActivity.class.getSimpleName();
-    private static final String popOrderUrl = AllConstants.TOBOSU_URL + "tapi/order/pub_order";
-    private static final String pipe_code = AllConstants.PIPE; // 渠道代码
+    private static final String popOrderUrl = Constant.TOBOSU_URL + "tapi/order/pub_order";
+    private static final String pipe_code = Constant.PIPE; // 渠道代码
     private Context mContext;
 
     private RelativeLayout relBar;
@@ -777,9 +777,9 @@ public class PopOrderActivity extends Activity {
                 tvCityLocation1.setText(" 当前位置 " + city);
                 break;
         }
-        if(AllConstants.HOMEFRAGMENT_REQUESTCODE==requestCode){
+        if(Constant.HOMEFRAGMENT_REQUESTCODE==requestCode){
             fromActivity = 1;
-            setResult(AllConstants.FINISH_MAINACTIVITY);
+            setResult(Constant.FINISH_MAINACTIVITY);
         }
     }
 
@@ -1300,7 +1300,7 @@ public class PopOrderActivity extends Activity {
                     tv_question_title.setVisibility(View.VISIBLE);
                 }else if(position==0){
                     if(gopoporder_code==34){
-                        setResult(AllConstants.POP_RESULTCODE);
+                        setResult(Constant.POP_RESULTCODE);
                         startActivity(new Intent(mContext, MainActivity.class));
                     }
 
@@ -1501,8 +1501,8 @@ public class PopOrderActivity extends Activity {
                 hashMap.put("source", "942");
                 hashMap.put("city", CacheManager.getCity(mContext));
                 hashMap.put("version", AppInfoUtil.getAppVersionName(mContext));
-                hashMap.put("urlhistory", AllConstants.PIPE); // 渠道代码
-                hashMap.put("comeurl", AllConstants.PIPE); //订单发布页面
+                hashMap.put("urlhistory", Constant.PIPE); // 渠道代码
+                hashMap.put("comeurl", Constant.PIPE); //订单发布页面
                 return hashMap;
             }
         };

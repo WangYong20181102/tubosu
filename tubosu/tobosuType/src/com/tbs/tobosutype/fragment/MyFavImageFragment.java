@@ -19,7 +19,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,8 +37,7 @@ import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.ImageDetailActivity;
 import com.tbs.tobosutype.activity.MyFavActivity;
-import com.tbs.tobosutype.global.AllConstants;
-import com.tbs.tobosutype.protocol.JpyProtocol;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
@@ -61,10 +59,10 @@ public class MyFavImageFragment extends Fragment {
 	private FavImageAdapter favImageAdapter;
 	
 	/**我的收藏接口*/
-	private String urlstore = AllConstants.TOBOSU_URL + "tapp/user/my_fav";
+	private String urlstore = Constant.TOBOSU_URL + "tapp/user/my_fav";
 	
 	/**添加或取消 接口*/
-	private String delUrl = AllConstants.TOBOSU_URL + "tapp/user/fav";
+	private String delUrl = Constant.TOBOSU_URL + "tapp/user/fav";
 	
 	private int page = 1;
 	private int pageSize = 70;

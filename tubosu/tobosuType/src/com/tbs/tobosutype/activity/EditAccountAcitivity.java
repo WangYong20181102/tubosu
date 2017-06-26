@@ -21,7 +21,7 @@ import com.tbs.tobosutype.fragment.KitchenFragment;
 import com.tbs.tobosutype.fragment.ManpowerFragment;
 import com.tbs.tobosutype.fragment.MaterialFragment;
 import com.tbs.tobosutype.fragment.SteelFragment;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.Util;
@@ -157,15 +157,15 @@ public class EditAccountAcitivity extends FragmentActivity{
                 Intent intent = null;
                 // 请求网络
                 if(saveData==0){
-                    intent = new Intent(AllConstants.ACTION_MANPOWER_FRAGMENT_DATA);
+                    intent = new Intent(Constant.ACTION_MANPOWER_FRAGMENT_DATA);
                 }else if(saveData==1){
-                    intent = new Intent(AllConstants.ACTION_MATERIAL_FRAGMENT_DATA);
+                    intent = new Intent(Constant.ACTION_MATERIAL_FRAGMENT_DATA);
                 }else if(saveData==2){
-                    intent = new Intent(AllConstants.ACTION_STEEL_FRAGMENT_DATA);
+                    intent = new Intent(Constant.ACTION_STEEL_FRAGMENT_DATA);
                 }else if(saveData==3){
-                    intent = new Intent(AllConstants.ACTION_FURNITURE_FRAGMENT_DATA);
+                    intent = new Intent(Constant.ACTION_FURNITURE_FRAGMENT_DATA);
                 }else if(saveData==4){
-                    intent = new Intent(AllConstants.ACTION_KITCHEN_FRAGMENT_DATA);
+                    intent = new Intent(Constant.ACTION_KITCHEN_FRAGMENT_DATA);
                 }
                 sendBroadcast(intent);
             }
@@ -183,7 +183,7 @@ public class EditAccountAcitivity extends FragmentActivity{
 
     private void initDataRecever(){
         receiver = new DataReceiver();
-        IntentFilter filter = new IntentFilter(AllConstants.ACTION_GET_FRAGMENT_DATA);
+        IntentFilter filter = new IntentFilter(Constant.ACTION_GET_FRAGMENT_DATA);
         registerReceiver(receiver, filter);
     }
 
@@ -192,7 +192,7 @@ public class EditAccountAcitivity extends FragmentActivity{
 
         @Override
         public void onReceive(final Context context, Intent intent) {
-            if(AllConstants.ACTION_GET_FRAGMENT_DATA.equals(intent.getAction())){
+            if(Constant.ACTION_GET_FRAGMENT_DATA.equals(intent.getAction())){
                 String dataArray[] = intent.getStringArrayExtra("dataArray");
                 if(dataArray!=null){
                     mainNameText = dataArray[0];
@@ -229,7 +229,7 @@ public class EditAccountAcitivity extends FragmentActivity{
                         hashMap.put("cost", mainMoneyText);
                         hashMap.put("expend_time", mainTimeText);
                         hashMap.put("content", mainContentText);
-                        okHttpUtil.post(AllConstants.EDIT_DECORATE_OUTCOME_URL, hashMap, new OKHttpUtil.BaseCallBack() {
+                        okHttpUtil.post(Constant.EDIT_DECORATE_OUTCOME_URL, hashMap, new OKHttpUtil.BaseCallBack() {
                             @Override
                             public void onSuccess(Response response, String json) {
                                 Util.setErrorLog(TAG, json);
@@ -237,7 +237,7 @@ public class EditAccountAcitivity extends FragmentActivity{
                                     JSONObject obj = new JSONObject(json);
                                     if(obj.getInt("status")==200){
                                         Util.setToast(context, getToastMesssage(saveData)+"添加成功");
-                                        setResultCode(AllConstants.FINISH_SAVE_EDIT_OUTCOME);
+                                        setResultCode(Constant.FINISH_SAVE_EDIT_OUTCOME);
                                         finish();
                                     }else if(obj.getInt("status")==0){
                                         Util.setToast(context, getToastMesssage(saveData)+"添加失败,稍后再试!");

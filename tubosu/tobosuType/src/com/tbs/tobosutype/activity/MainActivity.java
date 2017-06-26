@@ -23,9 +23,8 @@ import android.widget.TextView;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.Util;
 import com.tencent.android.tpush.XGPushManager;
@@ -93,7 +92,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     /**
      * 在[我]按钮 显示订单数目的接口地址
      */
-    private String requsetUrl = AllConstants.TOBOSU_URL + "tapp/user/my";
+    private String requsetUrl = Constant.TOBOSU_URL + "tapp/user/my";
 
     private RequestParams requestParams;
 
@@ -220,9 +219,9 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     private void initReceiver() {
         receiver = new NetStateReceiver();
         IntentFilter filter = new IntentFilter();
-        filter.addAction(AllConstants.NET_STATE_ACTION);
-//        filter.addAction(AllConstants.LOGIN_ACTION);
-//        filter.addAction(AllConstants.LOGOUT_ACTION);
+        filter.addAction(Constant.NET_STATE_ACTION);
+//        filter.addAction(Constant.LOGIN_ACTION);
+//        filter.addAction(Constant.LOGOUT_ACTION);
         registerReceiver(receiver, filter);
     }
 
@@ -602,7 +601,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(AllConstants.NET_STATE_ACTION)) {
+            if (intent.getAction().equals(Constant.NET_STATE_ACTION)) {
                 // 有网络时
                 Bundle b = intent.getBundleExtra("Net_Flag_String_Bundle");
                 Message m = new Message();
@@ -616,9 +615,9 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
             }
 
 //            // 以下跟网络无关 只是我不想再写一个广播类了
-//            else if (intent.getAction().equals(AllConstants.LOGOUT_ACTION)) {
+//            else if (intent.getAction().equals(Constant.LOGOUT_ACTION)) {
 //                setFragmentPosition(0);
-//            } else if (intent.getAction().equals(AllConstants.LOGIN_ACTION)) {
+//            } else if (intent.getAction().equals(Constant.LOGIN_ACTION)) {
 //                setFragmentPosition(3);
 //            }
         }

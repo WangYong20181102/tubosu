@@ -4,52 +4,35 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.AnimationDrawable;
-import android.media.Image;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Adapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.customview.ObservableScrollView;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
-import com.tbs.tobosutype.utils.HintInput;
 import com.tbs.tobosutype.utils.HttpServer;
-import com.tbs.tobosutype.utils.ScreenUtils;
-import com.tbs.tobosutype.utils.ShareUtil;
 import com.tbs.tobosutype.utils.Util;
 
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 /**
  * 首页免费设计按钮  跳转过来的 报价页面  [本来是加载html5页面， 袁总说需要安卓原生页面, 几经周折改成如下页面 ]
@@ -331,15 +314,15 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 				return;
 			}
 
-			if(AllConstants.checkNetwork(mContext)){
+			if(Constant.checkNetwork(mContext)){
 
 				pubOrderParams.put("", name); // FIXME 接口需要更改
 				pubOrderParams.put("cellphone", phone);
 				pubOrderParams.put("city", city);
 				Util.setLog(TAG, "免费预约的城市是" + city);
-				pubOrderParams.put("urlhistory", AllConstants.PIPE);
+				pubOrderParams.put("urlhistory", Constant.PIPE);
 				// 发单入口
-				pubOrderParams.put("comeurl", AllConstants.PIPE);
+				pubOrderParams.put("comeurl", Constant.PIPE);
 				if (!TextUtils.isEmpty(userid)) {
 					pubOrderParams.put("userid", userid);
 				} else {
@@ -348,7 +331,7 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 				pubOrderParams.put("source", "1112");
 				requestPubOrder();
 			}else{
-				AllConstants.toastNetOut(mContext);
+				Constant.toastNetOut(mContext);
 			}
 			break;
 		}
@@ -360,7 +343,7 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 	 */
 	private void requestPubOrder() {
 		showLoadingView();
-		HttpServer.getInstance().requestPOST(AllConstants.PUB_ORDERS, pubOrderParams, new AsyncHttpResponseHandler() {
+		HttpServer.getInstance().requestPOST(Constant.PUB_ORDERS, pubOrderParams, new AsyncHttpResponseHandler() {
 
 					@Override
 					public void onSuccess(int arg0, Header[] arg1, byte[] body) {

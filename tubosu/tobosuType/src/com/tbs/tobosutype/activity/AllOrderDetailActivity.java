@@ -32,7 +32,7 @@ import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CallDialogCompany;
 import com.tbs.tobosutype.customview.LfPwdPopupWindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CheckOrderUtils;
@@ -230,7 +230,7 @@ public class AllOrderDetailActivity extends Activity implements OnClickListener 
     /**
      * 订单详情接口
      */
-    private String orderDetailUrl = AllConstants.TOBOSU_URL + "tapp/order/order_detail";
+    private String orderDetailUrl = Constant.TOBOSU_URL + "tapp/order/order_detail";
 
     public String order_id;
     private String order_issee;
@@ -250,7 +250,7 @@ public class AllOrderDetailActivity extends Activity implements OnClickListener 
     private RelativeLayout rl_top;
 
     /***订单量房接口*/
-    private String lfangUrl = AllConstants.TOBOSU_URL + "tapp/order/lfang";
+    private String lfangUrl = Constant.TOBOSU_URL + "tapp/order/lfang";
 
     /***加载更多*/
     private LinearLayout detail_allorder_loading;

@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.CalculaterActivity;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.ShareUtil;
 
@@ -1032,10 +1032,10 @@ public class PaintFragment extends Fragment {
 						}else if("".equals(total_price)){
 							Toast.makeText(getActivity(),total_price, Toast.LENGTH_SHORT).show();
 							String url = "&tbsNum="+ total_num;
-							new ShareUtil(getActivity(), tvPaintShare, "我的装修，来自一砖一瓦", "我需要"+total_num+"升",  AllConstants.CALCULATER_SHARE_URL + url);
+							new ShareUtil(getActivity(), tvPaintShare, "我的装修，来自一砖一瓦", "我需要"+total_num+"升",  Constant.CALCULATER_SHARE_URL + url);
 						}else{
 							String url = "tbsPrice="+ total_price +"&tbsNum="+ total_num;
-							new ShareUtil(getActivity(), tvPaintShare, "我的装修，来自一砖一瓦", "我需要"+total_num+"升", AllConstants.CALCULATER_SHARE_URL + url);
+							new ShareUtil(getActivity(), tvPaintShare, "我的装修，来自一砖一瓦", "我需要"+total_num+"升", Constant.CALCULATER_SHARE_URL + url);
 						}
 					}
 				});

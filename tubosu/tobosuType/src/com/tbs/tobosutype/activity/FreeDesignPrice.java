@@ -23,8 +23,7 @@ import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
-import com.tbs.tobosutype.customview.MyChatView;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
@@ -33,9 +32,6 @@ import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class FreeDesignPrice extends Activity {
     private String TAG = "FreeDesignPrice";
@@ -43,10 +39,8 @@ public class FreeDesignPrice extends Activity {
     private Context mContext;
     private int count = 60;//倒计时时间
     private RequestParams fastLoginParams;//快速注册参数
-    private String fastLoginUrl = AllConstants.TOBOSU_URL + "tapp/passport/fast_register";//快速注册接口
+    private String fastLoginUrl = Constant.TOBOSU_URL + "tapp/passport/fast_register";//快速注册接口
     private CustomWaitDialog customWaitDialog;
-    private MyChatView myChatView;
-    private List<Float> floatList = new ArrayList<>();
 
     //要从上个界面传来的数据  显示在这个界面
     private int mPrice;//半包总价格
@@ -108,7 +102,7 @@ public class FreeDesignPrice extends Activity {
     //绑定控件
     private void bindView() {
         fdpLL = (LinearLayout) findViewById(R.id.fdp_ll);
-        myChatView = (MyChatView) findViewById(R.id.fdp_my_chat_view);
+
         fdpBack = (ImageView) findViewById(R.id.fdp_back);
         fdpPrice = (TextView) findViewById(R.id.fdp_price);
 
@@ -133,17 +127,10 @@ public class FreeDesignPrice extends Activity {
     }
 
     private void initView() {
-        floatList.add(9.19f);
-        floatList.add(26.37f);
-        floatList.add(9f);
-        floatList.add(20f);
-        floatList.add(12.63f);
-        floatList.add(22.81f);
         //设置点击事件监听
         fdpBack.setOnClickListener(occl);
         fdpGetcode.setOnClickListener(occl);
         fdpOksend.setOnClickListener(occl);
-        myChatView.setFloatList(floatList);
         //获取上一个界面的传来的数据
         mPhoneNum = intent.getStringExtra("mPhoneNum");
         mPrice = intent.getIntExtra("mPrice", 0);
@@ -177,7 +164,7 @@ public class FreeDesignPrice extends Activity {
                     break;
                 case R.id.fdp_get_code:
                     //走获取验证码的方法
-                    if (AllConstants.checkNetwork(mContext)) {
+                    if (Constant.checkNetwork(mContext)) {
                         if ("重新获取".equals(fdpGetcode.getText().toString()) || "获取验证码".equals(fdpGetcode.getText().toString())) {
                             GetVerificationPopupwindow popupwindow = new GetVerificationPopupwindow(mContext);
                             popupwindow.phone = mPhoneNum;
@@ -193,7 +180,7 @@ public class FreeDesignPrice extends Activity {
                     break;
                 case R.id.fdp_ok_send:
                     //走接口  快速注册
-                    if (AllConstants.checkNetwork(mContext)) {
+                    if (Constant.checkNetwork(mContext)) {
                         if (!TextUtils.isEmpty(fdpInputCode.getText().toString().trim())) {
                             customWaitDialog.show();
                             fastLoginParams = AppInfoUtil.getPublicParams(mContext);
@@ -202,8 +189,8 @@ public class FreeDesignPrice extends Activity {
                             fastLoginParams.put("system_type", "1");
                             fastLoginParams.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
                             fastLoginParams.put("msg_code", fdpInputCode.getText().toString().trim());
-                            fastLoginParams.put("urlhistory", AllConstants.PIPE); // 渠道代码
-                            fastLoginParams.put("comeurl", AllConstants.PIPE); //订单发布页面
+                            fastLoginParams.put("urlhistory", Constant.PIPE); // 渠道代码
+                            fastLoginParams.put("comeurl", Constant.PIPE); //订单发布页面
                             requestFastLogin();
                         } else {
                             Toast.makeText(mContext, "验证码不能为空！", Toast.LENGTH_SHORT).show();

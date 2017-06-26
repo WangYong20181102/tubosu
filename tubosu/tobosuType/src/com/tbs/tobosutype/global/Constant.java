@@ -8,8 +8,9 @@ import android.widget.Toast;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 
 
-public class AllConstants {
+public class Constant {
     public static final String DESCRIPTOR = "com.umeng.login";
+    public static final String DESCRIPTOR_SHARE = "com.umeng.share";
 
     public static final String UMENG_KEY = "5657b48a67e58ed2b30040bc";
     private static final String TIPS = "请移步官方网站 ";
@@ -30,6 +31,7 @@ public class AllConstants {
 
 	/*----------以下是新增加的------------*/
 
+    public static final int UNLOGIN_TO_LOGIN_RESULTCODE = 0x000018;
     public static final int POP_RESULTCODE = 0x0000027;
     public static final int HOMEFRAGMENT_REQUESTCODE = 0x0000028;
     public static final int FINISH_MAINACTIVITY = 0x0000030;
@@ -131,8 +133,12 @@ public class AllConstants {
     //                              http://www.tobosu.com/tapi/order/pub_order
 
 
-    //    public static final String PIPE = "http://m.tobosu.com/app/pub?channel=seo&subchannel=android&chcode=" + AllConstants.CHANNEL_TYPE;
-    public static final String PIPE = "http://m.tobosu.com/app/pub?channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    /**
+     * app_type 1是土拨鼠
+     *          2是装好家
+     *          3效果图
+     */
+    public static final String PIPE = "http://m.tobosu.com/app/pub?channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "&app_type=1";
 
     public static final String WANGJIANLIN = "&tbsfrom=share";
 
@@ -140,80 +146,6 @@ public class AllConstants {
     public static final String M_POP_PARAM = "&channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
 
     public static final String ANDROID_SHARE = "&channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "&tbsfrom=share";
-
-
-    //	public static final String CHANNEL_TYPE = "aisi";/**渠道-- > 爱思助手*/
-//	public static final String CHANNEL_TYPE = "anbei";/**渠道-- > 安贝市场*/
-//	public static final String CHANNEL_TYPE = "anfen";	/**渠道-- > 安粉*/
-//	public static final String CHANNEL_TYPE = "anfeng";/**渠道-- > 安丰网*/
-//	public static final String CHANNEL_TYPE = "anzhi";/**渠道-- > 安智市场*/
-//	public static final String CHANNEL_TYPE = "anzhuo";/**渠道-- > 安卓市场*/
-//	public static final String CHANNEL_TYPE = "anzhuofamily";/**渠道-- > 安卓之家*/
-//	public static final String CHANNEL_TYPE = "anzhuoyuan";/**渠道-- > 安卓园市场*/
-//	public static final String CHANNEL_TYPE = "appbaidu";/**渠道-- > 百度*/
-//	public static final String CHANNEL_TYPE = "apphuawei";/**渠道-- > 华为应用商店*/
-//	public static final String CHANNEL_TYPE = "applenovo";/**渠道-- > 联想应用商店*/
-//	public static final String CHANNEL_TYPE = "appmeizu";/**渠道-- > 魅族应用商店*/
-//	public static final String CHANNEL_TYPE = "appoppo";	/**渠道-- > oppo应用商店*/
-//	public static final String CHANNEL_TYPE = "appqihu";/**渠道-- > 360手机助手*/
-//	public static final String CHANNEL_TYPE = "appttt";/**渠道-- > 锤子应用商店*/
-//	public static final String CHANNEL_TYPE = "appvivo";/**渠道-- > vivo应用商店*/
-//	public static final String CHANNEL_TYPE = "appwdj";/**渠道-- > 豌豆荚应用商店*/
-//	public static final String CHANNEL_TYPE = "appxiaomi";/**渠道-- > 小米应用商店*/
-//	public static final String CHANNEL_TYPE = "appyyb";/**渠道-- > 腾讯应用宝*/
-//	public static final String CHANNEL_TYPE = "bikeer";/**渠道-- > 比克尔*/
-//	public static final String CHANNEL_TYPE = "changhong";/**渠道-- > 长虹*/
-//	public static final String CHANNEL_TYPE = "feifan";/**渠道-- > 非凡软件*/
-//	public static final String CHANNEL_TYPE = "fengfeng";/**渠道-- > 锋锋网*/
-//	public static final String CHANNEL_TYPE = "gaoqu";/**渠道-- > 搞趣*/
-//	public static final String CHANNEL_TYPE = "itools";/**渠道-- > itools*/
-//	public static final String CHANNEL_TYPE = "jifeng";/**渠道-- > 机锋市场*/
-//	public static final String CHANNEL_TYPE = "jinli";	/**渠道-- > 易用汇（金立手机）*/
-//	public static final String CHANNEL_TYPE = "kuaiyong";/**渠道-- > 快用*/
-//	public static final String CHANNEL_TYPE = "kuchuan";/**渠道-- > 酷传*/
-//	public static final String CHANNEL_TYPE = "kupai";/**渠道-- > 酷派*/
-//	public static final String CHANNEL_TYPE = "lenovowow";/**渠道-- > 中国联通沃商店*/
-//	public static final String CHANNEL_TYPE = "leshi";/**渠道-- > 乐视应用商店*/
-//	public static final String CHANNEL_TYPE = "liqu";/**渠道-- > 历趣网*/
-//	public static final String CHANNEL_TYPE = "maopao";/**渠道-- > 冒泡堂*/
-//	public static final String CHANNEL_TYPE = "mogu";/**渠道-- > 蘑菇市场*/
-//	public static final String CHANNEL_TYPE = "mumayi";/**渠道-- > 木蚂蚁*/
-//	public static final String CHANNEL_TYPE = "nduo";/**渠道-- > n多网*/
-//	public static final String CHANNEL_TYPE = "nineoneMarket";/**渠道-- > 91手机助手*/
-//	public static final String CHANNEL_TYPE = "nineonezhushou"; //  91zhushou 91手机助手
-//	public static final String CHANNEL_TYPE = "pingguoyuan";/**渠道-- > 苹果园*/
-//	public static final String CHANNEL_TYPE = "ppzhushou";/**渠道-- > pp助手*/
-//	public static final String CHANNEL_TYPE = "shizimao";	/**渠道-- > 十宇猫*/
-//	public static final String CHANNEL_TYPE = "shuajidashi";/**渠道-- > 刷机大师/应用酷*/
-//	public static final String CHANNEL_TYPE = "sougou";/**渠道-- > 搜狗助手市场*/
-//	public static final String CHANNEL_TYPE = "souhu";/**渠道-- > 搜狐*/
-//	public static final String CHANNEL_TYPE = "sumsung";/**渠道-- > 三星应用商店*/
-//	public static final String CHANNEL_TYPE = "suning";	/**渠道-- > 苏宁应用*/
-//	public static final String CHANNEL_TYPE = "taobao";/**渠道-- > 淘宝手机市场*/
-//	public static final String CHANNEL_TYPE = "threeMarket";/**渠道-- > 3G市场*/
-//	public static final String CHANNEL_TYPE = "tianyi";/**渠道-- > 中国电信天翼*/
-//	public static final String CHANNEL_TYPE = "tompda";/**渠道-- > TOMPDA*/
-//	public static final String CHANNEL_TYPE = "tongbu";	/**渠道-- > 同步推*/
-//	public static final String CHANNEL_TYPE = "ucmarket";	/**渠道-- > UC应用市场*/
-//	public static final String CHANNEL_TYPE = "wangxun";/**渠道-- > 网讯安卓*/
-//	public static final String CHANNEL_TYPE = "wangyi";/**渠道-- > 网易应用中心*/
-//	public static final String CHANNEL_TYPE = "weibo";/**渠道-- > 微博应用中心*/
-//	public static final String CHANNEL_TYPE = "wujiwang";/**渠道-- > 无极网*/
-//	public static final String CHANNEL_TYPE = "xy";/**渠道-- > xy苹果助手*/
-//	public static final String CHANNEL_TYPE = "yidongmm";/**渠道-- > 中国移动*/
-//	public static final String CHANNEL_TYPE = "yingyonghui";/**渠道-- > 应用汇*/
-//	public static final String CHANNEL_TYPE = "youyi";/**渠道-- > 优益市场*/
-//	public static final String CHANNEL_TYPE = "zhonguanchun";/**渠道-- > 中关村*/
-//	public static final String CHANNEL_TYPE = "zhongxin";/**渠道-- > 中兴应用*/
-//	public static final String CHANNEL_TYPE = "zhuole";/**渠道-- > 卓乐*/
-//	public static final String CHANNEL_TYPE = "zuimei";/**渠道-- > 最美应用*/
-//    public static final String CHANNEL_TYPE = "tobosu1";
-
-    /**
-     * 渠道-- > 备用1
-     */
-//	public static final String CHANNEL_TYPE = "tobosu2";
-//	public static final String CHANNEL_TYPE = "tobosu3";
 
 
     /**

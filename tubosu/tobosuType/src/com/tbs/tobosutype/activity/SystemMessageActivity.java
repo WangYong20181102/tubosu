@@ -27,7 +27,7 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.xlistview.XListView;
@@ -65,12 +65,12 @@ public class SystemMessageActivity extends Activity implements IXListViewListene
     /**
      * 消息列表接口
      */
-    private String userSystemMessageUrl = AllConstants.TOBOSU_URL + "tapp/msg/user_msg";
+    private String userSystemMessageUrl = Constant.TOBOSU_URL + "tapp/msg/user_msg";
 
     /**
      * 读取消息外链接口
      */
-    private String userMsgOne = AllConstants.TOBOSU_URL + "tapp/msg/user_msg_one";
+    private String userMsgOne = Constant.TOBOSU_URL + "tapp/msg/user_msg_one";
 
     private RequestParams userMsgParams;
     private RequestParams userMsgOneParams;

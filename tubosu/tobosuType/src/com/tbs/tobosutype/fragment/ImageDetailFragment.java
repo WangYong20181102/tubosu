@@ -21,8 +21,6 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.ApplyforSuccessActivity;
-import com.tbs.tobosutype.activity.ImageDetailActivity;
-import com.tbs.tobosutype.activity.ImageDetailNewActivity;
 import com.tbs.tobosutype.activity.ImageDetailsFullScreenActivity;
 import com.tbs.tobosutype.activity.LoginActivity;
 import com.tbs.tobosutype.bean._CardDataItem;
@@ -30,7 +28,7 @@ import com.tbs.tobosutype.bean._ImageDetail;
 import com.tbs.tobosutype.customview.CardSlidePanel;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.customview.DesignFreePopupWindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
@@ -65,10 +63,10 @@ public class ImageDetailFragment extends Fragment {
     private DesignFreePopupWindow designPopupWindow;//底部弹窗按钮
 
     /***效果图详情接口*/
-    private String imgDetailUrl = AllConstants.TOBOSU_URL + "tapp/impression/detail";
+    private String imgDetailUrl = Constant.TOBOSU_URL + "tapp/impression/detail";
 
     /***添加取消收藏接口*/
-    private String favUrl = AllConstants.TOBOSU_URL + "/tapp/user/fav";
+    private String favUrl = Constant.TOBOSU_URL + "/tapp/user/fav";
 
     private List<String> singleMap = new ArrayList<String>();
 
@@ -138,14 +136,14 @@ public class ImageDetailFragment extends Fragment {
         imgDetailParams.put("token", AppInfoUtil.getToekn(mContext));
         imgDetailParams.put("id", id);
         imgDetailParams.put("url", url);
-        imgDetailParams.put("urlhistory", AllConstants.PIPE); // 渠道代码
-        imgDetailParams.put("comeurl", AllConstants.PIPE); //订单发布页面
+        imgDetailParams.put("urlhistory", Constant.PIPE); // 渠道代码
+        imgDetailParams.put("comeurl", Constant.PIPE); //订单发布页面
         HttpRequestImgDetail();
     }
 
     private void HttpRequestImgDetail() {
-        if (!AllConstants.checkNetwork(mContext)) {
-            AllConstants.toastNetOut(mContext);
+        if (!Constant.checkNetwork(mContext)) {
+            Constant.toastNetOut(mContext);
             return;
         }
         HttpServer.getInstance().requestPOST(imgDetailUrl, imgDetailParams, new AsyncHttpResponseHandler() {
@@ -374,8 +372,8 @@ public class ImageDetailFragment extends Fragment {
                     }
                     MobclickAgent.onEvent(mContext, "click_find_decoration_array_design_3.0");
                     pubOrderParams.put("cellphone", phone);
-                    pubOrderParams.put("comeurl", AllConstants.PIPE);
-                    pubOrderParams.put("urlhistory", AllConstants.PIPE);
+                    pubOrderParams.put("comeurl", Constant.PIPE);
+                    pubOrderParams.put("urlhistory", Constant.PIPE);
                     pubOrderParams.put("source", "893");
                     pubOrderParams.put("city", AppInfoUtil.getCityName(mContext));
 
@@ -396,7 +394,7 @@ public class ImageDetailFragment extends Fragment {
          */
         private void HttpRequestPubOrder() {
             customWaitDialog.show();
-            HttpServer.getInstance().requestPOST(AllConstants.PUB_ORDERS, pubOrderParams, new AsyncHttpResponseHandler() {
+            HttpServer.getInstance().requestPOST(Constant.PUB_ORDERS, pubOrderParams, new AsyncHttpResponseHandler() {
 
                 @Override
                 public void onSuccess(int arg0, Header[] arg1, byte[] body) {

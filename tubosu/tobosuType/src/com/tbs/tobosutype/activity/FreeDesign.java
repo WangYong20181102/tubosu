@@ -21,7 +21,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 
@@ -212,7 +212,7 @@ public class FreeDesign extends Activity {
                     onClickChangeNum(fdTextMyHomeYangTai, 1);
                     break;
                 case R.id.fd_btn_ok:
-//                    Toast.makeText(mContext, "当前渠道版本" + AppInfoUtil.getChannType(mContext) + "====当前的PIPE===" + AllConstants.PIPE, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(mContext, "当前渠道版本" + AppInfoUtil.getChannType(mContext) + "====当前的PIPE===" + Constant.PIPE, Toast.LENGTH_LONG).show();
                     if (AppInfoUtil.getTypeid(mContext).equals("3")) {
                         //当前为装修公司用户拦截其发单
                         Toast.makeText(mContext, "当前登录用户为装修公司无法获取报价", Toast.LENGTH_LONG).show();
@@ -235,7 +235,7 @@ public class FreeDesign extends Activity {
      */
     private void okBtnMessag() {
         String MOBILE = "^1(3[0-9]|5[0-35-9]|7[0136-8]|8[0-9])\\d{8}$";
-        if (AllConstants.checkNetwork(mContext)) {
+        if (Constant.checkNetwork(mContext)) {
             if (!TextUtils.isEmpty(fdEditPhoneNum.getText().toString())) {
                 if (fdEditPhoneNum.getText().toString().matches(MOBILE)) {
                     if (fdTextMyHomeRoomNum.getText().toString().equals("0")
@@ -455,9 +455,9 @@ public class FreeDesign extends Activity {
         pubOrderParams.put("decorate_price", mPrice);
         pubOrderParams.put("cellphone", fdEditPhoneNum.getText().toString());//用户的手机号码
         pubOrderParams.put("city", fdTextCity.getText().toString());//用户所选的城市
-        pubOrderParams.put("urlhistory", AllConstants.PIPE);
+        pubOrderParams.put("urlhistory", Constant.PIPE);
         // 发单入口
-        pubOrderParams.put("comeurl", AllConstants.PIPE);
+        pubOrderParams.put("comeurl", Constant.PIPE);
         if (!TextUtils.isEmpty(userid)) {
             pubOrderParams.put("userid", userid);
         } else {
@@ -470,7 +470,7 @@ public class FreeDesign extends Activity {
 
     //发单请求
     private void HttpRequestPubOrder(RequestParams params) {
-        HttpServer.getInstance().requestPOST(AllConstants.PUB_ORDERS, params, new AsyncHttpResponseHandler() {
+        HttpServer.getInstance().requestPOST(Constant.PUB_ORDERS, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
                 String result = new String(bytes);

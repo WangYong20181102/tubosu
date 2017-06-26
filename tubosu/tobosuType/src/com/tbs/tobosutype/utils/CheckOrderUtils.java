@@ -22,11 +22,9 @@ import com.tbs.tobosutype.activity.AllOrderDetailActivity;
 import com.tbs.tobosutype.activity.AllOrderListActivity;
 import com.tbs.tobosutype.activity.MyCompanyActivity;
 import com.tbs.tobosutype.customview.CheckOrderPwdPopupWindow;
-import com.tbs.tobosutype.customview.CustomDialog;
-import com.tbs.tobosutype.customview.CustomDialog.Builder;
 import com.tbs.tobosutype.customview.InputWarnDialog;
 import com.tbs.tobosutype.customview.SettingOrderPwdPopupWindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 
 public class CheckOrderUtils {
 	
@@ -45,13 +43,13 @@ public class CheckOrderUtils {
 	private String token;
 	
 	/***订单是否设置密码*/
-	private String hasOrderPwdUrl = AllConstants.TOBOSU_URL + "tapp/order/hasOrderPwd";
+	private String hasOrderPwdUrl = Constant.TOBOSU_URL + "tapp/order/hasOrderPwd";
 	
 	/***订单填写密码*/
-	private String setOrderPwdUrl = AllConstants.TOBOSU_URL + "tapp/passport/setOrderPwd";
+	private String setOrderPwdUrl = Constant.TOBOSU_URL + "tapp/passport/setOrderPwd";
 	
 	/***订单验证密码*/
-	private String requestOrderPwdUrl = AllConstants.TOBOSU_URL + "tapp/order/checkOrderPwd";
+	private String requestOrderPwdUrl = Constant.TOBOSU_URL + "tapp/order/checkOrderPwd";
 	
 	/***有密码-请求参数对象*/
 	private RequestParams hasOrderParams;

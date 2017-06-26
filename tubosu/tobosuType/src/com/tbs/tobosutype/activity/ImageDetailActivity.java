@@ -11,7 +11,6 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -33,7 +32,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.DesignFreePopupWindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
@@ -56,10 +55,10 @@ public class ImageDetailActivity extends Activity implements OnClickListener, On
     private RelativeLayout rel_image_detail_activity_toptitlelayout;
 
     /***效果图详情接口*/
-    private String imgDetailUrl = AllConstants.TOBOSU_URL + "tapp/impression/detail";
+    private String imgDetailUrl = Constant.TOBOSU_URL + "tapp/impression/detail";
 
     /***添加取消收藏接口*/
-    private String favUrl = AllConstants.TOBOSU_URL + "/tapp/user/fav";
+    private String favUrl = Constant.TOBOSU_URL + "/tapp/user/fav";
 
     private String favConid;
 
@@ -207,8 +206,8 @@ public class ImageDetailActivity extends Activity implements OnClickListener, On
      * 效果图详情 接口请求
      */
     private void requestImgDetail() {
-        if (!AllConstants.checkNetwork(mContext)) {
-            AllConstants.toastNetOut(mContext);
+        if (!Constant.checkNetwork(mContext)) {
+            Constant.toastNetOut(mContext);
             return;
         }
 
@@ -541,8 +540,8 @@ public class ImageDetailActivity extends Activity implements OnClickListener, On
                     MobclickAgent.onEvent(mContext, "click_find_decoration_array_design_for_me");
                     pubOrderParams.put("cellphone", phone);
 //				pubOrderParams.put("comeurl", "http://m.tobosu.com/?channel=product&subchannel=android&chcode=android"); [原来的url]
-                    pubOrderParams.put("comeurl", AllConstants.PIPE);
-                    pubOrderParams.put("urlhistory", AllConstants.PIPE);
+                    pubOrderParams.put("comeurl", Constant.PIPE);
+                    pubOrderParams.put("urlhistory", Constant.PIPE);
                     pubOrderParams.put("source", "893");
                     pubOrderParams.put("city", AppInfoUtil.getCityName(getApplicationContext()));
 //				pubOrderParams.put("device", AppInfoUtil.getDeviceName());
@@ -567,7 +566,7 @@ public class ImageDetailActivity extends Activity implements OnClickListener, On
          * 输入电话号码发单接口请求
          */
         private void requestPubOrder() {
-            HttpServer.getInstance().requestPOST(AllConstants.PUB_ORDERS, pubOrderParams, new AsyncHttpResponseHandler() {
+            HttpServer.getInstance().requestPOST(Constant.PUB_ORDERS, pubOrderParams, new AsyncHttpResponseHandler() {
 
                 @Override
                 public void onSuccess(int arg0, Header[] arg1, byte[] body) {

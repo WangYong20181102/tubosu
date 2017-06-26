@@ -44,7 +44,7 @@ import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.DesignFreePopupWindow;
 import com.tbs.tobosutype.customview.TouchImageView;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
@@ -86,17 +86,17 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
     private String id;
 
     /***效果图详情接口*/
-    private String imageDetaiUrl = AllConstants.TOBOSU_URL + "tapp/impression/detail";
+    private String imageDetaiUrl = Constant.TOBOSU_URL + "tapp/impression/detail";
 
     /**
      * 添加取消收藏接口
      */
-    private String favUrl = AllConstants.TOBOSU_URL + "/tapp/user/fav";
+    private String favUrl = Constant.TOBOSU_URL + "/tapp/user/fav";
 
     /**
      * 发单入口接口
      */
-    private String pubOrderUrl = AllConstants.TOBOSU_URL + "tapi/order/pub_order";
+    private String pubOrderUrl = Constant.TOBOSU_URL + "tapi/order/pub_order";
 
     /**
      * 安卓url
@@ -201,7 +201,7 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
 
             @Override
             public void onClick(View v) {
-                if (AllConstants.checkNetwork(mContext)) {
+                if (Constant.checkNetwork(mContext)) {
                     // 效果图下载线程
                     new Thread(saveFileRunnable).start();
                 } else {
@@ -556,8 +556,8 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
                         RequestParams params = AppInfoUtil.getPublicParams(getApplicationContext());
                         params.put("cellphone", phone);
                         params.put("city", cityid);
-                        params.put("urlhistory", AllConstants.PIPE); // 渠道代码
-                        params.put("comeurl", AllConstants.PIPE); //订单发布页面
+                        params.put("urlhistory", Constant.PIPE); // 渠道代码
+                        params.put("comeurl", Constant.PIPE); //订单发布页面
                         params.put("comeurl", androidUrl);
                         if (!TextUtils.isEmpty(userid)) {
                             params.put("userid", userid);

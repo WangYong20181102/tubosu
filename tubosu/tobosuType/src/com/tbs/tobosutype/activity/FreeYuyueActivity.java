@@ -20,7 +20,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HintInput;
 import com.tbs.tobosutype.utils.HttpServer;
@@ -146,7 +146,7 @@ public class FreeYuyueActivity extends Activity implements OnClickListener {
                 }
 
 
-                if (AllConstants.checkNetwork(mContext)) {
+                if (Constant.checkNetwork(mContext)) {
                     showLoadingView();
                     if (!TextUtils.isEmpty(free_yuyue_input_obtainphone.getText() + "")) {
                         pubOrderParams.put("housearea", area);
@@ -154,9 +154,9 @@ public class FreeYuyueActivity extends Activity implements OnClickListener {
                         pubOrderParams.put("cellphone", phone);
                         pubOrderParams.put("city", city);//深圳
                         System.out.println("FreeYuYueActivity 免费预约的城市是" + city);
-                        pubOrderParams.put("urlhistory", AllConstants.PIPE);
+                        pubOrderParams.put("urlhistory", Constant.PIPE);
                         // 发单入口
-                        pubOrderParams.put("comeurl", AllConstants.PIPE);
+                        pubOrderParams.put("comeurl", Constant.PIPE);
                         if (!TextUtils.isEmpty(userid)) {
                             pubOrderParams.put("userid", userid);
                         } else {
@@ -166,7 +166,7 @@ public class FreeYuyueActivity extends Activity implements OnClickListener {
                         requestPubOrder();
                     }
                 } else {
-                    AllConstants.toastNetOut(mContext);
+                    Constant.toastNetOut(mContext);
                 }
                 break;
         }
@@ -177,7 +177,7 @@ public class FreeYuyueActivity extends Activity implements OnClickListener {
      * 发单接口请求
      */
     private void requestPubOrder() {
-        HttpServer.getInstance().requestPOST(AllConstants.PUB_ORDERS, pubOrderParams, new AsyncHttpResponseHandler() {
+        HttpServer.getInstance().requestPOST(Constant.PUB_ORDERS, pubOrderParams, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int arg0, Header[] arg1, byte[] body) {

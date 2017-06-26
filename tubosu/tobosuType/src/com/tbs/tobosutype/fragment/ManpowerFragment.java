@@ -9,8 +9,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +18,10 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.activity.EditAccountAcitivity;
 import com.tbs.tobosutype.adapter.WriteAccountAdapter;
 import com.tbs.tobosutype.bean.SaveDataEntity;
 import com.tbs.tobosutype.customview.DateChooseWheelViewDialog;
-import com.tbs.tobosutype.global.AllConstants;
-import com.tbs.tobosutype.model.Constant;
-import com.tbs.tobosutype.utils.DensityUtil;
-import com.tbs.tobosutype.utils.Util;
+import com.tbs.tobosutype.global.Constant;
 
 /**
  * Created by Lie on 2017/6/21.
@@ -57,7 +51,7 @@ public class ManpowerFragment  extends Fragment {
 
     private void initData() {
         receiver = new ManPowerReceiver();
-        IntentFilter filter = new IntentFilter(AllConstants.ACTION_MANPOWER_FRAGMENT_DATA);
+        IntentFilter filter = new IntentFilter(Constant.ACTION_MANPOWER_FRAGMENT_DATA);
         getActivity().registerReceiver(receiver, filter);
 
     }
@@ -122,7 +116,7 @@ public class ManpowerFragment  extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            if(AllConstants.ACTION_MANPOWER_FRAGMENT_DATA.equals(intent.getAction())){
+            if(Constant.ACTION_MANPOWER_FRAGMENT_DATA.equals(intent.getAction())){
                 String name = etCostManpower.getText().toString().trim();
                 String typeId = "";
                 if(!"".equals(name) && isOtherType(name)){
@@ -133,7 +127,7 @@ public class ManpowerFragment  extends Fragment {
                 SaveDataEntity entity = new SaveDataEntity(name,
                         etCostMoney.getText().toString().trim(),tvCostTime.getText().toString().trim(),
                         etCostContent.getText().toString().trim(), typeId);
-                Intent dataIntent = new Intent(AllConstants.ACTION_GET_FRAGMENT_DATA);
+                Intent dataIntent = new Intent(Constant.ACTION_GET_FRAGMENT_DATA);
                 dataIntent.putExtra("dataArray", entity.getDataArray());
                 getActivity().sendBroadcast(dataIntent);
             }

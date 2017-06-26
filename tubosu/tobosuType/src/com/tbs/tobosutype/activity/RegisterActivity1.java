@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.http.HttpPost;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HintInput;
@@ -89,7 +89,7 @@ public class RegisterActivity1 extends Activity implements OnClickListener {
 	}
 
 	private void sendMessage(HashMap<String, String> map) {
-		String result = HttpPost.doPost(AllConstants.TOBOSU_URL + "tapp/passport/query_mobile?", map, "utf-8");
+		String result = HttpPost.doPost(Constant.TOBOSU_URL + "tapp/passport/query_mobile?", map, "utf-8");
 		try {
 			if (result != null) {
 				JSONObject object = new JSONObject(result);

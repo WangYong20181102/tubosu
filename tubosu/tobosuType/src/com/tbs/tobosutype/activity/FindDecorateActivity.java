@@ -44,7 +44,7 @@ import com.tbs.tobosutype.customview.BusinessLicensePopupWindow;
 import com.tbs.tobosutype.customview.FirstLookDecoratDialog;
 import com.tbs.tobosutype.customview.GalleryGridView;
 import com.tbs.tobosutype.customview.VouchersPopupWindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
 import com.tbs.tobosutype.utils.HttpServer;
@@ -60,7 +60,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -274,17 +273,17 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
     /**
      * 装修公司列表接口
      */
-    private String dataUrl = AllConstants.TOBOSU_URL + "/tapp/company/company_list";
+    private String dataUrl = Constant.TOBOSU_URL + "/tapp/company/company_list";
 
     /**
      * 品牌logo接口
      */
-    private String getAdsUrl = AllConstants.TOBOSU_URL + "tapp/util/getAds";
+    private String getAdsUrl = Constant.TOBOSU_URL + "tapp/util/getAds";
 
     /**
      * 广告位接口
      */
-    private String adsenseUrl = AllConstants.TOBOSU_URL + "tapp/util/adsense";
+    private String adsenseUrl = Constant.TOBOSU_URL + "tapp/util/adsense";
 
     /**
      * 装修公司列表
@@ -482,12 +481,12 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
 
 
         Intent intent = new Intent();
-        intent.setAction(AllConstants.NET_STATE_ACTION);
+        intent.setAction(Constant.NET_STATE_ACTION);
         Bundle b = null;
 
         loadData();
 
-        if (AllConstants.checkNetwork(mContext)) { // 有网络
+        if (Constant.checkNetwork(mContext)) { // 有网络
             netOutView.setVisibility(View.GONE);
             findDecorateLinearLayout.setVisibility(View.VISIBLE);
             b = new Bundle();
@@ -1366,7 +1365,7 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
 
     private void inintReceiver() {
         IntentFilter filter = new IntentFilter();
-        filter.addAction(AllConstants.ACTION_HOME_SELECT_CITY);
+        filter.addAction(Constant.ACTION_HOME_SELECT_CITY);
         receiver = new RefreshCityReceiver();
         registerReceiver(receiver, filter);
     }
@@ -1377,7 +1376,7 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(AllConstants.ACTION_HOME_SELECT_CITY)) {
+            if (intent.getAction().equals(Constant.ACTION_HOME_SELECT_CITY)) {
                 tv_city.setText(intent.getBundleExtra("f_select_city_bundle").getString("city_selected"));
             }
         }

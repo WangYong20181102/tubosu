@@ -23,7 +23,7 @@ import com.tbs.tobosutype.activity.DecorateCompanyDetailActivity;
 import com.tbs.tobosutype.activity.DesignChartAcitivity;
 import com.tbs.tobosutype.activity.ImageDetailActivity;
 import com.tbs.tobosutype.activity.LoginActivity;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
@@ -71,7 +71,7 @@ public class ImageAdapter extends BaseAdapter {
 	private ArrayList<String> favListFromNet = new ArrayList<String>();
 	
 	/**添加或者取消 收藏接口*/
-	private String favUrl = AllConstants.TOBOSU_URL + "/tapp/user/fav";
+	private String favUrl = Constant.TOBOSU_URL + "/tapp/user/fav";
 	
 	/**获取未点击操作前的 状态*/
 //	private String get_hav_fav = "";
@@ -234,8 +234,8 @@ public class ImageAdapter extends BaseAdapter {
 			return;
 		}
 		
-		if(!AllConstants.checkNetwork(mContext)){
-			AllConstants.toastNetOut(mContext);
+		if(!Constant.checkNetwork(mContext)){
+			Constant.toastNetOut(mContext);
 			return;
 		}
 		

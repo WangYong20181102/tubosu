@@ -55,14 +55,14 @@ android {
 
     productFlavors {
         aisi {}
-        anbei {}
-        anfen {}
-        anfeng {}
+//        anbei {}
+//        anfen {}
+//        anfeng {}
         ali {}
         anzhi {}
-        anzhuo {}
-        anzhuofamily {}
-        anzhuoyuan {}
+//        anzhuo {}
+//        anzhuofamily {}
+//        anzhuoyuan {}
         appbaidu {}
         apphuawei {}
         applenovo {}
@@ -74,50 +74,50 @@ android {
         appwdj {}
         appxiaomi {}
         appyyb {}
-        bikeer {}
-        changhong {}
-        feifan {}
-        fengfeng {}
+//        bikeer {}
+//        changhong {}
+//        feifan {}
+//        fengfeng {}
         gaoqu {}
         itools {}
         jifeng {}
         jinli {}
         kuaiyong {}
-        kuchuan {}
+//        kuchuan {}
         kupai {}
-        lenovowow {}
+//        lenovowow {}
         leshi {}
         liqu {}
-        maopao {}
-        mogu {}
+//        maopao {}
+//        mogu {}
         mumayi {}
         nduo {}
-        nineoneMarket {}
+//        nineoneMarket {}
         nineonezhushou {}
         pingguoyuan {}
-        shizimao {}
-        shuajidashi {}
+//        shizimao {}
+//        shuajidashi {}
         sougou {}
-        souhu {}
+//        souhu {}
         sumsung {}
-        suning {}
+//        suning {}
         taobao {}
         threeMarket {}
-        tianyi {}
-        tompda {}
+//        tianyi {}
+//        tompda {}
         tongbu {}
         ucmarket {}
-        wangxun {}
-        wangyi {}
-        weibo {}
-        wujiwang {}
+//        wangxun {}
+//        wangyi {}
+//        weibo {}
+//        wujiwang {}
         xy {}
-        yidongmm {}
+//        yidongmm {}
         yingyonghui {}
         youyi {}
-        zhonguanchun {}
+//        zhonguanchun {}
         zhongxin {}
-        zhuole {}
+//        zhuole {}
         zuimei {}
         kuan {}
         tobosu1 {}

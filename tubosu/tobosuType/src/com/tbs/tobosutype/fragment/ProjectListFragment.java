@@ -25,7 +25,7 @@ import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.SelectedImageDetailActivity;
 import com.tbs.tobosutype.customview.RoundAngleImageView;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 import com.tbs.tobosutype.utils.Util;
@@ -52,7 +52,7 @@ public class ProjectListFragment extends Fragment implements IXListViewListener 
 	private XListView xlistView_projectlist;
 
 	/**精选专题*/
-	private String getListUrl = AllConstants.TOBOSU_URL + "tapp/spcailpic/get_list";
+	private String getListUrl = Constant.TOBOSU_URL + "tapp/spcailpic/get_list";
 
 	private RequestParams getListParams;
 	private int pageSize;

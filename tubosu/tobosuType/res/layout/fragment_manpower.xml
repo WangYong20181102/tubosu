@@ -44,6 +44,7 @@
             android:layout_centerVertical="true"
             android:paddingLeft="14dp"
             android:hint="请输入开支名称"
+            android:textColorHint="#B4B4B4"
             android:background="@color/white"
             android:textSize="18sp"
             android:layout_toRightOf="@+id/tv_manpower_name"/>
@@ -76,7 +77,9 @@
             android:layout_centerVertical="true"
             android:paddingLeft="14dp"
             android:textSize="18sp"
+            android:textColorHint="#B4B4B4"
             android:digits="0.123456789"
+            android:inputType="number"
             android:hint="请输入开支金额"
             android:background="@color/white"
             android:layout_toRightOf="@+id/tv_manpower_cs"/>
@@ -111,6 +114,7 @@
             android:layout_marginLeft="21dp"
             android:gravity="center"
             android:textSize="18sp"
+            android:textColorHint="#B4B4B4"
             android:hint="请输入开支时间"
             android:background="@color/white"
             android:layout_toRightOf="@+id/tv_manpower_time"/>
@@ -144,7 +148,8 @@
             android:layout_centerVertical="true"
             android:paddingLeft="14dp"
             android:textSize="18sp"
-            android:hint="请输入备注信息"
+            android:textColorHint="#B4B4B4"
+            android:hint="请输入开支备注信息"
             android:background="@color/white"
             android:layout_toRightOf="@+id/tv_manpower_cont"/>
         

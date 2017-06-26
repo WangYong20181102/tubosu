@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,13 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.activity.ApplyforSuccessActivity;
 import com.tbs.tobosutype.activity.BindingPhoneActivity;
 import com.tbs.tobosutype.activity.FindPwdActivity2;
 import com.tbs.tobosutype.activity.FreeDesignPrice;
 import com.tbs.tobosutype.activity.LoginActivity;
 import com.tbs.tobosutype.activity.RegisterActivity2;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.http.HttpClientHelper;
 import com.tbs.tobosutype.utils.HintInput;
 import com.tbs.tobosutype.utils.Util;
@@ -50,7 +48,7 @@ public class GetVerificationPopupwindow extends PopupWindow {
     private TextView tv_ensure;
     public EditText et_input;
     private HashMap<String, Object> headerMap = new HashMap<String, Object>();
-    private String urlBase = AllConstants.TOBOSU_URL + "tapp/passport/get_pic_code?version=";
+    private String urlBase = Constant.TOBOSU_URL + "tapp/passport/get_pic_code?version=";
     private String header;
     private Handler imageVerifHandler = new Handler();
     private Context mContext;
@@ -162,7 +160,7 @@ public class GetVerificationPopupwindow extends PopupWindow {
             Looper.prepare();
             if (header != null) {
                 String[] split = header.split(";");
-                String result = HttpClientHelper.doPostSubmit(AllConstants.TOBOSU_URL + "tapp/passport/app_sms_code?" + System.currentTimeMillis(), map, split[0]);
+                String result = HttpClientHelper.doPostSubmit(Constant.TOBOSU_URL + "tapp/passport/app_sms_code?" + System.currentTimeMillis(), map, split[0]);
                 int errorCode = -1;
                 try {
                     if (result != null) {

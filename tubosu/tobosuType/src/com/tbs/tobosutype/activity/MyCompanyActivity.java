@@ -23,7 +23,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.RoundImageView;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CheckOrderUtils;
@@ -171,7 +171,7 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
     /**
      * 我的【装修公司】接口
      */
-    private String myUrl = AllConstants.TOBOSU_URL + "tapp/user/my";
+    private String myUrl = Constant.TOBOSU_URL + "tapp/user/my";
 
     private LinearLayout ll_loading;
     private LinearLayout ll_msgnote;//消息

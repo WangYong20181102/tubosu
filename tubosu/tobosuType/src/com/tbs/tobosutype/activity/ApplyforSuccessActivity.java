@@ -21,7 +21,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HintInput;
 import com.tbs.tobosutype.utils.HttpServer;
@@ -59,7 +59,7 @@ public class ApplyforSuccessActivity extends Activity implements OnClickListener
     /**
      * 快速注册用户接口
      */
-    private String fastLoginUrl = AllConstants.TOBOSU_URL + "tapp/passport/fast_register";
+    private String fastLoginUrl = Constant.TOBOSU_URL + "tapp/passport/fast_register";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

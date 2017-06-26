@@ -18,7 +18,6 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean._DecorationExpent;
 import com.tbs.tobosutype.customview.MyChatView;
 import com.tbs.tobosutype.global.OKHttpUtil;
-import com.tbs.tobosutype.model.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.Util;
 
@@ -142,7 +141,6 @@ public class DecorateAccountActivity extends Activity {
             seekProgress.setBackgroundResource(R.color.budget_red);
             tvState.setText(budgetTips[2]);
         }
-
     }
 
     private void setClick() {

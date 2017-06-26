@@ -67,7 +67,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.SelectPersonalPopupWindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
 import com.tbs.tobosutype.utils.HttpServer;
@@ -101,7 +101,7 @@ public class FeedbackActivity extends Activity {
     /**
      * 反馈接口
      */
-    private String feedBackUrl = AllConstants.TOBOSU_URL + "tapp/util/feedback";
+    private String feedBackUrl = Constant.TOBOSU_URL + "tapp/util/feedback";
 
     private RequestParams feedbackParams;
     private String mode;
@@ -702,7 +702,7 @@ public class FeedbackActivity extends Activity {
 
 
     /*** 上传图片到此接口*/
-    private String imgUrl = AllConstants.TOBOSU_URL + "cloud/upload/upload_for_ke?";
+    private String imgUrl = Constant.TOBOSU_URL + "cloud/upload/upload_for_ke?";
 
     /**
      * 上传图片成功与否得到的结果

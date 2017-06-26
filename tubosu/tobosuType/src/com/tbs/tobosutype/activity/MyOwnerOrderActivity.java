@@ -34,7 +34,7 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
 import com.tbs.tobosutype.utils.HttpServer;
@@ -238,7 +238,7 @@ public class MyOwnerOrderActivity extends Activity {
      */
     private void requestMyOwnerOderPost() {
 
-        HttpServer.getInstance().requestPOST(AllConstants.MY_OWNER_ODER_URL, params, new AsyncHttpResponseHandler() {
+        HttpServer.getInstance().requestPOST(Constant.MY_OWNER_ODER_URL, params, new AsyncHttpResponseHandler() {
 
             @Override
             public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {

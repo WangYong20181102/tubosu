@@ -34,7 +34,7 @@ import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.customview.SelectPersonalPopupWindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
@@ -134,16 +134,16 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 	private Bitmap photo = null;
 	
 	/*** 上传头像的接口*/
-	private String imgUrl = AllConstants.TOBOSU_URL + "cloud/upload/upload_for_ke?";
+	private String imgUrl = Constant.TOBOSU_URL + "cloud/upload/upload_for_ke?";
 	
 	/***我的[业主]接口*/
-	private String userMyUrl = AllConstants.TOBOSU_URL + "tapp/user/my";
+	private String userMyUrl = Constant.TOBOSU_URL + "tapp/user/my";
 	
 	/***找回订单接口*/
-	private String retrieveOrderUrl = AllConstants.TOBOSU_URL + "tapp/order/retrieveOrder";
+	private String retrieveOrderUrl = Constant.TOBOSU_URL + "tapp/order/retrieveOrder";
 	
 	/***修改用户信息接口*/
-	private String userChageInfoUrl = AllConstants.TOBOSU_URL + "tapp/user/chage_user_info";
+	private String userChageInfoUrl = Constant.TOBOSU_URL + "tapp/user/chage_user_info";
 	
 	private String resultStr = "";
 	

@@ -31,7 +31,7 @@ import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.ChooseActivity;
 import com.tbs.tobosutype.activity.MainActivity;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.umeng.analytics.MobclickAgent;
@@ -190,12 +190,12 @@ public class ChooseDecorateDesignFragment extends Fragment{
 		pubOrderParams.put("housearea", ChooseActivity.chooseString.get(1));
 		pubOrderParams.put("city", city);//必传
 		System.out.println("ChooseDecorateDesignFragment -- 必传城市是" + city);
-		pubOrderParams.put("urlhistory", AllConstants.PIPE);
+		pubOrderParams.put("urlhistory", Constant.PIPE);
 		
 		System.out.println("类型["+ChooseActivity.chooseString.get(0)+"]  面积["+ChooseActivity.chooseString.get(1)+"]  电话["+et_input_cellnum_design.getText().toString().trim()+"]");
 		
 		// 发单入口
-		pubOrderParams.put("comeurl", AllConstants.PIPE);
+		pubOrderParams.put("comeurl", Constant.PIPE);
 		userid = AppInfoUtil.getUserid(getActivity().getApplicationContext());
 		if (!TextUtils.isEmpty(userid)) {
 			pubOrderParams.put("userid", userid);
@@ -211,7 +211,7 @@ public class ChooseDecorateDesignFragment extends Fragment{
 	 */
 	private void requestPubOrder() {
 		
-		HttpServer.getInstance().requestPOST(AllConstants.PUB_ORDERS, pubOrderParams, new AsyncHttpResponseHandler() {
+		HttpServer.getInstance().requestPOST(Constant.PUB_ORDERS, pubOrderParams, new AsyncHttpResponseHandler() {
 
 					@Override
 					public void onSuccess(int arg0, Header[] arg1, byte[] body) {

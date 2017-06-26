@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,7 +19,6 @@ import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.DecorateCompanyDetailActivity;
-import com.tbs.tobosutype.global.AllConstants;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 	/**
 	 * 找装修页面中 装修公司列表适配器
