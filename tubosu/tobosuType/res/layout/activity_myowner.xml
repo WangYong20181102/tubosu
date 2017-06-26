@@ -30,6 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="13dp"
+                    android:background="@drawable/my_lingdan_img1"
                     android:layout_marginTop="18dp" />
 					<!-- 信封图标是 icon_mail -->
 					
@@ -53,7 +54,7 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/not_see_orders_count_bg"
                     android:gravity="center"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:text="9+"
                     android:textColor="@android:color/white"
                     android:textSize="5sp"
@@ -420,7 +421,7 @@
                         android:background="@color/bg_gray" />
 					<!-- 第二行第二个格 -->
                     <LinearLayout
-                        android:id="@+id/my_layout_ower_msg"
+                        android:id="@+id/my_layout_ower_outcome"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -432,13 +433,13 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/msgnote" />
+                            android:background="@drawable/kaizhi" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="消息"
+                            android:text="装修开支"
                             android:textColor="@color/color_darkgray"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -450,14 +451,14 @@
                     <!-- 第二行第三个格  装修开支-->
 
                     <LinearLayout
-                        android:id="@+id/my_layout_ower_outcome"
+                        android:id="@+id/my_layout_ower_outcome0000"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="vertical"
                         android:paddingLeft="1dp"
-                        android:visibility="visible" >
+                        android:visibility="gone" >
 
                         <ImageView
                             android:layout_width="wrap_content"

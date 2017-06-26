@@ -43,7 +43,7 @@
             android:layout_height="34dp"
             android:layout_centerVertical="true"
             android:paddingLeft="14dp"
-            android:hint="请输入本次开支名称"
+            android:hint="请输入开支名称"
             android:background="@color/white"
             android:textSize="18sp"
             android:layout_toRightOf="@+id/tv_manpower_name"/>
@@ -77,7 +77,7 @@
             android:paddingLeft="14dp"
             android:textSize="18sp"
             android:digits="0.123456789"
-            android:hint="请输入本次开支金额"
+            android:hint="请输入开支金额"
             android:background="@color/white"
             android:layout_toRightOf="@+id/tv_manpower_cs"/>
 
@@ -111,7 +111,7 @@
             android:layout_marginLeft="21dp"
             android:gravity="center"
             android:textSize="18sp"
-            android:hint="请输入本次开支时间"
+            android:hint="请输入开支时间"
             android:background="@color/white"
             android:layout_toRightOf="@+id/tv_manpower_time"/>
 

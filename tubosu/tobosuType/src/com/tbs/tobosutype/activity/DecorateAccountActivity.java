@@ -40,7 +40,8 @@ public class DecorateAccountActivity extends Activity {
     private TextView tvStartAccount;
     private RelativeLayout relDataEmpty;
     private LinearLayout relDataLaout;
-    private RelativeLayout decsdfsdf_bar;
+    private RelativeLayout decorateAccBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +69,8 @@ public class DecorateAccountActivity extends Activity {
         tvStartAccount = (TextView) findViewById(R.id.tv_start_account);
         relDataEmpty = (RelativeLayout) findViewById(R.id.rel_data_empty);
         relDataLaout = (LinearLayout) findViewById(R.id.rel_data_layout);
-        decsdfsdf_bar = (RelativeLayout) findViewById(R.id.decsdfsdf_bar);
-        decsdfsdf_bar.setBackgroundColor(Color.parseColor("#ff882e"));
+        decorateAccBar = (RelativeLayout) findViewById(R.id.decorate_acc_bar);
+        decorateAccBar.setBackgroundColor(Color.parseColor("#ff882e"));
 
         if (seekProgress.getProgress() >= 0 && seekProgress.getProgress() <= 20) {
             seekProgress.setProgress(20);

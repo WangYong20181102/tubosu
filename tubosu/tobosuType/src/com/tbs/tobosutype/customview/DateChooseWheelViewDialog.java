@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Looper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -489,6 +492,11 @@ public class DateChooseWheelViewDialog extends Dialog implements View.OnClickLis
 
         if (null != mDialog) {
 
+            Window dialogWindow = mDialog.getWindow();
+            dialogWindow.setGravity( Gravity.BOTTOM);
+            WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+            lp.y = 20;
+            dialogWindow.setAttributes(lp);
             mDialog.show();
             return;
         }
@@ -499,6 +507,13 @@ public class DateChooseWheelViewDialog extends Dialog implements View.OnClickLis
         }
 
         mDialog.setCanceledOnTouchOutside(true);
+
+        Window dialogWindow = mDialog.getWindow();
+        dialogWindow.setGravity( Gravity.BOTTOM);
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        lp.y = 20;
+        dialogWindow.setAttributes(lp);
+
         mDialog.show();
     }
 

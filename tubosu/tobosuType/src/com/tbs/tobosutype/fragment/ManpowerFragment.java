@@ -26,6 +26,7 @@ import com.tbs.tobosutype.bean.SaveDataEntity;
 import com.tbs.tobosutype.customview.DateChooseWheelViewDialog;
 import com.tbs.tobosutype.global.AllConstants;
 import com.tbs.tobosutype.model.Constant;
+import com.tbs.tobosutype.utils.DensityUtil;
 import com.tbs.tobosutype.utils.Util;
 
 /**
@@ -106,7 +107,6 @@ public class ManpowerFragment  extends Fragment {
                         String t[] = time.split(" ");
                         tvCostTime.setText(t[0]);
                         tvCostTime.setBackgroundResource(R.drawable.shape_time_textview_selected_bg);
-//                        timeText = t[0];
                     }
                 });
                 chooseTimeDialog.setDateDialogTitle("开支时间");
