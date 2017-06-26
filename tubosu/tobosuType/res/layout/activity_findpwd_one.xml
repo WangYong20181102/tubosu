@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_banner"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/color_icon" >
+        android:background="@color/color_icon">
 
         <ImageView
             android:id="@+id/findpwd_one_back"
@@ -51,15 +52,15 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/verification_edittext_bg"
-        android:maxLength="11"
         android:inputType="phone"
+        android:maxLength="11"
         android:padding="10dp"
-        android:textSize="18sp" >
+        android:textSize="18sp">
 
         <requestFocus />
     </EditText>
-    
-    
+
+
     <!-- 接收验证码 -->
     <TextView
         android:id="@+id/findpwd_two_inputverif_tag"
@@ -68,26 +69,26 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
         android:padding="5dp"
-        android:visibility="gone"
         android:text="@string/findpwd_input_verif"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:visibility="gone"
         android:layout_marginTop="20dip"
-        android:background="@drawable/verification_edittext_bg" >
+        android:background="@drawable/verification_edittext_bg"
+        android:visibility="gone">
 
         <EditText
             android:id="@+id/findpwd_inputverif1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
             android:background="@color/white"
+            android:ems="10"
             android:inputType="number"
             android:padding="10dp"
             android:textSize="18sp" />
@@ -100,24 +101,24 @@
             android:text="@string/findpwd_obtain_again"
             android:textColor="@color/color_icon" />
     </LinearLayout>
-    
-    <RelativeLayout 
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-        
+        android:layout_height="match_parent">
+
         <Button
-	        android:id="@+id/findpwd_one_nextstep"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_centerHorizontal="true"
-	        android:layout_alignParentBottom="true"
-	        android:layout_marginBottom="35dip"
-	        android:layout_marginLeft="10dp"
-	        android:layout_marginRight="10dp"
-	        android:background="@drawable/login"
-	        android:text="@string/reg_nextstep"
-	        android:textColor="@color/white"
-	        android:textSize="18sp" />
+            android:id="@+id/findpwd_one_nextstep"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="35dip"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/login"
+            android:text="@string/reg_nextstep"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
     </RelativeLayout>
 
 </LinearLayout>

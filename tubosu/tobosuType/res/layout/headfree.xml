@@ -1,12 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/headfree_banner"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/color_icon" >
+        android:background="@color/color_icon">
 
         <ImageView
             android:id="@+id/free_activity_back"
@@ -20,13 +21,13 @@
             android:id="@+id/title_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/head_right_image_share"
-            android:layout_toRightOf="@+id/free_activity_back"
             android:layout_marginLeft="4dip"
             android:layout_marginRight="4dip"
+            android:layout_toLeftOf="@+id/head_right_image_share"
+            android:layout_toRightOf="@+id/free_activity_back"
             android:ellipsize="end"
+            android:gravity="center"
             android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="16sp" />
@@ -37,8 +38,8 @@
             android:layout_height="20dip"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
             android:layout_marginLeft="5dip"
+            android:layout_marginRight="20dp"
             android:src="@drawable/image_share" />
     </RelativeLayout>
 
