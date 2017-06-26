@@ -83,5 +83,6 @@
     <color name="topbar_3">#339EFE</color>
     <color name="text_10">#333333</color>
     <color name="text_11">#999999</color>
+    <color name="text_gray">#c9cbcf</color>
 
 </resources>
