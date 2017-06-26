@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,13 +15,20 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean._DecorationExpent;
 import com.tbs.tobosutype.customview.MyChatView;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.Util;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -82,6 +90,7 @@ public class DecorateAccountActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+        HttpGetData();
     }
 
     private void HttpGetData() {
@@ -89,7 +98,39 @@ public class DecorateAccountActivity extends Activity {
         HashMap<String, String> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         param.put("uid", Util.getUserId(mContext));
-//        okHttpUtil.post();
+        okHttpUtil.post(Constant.OUTCOME_HOMEPAGE_URL, param, new OKHttpUtil.BaseCallBack() {
+            @Override
+            public void onSuccess(Response response, String json) {
+                Log.e(TAG, "数据请求=====" + json);
+                parseJson(json);
+            }
+
+            @Override
+            public void onFail(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onError(Response response, int code) {
+
+            }
+        });
+    }
+
+    private void parseJson(String json) {
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            String status = jsonObject.getString("status");
+            if (status.equals("200")) {
+                decorationExpent = new _DecorationExpent(jsonObject.getString("data"));
+                initView(decorationExpent);
+            } else if (status.equals("201")) {
+                //没有数据显示没有数据的浮层 并且隐藏显示数据的图层
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void bindView() {
@@ -119,7 +160,9 @@ public class DecorateAccountActivity extends Activity {
         da_qita = (TextView) findViewById(R.id.da_qita);
         da_text_qita = (TextView) findViewById(R.id.da_text_qita);
         decorate_expence_recycleview = (RecyclerView) findViewById(R.id.decorate_expence_recycleview);
+    }
 
+    private void initView(_DecorationExpent decorationExpent) {
         if (seekProgress.getProgress() >= 0 && seekProgress.getProgress() <= 20) {
             seekProgress.setProgress(20);
             seekProgress.setBackgroundResource(R.color.budget_green);
@@ -141,6 +184,9 @@ public class DecorateAccountActivity extends Activity {
             seekProgress.setBackgroundResource(R.color.budget_red);
             tvState.setText(budgetTips[2]);
         }
+
+        //处理相关页面数据
+        //处理饼状图的显示
     }
 
     private void setClick() {
