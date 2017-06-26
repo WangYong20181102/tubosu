@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -56,7 +57,9 @@ public class SettingActivity extends Activity {
 	
 	/**版本升级布局*/
 	private RelativeLayout myset_layout_version_upgrade;
-	
+	//banner
+	private RelativeLayout rel_head_setting;
+
 	/**客服电话布局*/
 	private RelativeLayout rel_company_tel;
 	
@@ -130,6 +133,7 @@ public class SettingActivity extends Activity {
 		rel_clear_cache = (RelativeLayout) findViewById(R.id.rel_clear_cache);
 		tv_cache = (TextView) findViewById(R.id.tv_cache);
 		myset_layout_version_upgrade = (RelativeLayout) findViewById(R.id.myset_layout_version_upgrade);
+		rel_head_setting = (RelativeLayout) findViewById(R.id.rel_head_setting);
 		rel_company_tel = (RelativeLayout) findViewById(R.id.rel_company_tel);
 		myset_layout_tbs_weixin = (RelativeLayout) findViewById(R.id.myset_layout_tbs_weixin);
 		rel_layout_share = (RelativeLayout) findViewById(R.id.rel_layout_share);
@@ -149,6 +153,7 @@ public class SettingActivity extends Activity {
 		
 		myset_version_upgrade = (TextView) findViewById(R.id.myset_version_upgrade);
 		myset_logo_name = (TextView) findViewById(R.id.myset_logo_name);
+		rel_head_setting.setBackgroundColor(Color.parseColor("#ff882e"));
 	}
 
 	private void initData() {

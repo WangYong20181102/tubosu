@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_banner"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/color_icon" >
+        android:background="@color/color_icon">
 
         <TextView
             android:id="@+id/bundlesuccess_title"
@@ -41,7 +42,7 @@
         android:layout_marginTop="10dp"
         android:background="@color/white"
         android:gravity="center"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/bundlesuccess_logo"
