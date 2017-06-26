@@ -26,6 +26,9 @@ import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.Util;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -188,7 +191,7 @@ public class EditAccountAcitivity extends FragmentActivity{
     private class DataReceiver extends BroadcastReceiver{
 
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(final Context context, Intent intent) {
             if(AllConstants.ACTION_GET_FRAGMENT_DATA.equals(intent.getAction())){
                 String dataArray[] = intent.getStringArrayExtra("dataArray");
                 if(dataArray!=null){
@@ -216,37 +219,69 @@ public class EditAccountAcitivity extends FragmentActivity{
                         return;
                     }
 
+                    if(Util.isNetAvailable(context)){
+                        OKHttpUtil okHttpUtil = new OKHttpUtil();
+                        HashMap<String, String> hashMap = new HashMap<String, String>();
+                        hashMap.put("token", Util.getDateToken());
+                        hashMap.put("uid", AppInfoUtil.getUserid(context));
+                        hashMap.put("type_id", outcomeTypeId);
+                        hashMap.put("expend_name", mainNameText);
+                        hashMap.put("cost", mainMoneyText);
+                        hashMap.put("expend_time", mainTimeText);
+                        hashMap.put("content", mainContentText);
+                        okHttpUtil.post(AllConstants.EDIT_DECORATE_OUTCOME_URL, hashMap, new OKHttpUtil.BaseCallBack() {
+                            @Override
+                            public void onSuccess(Response response, String json) {
+                                Util.setErrorLog(TAG, json);
+                                try {
+                                    JSONObject obj = new JSONObject(json);
+                                    if(obj.getInt("status")==200){
+                                        Util.setToast(context, getToastMesssage(saveData)+"添加成功");
+                                        setResultCode(AllConstants.FINISH_SAVE_EDIT_OUTCOME);
+                                        finish();
+                                    }else if(obj.getInt("status")==0){
+                                        Util.setToast(context, getToastMesssage(saveData)+"添加失败,稍后再试!");
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
 
-                    OKHttpUtil okHttpUtil = new OKHttpUtil();
-                    HashMap<String, String> hashMap = new HashMap<String, String>();
-                    hashMap.put("token", Util.getDateToken());
-                    hashMap.put("uid", AppInfoUtil.getUserid(context));
-                    hashMap.put("type_id", outcomeTypeId);
-                    hashMap.put("expend_name", mainNameText);
-                    hashMap.put("cost", mainMoneyText);
-                    hashMap.put("expend_time", mainTimeText);
-                    hashMap.put("content", mainContentText);
-                    okHttpUtil.post(AllConstants.EDIT_DECORATE_OUTCOME_URL, hashMap, new OKHttpUtil.BaseCallBack() {
-                        @Override
-                        public void onSuccess(Response response, String json) {
-                            Util.setErrorLog(TAG, json);
-                        }
+                            @Override
+                            public void onFail(Request request, IOException e) {
+                                Util.setToast(context, getToastMesssage(saveData)+"添加失败,稍后再试!");
+                            }
 
-                        @Override
-                        public void onFail(Request request, IOException e) {
-
-                        }
-
-                        @Override
-                        public void onError(Response response, int code) {
-
-                        }
-                    });
-
-
+                            @Override
+                            public void onError(Response response, int code) {
+                                Util.setToast(context, getToastMesssage(saveData)+"添加失败,稍后再试!");
+                            }
+                        });
+                    }
                 }
             }
         }
+    }
+
+    private String getToastMesssage(int save){
+        String text = "开支";
+        switch (save){
+            case 0:
+                text = "人工开支";
+                break;
+            case 1:
+                text = "建材开支";
+                break;
+            case 2:
+                text = "五金开支";
+                break;
+            case 3:
+                text = "家具开支";
+                break;
+            case 4:
+                text = "厨卫开支";
+        }
+        return text;
     }
 
     private int setFragment(int position){

@@ -33,6 +33,7 @@ public class AllConstants {
     public static final int POP_RESULTCODE = 0x0000027;
     public static final int HOMEFRAGMENT_REQUESTCODE = 0x0000028;
     public static final int FINISH_MAINACTIVITY = 0x0000030;
+    public static final int FINISH_SAVE_EDIT_OUTCOME = 0x0000031;
 
     /***标记推送*/
     public static String app_push_flag = "0";
