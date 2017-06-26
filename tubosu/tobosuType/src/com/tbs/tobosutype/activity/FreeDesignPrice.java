@@ -23,6 +23,7 @@ import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
+import com.tbs.tobosutype.customview.MyChatView;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
@@ -31,6 +32,9 @@ import com.tbs.tobosutype.utils.HttpServer;
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FreeDesignPrice extends Activity {
@@ -41,7 +45,7 @@ public class FreeDesignPrice extends Activity {
     private RequestParams fastLoginParams;//快速注册参数
     private String fastLoginUrl = Constant.TOBOSU_URL + "tapp/passport/fast_register";//快速注册接口
     private CustomWaitDialog customWaitDialog;
-
+    private MyChatView myChatView;
     //要从上个界面传来的数据  显示在这个界面
     private int mPrice;//半包总价格
     private float mWeiPrice;//卫生间价格 占比12.63%
@@ -51,6 +55,7 @@ public class FreeDesignPrice extends Activity {
     private float mYangtaiPrice;//阳台价格  占比9.00%
     private float mOtherPrice;//其他价格  占比20.00%
 
+    private List<Float> floatList = new ArrayList<>();
 
     private String mPhoneNum;//上个界面传来的用户手机号码
 
@@ -101,6 +106,13 @@ public class FreeDesignPrice extends Activity {
 
     //绑定控件
     private void bindView() {
+        floatList.add(9.19f);
+        floatList.add(26.37f);
+        floatList.add(9f);
+        floatList.add(20f);
+        floatList.add(12.63f);
+        floatList.add(22.81f);
+        myChatView = (MyChatView) findViewById(R.id.fdp_my_chat_view);
         fdpLL = (LinearLayout) findViewById(R.id.fdp_ll);
 
         fdpBack = (ImageView) findViewById(R.id.fdp_back);
@@ -127,6 +139,7 @@ public class FreeDesignPrice extends Activity {
     }
 
     private void initView() {
+        myChatView.setFloatList(floatList);
         //设置点击事件监听
         fdpBack.setOnClickListener(occl);
         fdpGetcode.setOnClickListener(occl);
