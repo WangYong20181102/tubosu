@@ -3,9 +3,11 @@ package com.tbs.tobosutype.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -23,11 +25,11 @@ public class DecorateAccountActivity extends Activity {
     private static final String TAG = DecorateAccountActivity.class.getSimpleName();
 
     /**
-     *  总开支占比总预算在80%-0%之间    --->>   小主，一切还在预算当中
-     *  总开支占比总预算在80%-100%      --->>   要死了，花钱如流水啊
-     *  总开支占比总预算超过100%        --->>   就知道你是土豪，你任性就使劲花吧
+     * 总开支占比总预算在80%-0%之间    --->>   小主，一切还在预算当中
+     * 总开支占比总预算在80%-100%      --->>   要死了，花钱如流水啊
+     * 总开支占比总预算超过100%        --->>   就知道你是土豪，你任性就使劲花吧
      */
-    private String[] budgetTips = {"小主，一切还在预算当中", "要死了，花钱如流水啊","就知道你是土豪，你任性就使劲花吧"};
+    private String[] budgetTips = {"小主，一切还在预算当中", "要死了，花钱如流水啊", "就知道你是土豪，你任性就使劲花吧"};
 
     private RelativeLayout relBack;
     private ImageView ivEditAccount;
@@ -37,7 +39,8 @@ public class DecorateAccountActivity extends Activity {
     private TextView tvTotalCost;
     private TextView tvStartAccount;
     private RelativeLayout relDataEmpty;
-    private RelativeLayout relDataLaout;
+    private LinearLayout relDataLaout;
+    private RelativeLayout decsdfsdf_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,7 @@ public class DecorateAccountActivity extends Activity {
         setClick();
     }
 
-    private void initData(){
+    private void initData() {
 
     }
 
@@ -64,26 +67,27 @@ public class DecorateAccountActivity extends Activity {
         tvState = (TextView) findViewById(R.id.tv_state);
         tvStartAccount = (TextView) findViewById(R.id.tv_start_account);
         relDataEmpty = (RelativeLayout) findViewById(R.id.rel_data_empty);
-        relDataLaout = (RelativeLayout) findViewById(R.id.rel_data_layout);
+        relDataLaout = (LinearLayout) findViewById(R.id.rel_data_layout);
+        decsdfsdf_bar = (RelativeLayout) findViewById(R.id.decsdfsdf_bar);
+        decsdfsdf_bar.setBackgroundColor(Color.parseColor("#ff882e"));
 
-
-        if(seekProgress.getProgress()>=0 && seekProgress.getProgress()<=20){
+        if (seekProgress.getProgress() >= 0 && seekProgress.getProgress() <= 20) {
             seekProgress.setProgress(20);
             seekProgress.setBackgroundResource(R.color.budget_green);
             tvState.setText(budgetTips[0]);
-        }else if(seekProgress.getProgress()>=20 && seekProgress.getProgress()<40){
+        } else if (seekProgress.getProgress() >= 20 && seekProgress.getProgress() < 40) {
             seekProgress.setProgress(37);
             seekProgress.setBackgroundResource(R.color.budget_blue);
             tvState.setText(budgetTips[0]);
-        }else if(seekProgress.getProgress()>=40 && seekProgress.getProgress()<60){
+        } else if (seekProgress.getProgress() >= 40 && seekProgress.getProgress() < 60) {
             seekProgress.setProgress(57);
             seekProgress.setBackgroundResource(R.color.budget_orange);
             tvState.setText(budgetTips[0]);
-        }else if(seekProgress.getProgress()>=60 && seekProgress.getProgress()<80){
+        } else if (seekProgress.getProgress() >= 60 && seekProgress.getProgress() < 80) {
             seekProgress.setProgress(77);
             seekProgress.setBackgroundResource(R.color.budget_yellow);
             tvState.setText(budgetTips[1]);
-        }else{
+        } else {
             seekProgress.setProgress(90);
             seekProgress.setBackgroundResource(R.color.budget_red);
             tvState.setText(budgetTips[2]);
@@ -109,7 +113,7 @@ public class DecorateAccountActivity extends Activity {
         tvStartAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(mContext, EditAccountAcitivity.class),0x00013);
+                startActivityForResult(new Intent(mContext, EditAccountAcitivity.class), 0x00013);
             }
         });
 
