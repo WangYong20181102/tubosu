@@ -7,11 +7,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.model.Constant;
-import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.Util;
 
 /**

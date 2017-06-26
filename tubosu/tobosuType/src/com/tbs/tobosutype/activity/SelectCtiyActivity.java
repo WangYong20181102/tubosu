@@ -60,7 +60,7 @@ import com.tbs.tobosutype.customview.BladeView.OnItemClickListener;
 import com.tbs.tobosutype.customview.FirstGridView;
 import com.tbs.tobosutype.customview.PinnedHeaderListView;
 import com.tbs.tobosutype.customview.SwitchCityDialog;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.model.City;
@@ -93,7 +93,7 @@ import java.util.Map;
  */
 public class SelectCtiyActivity extends Activity implements OnClickListener, MyApplication.EventHandler {
     private static final String TAG = SelectCtiyActivity.class.getSimpleName();
-    private String DOWNLOAD_COUNT_URL = AllConstants.TOBOSU_URL + "tapp/DataCount/download_count";
+    private String DOWNLOAD_COUNT_URL = Constant.TOBOSU_URL + "tapp/DataCount/download_count";
     /**
      * 首次安装
      */
@@ -137,7 +137,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     private LinearLayout select_loading;
 
     /***所有城市接口*/
-    private String cityUrl = AllConstants.TOBOSU_URL + "tapp/util/change_city";
+    private String cityUrl = Constant.TOBOSU_URL + "tapp/util/change_city";
 
     private List<String> hotCityNames = new ArrayList<String>();
     private MapView mMapView;

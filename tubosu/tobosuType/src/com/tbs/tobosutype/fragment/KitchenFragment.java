@@ -21,7 +21,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.WriteAccountAdapter;
 import com.tbs.tobosutype.bean.SaveDataEntity;
 import com.tbs.tobosutype.customview.DateChooseWheelViewDialog;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 
 /**
  * Created by Lie on 2017/6/21.
@@ -50,7 +50,7 @@ public class KitchenFragment extends Fragment {
 
     private void initData() {
         receiver = new KitchenReceiver();
-        IntentFilter filter = new IntentFilter(AllConstants.ACTION_KITCHEN_FRAGMENT_DATA);
+        IntentFilter filter = new IntentFilter(Constant.ACTION_KITCHEN_FRAGMENT_DATA);
         getActivity().registerReceiver(receiver, filter);
     }
 
@@ -112,7 +112,7 @@ public class KitchenFragment extends Fragment {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            if(AllConstants.ACTION_KITCHEN_FRAGMENT_DATA.equals(intent.getAction())){
+            if(Constant.ACTION_KITCHEN_FRAGMENT_DATA.equals(intent.getAction())){
                 String name = etCostKitchen.getText().toString().trim();
                 String typeId = "";
                 if(!"".equals(name) && isOtherType(name)){
@@ -123,7 +123,7 @@ public class KitchenFragment extends Fragment {
                 SaveDataEntity entity = new SaveDataEntity(name,
                         etCostMoney.getText().toString().trim(),tvCostTime.getText().toString().trim(),
                         etCostContent.getText().toString().trim(), typeId);
-                Intent dataIntent = new Intent(AllConstants.ACTION_GET_FRAGMENT_DATA);
+                Intent dataIntent = new Intent(Constant.ACTION_GET_FRAGMENT_DATA);
                 dataIntent.putExtra("dataArray", entity.getDataArray());
                 getActivity().sendBroadcast(dataIntent);
             }

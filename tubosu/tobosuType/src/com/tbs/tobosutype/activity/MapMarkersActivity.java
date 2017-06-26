@@ -43,7 +43,7 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 
@@ -72,7 +72,7 @@ public class MapMarkersActivity extends Activity implements OnClickListener {
 	private String token;
 	
 	/**修改坐标的接口*/
-	private String mapMarkersUrl = AllConstants.TOBOSU_URL + "/tapp/company/set_coor";
+	private String mapMarkersUrl = Constant.TOBOSU_URL + "/tapp/company/set_coor";
 	
 	private RequestParams mapMarkersParams;
 	

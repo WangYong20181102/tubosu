@@ -23,7 +23,7 @@ import com.tbs.tobosutype.customview.RoundImageView;
 import com.tbs.tobosutype.customview.SelectCityDialog;
 import com.tbs.tobosutype.customview.SelectCityDialog.Builder;
 import com.tbs.tobosutype.customview.SelectSexPopupWindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
@@ -135,7 +135,7 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
 
     private Intent intent;
 
-    private UMSocialService mController = UMServiceFactory.getUMSocialService(AllConstants.DESCRIPTOR);
+    private UMSocialService mController = UMServiceFactory.getUMSocialService(Constant.DESCRIPTOR);
     private String weiXinUserName;
     private String weiXinImageUrl;
     private String weiXinUserId;
@@ -360,7 +360,7 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
      */
     private void requestChangeInfo() {
 
-        HttpServer.getInstance().requestPOST(AllConstants.USER_CHANGE_INFO_URL, changeInfoParams, new AsyncHttpResponseHandler() {
+        HttpServer.getInstance().requestPOST(Constant.USER_CHANGE_INFO_URL, changeInfoParams, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int code, Header[] arg1, byte[] result) {
@@ -398,7 +398,7 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
                 dialog.cancel();
 
                 Intent i = new Intent();
-                i.setAction(AllConstants.LOGOUT_ACTION);
+                i.setAction(Constant.LOGOUT_ACTION);
                 sendBroadcast(i);
                 finish();
             }
@@ -488,7 +488,7 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
         bindThirdPartyParams.put("icon", weiXinImageUrl);
         bindThirdPartyParams.put("nickname", weiXinUserName);
         bindThirdPartyParams.put("account", weiXinUserId);
-        HttpServer.getInstance().requestPOST(AllConstants.BIND_THIRD_PARTY_URL, bindThirdPartyParams, new AsyncHttpResponseHandler() {
+        HttpServer.getInstance().requestPOST(Constant.BIND_THIRD_PARTY_URL, bindThirdPartyParams, new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int arg0, Header[] arg1, byte[] body) {

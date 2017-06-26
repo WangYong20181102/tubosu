@@ -20,7 +20,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.DesignFreePopupWindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.http.HttpPost;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
@@ -75,7 +75,7 @@ public class LocalDiscountDetailActivity extends Activity implements OnClickList
 	private String activityid;
 	
 	/***装修公司优惠接口*/
-	private String activityUrl = AllConstants.TOBOSU_URL + "tapp/company/discount";
+	private String activityUrl = Constant.TOBOSU_URL + "tapp/company/discount";
 	
 	private RequestParams activityParams;
 	private ImageView iv_cover;
@@ -415,8 +415,8 @@ public class LocalDiscountDetailActivity extends Activity implements OnClickList
 					designPopupWindow.dismiss();
 					HashMap<String, String> map = new HashMap<String, String>();
 					map.put("cellphone", phone);
-					map.put("comeurl", AllConstants.PIPE);
-					map.put("urlhistory", AllConstants.PIPE);
+					map.put("comeurl", Constant.PIPE);
+					map.put("urlhistory", Constant.PIPE);
 					map.put("city", getSharedPreferences("Save_City_Info", MODE_PRIVATE).getString("save_city_now", ""));
 					String userid = "";
 					if (!TextUtils.isEmpty(userid)) {
@@ -474,7 +474,7 @@ public class LocalDiscountDetailActivity extends Activity implements OnClickList
 
 		@Override
 		public void run() {
-			String result = HttpPost.doPost(AllConstants.TOBOSU_URL + "tapi/order/pub_order?", map, "utf-8");
+			String result = HttpPost.doPost(Constant.TOBOSU_URL + "tapi/order/pub_order?", map, "utf-8");
 			try {
 				if (result != null) {
 					JSONObject object = new JSONObject(result);

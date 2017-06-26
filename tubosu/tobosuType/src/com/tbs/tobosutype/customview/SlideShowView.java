@@ -45,7 +45,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.FreeActivity;
 import com.tbs.tobosutype.activity.WebViewActivity;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
 
@@ -70,7 +70,7 @@ public class SlideShowView extends FrameLayout {
 
 	private Context context;
 	private String cityName;
-	private String urlString = AllConstants.TOBOSU_URL
+	private String urlString = Constant.TOBOSU_URL
 			+ "tapp/util/carousel_figure?city=" + cityName + "&version="
 			+ AppInfoUtil.getAppVersionName(context) + "&device=android";
 	private List<HashMap<String, Object>> slideShowList = new ArrayList<HashMap<String, Object>>();

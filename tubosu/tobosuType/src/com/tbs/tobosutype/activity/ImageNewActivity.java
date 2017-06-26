@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,7 +31,7 @@ import com.tbs.tobosutype.adapter.MyGridViewAdapter;
 import com.tbs.tobosutype.bean._ImageItem;
 import com.tbs.tobosutype.bean._Style;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 
@@ -50,26 +49,26 @@ public class ImageNewActivity extends Activity {
     /**
      * 逛图库中显示当地装修公司列表的接口
      */
-    private String getListUrl = AllConstants.TOBOSU_URL + "tapp/impression/get_list";
+    private String getListUrl = Constant.TOBOSU_URL + "tapp/impression/get_list";
 
     /**
      * 逛图库顶部广告位接口
      */
-    private String adsenseUrl = AllConstants.TOBOSU_URL + "tapp/util/adsense";
+    private String adsenseUrl = Constant.TOBOSU_URL + "tapp/util/adsense";
 
     /**
      * 上个月冠亚季军三个公司
      */
-    private String getLastMonthCompanyListUrl = AllConstants.TOBOSU_URL + "tapp/impression/getLastMonthCompanyList";
+    private String getLastMonthCompanyListUrl = Constant.TOBOSU_URL + "tapp/impression/getLastMonthCompanyList";
 
     /**
      * 搜索逛图库 ，输入小区名称
      */
-    private String searchCommunityUrl = AllConstants.TOBOSU_URL + "tapp/impression/searchCommunity";
+    private String searchCommunityUrl = Constant.TOBOSU_URL + "tapp/impression/searchCommunity";
     /**
      * 获取风格户型面积
      */
-    private String getStytleUrl = AllConstants.TOBOSU_URL + "tapp/impression/style";
+    private String getStytleUrl = Constant.TOBOSU_URL + "tapp/impression/style";
 
     private Context mContext;
     private String TAG = "ImageNewActivity";
@@ -348,7 +347,7 @@ public class ImageNewActivity extends Activity {
     private void HttpRequestGetImgItemList(final RequestParams params) {
         Log.e(TAG, "进入网络请求数据中。。。。");
         //判断当前的网络连接情况
-        if (AllConstants.checkNetwork(mContext)) {
+        if (Constant.checkNetwork(mContext)) {
             //请求
             HttpServer.getInstance().requestPOST(getListUrl, params, new AsyncHttpResponseHandler() {
                 @Override
@@ -437,7 +436,7 @@ public class ImageNewActivity extends Activity {
     private ImageNewActivityAdapter.OnImageNewItemClickLister onImageNewItemClickLister = new ImageNewActivityAdapter.OnImageNewItemClickLister() {
         @Override
         public void onItemClick(View view) {
-            if (AllConstants.checkNetwork(mContext)) {
+            if (Constant.checkNetwork(mContext)) {
                 int position = imgNewRecycleView.getChildPosition(view);
                 String title = imageItemsList.get(position).getTitle();
                 String url = imageItemsList.get(position).getIndexImageUrl();
@@ -449,7 +448,7 @@ public class ImageNewActivity extends Activity {
                 intent.putExtra("fav_conid", id);
                 startActivity(intent);
             } else {
-                AllConstants.toastNetOut(mContext);
+                Constant.toastNetOut(mContext);
             }
 
         }

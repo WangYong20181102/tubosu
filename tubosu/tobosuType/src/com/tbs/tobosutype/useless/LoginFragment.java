@@ -35,7 +35,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.MainActivity;
 import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
 import com.tbs.tobosutype.customview.LoadingWindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HintInput;
 import com.tbs.tobosutype.utils.HttpServer;
@@ -104,7 +104,7 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
      */
     private EditText et_input_verification_login;
 
-    private UMSocialService mController = UMServiceFactory.getUMSocialService(AllConstants.DESCRIPTOR);
+    private UMSocialService mController = UMServiceFactory.getUMSocialService(Constant.DESCRIPTOR);
 
     private String weiXinUserName;
     private String weiXinImageUrl;
@@ -113,19 +113,19 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
     /**
      * 微信第三方登录接口
      */
-    private String weixinLoginUrl = AllConstants.TOBOSU_URL + "tapp/passport/login_third_party";
+    private String weixinLoginUrl = Constant.TOBOSU_URL + "tapp/passport/login_third_party";
     private RequestParams weixinLoginParams;
 
     /**
      * 登录接口
      */
-    private String userLoginUrl = AllConstants.TOBOSU_URL + "tapp/passport/app_login";
+    private String userLoginUrl = Constant.TOBOSU_URL + "tapp/passport/app_login";
     private RequestParams userLoginParams;
 
     /**
      * 注册接口
      */
-    private String fastLoginUrl = AllConstants.TOBOSU_URL + "tapp/passport/fast_register";
+    private String fastLoginUrl = Constant.TOBOSU_URL + "tapp/passport/fast_register";
 
     private RequestParams fastLoginParams;
     private String phone;
@@ -199,7 +199,7 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
 
     @Override
     public void onClick(View v) {
-        if (AllConstants.checkNetwork(getActivity())) {
+        if (Constant.checkNetwork(getActivity())) {
             switch (v.getId()) {
                 case R.id.ll_obtain_weixin_login:
                     loginWeixin();
@@ -342,8 +342,8 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
      * 用户登录接口请求
      */
     private void requestUserLogin() {
-        if (!AllConstants.checkNetwork(getActivity())) {
-            AllConstants.toastNetOut(getActivity());
+        if (!Constant.checkNetwork(getActivity())) {
+            Constant.toastNetOut(getActivity());
             return;
         }
 
@@ -375,8 +375,8 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
      * 用户快速注册 登录接口请求
      */
     private void requestFastLogin() {
-        if (!AllConstants.checkNetwork(getActivity())) {
-            AllConstants.toastNetOut(getActivity());
+        if (!Constant.checkNetwork(getActivity())) {
+            Constant.toastNetOut(getActivity());
             return;
         }
 

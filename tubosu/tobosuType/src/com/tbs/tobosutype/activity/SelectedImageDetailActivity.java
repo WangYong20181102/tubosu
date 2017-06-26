@@ -30,7 +30,7 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.DesignFreePopupWindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
@@ -63,10 +63,10 @@ public class SelectedImageDetailActivity extends Activity implements IXListViewL
 	private String _id;
 	
 	/**精选详情接口*/
-	private String spcialDetailUrl = AllConstants.TOBOSU_URL + "tapp/util/spcial_detail";
+	private String spcialDetailUrl = Constant.TOBOSU_URL + "tapp/util/spcial_detail";
 	
 	/**发单接口*/
-	private String pubOrderUrl = AllConstants.TOBOSU_URL + "tapi/order/pub_order";
+	private String pubOrderUrl = Constant.TOBOSU_URL + "tapi/order/pub_order";
 	
 	private RequestParams spcialDetailParams;
 	private String title;
@@ -163,7 +163,7 @@ public class SelectedImageDetailActivity extends Activity implements IXListViewL
 		textList = new ArrayList<String>();
 		_id = getIntent().getStringExtra("id");
 		
-		if(AllConstants.checkNetwork(mContext)){
+		if(Constant.checkNetwork(mContext)){
 			requestForDatas();
 			rel_selected_image_details_layout.setVisibility(View.VISIBLE);
 			rel_no_data.setVisibility(View.GONE);

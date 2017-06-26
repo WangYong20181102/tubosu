@@ -33,7 +33,7 @@ import com.tbs.tobosutype.customview.DialogShowText;
 import com.tbs.tobosutype.customview.ScrollViewExtend;
 import com.tbs.tobosutype.customview.ScrollViewExtend.OnScrollChangedListener;
 import com.tbs.tobosutype.customview.VouchersPopupWindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
@@ -189,7 +189,7 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 	private String token;
 	
 	/**装修公司明细接口*/
-	private String dataUrl = AllConstants.TOBOSU_URL + "tapp/company/company_detail";
+	private String dataUrl = Constant.TOBOSU_URL + "tapp/company/company_detail";
 	
 	private RequestParams companyDetailParams;
 	private String oper_type = "1";
@@ -215,7 +215,7 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 	private String hav_fav = "0";
 	
 	/**添加或取消收藏*/
-	private String favUrl = AllConstants.TOBOSU_URL + "/tapp/user/fav";;
+	private String favUrl = Constant.TOBOSU_URL + "/tapp/user/fav";;
 	
 	
 	/**顶部bar*/

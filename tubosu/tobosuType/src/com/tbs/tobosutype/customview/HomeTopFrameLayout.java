@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
-import android.os.SystemClock;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -39,7 +38,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.FreeActivity;
 import com.tbs.tobosutype.activity.WebViewActivity;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
@@ -82,17 +81,17 @@ public class HomeTopFrameLayout extends FrameLayout {
     /**
      * 包含h5发单url
      */
-    private String containFreeUrl = "http://m.tobosu.com/app/pub?";  //AllConstants.PUB_ORDERS;
+    private String containFreeUrl = "http://m.tobosu.com/app/pub?";  //Constant.PUB_ORDERS;
 //									 http://m.tobosu.com/app/pub?
 //	                               http://m.tobosu.com/app/pub?channel=sem&subchannel=android&chcode=product
 
     /**
      * 根据不同城市而呈现不同的图片
      */
-    private String urlString = AllConstants.TOBOSU_URL + "tapp/util/carousel_figure";/*?city=*/
+    private String urlString = Constant.TOBOSU_URL + "tapp/util/carousel_figure";/*?city=*/
     //									http://www.tobosu.com/tapp/util/carousel_figure
     //统计所用的Api地址
-    private String urlCount = AllConstants.TOBOSU_URL + "tapp/banner/banner_views";
+    private String urlCount = Constant.TOBOSU_URL + "tapp/banner/banner_views";
 
     private ViewPager viewPager;
     private int currentItem = 0;

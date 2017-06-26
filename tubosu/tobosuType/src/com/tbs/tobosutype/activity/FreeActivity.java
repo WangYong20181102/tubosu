@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.ShareUtil;
 
@@ -141,7 +141,7 @@ public class FreeActivity extends Activity {
 		settings.setAppCacheEnabled(true);
 //		webView.setScrollBarStyle(0);
 		
-		webView.loadUrl(AllConstants.PIPE);
+		webView.loadUrl(Constant.PIPE);
 		
 		webView.setWebChromeClient(new WebChromeClient() {
 			@Override
@@ -159,7 +159,7 @@ public class FreeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (!TextUtils.isEmpty(title)) {
-					new ShareUtil(mContext, image_share, title, title, AllConstants.PIPE);
+					new ShareUtil(mContext, image_share, title, title, Constant.PIPE);
 				}
 			}
 		});

@@ -27,7 +27,7 @@ import com.tbs.tobosutype.customview.RoundImageView;
 import com.tbs.tobosutype.customview.SelectCityDialog;
 import com.tbs.tobosutype.customview.SelectCityDialog.Builder;
 import com.tbs.tobosutype.customview.SelectSexPopupWindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
@@ -71,15 +71,15 @@ public class MyCompanyChangeInfoActivity extends Activity implements OnClickList
 	private RelativeLayout rl_exit;
 	
 	/**修改用户信息*/
-	private String userChageInfoUrl = AllConstants.TOBOSU_URL + "tapp/user/chage_user_info";
+	private String userChageInfoUrl = Constant.TOBOSU_URL + "tapp/user/chage_user_info";
 	
 	/**第三方绑定*/
-	private String bindThirdPartyUrl = AllConstants.TOBOSU_URL + "tapp/passport/bindThirdParty";
+	private String bindThirdPartyUrl = Constant.TOBOSU_URL + "tapp/passport/bindThirdParty";
 	
 	private RequestParams chageInfoParams;
 	private RequestParams bindThirdPartyParams;
 	private Intent intent;
-	private UMSocialService mController = UMServiceFactory.getUMSocialService(AllConstants.DESCRIPTOR);
+	private UMSocialService mController = UMServiceFactory.getUMSocialService(Constant.DESCRIPTOR);
 	private String weiXinUserName;
 	private String weiXinImageUrl;
 	private String weiXinUserId;

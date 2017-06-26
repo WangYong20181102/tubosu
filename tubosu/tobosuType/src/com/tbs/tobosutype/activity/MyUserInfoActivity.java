@@ -22,8 +22,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomDialog;
-import com.tbs.tobosutype.global.AllConstants;
-import com.tbs.tobosutype.protocol.JpyProtocol;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tencent.android.tpush.XGPushManager;
@@ -54,11 +53,11 @@ public class MyUserInfoActivity extends Activity implements OnClickListener {
 	private RelativeLayout rl_exit;
 	
 	/**第三方绑定接口*/
-	private String bindThirdPartyUrl = AllConstants.TOBOSU_URL + "tapp/passport/bindThirdParty";
+	private String bindThirdPartyUrl = Constant.TOBOSU_URL + "tapp/passport/bindThirdParty";
 	
 	private RequestParams bindThirdPartyParams;
 	
-	private UMSocialService mController = UMServiceFactory.getUMSocialService(AllConstants.DESCRIPTOR);
+	private UMSocialService mController = UMServiceFactory.getUMSocialService(Constant.DESCRIPTOR);
 	private String weiXinUserName;
 	private String weiXinImageUrl;
 	private String weiXinUserId;

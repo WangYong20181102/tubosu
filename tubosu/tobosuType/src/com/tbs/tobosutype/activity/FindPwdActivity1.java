@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HintInput;
 import com.tbs.tobosutype.utils.ToastUtil;
@@ -53,7 +53,7 @@ public class FindPwdActivity1 extends Activity implements OnClickListener {
     /**
      * 获取验证码的接口
      */
-    private String urlBase = AllConstants.TOBOSU_URL + "tapp/passport/get_pic_code?version=";
+    private String urlBase = Constant.TOBOSU_URL + "tapp/passport/get_pic_code?version=";
 
     private static int count = 60;
 

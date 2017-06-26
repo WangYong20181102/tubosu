@@ -14,7 +14,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.customview.CustomProgressDialog;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.model.DownLoadManager;
 
@@ -30,7 +30,7 @@ import java.io.File;
 public class CheckUpdateUtils {
 	private static final String TAG = CheckUpdateUtils.class.getSimpleName();
 	private Context context;
-	private String checkUpdateUrl = AllConstants.TOBOSU_URL + "tapp/util/boot_img";
+	private String checkUpdateUrl = Constant.TOBOSU_URL + "tapp/util/boot_img";
 
 	public CheckUpdateUtils(Context context) {
 		this.context = context;

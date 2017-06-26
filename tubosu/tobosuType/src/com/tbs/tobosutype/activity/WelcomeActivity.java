@@ -22,8 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.squareup.okhttp.Request;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.global.AllConstants;
-import com.tbs.tobosutype.global.MyApplication;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
@@ -37,14 +36,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.crypto.Mac;
 
 /**
  * 欢迎 页
@@ -55,9 +50,9 @@ public class WelcomeActivity extends Activity {
     private static final String TAG = WelcomeActivity.class.getSimpleName();
     private CheckUpdateUtils updateUtils;
 
-    private String check_password = AllConstants.TOBOSU_URL + "tapp/passport/isCheckPwdUp";
-    private String check_ab_test = AllConstants.TOBOSU_URL + "tapp/spcailpic/get_ab";
-    private String SURVIVAL_URL = AllConstants.TOBOSU_URL + "tapp/DataCount/survival_count";
+    private String check_password = Constant.TOBOSU_URL + "tapp/passport/isCheckPwdUp";
+    private String check_ab_test = Constant.TOBOSU_URL + "tapp/spcailpic/get_ab";
+    private String SURVIVAL_URL = Constant.TOBOSU_URL + "tapp/DataCount/survival_count";
 
 
     private Context mContext;
@@ -74,8 +69,8 @@ public class WelcomeActivity extends Activity {
 
 //		ivWelcome = (ImageView) findViewById(R.id.iv_welcom);
 //		Glide.with(WelcomeActivity.this).load(R.drawable.welcome_image).into(ivWelcome);
-//		MobclickAgent.UMAnalyticsConfig config = new MobclickAgent.UMAnalyticsConfig(this, AllConstants.UMENG_KEY, AllConstants.CHANNEL_TYPE);
-        MobclickAgent.UMAnalyticsConfig config = new MobclickAgent.UMAnalyticsConfig(this, AllConstants.UMENG_KEY, AppInfoUtil.getChannType(this));
+//		MobclickAgent.UMAnalyticsConfig config = new MobclickAgent.UMAnalyticsConfig(this, Constant.UMENG_KEY, Constant.CHANNEL_TYPE);
+        MobclickAgent.UMAnalyticsConfig config = new MobclickAgent.UMAnalyticsConfig(this, Constant.UMENG_KEY, AppInfoUtil.getChannType(this));
 
         MobclickAgent.startWithConfigure(config);
 

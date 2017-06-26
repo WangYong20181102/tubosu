@@ -23,7 +23,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.ImageAdapter;
 import com.tbs.tobosutype.bean._ImageItem;
 import com.tbs.tobosutype.customview.RoundImageView;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
@@ -74,22 +74,22 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
     /**
      * 逛图库中显示当地装修公司列表的接口
      */
-    private String getListUrl = AllConstants.TOBOSU_URL + "tapp/impression/get_list";
+    private String getListUrl = Constant.TOBOSU_URL + "tapp/impression/get_list";
 
     /**
      * 逛图库顶部广告位接口
      */
-    private String adsenseUrl = AllConstants.TOBOSU_URL + "tapp/util/adsense";
+    private String adsenseUrl = Constant.TOBOSU_URL + "tapp/util/adsense";
 
     /**
      * 上个月冠亚季军三个公司
      */
-    private String getLastMonthCompanyListUrl = AllConstants.TOBOSU_URL + "tapp/impression/getLastMonthCompanyList";
+    private String getLastMonthCompanyListUrl = Constant.TOBOSU_URL + "tapp/impression/getLastMonthCompanyList";
 
     /**
      * 搜索逛图库 ，输入小区名称
      */
-    private String searchCommunityUrl = AllConstants.TOBOSU_URL + "tapp/impression/searchCommunity";
+    private String searchCommunityUrl = Constant.TOBOSU_URL + "tapp/impression/searchCommunity";
 
     private RequestParams getListParams;
     private RequestParams adsenseParams;
@@ -221,10 +221,10 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
 
     private void initData() {
         Intent intent = new Intent();
-        intent.setAction(AllConstants.NET_STATE_ACTION);
+        intent.setAction(Constant.NET_STATE_ACTION);
         Bundle b = null;
         loadDatas();
-        if (AllConstants.checkNetwork(mContext)) {
+        if (Constant.checkNetwork(mContext)) {
             linearlayout_imagesactivity.setVisibility(View.VISIBLE);
             imagesactivity_netoutview.setVisibility(View.GONE);
             b = new Bundle();

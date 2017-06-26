@@ -8,9 +8,8 @@ import android.view.View.OnClickListener;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.SelectPicPopupWindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
-import com.tbs.tobosutype.model.Constant;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
@@ -44,7 +43,7 @@ public class ShareUtil {
 	/**文字简短描述*/
 	private String desc;
 	
-	private UMSocialService mController = UMServiceFactory.getUMSocialService(Constant.DESCRIPTOR);
+	private UMSocialService mController = UMServiceFactory.getUMSocialService(Constant.DESCRIPTOR_SHARE);
 	private SelectPicPopupWindow popupWindow;
 	
 	/***
@@ -59,7 +58,7 @@ public class ShareUtil {
 		this.context = context;
 		this.title = title;
 		System.out.println("====-拼接前 >>"+url);
-		this.fenxiang_url = url + AllConstants.ANDROID_SHARE; //加这个链接
+		this.fenxiang_url = url + Constant.ANDROID_SHARE; //加这个链接
 		System.out.println("77777====-分享url拼接后 >>"+fenxiang_url);
 		this.desc = desc;
 		popupWindow = new SelectPicPopupWindow(context, itemsOnClick);
@@ -83,7 +82,7 @@ public class ShareUtil {
 
 		if(flag){
 			System.out.println("t====-util 拼接前boolean >>"+url);
-			this.fenxiang_url = url; // + AllConstants.M_POP_SHARE; // 装修课堂 精选详情分享 加这个链接
+			this.fenxiang_url = url; // + Constant.M_POP_SHARE; // 装修课堂 精选详情分享 加这个链接
 			System.out.println("t====-util 分享url拼接后boolean >>"+fenxiang_url);
 		}else{
 			System.out.println("f====-util 拼接前boolean >>"+url);

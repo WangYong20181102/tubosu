@@ -13,20 +13,16 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.activity.FindPwdActivity1;
-import com.tbs.tobosutype.activity.LoginActivity;
 import com.tbs.tobosutype.activity.MainActivity;
 import com.tbs.tobosutype.customview.LoadingWindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
@@ -79,14 +75,14 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
     /**
      * 登录接口
      */
-    private String userLoginUrl = AllConstants.TOBOSU_URL + "tapp/passport/app_login";
+    private String userLoginUrl = Constant.TOBOSU_URL + "tapp/passport/app_login";
     private RequestParams userLoginParams;
     /*-------------账号登陆相关------------*/
 
 
     /*-------------微信登陆相关------------*/
     private LoadingWindow wechatWindow;
-    private UMSocialService mController = UMServiceFactory.getUMSocialService(AllConstants.DESCRIPTOR);
+    private UMSocialService mController = UMServiceFactory.getUMSocialService(Constant.DESCRIPTOR);
 
     private String weiXinUserName;
     private String weiXinImageUrl;
@@ -95,7 +91,7 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
     /**
      * 微信第三方登陆接口
      */
-    private String weixinLoginUrl = AllConstants.TOBOSU_URL + "tapp/passport/login_third_party";
+    private String weixinLoginUrl = Constant.TOBOSU_URL + "tapp/passport/login_third_party";
 
     /**
      * 微信参数对象
@@ -175,8 +171,8 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
      * 用户登录接口请求
      */
     private void requestUserLogin() {
-        if (!AllConstants.checkNetwork(getActivity())) {
-            AllConstants.toastNetOut(getActivity());
+        if (!Constant.checkNetwork(getActivity())) {
+            Constant.toastNetOut(getActivity());
             return;
         }
 
@@ -376,7 +372,7 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
                 getActivity().startActivity(intent);
 
 //                Intent i = new Intent();
-//                i.setAction(AllConstants.LOGIN_ACTION);
+//                i.setAction(Constant.LOGIN_ACTION);
 //                getActivity().sendBroadcast(i);
 
 

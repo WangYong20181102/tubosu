@@ -25,7 +25,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.DecorateListAdapter;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.PrseJsonUtil;
@@ -46,7 +46,7 @@ public class SearchDecorateActivity extends Activity implements IXListViewListen
     private String kw;
     private RelativeLayout search_banner;
     /***装修公司列表接口*/
-    private String companyListUrl = AllConstants.TOBOSU_URL + "tapp/company/company_list";
+    private String companyListUrl = Constant.TOBOSU_URL + "tapp/company/company_list";
 
     private RequestParams companyListParams;
 
@@ -89,8 +89,8 @@ public class SearchDecorateActivity extends Activity implements IXListViewListen
      * 装修公司接口请求
      */
     private void requestCompanyList() {
-        if (!AllConstants.checkNetwork(mContext)) {
-            AllConstants.toastNetOut(mContext);
+        if (!Constant.checkNetwork(mContext)) {
+            Constant.toastNetOut(mContext);
             return;
         }
 

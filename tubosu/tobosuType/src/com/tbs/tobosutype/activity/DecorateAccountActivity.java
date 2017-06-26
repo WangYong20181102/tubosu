@@ -93,7 +93,6 @@ public class DecorateAccountActivity extends Activity {
             seekProgress.setBackgroundResource(R.color.budget_red);
             tvState.setText(budgetTips[2]);
         }
-
     }
 
     private void setClick() {

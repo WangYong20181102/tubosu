@@ -22,7 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.MyProjectViewPagerLayout;
 import com.tbs.tobosutype.fragment.ProjectListFragment;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 
 import org.json.JSONArray;
@@ -40,7 +40,7 @@ import java.util.Map;
  */
 public class ProjectPictActivity extends FragmentActivity {
     private Context mContext;
-    private static final String url = AllConstants.TOBOSU_URL + "tapp/spcailpic/get_list";
+    private static final String url = Constant.TOBOSU_URL + "tapp/spcailpic/get_list";
     private ImageView project_viewpager_back;
 
     /**

@@ -44,7 +44,7 @@ import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.DecorateCompanyDetailActivity;
 import com.tbs.tobosutype.activity.MyFavActivity;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
@@ -68,10 +68,10 @@ public class MyFavCompanyFragment extends Fragment {
 	public MyFavDecorateAdapter myFavDecorateAdapter;
 	
 	/**我的收藏接口*/
-	private String urlDecorateStore = AllConstants.TOBOSU_URL + "tapp/user/my_fav";
+	private String urlDecorateStore = Constant.TOBOSU_URL + "tapp/user/my_fav";
 	
 	/**添加或取消 接口*/
-	private String delUrl = AllConstants.TOBOSU_URL + "tapp/user/fav";
+	private String delUrl = Constant.TOBOSU_URL + "tapp/user/fav";
 	
 	private int page = 1;
 	private int pageSize = 50;

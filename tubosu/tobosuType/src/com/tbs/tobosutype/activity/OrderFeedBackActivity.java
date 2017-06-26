@@ -33,7 +33,7 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
@@ -64,10 +64,10 @@ public class OrderFeedBackActivity extends Activity {
 	private ListView order_feedback_listview;
 	
 	/***订单反馈追踪接口*/
-	private String orderFeedBackUrl = AllConstants.TOBOSU_URL + "/tapp/order/fangkui";
+	private String orderFeedBackUrl = Constant.TOBOSU_URL + "/tapp/order/fangkui";
 	
 	/***保存反馈信息接口*/
-	private String saveFeedBackUrl = AllConstants.TOBOSU_URL + "/tapp/order/save_fangkiui";
+	private String saveFeedBackUrl = Constant.TOBOSU_URL + "/tapp/order/save_fangkiui";
 	
 	private RequestParams feedBackParams;
 	private RequestParams saveFeedBackParams;

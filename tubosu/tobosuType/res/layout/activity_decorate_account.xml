@@ -99,6 +99,7 @@
                             android:id="@+id/tv_state"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@color/transparent"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
                             android:text="小主，一切还在预算当中"
@@ -355,7 +356,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
-                        
+
                     </LinearLayout>
                 </LinearLayout>
                 <!--记账的记录为空时显示-->

@@ -20,7 +20,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.DecorateCompanyDetailActivity;
 import com.tbs.tobosutype.activity.DesignChartAcitivity;
 import com.tbs.tobosutype.activity.ImageDetailActivity;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 
 	/***
@@ -46,7 +46,7 @@ public class DesignChartImageAdapter extends BaseAdapter {
 	
 	
 	/**添加或者取消 收藏接口*/
-	private String favUrl = AllConstants.TOBOSU_URL + "/tapp/user/fav";
+	private String favUrl = Constant.TOBOSU_URL + "/tapp/user/fav";
 	
 
 	

@@ -34,7 +34,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.PreferentialApplyForAdapter;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.xlistview.XListView;
@@ -81,7 +81,7 @@ public class PreferentialApplyForActivity extends Activity implements IXListView
     /**
      * 接口
      */
-    private String preferentialApplyForUrl = AllConstants.DECORATION_COMPANY_PREFERENTIAL_APPLYFOR;
+    private String preferentialApplyForUrl = Constant.DECORATION_COMPANY_PREFERENTIAL_APPLYFOR;
 
     private RequestParams myParams;
 

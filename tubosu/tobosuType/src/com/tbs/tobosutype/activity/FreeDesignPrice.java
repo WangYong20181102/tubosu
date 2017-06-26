@@ -23,7 +23,7 @@ import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
@@ -39,7 +39,7 @@ public class FreeDesignPrice extends Activity {
     private Context mContext;
     private int count = 60;//倒计时时间
     private RequestParams fastLoginParams;//快速注册参数
-    private String fastLoginUrl = AllConstants.TOBOSU_URL + "tapp/passport/fast_register";//快速注册接口
+    private String fastLoginUrl = Constant.TOBOSU_URL + "tapp/passport/fast_register";//快速注册接口
     private CustomWaitDialog customWaitDialog;
 
     //要从上个界面传来的数据  显示在这个界面
@@ -164,7 +164,7 @@ public class FreeDesignPrice extends Activity {
                     break;
                 case R.id.fdp_get_code:
                     //走获取验证码的方法
-                    if (AllConstants.checkNetwork(mContext)) {
+                    if (Constant.checkNetwork(mContext)) {
                         if ("重新获取".equals(fdpGetcode.getText().toString()) || "获取验证码".equals(fdpGetcode.getText().toString())) {
                             GetVerificationPopupwindow popupwindow = new GetVerificationPopupwindow(mContext);
                             popupwindow.phone = mPhoneNum;
@@ -180,7 +180,7 @@ public class FreeDesignPrice extends Activity {
                     break;
                 case R.id.fdp_ok_send:
                     //走接口  快速注册
-                    if (AllConstants.checkNetwork(mContext)) {
+                    if (Constant.checkNetwork(mContext)) {
                         if (!TextUtils.isEmpty(fdpInputCode.getText().toString().trim())) {
                             customWaitDialog.show();
                             fastLoginParams = AppInfoUtil.getPublicParams(mContext);
@@ -189,8 +189,8 @@ public class FreeDesignPrice extends Activity {
                             fastLoginParams.put("system_type", "1");
                             fastLoginParams.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
                             fastLoginParams.put("msg_code", fdpInputCode.getText().toString().trim());
-                            fastLoginParams.put("urlhistory", AllConstants.PIPE); // 渠道代码
-                            fastLoginParams.put("comeurl", AllConstants.PIPE); //订单发布页面
+                            fastLoginParams.put("urlhistory", Constant.PIPE); // 渠道代码
+                            fastLoginParams.put("comeurl", Constant.PIPE); //订单发布页面
                             requestFastLogin();
                         } else {
                             Toast.makeText(mContext, "验证码不能为空！", Toast.LENGTH_SHORT).show();

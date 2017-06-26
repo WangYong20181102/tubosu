@@ -31,7 +31,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CallDialogCompany;
 import com.tbs.tobosutype.customview.DropPopWindow;
 import com.tbs.tobosutype.customview.LfPwdPopupWindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.xlistview.XListView;
@@ -100,11 +100,11 @@ public class AllOrderListActivity extends Activity implements IXListViewListener
     private String kind;
 
     /***所有订单接口*/
-    private String allOrderUrl = AllConstants.TOBOSU_URL + "tapp/order/com_order_list";
+    private String allOrderUrl = Constant.TOBOSU_URL + "tapp/order/com_order_list";
 
     private HashMap<String, Object> popMap = new HashMap<String, Object>();
 
-    private String lfangUrl = AllConstants.TOBOSU_URL + "tapp/order/lfang";
+    private String lfangUrl = Constant.TOBOSU_URL + "tapp/order/lfang";
     private LinearLayout loading;
 
     @Override
@@ -150,7 +150,7 @@ public class AllOrderListActivity extends Activity implements IXListViewListener
         token = AppInfoUtil.getToekn(getApplicationContext());
         kind = getIntent().getExtras().getString("kind");
 
-        if (!TextUtils.isEmpty(token) && AllConstants.checkNetwork(mContext)) {
+        if (!TextUtils.isEmpty(token) && Constant.checkNetwork(mContext)) {
             initParams();
             requestOrderPost();
         }
@@ -532,7 +532,7 @@ public class AllOrderListActivity extends Activity implements IXListViewListener
     @Override
     public void onRefresh() {
         page = 1;
-        if (!TextUtils.isEmpty(token) && AllConstants.checkNetwork(mContext)) {
+        if (!TextUtils.isEmpty(token) && Constant.checkNetwork(mContext)) {
             initParams();
             requestOrderPost();
         }
@@ -541,7 +541,7 @@ public class AllOrderListActivity extends Activity implements IXListViewListener
     @Override
     public void onLoadMore() {
         page++;
-        if (!TextUtils.isEmpty(token) && AllConstants.checkNetwork(mContext)) {
+        if (!TextUtils.isEmpty(token) && Constant.checkNetwork(mContext)) {
             initParams();
             requestOrderPost();
         }

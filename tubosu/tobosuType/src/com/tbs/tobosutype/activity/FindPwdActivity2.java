@@ -15,7 +15,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,7 +25,7 @@ import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.http.HttpPost;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HintInput;
@@ -46,7 +45,7 @@ public class FindPwdActivity2 extends Activity implements OnClickListener {
 	private String mobile, smsVerif, newPwd;
 
 	/**获取验证码的接口*/
-	private String urlBase = AllConstants.TOBOSU_URL + "tapp/passport/get_pic_code?version=";
+	private String urlBase = Constant.TOBOSU_URL + "tapp/passport/get_pic_code?version=";
 
 	private static int count = 60;
 
@@ -132,7 +131,7 @@ public class FindPwdActivity2 extends Activity implements OnClickListener {
 		public void run() {
 			Looper.prepare();
 			// 设置新密码接口
-			String result = HttpPost.doPost(AllConstants.TOBOSU_URL + "tapp/passport/app_reset_password?", map, "utf-8");
+			String result = HttpPost.doPost(Constant.TOBOSU_URL + "tapp/passport/app_reset_password?", map, "utf-8");
 			try {
 				if (result != null) {
 					JSONObject object = new JSONObject(result);

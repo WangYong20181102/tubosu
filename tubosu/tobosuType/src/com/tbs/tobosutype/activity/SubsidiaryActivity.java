@@ -25,7 +25,7 @@ import android.widget.TextView;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 /**
@@ -35,7 +35,7 @@ import com.tbs.tobosutype.utils.HttpServer;
  */
 public class SubsidiaryActivity extends Activity {
 	private ImageView subsidiary_back;
-	private String requestUrl = AllConstants.TOBOSU_URL
+	private String requestUrl = Constant.TOBOSU_URL
 			+ "/tapp/company/fund_manage";
 	private RequestParams params;
 	private int page = 1;

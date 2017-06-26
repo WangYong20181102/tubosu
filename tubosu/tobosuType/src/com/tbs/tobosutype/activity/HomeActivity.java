@@ -40,13 +40,11 @@ import com.tbs.tobosutype.customview.RoundAngleImageView;
 import com.tbs.tobosutype.customview.RoundImageView;
 import com.tbs.tobosutype.customview.ScrollViewExtend;
 import com.tbs.tobosutype.customview.ScrollViewExtend.OnScrollChangedListener;
-import com.tbs.tobosutype.global.AllConstants;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
-import com.tbs.tobosutype.model.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
 import com.tbs.tobosutype.utils.HttpServer;
-import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
 
 import org.apache.http.Header;
@@ -236,15 +234,15 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     /**
      * 装修课堂接口
      */
-    private String decorationClassUrl = AllConstants.TOBOSU_URL + "tapp/util/decorationClass";
+    private String decorationClassUrl = Constant.TOBOSU_URL + "tapp/util/decorationClass";
 
     /**
      * 本地优惠接口
      */
-    private String discountUrl = AllConstants.TOBOSU_URL + "tapp/util/discount";
+    private String discountUrl = Constant.TOBOSU_URL + "tapp/util/discount";
 
 //	/** 精选图册接口 */
-//	private String getSpecialUrl = AllConstants.TOBOSU_URL + "tapp/util/get_special";
+//	private String getSpecialUrl = Constant.TOBOSU_URL + "tapp/util/get_special";
 
     private RequestParams decorationClassParams;
     private RequestParams localDiscountParams;
@@ -287,8 +285,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 //		//精选图
 //		operGetSpecial();
         Log.e(TAG + "获取的版本信息", "======" + AppInfoUtil.getAppVersionName(context));
-        Log.e(TAG + "获取的PIPE信息", "======" + AllConstants.PIPE);
-//        Log.e("获取Java代码中的渠道信息", "======" + AllConstants.CHANNEL_TYPE);
+        Log.e(TAG + "获取的PIPE信息", "======" + Constant.PIPE);
+//        Log.e("获取Java代码中的渠道信息", "======" + Constant.CHANNEL_TYPE);
 //        Log.e("获取Manifest文件中的渠道信息", "======" + AppInfoUtil.getChannType(context));
     }
 
@@ -564,7 +562,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
                 } else {
                     MobclickAgent.onEvent(context, "click_index_decoration_class");
                     System.out.println(TAG + "====-前 中 后，选材，设计，风水 传过去的 拼接前 :" + decorationClassDatas.get(position));
-                    String content_url = decorationClassDatas.get(position) + AllConstants.M_POP_PARAM + AllConstants.WANGJIANLIN;
+                    String content_url = decorationClassDatas.get(position) + Constant.M_POP_PARAM + Constant.WANGJIANLIN;
                     System.out.println(TAG + "====-前 中 后，选材，设计，风水 传过去的 拼接后 content_url :" + content_url);
                     // Log.d(TAG, "下面加载h5页面");
                     Intent detailIntent = new Intent(HomeActivity.this, WebViewActivity.class);
@@ -937,7 +935,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
                 MobclickAgent.onEvent(context, "click_index_decoration_com_total");
                 Intent detailIntent = new Intent(context, WebViewActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("link", AllConstants.POP_URL + AllConstants.M_POP_PARAM + AllConstants.WANGJIANLIN);
+                bundle.putString("link", Constant.POP_URL + Constant.M_POP_PARAM + Constant.WANGJIANLIN);
                 detailIntent.putExtras(bundle);
                 startActivity(detailIntent);
                 break;
@@ -1021,7 +1019,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
             }
             home_city.setText(cityName);
 
-            Intent selectCityIntent = new Intent(AllConstants.ACTION_HOME_SELECT_CITY);
+            Intent selectCityIntent = new Intent(Constant.ACTION_HOME_SELECT_CITY);
             Bundle b = new Bundle();
             b.putString("city_selected", cityName);
             selectCityIntent.putExtra("f_select_city_bundle",b);

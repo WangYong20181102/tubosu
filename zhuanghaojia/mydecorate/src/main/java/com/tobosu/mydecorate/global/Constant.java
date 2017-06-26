@@ -94,8 +94,10 @@ public class Constant {
      */
     public static final String BANNER_STRING = "?channel=seo&subchannel=zhjandroid&from=banner";
 
-
-    //    public static final String PIPE_CODE = "http://m.tobosu.com/app/pub?channel=seo&subchannel=zhjandroid&chcode=" + Constant.CHANNEL_TYPE;
+    /**
+     * app_type 1是土拨鼠
+     *          2是装好家
+     */
     public static final String PIPE_CODE = "http://m.tobosu.com/app/pub?channel=seo&subchannel=zhjandroid&chcode=" + Util.getChannType(MyApplication.getContexts()) + "&app_type=2";
     //****************************************************** creat by lin
     public static final String DESCRIPTOR = "com.umeng.share";
