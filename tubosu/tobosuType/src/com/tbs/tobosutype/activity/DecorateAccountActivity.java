@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.adapter.DecorateExpendAdapter;
 import com.tbs.tobosutype.bean._DecorationExpent;
 import com.tbs.tobosutype.customview.MyChatView;
 import com.tbs.tobosutype.global.Constant;
@@ -74,7 +75,8 @@ public class DecorateAccountActivity extends Activity {
     private TextView da_qita;//其他占比
     private TextView da_text_qita;//其他价格
     private RecyclerView decorate_expence_recycleview;//显示开支数据
-    private LinearLayoutManager linearLayoutManager;//列表布局
+    private LinearLayoutManager mLinearLayoutManager;//列表布局
+    private DecorateExpendAdapter decorateExpendAdapter;//适配器
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +86,7 @@ public class DecorateAccountActivity extends Activity {
         setContentView(R.layout.activity_decorate_account);
         mContext = DecorateAccountActivity.this;
         bindView();//绑定布局
+        initViewEvent();
         setClick();
     }
 
@@ -97,6 +100,7 @@ public class DecorateAccountActivity extends Activity {
         OKHttpUtil okHttpUtil = new OKHttpUtil();
         HashMap<String, String> param = new HashMap<>();
         param.put("token", Util.getDateToken());
+        Log.e(TAG, "用户的uid=====" + Util.getUserId(mContext));
         param.put("uid", Util.getUserId(mContext));
         okHttpUtil.post(Constant.OUTCOME_HOMEPAGE_URL, param, new OKHttpUtil.BaseCallBack() {
             @Override
@@ -126,7 +130,6 @@ public class DecorateAccountActivity extends Activity {
                 initView(decorationExpent);
             } else if (status.equals("201")) {
                 //没有数据显示没有数据的浮层 并且隐藏显示数据的图层
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -162,6 +165,11 @@ public class DecorateAccountActivity extends Activity {
         decorate_expence_recycleview = (RecyclerView) findViewById(R.id.decorate_expence_recycleview);
     }
 
+    private void initViewEvent() {
+        mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        decorate_expence_recycleview.setLayoutManager(mLinearLayoutManager);
+    }
+
     private void initView(_DecorationExpent decorationExpent) {
         if (seekProgress.getProgress() >= 0 && seekProgress.getProgress() <= 20) {
             seekProgress.setProgress(20);
@@ -184,9 +192,25 @@ public class DecorateAccountActivity extends Activity {
             seekProgress.setBackgroundResource(R.color.budget_red);
             tvState.setText(budgetTips[2]);
         }
-
+        if (decorateExpendAdapter == null) {
+            if (!decorationExpent.getDecorate_recordList().isEmpty()) {
+                decorateExpendAdapter = new DecorateExpendAdapter(mContext, decorationExpent.getDecorate_recordList());
+                decorate_expence_recycleview.setAdapter(decorateExpendAdapter);
+                decorateExpendAdapter.notifyDataSetChanged();
+            } else {
+                decorateExpendAdapter.notifyDataSetChanged();
+            }
+        }
         //处理相关页面数据
         //处理饼状图的显示
+//        if (!decorationExpent.getDecorateExpenseList().isEmpty()) {
+//            for (int i = 0; i < decorationExpent.getDecorateExpenseList().size(); i++) {
+//                if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("1")) {
+//                    da_rengong.setText("" + decorationExpent.getDecorateExpenseList().get(i).getType_name() +
+//                            decorationExpent.getDecorateExpenseList().get(i).getCount_cost());
+//                }
+//            }
+//        }
     }
 
     private void setClick() {

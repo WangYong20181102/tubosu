@@ -43,7 +43,7 @@ public class MyChatView extends View {
     //-------------颜色相关-------------
     //边框颜色和标注颜色
 
-    //厨房  卧室  阳台 其他 卫生间 客厅
+
     public int[] mColor = new int[]{Color.parseColor("#82d09c"), Color.parseColor("#62AAE5"),
             Color.parseColor("#dcb09e"), Color.parseColor("#f1c663"),
             Color.parseColor("#96b6d6"), Color.parseColor("#ff7f5b")};

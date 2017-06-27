@@ -53,27 +53,41 @@ public class Constant {
 
     public static final String ACTION_HOME_SELECT_CITY = "action_home_select_city";
 
-    /**获取数据*/
+    /**
+     * 获取数据
+     */
     public static final String ACTION_GET_FRAGMENT_DATA = "action_get_fragment_data";
-    /**人力*/
+    /**
+     * 人力
+     */
     public static final String ACTION_MANPOWER_FRAGMENT_DATA = "action_manpower_fragment_data";
-    /**建材*/
+    /**
+     * 建材
+     */
     public static final String ACTION_MATERIAL_FRAGMENT_DATA = "action_material_fragment_data";
-    /**五金*/
+    /**
+     * 五金
+     */
     public static final String ACTION_STEEL_FRAGMENT_DATA = "action_steel_fragment_data";
-    /**家具*/
+    /**
+     * 家具
+     */
     public static final String ACTION_FURNITURE_FRAGMENT_DATA = "action_furniture_fragment_data";
-    /**厨卫*/
+    /**
+     * 厨卫
+     */
     public static final String ACTION_KITCHEN_FRAGMENT_DATA = "action_kitchen_fragment_data";
 
 
-    /**测试环境*/
-//	public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+    /**
+     * 测试环境
+     */
+    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
     /**
      * 正式环境
      */
-    public static final String TOBOSU_URL = "http://www.tobosu.com/";
+//    public static final String TOBOSU_URL = "http://www.tobosu.com/";
 
     /**
      * 测试环境
@@ -135,8 +149,8 @@ public class Constant {
 
     /**
      * app_type 1是土拨鼠
-     *          2是装好家
-     *          3效果图
+     * 2是装好家
+     * 3效果图
      */
     public static final String PIPE = "http://m.tobosu.com/app/pub?channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "&app_type=1";
 
