@@ -71,8 +71,8 @@ public class _DecorationExpent {
     String all_cost;//总开支
     String cost;//总开支占总预算的百分比
     String expected_cost;//总预算
-    List<decorate_expense> decorateExpenseList = new ArrayList<>();
-    List<decorate_record> decorate_recordList = new ArrayList<>();
+    ArrayList<decorate_expense> decorateExpenseList = new ArrayList<>();
+    ArrayList<decorate_record> decorate_recordList = new ArrayList<>();
 
     public _DecorationExpent(String json) {
         try {
@@ -122,15 +122,15 @@ public class _DecorationExpent {
         return decorateExpenseList;
     }
 
-    public void setDecorateExpenseList(List<decorate_expense> decorateExpenseList) {
+    public void setDecorateExpenseList(ArrayList<decorate_expense> decorateExpenseList) {
         this.decorateExpenseList = decorateExpenseList;
     }
 
-    public List<decorate_record> getDecorate_recordList() {
+    public ArrayList<decorate_record> getDecorate_recordList() {
         return decorate_recordList;
     }
 
-    public void setDecorate_recordList(List<decorate_record> decorate_recordList) {
+    public void setDecorate_recordList(ArrayList<decorate_record> decorate_recordList) {
         this.decorate_recordList = decorate_recordList;
     }
 

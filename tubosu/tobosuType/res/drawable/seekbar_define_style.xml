@@ -3,19 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 未选中 -->
     <item
-        android:id="@android:id/background" >
-        <shape >
-            <corners android:radius="14dp"/>
-            <solid android:color="#FEDCB2"/>
-        </shape>
-    </item>
+        android:id="@android:id/background"
+        android:drawable="@color/white"/>
     <!-- 中 -->
     <item
         android:id="@android:id/progress"
-        android:drawable="@color/budget_green"
-        />
+        android:drawable="@color/budget_green"/>
     <item
         android:id="@android:id/secondaryProgress"
         android:drawable="@color/concern_color"/>
-
 </layer-list>

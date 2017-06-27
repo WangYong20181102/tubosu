@@ -38,4 +38,8 @@
         <attr name="MyChatView_radius" format="dimension" />
         <attr name="MyChatView_strokewidth" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="swipelistviewstyle">
+        <attr name="right_width" format="dimension"></attr>
+    </declare-styleable>
 </resources>

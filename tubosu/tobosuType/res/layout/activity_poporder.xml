@@ -120,7 +120,18 @@
             android:layout_height="0dp"
             android:layout_weight="2.8">
 
-
+            <TextView
+                android:id="@+id/tv_xgg"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_above="@+id/tv_message"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="18dp"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/shape_framelayout1_textview_bg"
+                android:gravity="center"
+                android:text="先逛逛 >>"
+                android:textColor="@color/white" />
             <!-- ###################################################### -->
             <RelativeLayout
                 android:id="@+id/re_prepare_direction"

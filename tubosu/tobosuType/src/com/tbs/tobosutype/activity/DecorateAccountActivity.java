@@ -6,11 +6,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -19,8 +22,10 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.DecorateExpendAdapter;
+import com.tbs.tobosutype.adapter.SwipeAdapter;
 import com.tbs.tobosutype.bean._DecorationExpent;
 import com.tbs.tobosutype.customview.MyChatView;
+import com.tbs.tobosutype.customview.SwipeListView;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
@@ -41,7 +46,7 @@ public class DecorateAccountActivity extends Activity {
     private Context mContext;
     private _DecorationExpent decorationExpent;//整个页面的数据
     private static final String TAG = DecorateAccountActivity.class.getSimpleName();
-
+    private float decorateBudget = 0;
     /**
      * 总开支占比总预算在80%-0%之间    --->>   小主，一切还在预算当中
      * 总开支占比总预算在80%-100%      --->>   要死了，花钱如流水啊
@@ -74,7 +79,8 @@ public class DecorateAccountActivity extends Activity {
     private TextView da_text_chuwei;//厨卫价格
     private TextView da_qita;//其他占比
     private TextView da_text_qita;//其他价格
-    private RecyclerView decorate_expence_recycleview;//显示开支数据
+//    private RecyclerView decorate_expence_recycleview;//显示开支数据
+    private SwipeListView mListView;
     private LinearLayoutManager mLinearLayoutManager;//列表布局
     private DecorateExpendAdapter decorateExpendAdapter;//适配器
 
@@ -85,9 +91,24 @@ public class DecorateAccountActivity extends Activity {
         AppInfoUtil.setTranslucentStatus(this);
         setContentView(R.layout.activity_decorate_account);
         mContext = DecorateAccountActivity.this;
+        initData();
         bindView();//绑定布局
-        initViewEvent();
+//        initViewEvent();
         setClick();
+    }
+
+    private void initData(){
+//        Intent intent = new Intent(mContext, DecorateAccountActivity.class);
+//        intent.putExtra("budget", etBudget.getText().toString());
+        if(getIntent()!=null && getIntent().getStringExtra("budget")!=null){
+            String budget = getIntent().getStringExtra("budget");
+            if("".equals(budget)){
+                decorateBudget = 0;
+            }else {
+                decorateBudget = Float.parseFloat(budget);
+            }
+
+        }
     }
 
     @Override
@@ -140,6 +161,7 @@ public class DecorateAccountActivity extends Activity {
         relBack = (RelativeLayout) findViewById(R.id.decorate_account_back);
         ivEditAccount = (ImageView) findViewById(R.id.iv_edit_account);
         tvTotalBuduget = (TextView) findViewById(R.id.tv_total_buduget);
+        tvTotalBuduget.setText(decorateBudget+"");
         seekProgress = (SeekBar) findViewById(R.id.seek_progress);
         tvTotalCost = (TextView) findViewById(R.id.tv_total_cost);
         tvState = (TextView) findViewById(R.id.tv_state);
@@ -162,15 +184,17 @@ public class DecorateAccountActivity extends Activity {
         da_text_chuwei = (TextView) findViewById(R.id.da_text_chuwei);
         da_qita = (TextView) findViewById(R.id.da_qita);
         da_text_qita = (TextView) findViewById(R.id.da_text_qita);
-        decorate_expence_recycleview = (RecyclerView) findViewById(R.id.decorate_expence_recycleview);
+//        decorate_expence_recycleview = (RecyclerView) findViewById(R.id.decorate_expence_recycleview);
+        mListView = (SwipeListView) findViewById(R.id.record_listview);
+        mListView.setSelector(R.color.transparent);
     }
 
-    private void initViewEvent() {
-        mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
-        decorate_expence_recycleview.setLayoutManager(mLinearLayoutManager);
-    }
+//    private void initViewEvent() {
+//        mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+//        decorate_expence_recycleview.setLayoutManager(mLinearLayoutManager);
+//    }
 
-    private void initView(_DecorationExpent decorationExpent) {
+    private void initView(_DecorationExpent decorationExpentList) {
         if (seekProgress.getProgress() >= 0 && seekProgress.getProgress() <= 20) {
             seekProgress.setProgress(20);
             seekProgress.setBackgroundResource(R.color.budget_green);
@@ -192,15 +216,37 @@ public class DecorateAccountActivity extends Activity {
             seekProgress.setBackgroundResource(R.color.budget_red);
             tvState.setText(budgetTips[2]);
         }
-        if (decorateExpendAdapter == null) {
-            if (!decorationExpent.getDecorate_recordList().isEmpty()) {
-                decorateExpendAdapter = new DecorateExpendAdapter(mContext, decorationExpent.getDecorate_recordList());
-                decorate_expence_recycleview.setAdapter(decorateExpendAdapter);
-                decorateExpendAdapter.notifyDataSetChanged();
-            } else {
-                decorateExpendAdapter.notifyDataSetChanged();
+
+//        if (decorateExpendAdapter == null) {
+//            if (!decorationExpent.getDecorate_recordList().isEmpty()) {
+//                decorateExpendAdapter = new DecorateExpendAdapter(mContext, decorationExpent.getDecorate_recordList());
+//                decorate_expence_recycleview.setAdapter(decorateExpendAdapter);
+//                decorateExpendAdapter.notifyDataSetChanged();
+//            } else {
+//                decorateExpendAdapter.notifyDataSetChanged();
+//            }
+//        }
+
+        SwipeAdapter mAdapter = new SwipeAdapter(mContext, decorationExpentList.getDecorate_recordList(), mListView.getRightViewWidth());
+        mListView.setAdapter(mAdapter);
+        setListViewHeightBasedOnChildren(mListView);
+        mAdapter.setOnRightItemClickListener(new SwipeAdapter.onRightItemClickListener() {
+
+            @Override
+            public void onRightItemClick(View v, int position) {
+
+                Util.setToast(mContext, "删除第  " + (position+1)+" 记录");
+
             }
-        }
+        });
+//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Util.setToast(mContext,"item onclick " + position);
+//            }
+//        });
+
+
         //处理相关页面数据
         //处理饼状图的显示
 //        if (!decorationExpent.getDecorateExpenseList().isEmpty()) {
@@ -254,5 +300,29 @@ public class DecorateAccountActivity extends Activity {
 //            }
 //        });
 
+    }
+
+    private void setListViewHeightBasedOnChildren(ListView listView) {
+        // 获取ListView对应的Adapter
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
+            // listAdapter.getCount()返回数据项的数目
+            View listItem = listAdapter.getView(i, null, listView);
+            // 计算子项View 的宽高
+            listItem.measure(0, 0);
+            // 统计所有子项的总高度
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        // listView.getDividerHeight()获取子项间分隔符占用的高度
+        // params.height最后得到整个ListView完整显示需要的高度
+        listView.setLayoutParams(params);
     }
 }
