@@ -163,6 +163,8 @@ public class PopOrderActivity extends Activity {
     private LinearLayout ll_location;
     private LinearLayout ll_location1;
 
+    /**先逛逛*/
+    private TextView tv_xgg;
 
 
     private void initNewViews(){
@@ -227,7 +229,8 @@ public class PopOrderActivity extends Activity {
         tv_message.bringToFront();
         ll_location = (LinearLayout) findViewById(R.id.ll_location);
         ll_location1 = (LinearLayout) findViewById(R.id.ll_location1);
-
+        tv_xgg = (TextView) findViewById(R.id.tv_xgg);
+        tv_xgg.bringToFront();
 
     }
 
@@ -495,6 +498,7 @@ public class PopOrderActivity extends Activity {
                             tv_message.setVisibility(View.VISIBLE);
                             tv_question_title.setVisibility(View.VISIBLE);
                             tv_prepare_title.setText("准备装修");
+                            tv_xgg.setVisibility(View.VISIBLE);
                             break;
                         case -1:
                             // 阶段退出
@@ -502,6 +506,7 @@ public class PopOrderActivity extends Activity {
                             stageAnimationOut1(rl_going_stage);
                             tv_message.setVisibility(View.VISIBLE);
                             tv_question_title.setVisibility(View.VISIBLE);
+                            tv_xgg.setVisibility(View.VISIBLE);
                             break;
                         case -2:
                             //  风格出  阶段入
@@ -581,7 +586,13 @@ public class PopOrderActivity extends Activity {
         });
 
 
-
+        tv_xgg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mContext, MainActivity.class));
+                finish();
+            }
+        });
 
         rel_left_gif.setOnClickListener(new View.OnClickListener() {
 
@@ -599,58 +610,6 @@ public class PopOrderActivity extends Activity {
             }
         });
 
-//        etCellphone.setOnTouchListener(new View.OnTouchListener() {
-//            public boolean onTouch(View v, MotionEvent event){
-//                etCellphone.setFocusable(true);
-//                etCellphone.setFocusableInTouchMode(true);
-//                etCellphone.requestFocus();
-//                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//                imm.hideSoftInputFromWindow(etCellphone.getWindowToken(), 0);
-//                return false;
-//            }
-//        });
-//
-//        etCellphone1.setOnTouchListener(new View.OnTouchListener() {
-//            public boolean onTouch(View v, MotionEvent event){
-//                etCellphone1.setFocusable(true);
-//                etCellphone1.setFocusableInTouchMode(true);
-//                etCellphone1.requestFocus();
-//                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//                imm.hideSoftInputFromWindow(etCellphone1.getWindowToken(), 0);
-//                return false;
-//            }
-//        });
-//
-//        etCellphone.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-//
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//
-//                if(hasFocus) {
-//                    // 弹出键盘
-//
-//                } else {
-//                    // 关闭键盘
-//
-//                }
-//            }
-//        });
-//
-//        etCellphone1.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-//
-//            @Override
-//
-//            public void onFocusChange(View v, boolean hasFocus) {
-//
-//                if(hasFocus) {
-//                    // 弹出键盘
-//
-//                } else {
-//                    // 关闭键盘
-//
-//                }
-//            }
-//        });
 
         tvSummitOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1298,6 +1257,7 @@ public class PopOrderActivity extends Activity {
                     relBar.setVisibility(View.VISIBLE);
                     tv_message.setVisibility(View.VISIBLE);
                     tv_question_title.setVisibility(View.VISIBLE);
+                    tv_xgg.setVisibility(View.VISIBLE);
                 }else if(position==0){
                     if(gopoporder_code==34){
                         setResult(Constant.POP_RESULTCODE);
@@ -1321,6 +1281,7 @@ public class PopOrderActivity extends Activity {
                     relBar.setVisibility(View.VISIBLE);
                     tv_message.setVisibility(View.VISIBLE);
                     tv_question_title.setVisibility(View.VISIBLE);
+                    tv_xgg.setVisibility(View.VISIBLE);
                 }else if(position==-2){
                     //  风格出  阶段入
                     ongoingStyleOut(rl_going_style);
@@ -1366,7 +1327,6 @@ public class PopOrderActivity extends Activity {
                     }else{
                         tv_ongoing_title.setText(getOngoingStyle(mContext));
                     }
-
 
                     return true;
                 }
@@ -1443,30 +1403,12 @@ public class PopOrderActivity extends Activity {
                           getSharedPreferences("Cancel_Get_Design", Context.MODE_PRIVATE).edit().putInt("cancel_String", 1).commit();
                         */
                         CacheManager.setPopFlag(mContext, 16);
-//                        startActivity(new Intent(mContext, MainActivity.class));
-//                        if (!Util.isLogin(mContext)) {
-//                            startActivity(new Intent(mContext, TransitActivity.class));
-//                            Log.d(TAG, "沒登录进入提醒登录页");
-//                        } else {
-//                            startActivity(new Intent(mContext, MainActivity.class));
-//                            Log.d(TAG, "直接进入主页");
-//                        }
                         startActivity(new Intent(mContext, MainActivity.class));
                         finish();
                     } else if (orderObject.getInt("error_code") == 250) {
                         hideLoadingView();
                         notNow();
                         Util.setToast(mContext, "您操作太频繁 请稍后再试!");
-//                        startActivity(new Intent(mContext, MainActivity.class));
-//                        if (!Util.isLogin(mContext)) {
-//                            startActivity(new Intent(mContext, TransitActivity.class));
-//                            Log.d(TAG, "沒登录进入提醒登录页");
-//                        } else {
-//                            startActivity(new Intent(mContext, MainActivity.class));
-//                            Log.d(TAG, "直接进入主页");
-//                        }
-//                        startActivity(new Intent(mContext, MainActivity.class));
-//                        finish();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -1479,15 +1421,6 @@ public class PopOrderActivity extends Activity {
                 Util.setToast(mContext, "领取失败 请稍后再试");
                 hideLoadingView();
                 notNow();
-//                if (!Util.isLogin(mContext)) {
-//                    startActivity(new Intent(mContext, TransitActivity.class));
-//                    Log.d(TAG, "沒登录进入提醒登录页");
-//                } else {
-//                    startActivity(new Intent(mContext, MainActivity.class));
-//                    Log.d(TAG, "直接进入主页");
-//                }
-//                startActivity(new Intent(mContext, MainActivity.class));
-//                finish();
             }
         }) {
             @Override
@@ -1518,6 +1451,7 @@ public class PopOrderActivity extends Activity {
             tv_message.setVisibility(View.INVISIBLE);
 //            tv_message.setAlpha(0.0f);
             rel_dont_care.setVisibility(View.VISIBLE);
+            tv_xgg.setVisibility(View.INVISIBLE);
             leftToMid(left);
             right.setVisibility(View.GONE);
             right.setAlpha(0.0f);
@@ -1555,6 +1489,7 @@ public class PopOrderActivity extends Activity {
             tv_message.setVisibility(View.INVISIBLE);
 //            tv_message.setAlpha(0.0f);
             rel_dont_care.setVisibility(View.VISIBLE);
+            tv_xgg.setVisibility(View.INVISIBLE);
             rightToMid(right);
             left.setVisibility(View.GONE);
             left.setAlpha(0.0f);

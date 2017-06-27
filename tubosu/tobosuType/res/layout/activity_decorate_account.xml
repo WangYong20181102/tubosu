@@ -37,6 +37,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="14dp"
+                            android:padding="4dp"
                             android:background="@drawable/back_up" />
                     </RelativeLayout>
 
@@ -357,19 +358,35 @@
                             app:MyChatView_strokewidth="50dp" />
                     </RelativeLayout>
 
-                    <LinearLayout
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="14dp"
+                        android:background="#F5F5F5"/>
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:background="@color/white">
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/decorate_expence_recycleview"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
+                            android:layout_height="match_parent"
+                            android:visibility="gone">
                         </android.support.v7.widget.RecyclerView>
-                    </LinearLayout>
+
+                        <com.tbs.tobosutype.customview.SwipeListView
+                            android:id="@+id/record_listview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:divider="@null"
+                            android:background="@color/white"
+                            android:dividerHeight="1dp"
+                            app:right_width="120dp">
+                        </com.tbs.tobosutype.customview.SwipeListView>
+                    </RelativeLayout>
                 </LinearLayout>
+
                 <!--记账的记录为空时显示-->
                 <RelativeLayout
                     android:id="@+id/rel_data_empty"

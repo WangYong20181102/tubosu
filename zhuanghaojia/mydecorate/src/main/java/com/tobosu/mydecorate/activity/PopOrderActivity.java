@@ -571,14 +571,6 @@ public class PopOrderActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
-//                if (!Util.isLogin(mContext)) {
-//                    startActivity(new Intent(mContext, TransitActivity.class));
-//                    Log.d(TAG, "沒登录进入提醒登录页");
-//                } else {
-//                    startActivity(new Intent(mContext, MainActivity.class));
-//                    Log.d(TAG, "直接进入主页");
-//                }
                 startActivity(new Intent(mContext, MainActivity.class));
                 CacheManager.setDontNeed(mContext, "dontneed");
                 finish();
