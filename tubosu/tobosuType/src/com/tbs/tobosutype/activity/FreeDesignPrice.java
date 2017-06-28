@@ -200,6 +200,7 @@ public class FreeDesignPrice extends Activity {
                             fastLoginParams.put("mobile", mPhoneNum);
                             fastLoginParams.put("platform_type", "1");
                             fastLoginParams.put("system_type", "1");
+                            fastLoginParams.put("source", "1112");
                             fastLoginParams.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
                             fastLoginParams.put("msg_code", fdpInputCode.getText().toString().trim());
                             fastLoginParams.put("urlhistory", Constant.PIPE); // 渠道代码

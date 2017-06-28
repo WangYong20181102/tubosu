@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 
 /***
@@ -42,13 +43,15 @@ public class ZhuangActivity extends Activity {
 
     private ProgressDialog pbDialog;
 
-    private String zhuanghaojia_url = "http://m.tobosu.com/mt?channel=seo&subchannel=zhjandroid&chcode=" + Constant.PIPE + "&from=share&tbsNative=1";
+    private String zhuanghaojia_url = "http://m.tobosu.com/mt?channel=seo&subchannel=zhjandroid&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "&from=share&tbsNative=1";
     private RelativeLayout rl_banner;
+
 
     private Handler myHandler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case 12:
+
                     if (pbDialog.isShowing()) {
                         pbDialog.dismiss();
                     }

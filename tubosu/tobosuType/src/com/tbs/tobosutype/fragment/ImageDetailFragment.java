@@ -136,6 +136,7 @@ public class ImageDetailFragment extends Fragment {
         imgDetailParams.put("token", AppInfoUtil.getToekn(mContext));
         imgDetailParams.put("id", id);
         imgDetailParams.put("url", url);
+        imgDetailParams.put("source", "893");
         imgDetailParams.put("urlhistory", Constant.PIPE); // 渠道代码
         imgDetailParams.put("comeurl", Constant.PIPE); //订单发布页面
         HttpRequestImgDetail();
