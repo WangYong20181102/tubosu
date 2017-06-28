@@ -32,8 +32,10 @@ public class HttpUtils {
     public static OkHttpClient getInstance() {
         if (client == null) {
             synchronized (HttpUtils.class) {
-                if (client == null)
+                if (client == null){
                     client = new OkHttpClient();
+                }
+
             }
         }
         return client;
