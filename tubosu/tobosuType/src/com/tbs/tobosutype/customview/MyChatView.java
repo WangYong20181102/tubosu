@@ -34,6 +34,23 @@ public class MyChatView extends View {
 
     //圆的直径
     private float mRadius;
+
+    public float getmRadius() {
+        return mRadius;
+    }
+
+    public void setmRadius(float mRadius) {
+        this.mRadius = mRadius;
+    }
+
+    public float getmStrokeWidth() {
+        return mStrokeWidth;
+    }
+
+    public void setmStrokeWidth(float mStrokeWidth) {
+        this.mStrokeWidth = mStrokeWidth;
+    }
+
     //圆的粗细
     private float mStrokeWidth;
     //-------------画笔相关-------------
@@ -128,6 +145,7 @@ public class MyChatView extends View {
     private void drawCycle(Canvas canvas) {
         float startPercent = 0;
         float sweepPercent = 0;
+        Log.e("MyChatView", "绘制集合的长度======" + floatList.size());
         for (int i = 0; i < floatList.size(); i++) {
             cyclePaint.setColor(mColor[i]);
             startPercent = sweepPercent + startPercent;

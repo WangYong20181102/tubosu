@@ -69,8 +69,9 @@ public class DecorateAccountActivity extends Activity {
     private LinearLayout relDataEmpty;
     private LinearLayout relDataLaout;
     private RelativeLayout decorateAccBar;
+    private RelativeLayout rl_chat_pie;
     //进度条以下的控件 以及相关数据
-    private MyChatView myChatView;//饼图
+//    private MyChatView myChatView;//饼图
     private List<Float> floatList = new ArrayList<>();//饼图的占比
     private TextView da_rengong;//人工占比
     private TextView da_text_rengong;//人工价格
@@ -85,18 +86,18 @@ public class DecorateAccountActivity extends Activity {
     private TextView da_qita;//其他占比
     private TextView da_text_qita;//其他价格
     private SwipeListView mListView;
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 10086) {
-                for (int i = 0; i < floatList.size(); i++) {
-                    Log.e(TAG, "handler执行比例值====" + decorationExpent.getDecorateExpenseList().get(i).getType_name() + "===" + floatList.get(i));
-                }
-                myChatView.setFloatList(floatList);
-            }
-        }
-    };
+//    Handler handler = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            if (msg.what == 10086) {
+//                for (int i = 0; i < floatList.size(); i++) {
+//                    Log.e(TAG, "handler执行比例值====" + decorationExpent.getDecorateExpenseList().get(i).getType_name() + "===" + floatList.get(i));
+//                }
+//                myChatView.setFloatList(floatList);
+//            }
+//        }
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +130,9 @@ public class DecorateAccountActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+        if (!floatList.isEmpty()) {
+            floatList.clear();
+        }
         HttpGetData();
     }
 
@@ -196,15 +200,17 @@ public class DecorateAccountActivity extends Activity {
 //        floatList.add(15.26f);//家具
 //        floatList.add(10.62f);//厨卫
 //        floatList.add(26.01f);//其他
-        myChatView = (MyChatView) findViewById(R.id.da_my_chat_view);
+//        myChatView = (MyChatView) findViewById(R.id.da_my_chat_view);
 //        myChatView.setFloatList(floatList);
 
         sv = (ScrollView) findViewById(R.id.sv_decorate_acc);
+        rl_chat_pie = (RelativeLayout) findViewById(R.id.rl_chat_pie);
         relBack = (RelativeLayout) findViewById(R.id.decorate_account_back);
         ivEditAccount = (ImageView) findViewById(R.id.iv_edit_account);
         tvTotalBuduget = (TextView) findViewById(R.id.tv_total_buduget);
         tvTotalBuduget.setText(decorateBudget + "");
         seekProgress = (MySeekBar) findViewById(R.id.seek_progress);
+
 
         tvTotalCost = (TextView) findViewById(R.id.tv_total_cost);
         tvState = (TextView) findViewById(R.id.tv_state);
@@ -241,10 +247,6 @@ public class DecorateAccountActivity extends Activity {
         } else {
             float totalCost = Float.parseFloat(decorationExpentList.getAll_cost());
             float f = totalCost / decorateBudget;
-//            DecimalFormat fnum = new DecimalFormat("##0.00");
-//            int fs = (int) Float.parseFloat(fnum.format(f));
-
-//            Util.setToast(mContext, "" + f);
             if (f >= 0 && f <= 0.20) {
                 seekProgress.setProgress(20);
                 seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_green_style));
@@ -288,17 +290,11 @@ public class DecorateAccountActivity extends Activity {
 
             }
         });
-//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Util.setToast(mContext,"item onclick " + position);
-//            }
-//        });
 
 
         //处理相关页面数据
         //处理饼状图的周边显示
-        if (!decorationExpent.getDecorateExpenseList().isEmpty()) {
+        if (!decorationExpent.getDecorateExpenseList().isEmpty() && floatList.isEmpty()) {
             //人工
             float rengong = Float.parseFloat(decorationExpent.getDecorateExpenseList().get(4).getCount_cost().substring(0, decorationExpent.getDecorateExpenseList().get(4).getCount_cost().length() - 1));
             floatList.add(rengong);
@@ -318,86 +314,47 @@ public class DecorateAccountActivity extends Activity {
             float qita = Float.parseFloat(decorationExpent.getDecorateExpenseList().get(2).getCount_cost().substring(0, decorationExpent.getDecorateExpenseList().get(2).getCount_cost().length() - 1));
             floatList.add(qita);
 
-            for (int i = 0; i < floatList.size(); i++) {
-                Log.e(TAG, "比例值====" + decorationExpent.getDecorateExpenseList().get(i).getType_name() + "===" + floatList.get(i));
-            }
-
-//            线程处理
-            new MyThread().start();
+            MyChatView myChatView = new MyChatView(mContext);
+            myChatView.setmRadius(240f);
+            myChatView.setmStrokeWidth(120f);
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            myChatView.setLayoutParams(layoutParams);
             myChatView.setFloatList(floatList);
-            for (int i = 0; i < myChatView.getFloatList().size(); i++) {
-                Log.e(TAG, "拿到的数据=====" + myChatView.getFloatList().get(i));
+            rl_chat_pie.addView(myChatView);
+        }
+        /**
+         * 显示饼图周边的数据
+         */
+        for (int i = 0; i < decorationExpent.getDecorateExpenseList().size(); i++) {
+            if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("1")) {
+                //将人工相关的描述隐藏
+                da_rengong.setText("" + decorationExpent.getDecorateExpenseList().get(i).getType_name() + decorationExpent.getDecorateExpenseList().get(i).getCount_cost());
+                da_text_rengong.setText("¥ " + decorationExpent.getDecorateExpenseList().get(i).getCost());
             }
-//            floatList.clear();
-
-            /**
-             * 显示饼图周边的数据
-             */
-            for (int i = 0; i < decorationExpent.getDecorateExpenseList().size(); i++) {
-//                if (decorationExpent.getDecorateExpenseList().get(i).getCost().equals("0")) {
-//                    if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("1")) {
-//                        //将人工相关的描述隐藏
-//                        da_rengong.setVisibility(View.GONE);
-//                        da_text_rengong.setVisibility(View.GONE);
-//                    }
-//                    if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("2")) {
-//                        //将建材相关的描述隐藏
-//                        da_jiancai.setVisibility(View.GONE);
-//                        da_text_jiancai.setVisibility(View.GONE);
-//                    }
-//                    if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("3")) {
-//                        //将建材相关的描述隐藏
-//                        da_wujin.setVisibility(View.GONE);
-//                        da_text_wujin.setVisibility(View.GONE);
-//                    }
-//                    if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("4")) {
-//                        //将建材相关的描述隐藏
-//                        da_jiaju.setVisibility(View.GONE);
-//                        da_text_jiaju.setVisibility(View.GONE);
-//                    }
-//                    if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("5")) {
-//                        //将建材相关的描述隐藏
-//                        da_chuwei.setVisibility(View.GONE);
-//                        da_text_chuwei.setVisibility(View.GONE);
-//                    }
-//                    if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("6")) {
-//                        //将建材相关的描述隐藏
-//                        da_qita.setVisibility(View.GONE);
-//                        da_text_qita.setVisibility(View.GONE);
-//                    }
-//                } else {
-                //花费不为空
-                if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("1")) {
-                    //将人工相关的描述隐藏
-                    da_rengong.setText("" + decorationExpent.getDecorateExpenseList().get(i).getType_name() + decorationExpent.getDecorateExpenseList().get(i).getCount_cost());
-                    da_text_rengong.setText("¥ " + decorationExpent.getDecorateExpenseList().get(i).getCost());
-                }
-                if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("2")) {
-                    //将建材相关的描述隐藏
-                    da_jiancai.setText("" + decorationExpent.getDecorateExpenseList().get(i).getType_name() + decorationExpent.getDecorateExpenseList().get(i).getCount_cost());
-                    da_text_jiancai.setText("¥ " + decorationExpent.getDecorateExpenseList().get(i).getCost());
-                }
-                if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("3")) {
-                    //将建材相关的描述隐藏
-                    da_wujin.setText("" + decorationExpent.getDecorateExpenseList().get(i).getType_name() + decorationExpent.getDecorateExpenseList().get(i).getCount_cost());
-                    da_text_wujin.setText("¥ " + decorationExpent.getDecorateExpenseList().get(i).getCost());
-                }
-                if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("4")) {
-                    //将建材相关的描述隐藏
-                    da_jiaju.setText("" + decorationExpent.getDecorateExpenseList().get(i).getType_name() + decorationExpent.getDecorateExpenseList().get(i).getCount_cost());
-                    da_text_jiaju.setText("¥ " + decorationExpent.getDecorateExpenseList().get(i).getCost());
-                }
-                if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("5")) {
-                    //将建材相关的描述隐藏
-                    da_chuwei.setText("" + decorationExpent.getDecorateExpenseList().get(i).getType_name() + decorationExpent.getDecorateExpenseList().get(i).getCount_cost());
-                    da_text_chuwei.setText("¥ " + decorationExpent.getDecorateExpenseList().get(i).getCost());
-                }
-                if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("6")) {
-                    //将建材相关的描述隐藏
-                    da_qita.setText("" + decorationExpent.getDecorateExpenseList().get(i).getType_name() + decorationExpent.getDecorateExpenseList().get(i).getCount_cost());
-                    da_text_qita.setText("¥ " + decorationExpent.getDecorateExpenseList().get(i).getCost());
-                }
-//                }
+            if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("2")) {
+                //将建材相关的描述隐藏
+                da_jiancai.setText("" + decorationExpent.getDecorateExpenseList().get(i).getType_name() + decorationExpent.getDecorateExpenseList().get(i).getCount_cost());
+                da_text_jiancai.setText("¥ " + decorationExpent.getDecorateExpenseList().get(i).getCost());
+            }
+            if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("3")) {
+                //将建材相关的描述隐藏
+                da_wujin.setText("" + decorationExpent.getDecorateExpenseList().get(i).getType_name() + decorationExpent.getDecorateExpenseList().get(i).getCount_cost());
+                da_text_wujin.setText("¥ " + decorationExpent.getDecorateExpenseList().get(i).getCost());
+            }
+            if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("4")) {
+                //将建材相关的描述隐藏
+                da_jiaju.setText("" + decorationExpent.getDecorateExpenseList().get(i).getType_name() + decorationExpent.getDecorateExpenseList().get(i).getCount_cost());
+                da_text_jiaju.setText("¥ " + decorationExpent.getDecorateExpenseList().get(i).getCost());
+            }
+            if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("5")) {
+                //将建材相关的描述隐藏
+                da_chuwei.setText("" + decorationExpent.getDecorateExpenseList().get(i).getType_name() + decorationExpent.getDecorateExpenseList().get(i).getCount_cost());
+                da_text_chuwei.setText("¥ " + decorationExpent.getDecorateExpenseList().get(i).getCost());
+            }
+            if (decorationExpent.getDecorateExpenseList().get(i).getType_id().equals("6")) {
+                //将建材相关的描述隐藏
+                da_qita.setText("" + decorationExpent.getDecorateExpenseList().get(i).getType_name() + decorationExpent.getDecorateExpenseList().get(i).getCount_cost());
+                da_text_qita.setText("¥ " + decorationExpent.getDecorateExpenseList().get(i).getCost());
             }
         }
     }
@@ -472,24 +429,6 @@ public class DecorateAccountActivity extends Activity {
             }
         });
 
-
-//        seekProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-//            @Override
-//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//
-//            }
-//
-//            @Override
-//            public void onStartTrackingTouch(SeekBar seekBar) {
-//
-//            }
-//
-//            @Override
-//            public void onStopTrackingTouch(SeekBar seekBar) {
-//
-//            }
-//        });
-
     }
 
     private void setListViewHeightBasedOnChildren(ListView listView) {
@@ -514,17 +453,5 @@ public class DecorateAccountActivity extends Activity {
         // listView.getDividerHeight()获取子项间分隔符占用的高度
         // params.height最后得到整个ListView完整显示需要的高度
         listView.setLayoutParams(params);
-    }
-
-    class MyThread extends Thread {
-        @Override
-        public void run() {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            handler.sendEmptyMessage(10086);
-        }
     }
 }
