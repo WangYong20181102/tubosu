@@ -63,7 +63,7 @@
                 android:id="@+id/iv_fast_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/dot_select"
+                android:background="@drawable/nav"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"/>
 
@@ -85,7 +85,7 @@
                 android:id="@+id/iv_account_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/dot_select"
+                android:background="@drawable/nav"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"/>
         </RelativeLayout>

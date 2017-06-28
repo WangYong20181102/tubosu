@@ -89,10 +89,6 @@ public class Constant {
      */
 //    public static final String TOBOSU_URL = "http://www.tobosu.com/";
 
-    /**
-     * 测试环境
-     */
-//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
     /**
      * 编辑装修开支
@@ -113,6 +109,11 @@ public class Constant {
      * 装修公司开支记录
      */
     public static final String OUTCOME_RECORD_URL = TOBOSU_URL + "mapp/RenovateExpense/get_decorate_record";
+
+    /**
+     * 删除装修记录
+     */
+    public static final String DELETE_DECORATE_RECORD = TOBOSU_URL + "mapp/RenovateExpense/del_renovate_expense";
 
     /**
      * 装修公司优惠报名订单列表接口

@@ -6,6 +6,7 @@
     android:fitsSystemWindows="true">
 
     <ScrollView
+        android:id="@+id/sv_decorate_acc"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
@@ -35,12 +36,13 @@
                         android:layout_height="match_parent">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="10dp"
+                            android:layout_height="20dp"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="14dp"
                             android:background="@drawable/back_up"
                             android:padding="4dp" />
+
                     </RelativeLayout>
 
                     <TextView
@@ -68,8 +70,7 @@
             <RelativeLayout
                 android:id="@+id/rel_top_123"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/decorate_acc_bar">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -90,11 +91,12 @@
                         android:layout_marginRight="60dp"
                         android:layout_marginTop="16dp">
 
-                        <SeekBar
+                        <com.tbs.tobosutype.customview.MySeekBar
                             android:id="@+id/seek_progress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:max="100"
+                            style="?android:attr/progressBarStyleHorizontal"
                             android:progressDrawable="@drawable/seekbar_define_style"
                             android:thumb="@null" />
 
@@ -102,12 +104,10 @@
                             android:id="@+id/tv_state"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/transparent"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
+                            android:gravity="center"
                             android:text="小主，一切还在预算当中"
                             android:textColor="@color/white"
-                            android:textSize="16sp" />
+                            android:textSize="13sp" />
 
                     </RelativeLayout>
 
@@ -178,8 +178,7 @@
             <!--  以下是记账记录  =====================================================  -->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rel_top_123">
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:id="@+id/rel_data_layout"
@@ -410,36 +409,37 @@
                 </LinearLayout>
 
                 <!--记账的记录为空时显示-->
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/rel_data_empty"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginTop="21dp"
                     android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/sd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center_horizontal"
                         android:background="@drawable/no_accou" />
 
                     <TextView
                         android:id="@+id/tv_start_account"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/sd"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="14dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="14dp"
                         android:background="@drawable/shape_start_acc_bg"
-                        android:paddingBottom="10dp"
-                        android:paddingLeft="18dp"
-                        android:paddingRight="18dp"
-                        android:paddingTop="10dp"
+                        android:paddingBottom="6dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="6dp"
                         android:text="开始记账"
                         android:textColor="@color/white"
-                        android:textSize="20sp" />
-                </RelativeLayout>
+                        android:textSize="17sp" />
+                </LinearLayout>
 
             </RelativeLayout>
         </LinearLayout>

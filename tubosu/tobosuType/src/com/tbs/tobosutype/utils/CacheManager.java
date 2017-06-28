@@ -397,6 +397,7 @@ public class CacheManager {
 
     private static final String OUTCOME_PRE = "outcome_pre";
     private static final String OUTCOME_RECORD = "outcome_record";
+    private static final String DECORATE_BUDGET = "decorate_budget";
     /**
      *
      * @param context
@@ -413,5 +414,24 @@ public class CacheManager {
      */
     public static int getFirstTimeRecord(Context context){
         return context.getSharedPreferences(OUTCOME_PRE, Context.MODE_PRIVATE).getInt(OUTCOME_RECORD, -1);
+    }
+
+
+    public static void setDecorateBudget(Context context, String budget){
+        context.getSharedPreferences(OUTCOME_PRE, Context.MODE_PRIVATE).edit().putString(DECORATE_BUDGET, budget).commit();
+    }
+
+    /**
+     *
+     * @param context
+     * @return
+     */
+    public static int getDecorateBudget(Context context){
+        String budget = context.getSharedPreferences(OUTCOME_PRE, Context.MODE_PRIVATE).getString(DECORATE_BUDGET, "0");
+        if("0".equals(budget)){
+            return 0;
+        }else {
+            return Integer.parseInt(budget);
+        }
     }
 }

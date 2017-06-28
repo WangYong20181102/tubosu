@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.Util;
 
 /**
@@ -53,6 +54,7 @@ public class KeepAccountActivity extends Activity{
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, DecorateAccountActivity.class);
                 intent.putExtra("budget", etBudget.getText().toString());
+                CacheManager.setDecorateBudget(mContext, etBudget.getText().toString());
                 startActivity(intent);
             }
         });
