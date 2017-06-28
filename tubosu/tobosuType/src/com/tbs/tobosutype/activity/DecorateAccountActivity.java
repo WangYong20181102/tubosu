@@ -9,13 +9,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.SeekBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.squareup.okhttp.Request;
@@ -25,16 +24,20 @@ import com.tbs.tobosutype.adapter.DecorateExpendAdapter;
 import com.tbs.tobosutype.adapter.SwipeAdapter;
 import com.tbs.tobosutype.bean._DecorationExpent;
 import com.tbs.tobosutype.customview.MyChatView;
+import com.tbs.tobosutype.customview.MySeekBar;
 import com.tbs.tobosutype.customview.SwipeListView;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.Util;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -54,14 +57,15 @@ public class DecorateAccountActivity extends Activity {
      */
     private String[] budgetTips = {"小主，一切还在预算当中", "要死了，花钱如流水啊", "就知道你是土豪，你任性就使劲花吧"};
 
+    private ScrollView sv;
     private RelativeLayout relBack;
     private ImageView ivEditAccount;
     private TextView tvTotalBuduget;
-    private SeekBar seekProgress;
+    private MySeekBar seekProgress;
     private TextView tvState;
     private TextView tvTotalCost;
     private TextView tvStartAccount;
-    private RelativeLayout relDataEmpty;
+    private LinearLayout relDataEmpty;
     private LinearLayout relDataLaout;
     private RelativeLayout decorateAccBar;
     //进度条以下的控件 以及相关数据
@@ -79,7 +83,6 @@ public class DecorateAccountActivity extends Activity {
     private TextView da_text_chuwei;//厨卫价格
     private TextView da_qita;//其他占比
     private TextView da_text_qita;//其他价格
-//    private RecyclerView decorate_expence_recycleview;//显示开支数据
     private SwipeListView mListView;
     private LinearLayoutManager mLinearLayoutManager;//列表布局
     private DecorateExpendAdapter decorateExpendAdapter;//适配器
@@ -93,21 +96,19 @@ public class DecorateAccountActivity extends Activity {
         mContext = DecorateAccountActivity.this;
         initData();
         bindView();//绑定布局
-//        initViewEvent();
         setClick();
     }
 
     private void initData(){
-//        Intent intent = new Intent(mContext, DecorateAccountActivity.class);
-//        intent.putExtra("budget", etBudget.getText().toString());
         if(getIntent()!=null && getIntent().getStringExtra("budget")!=null){
             String budget = getIntent().getStringExtra("budget");
             if("".equals(budget)){
                 decorateBudget = 0;
             }else {
-                decorateBudget = Float.parseFloat(budget);
+                decorateBudget = Float.parseFloat(budget) * 10000;
             }
-
+        }else {
+            decorateBudget = CacheManager.getDecorateBudget(mContext) * 10000;
         }
     }
 
@@ -147,26 +148,36 @@ public class DecorateAccountActivity extends Activity {
             JSONObject jsonObject = new JSONObject(json);
             String status = jsonObject.getString("status");
             if (status.equals("200")) {
+                relDataEmpty.setVisibility(View.GONE);
+                relDataLaout.setVisibility(View.VISIBLE);
                 decorationExpent = new _DecorationExpent(jsonObject.getString("data"));
                 initView(decorationExpent);
-            } else if (status.equals("201")) {
+            } else/* if (status.equals("201"))*/ {
                 //没有数据显示没有数据的浮层 并且隐藏显示数据的图层
+                relDataEmpty.setVisibility(View.VISIBLE);
+                relDataLaout.setVisibility(View.GONE);
+
+                tvTotalCost.setText("0");
+                seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_green_style));
+                tvState.setText(budgetTips[0]);
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
     private void bindView() {
+        sv = (ScrollView) findViewById(R.id.sv_decorate_acc);
         relBack = (RelativeLayout) findViewById(R.id.decorate_account_back);
         ivEditAccount = (ImageView) findViewById(R.id.iv_edit_account);
         tvTotalBuduget = (TextView) findViewById(R.id.tv_total_buduget);
         tvTotalBuduget.setText(decorateBudget+"");
-        seekProgress = (SeekBar) findViewById(R.id.seek_progress);
+        seekProgress = (MySeekBar) findViewById(R.id.seek_progress);
         tvTotalCost = (TextView) findViewById(R.id.tv_total_cost);
         tvState = (TextView) findViewById(R.id.tv_state);
         tvStartAccount = (TextView) findViewById(R.id.tv_start_account);
-        relDataEmpty = (RelativeLayout) findViewById(R.id.rel_data_empty);
+        relDataEmpty = (LinearLayout) findViewById(R.id.rel_data_empty);
         relDataLaout = (LinearLayout) findViewById(R.id.rel_data_layout);
         decorateAccBar = (RelativeLayout) findViewById(R.id.decorate_acc_bar);
         decorateAccBar.setBackgroundColor(Color.parseColor("#ff882e"));
@@ -184,58 +195,65 @@ public class DecorateAccountActivity extends Activity {
         da_text_chuwei = (TextView) findViewById(R.id.da_text_chuwei);
         da_qita = (TextView) findViewById(R.id.da_qita);
         da_text_qita = (TextView) findViewById(R.id.da_text_qita);
-//        decorate_expence_recycleview = (RecyclerView) findViewById(R.id.decorate_expence_recycleview);
         mListView = (SwipeListView) findViewById(R.id.record_listview);
         mListView.setSelector(R.color.transparent);
     }
 
-//    private void initViewEvent() {
-//        mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
-//        decorate_expence_recycleview.setLayoutManager(mLinearLayoutManager);
-//    }
 
     private void initView(_DecorationExpent decorationExpentList) {
-        if (seekProgress.getProgress() >= 0 && seekProgress.getProgress() <= 20) {
-            seekProgress.setProgress(20);
-            seekProgress.setBackgroundResource(R.color.budget_green);
-            tvState.setText(budgetTips[0]);
-        } else if (seekProgress.getProgress() >= 20 && seekProgress.getProgress() < 40) {
-            seekProgress.setProgress(37);
-            seekProgress.setBackgroundResource(R.color.budget_blue);
-            tvState.setText(budgetTips[0]);
-        } else if (seekProgress.getProgress() >= 40 && seekProgress.getProgress() < 60) {
-            seekProgress.setProgress(57);
-            seekProgress.setBackgroundResource(R.color.budget_orange);
-            tvState.setText(budgetTips[0]);
-        } else if (seekProgress.getProgress() >= 60 && seekProgress.getProgress() < 80) {
-            seekProgress.setProgress(77);
-            seekProgress.setBackgroundResource(R.color.budget_yellow);
-            tvState.setText(budgetTips[1]);
-        } else {
-            seekProgress.setProgress(90);
-            seekProgress.setBackgroundResource(R.color.budget_red);
-            tvState.setText(budgetTips[2]);
+        sv.smoothScrollTo(0,0);
+        tvTotalCost.setText(decorationExpentList.getAll_cost());
+        if(decorateBudget==0){
+            seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_red_style));
+            tvState.setText("你的预算竟然是0");
+        }else {
+            float totalCost = Float.parseFloat(decorationExpentList.getAll_cost());
+            float f = totalCost / decorateBudget;
+//            DecimalFormat fnum = new DecimalFormat("##0.00");
+//            int fs = (int) Float.parseFloat(fnum.format(f));
+
+//            Util.setToast(mContext, "" + f);
+            if (f >= 0 && f <= 0.20) {
+                seekProgress.setProgress(20);
+                seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_green_style));
+                tvState.setText(budgetTips[0]);
+            } else if (f >= 0.20 && f < 0.40) {
+                seekProgress.setProgress(37);
+                seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_blue_style));
+                tvState.setText(budgetTips[0]);
+            } else if (f >= 0.40 && f < 0.60) {
+                seekProgress.setProgress(57);
+                seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_orange_style));
+                tvState.setText(budgetTips[0]);
+            } else if (f >= 0.60 && f < 0.80) {
+                seekProgress.setProgress(77);
+                seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_yellow_style));
+                tvState.setText(budgetTips[0]);
+            } else if (f >= 0.80 && f < 1.00){
+                seekProgress.setProgress(96);
+                seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_red_style));
+                tvState.setText(budgetTips[1]);
+            }else {
+                seekProgress.setProgress(100);
+                seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_red_style));
+                tvState.setText(budgetTips[2]);
+            }
         }
 
-//        if (decorateExpendAdapter == null) {
-//            if (!decorationExpent.getDecorate_recordList().isEmpty()) {
-//                decorateExpendAdapter = new DecorateExpendAdapter(mContext, decorationExpent.getDecorate_recordList());
-//                decorate_expence_recycleview.setAdapter(decorateExpendAdapter);
-//                decorateExpendAdapter.notifyDataSetChanged();
-//            } else {
-//                decorateExpendAdapter.notifyDataSetChanged();
-//            }
-//        }
 
-        SwipeAdapter mAdapter = new SwipeAdapter(mContext, decorationExpentList.getDecorate_recordList(), mListView.getRightViewWidth());
+
+        final ArrayList<_DecorationExpent.decorate_record> recordList = decorationExpentList.getDecorate_recordList();
+        SwipeAdapter mAdapter = new SwipeAdapter(mContext, recordList, mListView.getRightViewWidth());
         mListView.setAdapter(mAdapter);
         setListViewHeightBasedOnChildren(mListView);
         mAdapter.setOnRightItemClickListener(new SwipeAdapter.onRightItemClickListener() {
 
             @Override
             public void onRightItemClick(View v, int position) {
-
-                Util.setToast(mContext, "删除第  " + (position+1)+" 记录");
+//                recordList.get(position).getExpend_name();
+                if(Util.isNetAvailable(mContext)){
+                    httpDeleteData(recordList.get(position).getId());
+                }
 
             }
         });
@@ -257,6 +275,54 @@ public class DecorateAccountActivity extends Activity {
 //                }
 //            }
 //        }
+    }
+
+    private void httpDeleteData(String deleteId) {
+        OKHttpUtil okHttpUtil = new OKHttpUtil();
+        HashMap<String, String> param = new HashMap<>();
+        param.put("token", Util.getDateToken());
+        param.put("id", deleteId);
+        okHttpUtil.post(Constant.DELETE_DECORATE_RECORD, param, new OKHttpUtil.BaseCallBack() {
+            @Override
+            public void onSuccess(Response response, String json) {
+                Log.e(TAG, "数据请求=====" + json);
+                try {
+                    JSONObject obj = new JSONObject(json);
+                    if(obj.getInt("status") == 200){
+                        Util.setToast(mContext, "删除开支记录成功");
+                        HttpGetData();
+                    }else if(obj.getInt("status") == 0) {
+                        Util.setToast(mContext, obj.getString("msg"));
+                    }else {
+                        Util.setToast(mContext, "删除开支记录失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFail(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onError(Response response, int code) {
+
+            }
+        });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case 0x00013:
+                HttpGetData();
+                break;
+        }
     }
 
     private void setClick() {
@@ -281,7 +347,6 @@ public class DecorateAccountActivity extends Activity {
             }
         });
 
-        seekProgress.setBackgroundResource(R.color.budget_green);
 
 //        seekProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 //            @Override

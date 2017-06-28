@@ -188,6 +188,7 @@ public class _DecorationExpent {
 
     //装修开支明细
     public class decorate_record {
+        String id; // 记录id
         String expend_name;//开支明细的名称
         String cost;//开支明细的花费
         String expend_time;//开支明细的花费时间
@@ -196,6 +197,7 @@ public class _DecorationExpent {
         public decorate_record(String json) {
             try {
                 JSONObject jsonObject = new JSONObject(json);
+                this.id = jsonObject.getString("id");
                 this.expend_name = jsonObject.getString("expend_name");
                 this.cost = jsonObject.getString("cost");
                 this.expend_time = jsonObject.getString("expend_time");
@@ -203,6 +205,14 @@ public class _DecorationExpent {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
         }
 
         public String getExpend_name() {
