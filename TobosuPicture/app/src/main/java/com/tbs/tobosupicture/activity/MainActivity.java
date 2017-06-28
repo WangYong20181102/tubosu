@@ -1,10 +1,8 @@
 package com.tbs.tobosupicture.activity;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;

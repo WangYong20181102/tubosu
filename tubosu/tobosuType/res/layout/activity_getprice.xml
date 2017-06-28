@@ -96,15 +96,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:textSize="16sp"
+                            android:textSize="12sp"
                             android:layout_gravity="center_vertical"
                             android:textColor="#C9C9C9"
                             android:text="已有"/>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="111dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
+                            android:gravity="center"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -151,7 +152,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:textSize="16sp"
+                            android:textSize="12sp"
                             android:layout_gravity="center_vertical"
                             android:textColor="#C9C9C9"
                             android:text="人申请"/>

@@ -172,21 +172,23 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 
 	}
 
-	private Handler numHandler = new Handler(){
-		@Override
-		public void handleMessage(Message msg) {
-			super.handleMessage(msg);
-			int big = msg.what;
-			for(int i=0;i<=big;i++){
-				setNumBg(imgArray, numReIdList,big);
-			}
-		}
-	};
+//	private Handler numHandler = new Handler(){
+//		@Override
+//		public void handleMessage(Message msg) {
+//			super.handleMessage(msg);
+//			int big = msg.what;
+//			for(int i=0;i<=big;i++){
+////				setNumBg(imgArray, numReIdList,big);
+//
+//			}
+//		}
+//	};
 
 
 	private void initNumAnimation(){
 		for(int i=0;i<=cheatNum; i++){
 //			setNumBg(imgArray, numReIdList,i);
+			System.out.println("====num=>" +i);
 		}
 	}
 
