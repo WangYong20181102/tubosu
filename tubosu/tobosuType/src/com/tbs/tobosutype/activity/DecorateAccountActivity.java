@@ -108,30 +108,27 @@ public class DecorateAccountActivity extends Activity {
         initData();
     }
 
-    
 
-    private void initData(){
-		
-        if(getIntent()!=null && getIntent().getStringExtra("budget")!=null){
+    private void initData() {
+
+        if (getIntent() != null && getIntent().getStringExtra("budget") != null) {
 
             String budget = getIntent().getStringExtra("budget");
             if ("".equals(budget)) {
                 decorateBudget = 0;
-            }else {
+            } else {
                 decorateBudget = Float.parseFloat(budget) * 10000;
             }
-        }else {
+        } else {
             decorateBudget = CacheManager.getDecorateBudget(mContext) * 10000;
         }
-		bindView();//绑定布局
+        bindView();//绑定布局
         setClick();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        bindView();//绑定布局
-        setClick();
         HttpGetData();
     }
 
@@ -193,20 +190,20 @@ public class DecorateAccountActivity extends Activity {
     }
 
     private void bindView() {
-        floatList.add(15.04f);//人工
-        floatList.add(19.34f);//建材
-        floatList.add(13.73f);//五金
-        floatList.add(15.26f);//家具
-        floatList.add(10.62f);//厨卫
-        floatList.add(26.01f);//其他
+//        floatList.add(15.04f);//人工
+//        floatList.add(19.34f);//建材
+//        floatList.add(13.73f);//五金
+//        floatList.add(15.26f);//家具
+//        floatList.add(10.62f);//厨卫
+//        floatList.add(26.01f);//其他
         myChatView = (MyChatView) findViewById(R.id.da_my_chat_view);
-        myChatView.setFloatList(floatList);
+//        myChatView.setFloatList(floatList);
 
         sv = (ScrollView) findViewById(R.id.sv_decorate_acc);
         relBack = (RelativeLayout) findViewById(R.id.decorate_account_back);
         ivEditAccount = (ImageView) findViewById(R.id.iv_edit_account);
         tvTotalBuduget = (TextView) findViewById(R.id.tv_total_buduget);
-        tvTotalBuduget.setText(decorateBudget+"");
+        tvTotalBuduget.setText(decorateBudget + "");
         seekProgress = (MySeekBar) findViewById(R.id.seek_progress);
 
         tvTotalCost = (TextView) findViewById(R.id.tv_total_cost);
@@ -236,12 +233,12 @@ public class DecorateAccountActivity extends Activity {
 
 
     private void initView(_DecorationExpent decorationExpentList) {
-        sv.smoothScrollTo(0,0);
+        sv.smoothScrollTo(0, 0);
         tvTotalCost.setText(decorationExpentList.getAll_cost());
-        if(decorateBudget==0){
+        if (decorateBudget == 0) {
             seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_red_style));
             tvState.setText("你的预算竟然是0");
-        }else {
+        } else {
             float totalCost = Float.parseFloat(decorationExpentList.getAll_cost());
             float f = totalCost / decorateBudget;
 //            DecimalFormat fnum = new DecimalFormat("##0.00");
@@ -264,11 +261,11 @@ public class DecorateAccountActivity extends Activity {
                 seekProgress.setProgress(77);
                 seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_yellow_style));
                 tvState.setText(budgetTips[0]);
-            } else if (f >= 0.80 && f < 1.00){
+            } else if (f >= 0.80 && f < 1.00) {
                 seekProgress.setProgress(96);
                 seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_red_style));
                 tvState.setText(budgetTips[1]);
-            }else {
+            } else {
                 seekProgress.setProgress(100);
                 seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_red_style));
                 tvState.setText(budgetTips[2]);
@@ -285,7 +282,7 @@ public class DecorateAccountActivity extends Activity {
             @Override
             public void onRightItemClick(View v, int position) {
 
-                if(Util.isNetAvailable(mContext)){
+                if (Util.isNetAvailable(mContext)) {
                     httpDeleteData(recordList.get(position).getId());
                 }
 
@@ -303,33 +300,34 @@ public class DecorateAccountActivity extends Activity {
         //处理饼状图的周边显示
         if (!decorationExpent.getDecorateExpenseList().isEmpty()) {
             //人工
-//            float rengong = Float.parseFloat(decorationExpent.getDecorateExpenseList().get(4).getCount_cost().substring(0, decorationExpent.getDecorateExpenseList().get(4).getCount_cost().length() - 1));
-//            floatList.add(rengong);
-//            //建材
-//            float jiancai = Float.parseFloat(decorationExpent.getDecorateExpenseList().get(5).getCount_cost().substring(0, decorationExpent.getDecorateExpenseList().get(5).getCount_cost().length() - 1));
-//            floatList.add(jiancai);
-//            //五金
-//            float wujin = Float.parseFloat(decorationExpent.getDecorateExpenseList().get(0).getCount_cost().substring(0, decorationExpent.getDecorateExpenseList().get(0).getCount_cost().length() - 1));
-//            floatList.add(wujin);
-//            //家具
-//            float jiaju = Float.parseFloat(decorationExpent.getDecorateExpenseList().get(1).getCount_cost().substring(0, decorationExpent.getDecorateExpenseList().get(1).getCount_cost().length() - 1));
-//            floatList.add(jiaju);
-//            //厨卫
-//            float chuwei = Float.parseFloat(decorationExpent.getDecorateExpenseList().get(3).getCount_cost().substring(0, decorationExpent.getDecorateExpenseList().get(3).getCount_cost().length() - 1));
-//            floatList.add(chuwei);
-//            //其他
-//            float qita = Float.parseFloat(decorationExpent.getDecorateExpenseList().get(2).getCount_cost().substring(0, decorationExpent.getDecorateExpenseList().get(2).getCount_cost().length() - 1));
-//            floatList.add(qita);
-//
-//            for (int i = 0; i < floatList.size(); i++) {
-//                Log.e(TAG, "比例值====" + decorationExpent.getDecorateExpenseList().get(i).getType_name() + "===" + floatList.get(i));
-//            }
-            //线程处理
-//            new MyThread().start();
-//            myChatView.setFloatList(floatList);
-//            for (int i = 0; i < myChatView.getFloatList().size(); i++) {
-//                Log.e(TAG, "拿到的数据=====" + myChatView.getFloatList().get(i));
-//            }
+            float rengong = Float.parseFloat(decorationExpent.getDecorateExpenseList().get(4).getCount_cost().substring(0, decorationExpent.getDecorateExpenseList().get(4).getCount_cost().length() - 1));
+            floatList.add(rengong);
+            //建材
+            float jiancai = Float.parseFloat(decorationExpent.getDecorateExpenseList().get(5).getCount_cost().substring(0, decorationExpent.getDecorateExpenseList().get(5).getCount_cost().length() - 1));
+            floatList.add(jiancai);
+            //五金
+            float wujin = Float.parseFloat(decorationExpent.getDecorateExpenseList().get(0).getCount_cost().substring(0, decorationExpent.getDecorateExpenseList().get(0).getCount_cost().length() - 1));
+            floatList.add(wujin);
+            //家具
+            float jiaju = Float.parseFloat(decorationExpent.getDecorateExpenseList().get(1).getCount_cost().substring(0, decorationExpent.getDecorateExpenseList().get(1).getCount_cost().length() - 1));
+            floatList.add(jiaju);
+            //厨卫
+            float chuwei = Float.parseFloat(decorationExpent.getDecorateExpenseList().get(3).getCount_cost().substring(0, decorationExpent.getDecorateExpenseList().get(3).getCount_cost().length() - 1));
+            floatList.add(chuwei);
+            //其他
+            float qita = Float.parseFloat(decorationExpent.getDecorateExpenseList().get(2).getCount_cost().substring(0, decorationExpent.getDecorateExpenseList().get(2).getCount_cost().length() - 1));
+            floatList.add(qita);
+
+            for (int i = 0; i < floatList.size(); i++) {
+                Log.e(TAG, "比例值====" + decorationExpent.getDecorateExpenseList().get(i).getType_name() + "===" + floatList.get(i));
+            }
+
+//            线程处理
+            new MyThread().start();
+            myChatView.setFloatList(floatList);
+            for (int i = 0; i < myChatView.getFloatList().size(); i++) {
+                Log.e(TAG, "拿到的数据=====" + myChatView.getFloatList().get(i));
+            }
 //            floatList.clear();
 
             /**
@@ -415,12 +413,12 @@ public class DecorateAccountActivity extends Activity {
                 Log.e(TAG, "数据请求=====" + json);
                 try {
                     JSONObject obj = new JSONObject(json);
-                    if(obj.getInt("status") == 200){
+                    if (obj.getInt("status") == 200) {
                         Util.setToast(mContext, "删除开支记录成功");
                         HttpGetData();
-                    }else if(obj.getInt("status") == 0) {
+                    } else if (obj.getInt("status") == 0) {
                         Util.setToast(mContext, obj.getString("msg"));
-                    }else {
+                    } else {
                         Util.setToast(mContext, "删除开支记录失败");
                     }
                 } catch (JSONException e) {
@@ -445,7 +443,7 @@ public class DecorateAccountActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
+        switch (requestCode) {
             case 0x00013:
                 HttpGetData();
                 break;
