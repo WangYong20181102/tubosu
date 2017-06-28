@@ -37,7 +37,6 @@ public class SlidingItemView extends HorizontalScrollView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (!once) {
-            mImageView_delete = (ImageView) findViewById(R.id.item_da_delete);
             once = true;
         }
     }

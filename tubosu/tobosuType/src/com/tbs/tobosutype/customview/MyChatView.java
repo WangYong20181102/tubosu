@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.tbs.tobosutype.R;
@@ -43,10 +44,10 @@ public class MyChatView extends View {
     //-------------颜色相关-------------
     //边框颜色和标注颜色
 
-
-    public int[] mColor = new int[]{Color.parseColor("#82d09c"), Color.parseColor("#62AAE5"),
-            Color.parseColor("#dcb09e"), Color.parseColor("#f1c663"),
-            Color.parseColor("#96b6d6"), Color.parseColor("#ff7f5b")};
+    //颜色顺序 绿色（82d09c五金）  湖蓝（62AAE5家具） 暗红（dcb09e其他） 橙黄（f1c663厨卫） 水蓝（96b6d6人工） 橙色（ff7f5b建材）
+    public int[] mColor = new int[]{Color.parseColor("#a6c1dd"), Color.parseColor("#ffa36f"),
+            Color.parseColor("#8fd6a7"), Color.parseColor("#78bfe6"),
+            Color.parseColor("#ffd77f"), Color.parseColor("#dcb09e")};
     //文字颜色
     private int textColor = 0xFF000000;
     //-------------View相关-------------
@@ -108,6 +109,22 @@ public class MyChatView extends View {
      *
      * @param canvas
      */
+    //测试
+//    Float[] floats = {38.89f, 50.0f, 6.11f, 0f, 0f, 5.0f};
+//
+//    private void drawCycle(Canvas canvas) {
+//        float startPercent = 0;
+//        float sweepPercent = 0;
+//        for (int i = 0; i < floats.length; i++) {
+//            cyclePaint.setColor(mColor[i]);
+//            startPercent = sweepPercent + startPercent;
+//            //这里采用比例占100的百分比乘于360的来计算出占用的角度，使用先乘再除可以算出值
+//            sweepPercent = floats[i] * 360 / 100;
+//            canvas.drawArc(new RectF(0, 0, mRadius, mRadius), startPercent, sweepPercent, false, cyclePaint);
+//        }
+//    }
+
+    //正式
     private void drawCycle(Canvas canvas) {
         float startPercent = 0;
         float sweepPercent = 0;
@@ -116,6 +133,7 @@ public class MyChatView extends View {
             startPercent = sweepPercent + startPercent;
             //这里采用比例占100的百分比乘于360的来计算出占用的角度，使用先乘再除可以算出值
             sweepPercent = floatList.get(i) * 360 / 100;
+            Log.e("MyChatView", "=====计算比例值===" + sweepPercent);
             canvas.drawArc(new RectF(0, 0, mRadius, mRadius), startPercent, sweepPercent, false, cyclePaint);
         }
     }

@@ -8,6 +8,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:scrollbars="none">
 
         <LinearLayout
@@ -37,8 +39,8 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="14dp"
-                            android:padding="4dp"
-                            android:background="@drawable/back_up" />
+                            android:background="@drawable/back_up"
+                            android:padding="4dp" />
                     </RelativeLayout>
 
                     <TextView
@@ -188,141 +190,169 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="260dp"
+                        android:background="@color/white"
                         android:gravity="center">
 
-                        <TextView
-                            android:id="@+id/da_rengong"
+                        <LinearLayout
+                            android:id="@+id/ll_rengong"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="112dp"
-                            android:layout_marginTop="15dp"
-                            android:text="人工20.00%"
-                            android:textColor="#97b6d6"
-                            android:textSize="14sp" />
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/da_text_rengong"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/da_rengong"
-                            android:layout_marginLeft="125dp"
-                            android:layout_marginTop="2dp"
-                            android:text="¥8632"
-                            android:textColor="#97b6d6"
-                            android:textSize="14sp" />
+                            <TextView
+                                android:id="@+id/da_rengong"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="人工0.00%"
+                                android:textColor="#97b6d6"
+                                android:textSize="14sp" />
 
-                        <TextView
-                            android:id="@+id/da_jiancai"
+                            <TextView
+                                android:id="@+id/da_text_rengong"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="¥0.0"
+                                android:textColor="#97b6d6"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_jiancai"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:layout_marginRight="30dp"
-                            android:layout_marginTop="50dp"
-                            android:text="建材22.81%"
-                            android:textColor="#ff805c"
-                            android:textSize="14sp" />
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="10dp"
+                            android:gravity="left"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/da_text_jiancai"
+                            <TextView
+                                android:id="@+id/da_jiancai"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="建材0.00%"
+                                android:textColor="#ff805c"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/da_text_jiancai"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="¥0.0"
+                                android:textColor="#ff805c"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_chuwei"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
+                            android:layout_below="@+id/ll_rengong"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="40dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/da_chuwei"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="厨卫0.00%"
+                                android:textColor="#f1c664"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/da_text_chuwei"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/da_chuwei"
+                                android:text="¥0.0"
+                                android:textColor="#f1c664"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_wujin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:layout_below="@+id/da_jiancai"
-                            android:layout_marginRight="42dp"
-                            android:layout_marginTop="2dp"
-                            android:text="¥14522"
-                            android:textColor="#ff805c"
-                            android:textSize="14sp" />
+                            android:layout_below="@+id/ll_jiancai"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="40dp"
+                            android:gravity="left"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/da_chuwei"
+                            <TextView
+                                android:id="@+id/da_wujin"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="五金0.00%"
+                                android:textColor="#8cd2a3"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/da_text_wujin"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="¥0.0"
+                                android:textColor="#8cd2a3"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="90dp"
-                            android:text="厨卫20.00%"
-                            android:textColor="#f1c664"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/da_text_chuwei"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/da_chuwei"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="2dp"
-                            android:text="¥12666"
-                            android:textColor="#f1c664"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/da_wujin"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginTop="140dp"
-                            android:text="五金9.19%"
-                            android:textColor="#8cd2a3"
-                            android:textSize="14sp" />
+                            android:layout_below="@+id/ll_wujin"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="40dp"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/da_text_wujin"
+                            <TextView
+                                android:id="@+id/da_jiaju"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="家具0.00%"
+                                android:textColor="#6fb0e5"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/da_text_jiaju"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/da_jiaju"
+                                android:text="¥0.0"
+                                android:textColor="#6fb0e5"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_below="@+id/da_wujin"
-                            android:layout_marginRight="32dp"
-                            android:layout_marginTop="2dp"
-                            android:text="¥7589"
-                            android:textColor="#8cd2a3"
-                            android:textSize="14sp" />
+                            android:layout_below="@+id/ll_chuwei"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="40dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/da_qita"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="其他0.00%"
+                                android:textColor="#ddb5a5"
+                                android:textSize="14sp" />
 
-                        <TextView
-                            android:id="@+id/da_jiaju"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="140dp"
-                            android:layout_marginTop="210dp"
-                            android:text="家具26.37%"
-                            android:textColor="#6fb0e5"
-                            android:textSize="14sp" />
+                            <TextView
+                                android:id="@+id/da_text_qita"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="¥0.0"
+                                android:textColor="#ddb5a5"
+                                android:textSize="14sp" />
+                        </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/da_text_jiaju"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/da_jiaju"
-                            android:layout_marginLeft="150dp"
-                            android:layout_marginTop="2dp"
-                            android:text="¥16588"
-                            android:textColor="#6fb0e5"
-                            android:textSize="14sp" />
 
-                        <TextView
-                            android:id="@+id/da_qita"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="170dp"
-                            android:text="其他9.00%"
-                            android:textColor="#ddb5a5"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:id="@+id/da_text_qita"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/da_qita"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginTop="2dp"
-                            android:text="¥4589"
-                            android:textColor="#ddb5a5"
-                            android:textSize="14sp" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -361,29 +391,21 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="14dp"
-                        android:background="#F5F5F5"/>
+                        android:background="#F5F5F5" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/white">
 
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/decorate_expence_recycleview"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:visibility="gone">
-                        </android.support.v7.widget.RecyclerView>
-
                         <com.tbs.tobosutype.customview.SwipeListView
                             android:id="@+id/record_listview"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:divider="@null"
                             android:background="@color/white"
+                            android:divider="@null"
                             android:dividerHeight="1dp"
-                            app:right_width="120dp">
-                        </com.tbs.tobosutype.customview.SwipeListView>
+                            app:right_width="120dp"></com.tbs.tobosutype.customview.SwipeListView>
                     </RelativeLayout>
                 </LinearLayout>
 
