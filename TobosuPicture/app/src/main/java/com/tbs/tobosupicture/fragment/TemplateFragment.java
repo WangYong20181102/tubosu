@@ -7,12 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.tbs.tobosupicture.base.BaseFragment;
+
 /**
  * Created by Mr.Lin on 2017/6/29 11:00.
  * 样板图fragment
  */
 
-public class TemplateFragment extends Fragment {
+public class TemplateFragment extends BaseFragment {
     public TemplateFragment() {
     }
 

@@ -9,6 +9,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.fragment.DecorationCaseFragment;
 import com.tbs.tobosupicture.fragment.ImageToFriendFragment;
 import com.tbs.tobosupicture.fragment.MineFragment;
@@ -76,7 +77,12 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    public void onDestroy() {
         super.onDestroy();
     }
 }
