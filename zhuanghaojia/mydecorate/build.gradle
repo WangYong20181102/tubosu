@@ -10,21 +10,15 @@ android {
         applicationId "com.tobosu.mydecorate" // 程序的包名
         minSdkVersion 11
         targetSdkVersion 17
-        versionCode 3
-        versionName "1.2"
+        versionCode 4
+        versionName "1.2.1"
         multiDexEnabled true  // 消去重复的jar 引用
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "aisi"]//多渠道打包标识 默认爱思 到时候可以修改
     }
     productFlavors {
         aisi {}
-//        anbei {}
-//        anfen {}
-//        anfeng {}
         ali {}
         anzhi {}
-//        anzhuo {}
-//        anzhuofamily {}
-//        anzhuoyuan {}
         appbaidu {}
         apphuawei {}
         applenovo {}
@@ -36,50 +30,28 @@ android {
         appwdj {}
         appxiaomi {}
         appyyb {}
-//        bikeer {}
-//        changhong {}
-//        feifan {}
-//        fengfeng {}
         gaoqu {}
         itools {}
         jifeng {}
         jinli {}
         kuaiyong {}
-//        kuchuan {}
         kupai {}
-//        lenovowow {}
         leshi {}
         liqu {}
-//        maopao {}
-//        mogu {}
         mumayi {}
         nduo {}
-//        nineoneMarket {}
         nineonezhushou {}
         pingguoyuan {}
-//        shizimao {}
-//        shuajidashi {}
         sougou {}
-//        souhu {}
         sumsung {}
-//        suning {}
         taobao {}
         threeMarket {}
-//        tianyi {}
-//        tompda {}
         tongbu {}
         ucmarket {}
-//        wangxun {}
-//        wangyi {}
-//        weibo {}
-//        wujiwang {}
         xy {}
-//        yidongmm {}
         yingyonghui {}
         youyi {}
-//        zhonguanchun {}
         zhongxin {}
-//        zhuole {}
         zuimei {}
         kuan {}
         tobosu1 {}
@@ -240,10 +212,10 @@ android.applicationVariants.all { variant ->
             def fileName
             if (variant.buildType.name == "release") {
 //                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_${variant.productFlavors[0].name}.apk"
-                fileName = "zhuanghaojia_v1.2_${variant.productFlavors[0].name}.apk"
+                fileName = "zhuanghaojia_v1.2.1_${variant.productFlavors[0].name}.apk"
             } else {
 //                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_beta.apk"
-                fileName = "zhuanghaojia_v1.2_${variant.productFlavors[0].name}_beta.apk"
+                fileName = "zhuanghaojia_v1.2.1_${variant.productFlavors[0].name}_beta.apk"
             }
             output.outputFile = new File(outputDirectory, fileName)
         }
