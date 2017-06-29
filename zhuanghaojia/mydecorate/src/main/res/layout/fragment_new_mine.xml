@@ -41,6 +41,7 @@
                             android:layout_width="69dp"
                             android:layout_height="69dp"
                             android:layout_marginLeft="25dp"
+                            android:scaleType="fitXY"
                             android:src="@mipmap/icon_head_default" />
 
                         <TextView
