@@ -41,6 +41,7 @@ import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.tobosu.mydecorate.util.GlideUtils;
 import com.tobosu.mydecorate.util.Util;
 import com.tobosu.mydecorate.view.CustomWaitDialog;
+import com.tobosu.mydecorate.view.RoundImageView;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.media.QQShareContent;
 import com.umeng.socialize.media.QZoneShareContent;
@@ -304,7 +305,7 @@ public class NewMineFragment extends Fragment {
             String userIconUrl = sp.getString("head_pic_url", "");
             nmfUserMsg.setVisibility(View.VISIBLE);
             nmfLLguanzhu.setVisibility(View.VISIBLE);
-            GlideUtils.glideLoader(mContext, userIconUrl, 0, R.mipmap.jiazai_loading, nmfUserIcon, GlideUtils.CIRCLE_IMAGE);
+            GlideUtils.glideLoader(mContext, userIconUrl, 0, R.mipmap.jiazai_loading, nmfUserIcon, 3);
             nmfUserName.setText("" + sp.getString("user_name", ""));
             customWaitDialog.show();
             HttpGetMineMessage();
@@ -477,7 +478,7 @@ public class NewMineFragment extends Fragment {
                 nmfGuanzhu5.setVisibility(View.GONE);
                 GlideUtils.glideLoader(mContext,
                         minePage.getAttentionList().get(0).getHeader_pic_url(),
-                        0, R.mipmap.jiazai_loading, nmfGuanzhuIcon1, GlideUtils.CIRCLE_IMAGE);
+                        R.mipmap.icon_head_default, R.mipmap.icon_head_default, nmfGuanzhuIcon1, GlideUtils.CIRCLE_IMAGE);
                 nmfGuanzhuName1.setText("" + minePage.getAttentionList().get(0).getNick());
                 break;
             case 2:
