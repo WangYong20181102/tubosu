@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,6 +25,7 @@ import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.customview.ObservableScrollView;
+import com.tbs.tobosutype.customview.PmTextView;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
@@ -33,6 +35,11 @@ import com.tbs.tobosutype.utils.Util;
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 /**
  * 首页免费设计按钮  跳转过来的 报价页面  [本来是加载html5页面， 袁总说需要安卓原生页面, 几经周折改成如下页面 ]
@@ -57,7 +64,7 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 	private String city;
 
 	private TextView tvSummit;
-	private TextView tvCheatText;
+	private PmTextView tvCheatTextView;
 
 	private ViewPager vpGetpriceImg;
 	private ViewGroup group;
@@ -79,6 +86,8 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 	private ImageView ivNum6;
 	private ImageView[] imgArray;
 
+	private Timer timer;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -87,11 +96,39 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 		setContentView(R.layout.activity_getprice);
 		mContext = GetPriceActivity.this;
 		initView();
-		initNumAnimation();
 		initData();
 		initViewpagerAdapter();
 		initEvent();
 	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		numHandler.sendEmptyMessage(0);
+
+		timer = new Timer();
+		timer.schedule(task, 1000, 1000);  // timeTask
+	}
+
+
+	int recLen = 8;
+	private TimerTask task = new TimerTask() {
+		@Override
+		public void run() {
+
+			runOnUiThread(new Runnable() {
+
+				@Override
+				public void run() {
+					recLen--;
+					if(recLen < 0){
+						timer.cancel();
+						numHandler.sendEmptyMessage(1);
+					}
+				}
+			});
+		}
+	};
 
 	private void initView() {
 		relBack = (RelativeLayout) findViewById(R.id.rel_getprice_back);
@@ -104,8 +141,7 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 		tvCity = (TextView) findViewById(R.id.tv_getprice_city);
 		relChooseCity = (RelativeLayout) findViewById(R.id.rel_choose_city);
 		tvSummit = (TextView) findViewById(R.id.getprice_submit);
-		tvCheatText = (TextView) findViewById(R.id.cheat_textview);
-		tvCheatText.setSelected(true);
+		tvCheatTextView = (PmTextView) findViewById(R.id.cheat_textview);
 
 		ivNum1 = (ImageView) findViewById(R.id.num1);
 		ivNum2 = (ImageView) findViewById(R.id.num2);
@@ -113,7 +149,7 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 		ivNum4 = (ImageView) findViewById(R.id.num4);
 		ivNum5 = (ImageView) findViewById(R.id.num5);
 		ivNum6 = (ImageView) findViewById(R.id.num6);
-		imgArray = new ImageView[]{ivNum1,ivNum2,ivNum3,ivNum4,ivNum5,ivNum6};
+		imgArray = new ImageView[]{ivNum1,ivNum2,ivNum3,ivNum4,ivNum5};
 
 		scrollview.setOnScollChangedListener(new ObservableScrollView.OnScollChangedListener() {
 			@Override
@@ -126,74 +162,78 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 				}
 			}
 		});
-
 	}
 
-	private int[] numReIdList = {R.drawable.n0, R.drawable.n1, R.drawable.n2, R.drawable.n3, R.drawable.n4, R.drawable.n5,
-			R.drawable.n6, R.drawable.n7, R.drawable.n8, R.drawable.n9};
 
-	private void setNumBg(ImageView[] imageViewList, int[] resIdList, int time){
-		Util.setLog(TAG, "【"+time+"】");
-		if(time<=9){
-			imageViewList[0].setBackgroundResource(resIdList[time]);
-		}else if(time==10 && time<=99){
-			imageViewList[0].setBackgroundResource(resIdList[time%10]);
-			imageViewList[1].setBackgroundResource(resIdList[time/10]);
-		}else if(time==100 && time<=999){
-			imageViewList[0].setBackgroundResource(resIdList[time%10]);
-			imageViewList[1].setBackgroundResource(resIdList[time%100/10]);
-			imageViewList[2].setBackgroundResource(resIdList[time%1000/100]);
-		}else if(time==1000 && time<=9999){
-			imageViewList[0].setBackgroundResource(resIdList[time%10]);
-			imageViewList[1].setBackgroundResource(resIdList[time%100/10]);
-			imageViewList[2].setBackgroundResource(resIdList[time%1000/100]);
-			imageViewList[3].setBackgroundResource(resIdList[time%10000/1000]);
-		}else if(time==10000 && time<=99999){
-			imageViewList[0].setBackgroundResource(resIdList[time%10]);
-			imageViewList[1].setBackgroundResource(resIdList[time%100/10]);
-			imageViewList[2].setBackgroundResource(resIdList[time%1000/100]);
-			imageViewList[3].setBackgroundResource(resIdList[time%10000/1000]);
-			imageViewList[4].setBackgroundResource(resIdList[time%100000/10000]);
-		}else if(time==100000 && time<cheatNum){ //156486
-			imageViewList[0].setBackgroundResource(resIdList[time%10]);
-			imageViewList[1].setBackgroundResource(resIdList[time%100/10]);
-			imageViewList[2].setBackgroundResource(resIdList[time%1000/100]);
-			imageViewList[3].setBackgroundResource(resIdList[time%10000/1000]);
-			imageViewList[4].setBackgroundResource(resIdList[time%100000/10000]);
-			imageViewList[5].setBackgroundResource(R.drawable.n1);
-		}else if(time==cheatNum) {
-			ivNum1.setBackgroundResource(R.drawable.n6);
-			ivNum2.setBackgroundResource(R.drawable.n8);
-			ivNum3.setBackgroundResource(R.drawable.n4);
-			ivNum4.setBackgroundResource(R.drawable.n6);
-			ivNum5.setBackgroundResource(R.drawable.n5);
-			ivNum6.setBackgroundResource(R.drawable.n1);
-		}
 
-	}
-
-//	private Handler numHandler = new Handler(){
-//		@Override
-//		public void handleMessage(Message msg) {
-//			super.handleMessage(msg);
-//			int big = msg.what;
-//			for(int i=0;i<=big;i++){
-////				setNumBg(imgArray, numReIdList,big);
+	private Handler numHandler = new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			switch (msg.what){
+				case 0:
+					startAnimation(imgArray);
+					break;
+				case 1:
+					stopAnimation();
+					break;
+			}
 //
-//			}
-//		}
-//	};
+		}
+	};
 
-
-	private void initNumAnimation(){
-		for(int i=0;i<=cheatNum; i++){
-//			setNumBg(imgArray, numReIdList,i);
-			System.out.println("====num=>" +i);
+	private void startAnimation(ImageView[] imgs){
+		for(int i=0, len = imgs.length;i<len;i++){
+			switch (i){
+				case 0:
+					imgs[0].setBackgroundResource(+R.anim.num_animation0);
+					break;
+				case 1:
+					imgs[1].setBackgroundResource(+R.anim.num_animation00);
+					break;
+				case 2:
+					imgs[2].setBackgroundResource(+R.anim.num_animation000);
+					break;
+				case 3:
+					imgs[3].setBackgroundResource(+R.anim.num_animation0000);
+					break;
+				case 4:
+					imgs[4].setBackgroundResource(+R.anim.num_animation00000);
+					break;
+			}
+			AnimationDrawable anim = (AnimationDrawable) imgs[i].getBackground(); //获取ImageView背景,此时已被编译成AnimationDrawable
+			anim.start();  //开始动画
 		}
 	}
 
+	private void stopAnimation(){
+		ivNum1.setBackgroundResource(R.drawable.n6);
+		ivNum2.setBackgroundResource(R.drawable.n8);
+		ivNum3.setBackgroundResource(R.drawable.n4);
+		ivNum4.setBackgroundResource(R.drawable.n6);
+		ivNum5.setBackgroundResource(R.drawable.n5);
+		ivNum6.setBackgroundResource(R.drawable.n1);
+	}
+
+
+	private String cheatText =
+			"武汉的周先生已经获取4份报价 1分钟前  上海的李先生已经获取2份报价 1分钟前"  +
+			"北京的何女士已经获取2份报价 3分钟前  深圳的高先生已经获取2份报价 1分钟前"  +
+			"南昌的张女士已经获取1份报价 2分钟前  厦门的刘先生已经获取1份报价 1分钟前"  +
+			"湖南的于女士已经获取1份报价 6分钟前  武汉的阎先生已经获取1份报价 2分钟前"  +
+			"广州的刘女士已经获取1份报价 8分钟前  合肥的曾先生已经获取1份报价 3分钟前"  +
+			"上海的陈女士已经获取1份报价 6分钟前  南京的谢先生已经获取1份报价 2分钟前"  +
+			"南宁的徐女士已经获取1份报价 6分钟前  石家庄的袁先生已经获取1份报价 2分钟前"  +
+			"天津的方女士已经获取1份报价 6分钟前  重庆的胡先生已经获取1份报价 2分钟前";
+
+//	private int getCheatNum(){
+//		Random random=new Random();// 定义随机类
+//		int result=random.nextInt(16);// 返回[0,16)集合中的整数，注意不包括10
+//		return result+1;
+//	}
 
 	private void initData() {
+		tvCheatTextView.setText(cheatText);
 		pubOrderParams = AppInfoUtil.getPublicParams(getApplicationContext());
 		getCitySharePre = this.getSharedPreferences("Save_City_Info", MODE_PRIVATE);
 		String city = getCitySharePre.getString("save_city_now", "");
@@ -420,6 +460,11 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 			return array[position % array.length];
 		}
 
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
 	}
 
 }
