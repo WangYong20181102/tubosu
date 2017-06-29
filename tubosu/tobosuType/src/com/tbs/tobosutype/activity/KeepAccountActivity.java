@@ -56,6 +56,7 @@ public class KeepAccountActivity extends Activity{
                 intent.putExtra("budget", etBudget.getText().toString());
                 CacheManager.setDecorateBudget(mContext, etBudget.getText().toString());
                 startActivity(intent);
+                finish();
             }
         });
     }

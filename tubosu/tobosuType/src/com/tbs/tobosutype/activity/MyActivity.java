@@ -25,6 +25,7 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
     private RelativeLayout relUnlogin;
     private RelativeLayout rl_search;
     private ImageView ivSetting;
+    private ImageView ivSystemMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
         rl_search = (RelativeLayout) findViewById(R.id.rl_search);
         rl_search.setBackgroundColor(Color.parseColor("#ff882e"));
         ivSetting = (ImageView) findViewById(R.id.iv_unlogin_setting);
+        ivSystemMessage = (ImageView) findViewById(R.id.iv_unlogin_system_message);
     }
 
     private void setClick(){
@@ -75,6 +77,7 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
                 startActivityForResult(new Intent(mContext, LoginActivity.class), 0x00017);
                 break;
             case R.id.iv_unlogin_setting:
+            case R.id.iv_unlogin_system_message:
                 startActivity(new Intent(mContext, SettingActivity.class));
                 break;
         }
