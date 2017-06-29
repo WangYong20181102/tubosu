@@ -17,6 +17,4 @@ public class UrlConstans {
     public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
 
-    public static final String LB_URL = TOBOSU_URL + "zapp/token/get_token";
-
 }

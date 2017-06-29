@@ -1,52 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.tbs.tobosupicture.activity.MainActivity">
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/main_frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-        <EditText
-            android:id="@+id/main_et_city"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="城市名称：如北京" />
+    </FrameLayout>
 
-        <EditText
-            android:id="@+id/main_et_device"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="手机系统：如Android" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/main_radioGroup"
+        android:background="@color/line" />
 
-        <EditText
-            android:id="@+id/main_et_version"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="当前的版本号：如2.9" />
-
-        <Button
-            android:id="@+id/main_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="请求数据" />
-
-        <ImageView
-            android:id="@+id/main_img"
-            android:layout_width="210dp"
-            android:layout_height="210dp"
-            android:src="@mipmap/ic_launcher" />
-
-        <TextView
-            android:id="@+id/main_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="请求的结果将在这里显示" />
-    </LinearLayout>
-
-
-</RelativeLayout>
+    <RadioGroup
+        android:id="@+id/main_radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <!--样板图按钮-->
+        <RadioButton
+            android:id="@+id/rb_first"
+            style="@style/radiobutton_style"
+            android:text="样板图"
+            android:textSize="@dimen/text_size_14" />
+        <!--案例按钮-->
+        <RadioButton
+            android:id="@+id/rb_second"
+            style="@style/radiobutton_style"
+            android:text="案例"
+            android:textSize="@dimen/text_size_14" />
+        <!--以图会友按钮-->
+        <RadioButton
+            android:id="@+id/rb_third"
+            style="@style/radiobutton_style"
+            android:text="以图会友"
+            android:textSize="@dimen/text_size_14" />
+        <!--我的按钮-->
+        <RadioButton
+            android:id="@+id/rb_fourth"
+            style="@style/radiobutton_style"
+            android:text="我的"
+            android:textSize="@dimen/text_size_14" />
+    </RadioGroup>
+</LinearLayout>
