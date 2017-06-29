@@ -121,31 +121,31 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="2dp"
-                                android:background="@drawable/n0"/>
+                                android:background="@drawable/num_animation00000"/>
                             <ImageView
                                 android:id="@+id/num4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="2dp"
-                                android:background="@drawable/n0"/>
+                                android:background="@drawable/num_animation0000"/>
                             <ImageView
                                 android:id="@+id/num3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="2dp"
-                                android:background="@drawable/n0"/>
+                                android:background="@drawable/num_animation000"/>
                             <ImageView
                                 android:id="@+id/num2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="2dp"
-                                android:background="@drawable/n0"/>
+                                android:background="@drawable/num_animation00"/>
                             <ImageView
                                 android:id="@+id/num1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="2dp"
-                                android:background="@drawable/n0"/>
+                                android:background="@drawable/num_animation0"/>
                         </LinearLayout>
 
                         <TextView
@@ -159,12 +159,16 @@
                     </LinearLayout>
 
 
-                    <TextView
+                    <com.tbs.tobosutype.customview.PmTextView
                         android:id="@+id/cheat_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:layout_margin="13dp"
+                        android:layout_margin="19dp"
                         android:gravity="center"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:maxLines="1"
+                        android:focusableInTouchMode="true"
                         android:background="@drawable/shape_getprice_textview_bg"
                         android:layout_alignBottom="@+id/iv_big"
                         android:layout_centerHorizontal="true"
