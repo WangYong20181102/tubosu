@@ -315,7 +315,7 @@ public class DecorateAccountActivity extends Activity {
             floatList.add(qita);
 
             MyChatView myChatView = new MyChatView(mContext);
-            myChatView.setmRadius(240f);
+            myChatView.setmRadius(260f);
             myChatView.setmStrokeWidth(120f);
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             myChatView.setLayoutParams(layoutParams);
