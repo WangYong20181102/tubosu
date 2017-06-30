@@ -53,6 +53,8 @@ public class Constant {
 
     public static final String ACTION_HOME_SELECT_CITY = "action_home_select_city";
 
+    public static final String ACTION_GO_EDIT_ACCOUNT_FRAGMENT = "action_go_edit_account_fragment";
+
     /**
      * 获取数据
      */
@@ -106,7 +108,7 @@ public class Constant {
     public static final String OUTCOME_HOMEPAGE_URL = TOBOSU_URL + "mapp/RenovateExpense/get_renovate_expense";
 
     /**
-     * 装修公司开支记录
+     * 装修公司开支记录  分页使用的
      */
     public static final String OUTCOME_RECORD_URL = TOBOSU_URL + "mapp/RenovateExpense/get_decorate_record";
 

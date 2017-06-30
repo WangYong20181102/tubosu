@@ -326,6 +326,7 @@
         <activity
             android:name=".activity.EditAccountAcitivity"
             android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
 
 

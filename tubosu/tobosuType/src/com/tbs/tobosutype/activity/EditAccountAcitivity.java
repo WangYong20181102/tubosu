@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -24,12 +25,15 @@ import com.tbs.tobosutype.fragment.SteelFragment;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.Util;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -78,6 +82,14 @@ public class EditAccountAcitivity extends FragmentActivity{
     private String mainContentText = "";
     private String outcomeTypeId = "";
 
+//    private String name;
+//    private String time;
+//    private String money;
+//    private String content;
+    private int fragmentPosition = -1;
+
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,9 +98,12 @@ public class EditAccountAcitivity extends FragmentActivity{
         setContentView(R.layout.activity_edit_account);
 
         context = EditAccountAcitivity.this;
+
+        initFragment();
         initView();
         initDataRecever();
         setClick();
+        initGetIntent();
     }
 
     private void initView(){
@@ -109,6 +124,22 @@ public class EditAccountAcitivity extends FragmentActivity{
         saveData = setFragment(0);
 
     }
+
+    private void initGetIntent(){
+        Intent data = getIntent();
+        Bundle b = null;
+        if(data!=null && data.getBundleExtra("check_record_bundle") != null){
+            b = data.getBundleExtra("check_record_bundle");
+            String[] textArr = new String[]{b.getString("outcome_name"),b.getString("outcome_money"),b.getString("outcome_time"),b.getString("outcome_contents")};
+            CacheManager.setStringArrayList(context, textArr);
+            fragmentPosition = b.getInt("outcome_position");
+            goFragment(fragmentPosition);
+            Intent intent = new Intent(Constant.ACTION_GO_EDIT_ACCOUNT_FRAGMENT);
+            sendBroadcast(intent);
+            Util.setToast(context, "发送广播fragmentPosition   " +fragmentPosition);
+        }
+    }
+
 
     private void setClick(){
 
@@ -262,6 +293,69 @@ public class EditAccountAcitivity extends FragmentActivity{
             }
         }
     }
+
+    private ManpowerFragment manpower;
+    private MaterialFragment material;
+    private SteelFragment steel;
+    private FurnitureFragment furniture;
+    private KitchenFragment kitchen;
+    private void initFragment(){
+        manpower = new ManpowerFragment();
+        material = new MaterialFragment();
+        steel = new SteelFragment();
+        furniture = new FurnitureFragment();
+        kitchen = new KitchenFragment();
+    }
+
+    private void goFragment(int position){
+        fm = getSupportFragmentManager();
+        ft = fm.beginTransaction();
+        switch (position){
+            case 0:
+                ft.replace(R.id.edit_account_container,manpower);
+                ivManpower.setVisibility(View.VISIBLE);
+                ivMateria.setVisibility(View.GONE);
+                ivSteel.setVisibility(View.GONE);
+                ivKitchen.setVisibility(View.GONE);
+                ivFurniture.setVisibility(View.GONE);
+                break;
+            case 1:
+                ft.replace(R.id.edit_account_container,material);
+                ivManpower.setVisibility(View.GONE);
+                ivMateria.setVisibility(View.VISIBLE);
+                ivSteel.setVisibility(View.GONE);
+                ivKitchen.setVisibility(View.GONE);
+                ivFurniture.setVisibility(View.GONE);
+                break;
+            case 2:
+                ft.replace(R.id.edit_account_container,steel);
+                ivManpower.setVisibility(View.GONE);
+                ivMateria.setVisibility(View.GONE);
+                ivSteel.setVisibility(View.VISIBLE);
+                ivKitchen.setVisibility(View.GONE);
+                ivFurniture.setVisibility(View.GONE);
+
+                break;
+            case 3:
+                ft.replace(R.id.edit_account_container,furniture);
+                ivManpower.setVisibility(View.GONE);
+                ivMateria.setVisibility(View.GONE);
+                ivSteel.setVisibility(View.GONE);
+                ivFurniture.setVisibility(View.VISIBLE);
+                ivKitchen.setVisibility(View.GONE);
+                break;
+            case 4:
+                ft.replace(R.id.edit_account_container,kitchen);
+                ivManpower.setVisibility(View.GONE);
+                ivMateria.setVisibility(View.GONE);
+                ivSteel.setVisibility(View.GONE);
+                ivFurniture.setVisibility(View.GONE);
+                ivKitchen.setVisibility(View.VISIBLE);
+                break;
+        }
+        ft.commit();
+    }
+
 
     private String getToastMesssage(int save){
         String text = "开支";

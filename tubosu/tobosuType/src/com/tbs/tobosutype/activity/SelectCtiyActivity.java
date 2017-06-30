@@ -35,6 +35,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.location.Poi;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
@@ -142,7 +143,6 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     private List<String> hotCityNames = new ArrayList<String>();
     private MapView mMapView;
     private BaiduMap mBaiduMap;
-    private LocationClient mLocationClient = null;
     private MyBDLocationListner mListner = null;
     private BitmapDescriptor mCurrentMarker = null;
     private GeoCoder mGeoCoder = null;
@@ -157,7 +157,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     /**
      * 定位得到的真实城市地理地址
      */
-    private String realLocationCity = "";
+    private String realLocationCity = "无法定位，可能你未开启定位权限，请自行开启定位权限";
 
     /**
      * 保存本地的城市参数
@@ -175,6 +175,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     private String MAC_CODE = "";
     private String _TOKEN = "";
 
+    private LocationClient mLocationClient;
 
     /**
      * 获取手机mac地址<br/>
@@ -214,6 +215,9 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = SelectCtiyActivity.this;
+
+        initBDMap();
+
         getSetting();
         initView();
         initData();
@@ -261,9 +265,6 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             city_title_back.setVisibility(View.VISIBLE);
         }
 
-//        b.putString("fromHomeActivity", "101");
-//        selectCityIntent.putExtra("HomeActivitySelectcityBundle", b);
-
         if (getIntent() != null && getIntent().getBundleExtra("HomeActivitySelectcityBundle") != null) {
             Bundle b = getIntent().getBundleExtra("HomeActivitySelectcityBundle");
             fromHome = b.getString("fromHomeActivity");
@@ -280,8 +281,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
         }
 
 
-        SDKInitializer.initialize(getApplicationContext());
-        mMapView = new MapView(SelectCtiyActivity.this);
+
         headView = getLayoutInflater().inflate(R.layout.head_view_select_city, null);
         mCity_gridView = (FirstGridView) headView.findViewById(R.id.city_gridView);
         select_loading = (LinearLayout) findViewById(R.id.ll_loading);
@@ -334,10 +334,14 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             }
         });
 
-        initBDMap();
+
     }
 
     private void initBDMap() {
+
+        SDKInitializer.initialize(getApplicationContext());
+        mMapView = new MapView(SelectCtiyActivity.this);
+
         try {
             mMapView.showZoomControls(false);
             mBaiduMap = mMapView.getMap();
@@ -358,6 +362,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             mGeoCoder.setOnGetGeoCodeResultListener(GeoListener);
         } catch (Exception e) {
             e.printStackTrace();
+            Util.setLog(TAG, "定位城市5 result >>> 抛出异常了") ;
         }
 
 
@@ -591,16 +596,6 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             return;
         }
 
-
-        //getIntent().getBooleanExtra("isSelectCity", false) == true 是指从首页选择城市 跳转过来重新选择城市
-        // 													 == false 是指第一次安装后从欢迎页面过来选择城市
-//        if (getIntent().getBooleanExtra("isSelectCity", false)) {
-//            Intent intent = getIntent();
-//            intent.putExtra("result", cityName);
-//            this.setResult(0, intent);
-//            finish();
-//        } else {
-
         if(fromHome.equals("101")){
             Intent it = new Intent();
             Bundle b = new Bundle();
@@ -613,9 +608,6 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             // 首次安装
             if (FIRST_INSTALL.equals(getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).getString("go_poporder_string", "0"))) {
                 countDownloadNum();
-                // FIRST_INSTALL.equals(getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).getString("go_poporder_string", "0"))
-                // 改为不是 FIRST_INSTALL
-//				getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).edit().putString("go_poporder_string", "3").commit();
                 startActivity(new Intent(context, PopOrderActivity.class));
             } else {
                 // 进入选择装修类型和面积发单入口
@@ -691,20 +683,13 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
      * 选择城市
      */
     private void operEdit() {
-//        if (getIntent().getBooleanExtra("isSelectCity", false)) {
-//            Intent intent = getIntent();
-//            intent.putExtra("result", "");
-//            this.setResult(0, intent);
-//        } else {
-//			startActivity(new Intent(context, PopOrderActivity.class)); // 应该跳转 PopOrderActivity 原来是MainActivity
-            if (FIRST_INSTALL.equals(getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).getString("go_poporder_string", "0"))) {
-                startActivity(new Intent(context, PopOrderActivity.class));
-            } else {
-                // 进入选择装修类型和面积发单入口
-                startActivity(new Intent(context, MainActivity.class));
-                Log.d(TAG, "--直接进入 MainActivity 页面--");
-            }
-//        }
+        if (FIRST_INSTALL.equals(getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).getString("go_poporder_string", "0"))) {
+            startActivity(new Intent(context, PopOrderActivity.class));
+        } else {
+            // 进入选择装修类型和面积发单入口
+            startActivity(new Intent(context, MainActivity.class));
+            Log.d(TAG, "--直接进入 MainActivity 页面--");
+        }
         finish();
     }
 
@@ -765,7 +750,8 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
                 MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(currentLatLng);
                 mBaiduMap.animateMapStatus(u);
 
-                mGeoCoder.reverseGeoCode((new ReverseGeoCodeOption()).location(currentLatLng));
+//                mGeoCoder.reverseGeoCode((new ReverseGeoCodeOption()).location(currentLatLng));
+                mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(mLoactionLatLng));
                 return;
             }
         }
@@ -779,14 +765,15 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
 
         @Override
         public void onGetGeoCodeResult(GeoCodeResult result) {
-
+            Util.setLog(TAG, "定位城市1 result >>>" + result.getAddress());
         }
 
         @Override
         public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
             if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-
+                Util.setLog(TAG, "定位城市2 result为空");
             } else {
+                Util.setLog(TAG, "定位城市3 result >>>" + result.getAddress());
                 String address = result.getAddress();
                 realLocationCity = result.getAddressDetail().city;
                 lat = result.getLocation().latitude;
@@ -794,6 +781,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
 
                 if (address != null) {
                     select_positioning.setText(realLocationCity);
+                    Util.setLog(TAG, "定位城市4是什么啊？ >>>" + realLocationCity);
                     // 首次进入则定位后 自动跳转  非首次 则不用自动跳入
                     if (selectCitySP.getBoolean("first_select_city", false)) {
                         operEdit();
@@ -805,17 +793,6 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
         }
     };
 
-    public void positioning(View v) {
-
-    }
-
-    public void turnBack(View view) {
-        MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(mLoactionLatLng);
-        mBaiduMap.animateMapStatus(u);
-
-        mBaiduMap.clear();
-        mGeoCoder.reverseGeoCode((new ReverseGeoCodeOption()).location(mLoactionLatLng));
-    }
 
     @Override
     public void onNetChange() {

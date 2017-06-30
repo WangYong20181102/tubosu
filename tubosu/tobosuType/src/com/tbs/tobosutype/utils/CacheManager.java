@@ -398,6 +398,8 @@ public class CacheManager {
     private static final String OUTCOME_PRE = "outcome_pre";
     private static final String OUTCOME_RECORD = "outcome_record";
     private static final String DECORATE_BUDGET = "decorate_budget";
+    private static final String DECORATE_BUDGET_TEXT = "decorate_budget_text";
+
     /**
      *
      * @param context
@@ -434,4 +436,19 @@ public class CacheManager {
             return Integer.parseInt(budget);
         }
     }
+
+
+    public static void setStringArrayList(Context context, String[] textArray){
+        String textList = "";
+        for(int i=0,len=textArray.length;i<len;i++){
+            textList = textList + "#" + textArray[i];
+        }
+        context.getSharedPreferences(OUTCOME_PRE, Context.MODE_PRIVATE).edit().putString(DECORATE_BUDGET_TEXT, textList).commit();
+    }
+
+
+    public static String getStringArrayList(Context context){
+        return context.getSharedPreferences(OUTCOME_PRE, Context.MODE_PRIVATE).getString(DECORATE_BUDGET_TEXT, "");
+    }
+
 }
