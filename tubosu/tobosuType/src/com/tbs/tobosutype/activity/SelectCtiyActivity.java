@@ -27,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -120,6 +121,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     private List<Integer> mPositions;
     private Map<String, Integer> mIndexer;
     private MyApplication mApplication;
+    private RelativeLayout rl_banner;//顶部的标题栏
 
     /**
      * 热门城市gridview
@@ -203,12 +205,11 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     }
 
 
-    private void getSetting(){
+    private void getSetting() {
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         MAC_CODE = getMacAddress(context);
-        _TOKEN = MD5Util.md5(MD5Util.md5(MAC_CODE+1)+date);
+        _TOKEN = MD5Util.md5(MD5Util.md5(MAC_CODE + 1) + date);
     }
-
 
 
     @Override
@@ -257,8 +258,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
         }
 
 
-
-        if(getIntent() != null && getIntent().getBundleExtra("GetPriceSelectcityBundle") != null){
+        if (getIntent() != null && getIntent().getBundleExtra("GetPriceSelectcityBundle") != null) {
             Bundle b = getIntent().getBundleExtra("GetPriceSelectcityBundle");
             fromGetPrice = b.getString("fromGetPrice");
             city_title_back = (ImageView) findViewById(R.id.city_title_back);
@@ -292,6 +292,8 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
         mCityListView = (PinnedHeaderListView) findViewById(R.id.pinned_header_citys_list);
         mCityListView.addHeaderView(headView);
         mCityListView.setEmptyView(findViewById(R.id.citys_list_empty));
+        rl_banner = (RelativeLayout) findViewById(R.id.rl_banner);
+        rl_banner.setBackgroundColor(Color.parseColor("#ff882e"));
 
         select_city_layout = (LinearLayout) findViewById(R.id.select_city_layout);
         select_city_activity_netoutview = (LinearLayout) findViewById(R.id.select_city_activity_netoutview);
@@ -562,7 +564,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
         }
 
 
-        if(fromGetPrice.equals("647")){
+        if (fromGetPrice.equals("647")) {
             // 来自免费设计页面
             Intent cityData = new Intent();
             Bundle b = new Bundle();
@@ -573,7 +575,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             return;
         }
 
-        if(fromFindDecorateCompany.equals("64")){
+        if (fromFindDecorateCompany.equals("64")) {
             // 来自找装修公司页面
             Intent cityData = new Intent();
             Bundle b = new Bundle();
@@ -596,14 +598,16 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             return;
         }
 
+
         if(fromHome.equals("101")){
+
             Intent it = new Intent();
             Bundle b = new Bundle();
             b.putString("ci", cityName);
             it.putExtra("city_bundle", b);
             setResult(104, it);
             finish();
-        }else{
+        } else {
 
             // 首次安装
             if (FIRST_INSTALL.equals(getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).getString("go_poporder_string", "0"))) {
@@ -622,16 +626,16 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     /***
      * 首次安装调用
      */
-    private void countDownloadNum(){
+    private void countDownloadNum() {
         OKHttpUtil client = new OKHttpUtil();
         HashMap<String, String> map = new HashMap<String, String>();
         map.put("mac_code", MAC_CODE);
-        map.put("type","1");
+        map.put("type", "1");
         map.put("_token", _TOKEN);
         client.post(DOWNLOAD_COUNT_URL, map, new OKHttpUtil.BaseCallBack() {
             @Override
             public void onSuccess(com.squareup.okhttp.Response response, String json) {
-                Util.setLog(TAG, "songchengcai >>>"+json);
+                Util.setLog(TAG, "songchengcai >>>" + json);
             }
 
             @Override
@@ -642,7 +646,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
 
             @Override
             public void onError(com.squareup.okhttp.Response response, int code) {
-                Util.setLog(TAG, code+"<<<<songchengcai <<<<");
+                Util.setLog(TAG, code + "<<<<songchengcai <<<<");
             }
         });
     }
@@ -653,19 +657,19 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
         switch (v.getId()) {
             case R.id.city_title_back:
 
-                if(fromFreeDesign.equals("66")){
+                if (fromFreeDesign.equals("66")) {
                     // 来自 智能报价
                     finish();
                     return;
                 }
 
-                if(fromHome.equals("101")){
+                if (fromHome.equals("101")) {
                     // 来自 首页
                     finish();
                     return;
                 }
 
-                if(fromFindDecorateCompany.equals("64")){
+                if (fromFindDecorateCompany.equals("64")) {
                     // 来自找装修公司页面
                     finish();
                     return;
@@ -683,6 +687,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
      * 选择城市
      */
     private void operEdit() {
+
         if (FIRST_INSTALL.equals(getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).getString("go_poporder_string", "0"))) {
             startActivity(new Intent(context, PopOrderActivity.class));
         } else {
@@ -823,21 +828,21 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        if(keyCode == KeyEvent.KEYCODE_BACK && fromFindDecorateCompany.equals("64")){
+        if (keyCode == KeyEvent.KEYCODE_BACK && fromFindDecorateCompany.equals("64")) {
             // 来自 找公司
             finish();
             return true;
         }
 
 
-        if(keyCode == KeyEvent.KEYCODE_BACK && fromFreeDesign.equals("66")){
+        if (keyCode == KeyEvent.KEYCODE_BACK && fromFreeDesign.equals("66")) {
             // 来自 智能报价
             finish();
             return true;
         }
 
 
-        if(keyCode == KeyEvent.KEYCODE_BACK && fromHome.equals("101")){
+        if (keyCode == KeyEvent.KEYCODE_BACK && fromHome.equals("101")) {
             // 来自 首页城市选择
             finish();
             return true;

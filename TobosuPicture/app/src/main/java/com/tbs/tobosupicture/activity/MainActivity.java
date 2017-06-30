@@ -1,130 +1,156 @@
 package com.tbs.tobosupicture.activity;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.FrameLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
-import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
-import com.tbs.tobosupicture.bean.LbPicture;
-import com.tbs.tobosupicture.constants.UrlConstans;
-import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.base.BaseActivity;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
+import com.tbs.tobosupicture.bean._User;
+import com.tbs.tobosupicture.fragment.DecorationCaseFragment;
+import com.tbs.tobosupicture.fragment.ImageToFriendFragment;
+import com.tbs.tobosupicture.fragment.MineFragment;
+import com.tbs.tobosupicture.fragment.TemplateFragment;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
-    private Handler mHandler;
+    @BindView(R.id.main_frameLayout)
+    FrameLayout mainFrameLayout;
+    @BindView(R.id.rb_first)
+    RadioButton rbFirst;
+    @BindView(R.id.rb_second)
+    RadioButton rbSecond;
+    @BindView(R.id.rb_third)
+    RadioButton rbThird;
+    @BindView(R.id.rb_fourth)
+    RadioButton rbFourth;
+    @BindView(R.id.main_radioGroup)
+    RadioGroup mainRadioGroup;
 
-    private Button mainBtn;
-    private ImageView mainImg;
-    private TextView mainTv;
-    private EditText city;
-    private EditText device;
-    private EditText version;
-
-    private Map<String, String> param = new HashMap<>();
-    private List<LbPicture> lbPictureList = new ArrayList<>();
+    private Fragment[] mFragments;//fragment集合
+    private int mIndex;//数据下标
     private String TAG = "MainActivity";
     private Context mContext;
-    private View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         mContext = this;
-        mHandler = new Handler();
-        bindView();
-        initView();
+        initFragment();
     }
 
-    private void bindView() {
-        mainBtn = (Button) findViewById(R.id.main_btn);
-        mainImg = (ImageView) findViewById(R.id.main_img);
-        mainTv = (TextView) findViewById(R.id.main_tv);
-        city = (EditText) findViewById(R.id.main_et_city);
-        device = (EditText) findViewById(R.id.main_et_device);
-        version = (EditText) findViewById(R.id.main_et_version);
+    private void initFragment() {
+        //样板图
+        TemplateFragment templateFragment = new TemplateFragment();
+        //案例
+        DecorationCaseFragment decorationCaseFragment = new DecorationCaseFragment();
+        //以图会友
+        ImageToFriendFragment imageToFriendFragment = new ImageToFriendFragment();
+        //我的
+        MineFragment mineFragment = new MineFragment();
+        //将fragment添加至数组中
+        mFragments = new Fragment[]{templateFragment, decorationCaseFragment, imageToFriendFragment, mineFragment};
+        //处理相关的事务
+        FragmentTransaction ft =
+                getSupportFragmentManager().beginTransaction();
+        //添加首页
+        ft.add(R.id.main_frameLayout, templateFragment).commit();
+        //默认设置第0个
+        setIndexSelect(0);
     }
 
-    private void initView() {
-        mainBtn.setOnClickListener(occl);
-    }
-
-    private View.OnClickListener occl = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (param != null || lbPictureList != null) {
-                param.clear();
-                lbPictureList.clear();
-            }
-            Log.e(TAG, "开始请求====+url" + UrlConstans.LB_URL);
-            apiGetPicture();
-            Message message = new Message();
-            message.obj = "这是一条数据。。";
-            mHandler.sendMessage(message);
+    //选择所在页面
+    private void setIndexSelect(int index) {
+        if (mIndex == index) {
+            return;
         }
-    };
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        //隐藏不必要的布局
+        ft.hide(mFragments[mIndex]);
+        //处理逻辑 如果没有添加则添加 添加了则显示
+        if (!mFragments[index].isAdded()) {
+            ft.add(R.id.main_frameLayout, mFragments[index]).show(mFragments[index]);
+        } else {
+            ft.show(mFragments[index]);
+        }
+        ft.commit();
+        mIndex = index;
+    }
 
-    private void apiGetPicture() {
-        Log.e(TAG , "===请求zhongh》》》");
-//        param.put("city", city.getText().toString());
-//        param.put("device", device.getText().toString());
-//        param.put("version", version.getText().toString());
-        HttpUtils.doPost(UrlConstans.LB_URL, param, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e(TAG + "===请求错误》》》", call.toString());
-            }
+    @OnClick({R.id.rb_first, R.id.rb_second, R.id.rb_third, R.id.rb_fourth})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.rb_first:
+                //点击第一个选项 显示样板图
+                Log.e(TAG, "点击了样板图");
+                setIndexSelect(0);
+                break;
+            case R.id.rb_second:
+                //点击第二个选项 显示案例
+                setIndexSelect(1);
+                break;
+            case R.id.rb_third:
+                //点击第三个选项 显示以图会友
+                setIndexSelect(2);
+                break;
+            case R.id.rb_fourth:
+                //点击第四个选项 显示我的  其中我的界面要分情况考虑
+                setIndexSelect(3);
+                break;
+        }
+    }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String responses = response.body().string();
-                try {
-                    JSONObject jsonObject = new JSONObject(responses);
-                    String errorCode = jsonObject.getString("error_code");
-                    if (errorCode.equals("0")) {
-                        Log.e(TAG, "请求成功！");
-                        JSONArray jsonArray = jsonObject.getJSONArray("data");
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            LbPicture lbPicture = new LbPicture(jsonArray.get(i).toString());
-                            lbPictureList.add(lbPicture);
-                        }
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Glide.with(mContext).load(lbPictureList.get(0).getImgUrl()).into(mainImg);
-                                mainTv.setText("" + responses);
-                            }
-                        });
+    //是否使用Eventbus
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
 
-                    } else {
-                        Log.e(TAG, "请求失败！" + responses);
-                    }
+    //使用Eventbus处理回来显示
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case EC.EventCode.SHOW_TEMPLATE_FRAGMENT:
+                //样板图
+                rbFirst.performClick();
+                setIndexSelect(0);
+                break;
+            case EC.EventCode.SHOW_DECORATIONCASE_FRAGMENT:
+                //装修案例
+                rbSecond.performClick();
+                setIndexSelect(1);
+                break;
+            case EC.EventCode.SHOW_IMAGETOFRIEND_FRAGMENT:
+                //以图会友
+                rbThird.performClick();
+                setIndexSelect(2);
+                break;
+            case EC.EventCode.SHOW_MINE_FRAGMENT:
+                //显示我的
+                rbFourth.performClick();
+                setIndexSelect(3);
+                break;
+        }
+    }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

@@ -1,5 +1,7 @@
 package com.tbs.tobosupicture.utils;
 
+import android.os.Handler;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,6 +27,7 @@ import okhttp3.Response;
 
 public class HttpUtils {
     private static OkHttpClient client = null;
+    private static final String TAG = "HttpUtils";
 
     private HttpUtils() {
     }
@@ -32,7 +35,7 @@ public class HttpUtils {
     public static OkHttpClient getInstance() {
         if (client == null) {
             synchronized (HttpUtils.class) {
-                if (client == null){
+                if (client == null) {
                     client = new OkHttpClient();
                 }
 
@@ -62,10 +65,10 @@ public class HttpUtils {
      * @param mapParams
      * @param callback
      */
-    public static void doPost(String url, Map<String, String> mapParams, Callback callback) {
+    public static void doPost(String url, Map<String, Object> mapParams, Callback callback) {
         FormBody.Builder builder = new FormBody.Builder();
         for (String key : mapParams.keySet()) {
-            builder.add(key, mapParams.get(key));
+            builder.add(key, String.valueOf(mapParams.get(key)));
         }
         Request request = new Request.Builder()
                 .url(url)
@@ -82,7 +85,7 @@ public class HttpUtils {
      * @param jsonParams
      * @param callback
      */
-    public static void doPost(String url, String jsonParams, Callback callback) {
+    public static void doPostJson(String url, String jsonParams, Callback callback) {
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8")
                 , jsonParams);
         Request request = new Request.Builder()
