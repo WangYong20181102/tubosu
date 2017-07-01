@@ -50,15 +50,23 @@ public class ManpowerFragment  extends Fragment {
         initAdapter();
         initData();
         setClick();
+        initformerRecord();
         return view;
     }
 
+
+    private void initformerRecord(){
+        String cache = CacheManager.getStringArrayList(getActivity());
+        if(!"".equals(cache)){
+            setTextMessage(cache);
+        }
+    }
 
     private void initData() {
         receiver = new ManPowerReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.ACTION_MANPOWER_FRAGMENT_DATA);
-        filter.addAction(Constant.ACTION_GO_EDIT_ACCOUNT_FRAGMENT);
+        filter.addAction(Constant.ACTION_GOTO_EDIT_FRAGMENT);
         getActivity().registerReceiver(receiver, filter);
 
     }
@@ -91,18 +99,17 @@ public class ManpowerFragment  extends Fragment {
         etCostManpower = (EditText)view.findViewById(R.id.et_manpower_cost_manpower);
         etCostMoney = (EditText)view.findViewById(R.id.et_manpower_cost_money);
         tvCostTime = (TextView) view.findViewById(R.id.tv_manpower_cost_time);
+        tvCostTime.setText(Util.getTodayDatetime());
         etCostContent = (EditText)view.findViewById(R.id.et_manpower_cost_content);
 
     }
 
-    private void setTextMessage(){
-        String cache = CacheManager.getStringArrayList(getActivity());
+    private void setTextMessage(String cache){
         String[] pieces = cache.split("#");
-        etCostManpower.setText(pieces[0]);
-        etCostMoney.setText(pieces[1]);
-        tvCostTime.setText(pieces[2]);
-        etCostContent.setText(pieces[3]);
-        Util.setToast(getActivity(), "接收广播0>" + cache);
+        etCostManpower.setText(pieces[1]);
+        etCostMoney.setText(pieces[2]);
+        tvCostTime.setText(pieces[3]);
+        etCostContent.setText(pieces[4]);
     }
 
     private void setClick(){
@@ -159,32 +166,40 @@ public class ManpowerFragment  extends Fragment {
             if(Constant.ACTION_MANPOWER_FRAGMENT_DATA.equals(intent.getAction())){
                 String name = etCostManpower.getText().toString().trim();
                 String typeId = "";
-                if(!"".equals(name) && isOtherType(name)){
+                if(isOtherType(name)){
                     typeId = "6";
                 }else {
                     typeId = "1";
                 }
+
+
                 SaveDataEntity entity = new SaveDataEntity(name,
                         etCostMoney.getText().toString().trim(),tvCostTime.getText().toString().trim(),
                         etCostContent.getText().toString().trim(), typeId);
                 Intent dataIntent = new Intent(Constant.ACTION_GET_FRAGMENT_DATA);
                 dataIntent.putExtra("dataArray", entity.getDataArray());
                 getActivity().sendBroadcast(dataIntent);
-            }else if(Constant.ACTION_GO_EDIT_ACCOUNT_FRAGMENT.equals(intent.getAction())){
-                setTextMessage();
             }
         }
     }
 
     private boolean isOtherType(String type){
-        for(int i=0; i<stringArr.length; i++){
-            if(type.equals(stringArr[i])){
-                return false;
-            }else {
-                return true;
+        int same = -1;
+        if(!"".equals(type)){
+            for(int i=0; i<stringArr.length; i++){
+                if(type.equals(stringArr[i])){
+                    same = -1;
+                    break;
+                }else {
+                    same = 1;
+                }
             }
         }
-        return true;
+        if(same>0){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override

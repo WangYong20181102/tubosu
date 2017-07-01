@@ -296,20 +296,16 @@ public class DecorateAccountActivity extends Activity {
         });
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 _DecorationExpent.decorate_record record = recordList.get(position);
                 Intent intent = new Intent(mContext, EditAccountAcitivity.class);
-//                intent.setAction(Constant.ACTION_GO_EDIT_ACCOUNT);
                 Bundle b = new Bundle();
-                Util.setToast(mContext, "==="+record.getId());
-                b.putString("outcome_name", record.getExpend_name());
-                b.putString("outcome_money", record.getCost());
-                b.putString("outcome_time", record.getExpend_time());
-                b.putString("outcome_contents", record.getContent());
-                b.putInt("outcome_position", getFragmentPosition(record.getExpend_name()));
+                String[] textArr = new String[]{record.getExpend_name(),record.getCost(),record.getExpend_time(),record.getContent()};
+                CacheManager.setStringArrayList(mContext, textArr);
+                b.putInt("outcome_position", Integer.parseInt(record.getType_id()));
                 intent.putExtra("check_record_bundle",b);
-//                sendBroadcast(intent);
                 startActivityForResult(intent,0x00013);
             }
         });
@@ -382,23 +378,6 @@ public class DecorateAccountActivity extends Activity {
         }
     }
 
-    private int getFragmentPosition(String name){
-        if(!"".equals(name)){
-            if("人工".equals(name)){
-                return 0;
-            }else if("建材".equals(name)){
-                return 1;
-            }else if("五金".equals(name)){
-                return 2;
-            }else if("家具".equals(name)){
-                return 3;
-            }else {
-                return 4;
-            }
-        }else {
-            return 0;
-        }
-    }
 
     private void httpDeleteData(String deleteId) {
         OKHttpUtil okHttpUtil = new OKHttpUtil();
@@ -460,6 +439,7 @@ public class DecorateAccountActivity extends Activity {
         ivEditAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CacheManager.clearStringArrayList(mContext);
                 startActivityForResult(new Intent(mContext, EditAccountAcitivity.class), 0x00013);
             }
         });
@@ -467,6 +447,7 @@ public class DecorateAccountActivity extends Activity {
         tvStartAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CacheManager.clearStringArrayList(mContext);
                 startActivityForResult(new Intent(mContext, EditAccountAcitivity.class), 0x00013);
             }
         });

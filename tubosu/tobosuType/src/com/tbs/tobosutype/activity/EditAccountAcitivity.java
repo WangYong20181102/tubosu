@@ -130,13 +130,9 @@ public class EditAccountAcitivity extends FragmentActivity{
         Bundle b = null;
         if(data!=null && data.getBundleExtra("check_record_bundle") != null){
             b = data.getBundleExtra("check_record_bundle");
-            String[] textArr = new String[]{b.getString("outcome_name"),b.getString("outcome_money"),b.getString("outcome_time"),b.getString("outcome_contents")};
-            CacheManager.setStringArrayList(context, textArr);
+
             fragmentPosition = b.getInt("outcome_position");
-            goFragment(fragmentPosition);
-            Intent intent = new Intent(Constant.ACTION_GO_EDIT_ACCOUNT_FRAGMENT);
-            sendBroadcast(intent);
-            Util.setToast(context, "发送广播fragmentPosition   " +fragmentPosition);
+            saveData = goFragment(fragmentPosition);
         }
     }
 
@@ -146,30 +142,35 @@ public class EditAccountAcitivity extends FragmentActivity{
         tvManPower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CacheManager.clearStringArrayList(context);
                 saveData = setFragment(0);
             }
         });
         tvMateria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CacheManager.clearStringArrayList(context);
                 saveData = setFragment(1);
             }
         });
         tvSteel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CacheManager.clearStringArrayList(context);
                 saveData = setFragment(2);
             }
         });
         tvFurniture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CacheManager.clearStringArrayList(context);
                 saveData = setFragment(3);
             }
         });
         tvKitchen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CacheManager.clearStringArrayList(context);
                 saveData = setFragment(4);
             }
         });
@@ -177,6 +178,7 @@ public class EditAccountAcitivity extends FragmentActivity{
         tvCancelEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                CacheManager.clearStringArrayList(context);
                 finish();
             }
         });
@@ -232,10 +234,11 @@ public class EditAccountAcitivity extends FragmentActivity{
                     mainContentText = dataArray[3];
                     outcomeTypeId = dataArray[4];
 
-                    Util.setErrorLog(TAG,"******" + saveData + "=" + mainNameText);
-                    Util.setErrorLog(TAG,"******" + saveData + "=" + mainMoneyText);
-                    Util.setErrorLog(TAG,"******" + saveData + "=" + mainTimeText);
-                    Util.setErrorLog(TAG,"******" + saveData + "=" + mainContentText);
+                    Util.setErrorLog(TAG,"***" + saveData + "=>>>" + mainNameText);
+                    Util.setErrorLog(TAG,"***" + saveData + "=>>>" + mainMoneyText);
+                    Util.setErrorLog(TAG,"***" + saveData + "=>>>" + mainTimeText);
+                    Util.setErrorLog(TAG,"***" + saveData + "=>>>" + mainContentText);
+                    Util.setErrorLog(TAG,"***" + saveData + "=>>>=" + outcomeTypeId);
 
                     if("".equals(mainNameText)){
                         Util.setToast(context,"名称不能为空");
@@ -259,8 +262,9 @@ public class EditAccountAcitivity extends FragmentActivity{
                         hashMap.put("expend_name", mainNameText);
                         hashMap.put("cost", mainMoneyText);
                         hashMap.put("expend_time", mainTimeText);
-                        hashMap.put("content", mainContentText);
+                        hashMap.put("content", mainContentText+" ");
                         okHttpUtil.post(Constant.EDIT_DECORATE_OUTCOME_URL, hashMap, new OKHttpUtil.BaseCallBack() {
+
                             @Override
                             public void onSuccess(Response response, String json) {
                                 Util.setErrorLog(TAG, json);
@@ -307,10 +311,11 @@ public class EditAccountAcitivity extends FragmentActivity{
         kitchen = new KitchenFragment();
     }
 
-    private void goFragment(int position){
+    private int goFragment(int position){
+        int p = position -1;
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();
-        switch (position){
+        switch (p){
             case 0:
                 ft.replace(R.id.edit_account_container,manpower);
                 ivManpower.setVisibility(View.VISIBLE);
@@ -354,6 +359,7 @@ public class EditAccountAcitivity extends FragmentActivity{
                 break;
         }
         ft.commit();
+        return p;
     }
 
 

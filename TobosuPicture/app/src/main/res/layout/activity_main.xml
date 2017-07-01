@@ -30,28 +30,28 @@
         android:orientation="horizontal">
         <!--样板图按钮-->
         <RadioButton
-            android:onClick="MainViewOnClick"
+            android:onClick="onViewClicked"
             android:id="@+id/rb_first"
             style="@style/radiobutton_style"
             android:text="样板图"
             android:textSize="@dimen/text_size_14" />
         <!--案例按钮-->
         <RadioButton
-            android:onClick="MainViewOnClick"
+            android:onClick="onViewClicked"
             android:id="@+id/rb_second"
             style="@style/radiobutton_style"
             android:text="案例"
             android:textSize="@dimen/text_size_14" />
         <!--以图会友按钮-->
         <RadioButton
-            android:onClick="MainViewOnClick"
+            android:onClick="onViewClicked"
             android:id="@+id/rb_third"
             style="@style/radiobutton_style"
             android:text="以图会友"
             android:textSize="@dimen/text_size_14" />
         <!--我的按钮-->
         <RadioButton
-            android:onClick="MainViewOnClick"
+            android:onClick="onViewClicked"
             android:id="@+id/rb_fourth"
             style="@style/radiobutton_style"
             android:text="我的"

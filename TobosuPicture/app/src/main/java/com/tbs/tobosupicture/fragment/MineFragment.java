@@ -16,7 +16,6 @@ import com.tbs.tobosupicture.base.BaseFragment;
  */
 
 public class MineFragment extends BaseFragment {
-
     public MineFragment() {
 
     }

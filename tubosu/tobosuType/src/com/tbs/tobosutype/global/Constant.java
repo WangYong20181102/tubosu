@@ -53,7 +53,7 @@ public class Constant {
 
     public static final String ACTION_HOME_SELECT_CITY = "action_home_select_city";
 
-    public static final String ACTION_GO_EDIT_ACCOUNT_FRAGMENT = "action_go_edit_account_fragment";
+    public static final String ACTION_GOTO_EDIT_FRAGMENT = "action_goto_edit_fragment";
 
     /**
      * 获取数据
