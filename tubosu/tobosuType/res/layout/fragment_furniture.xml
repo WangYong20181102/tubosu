@@ -26,7 +26,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="44dp">
+        android:layout_height="62dp">
         <TextView
             android:id="@+id/tv_furniture_name"
             android:layout_width="wrap_content"
@@ -40,12 +40,12 @@
         <EditText
             android:id="@+id/et_furniture_cost_furniture"
             android:layout_width="match_parent"
-            android:layout_height="34dp"
+            android:layout_height="57dp"
             android:layout_centerVertical="true"
             android:paddingLeft="14dp"
             android:hint="请输入开支名称"
             android:background="@color/white"
-            android:textColorHint="#B4B4B4"
+            android:textColorHint="#d4d2d2"
             android:textSize="18sp"
             android:layout_toRightOf="@+id/tv_furniture_name"/>
         <View
@@ -59,7 +59,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="44dp">
+        android:layout_height="62dp">
         <TextView
             android:id="@+id/tv_furniture_cs"
             android:layout_width="wrap_content"
@@ -73,9 +73,9 @@
         <EditText
             android:id="@+id/et_furniture_cost_money"
             android:layout_width="match_parent"
-            android:layout_height="34dp"
+            android:layout_height="57dp"
             android:layout_centerVertical="true"
-            android:textColorHint="#B4B4B4"
+            android:textColorHint="#d4d2d2"
             android:paddingLeft="14dp"
             android:textSize="18sp"
             android:inputType="number"
@@ -95,12 +95,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="44dp">
+        android:layout_height="62dp">
         <TextView
             android:id="@+id/tv_furniture_time"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="57dp"
             android:layout_centerVertical="true"
+            android:gravity="center_vertical"
             android:text="开支时间:"
             android:textSize="16sp"
             android:textColor="@color/color_black"
@@ -109,11 +110,11 @@
         <TextView
             android:id="@+id/tv_furniture_cost_time"
             android:layout_width="wrap_content"
-            android:layout_height="34dp"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="21dp"
             android:gravity="center"
-            android:textColorHint="#B4B4B4"
+            android:textColorHint="#d4d2d2"
             android:textSize="18sp"
             android:hint="请输入开支时间"
             android:background="@color/white"
@@ -130,12 +131,12 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="44dp">
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tv_furniture_cont"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_height="57dp"
+            android:gravity="center_vertical"
             android:text="开支内容:"
             android:textSize="16sp"
             android:textColor="@color/color_black"
@@ -144,12 +145,15 @@
         <EditText
             android:id="@+id/et_furniture_cost_content"
             android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="8dp"
             android:paddingLeft="14dp"
+            android:maxLength="50"
             android:textSize="18sp"
             android:hint="请输入备注信息"
-            android:textColorHint="#B4B4B4"
+            android:textColorHint="#d4d2d2"
             android:background="@color/white"
             android:layout_toRightOf="@+id/tv_furniture_cont"/>
         
@@ -158,7 +162,7 @@
             android:layout_height="1dp"
             android:layout_marginLeft="14dp"
             android:layout_marginRight="14dp"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/et_furniture_cost_content"
             android:background="#CCCCCC"/>
     </RelativeLayout>
 

@@ -9,6 +9,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,9 @@ import com.tbs.tobosutype.adapter.WriteAccountAdapter;
 import com.tbs.tobosutype.bean.SaveDataEntity;
 import com.tbs.tobosutype.customview.DateChooseWheelViewDialog;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.utils.CacheManager;
+import com.tbs.tobosutype.utils.Util;
+
 
 /**
  * Created by Lie on 2017/6/21.
@@ -51,7 +56,9 @@ public class ManpowerFragment  extends Fragment {
 
     private void initData() {
         receiver = new ManPowerReceiver();
-        IntentFilter filter = new IntentFilter(Constant.ACTION_MANPOWER_FRAGMENT_DATA);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.ACTION_MANPOWER_FRAGMENT_DATA);
+        filter.addAction(Constant.ACTION_GO_EDIT_ACCOUNT_FRAGMENT);
         getActivity().registerReceiver(receiver, filter);
 
     }
@@ -88,6 +95,16 @@ public class ManpowerFragment  extends Fragment {
 
     }
 
+    private void setTextMessage(){
+        String cache = CacheManager.getStringArrayList(getActivity());
+        String[] pieces = cache.split("#");
+        etCostManpower.setText(pieces[0]);
+        etCostMoney.setText(pieces[1]);
+        tvCostTime.setText(pieces[2]);
+        etCostContent.setText(pieces[3]);
+        Util.setToast(getActivity(), "接收广播0>" + cache);
+    }
+
     private void setClick(){
 
         tvCostTime.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +122,29 @@ public class ManpowerFragment  extends Fragment {
                 });
                 chooseTimeDialog.setDateDialogTitle("开支时间");
                 chooseTimeDialog.showDateChooseDialog();
+            }
+        });
+        etCostManpower.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                for(int i=0,len=stringArr.length;i<len;i++){
+                    if(etCostManpower.getText().toString().equals(stringArr[i])){
+                        adapter.setSelection(i);
+                    }else {
+                        adapter.clearSelection(-1);
+                    }
+                }
+                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -130,6 +170,8 @@ public class ManpowerFragment  extends Fragment {
                 Intent dataIntent = new Intent(Constant.ACTION_GET_FRAGMENT_DATA);
                 dataIntent.putExtra("dataArray", entity.getDataArray());
                 getActivity().sendBroadcast(dataIntent);
+            }else if(Constant.ACTION_GO_EDIT_ACCOUNT_FRAGMENT.equals(intent.getAction())){
+                setTextMessage();
             }
         }
     }

@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -166,6 +167,8 @@ public class DecorateAccountActivity extends Activity {
             final JSONObject jsonObject = new JSONObject(json);
             String status = jsonObject.getString("status");
             if (status.equals("200")) {
+                relDataEmpty.setVisibility(View.GONE);
+                relDataLaout.setVisibility(View.VISIBLE);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -179,8 +182,8 @@ public class DecorateAccountActivity extends Activity {
                 });
 
             } else if (status.equals("201")) {
-                relDataEmpty.setVisibility(View.GONE);
-                relDataLaout.setVisibility(View.VISIBLE);
+                relDataEmpty.setVisibility(View.VISIBLE);
+                relDataLaout.setVisibility(View.GONE);
                 tvTotalCost.setText("0");
                 seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_green_style));
                 tvState.setText(budgetTips[0]);
@@ -278,6 +281,7 @@ public class DecorateAccountActivity extends Activity {
         SwipeAdapter mAdapter = new SwipeAdapter(mContext, recordList, mListView.getRightViewWidth());
 
         mListView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
         setListViewHeightBasedOnChildren(mListView);
         mAdapter.setOnRightItemClickListener(new SwipeAdapter.onRightItemClickListener() {
 
@@ -285,9 +289,28 @@ public class DecorateAccountActivity extends Activity {
             public void onRightItemClick(View v, int position) {
 
                 if (Util.isNetAvailable(mContext)) {
-                    httpDeleteData(recordList.get(position).getId());
+                    httpDeleteData(recordList.get(position).getId()); // 删除id
                 }
 
+            }
+        });
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                _DecorationExpent.decorate_record record = recordList.get(position);
+                Intent intent = new Intent(mContext, EditAccountAcitivity.class);
+//                intent.setAction(Constant.ACTION_GO_EDIT_ACCOUNT);
+                Bundle b = new Bundle();
+                Util.setToast(mContext, "==="+record.getId());
+                b.putString("outcome_name", record.getExpend_name());
+                b.putString("outcome_money", record.getCost());
+                b.putString("outcome_time", record.getExpend_time());
+                b.putString("outcome_contents", record.getContent());
+                b.putInt("outcome_position", getFragmentPosition(record.getExpend_name()));
+                intent.putExtra("check_record_bundle",b);
+//                sendBroadcast(intent);
+                startActivityForResult(intent,0x00013);
             }
         });
 
@@ -315,8 +338,8 @@ public class DecorateAccountActivity extends Activity {
             floatList.add(qita);
 
             MyChatView myChatView = new MyChatView(mContext);
-            myChatView.setmRadius(260f);
-            myChatView.setmStrokeWidth(120f);
+            myChatView.setmRadius(240f);
+            myChatView.setmStrokeWidth(100f);
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             myChatView.setLayoutParams(layoutParams);
             myChatView.setFloatList(floatList);
@@ -359,6 +382,24 @@ public class DecorateAccountActivity extends Activity {
         }
     }
 
+    private int getFragmentPosition(String name){
+        if(!"".equals(name)){
+            if("人工".equals(name)){
+                return 0;
+            }else if("建材".equals(name)){
+                return 1;
+            }else if("五金".equals(name)){
+                return 2;
+            }else if("家具".equals(name)){
+                return 3;
+            }else {
+                return 4;
+            }
+        }else {
+            return 0;
+        }
+    }
+
     private void httpDeleteData(String deleteId) {
         OKHttpUtil okHttpUtil = new OKHttpUtil();
         HashMap<String, String> param = new HashMap<>();
@@ -372,6 +413,7 @@ public class DecorateAccountActivity extends Activity {
                     JSONObject obj = new JSONObject(json);
                     if (obj.getInt("status") == 200) {
                         Util.setToast(mContext, "删除开支记录成功");
+
                         HttpGetData();
                     } else if (obj.getInt("status") == 0) {
                         Util.setToast(mContext, obj.getString("msg"));
@@ -400,7 +442,7 @@ public class DecorateAccountActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
+        switch (resultCode) {
             case 0x00013:
                 HttpGetData();
                 break;

@@ -52,11 +52,24 @@ public class KeepAccountActivity extends Activity{
         relOpenAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, DecorateAccountActivity.class);
-                intent.putExtra("budget", etBudget.getText().toString());
-                CacheManager.setDecorateBudget(mContext, etBudget.getText().toString());
-                startActivity(intent);
-                finish();
+                String budget = etBudget.getText().toString().trim();
+                float budeget = 0;
+                if("".equals(budget)){
+                    Util.setToast(mContext, "预算不能为空");
+                    return;
+                }else {
+                    budeget = Float.parseFloat(budget);
+                    if(budeget - 0 == 0){
+                        Util.setToast(mContext, "预算不能为零");
+                        return;
+                    }else {
+                        Intent intent = new Intent(mContext, DecorateAccountActivity.class);
+                        intent.putExtra("budget", etBudget.getText().toString());
+                        CacheManager.setDecorateBudget(mContext, etBudget.getText().toString());
+                        startActivity(intent);
+                        finish();
+                    }
+                }
             }
         });
     }

@@ -36,7 +36,6 @@ import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -113,6 +112,7 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 
 	int recLen = 8;
 	private TimerTask task = new TimerTask() {
+
 		@Override
 		public void run() {
 
@@ -343,7 +343,7 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 			selectCityIntent.putExtra("GetPriceSelectcityBundle", b);
 			startActivityForResult(selectCityIntent, 0);
 		break;
-		case R.id.free_yuyue_submit:
+		case R.id.getprice_submit:
 			String name = etName.getText().toString().trim();
 			String phone = etPhone.getText().toString().trim();
 			if (TextUtils.isEmpty(name)) {
@@ -357,8 +357,6 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 			}
 
 			if(Constant.checkNetwork(mContext)){
-
-				pubOrderParams.put("", name); // FIXME 接口需要更改
 				pubOrderParams.put("cellphone", phone);
 				pubOrderParams.put("city", city);
 				Util.setLog(TAG, "免费预约的城市是" + city);
