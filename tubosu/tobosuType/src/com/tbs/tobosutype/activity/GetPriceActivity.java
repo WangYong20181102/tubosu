@@ -167,6 +167,7 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 
 
 	private Handler numHandler = new Handler(){
+
 		@Override
 		public void handleMessage(Message msg) {
 			super.handleMessage(msg);

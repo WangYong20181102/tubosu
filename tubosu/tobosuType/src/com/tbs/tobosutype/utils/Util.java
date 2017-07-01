@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -263,6 +264,15 @@ public class Util {
             window.setStatusBarColor(Color.TRANSPARENT);
             window.setNavigationBarColor(Color.TRANSPARENT);
         }
+    }
+
+
+    public static String getTodayDatetime() {
+        Calendar nowCalendar = Calendar.getInstance();
+        int nowYear = nowCalendar.get(Calendar.YEAR);
+        int nowMonth = nowCalendar.get(Calendar.MONTH);
+        int nowDay = nowCalendar.get(Calendar.DAY_OF_MONTH);
+        return nowYear + "-" + nowMonth + "-" + nowDay;
     }
 //
 //    /**

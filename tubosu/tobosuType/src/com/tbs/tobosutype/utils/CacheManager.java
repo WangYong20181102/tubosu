@@ -439,6 +439,7 @@ public class CacheManager {
 
 
     public static void setStringArrayList(Context context, String[] textArray){
+//        {b.getString("outcome_name"),b.getString("outcome_money"),b.getString("outcome_time"),b.getString("outcome_contents")}
         String textList = "";
         for(int i=0,len=textArray.length;i<len;i++){
             textList = textList + "#" + textArray[i];
@@ -446,6 +447,9 @@ public class CacheManager {
         context.getSharedPreferences(OUTCOME_PRE, Context.MODE_PRIVATE).edit().putString(DECORATE_BUDGET_TEXT, textList).commit();
     }
 
+    public static void clearStringArrayList(Context context){
+        context.getSharedPreferences(OUTCOME_PRE, Context.MODE_PRIVATE).edit().putString(DECORATE_BUDGET_TEXT, "").commit();
+    }
 
     public static String getStringArrayList(Context context){
         return context.getSharedPreferences(OUTCOME_PRE, Context.MODE_PRIVATE).getString(DECORATE_BUDGET_TEXT, "");

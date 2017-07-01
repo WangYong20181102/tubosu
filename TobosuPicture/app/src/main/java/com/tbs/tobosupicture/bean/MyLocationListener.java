@@ -14,6 +14,7 @@ import java.util.List;
  */
 
 public class MyLocationListener implements BDLocationListener {
+
     @Override
     public void onReceiveLocation(BDLocation location) {
 

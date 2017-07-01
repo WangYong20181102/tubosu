@@ -159,7 +159,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     /**
      * 定位得到的真实城市地理地址
      */
-    private String realLocationCity = "无法定位，可能你未开启定位权限，请自行开启定位权限";
+    private String realLocationCity = "";
 
     /**
      * 保存本地的城市参数
@@ -781,6 +781,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
                 Util.setLog(TAG, "定位城市3 result >>>" + result.getAddress());
                 String address = result.getAddress();
                 realLocationCity = result.getAddressDetail().city;
+//                无法定位，可能你未开启定位权限，请自行开启定位权限
                 lat = result.getLocation().latitude;
                 lng = result.getLocation().longitude;
 
