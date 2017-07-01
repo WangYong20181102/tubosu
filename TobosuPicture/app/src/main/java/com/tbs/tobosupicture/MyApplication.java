@@ -1,7 +1,11 @@
 package com.tbs.tobosupicture;
 
+import android.Manifest;
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.baidu.location.BDLocation;
@@ -10,6 +14,8 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.tbs.tobosupicture.utils.SpUtils;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 
 import java.util.List;
 
@@ -25,13 +31,24 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        //百度定位初始化
         mLocationClient = new LocationClient(getApplicationContext());
         myListener = new MyLocationListener();
         mLocationClient.registerLocationListener(myListener);
         initLocation();
         mLocationClient.start();
+        //友盟初始化
+        UMShareAPI.get(this);
     }
 
+//    //关于6.0系统的动态权限问题
+//    private void startLocation() {
+//        int checkPermission = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
+//        if (checkPermission != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+//        }
+//    }
 
     //关于百度定位的一些设置
     private void initLocation() {
@@ -175,5 +192,12 @@ public class MyApplication extends Application {
         public void onConnectHotSpotMessage(String s, int i) {
 
         }
+    }
+
+    {
+        //社会化分享所需要的配置
+        PlatformConfig.setWeixin("", "");
+        PlatformConfig.setSinaWeibo("", "", "");
+        PlatformConfig.setQQZone("", "");
     }
 }
