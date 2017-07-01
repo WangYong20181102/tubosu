@@ -316,6 +316,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             } else {
                 Toast.makeText(mContext, loginJsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "====" + loginJsonObject.getString("msg"));
                 hideLoadingView();
                 return;
             }
