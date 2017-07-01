@@ -46,7 +46,7 @@ public class FristActivity extends AppCompatActivity {
 
     @OnClick(R.id.frist_into_main)
     public void onFristActivityClick() {
-        SpUtils.setUserIsFristLogin(mContext, "alreadyLogin");
+        SpUtils.setUserIsFristLogin(mContext, "alreadyLogin");//设置用户已经登录的标签
         startActivity(new Intent(FristActivity.this, MainActivity.class));
         FristActivity.this.finish();
     }
