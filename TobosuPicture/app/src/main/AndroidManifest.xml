@@ -38,23 +38,18 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote">
-            <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2"></action>
-            </intent-filter>
-        </service>
+            android:process=":remote"></service>
         <!--*****************************百度地图定位相关的服务************************↑-->
         <!--*****************************百度地图定位的AcessKey************************↓-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="S2nNH0tBLCHNTpMIh9M3GsvLzaDrj1ur" />
+            android:value="SFE9imNf9G4D4GEfM6Wk5O3vuGw4c9nL" />
         <!--*****************************百度地图定位的AcessKey************************↑-->
         <!--*****************************新浪、微信等分享索要用的Activity************************↓-->
         <!--友盟分享mate-->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5957097db27b0a539700219b" >
-        </meta-data>
+            android:value="5957097db27b0a539700219b"></meta-data>
         <!--新浪-->
         <activity
             android:name=".WBShareActivity"

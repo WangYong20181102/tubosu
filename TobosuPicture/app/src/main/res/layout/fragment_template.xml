@@ -8,4 +8,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="这个是样板图fragment" />
+    <TextView
+        android:id="@+id/temp_location"
+        android:text="显示的定位城市===="
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>
