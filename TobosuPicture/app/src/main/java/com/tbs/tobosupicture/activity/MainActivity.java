@@ -1,26 +1,29 @@
 package com.tbs.tobosupicture.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.bean.EC;
 import com.tbs.tobosupicture.bean.Event;
-import com.tbs.tobosupicture.bean._User;
 import com.tbs.tobosupicture.fragment.DecorationCaseFragment;
 import com.tbs.tobosupicture.fragment.ImageToFriendFragment;
 import com.tbs.tobosupicture.fragment.MineFragment;
 import com.tbs.tobosupicture.fragment.TemplateFragment;
+import com.tbs.tobosupicture.utils.EventBusUtil;
+import com.tbs.tobosupicture.utils.SpUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,6 +75,7 @@ public class MainActivity extends BaseActivity {
         ft.add(R.id.main_frameLayout, templateFragment).commit();
         //默认设置第0个
         setIndexSelect(0);
+        Log.e(TAG, "获取当前用户的定位信息=====" + SpUtils.getLocationCity(mContext));
     }
 
     //选择所在页面
@@ -94,7 +98,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @OnClick({R.id.rb_first, R.id.rb_second, R.id.rb_third, R.id.rb_fourth})
-    public void onViewClicked(View view) {
+    public void MainViewOnClick(View view) {
         switch (view.getId()) {
             case R.id.rb_first:
                 //点击第一个选项 显示样板图
@@ -104,6 +108,7 @@ public class MainActivity extends BaseActivity {
             case R.id.rb_second:
                 //点击第二个选项 显示案例
                 setIndexSelect(1);
+                EventBusUtil.sendEvent(new Event(EC.EventCode.WELCOMETOMAIN));
                 break;
             case R.id.rb_third:
                 //点击第三个选项 显示以图会友
@@ -146,7 +151,33 @@ public class MainActivity extends BaseActivity {
                 rbFourth.performClick();
                 setIndexSelect(3);
                 break;
+            case EC.EventCode.WELCOMETOMAIN://这个是弄来测试用的
+                Log.e(TAG, "收到了来自welcome界面的信息===");
+                break;
         }
+    }
+    //重新返回按钮
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setMessage("你确定要退出吗？");
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    MainActivity.this.finish();
+                }
+            }).setNegativeButton("再看看", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

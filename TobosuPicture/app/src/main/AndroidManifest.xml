@@ -45,14 +45,14 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="S2nNH0tBLCHNTpMIh9M3GsvLzaDrj1ur" />
         <!--*****************************百度地图定位的AcessKey************************↑-->
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.WelcomeActivity" />
         <activity android:name=".activity.FristActivity"></activity>
     </application>
 

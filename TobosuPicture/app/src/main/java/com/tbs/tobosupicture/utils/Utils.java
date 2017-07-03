@@ -129,7 +129,7 @@ public class Utils {
                 }
             }
         }
-        Toast.makeText(context, "网络断开了~", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "当前网络未连接", Toast.LENGTH_SHORT).show();
         return false;
     }
 
