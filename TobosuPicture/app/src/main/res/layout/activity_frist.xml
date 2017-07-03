@@ -12,11 +12,11 @@
         android:orientation="vertical">
 
         <TextView
-            android:onClick="onFristActivityClick"
-            android:id="@+id/frist_into_main"
+            android:onClick="onViewClickedInFristActivity"
+            android:id="@+id/into_mian"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="用户首次使用我们的App会进入到的页面，点击进入首页main" />
+            android:text="用户第一次进入我们的App会进入的页面，点击这个进入主页" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/frist_viewpager"

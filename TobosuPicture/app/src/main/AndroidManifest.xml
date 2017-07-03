@@ -21,6 +21,10 @@
     <!-- SD卡读取权限，用户写入离线定位数据-->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
     <!--*****************************百度地图定位相关的权限************************↑-->
+    <!--****************************友盟社会化分享相关权限*************************↓-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <!--****************************友盟社会化分享相关权限*************************↑-->
 
     <application
         android:name=".MyApplication"
@@ -34,17 +38,62 @@
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote">
-            <intent-filter>
-                <action android:name="com.baidu.location.service_v2.2"></action>
-            </intent-filter>
-        </service>
+            android:process=":remote"></service>
         <!--*****************************百度地图定位相关的服务************************↑-->
         <!--*****************************百度地图定位的AcessKey************************↓-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="S2nNH0tBLCHNTpMIh9M3GsvLzaDrj1ur" />
+            android:value="SFE9imNf9G4D4GEfM6Wk5O3vuGw4c9nL" />
         <!--*****************************百度地图定位的AcessKey************************↑-->
+        <!--*****************************新浪、微信等分享索要用的Activity************************↓-->
+        <!--友盟分享mate-->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5957097db27b0a539700219b"></meta-data>
+        <!--新浪-->
+        <activity
+            android:name=".WBShareActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.umeng.socialize.editorpage.ShareActivity"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.UMDefault" />
+        <!--微信-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--QQ-->
+        <activity
+            android:name="com.umeng.qq.tencent.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent100424468" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.umeng.qq.tencent.AssistActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--*****************************新浪、微信、QQ分享索要用的Activity************************↑-->
+
         <activity android:name=".activity.MainActivity"></activity>
         <activity android:name=".activity.WelcomeActivity">
             <intent-filter>

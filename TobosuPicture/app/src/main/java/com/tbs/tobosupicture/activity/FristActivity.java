@@ -16,13 +16,13 @@ import butterknife.OnClick;
 
 /**
  * 用户第一次使用我们的App时的启动页
- * 主要放置一些滑动切片 利用fragment 作为切片的载体
+ * 主要放置一些滑动切片 利用viewpager 作为切片的载体
  */
 public class FristActivity extends AppCompatActivity {
+    @BindView(R.id.into_mian)
+    TextView intoMian;
     @BindView(R.id.frist_viewpager)
     ViewPager fristViewpager;
-    @BindView(R.id.frist_into_main)
-    TextView fristIntoMain;
     private String TAG = "FristActivity";
     private Context mContext;
 
@@ -32,20 +32,16 @@ public class FristActivity extends AppCompatActivity {
         setContentView(R.layout.activity_frist);
         ButterKnife.bind(this);
         mContext = this;
-        initView();
     }
 
-    private void initView() {
-
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
 
-    @OnClick(R.id.frist_into_main)
-    public void onFristActivityClick() {
+    @OnClick(R.id.into_mian)
+    public void onViewClickedInFristActivity() {
         SpUtils.setUserIsFristLogin(mContext, "alreadyLogin");//设置用户已经登录的标签
         startActivity(new Intent(FristActivity.this, MainActivity.class));
         FristActivity.this.finish();
