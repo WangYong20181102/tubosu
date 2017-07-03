@@ -3,9 +3,11 @@ package com.tbs.tobosutype.activity;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -176,7 +178,7 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_myowner);
 		mContext = MyOwnerActivity.this;
-		
+		initReceiver();
 		initView();
 		initData();
 		initEvent();
@@ -207,6 +209,12 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 		iv_myowner_set = (ImageView) findViewById(R.id.iv_myowner_set);
 		ll_decorate_security = (LinearLayout) findViewById(R.id.ll_decorate_security);
 		iv_system_message_user = (ImageView) findViewById(R.id.iv_system_message_user);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		initData();
 	}
 
 	private void initData() {
@@ -405,11 +413,6 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 		ll_loading.setVisibility(View.GONE);
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		requestUserMy();
-	}
 
 	@Override
 	public void onClick(View v) {
@@ -437,7 +440,7 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 				bundle.putString("province", province);
 				bundle.putString("icommunity", icommunity);
 				personalIntent.putExtra("data", bundle);
-				startActivity(personalIntent);
+				startActivityForResult(personalIntent, 14);
 			}
 			break;
 		case R.id.myowner_layout_store_pic:
@@ -460,7 +463,6 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 		case R.id.my_layout_ower_outcome:
 			if(CacheManager.getFirstTimeRecord(mContext) == -1){
 				startActivity(new Intent(mContext, KeepAccountActivity.class));
-				CacheManager.setFirstTimeRecord(mContext, 1);
 			}else {
 				startActivity(new Intent(mContext, DecorateAccountActivity.class));
 			}
@@ -581,6 +583,13 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 				showFindOrderDialog();
 			}
 			break;
+		}
+
+		switch (resultCode){
+			case 44:
+
+				break;
+
 		}
 	}
 
@@ -773,5 +782,26 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 			return false;
 		}
 	});
+
+
+
+	private void initReceiver(){
+		receiver = new DataRefreshReceiver();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(Constant.LOGOUT_ACTION);
+		registerReceiver(receiver, filter);
+	}
+	private DataRefreshReceiver receiver;
+	private class DataRefreshReceiver extends BroadcastReceiver {
+
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if(Constant.LOGOUT_ACTION.equals(intent.getAction())){
+				Util.setToast(mContext, "怎？？？111");
+//				requestUserMy();
+			}
+		}
+	}
 
 }

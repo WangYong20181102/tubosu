@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="67dp"
+    android:layout_height="match_parent"
     android:orientation="horizontal">
 
     <RelativeLayout
@@ -87,7 +88,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignTop="@+id/item_da_content"
-                        android:layout_marginEnd="32dp"
+                        android:layout_marginEnd="10dp"
                         android:gravity="center"
                         android:text="¥16666"
                         android:textColor="#ff882e"
@@ -119,4 +120,5 @@
             android:src="@drawable/item_del" />
 
     </RelativeLayout>
+
 </LinearLayout>

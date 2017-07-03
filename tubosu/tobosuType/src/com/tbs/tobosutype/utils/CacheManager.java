@@ -1,6 +1,7 @@
 package com.tbs.tobosutype.utils;
 
 import android.content.Context;
+import android.renderscript.Float2;
 
 /**
  * 缓存工具类
@@ -428,12 +429,13 @@ public class CacheManager {
      * @param context
      * @return
      */
-    public static int getDecorateBudget(Context context){
+    public static float getDecorateBudget(Context context){
         String budget = context.getSharedPreferences(OUTCOME_PRE, Context.MODE_PRIVATE).getString(DECORATE_BUDGET, "0");
-        if("0".equals(budget)){
+        float f = Float.parseFloat(budget);
+        if(f-0==0){
             return 0;
         }else {
-            return Integer.parseInt(budget);
+            return f;
         }
     }
 

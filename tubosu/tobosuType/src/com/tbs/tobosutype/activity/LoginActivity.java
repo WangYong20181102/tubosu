@@ -1,7 +1,6 @@
 package com.tbs.tobosutype.activity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.fragment.LoginFragmentAccount;
 import com.tbs.tobosutype.fragment.LoginFragmentPhone;
 import com.tbs.tobosutype.utils.Util;
@@ -185,36 +183,36 @@ public class LoginActivity extends FragmentActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    /***
-     * 退出应用
-     */
-    private void exitTbs() {
-        Intent intent = getIntent();
-        if (intent.getBooleanExtra("isFav", false)) {
-            intent.putExtra("token", "");
-            setResult(0, intent);
-            finish();
-        } else {
-            CustomDialog.Builder builder = new CustomDialog.Builder(this);
-            builder.setMessage("你确定退出吗？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.cancel();
-                    finish();
-                    System.exit(0);
-                }
-            })
-                    .setNegativeButton("再看看", new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-            builder.create().show();
-        }
-    }
+//    /***
+//     * 退出应用
+//     */
+//    private void exitTbs() {
+//        Intent intent = getIntent();
+//        if (intent.getBooleanExtra("isFav", false)) {
+//            intent.putExtra("token", "");
+//            setResult(0, intent);
+//            finish();
+//        } else {
+//            CustomDialog.Builder builder = new CustomDialog.Builder(this);
+//            builder.setMessage("你确定退出吗？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//
+//                @Override
+//                public void onClick(DialogInterface dialog, int id) {
+//                    dialog.cancel();
+//                    finish();
+//                    System.exit(0);
+//                }
+//            })
+//                    .setNegativeButton("再看看", new DialogInterface.OnClickListener() {
+//
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            dialog.cancel();
+//                        }
+//                    });
+//            builder.create().show();
+//        }
+//    }
 
     private void setClick() {
         ivBack.setOnClickListener(new View.OnClickListener() {

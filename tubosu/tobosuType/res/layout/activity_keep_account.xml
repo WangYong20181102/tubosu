@@ -48,20 +48,29 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_marginTop="44dp"
             android:layout_below="@+id/tvtexttexsd"
             android:layout_centerHorizontal="true">
 
+            <TextView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="#737370"
+                android:text="请输入您的预计开销(单位:万)"
+                android:textSize="14sp"/>
+
             <EditText
                 android:id="@+id/et_budget_account"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
                 android:layout_width="224dp"
-                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="44dp"
                 android:textColorHint="#BDB59D"
                 android:paddingLeft="10dp"
-                android:hint="请输入您的预计开销(万)"
+                android:hint="请输入您的预计开销(单位:万)"
                 android:background="@drawable/shape_getprice_edittext_bg"
                 android:textSize="16sp"
                 android:inputType="number"

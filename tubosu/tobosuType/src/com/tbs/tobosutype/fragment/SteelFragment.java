@@ -32,7 +32,7 @@ import com.tbs.tobosutype.utils.Util;
  */
 
 public class SteelFragment extends Fragment {
-    private String[] stringArr = {"开关插座","门窗","窗帘滑轨","门锁","合页","衣架","衣架","水笼头","五金配件","防盗网"};
+    private String[] stringArr = {"开关插座","门窗","窗帘滑轨","门锁","合页","衣架","水笼头","五金配件","防盗网"};
 
     private WriteAccountAdapter adapter;
     private GridView gvSteel;

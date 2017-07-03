@@ -270,7 +270,7 @@ public class Util {
     public static String getTodayDatetime() {
         Calendar nowCalendar = Calendar.getInstance();
         int nowYear = nowCalendar.get(Calendar.YEAR);
-        int nowMonth = nowCalendar.get(Calendar.MONTH);
+        int nowMonth = nowCalendar.get(Calendar.MONTH) + 1;
         int nowDay = nowCalendar.get(Calendar.DAY_OF_MONTH);
         return nowYear + "-" + nowMonth + "-" + nowDay;
     }

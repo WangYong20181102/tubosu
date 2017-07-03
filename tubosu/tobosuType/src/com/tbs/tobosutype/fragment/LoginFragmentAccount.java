@@ -370,11 +370,11 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
                 intent.setClass(getActivity(), MainActivity.class);
                 AppInfoUtil.ISJUSTLOGIN = true;
                 getActivity().startActivity(intent);
+                getActivity().setResult(404);
 
 //                Intent i = new Intent();
 //                i.setAction(Constant.LOGIN_ACTION);
 //                getActivity().sendBroadcast(i);
-
 
                 getActivity().finish();
             } else {

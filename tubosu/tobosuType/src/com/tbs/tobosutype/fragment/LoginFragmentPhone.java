@@ -196,20 +196,26 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
 
 
     private void userPhoneLogin() {
+        if((TextUtils.isEmpty(et_login_userphone.getText().toString().trim()))){
+            Toast.makeText(getActivity(), "手机号不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (TextUtils.isEmpty(et_login_userphone_verify_code.getText().toString().trim())) {
             Toast.makeText(getActivity(), "验证码不能为空！", Toast.LENGTH_SHORT).show();
             return;
-        } else {
-            fastLoginParams = AppInfoUtil.getPublicParams(getActivity());
-            fastLoginParams.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
-            fastLoginParams.put("mobile", et_login_userphone.getText().toString().trim());
-            fastLoginParams.put("msg_code", et_login_userphone_verify_code.getText().toString().trim());
-            fastLoginParams.put("platform_type", "1"); // 1是土拨鼠  2是装好家
-            fastLoginParams.put("system_type", "1"); // 1是安卓， 2是ios
-            Log.e("手机登录 账号", "=====" + et_login_userphone.getText().toString().trim());
-            Log.e("手机登录 验证码", "=====" + et_login_userphone_verify_code.getText().toString().trim());
-            requestFastLogin();
         }
+
+        fastLoginParams = AppInfoUtil.getPublicParams(getActivity());
+        fastLoginParams.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
+        fastLoginParams.put("mobile", et_login_userphone.getText().toString().trim());
+        fastLoginParams.put("msg_code", et_login_userphone_verify_code.getText().toString().trim());
+        fastLoginParams.put("platform_type", "1"); // 1是土拨鼠  2是装好家
+        fastLoginParams.put("system_type", "1"); // 1是安卓， 2是ios
+        Log.e("手机登录 账号", "=====" + et_login_userphone.getText().toString().trim());
+        Log.e("手机登录 验证码", "=====" + et_login_userphone_verify_code.getText().toString().trim());
+        requestFastLogin();
+
     }
 
     /**
@@ -457,7 +463,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
                 intent.setClass(getActivity(), MainActivity.class);
                 AppInfoUtil.ISJUSTLOGIN = true;
                 getActivity().startActivity(intent);
-
+                getActivity().setResult(404);
 //                Intent i = new Intent();
 //                i.setAction(Constant.LOGIN_ACTION);
 //                getActivity().sendBroadcast(i);

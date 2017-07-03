@@ -85,7 +85,7 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 	private ImageView ivNum6;
 	private ImageView[] imgArray;
 
-	private Timer timer;
+//	private Timer timer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -103,32 +103,32 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		numHandler.sendEmptyMessage(0);
-
-		timer = new Timer();
-		timer.schedule(task, 1000, 1000);  // timeTask
+//		numHandler.sendEmptyMessage(0);
+		stopAnimation();
+//		timer = new Timer();
+//		timer.schedule(new MyTimerTask(), 1000, 1000);  // timeTask
 	}
 
 
-	int recLen = 8;
-	private TimerTask task = new TimerTask() {
+//	int recLen = 8;
 
-		@Override
-		public void run() {
-
-			runOnUiThread(new Runnable() {
-
-				@Override
-				public void run() {
-					recLen--;
-					if(recLen < 0){
-						timer.cancel();
-						numHandler.sendEmptyMessage(1);
-					}
-				}
-			});
-		}
-	};
+//	private class MyTimerTask extends TimerTask{
+//		@Override
+//		public void run() {
+//
+//			runOnUiThread(new Runnable() {
+//
+//				@Override
+//				public void run() {
+//					recLen--;
+//					if(recLen < 0){
+//						timer.cancel();
+//						numHandler.sendEmptyMessage(1);
+//					}
+//				}
+//			});
+//		}
+//	}
 
 	private void initView() {
 		relBack = (RelativeLayout) findViewById(R.id.rel_getprice_back);
@@ -166,22 +166,22 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 
 
 
-	private Handler numHandler = new Handler(){
-
-		@Override
-		public void handleMessage(Message msg) {
-			super.handleMessage(msg);
-			switch (msg.what){
-				case 0:
-					startAnimation(imgArray);
-					break;
-				case 1:
-					stopAnimation();
-					break;
-			}
+//	private Handler numHandler = new Handler(){
 //
-		}
-	};
+//		@Override
+//		public void handleMessage(Message msg) {
+//			super.handleMessage(msg);
+//			switch (msg.what){
+//				case 0:
+//					startAnimation(imgArray);
+//					break;
+//				case 1:
+//					stopAnimation();
+//					break;
+//			}
+////
+//		}
+//	};
 
 	private void startAnimation(ImageView[] imgs){
 		for(int i=0, len = imgs.length;i<len;i++){

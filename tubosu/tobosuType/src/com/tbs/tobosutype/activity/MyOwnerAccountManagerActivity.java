@@ -396,10 +396,9 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
                 getSharedPreferences("userInfo", 0).edit().clear().commit();
                 XGPushManager.unregisterPush(getApplicationContext());
                 dialog.cancel();
-
-                Intent i = new Intent();
-                i.setAction(Constant.LOGOUT_ACTION);
-                sendBroadcast(i);
+//                Intent i = new Intent();
+//                i.setAction(Constant.LOGOUT_ACTION);
+//                sendBroadcast(i);
                 finish();
             }
         })

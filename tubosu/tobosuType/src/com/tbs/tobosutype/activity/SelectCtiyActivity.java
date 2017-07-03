@@ -1,11 +1,13 @@
 package com.tbs.tobosutype.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
@@ -16,6 +18,8 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -145,9 +149,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     private List<String> hotCityNames = new ArrayList<String>();
     private MapView mMapView;
     private BaiduMap mBaiduMap;
-    private MyBDLocationListner mListner = null;
     private BitmapDescriptor mCurrentMarker = null;
-    private GeoCoder mGeoCoder = null;
     private double mLantitude;
     private double mLongtitude;
     private LatLng mLoactionLatLng;
@@ -217,7 +219,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
         super.onCreate(savedInstanceState);
         context = SelectCtiyActivity.this;
 
-        initBDMap();
+        initBaidu();
 
         getSetting();
         initView();
@@ -339,36 +341,6 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
 
     }
 
-    private void initBDMap() {
-
-        SDKInitializer.initialize(getApplicationContext());
-        mMapView = new MapView(SelectCtiyActivity.this);
-
-        try {
-            mMapView.showZoomControls(false);
-            mBaiduMap = mMapView.getMap();
-            MapStatusUpdate msu = MapStatusUpdateFactory.zoomTo(17.0f);
-            mBaiduMap.setMapStatus(msu);
-            mBaiduMap.setMyLocationEnabled(true);
-            mLocationClient = new LocationClient(this);
-            mListner = new MyBDLocationListner();
-
-            mLocationClient.registerLocationListener(mListner);
-            LocationClientOption option = new LocationClientOption();
-            option.setOpenGps(true);
-            option.setCoorType("bd09ll");
-            option.setScanSpan(1000);
-            mLocationClient.setLocOption(option);
-            mLocationClient.start();
-            mGeoCoder = GeoCoder.newInstance();
-            mGeoCoder.setOnGetGeoCodeResultListener(GeoListener);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Util.setLog(TAG, "定位城市5 result >>> 抛出异常了") ;
-        }
-
-
-    }
 
     private void initData() {
 
@@ -652,6 +624,8 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     }
 
 
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -680,7 +654,6 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             default:
                 break;
         }
-
     }
 
     /**
@@ -707,7 +680,6 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     protected void onDestroy() {
         super.onDestroy();
         mLocationClient.stop();
-        mGeoCoder.destroy();
         MyApplication.mListeners.remove(this);
     }
 
@@ -726,78 +698,125 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
         mCityListView.setOnScrollListener(mCityAdapter);
     }
 
-    /***
-     * 百度地图地位监听
-     *
-     * @author dec
-     *
-     */
-    private class MyBDLocationListner implements BDLocationListener {
+    private void initBaidu(){
+        SDKInitializer.initialize(getApplicationContext());
+        initLocationSetting();
+    }
+    private void initLocationSetting(){
+        try{
+            mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
+            mLocationClient.start();
+
+            LocationClientOption option = new LocationClientOption();
+            option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+            option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
+            int span=1000;
+            option.setIsNeedAddress(true);
+            option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
+            option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
+            option.setOpenGps(true);//可选，默认false,设置是否使用gps
+            option.setLocationNotify(true);//可选，默认false，设置是否当GPS有效时按照1S/1次频率输出GPS结果
+            option.setIsNeedLocationDescribe(true);//可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
+            option.setIsNeedLocationPoiList(true);//可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
+            option.setIgnoreKillProcess(false);//可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
+            option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
+            option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤GPS仿真结果，默认需要
+            mLocationClient.setLocOption(option);
+
+            if (mLocationClient != null && mLocationClient.isStarted()){
+                System.out.println("--SelectCityActivity-->>" + mLocationClient.requestLocation());
+            }else{
+                System.out.println("SelectCityActivity === locClient is null or not started");
+            }
+
+            mLocationClient.registerLocationListener(new MyLocationListener());    //注册监听函数
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    private String locationCity = "";
+
+
+
+    public class MyLocationListener implements BDLocationListener {
+
         @Override
         public void onReceiveLocation(BDLocation location) {
-            if (location == null || mMapView == null)
-                return;
-            MyLocationData data = new MyLocationData.Builder()
-                    .accuracy(location.getRadius())
-                    .latitude(location.getLatitude())
-                    .longitude(location.getLongitude()).build();
-            mBaiduMap.setMyLocationData(data);
-
-            MyLocationConfiguration config = new MyLocationConfiguration(LocationMode.NORMAL, true, null);
-            mBaiduMap.setMyLocationConfigeration(config);
-            mLantitude = location.getLatitude();
-            mLongtitude = location.getLongitude();
-            LatLng currentLatLng = new LatLng(mLantitude, mLongtitude);
-            mLoactionLatLng = new LatLng(mLantitude, mLongtitude);
-
-            if (isFirstLoc) {
-                isFirstLoc = false;
-                MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(currentLatLng);
-                mBaiduMap.animateMapStatus(u);
-
-//                mGeoCoder.reverseGeoCode((new ReverseGeoCodeOption()).location(currentLatLng));
-                mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(mLoactionLatLng));
-                return;
+            StringBuffer sb = new StringBuffer(256);
+            sb.append("time : ");
+            sb.append(location.getTime());
+            sb.append("\nerror code : ");
+            sb.append(location.getLocType());
+            sb.append("\nlatitude : ");
+            sb.append(location.getLatitude());
+            sb.append("\nlontitude : ");
+            sb.append(location.getLongitude());
+            sb.append("\nradius : ");
+            locationCity = location.getCity();
+            if(locationCity!=null){
+                locationCity= locationCity.replaceAll("[^\u4E00-\u9FA5]", "");
+                System.out.println("=============有没有city>>>" + locationCity +"<<<");
+                CacheManager.setCity(context, locationCity);
+                select_positioning.setText(locationCity);
+            }else{
+                select_positioning.setText("定位中...");
             }
+
+
+            sb.append(location.getRadius());
+            if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
+                sb.append("\nspeed : ");
+                sb.append(location.getSpeed());// 单位：公里每小时
+                sb.append("\nsatellite : ");
+                sb.append(location.getSatelliteNumber());
+                sb.append("\nheight : ");
+                sb.append(location.getAltitude());// 单位：米
+                sb.append("\ndirection : ");
+                sb.append(location.getDirection());// 单位度
+                sb.append("\naddr : ");
+                sb.append(location.getAddrStr());
+                sb.append("\ndescribe : ");
+                sb.append("gps定位成功");
+
+            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
+                sb.append("\naddr : ");
+                sb.append(location.getAddrStr());
+                //运营商信息
+                sb.append("\noperationers : ");
+                sb.append(location.getOperators());
+                sb.append("\ndescribe : ");
+                sb.append("网络定位成功");
+            } else if (location.getLocType() == BDLocation.TypeOffLineLocation) {// 离线定位结果
+                sb.append("\ndescribe : ");
+                sb.append("离线定位成功，离线定位结果也是有效的");
+            } else if (location.getLocType() == BDLocation.TypeServerError) {
+                sb.append("\ndescribe : ");
+                sb.append("服务端网络定位失败，可以反馈IMEI号和大体定位时间到loc-bugs@baidu.com，会有人追查原因");
+            } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
+                sb.append("\ndescribe : ");
+                sb.append("网络不同导致定位失败，请检查网络是否通畅");
+            } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
+                sb.append("\ndescribe : ");
+                sb.append("无法获取有效定位依据导致定位失败，一般是由于手机的原因，处于飞行模式下一般会造成这种结果，可以试着重启手机");
+            }
+            sb.append("\nlocationdescribe : ");
+            sb.append(location.getLocationDescribe());// 位置语义化信息
+            List<Poi> list = location.getPoiList();// POI数据
+            if (list != null) {
+                sb.append("\npoilist size = : ");
+                sb.append(list.size());
+                for (Poi p : list) {
+                    sb.append("\npoi= : ");
+                    sb.append(p.getId() + " " + p.getName() + " " + p.getRank());
+                }
+            }
+
+            Log.d(TAG, "--SelectCityActivity 草--" + sb);
         }
 
     }
-
-    /**
-     * 地理位置信息监听
-     */
-    OnGetGeoCoderResultListener GeoListener = new OnGetGeoCoderResultListener() {
-
-        @Override
-        public void onGetGeoCodeResult(GeoCodeResult result) {
-            Util.setLog(TAG, "定位城市1 result >>>" + result.getAddress());
-        }
-
-        @Override
-        public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
-            if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-                Util.setLog(TAG, "定位城市2 result为空");
-            } else {
-                Util.setLog(TAG, "定位城市3 result >>>" + result.getAddress());
-                String address = result.getAddress();
-                realLocationCity = result.getAddressDetail().city;
-//                无法定位，可能你未开启定位权限，请自行开启定位权限
-                lat = result.getLocation().latitude;
-                lng = result.getLocation().longitude;
-
-                if (address != null) {
-                    select_positioning.setText(realLocationCity);
-                    Util.setLog(TAG, "定位城市4是什么啊？ >>>" + realLocationCity);
-                    // 首次进入则定位后 自动跳转  非首次 则不用自动跳入
-                    if (selectCitySP.getBoolean("first_select_city", false)) {
-                        operEdit();
-                    }
-                } else {
-                    select_positioning.setText("定位失败！");
-                }
-            }
-        }
-    };
 
 
     @Override
