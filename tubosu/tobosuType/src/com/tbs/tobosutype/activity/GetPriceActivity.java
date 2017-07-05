@@ -6,14 +6,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,8 +36,6 @@ import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 /**
@@ -63,7 +61,8 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 	private String city;
 
 	private TextView tvSummit;
-	private PmTextView tvCheatTextView;
+
+	private PmTextView tvCheatTextView; // 跑马灯
 
 	private ViewPager vpGetpriceImg;
 	private ViewGroup group;
@@ -77,15 +76,6 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 	private String userid;
 	private String budget;
 
-	private ImageView ivNum1;
-	private ImageView ivNum2;
-	private ImageView ivNum3;
-	private ImageView ivNum4;
-	private ImageView ivNum5;
-	private ImageView ivNum6;
-	private ImageView[] imgArray;
-
-//	private Timer timer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,35 +90,6 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 		initEvent();
 	}
 
-	@Override
-	protected void onStart() {
-		super.onStart();
-//		numHandler.sendEmptyMessage(0);
-		stopAnimation();
-//		timer = new Timer();
-//		timer.schedule(new MyTimerTask(), 1000, 1000);  // timeTask
-	}
-
-
-//	int recLen = 8;
-
-//	private class MyTimerTask extends TimerTask{
-//		@Override
-//		public void run() {
-//
-//			runOnUiThread(new Runnable() {
-//
-//				@Override
-//				public void run() {
-//					recLen--;
-//					if(recLen < 0){
-//						timer.cancel();
-//						numHandler.sendEmptyMessage(1);
-//					}
-//				}
-//			});
-//		}
-//	}
 
 	private void initView() {
 		relBack = (RelativeLayout) findViewById(R.id.rel_getprice_back);
@@ -143,13 +104,6 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 		tvSummit = (TextView) findViewById(R.id.getprice_submit);
 		tvCheatTextView = (PmTextView) findViewById(R.id.cheat_textview);
 
-		ivNum1 = (ImageView) findViewById(R.id.num1);
-		ivNum2 = (ImageView) findViewById(R.id.num2);
-		ivNum3 = (ImageView) findViewById(R.id.num3);
-		ivNum4 = (ImageView) findViewById(R.id.num4);
-		ivNum5 = (ImageView) findViewById(R.id.num5);
-		ivNum6 = (ImageView) findViewById(R.id.num6);
-		imgArray = new ImageView[]{ivNum1,ivNum2,ivNum3,ivNum4,ivNum5};
 
 		scrollview.setOnScollChangedListener(new ObservableScrollView.OnScollChangedListener() {
 			@Override
@@ -165,76 +119,61 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 	}
 
 
-
-//	private Handler numHandler = new Handler(){
-//
-//		@Override
-//		public void handleMessage(Message msg) {
-//			super.handleMessage(msg);
-//			switch (msg.what){
-//				case 0:
-//					startAnimation(imgArray);
-//					break;
-//				case 1:
-//					stopAnimation();
-//					break;
-//			}
-////
-//		}
-//	};
-
-	private void startAnimation(ImageView[] imgs){
-		for(int i=0, len = imgs.length;i<len;i++){
-			switch (i){
-				case 0:
-					imgs[0].setBackgroundResource(+R.anim.num_animation0);
-					break;
-				case 1:
-					imgs[1].setBackgroundResource(+R.anim.num_animation00);
-					break;
-				case 2:
-					imgs[2].setBackgroundResource(+R.anim.num_animation000);
-					break;
-				case 3:
-					imgs[3].setBackgroundResource(+R.anim.num_animation0000);
-					break;
-				case 4:
-					imgs[4].setBackgroundResource(+R.anim.num_animation00000);
-					break;
+	private void cheatTextAnimation(){
+		Animation animation = AnimationUtils.loadAnimation(GetPriceActivity.this,R.anim.textview_left_out);
+		tvCheatTextView.startAnimation(animation);
+		animation.setAnimationListener(new Animation.AnimationListener() {
+			@Override
+			public void onAnimationStart(Animation animation) {
+				tvCheatTextView.setText(getCheatText());
 			}
-			AnimationDrawable anim = (AnimationDrawable) imgs[i].getBackground(); //获取ImageView背景,此时已被编译成AnimationDrawable
-			anim.start();  //开始动画
-		}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				cheatTextAnimation();
+				tvCheatTextView.setText(getCheatText());
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+
+			}
+		});
 	}
 
-	private void stopAnimation(){
-		ivNum1.setBackgroundResource(R.drawable.n6);
-		ivNum2.setBackgroundResource(R.drawable.n8);
-		ivNum3.setBackgroundResource(R.drawable.n4);
-		ivNum4.setBackgroundResource(R.drawable.n6);
-		ivNum5.setBackgroundResource(R.drawable.n5);
-		ivNum6.setBackgroundResource(R.drawable.n1);
+	private String getCheatText(){
+		String text = "";
+		int po = (int)(1+Math.random()*(14));
+		int name = (int)(1+Math.random()*(178));
+		text = cityText[po] + "的" + cheat[name] +  cheatText[po%2] + getSecondes() + "秒前";
+		return text;
 	}
 
+	private String[] cheatText = {"先生已经获取1份报价 ", "女士已经获取1份报价 "};
+	private int getSecondes(){
+		return (int)(1+Math.random()*(58));
+	}
+	private String[] cityText = {"武汉","上海", "北京","深圳", "南昌","厦门", "湖南","武汉", "广州","合肥", "上海","南京", "南宁","石家", "天津","乌鲁木齐"};
+	private String[] cheat =
+			{"赵","钱","孙","李","周","吴","郑","王","冯","陈","褚","卫","蒋","沈","韩","杨","朱","秦","尤","许",
+			"何","吕","施","张","孔","曹","严","金","魏","陶","姜","戚","谢","邹","喻","柏","水","窦","章",
+			"云","苏","潘","葛","奚","范","彭","鲁","韦","昌","马","苗","凤","花","方","俞","任","袁","柳",
+			"酆","鲍","史","唐","费","廉","岑","雷","贺","倪","汤","滕","殷","罗","毕","郝","邬","安","常",
+			"乐","于","时","傅","皮","卞","齐","伍","余","元","卜","顾","孟","平","黄","和","穆","萧","尹",
+			"姚","邵","湛","汪","祁","毛","禹","米","贝","明","臧","计","伏","成","戴","谈","宋","茅","庞",
+			"熊","纪","舒","屈","项","祝","董","杜","阮","蓝","闵","席","季","麻","强","贾","路","娄","危",
+			"江","童","颜","郭","梅","盛","林","钟","徐","邱","骆","高","夏","蔡","田","樊","胡","凌","霍",
+			"虞","万","支","柯","昝","管","卢","经","房","裘","缪","干","解","应","宗","丁","宣","贲","邓" };
 
-	private String cheatText =
-			"武汉的周先生已经获取4份报价 1分钟前  上海的李先生已经获取2份报价 1分钟前"  +
-			"北京的何女士已经获取2份报价 3分钟前  深圳的高先生已经获取2份报价 1分钟前"  +
-			"南昌的张女士已经获取1份报价 2分钟前  厦门的刘先生已经获取1份报价 1分钟前"  +
-			"湖南的于女士已经获取1份报价 6分钟前  武汉的阎先生已经获取1份报价 2分钟前"  +
-			"广州的刘女士已经获取1份报价 8分钟前  合肥的曾先生已经获取1份报价 3分钟前"  +
-			"上海的陈女士已经获取1份报价 6分钟前  南京的谢先生已经获取1份报价 2分钟前"  +
-			"南宁的徐女士已经获取1份报价 6分钟前  石家庄的袁先生已经获取1份报价 2分钟前"  +
-			"天津的方女士已经获取1份报价 6分钟前  重庆的胡先生已经获取1份报价 2分钟前";
-
-//	private int getCheatNum(){
-//		Random random=new Random();// 定义随机类
-//		int result=random.nextInt(16);// 返回[0,16)集合中的整数，注意不包括10
-//		return result+1;
-//	}
+	@Override
+	protected void onResume() {
+		super.onResume();
+		cheatTextAnimation();
+	}
 
 	private void initData() {
-		tvCheatTextView.setText(cheatText);
+//		tvCheatTextView.setText(cheatText);
+
 		pubOrderParams = AppInfoUtil.getPublicParams(getApplicationContext());
 		getCitySharePre = this.getSharedPreferences("Save_City_Info", MODE_PRIVATE);
 		String city = getCitySharePre.getString("save_city_now", "");
@@ -459,11 +398,6 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 			return array[position % array.length];
 		}
 
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
 	}
 
 }

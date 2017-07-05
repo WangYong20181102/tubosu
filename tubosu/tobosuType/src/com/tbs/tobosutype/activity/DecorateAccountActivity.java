@@ -233,27 +233,32 @@ public class DecorateAccountActivity extends Activity {
         float f = totalCost / decorateBudget;
 
         if (f == 0) {
-            seekProgress.setProgress(20);
-            seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_nomralsd_style));
+            seekProgress.setProgress(0);
+            seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_whole_green_style));
             tvState.setText(budgetTips[0]);
         }else if (f > 0 && f <= 0.20) {
-            seekProgress.setProgress(18);
-            seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_green_style));
+            // 红色 80以上 剩余原色
+            seekProgress.setProgress(94);
+            seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_green_style)); //seekbar_green_style
             tvState.setText(budgetTips[0]);
         } else if (f >= 0.20 && f < 0.40) {
-            seekProgress.setProgress(37);
-            seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_blue_style));
+            // 橙色 80 剩余原色
+            seekProgress.setProgress(84);
+            seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_blue_style)); //seekbar_blue_style
             tvState.setText(budgetTips[0]);
         } else if (f >= 0.40 && f < 0.60) {
+            // 橙色 60 剩余原色
             seekProgress.setProgress(56);
-            seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_orange_style));
+            seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_orange_style)); //seekbar_orange_style
             tvState.setText(budgetTips[0]);
         } else if (f >= 0.60 && f < 0.80) {
-            seekProgress.setProgress(77);
-            seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_yellow_style));
+            // 黄色 40 剩余原色
+            seekProgress.setProgress(36);
+            seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_yellow_style)); //seekbar_yellow_style
             tvState.setText(budgetTips[0]);
         } else if (f >= 0.80 && f < 1.00) {
-            seekProgress.setProgress(96);
+            // 红色 20 剩余原色
+            seekProgress.setProgress(13);
             seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_red_style));
             tvState.setText(budgetTips[1]);
         }else if(f == 1.00){

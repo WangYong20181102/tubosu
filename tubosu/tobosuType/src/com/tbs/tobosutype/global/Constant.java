@@ -80,8 +80,6 @@ public class Constant {
      */
     public static final String ACTION_KITCHEN_FRAGMENT_DATA = "action_kitchen_fragment_data";
 
-
-
     /**
      * 测试环境
      */
@@ -91,7 +89,6 @@ public class Constant {
      * 正式环境
      */
     public static final String TOBOSU_URL = "http://www.tobosu.com/";
-
 
     public static final String SUMMIT_BUDGET_URL = TOBOSU_URL + "mapp/RenovateExpense/expense_bookkeep";
 

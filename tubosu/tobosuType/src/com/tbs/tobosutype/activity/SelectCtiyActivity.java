@@ -654,6 +654,12 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
                     return;
                 }
 
+                if (fromGetPrice.equals("647")) {
+                    // 来自免费设计页面
+                    finish();
+                    return;
+                }
+
                 operEdit();
 
             default:
@@ -741,7 +747,8 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
 
         if(Build.VERSION.SDK_INT >= 23){
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                                            Manifest.permission.ACCESS_FINE_LOCATION},ACCESS_LOCATION);
+                                            Manifest.permission.ACCESS_FINE_LOCATION,
+                                            Manifest.permission.READ_PHONE_STATE},ACCESS_LOCATION);
         }
 
 
@@ -898,6 +905,12 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             return true;
         }
 
+
+        if (keyCode == KeyEvent.KEYCODE_BACK && fromGetPrice.equals("647")) {
+            // 来自免费设计页面
+            finish();
+            return true;
+        }
 
         if (keyCode == KeyEvent.KEYCODE_BACK && fromHome.equals("101")) {
             // 来自 首页城市选择

@@ -97,15 +97,26 @@
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
                             android:textSize="12sp"
+                            android:gravity="center_vertical"
                             android:layout_gravity="center_vertical"
                             android:textColor="#C9C9C9"
                             android:text="已有"/>
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="27sp"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="#E33232"
+                            android:text="156486"/>
                         <LinearLayout
                             android:layout_width="111dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:gravity="center"
+                            android:visibility="gone"
                             android:orientation="horizontal">
 
                             <ImageView
@@ -153,6 +164,7 @@
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
                             android:textSize="12sp"
+                            android:gravity="center_vertical"
                             android:layout_gravity="center_vertical"
                             android:textColor="#C9C9C9"
                             android:text="人申请"/>
@@ -160,14 +172,16 @@
 
 
                     <com.tbs.tobosutype.customview.PmTextView
-                        android:id="@+id/cheat_textview"
+                        android:id="@+id/cheat_textview1"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_margin="19dp"
                         android:gravity="center"
+                        android:visibility="gone"
                         android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
                         android:focusable="true"
-                        android:maxLines="1"
+                        android:singleLine="true"
                         android:focusableInTouchMode="true"
                         android:background="@drawable/shape_getprice_textview_bg"
                         android:layout_alignBottom="@+id/iv_big"
@@ -289,12 +303,14 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="19dp"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/design_house" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="19dp"
                         android:layout_gravity="center_horizontal"
                         android:background="@drawable/pk_price" />
 
@@ -302,6 +318,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="19dp"
                         android:background="@drawable/house_future" />
 
                     <LinearLayout
@@ -341,9 +358,33 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+
         </RelativeLayout>
     </com.tbs.tobosutype.customview.ObservableScrollView>
 
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/getpric_bar">
+        <com.tbs.tobosutype.customview.PmTextView
+            android:id="@+id/cheat_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_margin="14dp"
+            android:gravity="center"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:focusable="true"
+            android:singleLine="true"
+            android:focusableInTouchMode="true"
+            android:background="@drawable/shape_getprice_textview_bg"
+            android:layout_centerHorizontal="true"
+            android:drawableLeft="@drawable/inform_icon"
+            android:textColor="@color/color_black"
+            android:text=""/>
+    </FrameLayout>
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -351,9 +392,9 @@
         android:layout_alignParentBottom="true">
         <ImageView
             android:id="@+id/iv_gotop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
+            android:layout_width="63dp"
+            android:layout_height="66dp"
+            android:layout_margin="20dp"
             android:visibility="gone"
             android:background="@drawable/getorder_now"/>
     </FrameLayout>
