@@ -365,28 +365,30 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
         }
 
         Intent favIntent = getActivity().getIntent();
-
-        if (favIntent.getBooleanExtra("isFav", false)) {
-            favIntent.putExtra("token", token);
-            getActivity().setResult(0, favIntent);
-            getActivity().finish();
-        } else {
-            if ("1".equals(mark) || "3".equals(mark)) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), MainActivity.class);
-                AppInfoUtil.ISJUSTLOGIN = true;
-                getActivity().startActivity(intent);
-                getActivity().setResult(404);
+        if(favIntent!=null){
+            if (favIntent.getBooleanExtra("isFav", false)) {
+                favIntent.putExtra("token", token);
+                getActivity().setResult(0, favIntent);
+                getActivity().finish();
+            } else {
+                if ("1".equals(mark) || "3".equals(mark)) {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), MainActivity.class);
+                    AppInfoUtil.ISJUSTLOGIN = true;
+                    getActivity().startActivity(intent);
+                    getActivity().setResult(404);
 
 //                Intent i = new Intent();
 //                i.setAction(Constant.LOGIN_ACTION);
 //                getActivity().sendBroadcast(i);
 
-                getActivity().finish();
-            } else {
-                Toast.makeText(getActivity(), "登录失败", Toast.LENGTH_SHORT).show();
+                    getActivity().finish();
+                } else {
+                    Toast.makeText(getActivity(), "登录失败", Toast.LENGTH_SHORT).show();
+                }
             }
         }
+
         et_login_useraccount_password.setText("");
         et_login_useraccount.setText("");
     }

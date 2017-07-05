@@ -106,13 +106,13 @@ public class DecorateAccountActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (!floatList.isEmpty()) {
-            floatList.clear();
-        }
         HttpGetData();
     }
 
     private void HttpGetData() {
+        if (!floatList.isEmpty()) {
+            floatList.clear();
+        }
         OKHttpUtil okHttpUtil = new OKHttpUtil();
         HashMap<String, String> param = new HashMap<>();
         param.put("token", Util.getDateToken());
@@ -179,14 +179,6 @@ public class DecorateAccountActivity extends Activity {
     }
 
     private void bindView() {
-//        floatList.add(15.04f);//人工
-//        floatList.add(19.34f);//建材
-//        floatList.add(13.73f);//五金
-//        floatList.add(15.26f);//家具
-//        floatList.add(10.62f);//厨卫
-//        floatList.add(26.01f);//其他
-//        myChatView = (MyChatView) findViewById(R.id.da_my_chat_view);
-//        myChatView.setFloatList(floatList);
 
         sv = (ScrollView) findViewById(R.id.sv_decorate_acc);
         sv.smoothScrollTo(0, 0);
