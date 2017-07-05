@@ -24,6 +24,7 @@ import com.tbs.tobosupicture.fragment.DecorationCaseFragment;
 import com.tbs.tobosupicture.fragment.ImageToFriendFragment;
 import com.tbs.tobosupicture.fragment.MineFragment;
 import com.tbs.tobosupicture.fragment.TemplateFragment;
+import com.tbs.tobosupicture.utils.EventBusUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,6 +103,7 @@ public class MainActivity extends BaseActivity {
             case R.id.rb_first:
                 //点击第一个选项 显示样板图
                 Log.e(TAG, "点击了样板图");
+//                EventBusUtil.sendEvent(new Event(EC.EventCode.SHOW_TEMPLATE_FRAGMENT));
                 setIndexSelect(0);
                 break;
             case R.id.rb_second:
@@ -136,8 +138,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case EC.EventCode.SHOW_DECORATIONCASE_FRAGMENT:
                 //装修案例
-                rbSecond.performClick();
-                setIndexSelect(1);
+                Log.e(TAG, "收到案例相关消息");
+//                rbSecond.performClick();
+//                setIndexSelect(1);
                 break;
             case EC.EventCode.SHOW_IMAGETOFRIEND_FRAGMENT:
                 //以图会友
@@ -174,8 +177,10 @@ public class MainActivity extends BaseActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
+        ButterKnife.bind(this).unbind();
     }
 }

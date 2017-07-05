@@ -99,10 +99,10 @@ public class HttpUtils {
     /**
      * 上传文件
      *
-     * @param url
-     * @param pathName
-     * @param fileName
-     * @param callback
+     * @param url      上传文件的地址
+     * @param pathName 文件路径
+     * @param fileName 文件的名称
+     * @param callback 上传的回调
      */
     public static void doFile(String url, String pathName, String fileName, Callback callback) {
         //判断文件类型
@@ -120,7 +120,6 @@ public class HttpUtils {
                 .build();
         Call call = getInstance().newCall(request);
         call.enqueue(callback);
-
     }
 
     /**

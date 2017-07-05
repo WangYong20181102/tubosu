@@ -2,6 +2,7 @@ package com.tbs.tobosupicture;
 
 import android.Manifest;
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
@@ -25,15 +26,22 @@ import java.util.List;
  */
 
 public class MyApplication extends Application {
+    private static MyApplication myApplication;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        myApplication = MyApplication.this;
         //友盟初始化
         UMShareAPI.get(this);
     }
 
+    public static Context getContexts() {
+        return myApplication;
+    }
+
     {
-        //社会化分享所需要的配置
+        //社会化分享所需要的配置 微信 微博 QQ的Appkey
         PlatformConfig.setWeixin("", "");
         PlatformConfig.setSinaWeibo("", "", "");
         PlatformConfig.setQQZone("", "");

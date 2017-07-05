@@ -86,8 +86,8 @@ public class WelcomeActivity extends BaseActivity {
         option.setCoorType("bd09ll");
         //可选，默认gcj02，设置返回的定位结果坐标系
 
-        int span = 1000;
-        option.setScanSpan(0);
+        int span = 0;
+        option.setScanSpan(span);
         //可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
 
         option.setIsNeedAddress(true);
@@ -209,7 +209,10 @@ public class WelcomeActivity extends BaseActivity {
             }
 
             Log.i("BaiduLocationApiDem", sb.toString());
-            SpUtils.setLocationCity(getApplicationContext(), location.getCity());
+            if (!TextUtils.isEmpty(location.getCity()) && !(location.getCity().equals(SpUtils.getLocationCity(mContext)))) {
+                //当获取的城市不为空且和之前的定位城市不相同则修改定位的城市
+                SpUtils.setLocationCity(getApplicationContext(), location.getCity());
+            }
             SpUtils.setLocationLat(getApplicationContext(), "" + location.getLatitude());
             SpUtils.setLocationLon(getApplicationContext(), "" + location.getLongitude());
             Log.e(TAG, "定位======" + sb.toString() + "具体城市===" + SpUtils.getLocationCity(getApplicationContext()));

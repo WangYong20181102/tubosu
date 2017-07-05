@@ -33,7 +33,7 @@ public class Utils {
      * 4.然后再对整体进行base64加密
      */
     public static String getDateToken() {
-        String md5ZHJ = Md5Utils.md5("tbs");//加密后的tbs
+        String md5ZHJ = Md5Utils.md5("xgt");//加密后的xgt
         Date date = new Date();
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String mTime = format.format(date);
@@ -112,7 +112,7 @@ public class Utils {
         return mChannType;
     }
 
-    //TODO 网络处理工具***********************************
+    //TODO 网络连接相关的处理工具***********************************
 
     /**
      * 判断网络是否可用

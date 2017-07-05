@@ -7,4 +7,16 @@
     <color name="white">#ffffff</color>
     <!--view的线条颜色-->
     <color name="line">#f2f3f5</color>
+    <!--按钮的底色蓝-->
+    <color name="blue">#8acdfd</color>
+    <!--字体颜色红色-->
+    <color name="text_red">#f57a7a</color>
+    <!--字体颜色灰色-->
+    <color name="text_gray">#8a8f99</color>
+    <!--白色背景色-->
+    <color name="bg_white">#ffffff</color>
+    <!--分割线颜色-->
+    <color name="bg_divide">#f2f3f5</color>
+    <!--字体颜色黑色-->
+    <color name="text_black">#3d424c</color>
 </resources>

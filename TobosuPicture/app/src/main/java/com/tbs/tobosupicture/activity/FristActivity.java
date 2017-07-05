@@ -35,15 +35,16 @@ public class FristActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     @OnClick(R.id.into_mian)
     public void onViewClickedInFristActivity() {
         SpUtils.setUserIsFristLogin(mContext, "alreadyLogin");//设置用户已经登录的标签
         startActivity(new Intent(FristActivity.this, MainActivity.class));
         FristActivity.this.finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.bind(this).unbind();
     }
 }

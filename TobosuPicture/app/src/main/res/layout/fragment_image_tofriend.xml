@@ -8,4 +8,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="这是以图会友fragment" />
+
+    <TextView
+        android:id="@+id/into_free_quote"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:onClick="onViewClickedAtImageToFriendFragment"
+        android:text="点击进入免费报价" />
+
+    <TextView
+        android:id="@+id/into_imgae"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:onClick="onViewClickedAtImageToFriendFragment"
+        android:text="点击进入获取系统的相机或者图库进行图片的选择" />
+
+    <ImageView
+        android:id="@+id/photo_img"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp" />
 </LinearLayout>

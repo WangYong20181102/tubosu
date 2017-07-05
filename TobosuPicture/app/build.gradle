@@ -10,12 +10,60 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "aisi"]//多渠道打包标识 默认爱思 到时候可以修改
+    }
+    productFlavors {
+        aisi {}
+        ali {}
+        anzhi {}
+        appbaidu {}
+        apphuawei {}
+        applenovo {}
+        appmeizu {}
+        appoppo {}
+        appqihu {}
+        appttt {}
+        appvivo {}
+        appwdj {}
+        appxiaomi {}
+        appyyb {}
+        gaoqu {}
+        itools {}
+        jifeng {}
+        jinli {}
+        kuaiyong {}
+        kupai {}
+        leshi {}
+        liqu {}
+        mumayi {}
+        nduo {}
+        nineonezhushou {}
+        pingguoyuan {}
+        sougou {}
+        sumsung {}
+        taobao {}
+        threeMarket {}
+        tongbu {}
+        ucmarket {}
+        xy {}
+        yingyonghui {}
+        youyi {}
+        zhongxin {}
+        zuimei {}
+        kuan {}
+        tobosu1 {}
+        zhuanghaojia {}
+        tbspc {}
+    }
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
         signingConfigs {
             debug {
                 storeFile file('debug.keystore')
@@ -40,13 +88,6 @@ dependencies {
     compile files('libs/okhttp-3.7.0.jar')
     compile files('libs/okio-1.12.0.jar')
     compile files('libs/glide-3.7.0.jar')
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
-    compile 'com.jakewharton:butterknife:8.6.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-    compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.google.code.gson:gson:2.8.1'
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/SocialSDK_QQ_Simplify.jar')
     compile files('libs/SocialSDK_Sina_Simplify.jar')
@@ -57,4 +98,28 @@ dependencies {
     compile files('libs/umeng_social_shareboard.jar')
     compile files('libs/umeng_social_shareview.jar')
     compile files('libs/umeng_social_tool.jar')
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.jakewharton:butterknife:8.6.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.google.code.gson:gson:2.8.1'
+    testCompile 'junit:junit:4.12'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+}
+android.applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+        def outputFile = output.outputFile
+        if (outputFile != null && outputFile.name.endsWith('.apk')) {
+            File outputDirectory = new File(outputFile.parent);
+            def fileName
+            if (variant.buildType.name == "release") {
+//                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_${variant.productFlavors[0].name}.apk"
+                fileName = "zhuangxiukankan_v1.0_${variant.productFlavors[0].name}.apk"
+            } else {
+//                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_beta.apk"
+                fileName = "zhuangxiukankan_v1.0_${variant.productFlavors[0].name}_beta.apk"
+            }
+            output.outputFile = new File(outputDirectory, fileName)
+        }
+    }
 }
