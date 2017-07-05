@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView tv_verify_code;
     private ImageView iv_login;
 
-    private String phone_code_login_url = Constant.ZHJ + "tapp/passport/fast_register";
+    private String phone_code_login_url = Constant.ZHJ + "tapp/passport/fast_register_mt";
 
     private String weixin_login_url = Constant.ZHJ + "tapp/passport/login_third_party";
 

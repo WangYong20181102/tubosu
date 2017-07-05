@@ -479,33 +479,36 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
 
 
 //		showWarnText(realLocationCity, cityFromClick);
-        if (realLocationCity.contains("市") || realLocationCity.contains("县")) {
-            realLocationCity = realLocationCity.substring(0, realLocationCity.length() - 1);
+        if(realLocationCity!=null){
+            if (realLocationCity.contains("市") || realLocationCity.contains("县")) {
+                realLocationCity = realLocationCity.substring(0, realLocationCity.length() - 1);
+            }
+
+            if (!"".equals(realLocationCity) && !realLocationCity.equals(city)) {
+                SwitchCityDialog.Builder builder = new SwitchCityDialog.Builder(this);
+                builder.setMessage("您当前定位在" + realLocationCity + "， 是否切换到" + city + "？")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                                confirmCity(city);
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                builder.create().show();
+            } else {
+                confirmCity(city);
+            }
         }
 
-        if (!"".equals(realLocationCity) && !realLocationCity.equals(city)) {
-            SwitchCityDialog.Builder builder = new SwitchCityDialog.Builder(this);
-            builder.setMessage("您当前定位在" + realLocationCity + "， 是否切换到" + city + "？")
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                            confirmCity(city);
-                        }
-                    })
-                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                        }
-                    });
-
-            builder.create().show();
-        } else {
-            confirmCity(city);
-        }
 
     }
 
@@ -783,8 +786,10 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             sb.append(location.getLocType());
             sb.append("\nlatitude : ");
             sb.append(location.getLatitude());
+            AppInfoUtil.setLat(context, location.getLatitude()+"");
             sb.append("\nlontitude : ");
             sb.append(location.getLongitude());
+            AppInfoUtil.setLng(context, location.getLongitude()+"");
             sb.append("\nradius : ");
             realLocationCity = location.getCity();
             if(realLocationCity!=null){

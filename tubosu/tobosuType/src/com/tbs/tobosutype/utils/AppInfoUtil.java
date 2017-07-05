@@ -93,11 +93,19 @@ public class AppInfoUtil {
     }
 
     public static void setCityName(Context context, String city){
-        context.getSharedPreferences("city", 0).edit().putString("cityName", city);
+        context.getSharedPreferences("city", 0).edit().putString("cityName", city).commit();
+    }
+
+    public static void setLat(Context context, String lat){
+        context.getSharedPreferences("city", 0).edit().putString("lat", lat).commit();
     }
 
     public static String getLat(Context context) {
         return context.getSharedPreferences("city", 0).getString("lat", "22");
+    }
+
+    public static void setLng(Context context, String lng) {
+        context.getSharedPreferences("city", 0).edit().putString("lng", lng).commit();
     }
 
     public static String getLng(Context context) {

@@ -194,7 +194,7 @@
                                 android:id="@+id/ll_rengong"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
+                                android:layout_marginLeft="50dp"
                                 android:layout_marginTop="10dp"
                                 android:orientation="vertical">
 
@@ -204,7 +204,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="人工0.00%"
                                     android:textColor="#8fd6a7"
-                                    android:textSize="14sp" />
+                                    android:textSize="12sp" />
 
                                 <TextView
                                     android:id="@+id/da_text_rengong"
@@ -213,7 +213,7 @@
                                     android:layout_marginTop="2dp"
                                     android:text="¥0.0"
                                     android:textColor="#8fd6a7"
-                                    android:textSize="14sp" />
+                                    android:textSize="12sp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -221,7 +221,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
-                                android:layout_marginRight="15dp"
+                                android:layout_marginRight="55dp"
                                 android:layout_marginTop="10dp"
                                 android:gravity="left"
                                 android:orientation="vertical">
@@ -232,7 +232,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="建材0.00%"
                                     android:textColor="#78bfe6"
-                                    android:textSize="14sp" />
+                                    android:textSize="12sp" />
 
                                 <TextView
                                     android:id="@+id/da_text_jiancai"
@@ -240,17 +240,16 @@
                                     android:layout_height="wrap_content"
                                     android:text="¥0.0"
                                     android:textColor="#78bfe6"
-                                    android:textSize="14sp" />
+                                    android:textSize="12sp" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:id="@+id/ll_chuwei"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/ll_rengong"
                                 android:layout_marginLeft="10dp"
-                                android:layout_marginTop="40dp"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:layout_alignTop="@+id/ll_wujin">
 
                                 <TextView
                                     android:id="@+id/da_chuwei"
@@ -258,7 +257,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="厨卫0.00%"
                                     android:textColor="#a6c1dd"
-                                    android:textSize="14sp" />
+                                    android:textSize="12sp" />
 
                                 <TextView
                                     android:id="@+id/da_text_chuwei"
@@ -267,7 +266,7 @@
                                     android:layout_below="@+id/da_chuwei"
                                     android:text="¥0.0"
                                     android:textColor="#a6c1dd"
-                                    android:textSize="14sp" />
+                                    android:textSize="12sp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -287,7 +286,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="五金0.00%"
                                     android:textColor="#ffa36f"
-                                    android:textSize="14sp" />
+                                    android:textSize="12sp" />
 
                                 <TextView
                                     android:id="@+id/da_text_wujin"
@@ -295,7 +294,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="¥0.0"
                                     android:textColor="#ffa36f"
-                                    android:textSize="14sp" />
+                                    android:textSize="12sp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -303,8 +302,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:layout_below="@+id/ll_wujin"
-                                android:layout_marginRight="15dp"
-                                android:layout_marginTop="40dp"
+                                android:layout_marginRight="55dp"
+                                android:layout_marginTop="50dp"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -313,7 +312,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="家具0.00%"
                                     android:textColor="#ffd77f"
-                                    android:textSize="14sp" />
+                                    android:textSize="12sp" />
 
                                 <TextView
                                     android:id="@+id/da_text_jiaju"
@@ -322,15 +321,15 @@
                                     android:layout_below="@+id/da_jiaju"
                                     android:text="¥0.0"
                                     android:textColor="#ffd77f"
-                                    android:textSize="14sp" />
+                                    android:textSize="12sp" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/ll_chuwei"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="40dp"
+                                android:layout_marginLeft="50dp"
+                                android:layout_marginTop="50dp"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -339,7 +338,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="其他0.00%"
                                     android:textColor="#ddb5a5"
-                                    android:textSize="14sp" />
+                                    android:textSize="12sp" />
 
                                 <TextView
                                     android:id="@+id/da_text_qita"
@@ -347,7 +346,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="¥0.0"
                                     android:textColor="#ddb5a5"
-                                    android:textSize="14sp" />
+                                    android:textSize="12sp" />
                             </LinearLayout>
 
 
@@ -374,15 +373,6 @@
                                     android:textColor="@color/text_gray" />
                             </LinearLayout>
 
-                            <!--<com.tbs.tobosutype.customview.MyChatView-->
-                            <!--android:id="@+id/da_my_chat_view"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_alignParentLeft="true"-->
-                            <!--android:layout_alignParentStart="true"-->
-                            <!--android:layout_alignParentTop="true"-->
-                            <!--app:MyChatView_radius="100dp"-->
-                            <!--app:MyChatView_strokewidth="50dp" />-->
                         </RelativeLayout>
 
                         <View

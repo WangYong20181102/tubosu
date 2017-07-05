@@ -234,7 +234,7 @@ public class DecorateAccountActivity extends Activity {
 
         if (f == 0) {
             seekProgress.setProgress(20);
-            seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_normal_style));
+            seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_nomralsd_style));
             tvState.setText(budgetTips[0]);
         }else if (f > 0 && f <= 0.20) {
             seekProgress.setProgress(18);
@@ -262,7 +262,7 @@ public class DecorateAccountActivity extends Activity {
             tvState.setText(budgetTips[1]);
         } else if(f > 1.00){
             seekProgress.setProgress(100);
-            seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_normal_style));
+            seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_nomralsd_style));
             tvState.setText(budgetTips[2]);
         }
 

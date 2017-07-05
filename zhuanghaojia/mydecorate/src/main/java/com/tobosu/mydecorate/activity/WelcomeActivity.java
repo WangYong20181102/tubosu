@@ -606,7 +606,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     sb.append(p.getId() + " " + p.getName() + " " + p.getRank());
                 }
             }
-            System.out.print("------->>" + sb);
+//            System.out.print("------->>" + sb);
         }
     }
 }

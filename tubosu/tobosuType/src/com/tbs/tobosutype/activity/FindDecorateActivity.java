@@ -640,19 +640,16 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
 
                 @Override
                 public void onFail(Request request, IOException e) {
-                    Util.setLog(TAG, "onFail请求网络返回有问题 ===>>>>" + request.toString() + " " + AppInfoUtil.getLat(mContext) + " " + AppInfoUtil.getLng(mContext));
+                    Util.setLog(TAG, "onFail请求网络返回有问题 ===>>>>" + request.toString() + "<<<======>>>>" + AppInfoUtil.getLat(mContext) + "<<<======>>>>" + AppInfoUtil.getLng(mContext) + "<<<<===");
                     handler.sendEmptyMessage(201);
                 }
 
                 @Override
                 public void onError(Response response, int code) {
-                    Util.setLog(TAG, "onError请求网络返回有问题 ===>>>>" + response.message() + " " + AppInfoUtil.getLat(mContext) + " " + AppInfoUtil.getLng(mContext));
+                    Util.setLog(TAG, "onError请求网络返回有问题 ===>>>>" + response.message() + "<<<======>>>>" + AppInfoUtil.getLat(mContext) + "<<<<======>>>>" + AppInfoUtil.getLng(mContext) + "<<<<===");
                 }
             });
-
-
         }
-
     }
 
     private Handler handler = new Handler() {
@@ -1363,7 +1360,7 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
             mapParams.put("certification", "0");
             mapParams.put("sort", "0");
 
-            // 请求
+            // 重新请求请求
             requestDecoratePost(mapParams);
 //            initDecorateListAdapter();
             decorate_textView_area.setText("全部区域");
