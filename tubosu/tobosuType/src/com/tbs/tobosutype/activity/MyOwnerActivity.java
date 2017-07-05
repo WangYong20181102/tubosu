@@ -461,7 +461,8 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 //            startActivity(new Intent(mContext, SystemMessageActivity.class));
 //            break;
 		case R.id.my_layout_ower_outcome:
-			if(CacheManager.getFirstTimeRecord(mContext) == -1){
+			Util.setErrorLog(TAG, "是否有设置预算>>>" + CacheManager.getDecorateBudget(mContext)+"<<<<<");
+			if(CacheManager.getDecorateBudget(mContext) <= 0){
 				startActivity(new Intent(mContext, KeepAccountActivity.class));
 			}else {
 				startActivity(new Intent(mContext, DecorateAccountActivity.class));
@@ -650,7 +651,7 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 				});
 	}
 
-	
+
 	/***
 	 * 裁剪头像图片
 	 * @param uri

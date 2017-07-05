@@ -25,6 +25,7 @@ import com.tbs.tobosutype.customview.LoadingWindow;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.MD5Util;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -180,7 +181,7 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
 
             @Override
             public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-
+                Log.e("账号登录", "====" + new String(body));
                 try {
                     JSONObject jsonObject = new JSONObject(new String(body));
                     if (jsonObject.getInt("error_code") == 0) {
@@ -195,9 +196,11 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                Log.e("错误日志", "----->>获取的错误码i" + i + "====headers" + headers.toString() + "======bytes" + new String(bytes) + "=====throwable" + throwable.toString());
             }
+
+
         });
     }
 
@@ -205,7 +208,6 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
      * 微信登录接口请求
      */
     private void loginWeixin() {
-        //FIXME
         wechatWindow = new LoadingWindow(getActivity());
         UMWXHandler wxHandler = new UMWXHandler(getActivity(), "wx20c4f4560dcd397a", "9b06e848d40bcb04205d75335df6b814");
         wxHandler.addToSocialSDK();
@@ -335,6 +337,9 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
             String cityname = data.getString("cityname");
             String cellphone = data.getString("cellphone");
             String typeId = data.getString("type_id");//登录用户的类型
+            String expected_cost = data.getString("expected_cost");
+            CacheManager.setDecorateBudget(getActivity(), expected_cost);
+
 
             SharedPreferences saveInfo = getActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE); // 登录成功后 存储用户标记mark
             SharedPreferences.Editor editor = saveInfo.edit();
@@ -347,6 +352,7 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
             editor.putString("token", token);
             editor.putString("cityname", cityname);
             editor.putString("cellphone", cellphone);
+            editor.putString("", "");
             editor.putString("typeid", typeId);
 
             editor.commit();

@@ -11,10 +11,12 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -713,7 +715,6 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             int span=1000;
             option.setIsNeedAddress(true);
             option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
-            option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
             option.setOpenGps(true);//可选，默认false,设置是否使用gps
             option.setLocationNotify(true);//可选，默认false，设置是否当GPS有效时按照1S/1次频率输出GPS结果
             option.setIsNeedLocationDescribe(true);//可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
@@ -733,17 +734,48 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
         }catch (Exception e){
             e.printStackTrace();
         }
+
+
+        if(Build.VERSION.SDK_INT >= 23){
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                                            Manifest.permission.ACCESS_FINE_LOCATION},ACCESS_LOCATION);
+        }
+
+
     }
 
 
-    private String locationCity = "";
 
+    /**自定义个权限码*/
+    private static final int ACCESS_LOCATION =100;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch(requestCode) {
 
+            // requestCode即所声明的权限获取码，在checkSelfPermission时传入
+            case ACCESS_LOCATION:
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // 获取到权限，作相应处理（调用定位SDK应当确保相关权限均被授权，否则可能引起定位失败）
+                } else{
+
+                    // 没有获取到权限，做特殊处理
+                }
+                break;
+
+            default:
+                break;
+
+        }
+
+    }
 
     public class MyLocationListener implements BDLocationListener {
 
         @Override
         public void onReceiveLocation(BDLocation location) {
+            Util.setErrorLog(TAG, "定位码" + location.getLocType());
             StringBuffer sb = new StringBuffer(256);
             sb.append("time : ");
             sb.append(location.getTime());
@@ -754,12 +786,12 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             sb.append("\nlontitude : ");
             sb.append(location.getLongitude());
             sb.append("\nradius : ");
-            locationCity = location.getCity();
-            if(locationCity!=null){
-                locationCity= locationCity.replaceAll("[^\u4E00-\u9FA5]", "");
-                System.out.println("=============有没有city>>>" + locationCity +"<<<");
-                CacheManager.setCity(context, locationCity);
-                select_positioning.setText(locationCity);
+            realLocationCity = location.getCity();
+            if(realLocationCity!=null){
+//                realLocationCity= realLocationCity.replaceAll("[^\u4E00-\u9FA5]", "");
+//                System.out.println("=============有没有city>>>" + locationCity +"<<<");
+                CacheManager.setCity(context, realLocationCity);
+                select_positioning.setText(realLocationCity);
             }else{
                 select_positioning.setText("定位中...");
             }

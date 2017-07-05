@@ -135,6 +135,9 @@ public class Constant {
      */
     public static String BIND_THIRD_PARTY_URL = TOBOSU_URL + "tapp/passport/bindThirdParty";
 
+
+    public static String FIND_DECORATE_COMPANY_URL = Constant.TOBOSU_URL + "/tapp/company/company_list";
+
     /**
      * 修改用户信息接口
      * <br/> field  <br/>

@@ -17,6 +17,7 @@ import com.squareup.okhttp.Response;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.Util;
 
@@ -73,7 +74,10 @@ public class KeepAccountActivity extends Activity{
                     if(budeget - 1 < 0){
                         Util.setToast(mContext, "预算从1万开始");
                         return;
-                    }else {
+                    }else if(budeget - 100 > 0) {
+                        Util.setToast(mContext, "预算不能超过100万");
+                        return;
+                    }else{
                         if(Util.isNetAvailable(mContext)){
                             summitBudget(etBudget.getText().toString());
                         }
@@ -89,9 +93,11 @@ public class KeepAccountActivity extends Activity{
         OKHttpUtil okHttpUtil = new OKHttpUtil();
         HashMap<String, String> param = new HashMap<>();
         param.put("token", Util.getDateToken());
-        param.put("uid", Util.getUserId(mContext));
+        param.put("uid", AppInfoUtil.getUserid(mContext));
         param.put("expected_cost", f + "");
+
         okHttpUtil.post(Constant.SUMMIT_BUDGET_URL, param, new OKHttpUtil.BaseCallBack() {
+
             @Override
             public void onSuccess(Response response, String json) {
                 Log.e(TAG, "上传预算=====" + json);
@@ -117,7 +123,6 @@ public class KeepAccountActivity extends Activity{
             if(object.getInt("status") == 200){
                 Intent intent = new Intent(mContext, DecorateAccountActivity.class);
                 startActivity(intent);
-                CacheManager.setFirstTimeRecord(mContext, 1);
                 finish();
             }else{
                 Util.setToast(mContext, "提交预算失败，稍后再试~");
@@ -125,7 +130,5 @@ public class KeepAccountActivity extends Activity{
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
     }
 }

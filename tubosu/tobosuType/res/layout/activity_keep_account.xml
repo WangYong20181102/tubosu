@@ -30,7 +30,7 @@
             android:id="@+id/iv_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="33dp"
             android:background="@drawable/icon_keep_outcome"
             android:layout_centerHorizontal="true" />
 
@@ -38,7 +38,7 @@
             android:id="@+id/tvtexttexsd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="33dp"
             android:layout_below="@+id/iv_logo"
             android:layout_marginRight="100dp"
             android:layout_marginLeft="100dp"
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="22dp"
             android:layout_below="@+id/tvtexttexsd"
             android:layout_centerHorizontal="true">
 
@@ -66,7 +66,7 @@
                 android:id="@+id/et_budget_account"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="224dp"
-                android:layout_margin="10dp"
+                android:layout_margin="4dp"
                 android:layout_height="44dp"
                 android:textColorHint="#BDB59D"
                 android:paddingLeft="10dp"
@@ -87,7 +87,7 @@
             android:gravity="center"
             android:layout_marginRight="60dp"
             android:layout_marginLeft="60dp"
-            android:layout_marginBottom="44dp">
+            android:layout_marginBottom="30dp">
 
             <ImageView
                 android:id="@+id/iv_open_account"

@@ -3,20 +3,20 @@ package com.tobosu.mydecorate.global;
 import com.tobosu.mydecorate.application.MyApplication;
 import com.tobosu.mydecorate.util.Util;
 
-/**
- * Created by dec on 2016/9/12.
- * <p>
- * 常量类
- */
+    /**
+     * Created by dec on 2016/9/12.
+     * <p>
+     * 常量类
+     */
 public class Constant {
     /**
      * 正式环境
      */
-//    public static final String ZHJ = "http://www.tobosu.com/";
+    public static final String ZHJ = "http://www.tobosu.com/";
     /**
      * 测试环境
      */
-    public static final String ZHJ = "http://www.dev.tobosu.com/";
+//    public static final String ZHJ = "http://www.dev.tobosu.com/";
 
     public static final int CHANGE_USERNAME_RESULTCODE = 0x000014;
     public static final int CHANGE_USERNAME_REQUESTCODE = 0x000015;

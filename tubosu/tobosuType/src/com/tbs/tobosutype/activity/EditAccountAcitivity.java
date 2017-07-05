@@ -73,7 +73,7 @@ public class EditAccountAcitivity extends FragmentActivity{
     private FragmentManager fm;
     private FragmentTransaction ft;
 
-    private int saveData = -1;
+    private int saveData = 0;
 
     private String recordId = "";
 
@@ -205,7 +205,7 @@ public class EditAccountAcitivity extends FragmentActivity{
                     intent = new Intent(Constant.ACTION_STEEL_FRAGMENT_DATA);
                 }else if(saveData==3){
                     intent = new Intent(Constant.ACTION_FURNITURE_FRAGMENT_DATA);
-                }else if(saveData==4){
+                }else{
                     intent = new Intent(Constant.ACTION_KITCHEN_FRAGMENT_DATA);
                 }
                 sendBroadcast(intent);

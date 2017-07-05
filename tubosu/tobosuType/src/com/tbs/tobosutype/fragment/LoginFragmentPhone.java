@@ -33,6 +33,7 @@ import com.tbs.tobosutype.customview.LoadingWindow;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -234,7 +235,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
             public void onSuccess(int arg0, Header[] arg1, byte[] body) {
                 try {
                     JSONObject jsonObject = new JSONObject(new String(body));
-                    Log.e("登录日志", "====" + jsonObject.toString());
+                    Log.e("登录日志", "====>>>" + jsonObject.toString() + "<<<<-");
                     if (jsonObject.getInt("error_code") == 0) {
 
                         parseJson(jsonObject);
@@ -247,9 +248,11 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-//                Log.e("错误日志", "----->>获取的错误码arg0" + arg0 + "====arg1" + arg1.toString() + "======arg2" + arg2.toString() + "=====arg3" + arg3.toString());
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                Log.e("错误日志", "----->>获取的错误码i" + i + "====headers" + headers.toString() + "======bytes" + new String(bytes) + "=====throwable" + throwable.toString());
             }
+
+
         });
     }
 
@@ -430,6 +433,8 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
             String cityname = data.getString("cityname");
             String cellphone = data.getString("cellphone");
             String typeId = data.getString("type_id");//登录用户的类型
+            String expected_cost = data.getString("expected_cost");
+            CacheManager.setDecorateBudget(getActivity(), expected_cost);
 
             SharedPreferences saveInfo = getActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE); // 登录成功后 存储用户标记mark
             SharedPreferences.Editor editor = saveInfo.edit();

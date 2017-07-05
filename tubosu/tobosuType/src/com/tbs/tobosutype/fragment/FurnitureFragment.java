@@ -113,6 +113,7 @@ public class FurnitureFragment extends Fragment{
         etCostMoney = (EditText)view.findViewById(R.id.et_furniture_cost_money);
         tvCostTime = (TextView) view.findViewById(R.id.tv_furniture_cost_time);
         tvCostTime.setText(Util.getTodayDatetime());
+        tvCostTime.setBackgroundResource(R.drawable.shape_time_textview_selected_bg);
         etCostContent = (EditText)view.findViewById(R.id.et_furniture_cost_content);
 
     }
