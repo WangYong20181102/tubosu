@@ -207,7 +207,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="人工0.00%"
                                 android:textColor="#8fd6a7"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/da_text_rengong"
@@ -216,7 +216,7 @@
                                 android:layout_marginTop="2dp"
                                 android:text="¥0.0"
                                 android:textColor="#8fd6a7"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -235,7 +235,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="建材0.00%"
                                 android:textColor="#78bfe6"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/da_text_jiancai"
@@ -243,7 +243,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="¥0.0"
                                 android:textColor="#78bfe6"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -261,7 +261,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="厨卫0.00%"
                                 android:textColor="#a6c1dd"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/da_text_chuwei"
@@ -270,7 +270,7 @@
                                 android:layout_below="@+id/da_chuwei"
                                 android:text="¥0.0"
                                 android:textColor="#a6c1dd"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -290,7 +290,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="五金0.00%"
                                 android:textColor="#ffa36f"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/da_text_wujin"
@@ -298,7 +298,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="¥0.0"
                                 android:textColor="#ffa36f"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -316,7 +316,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="家具0.00%"
                                 android:textColor="#ffd77f"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/da_text_jiaju"
@@ -325,7 +325,7 @@
                                 android:layout_below="@+id/da_jiaju"
                                 android:text="¥0.0"
                                 android:textColor="#ffd77f"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -342,7 +342,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="其他0.00%"
                                 android:textColor="#ddb5a5"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/da_text_qita"
@@ -350,7 +350,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="¥0.0"
                                 android:textColor="#ddb5a5"
-                                android:textSize="14sp" />
+                                android:textSize="12sp" />
                         </LinearLayout>
 
 
@@ -374,7 +374,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
                                 android:text="总开支分析图"
-                                android:textColor="@color/text_gray" />
+                                android:textColor="@color/text_gray"
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <!--<com.tbs.tobosutype.customview.MyChatView-->
