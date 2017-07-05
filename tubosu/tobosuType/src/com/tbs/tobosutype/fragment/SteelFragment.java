@@ -32,7 +32,7 @@ import com.tbs.tobosutype.utils.Util;
  */
 
 public class SteelFragment extends Fragment {
-    private String[] stringArr = {"开关插座","门窗","窗帘滑轨","门锁","合页","衣架","衣架","水笼头","五金配件","防盗网"};
+    private String[] stringArr = {"开关插座","门窗","窗帘滑轨","门锁","合页","衣架","水笼头","五金配件","防盗网"};
 
     private WriteAccountAdapter adapter;
     private GridView gvSteel;
@@ -107,6 +107,7 @@ public class SteelFragment extends Fragment {
         etCostSteel = (EditText)view.findViewById(R.id.et_steel_cost_steel);
         etCostMoney = (EditText)view.findViewById(R.id.et_steel_cost_money);
         tvCostTime = (TextView) view.findViewById(R.id.tv_steel_cost_time);
+        tvCostTime.setBackgroundResource(R.drawable.shape_time_textview_selected_bg);
         tvCostTime.setText(Util.getTodayDatetime());
         etCostContent = (EditText)view.findViewById(R.id.et_steel_cost_content);
 

@@ -33,6 +33,7 @@ import com.tbs.tobosutype.customview.LoadingWindow;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -196,20 +197,26 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
 
 
     private void userPhoneLogin() {
+        if((TextUtils.isEmpty(et_login_userphone.getText().toString().trim()))){
+            Toast.makeText(getActivity(), "手机号不能为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (TextUtils.isEmpty(et_login_userphone_verify_code.getText().toString().trim())) {
             Toast.makeText(getActivity(), "验证码不能为空！", Toast.LENGTH_SHORT).show();
             return;
-        } else {
-            fastLoginParams = AppInfoUtil.getPublicParams(getActivity());
-            fastLoginParams.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
-            fastLoginParams.put("mobile", et_login_userphone.getText().toString().trim());
-            fastLoginParams.put("msg_code", et_login_userphone_verify_code.getText().toString().trim());
-            fastLoginParams.put("platform_type", "1"); // 1是土拨鼠  2是装好家
-            fastLoginParams.put("system_type", "1"); // 1是安卓， 2是ios
-            Log.e("手机登录 账号", "=====" + et_login_userphone.getText().toString().trim());
-            Log.e("手机登录 验证码", "=====" + et_login_userphone_verify_code.getText().toString().trim());
-            requestFastLogin();
         }
+
+        fastLoginParams = AppInfoUtil.getPublicParams(getActivity());
+        fastLoginParams.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
+        fastLoginParams.put("mobile", et_login_userphone.getText().toString().trim());
+        fastLoginParams.put("msg_code", et_login_userphone_verify_code.getText().toString().trim());
+        fastLoginParams.put("platform_type", "1"); // 1是土拨鼠  2是装好家
+        fastLoginParams.put("system_type", "1"); // 1是安卓， 2是ios
+        Log.e("手机登录 账号", "=====" + et_login_userphone.getText().toString().trim());
+        Log.e("手机登录 验证码", "=====" + et_login_userphone_verify_code.getText().toString().trim());
+        requestFastLogin();
+
     }
 
     /**
@@ -228,7 +235,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
             public void onSuccess(int arg0, Header[] arg1, byte[] body) {
                 try {
                     JSONObject jsonObject = new JSONObject(new String(body));
-                    Log.e("登录日志", "====" + jsonObject.toString());
+                    Log.e("登录日志", "====>>>" + jsonObject.toString() + "<<<<-");
                     if (jsonObject.getInt("error_code") == 0) {
 
                         parseJson(jsonObject);
@@ -241,9 +248,11 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-//                Log.e("错误日志", "----->>获取的错误码arg0" + arg0 + "====arg1" + arg1.toString() + "======arg2" + arg2.toString() + "=====arg3" + arg3.toString());
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                Log.e("错误日志", "----->>获取的错误码i" + i + "====headers" + headers.toString() + "======bytes" + new String(bytes) + "=====throwable" + throwable.toString());
             }
+
+
         });
     }
 
@@ -424,6 +433,8 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
             String cityname = data.getString("cityname");
             String cellphone = data.getString("cellphone");
             String typeId = data.getString("type_id");//登录用户的类型
+            String expected_cost = data.getString("expected_cost");
+            CacheManager.setDecorateBudget(getActivity(), expected_cost);
 
             SharedPreferences saveInfo = getActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE); // 登录成功后 存储用户标记mark
             SharedPreferences.Editor editor = saveInfo.edit();
@@ -457,7 +468,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
                 intent.setClass(getActivity(), MainActivity.class);
                 AppInfoUtil.ISJUSTLOGIN = true;
                 getActivity().startActivity(intent);
-
+                getActivity().setResult(404);
 //                Intent i = new Intent();
 //                i.setAction(Constant.LOGIN_ACTION);
 //                getActivity().sendBroadcast(i);

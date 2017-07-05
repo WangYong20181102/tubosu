@@ -67,9 +67,6 @@ public class WelcomeActivity extends Activity {
         AppInfoUtil.setTranslucentStatus(this);
         setContentView(R.layout.activity_welcome_bg);
 
-//		ivWelcome = (ImageView) findViewById(R.id.iv_welcom);
-//		Glide.with(WelcomeActivity.this).load(R.drawable.welcome_image).into(ivWelcome);
-//		MobclickAgent.UMAnalyticsConfig config = new MobclickAgent.UMAnalyticsConfig(this, Constant.UMENG_KEY, Constant.CHANNEL_TYPE);
         MobclickAgent.UMAnalyticsConfig config = new MobclickAgent.UMAnalyticsConfig(this, Constant.UMENG_KEY, AppInfoUtil.getChannType(this));
 
         MobclickAgent.startWithConfigure(config);

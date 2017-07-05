@@ -81,6 +81,7 @@ public class Constant {
     public static final String ACTION_KITCHEN_FRAGMENT_DATA = "action_kitchen_fragment_data";
 
 
+
     /**
      * 测试环境
      */
@@ -92,6 +93,8 @@ public class Constant {
     public static final String TOBOSU_URL = "http://www.tobosu.com/";
 
 
+    public static final String SUMMIT_BUDGET_URL = TOBOSU_URL + "mapp/RenovateExpense/expense_bookkeep";
+
     /**
      * 编辑装修开支
      */
@@ -101,6 +104,11 @@ public class Constant {
      * 装修开支详情
      */
     public static final String OUTCOME_DETAIL_URL = TOBOSU_URL + "mapp/RenovateExpense/renovate_expense_detail";
+
+    /**
+     * 修改记录
+     */
+    public static final String MODIFY_RECORD_URL = TOBOSU_URL + "mapp/RenovateExpense/edit_renovate_expense";
 
     /**
      * 装修开支主页
@@ -126,6 +134,9 @@ public class Constant {
      * 第三方绑定接口
      */
     public static String BIND_THIRD_PARTY_URL = TOBOSU_URL + "tapp/passport/bindThirdParty";
+
+
+    public static String FIND_DECORATE_COMPANY_URL = Constant.TOBOSU_URL + "/tapp/company/company_list";
 
     /**
      * 修改用户信息接口

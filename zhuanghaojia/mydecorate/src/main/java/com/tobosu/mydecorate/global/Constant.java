@@ -3,11 +3,11 @@ package com.tobosu.mydecorate.global;
 import com.tobosu.mydecorate.application.MyApplication;
 import com.tobosu.mydecorate.util.Util;
 
-/**
- * Created by dec on 2016/9/12.
- * <p>
- * 常量类
- */
+    /**
+     * Created by dec on 2016/9/12.
+     * <p>
+     * 常量类
+     */
 public class Constant {
     /**
      * 正式环境

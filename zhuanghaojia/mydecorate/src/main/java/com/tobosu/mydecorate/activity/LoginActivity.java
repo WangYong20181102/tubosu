@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView tv_verify_code;
     private ImageView iv_login;
 
-    private String phone_code_login_url = Constant.ZHJ + "tapp/passport/fast_register_mt";
+    private String phone_code_login_url = Constant.ZHJ + "tapp/passport/fast_register";
 
     private String weixin_login_url = Constant.ZHJ + "tapp/passport/login_third_party";
 
@@ -217,6 +217,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         loginStringRequest = new StringRequest(Request.Method.POST, phone_code_login_url, new Response.Listener<String>() {
                             @Override
                             public void onResponse(String s) {
+                                hideLoadingView();
                                 System.out.println("请求结果:" + s);
                                 parseLoginJson(s);
                             }

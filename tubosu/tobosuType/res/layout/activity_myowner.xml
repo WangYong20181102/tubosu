@@ -73,7 +73,6 @@
 	                    android:id="@+id/my_owner_pic"
 	                    android:layout_width="70dp"
 	                    android:layout_height="70dp"
-	                   
 	                    android:layout_marginLeft="31dp"
 	                    android:scaleType="fitXY"
 	                    android:src="@drawable/myset_logo" />

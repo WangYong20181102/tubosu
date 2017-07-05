@@ -42,13 +42,7 @@ public class Util {
         }
     }
 
-    public static String getUserId(Context context){
-        return context.getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("userid","");
-    }
 
-//    public static String getUserId1(Context context){
-//        return context.getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("user_id","");
-//    }
 
     /**
      * 获取当天的加密token
@@ -270,7 +264,7 @@ public class Util {
     public static String getTodayDatetime() {
         Calendar nowCalendar = Calendar.getInstance();
         int nowYear = nowCalendar.get(Calendar.YEAR);
-        int nowMonth = nowCalendar.get(Calendar.MONTH);
+        int nowMonth = nowCalendar.get(Calendar.MONTH) + 1;
         int nowDay = nowCalendar.get(Calendar.DAY_OF_MONTH);
         return nowYear + "-" + nowMonth + "-" + nowDay;
     }

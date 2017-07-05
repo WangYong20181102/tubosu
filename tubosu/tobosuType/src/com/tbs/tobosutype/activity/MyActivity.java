@@ -62,6 +62,7 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
         myUnloginStore.setOnClickListener(this);
         relUnlogin.setOnClickListener(this);
         ivSetting.setOnClickListener(this);
+        ivSystemMessage.setOnClickListener(this);
     }
 
 
@@ -77,8 +78,10 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
                 startActivityForResult(new Intent(mContext, LoginActivity.class), 0x00017);
                 break;
             case R.id.iv_unlogin_setting:
-            case R.id.iv_unlogin_system_message:
                 startActivity(new Intent(mContext, SettingActivity.class));
+                break;
+            case R.id.iv_unlogin_system_message:
+                startActivity(new Intent(mContext, SystemMessageActivity.class));
                 break;
         }
     }
@@ -89,6 +92,9 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
             case Constant.UNLOGIN_TO_LOGIN_RESULTCODE:
                 Util.setToast(mContext, "更新登录状态哦");
                 finish();
+                break;
+            case 404:
+//                finish();
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);

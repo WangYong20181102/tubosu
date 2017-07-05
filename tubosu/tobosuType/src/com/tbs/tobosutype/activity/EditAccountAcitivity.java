@@ -73,8 +73,9 @@ public class EditAccountAcitivity extends FragmentActivity{
     private FragmentManager fm;
     private FragmentTransaction ft;
 
-    private int saveData = -1;
+    private int saveData = 0;
 
+    private String recordId = "";
 
     private String mainNameText = "";
     private String mainMoneyText = "";
@@ -128,9 +129,10 @@ public class EditAccountAcitivity extends FragmentActivity{
     private void initGetIntent(){
         Intent data = getIntent();
         Bundle b = null;
+        // 从记录而来的
         if(data!=null && data.getBundleExtra("check_record_bundle") != null){
             b = data.getBundleExtra("check_record_bundle");
-
+            recordId = b.getString("record_id");
             fragmentPosition = b.getInt("outcome_position");
             saveData = goFragment(fragmentPosition);
         }
@@ -142,6 +144,7 @@ public class EditAccountAcitivity extends FragmentActivity{
         tvManPower.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                recordId = "";
                 CacheManager.clearStringArrayList(context);
                 saveData = setFragment(0);
             }
@@ -149,6 +152,7 @@ public class EditAccountAcitivity extends FragmentActivity{
         tvMateria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                recordId = "";
                 CacheManager.clearStringArrayList(context);
                 saveData = setFragment(1);
             }
@@ -156,6 +160,7 @@ public class EditAccountAcitivity extends FragmentActivity{
         tvSteel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                recordId = "";
                 CacheManager.clearStringArrayList(context);
                 saveData = setFragment(2);
             }
@@ -163,6 +168,7 @@ public class EditAccountAcitivity extends FragmentActivity{
         tvFurniture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                recordId = "";
                 CacheManager.clearStringArrayList(context);
                 saveData = setFragment(3);
             }
@@ -170,6 +176,7 @@ public class EditAccountAcitivity extends FragmentActivity{
         tvKitchen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                recordId = "";
                 CacheManager.clearStringArrayList(context);
                 saveData = setFragment(4);
             }
@@ -178,6 +185,7 @@ public class EditAccountAcitivity extends FragmentActivity{
         tvCancelEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                recordId = "";
                 CacheManager.clearStringArrayList(context);
                 finish();
             }
@@ -197,7 +205,7 @@ public class EditAccountAcitivity extends FragmentActivity{
                     intent = new Intent(Constant.ACTION_STEEL_FRAGMENT_DATA);
                 }else if(saveData==3){
                     intent = new Intent(Constant.ACTION_FURNITURE_FRAGMENT_DATA);
-                }else if(saveData==4){
+                }else{
                     intent = new Intent(Constant.ACTION_KITCHEN_FRAGMENT_DATA);
                 }
                 sendBroadcast(intent);
@@ -263,7 +271,18 @@ public class EditAccountAcitivity extends FragmentActivity{
                         hashMap.put("cost", mainMoneyText);
                         hashMap.put("expend_time", mainTimeText);
                         hashMap.put("content", mainContentText+" ");
-                        okHttpUtil.post(Constant.EDIT_DECORATE_OUTCOME_URL, hashMap, new OKHttpUtil.BaseCallBack() {
+
+                        String url = "";
+                        if("".equals(recordId)){
+                            // 正常而来， 添加开支记录
+                            url = Constant.EDIT_DECORATE_OUTCOME_URL;
+                        }else{
+                            // 修改开支记录
+                            url = Constant.MODIFY_RECORD_URL;
+                            hashMap.put("id", recordId);
+                        }
+
+                        okHttpUtil.post(url, hashMap, new OKHttpUtil.BaseCallBack() {
 
                             @Override
                             public void onSuccess(Response response, String json) {
@@ -272,7 +291,7 @@ public class EditAccountAcitivity extends FragmentActivity{
                                     JSONObject obj = new JSONObject(json);
                                     if(obj.getInt("status")==200){
                                         Util.setToast(context, getToastMesssage(saveData)+"添加成功");
-                                        setResultCode(Constant.FINISH_SAVE_EDIT_OUTCOME);
+//                                        setResultCode(Constant.FINISH_SAVE_EDIT_OUTCOME);
                                         finish();
                                     }else if(obj.getInt("status")==0){
                                         Util.setToast(context, getToastMesssage(saveData)+"添加失败,稍后再试!");

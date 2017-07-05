@@ -161,6 +161,16 @@ public class AppInfoUtil {
         return params;
     }
 
+    public static HashMap<String,String> getPublicHashMapParams(Context context) {
+        HashMap<String,String> params = new HashMap<String,String>();
+        params.put("device", getDeviceName());
+        params.put("version", getAppVersionName(context));
+        params.put("city", getCityName(context));
+        params.put("lat", getLat(context));
+        params.put("lng", getLng(context));
+        return params;
+    }
+
 
     /***
      * 将本app中所有的Activity标题栏设置为土拨鼠颜色风格

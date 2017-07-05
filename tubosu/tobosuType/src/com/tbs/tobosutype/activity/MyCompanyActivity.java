@@ -5,8 +5,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Notification;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.media.RingtoneManager;
@@ -23,6 +25,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.RoundImageView;
+import com.tbs.tobosutype.fragment.LoginFragmentPhone;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
@@ -203,10 +206,16 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
         my_decorate_pic = (RoundImageView) findViewById(R.id.my_decorate_pic);
 
         mContext = MyCompanyActivity.this;
-
+        initReceiver();
         initView();
-        initData();
+
         initEvent();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
     }
 
     private void initView() {
@@ -464,7 +473,7 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
                 bundle.putString("wechat_check", wechat_check);
                 bundle.putString("cellphone", cellphone);
                 userInfoIntent.putExtra("data", bundle);
-                startActivity(userInfoIntent);
+                startActivityForResult(userInfoIntent, 16);
                 break;
             default:
                 break;
@@ -473,11 +482,32 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        if (!TextUtils.isEmpty(token)) {
-            initData();
-            requstMyPost();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (resultCode){
+            case 44:
+
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void initReceiver(){
+        receiver = new DataRefreshReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constant.LOGOUT_ACTION);
+        registerReceiver(receiver, filter);
+    }
+    private DataRefreshReceiver receiver;
+    private class DataRefreshReceiver extends BroadcastReceiver {
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(Constant.LOGOUT_ACTION.equals(intent.getAction())){
+                Util.setToast(mContext, "怎？？？");
+//                requstMyPost();
+            }
         }
     }
+
 }

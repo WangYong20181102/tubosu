@@ -33,6 +33,9 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.AreaAdapter;
 import com.tbs.tobosutype.adapter.DecorateListAdapter;
@@ -45,6 +48,7 @@ import com.tbs.tobosutype.customview.FirstLookDecoratDialog;
 import com.tbs.tobosutype.customview.GalleryGridView;
 import com.tbs.tobosutype.customview.VouchersPopupWindow;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
 import com.tbs.tobosutype.utils.HttpServer;
@@ -60,6 +64,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -255,10 +260,12 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
      */
     private SortAdapter sortWindowAdapter;
 
-    /**
-     * 装修公司的参数对象
-     */
-    private RequestParams mapParams;
+//    /**
+//     * 装修公司的参数对象
+//     */
+//    private RequestParams mapParams;
+    private HashMap<String,String> mapParams;
+
 
     /**
      * 品牌logo的参数对象
@@ -273,7 +280,7 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
     /**
      * 装修公司列表接口
      */
-    private String dataUrl = Constant.TOBOSU_URL + "/tapp/company/company_list";
+//    private String dataUrl = Constant.TOBOSU_URL + "/tapp/company/company_list";
 
     /**
      * 品牌logo接口
@@ -523,6 +530,9 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
         }
     }
 
+    /***
+     * 装修公司列表接口
+     */
     private void loadData() {
         // -------------请求网络获取公司列表 ---------
         initGetCompanyListParams();
@@ -591,9 +601,9 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
      * 初始化装修公司列表接口的参数
      */
     private void initGetCompanyListParams() {
-        mapParams = AppInfoUtil.getPublicParams(getApplicationContext());
-        mapParams.put("page", page);
-        mapParams.put("pageSize", pageSize);
+        mapParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
+        mapParams.put("page", page +"");
+        mapParams.put("pageSize", pageSize + "");
         mapParams.put("city", cityName);
     }
 
@@ -603,35 +613,44 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
      *
      * @param params
      */
-    private void requestDecoratePost(RequestParams params) {
+    private void requestDecoratePost(HashMap<String, String> params) {
         if (Util.isNetAvailable(mContext)) {
-            HttpServer.getInstance().requestPOST(dataUrl, params, new AsyncHttpResponseHandler() {
 
+            OKHttpUtil okHttpUtil = new OKHttpUtil();
+            okHttpUtil.post(Constant.FIND_DECORATE_COMPANY_URL, params, new OKHttpUtil.BaseCallBack() {
                 @Override
-                public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                    Util.setLog(TAG, "请求网络返回有问题 ===>>>>" + throwable.toString() + " " + AppInfoUtil.getLat(mContext) + " " + AppInfoUtil.getLng(mContext));
-                    handler.sendEmptyMessage(201);
-                }
-
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    String result = new String(responseBody);
-                    Util.setLog(TAG, "requestDecoratePost 请求网络返回成功 -->>> " + result);
+                public void onSuccess(Response response, String json) {
+                    Log.e(TAG, "数据请求=====" + json);
+//                    String result = new String(responseBody);
+                    Util.setLog(TAG, "requestDecoratePost 请求网络返回成功 -->>> " + json);
                     try {
-                        JSONObject obj = new JSONObject(result);
+                        JSONObject obj = new JSONObject(json);
                         if (obj.getInt("error_code") == 0) {
                             // 缓存请求的结果
-                            getSharedPreferences("CompanyCache", 0).edit().putString("jsonResult", result).commit();
-                            operDecorationCompany(result);
+                            getSharedPreferences("CompanyCache", 0).edit().putString("jsonResult", json).commit();
+                            operDecorationCompany(json);
                         } else {
                             handler.sendEmptyMessage(201);
-                            Util.setLog(TAG, "201请求网络返回有问题 ===>>>>" + responseBody.toString());
+                            Util.setLog(TAG, "201请求网络返回有问题 ===>>>>" + response.message());
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
+
+                @Override
+                public void onFail(Request request, IOException e) {
+                    Util.setLog(TAG, "onFail请求网络返回有问题 ===>>>>" + request.toString() + " " + AppInfoUtil.getLat(mContext) + " " + AppInfoUtil.getLng(mContext));
+                    handler.sendEmptyMessage(201);
+                }
+
+                @Override
+                public void onError(Response response, int code) {
+                    Util.setLog(TAG, "onError请求网络返回有问题 ===>>>>" + response.message() + " " + AppInfoUtil.getLat(mContext) + " " + AppInfoUtil.getLng(mContext));
+                }
             });
+
+
         }
 
     }
@@ -650,6 +669,7 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
                     Util.setToast(mContext, "服务器繁忙，请稍后再试~");
                     decorate_listView_company.stopRefresh();
                     decorate_listView_company.stopLoadMore();
+
                     break;
             }
         }
@@ -712,7 +732,7 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
             @Override
             public void onSuccess(int arg0, Header[] arg1, byte[] body) {
                 String result = new String(body);
-                System.out.println("---------装修公司--getAdsUrl-->>>" + result + "<<<");
+//                System.out.println("---------装修公司--getAdsUrl-->>>" + result + "<<<");
                 try {
                     JSONObject jsonString = new JSONObject(result);
                     recommandBrandListData = new ArrayList<HashMap<String, String>>();
@@ -1334,9 +1354,9 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
             getSharedPreferences("city", 0).edit().putString("cityName", cityName).commit();
 
             // 重新输入请求的参数
-            mapParams = AppInfoUtil.getPublicParams(getApplicationContext());
-            mapParams.put("page", page);
-            mapParams.put("pageSize", pageSize);
+            mapParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
+            mapParams.put("page", page + "");
+            mapParams.put("pageSize", pageSize + "");
             mapParams.put("city", cityName);
             mapParams.put("districtid", "0");
             mapParams.put("jjb_logo", "0");
