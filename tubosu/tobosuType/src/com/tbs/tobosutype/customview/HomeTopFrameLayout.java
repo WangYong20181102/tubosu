@@ -20,6 +20,13 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
+//import com.android.volley.AuthFailureError;
+//import com.android.volley.Request;
+//import com.android.volley.RequestQueue;
+//import com.android.volley.Response;
+//import com.android.volley.VolleyError;
+//import com.android.volley.toolbox.StringRequest;
+//import com.android.volley.toolbox.Volley;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -37,6 +44,7 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.FreeActivity;
+import com.tbs.tobosutype.activity.PopOrderActivity;
 import com.tbs.tobosutype.activity.WebViewActivity;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
@@ -81,7 +89,7 @@ public class HomeTopFrameLayout extends FrameLayout {
     /**
      * 包含h5发单url
      */
-    private String containFreeUrl = "http://m.tobosu.com/app/pub?";  //Constant.PUB_ORDERS;
+    private String containFreeUrl = "http://m.tobosu.com/app/pub?";
 //									 http://m.tobosu.com/app/pub?
 //	                               http://m.tobosu.com/app/pub?channel=sem&subchannel=android&chcode=product
 
@@ -305,15 +313,30 @@ public class HomeTopFrameLayout extends FrameLayout {
                     countParams.put("_token", _token);
                     Log.e(TAG, "=banner_id=" + get_banner_id + "=chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "=version=" + AppInfoUtil.getAppVersionName(MyApplication.getContext()) + "=mac_code=" + AppInfoUtil.getMacAddress(MyApplication.getContext()) + "=time=" + mTime);
                     HttpCountClick(countParams);
-                    if (!get_content_url.contains(containFreeUrl)) {
-                        Log.e(TAG, "--请检查--发单接口 走WebViewActivity【" + get_content_url + "】 【WebViewActivity走的不是安卓发单入口】");
-                        Intent detailIntent = new Intent(context, WebViewActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("link", get_content_url);
-                        detailIntent.putExtras(bundle);
-                        context.startActivity(detailIntent);
 
-                    } else {
+
+                    //
+                    if (!get_content_url.contains(containFreeUrl)) {
+                        Log.e(TAG, "--请检查--发单接口 走WebViewActivity原生【" + get_content_url + "】 【WebViewActivity走的不是安卓发单入口】");
+
+
+
+                        /*----------------------------------走发单PopOrderActivity 2017-07-06 邝俊要求--------------------------------------*/
+
+                        if(get_content_url.contains("guideBilling")){
+                            context.startActivity(new Intent(context, PopOrderActivity.class));
+                        } else {
+                       /*----------------------------------走发单PopOrderActivity 2017-07-06 邝俊要求--------------------------------------*/
+                            Intent detailIntent = new Intent(context, WebViewActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("link", get_content_url);
+                            detailIntent.putExtras(bundle);
+                            context.startActivity(detailIntent);
+                        }
+
+
+
+                    }else {
                         MobclickAgent.onEvent(context, "click_find_decoration_activite");
                         Log.e(TAG, "--请检查--发单接口 走FreeActivity【注意FreeActivity是绝对走android发单入口的】");
                         Intent intent = new Intent(context, FreeActivity.class);

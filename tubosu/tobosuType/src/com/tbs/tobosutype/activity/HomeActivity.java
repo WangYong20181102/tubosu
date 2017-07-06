@@ -1,5 +1,6 @@
 package com.tbs.tobosutype.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -270,6 +271,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         context = HomeActivity.this;
 
 
+        needPermissions();
         initView();
         initEvent();
         initData();
@@ -367,6 +369,27 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
     }
 
+    private  void needPermissions(){
+        if(Build.VERSION.SDK_INT >= 23){
+            String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_WIFI_STATE,
+
+                    Manifest.permission.ACCESS_NETWORK_STATE
+//                    Manifest.permission.READ_EXTERNAL_STORAGE,
+//                    Manifest.permission.ACCESS_COARSE_LOCATION,
+//                    Manifest.permission.ACCESS_WIFI_STATE
+
+            };
+
+            requestPermissions(permissions, 101);
+        }
+    }
 
 //	/***
 //	 * 本地优惠请求网络获取数据  2017-01-13 要求删除

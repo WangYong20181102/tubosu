@@ -162,7 +162,7 @@ public class DecorateAccountActivity extends Activity {
                 relDataEmpty.setVisibility(View.VISIBLE);
                 relDataLaout.setVisibility(View.GONE);
                 tvTotalCost.setText("0");
-                seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_green_style));
+                seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_nomralsd_style));
                 tvState.setText(budgetTips[0]);
             }else if(status==202){
                 JSONObject data = jsonObject.getJSONObject("data");

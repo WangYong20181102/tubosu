@@ -25,6 +25,8 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:support-v4:21.0.3'
     compile 'com.facebook.rebound:rebound:0.3.8'
+//    compile 'com.navercorp.volleyextensions:volley-views:2.0.1'
+    compile files('libs/volly-1.0.11.jar')
 }
 
 
@@ -43,7 +45,7 @@ android {
     buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.tbs.tobosutype" // 程序的包名
-        minSdkVersion 19
+        minSdkVersion 14
         targetSdkVersion 25
         versionCode 19
         versionName "3.1"

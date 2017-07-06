@@ -396,7 +396,10 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
 
     private void hideEdittext() {
         InputMethodManager im = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        im.hideSoftInputFromWindow(getActivity().getCurrentFocus().getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        if(getActivity()!=null && getActivity().getCurrentFocus()!=null){
+            im.hideSoftInputFromWindow(getActivity().getCurrentFocus().getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+
     }
 
 }

@@ -1,11 +1,13 @@
 package com.tbs.tobosutype.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.TextUtils;
@@ -23,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.squareup.okhttp.Request;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
@@ -48,7 +51,7 @@ import java.util.Map;
  */
 public class WelcomeActivity extends Activity {
     private static final String TAG = WelcomeActivity.class.getSimpleName();
-    private CheckUpdateUtils updateUtils;
+//    private CheckUpdateUtils updateUtils;
 
     private String check_password = Constant.TOBOSU_URL + "tapp/passport/isCheckPwdUp";
     private String check_ab_test = Constant.TOBOSU_URL + "tapp/spcailpic/get_ab";
@@ -73,12 +76,9 @@ public class WelcomeActivity extends Activity {
 
         mContext = WelcomeActivity.this;
         startapp_time = new Date().getTime();
+        needPermissions();
         do_webpage();
         getSetting();
-
-        // 新版本检查
-        updateUtils = new CheckUpdateUtils(WelcomeActivity.this);
-        updateUtils.cheackUpdate();
 
         // 欢迎页面 这里可以做基础数据集成到本地，如果没有则不需要
         new Thread() {
@@ -243,16 +243,8 @@ public class WelcomeActivity extends Activity {
         @Override
         public void run() {
 
-            // 这里不需要检测新版本
-
-//            if (MyApplication.ISMUSTUPDATE) { // 为true的话  进入更新 并且是强制更新
-//                // 有新版本更新
-//                updateUtils.startUpdata();
-//            } else {
-
                 // 首次安装标记
                 getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).edit().putString("go_poporder_string", "5").commit();
-
 
                 if (getSharedPreferences("city", 0).getString("cityName", "").length() > 0) {
                     // 定位到城市
@@ -337,6 +329,28 @@ public class WelcomeActivity extends Activity {
 //				String name = uri.getQueryParameter("name");
 //				String age= uri.getQueryParameter("age");
             }
+        }
+    }
+
+    private  void needPermissions(){
+        if(Build.VERSION.SDK_INT >= 23){
+            String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_WIFI_STATE,
+
+                    Manifest.permission.ACCESS_NETWORK_STATE
+//                    Manifest.permission.READ_EXTERNAL_STORAGE,
+//                    Manifest.permission.ACCESS_COARSE_LOCATION,
+//                    Manifest.permission.ACCESS_WIFI_STATE
+
+            };
+
+            requestPermissions(permissions, 101);
         }
     }
 }

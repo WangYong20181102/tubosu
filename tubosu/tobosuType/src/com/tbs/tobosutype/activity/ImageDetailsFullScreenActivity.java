@@ -3,6 +3,7 @@ package com.tbs.tobosutype.activity;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -425,14 +426,18 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
     }
 
 
-    public byte[] getImage(String path) throws Exception {
-        URL url = new URL(path);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setConnectTimeout(5 * 1000);
-        conn.setRequestMethod("GET");
-        InputStream inStream = conn.getInputStream();
-        if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-            return readStream(inStream);
+    public byte[] getImage(String path){
+        try{
+            URL url = new URL(path);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(5 * 1000);
+            conn.setRequestMethod("GET");
+            InputStream inStream = conn.getInputStream();
+            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                return readStream(inStream);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         return null;
     }
@@ -466,18 +471,34 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
      * @param fileName
      * @throws IOException
      */
-    public void saveFile(Bitmap bm, String fileName) throws IOException {
+    public void saveFile(Bitmap bm, String fileName){
         File dirFile = new File(IMG_PATH);
         if (!dirFile.exists()) {
             dirFile.mkdir();
         }
         File myCaptureFile = new File(IMG_PATH + fileName);
-        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
-        if (bm != null) {
-            bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+        BufferedOutputStream bos = null;
+        try {
+            bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
+            if (bm != null) {
+                bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }finally {
+            if(bos!=null){
+                try {
+                    bos.flush();
+                    bos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+
         }
-        bos.flush();
-        bos.close();
+
     }
 
     /***
@@ -490,7 +511,7 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
             try {
                 saveFile(mBitmap, mFileName);
                 mSaveMessage = "效果图下载成功！";
-            } catch (IOException e) {
+            } catch (Exception e) {
                 mSaveMessage = "效果图下载失败！";
                 e.printStackTrace();
             }

@@ -1,5 +1,6 @@
 package com.tbs.tobosutype.activity;
 
+import android.Manifest;
 import android.app.TabActivity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,6 +26,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.Util;
@@ -141,7 +144,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         initView();
         initReceiver();
         initEvent();
-
+        needPermissions();
     }
 
 
@@ -620,6 +623,27 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 //            } else if (intent.getAction().equals(Constant.LOGIN_ACTION)) {
 //                setFragmentPosition(3);
 //            }
+        }
+    }
+    private  void needPermissions(){
+        if(Build.VERSION.SDK_INT >= 23){
+            String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_WIFI_STATE,
+
+                    Manifest.permission.ACCESS_NETWORK_STATE
+//                    Manifest.permission.READ_EXTERNAL_STORAGE,
+//                    Manifest.permission.ACCESS_COARSE_LOCATION,
+//                    Manifest.permission.ACCESS_WIFI_STATE
+
+            };
+
+            requestPermissions(permissions, 101);
         }
     }
 

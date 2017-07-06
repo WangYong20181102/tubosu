@@ -744,16 +744,30 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             e.printStackTrace();
         }
 
-
-        if(Build.VERSION.SDK_INT >= 23){
-            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                                            Manifest.permission.ACCESS_FINE_LOCATION,
-                                            Manifest.permission.READ_PHONE_STATE},ACCESS_LOCATION);
-        }
-
-
+        needPermissions();
     }
 
+    private  void needPermissions(){
+        if(Build.VERSION.SDK_INT >= 23){
+            String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_WIFI_STATE,
+
+                    Manifest.permission.ACCESS_NETWORK_STATE
+//                    Manifest.permission.READ_EXTERNAL_STORAGE,
+//                    Manifest.permission.ACCESS_COARSE_LOCATION,
+//                    Manifest.permission.ACCESS_WIFI_STATE
+
+            };
+
+            requestPermissions(permissions, 101);
+        }
+    }
 
 
     /**自定义个权限码*/
@@ -765,13 +779,13 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
 
             // requestCode即所声明的权限获取码，在checkSelfPermission时传入
             case ACCESS_LOCATION:
-                if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // 获取到权限，作相应处理（调用定位SDK应当确保相关权限均被授权，否则可能引起定位失败）
-                } else{
-
-                    // 没有获取到权限，做特殊处理
-                }
+//                if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//
+//                    // 获取到权限，作相应处理（调用定位SDK应当确保相关权限均被授权，否则可能引起定位失败）
+//                } else{
+//
+//                    // 没有获取到权限，做特殊处理
+//                }
                 break;
 
             default:
@@ -879,11 +893,13 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
                 } else {
                     // 定位成功
 
-                    if (realLocationCity.contains("市") || realLocationCity.contains("县")) {
-                        realLocationCity = realLocationCity.substring(0, realLocationCity.length() - 1);
+                    if(realLocationCity!=null){
+                        if (realLocationCity.contains("市") || realLocationCity.contains("县")) {
+                            realLocationCity = realLocationCity.substring(0, realLocationCity.length() - 1);
+                        }
+                        startActivityWithCity(realLocationCity);
                     }
 
-                    startActivityWithCity(realLocationCity);
                 }
             }
         });

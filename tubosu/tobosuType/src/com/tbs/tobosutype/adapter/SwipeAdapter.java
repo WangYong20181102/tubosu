@@ -70,7 +70,7 @@ public class SwipeAdapter extends BaseAdapter {
         holder.item_da_name.setText(data.get(position).getExpend_name());
         holder.item_da_time.setText(data.get(position).getExpend_time());
         holder.item_da_content.setText(data.get(position).getContent());
-        holder.item_da_money.setText( "￥ "+data.get(position).getCost());
+        holder.item_da_money.setText( "¥ "+data.get(position).getCost());
 
         holder.item_right.setOnClickListener(new OnClickListener() {
             @Override

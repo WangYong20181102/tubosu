@@ -205,8 +205,11 @@ public class EditAccountAcitivity extends FragmentActivity{
                     intent = new Intent(Constant.ACTION_STEEL_FRAGMENT_DATA);
                 }else if(saveData==3){
                     intent = new Intent(Constant.ACTION_FURNITURE_FRAGMENT_DATA);
-                }else{
+                }else if(saveData==4){
                     intent = new Intent(Constant.ACTION_KITCHEN_FRAGMENT_DATA);
+                }else {
+                    saveData=0;
+                    intent = new Intent(Constant.ACTION_MANPOWER_FRAGMENT_DATA);
                 }
                 sendBroadcast(intent);
             }
@@ -294,7 +297,9 @@ public class EditAccountAcitivity extends FragmentActivity{
 //                                        setResultCode(Constant.FINISH_SAVE_EDIT_OUTCOME);
                                         finish();
                                     }else if(obj.getInt("status")==0){
-                                        Util.setToast(context, getToastMesssage(saveData)+"添加失败,稍后再试!");
+                                        Util.setToast(context, getToastMesssage(saveData)+"添加失败,请修改再试!");
+                                    }else {
+                                        Util.setToast(context, "请修改再试!");
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -303,12 +308,12 @@ public class EditAccountAcitivity extends FragmentActivity{
 
                             @Override
                             public void onFail(Request request, IOException e) {
-                                Util.setToast(context, getToastMesssage(saveData)+"添加失败,稍后再试!");
+                                Util.setToast(context, getToastMesssage(saveData)+"添加失败,请修改再试!");
                             }
 
                             @Override
                             public void onError(Response response, int code) {
-                                Util.setToast(context, getToastMesssage(saveData)+"添加失败,稍后再试!");
+                                Util.setToast(context, getToastMesssage(saveData)+"添加失败,请修改再试!");
                             }
                         });
                     }
