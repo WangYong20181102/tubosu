@@ -427,17 +427,19 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
 
 
     public byte[] getImage(String path){
-        try{
-            URL url = new URL(path);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setConnectTimeout(5 * 1000);
-            conn.setRequestMethod("GET");
-            InputStream inStream = conn.getInputStream();
-            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                return readStream(inStream);
+        if(path!=null && !"".equals(path)){
+            try{
+                URL url = new URL(path);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setConnectTimeout(5 * 1000);
+                conn.setRequestMethod("GET");
+                InputStream inStream = conn.getInputStream();
+                if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    return readStream(inStream);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
-        }catch (Exception e){
-            e.printStackTrace();
         }
         return null;
     }
@@ -540,7 +542,7 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
                 if (data != null) {
                     mBitmap = BitmapFactory.decodeByteArray(data, 0, data.length);// bitmap
                 } else {
-                    Toast.makeText(mContext, "Image error!", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "Image error!", Toast.LENGTH_SHORT).show();
                 }
                 mBitmap = BitmapFactory.decodeStream(getImageStream(filePath));
                 connectHanlder.sendEmptyMessage(0);
