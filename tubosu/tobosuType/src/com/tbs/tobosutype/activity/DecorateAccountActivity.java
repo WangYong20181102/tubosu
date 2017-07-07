@@ -162,12 +162,15 @@ public class DecorateAccountActivity extends Activity {
                 relDataEmpty.setVisibility(View.VISIBLE);
                 relDataLaout.setVisibility(View.GONE);
                 tvTotalCost.setText("0");
-                seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_nomralsd_style));
+//                seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_nomralsd_style));
+                seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_whole_green_style));
                 tvState.setText(budgetTips[0]);
             }else if(status==202){
                 JSONObject data = jsonObject.getJSONObject("data");
                 tvTotalCost.setText(data.getString("autual_cost"));
                 tvTotalBuduget.setText(data.getString("expected_cost"));
+                seekProgress.setProgress(0);
+                seekProgress.setProgressDrawable(getResources().getDrawable(R.drawable.seekbar_whole_green_style));
                 tvState.setText(budgetTips[0]);
                 relDataEmpty.setVisibility(View.VISIBLE);
                 relDataLaout.setVisibility(View.GONE);
@@ -215,7 +218,7 @@ public class DecorateAccountActivity extends Activity {
 
 
     private void initView(_DecorationExpent decorationExpentList) {
-
+        Util.setErrorLog(TAG, "刷新");
         tvTotalCost.setText(decorationExpentList.getAll_cost());
         String budget = decorationExpentList.getExpected_cost();
         tvTotalBuduget.setText(budget);

@@ -1,7 +1,9 @@
 package com.tbs.tobosupicture.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -41,6 +43,7 @@ public class WelcomeActivity extends BaseActivity {
         //百度地图的相关设置
         mLocationClient = new LocationClient(getApplicationContext());
         myListener = new MyLocationListener();
+        needPermissions();
         mLocationClient.registerLocationListener(myListener);
         initLocation();
         mLocationClient.start();
@@ -223,4 +226,28 @@ public class WelcomeActivity extends BaseActivity {
 
         }
     }
+
+    // 动态获取权限
+    private  void needPermissions(){
+        if(Build.VERSION.SDK_INT >= 23){
+            String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_WIFI_STATE,
+
+                    Manifest.permission.ACCESS_NETWORK_STATE
+//                    Manifest.permission.READ_EXTERNAL_STORAGE,
+//                    Manifest.permission.ACCESS_COARSE_LOCATION,
+//                    Manifest.permission.ACCESS_WIFI_STATE
+
+            };
+
+            requestPermissions(permissions, 101);
+        }
+    }
+
 }

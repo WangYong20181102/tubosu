@@ -103,7 +103,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:max="100"
-                                    android:progressDrawable="@drawable/seekbar_define_style"
+                                    android:progressDrawable="@drawable/seekbar_whole_green_style"
                                     android:thumb="@null" />
 
                                 <TextView
