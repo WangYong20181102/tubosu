@@ -18,9 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.FreeQuoteActivity;
 import com.tbs.tobosupicture.base.BaseFragment;
+import com.tbs.tobosupicture.utils.GlideUtils;
 
 import java.io.File;
 
@@ -57,7 +60,12 @@ public class ImageToFriendFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_image_tofriend, null);
         ButterKnife.bind(this, view);
         mContext = getActivity();
+        initView();
         return view;
+    }
+
+    private void initView() {
+//        GlideUtils.glideLoader(mContext,"/storage/emulated/0/DCIM/Camera/IMG_20170706_152728.jpg",0,0,photoImg);
     }
 
     @Override
