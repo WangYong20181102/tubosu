@@ -625,6 +625,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 //            }
         }
     }
+
     private  void needPermissions(){
         if(Build.VERSION.SDK_INT >= 23){
             String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
@@ -635,13 +636,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_WIFI_STATE,
-
-                    Manifest.permission.ACCESS_NETWORK_STATE
-//                    Manifest.permission.READ_EXTERNAL_STORAGE,
-//                    Manifest.permission.ACCESS_COARSE_LOCATION,
-//                    Manifest.permission.ACCESS_WIFI_STATE
-
-            };
+                    Manifest.permission.WRITE_SETTINGS,
+                    Manifest.permission.ACCESS_NETWORK_STATE};
 
             requestPermissions(permissions, 101);
         }

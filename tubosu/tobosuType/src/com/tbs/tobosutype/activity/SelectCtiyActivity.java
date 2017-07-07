@@ -871,7 +871,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
                 }
             }
 
-            Log.d(TAG, "--SelectCityActivity 草--" + sb);
+//            Log.d(TAG, "--SelectCityActivity 草--" + sb);
         }
 
     }

@@ -623,6 +623,7 @@ public class FreeQuoteActivity extends BaseActivity {
                 String json = new String(response.body().string());
                 Log.e(TAG, "请求回来的数据====" + json);
                 try {
+
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.getString("status");
                     if (status.equals("200")) {
