@@ -29,4 +29,17 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/into_photo"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="点击进入拍照" />
+
+    <TextView
+        android:id="@+id/into_img"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="点击进入相册" />
 </LinearLayout>

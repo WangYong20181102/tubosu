@@ -115,6 +115,10 @@
         </activity>
         <activity android:name=".activity.FristActivity" />
         <activity android:name=".activity.FreeQuoteActivity"></activity>
+        <!--Image Selector Entry-->
+        <activity
+            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
+            android:configChanges="orientation|screenSize" />
     </application>
 
 </manifest>

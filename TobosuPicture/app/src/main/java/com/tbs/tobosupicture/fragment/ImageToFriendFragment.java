@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,20 +15,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.FreeQuoteActivity;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.utils.GlideUtils;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.nereo.multi_image_selector.MultiImageSelector;
+import me.nereo.multi_image_selector.MultiImageSelectorActivity;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Mr.Lin on 2017/6/29 11:10.
@@ -37,10 +39,18 @@ import butterknife.OnClick;
  */
 
 public class ImageToFriendFragment extends BaseFragment {
+
+    private ArrayList<String> imageList = new ArrayList<>();
+    private ArrayList<String> path = new ArrayList<>();
+
     private static final int REQUESTCODE_TAKE = 1;
     private static final int REQUESTCODE_CUTTING = 2;
+    private static final int REQUEST_IMAGE = 3;
     private static final String IMAGE_FILE_NAME = "avatarImage.jpg";
-
+    @BindView(R.id.into_photo)
+    TextView intoPhoto;
+    @BindView(R.id.into_img)
+    TextView intoImg;
     private Context mContext;
     @BindView(R.id.photo_img)
     ImageView photoImg;
@@ -73,7 +83,7 @@ public class ImageToFriendFragment extends BaseFragment {
         super.onDestroyView();
     }
 
-    @OnClick({R.id.into_free_quote, R.id.into_imgae})
+    @OnClick({R.id.into_free_quote, R.id.into_imgae, R.id.into_img, R.id.into_photo})
     public void onViewClickedAtImageToFriendFragment(View view) {
         switch (view.getId()) {
             case R.id.into_free_quote:
@@ -87,11 +97,48 @@ public class ImageToFriendFragment extends BaseFragment {
                 takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
                 startActivityForResult(takeIntent, REQUESTCODE_TAKE);
                 break;
+            case R.id.into_img:
+                //点击进入相册
+                MultiImageSelector.create(mContext)
+                        .showCamera(true)
+                        .count(9)
+                        .multi()
+                        .origin(imageList)
+                        .start(ImageToFriendFragment.this, REQUEST_IMAGE);
+                break;
+            case R.id.into_photo:
+                //点击进行相机拍照处理
+                break;
         }
     }
 
+    /**
+     * 显示popwindow 选择去相册拿照片还是去拍照拿相片
+     */
+    private void showPopWindow() {
+
+    }
+
+    /**
+     * 处理选择完照片的逻辑
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE) {
+            if (resultCode == RESULT_OK) {
+                path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+                Intent intent = new Intent();
+                intent.putStringArrayListExtra("list", path);
+                for (int i = 0; i < path.size(); i++) {
+                    Log.e(TAG, "选择的图片地址====" + path.get(i));
+                }
+                GlideUtils.glideLoader(mContext, path.get(0), 0, 0, photoImg);
+            }
+        }
         switch (requestCode) {
             case REQUESTCODE_TAKE:
                 File temp = new File(Environment.getExternalStorageDirectory() + "/" + IMAGE_FILE_NAME);
@@ -110,6 +157,11 @@ public class ImageToFriendFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 设置照片到指定的位置
+     *
+     * @param picdata
+     */
     private void setPicToView(Intent picdata) {
         Bundle extras = picdata.getExtras();
         if (extras != null) {
@@ -118,6 +170,11 @@ public class ImageToFriendFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 裁剪照片
+     *
+     * @param uri
+     */
     public void startPhotoZoom(Uri uri) {
 
         Intent intent = new Intent("com.android.camera.action.CROP");
@@ -130,4 +187,5 @@ public class ImageToFriendFragment extends BaseFragment {
         intent.putExtra("return-data", true);
         startActivityForResult(intent, REQUESTCODE_CUTTING);
     }
+
 }
