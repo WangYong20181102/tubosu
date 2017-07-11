@@ -79,24 +79,6 @@ public class HttpUtils {
     }
 
     /**
-     * Post请求发送JSON数据
-     *
-     * @param url
-     * @param jsonParams
-     * @param callback
-     */
-    public static void doPostJson(String url, String jsonParams, Callback callback) {
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8")
-                , jsonParams);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
-        Call call = getInstance().newCall(request);
-        call.enqueue(callback);
-    }
-
-    /**
      * 上传文件
      *
      * @param url      上传文件的地址
@@ -121,7 +103,23 @@ public class HttpUtils {
         Call call = getInstance().newCall(request);
         call.enqueue(callback);
     }
-
+    /**
+     * Post请求发送JSON数据
+     *
+     * @param url
+     * @param jsonParams
+     * @param callback
+     */
+    public static void doPostJson(String url, String jsonParams, Callback callback) {
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8")
+                , jsonParams);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        Call call = getInstance().newCall(request);
+        call.enqueue(callback);
+    }
     /**
      * 根据文件路径判断MediaType
      *

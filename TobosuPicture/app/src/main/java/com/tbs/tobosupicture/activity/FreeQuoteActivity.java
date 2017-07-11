@@ -1,6 +1,7 @@
 package com.tbs.tobosupicture.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -25,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -39,6 +41,8 @@ public class FreeQuoteActivity extends BaseActivity {
     private Context mContext;
     private String mCityName = "";//选择的城市名称
     private int mPrice = 0;//计算的总价
+    private ArrayList<String> mImageList = new ArrayList<>();//临时测试用的集合
+
 
     private final int FIRST_TIER_CITITES = 1;//一线城市
     private final int SECOND_TIER_STRONG_CITITES = 2;//二线强城市

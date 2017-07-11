@@ -10,20 +10,26 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.FreeQuoteActivity;
 import com.tbs.tobosupicture.base.BaseFragment;
+import com.tbs.tobosupicture.utils.FileUtil;
 import com.tbs.tobosupicture.utils.GlideUtils;
+import com.tbs.tobosupicture.utils.ImageCompress;
+import com.tbs.tobosupicture.utils.ImgCompressUtils;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,12 +46,14 @@ import static android.app.Activity.RESULT_OK;
 
 public class ImageToFriendFragment extends BaseFragment {
 
+    @BindView(R.id.photo_img2)
+    ImageView photoImg2;
     private ArrayList<String> imageList = new ArrayList<>();
     private ArrayList<String> path = new ArrayList<>();
 
     private static final int REQUESTCODE_TAKE = 1;
     private static final int REQUESTCODE_CUTTING = 2;
-    private static final int REQUEST_IMAGE = 3;
+    private static final int REQUEST_IMAGE = 3;//图片选择器用到的code
     private static final String IMAGE_FILE_NAME = "avatarImage.jpg";
     @BindView(R.id.into_photo)
     TextView intoPhoto;
@@ -108,6 +116,7 @@ public class ImageToFriendFragment extends BaseFragment {
                 break;
             case R.id.into_photo:
                 //点击进行相机拍照处理
+                showPopWindow();
                 break;
         }
     }
@@ -116,7 +125,57 @@ public class ImageToFriendFragment extends BaseFragment {
      * 显示popwindow 选择去相册拿照片还是去拍照拿相片
      */
     private void showPopWindow() {
+        View popView = View.inflate(mContext, R.layout.view_popwindow_photo, null);
+        Button bt_album = (Button) popView.findViewById(R.id.btn_pop_album);//开启相册的选择
+        Button bt_camera = (Button) popView.findViewById(R.id.btn_pop_camera);//开启照相机的选择
+        Button bt_cancle = (Button) popView.findViewById(R.id.btn_pop_cancel);//取消
+        //获取屏幕的宽高
+        int weight = getResources().getDisplayMetrics().widthPixels;
+        int height = getResources().getDisplayMetrics().heightPixels;
+        final PopupWindow popupWindow = new PopupWindow(popView, weight, height);
+        popupWindow.setFocusable(true);
+        //点击外部消失
+        popupWindow.setOutsideTouchable(true);
+        bt_album.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //进入相册选择
+                MultiImageSelector.create(mContext)
+                        .showCamera(true)
+                        .count(9)
+                        .multi()
+                        .origin(imageList)
+                        .start(ImageToFriendFragment.this, REQUEST_IMAGE);
+            }
+        });
+        bt_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //进入相机拍摄
+            }
+        });
+        bt_cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //取消popwindow显示
+                popupWindow.dismiss();
+            }
+        });
 
+        //popwindow消失屏幕变为不透明
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+                lp.alpha = 1.0f;
+                getActivity().getWindow().setAttributes(lp);
+            }
+        });
+        //popwindow出现屏幕变为半透明
+        WindowManager.LayoutParams lp = getActivity().getWindow().getAttributes();
+        lp.alpha = 0.5f;
+        getActivity().getWindow().setAttributes(lp);
+        popupWindow.showAtLocation(popView, Gravity.BOTTOM, 0, 50);
     }
 
     /**
@@ -131,12 +190,35 @@ public class ImageToFriendFragment extends BaseFragment {
         if (requestCode == REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
                 path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                Intent intent = new Intent();
-                intent.putStringArrayListExtra("list", path);
+                String newPath = "";
+                //原始图片
+                File file = new File(path.get(0));
+                //压缩的图片
+                File newFile = new File(ImgCompressUtils.CompressAndGetPath(mContext, path.get(0)));
+                newPath = ImgCompressUtils.CompressAndGetPath(mContext, path.get(0));
+                Log.e(TAG, "压缩前图片的大小=" + (file.length() / 1024) + "压缩后的图片大小=" + newFile.length() / 1024);
                 for (int i = 0; i < path.size(); i++) {
-                    Log.e(TAG, "选择的图片地址====" + path.get(i));
+                    File files = new File(path.get(i));
+                    Log.e(TAG, "选择的图片地址=" + path.get(i) + "当前文件的name=" + files.getName() + "当前文件大小=" + files.length() / 1024);
                 }
                 GlideUtils.glideLoader(mContext, path.get(0), 0, 0, photoImg);
+                GlideUtils.glideLoader(mContext, newPath, 0, 0, photoImg2);
+//                HttpUtils.doFile(UrlConstans.UPLOAD_IMAGE, path.get(0), file.getName(), new Callback() {
+//                    @Override
+//                    public void onFailure(Call call, IOException e) {
+//                        Log.e(TAG, "链接失败" + e.toString());
+//                    }
+//
+//                    @Override
+//                    public void onResponse(Call call, Response response) throws IOException {
+//                        Log.e(TAG, "连接成功" + response.body().string());
+//                    }
+//                });
+                //下面这个是测试用的
+//                Intent intent = new Intent(getActivity(), FreeQuoteActivity.class);
+//                intent.putStringArrayListExtra("ImageList", path);
+//                startActivity(intent);
+
             }
         }
         switch (requestCode) {

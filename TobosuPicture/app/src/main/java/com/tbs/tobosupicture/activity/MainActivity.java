@@ -2,29 +2,29 @@ package com.tbs.tobosupicture.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.google.gson.Gson;
+import com.jauker.widget.BadgeView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.bean.EC;
 import com.tbs.tobosupicture.bean.Event;
-import com.tbs.tobosupicture.bean._User;
 import com.tbs.tobosupicture.fragment.DecorationCaseFragment;
 import com.tbs.tobosupicture.fragment.ImageToFriendFragment;
 import com.tbs.tobosupicture.fragment.MineFragment;
 import com.tbs.tobosupicture.fragment.TemplateFragment;
-import com.tbs.tobosupicture.utils.EventBusUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,11 +43,14 @@ public class MainActivity extends BaseActivity {
     RadioButton rbFourth;
     @BindView(R.id.main_radioGroup)
     RadioGroup mainRadioGroup;
+    @BindView(R.id.mian_show_num3)
+    View mianShowNum3;
 
     private Fragment[] mFragments;//fragment集合
     private int mIndex;//数据下标
     private String TAG = "MainActivity";
     private Context mContext;
+    private BadgeView badgeView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +79,17 @@ public class MainActivity extends BaseActivity {
         ft.add(R.id.main_frameLayout, templateFragment).commit();
         //默认设置第0个
         setIndexSelect(0);
+        //红点提示
+        badgeView = new BadgeView(mContext);
+        //红点提示框的圆形角度以及背景颜色
+        badgeView.setBackground(8, Color.parseColor("#FFF10606"));
+        //设置依附在那个控件上
+        badgeView.setTargetView(mianShowNum3);
+        //依附的位置
+        badgeView.setBadgeGravity(Gravity.RIGHT | Gravity.TOP);
+        //显示数量
+        badgeView.setBadgeCount(5);
+        badgeView.setVisibility(View.VISIBLE);
     }
 
     //选择所在页面

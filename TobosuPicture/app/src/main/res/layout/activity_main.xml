@@ -21,40 +21,84 @@
         android:layout_above="@+id/main_radioGroup"
         android:background="@color/line" />
 
-    <RadioGroup
-        android:id="@+id/main_radioGroup"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:orientation="horizontal">
-        <!--样板图按钮-->
-        <RadioButton
-            android:onClick="MainViewOnClick"
-            android:id="@+id/rb_first"
-            style="@style/radiobutton_style"
-            android:text="样板图"
-            android:textSize="@dimen/text_size_14" />
-        <!--案例按钮-->
-        <RadioButton
-            android:onClick="MainViewOnClick"
-            android:id="@+id/rb_second"
-            style="@style/radiobutton_style"
-            android:text="案例"
-            android:textSize="@dimen/text_size_14" />
-        <!--以图会友按钮-->
-        <RadioButton
-            android:onClick="MainViewOnClick"
-            android:id="@+id/rb_third"
-            style="@style/radiobutton_style"
-            android:text="以图会友"
-            android:textSize="@dimen/text_size_14" />
-        <!--我的按钮-->
-        <RadioButton
-            android:onClick="MainViewOnClick"
-            android:id="@+id/rb_fourth"
-            style="@style/radiobutton_style"
-            android:text="我的"
-            android:textSize="@dimen/text_size_14" />
-    </RadioGroup>
+        android:layout_height="50dp">
+
+        <RadioGroup
+            android:id="@+id/main_radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <!--样板图按钮-->
+            <RadioButton
+                android:id="@+id/rb_first"
+                style="@style/radiobutton_style"
+                android:checked="true"
+                android:onClick="MainViewOnClick"
+                android:text="样板图"
+                android:textColor="@drawable/selector_main_btn"
+                android:textSize="@dimen/text_size_14" />
+            <!--案例按钮-->
+            <RadioButton
+                android:id="@+id/rb_second"
+                style="@style/radiobutton_style"
+                android:checked="false"
+                android:onClick="MainViewOnClick"
+                android:text="案例"
+                android:textColor="@drawable/selector_main_btn"
+                android:textSize="@dimen/text_size_14" />
+            <!--以图会友按钮-->
+            <RadioButton
+                android:id="@+id/rb_third"
+                style="@style/radiobutton_style"
+                android:checked="false"
+                android:onClick="MainViewOnClick"
+                android:text="以图会友"
+                android:textColor="@drawable/selector_main_btn"
+                android:textSize="@dimen/text_size_14" />
+            <!--我的按钮-->
+            <RadioButton
+                android:id="@+id/rb_fourth"
+                style="@style/radiobutton_style"
+                android:checked="false"
+                android:onClick="MainViewOnClick"
+                android:text="我的"
+                android:textColor="@drawable/selector_main_btn"
+                android:textSize="@dimen/text_size_14" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:clickable="false"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <View
+                android:clickable="false"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+
+            <View
+                android:clickable="false"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+
+            <View
+                android:clickable="false"
+                android:id="@+id/mian_show_num3"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+
+            <View
+                android:clickable="false"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

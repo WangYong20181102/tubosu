@@ -108,6 +108,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     compile 'com.github.lovetuzitong:MultiImageSelector:1.2'
+    compile files('libs/badgeview.jar')
 }
 android.applicationVariants.all { variant ->
     variant.outputs.each { output ->
