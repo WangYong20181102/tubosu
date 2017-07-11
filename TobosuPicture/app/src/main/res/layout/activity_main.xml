@@ -69,36 +69,43 @@
                 android:textColor="@drawable/selector_main_btn"
                 android:textSize="@dimen/text_size_14" />
         </RadioGroup>
-
+        <!--红点提示依附的控件，因为红点提示直接依附在RadioButton上会引起事件的冲突，所以采用浮层模式-->
         <LinearLayout
-            android:clickable="false"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="50dp"
+            android:clickable="false">
 
             <View
-                android:clickable="false"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:clickable="false" />
 
             <View
-                android:clickable="false"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:clickable="false" />
 
             <View
-                android:clickable="false"
                 android:id="@+id/mian_show_num3"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:clickable="false" />
 
-            <View
-                android:clickable="false"
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="50dp"
-                android:layout_weight="1" />
+                android:layout_weight="1">
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/shape_dot"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp" />
+            </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

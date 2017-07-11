@@ -50,7 +50,8 @@ public class MainActivity extends BaseActivity {
     private int mIndex;//数据下标
     private String TAG = "MainActivity";
     private Context mContext;
-    private BadgeView badgeView;
+    private BadgeView mImgToFriendTag;//以图会友提示
+    private BadgeView mMineTag;//以图会友提示
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,17 +80,19 @@ public class MainActivity extends BaseActivity {
         ft.add(R.id.main_frameLayout, templateFragment).commit();
         //默认设置第0个
         setIndexSelect(0);
-        //红点提示
-        badgeView = new BadgeView(mContext);
+
+
+        //以图会友红点提示
+        mImgToFriendTag = new BadgeView(mContext);
         //红点提示框的圆形角度以及背景颜色
-        badgeView.setBackground(8, Color.parseColor("#FFF10606"));
+        mImgToFriendTag.setBackground(8, Color.parseColor("#FFF10606"));
         //设置依附在那个控件上
-        badgeView.setTargetView(mianShowNum3);
+        mImgToFriendTag.setTargetView(mianShowNum3);
         //依附的位置
-        badgeView.setBadgeGravity(Gravity.RIGHT | Gravity.TOP);
+        mImgToFriendTag.setBadgeGravity(Gravity.RIGHT | Gravity.TOP);
         //显示数量
-        badgeView.setBadgeCount(5);
-        badgeView.setVisibility(View.VISIBLE);
+        mImgToFriendTag.setBadgeCount(5);
+        mImgToFriendTag.setVisibility(View.VISIBLE);
     }
 
     //选择所在页面
@@ -141,7 +144,7 @@ public class MainActivity extends BaseActivity {
         return true;
     }
 
-    //使用Eventbus处理回来显示
+    //使用Eventbus处理回来显示 返回原来所点击的模块  目前仅做测试使用
     @Override
     protected void receiveEvent(Event event) {
         switch (event.getCode()) {

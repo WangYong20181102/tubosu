@@ -21,4 +21,6 @@
     <color name="text_black">#3d424c</color>
     <!--字体颜色黑色-->
     <color name="text_yellow">#ff882e</color>
+    <!--背景颜色红色-->
+    <color name="bg_red">#FFF10606</color>
 </resources>
