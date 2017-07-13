@@ -23,4 +23,17 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">12sp</item>
     </style>
+    <!-- 加载数据时显示的 DialogProgress -->
+    <style name="common_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowIsFloating">true</item>
+        <!-- 设置未浮动窗口 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 设置无边框 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 设置无标题 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 设置完全透明 -->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!-- 设置屏幕变暗 -->
+    </style>
 </resources>

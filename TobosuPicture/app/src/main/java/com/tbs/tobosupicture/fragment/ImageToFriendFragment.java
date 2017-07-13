@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.FreeQuoteActivity;
+import com.tbs.tobosupicture.activity.MyFansActivity;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.ImgCompressUtils;
@@ -107,8 +108,8 @@ public class ImageToFriendFragment extends BaseFragment {
     public void onViewClickedAtImageToFriendFragment(View view) {
         switch (view.getId()) {
             case R.id.into_free_quote:
-                Log.e(TAG, "点击了进入智能报价");
-                startActivity(new Intent(getActivity(), FreeQuoteActivity.class));
+                Log.e(TAG, "点击了进入要测试的Activity");
+                startActivity(new Intent(getActivity(), MyFansActivity.class));
                 break;
             case R.id.into_imgae:
                 //启动相机进行拍照处理

@@ -22,9 +22,9 @@
             <TextView
                 android:id="@+id/into_free_quote"
                 android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:onClick="onViewClickedAtImageToFriendFragment"
-                android:text="点击进入免费报价" />
+                android:text="点击进入要测试的Activity" />
 
             <TextView
                 android:id="@+id/into_imgae"

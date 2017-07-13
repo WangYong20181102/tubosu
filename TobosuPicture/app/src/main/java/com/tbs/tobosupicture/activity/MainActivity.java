@@ -120,8 +120,6 @@ public class MainActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.rb_first:
                 //点击第一个选项 显示样板图
-                Log.e(TAG, "点击了样板图");
-//                EventBusUtil.sendEvent(new Event(EC.EventCode.SHOW_TEMPLATE_FRAGMENT));
                 setIndexSelect(0);
                 break;
             case R.id.rb_second:
@@ -151,8 +149,8 @@ public class MainActivity extends BaseActivity {
         switch (event.getCode()) {
             case EC.EventCode.SHOW_TEMPLATE_FRAGMENT:
                 //样板图
-                rbFirst.performClick();
-                setIndexSelect(0);
+//                rbFirst.performClick();
+//                setIndexSelect(0);
                 break;
             case EC.EventCode.SHOW_DECORATIONCASE_FRAGMENT:
                 //装修案例
@@ -162,13 +160,13 @@ public class MainActivity extends BaseActivity {
                 break;
             case EC.EventCode.SHOW_IMAGETOFRIEND_FRAGMENT:
                 //以图会友
-                rbThird.performClick();
-                setIndexSelect(2);
+//                rbThird.performClick();
+//                setIndexSelect(2);
                 break;
             case EC.EventCode.SHOW_MINE_FRAGMENT:
                 //显示我的
-                rbFourth.performClick();
-                setIndexSelect(3);
+//                rbFourth.performClick();
+//                setIndexSelect(3);
                 break;
         }
     }
