@@ -41,7 +41,7 @@
                 android:onClick="MainViewOnClick"
                 android:text="效果图"
                 android:textColor="@drawable/selector_main_btn"
-                android:textSize="@dimen/text_size_24px" />
+                android:textSize="@dimen/text_size_20px" />
             <!--案例按钮-->
             <RadioButton
                 android:id="@+id/rb_second"
@@ -51,7 +51,7 @@
                 android:onClick="MainViewOnClick"
                 android:text="案例"
                 android:textColor="@drawable/selector_main_btn"
-                android:textSize="@dimen/text_size_24px" />
+                android:textSize="@dimen/text_size_20px" />
             <!--以图会友按钮-->
             <RadioButton
                 android:id="@+id/rb_third"
@@ -61,7 +61,7 @@
                 android:onClick="MainViewOnClick"
                 android:text="以图会友"
                 android:textColor="@drawable/selector_main_btn"
-                android:textSize="@dimen/text_size_24px" />
+                android:textSize="@dimen/text_size_20px" />
             <!--我的按钮-->
             <RadioButton
                 android:id="@+id/rb_fourth"
@@ -71,7 +71,7 @@
                 android:onClick="MainViewOnClick"
                 android:text="我的"
                 android:textColor="@drawable/selector_main_btn"
-                android:textSize="@dimen/text_size_24px" />
+                android:textSize="@dimen/text_size_20px" />
         </RadioGroup>
         <!--红点提示依附的控件，因为红点提示直接依附在RadioButton上会引起事件的冲突，所以采用浮层模式-->
         <LinearLayout

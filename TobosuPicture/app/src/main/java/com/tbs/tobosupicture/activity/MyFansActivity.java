@@ -72,9 +72,10 @@ public class MyFansActivity extends BaseActivity {
     }
 
     private void initViewEvent() {
+        //显示加载浮层
         customWaitDialog = new CustomWaitDialog(mContext);
         customWaitDialog.show();
-
+        //
         mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         mfMyfansRecyclelist.setLayoutManager(mLinearLayoutManager);
         mfMyfansRecyclelist.setOnTouchListener(onTouchListener);
