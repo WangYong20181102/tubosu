@@ -23,13 +23,17 @@ import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.FreeQuoteActivity;
 import com.tbs.tobosupicture.base.BaseFragment;
-import com.tbs.tobosupicture.utils.FileUtil;
 import com.tbs.tobosupicture.utils.GlideUtils;
-import com.tbs.tobosupicture.utils.ImageCompress;
 import com.tbs.tobosupicture.utils.ImgCompressUtils;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +52,10 @@ public class ImageToFriendFragment extends BaseFragment {
 
     @BindView(R.id.photo_img2)
     ImageView photoImg2;
+    @BindView(R.id.into_share)
+    TextView intoShare;
+    @BindView(R.id.into_thr_login)
+    TextView intoThrLogin;
     private ArrayList<String> imageList = new ArrayList<>();
     private ArrayList<String> path = new ArrayList<>();
 
@@ -55,6 +63,9 @@ public class ImageToFriendFragment extends BaseFragment {
     private static final int REQUESTCODE_CUTTING = 2;
     private static final int REQUEST_IMAGE = 3;//图片选择器用到的code
     private static final String IMAGE_FILE_NAME = "avatarImage.jpg";
+    private UMShareAPI mShareAPI;
+
+
     @BindView(R.id.into_photo)
     TextView intoPhoto;
     @BindView(R.id.into_img)
@@ -84,6 +95,7 @@ public class ImageToFriendFragment extends BaseFragment {
 
     private void initView() {
 //        GlideUtils.glideLoader(mContext,"/storage/emulated/0/DCIM/Camera/IMG_20170706_152728.jpg",0,0,photoImg);
+        mShareAPI = UMShareAPI.get(mContext);
     }
 
     @Override
@@ -91,7 +103,7 @@ public class ImageToFriendFragment extends BaseFragment {
         super.onDestroyView();
     }
 
-    @OnClick({R.id.into_free_quote, R.id.into_imgae, R.id.into_img, R.id.into_photo})
+    @OnClick({R.id.into_free_quote, R.id.into_imgae, R.id.into_img, R.id.into_photo, R.id.into_share, R.id.into_thr_login})
     public void onViewClickedAtImageToFriendFragment(View view) {
         switch (view.getId()) {
             case R.id.into_free_quote:
@@ -118,8 +130,58 @@ public class ImageToFriendFragment extends BaseFragment {
                 //点击进行相机拍照处理
                 showPopWindow();
                 break;
+            case R.id.into_share:
+                new ShareAction(getActivity()).withText("这只是一个分享")
+                        .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
+                        .setCallback(umShareListener).open();
+                break;
+            case R.id.into_thr_login:
+                mShareAPI.getPlatformInfo(getActivity(), SHARE_MEDIA.WEIXIN, new UMAuthListener() {
+                    @Override
+                    public void onStart(SHARE_MEDIA share_media) {
+
+                    }
+
+                    @Override
+                    public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                        Log.e(TAG, "微信授权成功!===" + map.get("openid"));
+                    }
+
+                    @Override
+                    public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+                        Log.e(TAG, "微信授权失败！===" + i + "===" + throwable.toString());
+                    }
+
+                    @Override
+                    public void onCancel(SHARE_MEDIA share_media, int i) {
+
+                    }
+                });
+                break;
         }
     }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onStart(SHARE_MEDIA share_media) {
+
+        }
+
+        @Override
+        public void onResult(SHARE_MEDIA share_media) {
+
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA share_media) {
+
+        }
+    };
 
     /**
      * 显示popwindow 选择去相册拿照片还是去拍照拿相片

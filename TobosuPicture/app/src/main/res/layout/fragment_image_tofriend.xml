@@ -65,6 +65,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="点击进入相册" />
+
+            <TextView
+                android:id="@+id/into_share"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="点击进行分享" />
+
+            <TextView
+                android:id="@+id/into_thr_login"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="点击进行第三方登录" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

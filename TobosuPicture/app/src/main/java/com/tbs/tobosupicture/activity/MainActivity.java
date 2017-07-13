@@ -2,6 +2,7 @@ package com.tbs.tobosupicture.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -199,5 +200,17 @@ public class MainActivity extends BaseActivity {
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.bind(this).unbind();
+    }
+
+    /**
+     * 在基本的四个Fragment中涉及到分享相关的处理都在MainActivity的OnActivityResult中处理
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

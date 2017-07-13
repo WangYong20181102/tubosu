@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tbs.tobosupicture">
-    <!--调取相机的权限-->
-    <!--<uses-permission android:name="android.permission.CAMERA" />-->
+
+    <!-- 调取相机的权限 -->
+    <!-- <uses-permission android:name="android.permission.CAMERA" /> -->
 
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -58,7 +59,7 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5957097db27b0a539700219b" />
-        <!--友盟多渠道打包-->
+        <!-- 友盟多渠道打包 -->
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}" />
@@ -114,11 +115,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.FristActivity" />
-        <activity android:name=".activity.FreeQuoteActivity"></activity>
-        <!--Image Selector Entry-->
+        <activity android:name=".activity.FreeQuoteActivity" />
+        <!-- Image Selector Entry -->
         <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
             android:configChanges="orientation|screenSize" />
+        <activity android:name=".activity.MyFansActivity"></activity>
     </application>
 
 </manifest>
