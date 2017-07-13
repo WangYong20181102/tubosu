@@ -26,8 +26,8 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.http.HttpPost;
-import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HintInput;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.HintInput;
 /**
  *  注册页面 2
  * @author dec

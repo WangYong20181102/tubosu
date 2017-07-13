@@ -1,0 +1,321 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true" >
+
+
+    <RelativeLayout
+        android:id="@+id/getpric_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="0元 4套设计方案"
+            android:textColor="#040404"
+            android:textSize="18sp" />
+
+        <RelativeLayout
+            android:id="@+id/rel_getprice_back"
+            android:layout_width="30dp"
+            android:layout_height="49dp"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/activity_back" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+
+
+    <com.tbs.tobosupicture.view.ObservableScrollView
+        android:id="@+id/scrollview_getprice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/getpric_bar">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!-- 大图 -->
+                    <ImageView
+                        android:id="@+id/iv_big"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:background="@mipmap/getprice_img" />
+
+                    <ImageView
+                        android:id="@+id/iv_triangle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:adjustViewBounds="true"
+                        android:layout_marginTop="36dp"
+                        android:background="@mipmap/free_get" />
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="33dp"
+                        android:layout_marginTop="4dp"
+                        android:orientation="horizontal"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignTop="@+id/iv_triangle">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="12sp"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="#C9C9C9"
+                            android:text="已有"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="27sp"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="#E33232"
+                            android:text="156486"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="12sp"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="#C9C9C9"
+                            android:text="人申请"/>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/step_img"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:background="#F5F5F5"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:gravity="center_vertical" >
+
+                    <EditText
+                        android:id="@+id/getprice_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/shape_getprice_edittext_bg"
+                        android:textColor="#494949"
+                        android:textColorHint="#C3C2C2"
+                        android:paddingLeft="10dp"
+                        android:hint="您的称呼"
+                        android:textSize="14sp"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:gravity="center_vertical" >
+
+                    <EditText
+                        android:id="@+id/getprice_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/shape_getprice_edittext_bg"
+                        android:textColor="#494949"
+                        android:inputType="phone"
+                        android:textColorHint="#C3C2C2"
+                        android:paddingLeft="10dp"
+                        android:hint="联系电话"
+                        android:textSize="14sp"/>
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rel_choose_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/shape_getprice_edittext_bg"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:id="@+id/tv_getprice_city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#494949"
+                        android:paddingLeft="10dp"
+                        android:layout_centerVertical="true"
+                        android:hint="选择城市"
+                        android:textSize="14sp"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="14dp"
+                        android:background="@mipmap/down_arrow"/>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/getprice_submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_margin="30dp"
+                    android:textSize="18sp"
+                    android:gravity="center"
+                    android:background="@mipmap/getprice_btn"
+                    android:text="免费获得设计与报价"
+                    android:textColor="@color/white" />
+
+
+                <!-- 下面都是静态的 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@mipmap/decorate_service" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="19dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@mipmap/design_house" />
+
+                    <ImageView
+                        android:onClick="onViewClickedInGet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="19dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@mipmap/pk_price" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="19dp"
+                        android:background="@mipmap/house_future" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="21dp"
+                        android:orientation="vertical">
+                        <android.support.v4.view.ViewPager
+                            android:id="@+id/vp_getprice_img"
+                            android:layout_width="match_parent"
+                            android:layout_height="134dp">
+                        </android.support.v4.view.ViewPager>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="14dp"
+                            android:orientation="vertical" >
+                            <LinearLayout
+                                android:id="@+id/dot_view_group"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="30dp"
+                                android:gravity="center_horizontal"
+                                android:orientation="horizontal" >
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@mipmap/getprice_bottom"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </com.tbs.tobosupicture.view.ObservableScrollView>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/getpric_bar">
+        <TextView
+            android:id="@+id/cheat_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_margin="14dp"
+            android:gravity="center"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:maxLines="1"
+            android:background="@color/white"
+            android:layout_centerHorizontal="true"
+            android:drawableLeft="@mipmap/inform_icon"
+            android:textColor="@color/color_black"
+            android:text=""/>
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true">
+        <ImageView
+            android:id="@+id/iv_gotop"
+            android:layout_width="63dp"
+            android:layout_height="66dp"
+            android:layout_margin="20dp"
+            android:visibility="gone"
+            android:background="@mipmap/getorder_now"/>
+    </FrameLayout>
+
+</RelativeLayout>

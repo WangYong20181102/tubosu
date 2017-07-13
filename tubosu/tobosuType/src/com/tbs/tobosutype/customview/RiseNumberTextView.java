@@ -1,13 +1,5 @@
 package com.tbs.tobosutype.customview;
 
-import android.animation.ValueAnimator;
-import android.content.Context;
-import android.util.AttributeSet;
-import android.widget.TextView;
-
-import com.tbs.tobosutype.global.RiseNumberBase;
-import com.tbs.tobosutype.utils.Utils;
-
 /**
  * Created by Lie on 2017/6/20.
  */

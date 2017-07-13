@@ -46,8 +46,8 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.FreeActivity;
 import com.tbs.tobosutype.activity.WebViewActivity;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.DensityUtil;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.DensityUtil;
 
 /**
  * 首页顶部广告

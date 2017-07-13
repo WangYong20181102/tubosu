@@ -23,7 +23,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.fragment.ChooseDecorateDesignFragment;
 import com.tbs.tobosutype.fragment.ChooseDecorateSquareFragment;
 import com.tbs.tobosutype.fragment.ChooseDecorateStyleFragment;
-import com.tbs.tobosutype.utils.DensityUtil;
+import com.tbs.tobosutype.adapter.utils.DensityUtil;
 
 import java.util.ArrayList;
 	/**  2017-03-23 弃用 改用动画发单入口

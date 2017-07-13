@@ -27,8 +27,8 @@ import com.tbs.tobosutype.activity.LoginActivity;
 import com.tbs.tobosutype.activity.RegisterActivity2;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.http.HttpClientHelper;
-import com.tbs.tobosutype.utils.HintInput;
-import com.tbs.tobosutype.utils.Util;
+import com.tbs.tobosutype.adapter.utils.HintInput;
+import com.tbs.tobosutype.adapter.utils.Util;
 
 import org.json.JSONException;
 import org.json.JSONObject;

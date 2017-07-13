@@ -19,4 +19,6 @@
     <color name="bg_divide">#f2f3f5</color>
     <!--字体颜色黑色-->
     <color name="text_black">#3d424c</color>
+
+    <color name="color_black">#000</color>
 </resources>

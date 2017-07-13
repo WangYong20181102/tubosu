@@ -2,7 +2,6 @@ package com.tbs.tobosutype.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
 
 /**
  * 业主的订单详情

@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
 
 /**
  * 免费设计与报价

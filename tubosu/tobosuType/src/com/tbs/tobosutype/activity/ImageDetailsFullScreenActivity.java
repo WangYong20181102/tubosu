@@ -47,10 +47,10 @@ import com.tbs.tobosutype.customview.DesignFreePopupWindow;
 import com.tbs.tobosutype.customview.TouchImageView;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
-import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
-import com.tbs.tobosutype.utils.ImageLoaderUtil;
-import com.tbs.tobosutype.utils.Util;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.HttpServer;
+import com.tbs.tobosutype.adapter.utils.ImageLoaderUtil;
+import com.tbs.tobosutype.adapter.utils.Util;
 
 /**
  * 逛图库 全浏览页

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.utils.ImageLoaderUtil;
+import com.tbs.tobosutype.adapter.utils.ImageLoaderUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -18,9 +18,9 @@ import android.widget.RelativeLayout;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HintInput;
-import com.tbs.tobosutype.utils.ToastUtil;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.HintInput;
+import com.tbs.tobosutype.adapter.utils.ToastUtil;
 
 public class FindPwdActivity1 extends Activity implements OnClickListener {
     private Context mContext;

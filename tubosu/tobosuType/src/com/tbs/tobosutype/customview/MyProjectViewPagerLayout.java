@@ -22,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.utils.DensityUtil;
+import com.tbs.tobosutype.adapter.utils.DensityUtil;
 
 
 public class MyProjectViewPagerLayout extends LinearLayout implements OnClickListener{

@@ -48,10 +48,10 @@ import com.tbs.tobosutype.activity.PopOrderActivity;
 import com.tbs.tobosutype.activity.WebViewActivity;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
-import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.DensityUtil;
-import com.tbs.tobosutype.utils.HttpServer;
-import com.tbs.tobosutype.utils.MD5Util;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.DensityUtil;
+import com.tbs.tobosutype.adapter.utils.HttpServer;
+import com.tbs.tobosutype.adapter.utils.MD5Util;
 import com.umeng.analytics.MobclickAgent;
 
 import org.apache.http.Header;

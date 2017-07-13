@@ -32,8 +32,8 @@ import com.tbs.tobosutype.customview.CallDialogCompany;
 import com.tbs.tobosutype.customview.DropPopWindow;
 import com.tbs.tobosutype.customview.LfPwdPopupWindow;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.HttpServer;
 import com.tbs.tobosutype.xlistview.XListView;
 import com.tbs.tobosutype.xlistview.XListView.IXListViewListener;
 

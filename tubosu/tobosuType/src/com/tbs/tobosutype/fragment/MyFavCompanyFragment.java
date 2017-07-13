@@ -45,9 +45,9 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.DecorateCompanyDetailActivity;
 import com.tbs.tobosutype.activity.MyFavActivity;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
-import com.tbs.tobosutype.utils.ImageLoaderUtil;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.HttpServer;
+import com.tbs.tobosutype.adapter.utils.ImageLoaderUtil;
 	/**
 	 * 收藏页面 之 装修公司收藏
 	 * @author dec

@@ -23,7 +23,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.MyProjectViewPagerLayout;
 import com.tbs.tobosutype.fragment.ProjectListFragment;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;

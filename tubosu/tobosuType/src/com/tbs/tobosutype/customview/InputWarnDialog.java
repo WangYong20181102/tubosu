@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.utils.Util;
+import com.tbs.tobosutype.adapter.utils.Util;
 
 /***
  * 输入密码提醒 弹窗

@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
 
 /**
  * 业主修改信息页面

@@ -1,7 +1,7 @@
 package com.tbs.tobosutype.customview;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.utils.DensityUtil;
+import com.tbs.tobosutype.adapter.utils.DensityUtil;
 
 import android.content.Context;
 import android.content.res.TypedArray;

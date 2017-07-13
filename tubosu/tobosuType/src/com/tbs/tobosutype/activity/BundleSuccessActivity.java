@@ -1,7 +1,7 @@
 package com.tbs.tobosutype.activity;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
 
 import android.app.Activity;
 import android.graphics.Color;

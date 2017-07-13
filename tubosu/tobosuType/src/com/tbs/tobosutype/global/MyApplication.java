@@ -6,14 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Handler;
 import android.widget.TextView;
 
@@ -28,9 +25,9 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.model.City;
-import com.tbs.tobosutype.utils.CityData;
-import com.tbs.tobosutype.utils.NetUtil;
-import com.tbs.tobosutype.utils.SharePreferenceUtil;
+import com.tbs.tobosutype.adapter.utils.CityData;
+import com.tbs.tobosutype.adapter.utils.NetUtil;
+import com.tbs.tobosutype.adapter.utils.SharePreferenceUtil;
 
 public class MyApplication extends android.app.Application {
     public static String iconUrl;

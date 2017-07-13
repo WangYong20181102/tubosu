@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.SelectPicPopupWindow;
-import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.ShareUtil;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.ShareUtil;
 
 /**
  * 装修公司的网店设置

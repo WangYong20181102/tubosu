@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.utils.ImageLoaderUtil;
+import com.tbs.tobosutype.adapter.utils.ImageLoaderUtil;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;

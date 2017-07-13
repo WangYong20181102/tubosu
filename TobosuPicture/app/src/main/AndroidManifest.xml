@@ -115,6 +115,7 @@
         </activity>
         <activity android:name=".activity.FristActivity" />
         <activity android:name=".activity.FreeQuoteActivity"></activity>
+        <activity android:name=".activity.GetPriceActivity"></activity>
     </application>
 
 </manifest>

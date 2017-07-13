@@ -27,9 +27,9 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.http.HttpPost;
-import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HintInput;
-import com.tbs.tobosutype.utils.MD5Util;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.HintInput;
+import com.tbs.tobosutype.adapter.utils.MD5Util;
 /**
  * 找回密码 2页面
  */

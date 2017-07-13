@@ -32,8 +32,8 @@ import com.tbs.tobosutype.bean._ImageItem;
 import com.tbs.tobosutype.bean._Style;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.HttpServer;
 
 import org.apache.http.Header;
 import org.json.JSONArray;

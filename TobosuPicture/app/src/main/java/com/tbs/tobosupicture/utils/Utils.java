@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.text.DateFormat;
@@ -145,5 +146,16 @@ public class Utils {
             }
         }
         return false;
+    }
+
+    public static void setLog(String tag, String log){
+        System.out.println("---当前页面是" + tag + "-->>>" + "--打印信息>>>" + log + "<<");
+    }
+
+    public static void setErrorLog(String tag, String log){
+        Log.e("---当前页面是" + tag + "-->>>", "--打印信息>>>" + log + "<<");
+    }
+    public static void setToast(Context context, String msg){
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 }

@@ -23,8 +23,8 @@ import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.ShareUtil;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.ShareUtil;
 
 /***
  * android发单入口 页面

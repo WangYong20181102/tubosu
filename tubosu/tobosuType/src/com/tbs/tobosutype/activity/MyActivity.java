@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.utils.Util;
+import com.tbs.tobosutype.adapter.utils.Util;
 
 /**
  * Created by Lie on 2017/5/25.

@@ -19,8 +19,8 @@ import android.widget.Toast;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.CalculaterActivity;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.ShareUtil;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.ShareUtil;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

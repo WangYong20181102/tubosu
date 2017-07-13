@@ -26,8 +26,8 @@ import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
 import com.tbs.tobosutype.customview.MyChatView;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
-import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.HttpServer;
 
 import org.apache.http.Header;
 import org.json.JSONException;

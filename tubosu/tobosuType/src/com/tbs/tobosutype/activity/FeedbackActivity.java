@@ -68,11 +68,11 @@ import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.SelectPersonalPopupWindow;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.DensityUtil;
-import com.tbs.tobosutype.utils.HttpServer;
-import com.tbs.tobosutype.utils.MiPictureHelper;
-import com.tbs.tobosutype.utils.WriteUtil;
+import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.adapter.utils.DensityUtil;
+import com.tbs.tobosutype.adapter.utils.HttpServer;
+import com.tbs.tobosutype.adapter.utils.MiPictureHelper;
+import com.tbs.tobosutype.adapter.utils.WriteUtil;
 
 public class FeedbackActivity extends Activity {
     private static final String TAG = FeedbackActivity.class.getSimpleName();

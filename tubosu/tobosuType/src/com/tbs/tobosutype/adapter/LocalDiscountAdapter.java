@@ -10,14 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.RoundImageView;
 import com.tbs.tobosutype.global.MyApplication;
-import com.tbs.tobosutype.utils.DensityUtil;
+import com.tbs.tobosutype.adapter.utils.DensityUtil;
 /***
  *  首页 本地优惠数据适配器 adapter
  * @author dec
