@@ -31,4 +31,12 @@ public class UrlConstans {
      * 获取使用发单人口数量
      */
     public static final String GET_BILL_COUNT_URL = ZXKK_URL + "zapp/index/get_bill_count";
+    /**
+     * 上传图片的地址
+     */
+    public static final String UPLOAD_IMAGE = ZXKK_URL + "cloud/upload/upload_for_ke?";
+    /**
+     * 获取我的图谜url
+     */
+    public static final String GET_MY_FANS_URL = ZXKK_URL + "";
 }

@@ -157,7 +157,8 @@ public class NewMylikeActivity extends AppCompatActivity {
 //            Log.e(TAG, "最后可见目标===" + lastVisiableItem + "集合总数===" + mLinearLayoutManager.getItemCount() + "==newState==" + newState + "==刷新状态==" + collectSwipe.isRefreshing());
             if (newState == RecyclerView.SCROLL_STATE_IDLE
                     && lastVisiableItem + 2 >= mLinearLayoutManager.getItemCount()
-                    && !mylike_swipe.isRefreshing() && !isShowDelete) {
+                    && !mylike_swipe.isRefreshing()
+                    && !isShowDelete) {
                 loadMore();
                 myLikeAdapter.changeState(1);
             }

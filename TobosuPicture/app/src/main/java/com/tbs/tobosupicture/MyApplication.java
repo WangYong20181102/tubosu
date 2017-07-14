@@ -42,7 +42,7 @@ public class MyApplication extends Application {
 
     {
         //社会化分享所需要的配置 微信 微博 QQ的Appkey
-        PlatformConfig.setWeixin("", "");
+        PlatformConfig.setWeixin("wx0bdd96841e80fac2", "d9794d9011a4344c0e60d643046c6ac6");
         PlatformConfig.setSinaWeibo("", "", "");
         PlatformConfig.setQQZone("", "");
     }

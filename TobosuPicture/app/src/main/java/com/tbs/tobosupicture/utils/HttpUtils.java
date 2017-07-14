@@ -79,24 +79,6 @@ public class HttpUtils {
     }
 
     /**
-     * Post请求发送JSON数据
-     *
-     * @param url
-     * @param jsonParams
-     * @param callback
-     */
-    public static void doPostJson(String url, String jsonParams, Callback callback) {
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8")
-                , jsonParams);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
-        Call call = getInstance().newCall(request);
-        call.enqueue(callback);
-    }
-
-    /**
      * 上传文件
      *
      * @param url      上传文件的地址
@@ -123,6 +105,24 @@ public class HttpUtils {
     }
 
     /**
+     * Post请求发送JSON数据
+     *
+     * @param url
+     * @param jsonParams
+     * @param callback
+     */
+    public static void doPostJson(String url, String jsonParams, Callback callback) {
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8")
+                , jsonParams);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+        Call call = getInstance().newCall(request);
+        call.enqueue(callback);
+    }
+
+    /**
      * 根据文件路径判断MediaType
      *
      * @param path
@@ -140,9 +140,9 @@ public class HttpUtils {
     /**
      * 下载文件
      *
-     * @param url
-     * @param fileDir
-     * @param fileName
+     * @param url      请求的地址 可以是图片的url或者是apk的下载地址
+     * @param fileDir  保存文件的路径名
+     * @param fileName 保存文件的文件名
      */
     public static void downFile(String url, final String fileDir, final String fileName) {
         Request request = new Request.Builder()
@@ -163,6 +163,12 @@ public class HttpUtils {
                 FileOutputStream fos = null;
                 try {
                     is = response.body().byteStream();
+                    File dirFile = new File(fileDir);
+                    if (!dirFile.exists()) {
+                        //没有该文件夹的时候创建该文件夹
+                        dirFile.mkdir();
+                    }
+                    //创建图片文件
                     File file = new File(fileDir, fileName);
                     fos = new FileOutputStream(file);
                     while ((len = is.read(buf)) != -1) {

@@ -3,6 +3,9 @@ package com.tbs.tobosupicture.bean;
 /**
  * Created by Mr.Lin on 2017/6/30 08:29.
  * Eventbus 处理事务总线
+ * 事件总线的code使用：
+ * 吴天保同学 0x00000N
+ * 林承文同学 0x10000N
  */
 
 public final class EC {

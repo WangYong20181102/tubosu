@@ -1,6 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?><!--尺寸相关-->
+<?xml version="1.0" encoding="utf-8"?><!--尺寸相关 设计给的字体尺寸是以像素为单位-->
 <resources>
-    <dimen name="text_size_14">14sp</dimen>
-    <dimen name="text_size_16">16sp</dimen>
-    <dimen name="text_size_18">18sp</dimen>
+    <dimen name="text_size_20px">10sp</dimen>
+    <dimen name="text_size_24px">12sp</dimen>
+    <dimen name="text_size_28px">14sp</dimen>
+    <dimen name="text_size_30px">15sp</dimen>
+    <dimen name="text_size_32px">16sp</dimen>
+    <dimen name="text_size_36px">18sp</dimen>
+    <dimen name="text_size_40px">20sp</dimen>
 </resources>

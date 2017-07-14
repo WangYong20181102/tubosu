@@ -2,29 +2,30 @@ package com.tbs.tobosupicture.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.google.gson.Gson;
+import com.jauker.widget.BadgeView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.bean.EC;
 import com.tbs.tobosupicture.bean.Event;
-import com.tbs.tobosupicture.bean._User;
 import com.tbs.tobosupicture.fragment.DecorationCaseFragment;
 import com.tbs.tobosupicture.fragment.ImageToFriendFragment;
 import com.tbs.tobosupicture.fragment.MineFragment;
 import com.tbs.tobosupicture.fragment.TemplateFragment;
-import com.tbs.tobosupicture.utils.EventBusUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,11 +44,15 @@ public class MainActivity extends BaseActivity {
     RadioButton rbFourth;
     @BindView(R.id.main_radioGroup)
     RadioGroup mainRadioGroup;
+    @BindView(R.id.mian_show_num3)
+    View mianShowNum3;
 
     private Fragment[] mFragments;//fragment集合
     private int mIndex;//数据下标
     private String TAG = "MainActivity";
     private Context mContext;
+    private BadgeView mImgToFriendTag;//以图会友提示
+    private BadgeView mMineTag;//以图会友提示
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +81,19 @@ public class MainActivity extends BaseActivity {
         ft.add(R.id.main_frameLayout, templateFragment).commit();
         //默认设置第0个
         setIndexSelect(0);
+
+
+        //以图会友红点提示
+        mImgToFriendTag = new BadgeView(mContext);
+        //红点提示框的圆形角度以及背景颜色
+        mImgToFriendTag.setBackground(8, Color.parseColor("#FFF10606"));
+        //设置依附在那个控件上
+        mImgToFriendTag.setTargetView(mianShowNum3);
+        //依附的位置
+        mImgToFriendTag.setBadgeGravity(Gravity.RIGHT | Gravity.TOP);
+        //显示数量
+        mImgToFriendTag.setBadgeCount(5);
+        mImgToFriendTag.setVisibility(View.VISIBLE);
     }
 
     //选择所在页面
@@ -102,8 +120,6 @@ public class MainActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.rb_first:
                 //点击第一个选项 显示样板图
-                Log.e(TAG, "点击了样板图");
-//                EventBusUtil.sendEvent(new Event(EC.EventCode.SHOW_TEMPLATE_FRAGMENT));
                 setIndexSelect(0);
                 break;
             case R.id.rb_second:
@@ -127,14 +143,14 @@ public class MainActivity extends BaseActivity {
         return true;
     }
 
-    //使用Eventbus处理回来显示
+    //使用Eventbus处理回来显示 返回原来所点击的模块  目前仅做测试使用
     @Override
     protected void receiveEvent(Event event) {
         switch (event.getCode()) {
             case EC.EventCode.SHOW_TEMPLATE_FRAGMENT:
                 //样板图
-                rbFirst.performClick();
-                setIndexSelect(0);
+//                rbFirst.performClick();
+//                setIndexSelect(0);
                 break;
             case EC.EventCode.SHOW_DECORATIONCASE_FRAGMENT:
                 //装修案例
@@ -144,13 +160,13 @@ public class MainActivity extends BaseActivity {
                 break;
             case EC.EventCode.SHOW_IMAGETOFRIEND_FRAGMENT:
                 //以图会友
-                rbThird.performClick();
-                setIndexSelect(2);
+//                rbThird.performClick();
+//                setIndexSelect(2);
                 break;
             case EC.EventCode.SHOW_MINE_FRAGMENT:
                 //显示我的
-                rbFourth.performClick();
-                setIndexSelect(3);
+//                rbFourth.performClick();
+//                setIndexSelect(3);
                 break;
         }
     }
@@ -182,5 +198,17 @@ public class MainActivity extends BaseActivity {
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.bind(this).unbind();
+    }
+
+    /**
+     * 在基本的四个Fragment中涉及到分享相关的处理都在MainActivity的OnActivityResult中处理
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

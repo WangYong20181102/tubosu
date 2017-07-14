@@ -23,8 +23,6 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">12sp</item>
     </style>
-
-
     <!-- 加载数据时显示的 DialogProgress -->
     <style name="common_dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowIsFloating">true</item>

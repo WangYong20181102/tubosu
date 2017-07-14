@@ -11,14 +11,22 @@
     <color name="blue">#8acdfd</color>
     <!--字体颜色红色-->
     <color name="text_red">#f57a7a</color>
+    <!--字体颜色白色-->
+    <color name="text_white">#ffffff</color>
+    <!--关于名字的字体颜色黑色-->
+    <color name="text_color_black_name">#2e3033</color>
     <!--字体颜色灰色-->
     <color name="text_gray">#8a8f99</color>
     <!--白色背景色-->
     <color name="bg_white">#ffffff</color>
     <!--分割线颜色-->
-    <color name="bg_divide">#f2f3f5</color>
+    <color name="bg_divide">#e5e5e5</color>
     <!--字体颜色黑色-->
     <color name="text_black">#3d424c</color>
-
-    <color name="color_black">#000</color>
+    <!--字体颜色黑色-->
+    <color name="text_yellow">#ff882e</color>
+    <!--背景颜色红色-->
+    <color name="bg_red">#FFF10606</color>
+    <!--顶部banner背景颜色黑色-->
+    <color name="bg_banner_black">#202124</color>
 </resources>
