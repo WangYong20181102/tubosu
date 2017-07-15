@@ -31,4 +31,6 @@
     <color name="bg_red">#FFF10606</color>
     <!--顶部banner背景颜色黑色-->
     <color name="bg_banner_black">#202124</color>
+    <!--顶部banner背景颜色黑色-->
+    <color name="color_black">#202124</color>
 </resources>
