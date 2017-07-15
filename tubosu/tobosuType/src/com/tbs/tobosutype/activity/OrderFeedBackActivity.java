@@ -35,9 +35,9 @@ import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
-import com.tbs.tobosutype.adapter.utils.HttpServer;
-import com.tbs.tobosutype.adapter.utils.ImageLoaderUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.HttpServer;
+import com.tbs.tobosutype.utils.ImageLoaderUtil;
 /**
  * 订单反馈页 -- 类似即时聊天页面
  * @author dec

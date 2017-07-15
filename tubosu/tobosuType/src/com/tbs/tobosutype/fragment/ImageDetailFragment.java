@@ -29,10 +29,10 @@ import com.tbs.tobosutype.customview.CardSlidePanel;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.customview.DesignFreePopupWindow;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
-import com.tbs.tobosutype.adapter.utils.HttpServer;
-import com.tbs.tobosutype.adapter.utils.ImageLoaderUtil;
-import com.tbs.tobosutype.adapter.utils.ShareUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.HttpServer;
+import com.tbs.tobosutype.utils.ImageLoaderUtil;
+import com.tbs.tobosutype.utils.ShareUtil;
 import com.umeng.analytics.MobclickAgent;
 
 import org.apache.http.Header;

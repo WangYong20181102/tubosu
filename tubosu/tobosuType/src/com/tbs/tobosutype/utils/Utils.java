@@ -1,4 +1,4 @@
-package com.tbs.tobosutype.adapter.utils;
+package com.tbs.tobosutype.utils;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;

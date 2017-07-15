@@ -1,4 +1,4 @@
-package com.tbs.tobosutype.adapter.utils;
+package com.tbs.tobosutype.utils;
 
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;

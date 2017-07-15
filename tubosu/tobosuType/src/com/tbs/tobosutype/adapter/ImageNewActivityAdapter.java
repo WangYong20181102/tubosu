@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean._ImageItem;
-import com.tbs.tobosutype.adapter.utils.ImageLoaderUtil;
+import com.tbs.tobosutype.utils.ImageLoaderUtil;
 
 import java.util.List;
 

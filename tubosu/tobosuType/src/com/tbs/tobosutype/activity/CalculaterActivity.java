@@ -22,7 +22,7 @@ import com.tbs.tobosutype.fragment.FloorFragment;
 import com.tbs.tobosutype.fragment.PaintFragment;
 import com.tbs.tobosutype.fragment.WallBrickFragment;
 import com.tbs.tobosutype.fragment.WallPicFragment;
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
 
 import java.util.ArrayList;
 import java.util.List;

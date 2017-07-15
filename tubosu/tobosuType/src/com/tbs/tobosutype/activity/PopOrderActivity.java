@@ -37,9 +37,9 @@ import com.tbs.tobosutype.adapter.PopAdapter;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.customview.TextSeekBar;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
-import com.tbs.tobosutype.adapter.utils.CacheManager;
-import com.tbs.tobosutype.adapter.utils.Util;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.CacheManager;
+import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -51,7 +51,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.tbs.tobosutype.adapter.utils.CacheManager.getOngoingStyle;
+import static com.tbs.tobosutype.utils.CacheManager.getOngoingStyle;
 
 
 /**

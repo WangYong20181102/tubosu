@@ -29,7 +29,7 @@ import com.tbs.tobosutype.customview.MyViewPager;
 import com.tbs.tobosutype.fragment.MyFavCompanyFragment;
 import com.tbs.tobosutype.fragment.MyFavImageFragment;
 import com.tbs.tobosutype.global.MyApplication;
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
 
 /**
  * 业主 收藏页面

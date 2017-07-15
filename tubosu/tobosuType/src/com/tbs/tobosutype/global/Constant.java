@@ -5,7 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.Toast;
 
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
 
 
 public class Constant {

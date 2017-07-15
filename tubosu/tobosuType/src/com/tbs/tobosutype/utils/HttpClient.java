@@ -1,4 +1,4 @@
-package com.tbs.tobosutype.adapter.utils;
+package com.tbs.tobosutype.utils;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;

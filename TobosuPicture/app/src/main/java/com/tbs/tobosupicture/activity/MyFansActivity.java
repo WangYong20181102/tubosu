@@ -17,6 +17,7 @@ import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.bean._MyFans;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.CustomWaitDialog;
 
 import org.json.JSONException;
@@ -36,7 +37,7 @@ import okhttp3.Response;
 
 /**
  * create by lin
- * 我的图谜列表
+ * 我的图谜列表  显示可以加为图友以及显示是否为图友
  */
 public class MyFansActivity extends BaseActivity {
     @BindView(R.id.mf_back)
@@ -75,16 +76,16 @@ public class MyFansActivity extends BaseActivity {
         //显示加载浮层
         customWaitDialog = new CustomWaitDialog(mContext);
         customWaitDialog.show();
-        //
-        mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
-        mfMyfansRecyclelist.setLayoutManager(mLinearLayoutManager);
-        mfMyfansRecyclelist.setOnTouchListener(onTouchListener);
-        mfMyfansRecyclelist.addOnScrollListener(onScrollLister);//上拉加载更多
 
         mfSwipRefresh.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE);
         mfSwipRefresh.setBackgroundColor(Color.WHITE);
         mfSwipRefresh.setSize(SwipeRefreshLayout.DEFAULT);
         mfSwipRefresh.setOnRefreshListener(onRefreshListener);
+        //
+        mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        mfMyfansRecyclelist.setLayoutManager(mLinearLayoutManager);
+        mfMyfansRecyclelist.setOnTouchListener(onTouchListener);
+        mfMyfansRecyclelist.addOnScrollListener(onScrollLister);//上拉加载更多
     }
 
     //下拉刷新重置数据
@@ -128,9 +129,9 @@ public class MyFansActivity extends BaseActivity {
 
     //网络请求数据
     private void HttpGetMyFansList(int mPage) {
-        customWaitDialog.dismiss();
         HashMap<String, Object> param = new HashMap<>();
         param.put("page", mPage);
+        param.put("token", Utils.getDateToken());
         HttpUtils.doPost(UrlConstans.GET_MY_FANS_URL, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -145,7 +146,7 @@ public class MyFansActivity extends BaseActivity {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.getString("status");
                     if (status.equals("200")) {
-                        //处理请求回来的数据
+                        //处理请求回来的数据 将数据布局
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

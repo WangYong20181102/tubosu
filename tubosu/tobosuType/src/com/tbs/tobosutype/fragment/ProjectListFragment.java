@@ -26,9 +26,9 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.SelectedImageDetailActivity;
 import com.tbs.tobosutype.customview.RoundAngleImageView;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
-import com.tbs.tobosutype.adapter.utils.ImageLoaderUtil;
-import com.tbs.tobosutype.adapter.utils.Util;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.ImageLoaderUtil;
+import com.tbs.tobosutype.utils.Util;
 import com.tbs.tobosutype.xlistview.XListView;
 import com.tbs.tobosutype.xlistview.XListView.IXListViewListener;
 

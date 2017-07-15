@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.ZoomImageView;
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
 
 /**
  * 没使用

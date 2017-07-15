@@ -16,8 +16,8 @@ import com.squareup.okhttp.Response;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
-import com.tbs.tobosutype.adapter.utils.Util;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.Util;
 
 import org.json.JSONException;
 import org.json.JSONObject;

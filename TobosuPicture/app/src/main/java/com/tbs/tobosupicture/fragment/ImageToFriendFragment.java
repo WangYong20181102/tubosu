@@ -21,8 +21,12 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.FindPasswordActivity;
 import com.tbs.tobosupicture.activity.FreeQuoteActivity;
 import com.tbs.tobosupicture.activity.MyFansActivity;
+import com.tbs.tobosupicture.activity.MyFriendsActivity;
+import com.tbs.tobosupicture.activity.RegisterActivity;
+import com.tbs.tobosupicture.activity.SystemActivity;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.ImgCompressUtils;
@@ -109,7 +113,7 @@ public class ImageToFriendFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.into_free_quote:
                 Log.e(TAG, "点击了进入要测试的Activity");
-                startActivity(new Intent(getActivity(), MyFansActivity.class));
+                startActivity(new Intent(getActivity(), MyFriendsActivity.class));
                 break;
             case R.id.into_imgae:
                 //启动相机进行拍照处理

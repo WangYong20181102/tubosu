@@ -15,7 +15,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.adapter.utils.HintInput;
+import com.tbs.tobosutype.utils.HintInput;
 
 	/***
 	 * 免费预约popupwindow 从底部往上弹出

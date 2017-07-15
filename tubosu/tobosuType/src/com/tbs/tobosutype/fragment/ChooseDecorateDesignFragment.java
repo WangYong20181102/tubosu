@@ -32,8 +32,8 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.ChooseActivity;
 import com.tbs.tobosutype.activity.MainActivity;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
-import com.tbs.tobosutype.adapter.utils.HttpServer;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.HttpServer;
 import com.umeng.analytics.MobclickAgent;
 	/**
 	 * 获取设计和报价fragment

@@ -20,6 +20,10 @@ public class UrlConstans {
     public static final String ZXKK_URL = "http://www.dev.tobosu.com/";
 
     /**
+     * 手机号码 用于验证手机号码是否合法
+     */
+    public static final String PHONE_NUM = "^1(3[0-9]|5[0-35-9]|7[0136-8]|8[0-9])\\d{8}$";
+    /**
      * 发单所要用到的标识码
      */
     public static final String PIPE_CODE = "http://m.tobosu.com/app/pub?channel=seo&subchannel=zhjandroid&chcode=" + Utils.getChannType(MyApplication.getContexts()) + "&app_type=2";
@@ -40,6 +44,7 @@ public class UrlConstans {
      */
     public static final String GET_MY_FANS_URL = ZXKK_URL + "";
 
+
     /**家装页面 获取筛选类型*/
     public static final String GET_HOUSE_DECORATE_STYLE_URL = ZXKK_URL + "rapp/TemplateMap/get_home_search_type";
 
@@ -48,4 +53,26 @@ public class UrlConstans {
 
     /**家装/工装列表url*/
     public static final String GET_LIST = ZXKK_URL + "rapp/TemplateMap/index";
+
+    /**
+     * 获取他人的图谜url
+     */
+    public static final String GET_HIS_FANS_URL = ZXKK_URL + "";
+    /**
+     * 获取我关注的设计师url
+     */
+    public static final String GET_MY_ATTENTION_DESIGNER_URL = ZXKK_URL + "";
+    /**
+     * 获取手机验证码
+     */
+    public static final String GET_PHONE_CODE_URL = ZXKK_URL + "";
+    /**
+     * 用户用手机号码注册
+     */
+    public static final String PHONE_NUM_REGISTER_URL = ZXKK_URL + "";
+    /**
+     * 用户设置新密码
+     */
+    public static final String SET_NEW_PASSWORD = ZXKK_URL + "";
+
 }

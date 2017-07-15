@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@color/bg_white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <!--粉丝的头像-->
+        <ImageView
+            android:id="@+id/item_myfriend_icon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="12dp"
+            android:src="@mipmap/default_icon" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="4.2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="79dp"
+                android:layout_marginLeft="12dp"
+                android:gravity="left|center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
+                    <!--粉丝的名字-->
+                    <TextView
+                        android:id="@+id/item_myfriend_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxEms="12"
+                        android:singleLine="true"
+                        android:text="灵感家居"
+                        android:textColor="@color/text_color_black_name"
+                        android:textSize="@dimen/text_size_30px" />
+                    <!--粉丝的签名-->
+                    <TextView
+                        android:id="@+id/item_myfriend_sign"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:ellipsize="end"
+                        android:maxEms="16"
+                        android:singleLine="true"
+                        android:text="热爱生活每一天~"
+                        android:textColor="@color/text_gray"
+                        android:textSize="@dimen/text_size_24px" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/item_myfriend_add"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1.2"
+                    android:background="@drawable/shape_btn_gray"
+                    android:gravity="center"
+                    android:padding="7dp"
+                    android:singleLine="true"
+                    android:text="⇆互为图友"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_size_24px" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="12dp"
+                android:background="@color/bg_divide" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

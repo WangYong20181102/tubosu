@@ -26,10 +26,10 @@ import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.customview.ObservableScrollView;
 import com.tbs.tobosutype.customview.PmTextView;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
-import com.tbs.tobosutype.adapter.utils.DensityUtil;
-import com.tbs.tobosutype.adapter.utils.HttpServer;
-import com.tbs.tobosutype.adapter.utils.Util;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.DensityUtil;
+import com.tbs.tobosutype.utils.HttpServer;
+import com.tbs.tobosutype.utils.Util;
 
 import org.apache.http.Header;
 import org.json.JSONException;

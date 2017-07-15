@@ -1,4 +1,4 @@
-package com.tbs.tobosutype.adapter.utils;
+package com.tbs.tobosutype.utils;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;

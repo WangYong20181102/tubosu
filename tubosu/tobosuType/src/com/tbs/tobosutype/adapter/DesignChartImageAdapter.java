@@ -21,7 +21,7 @@ import com.tbs.tobosutype.activity.DecorateCompanyDetailActivity;
 import com.tbs.tobosutype.activity.DesignChartAcitivity;
 import com.tbs.tobosutype.activity.ImageDetailActivity;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.adapter.utils.ImageLoaderUtil;
+import com.tbs.tobosutype.utils.ImageLoaderUtil;
 
 	/***
 	 * 逛图库的适配器

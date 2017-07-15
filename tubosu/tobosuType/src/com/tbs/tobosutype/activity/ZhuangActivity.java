@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.MyApplication;
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
 
 /***
  * android发单入口 页面

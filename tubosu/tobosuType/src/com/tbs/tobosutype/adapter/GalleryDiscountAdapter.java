@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.adapter.utils.ImageLoaderUtil;
+import com.tbs.tobosutype.utils.ImageLoaderUtil;
 
 public class GalleryDiscountAdapter extends BaseAdapter {
 	private Context context;

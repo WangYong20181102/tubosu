@@ -1,4 +1,4 @@
-package com.tbs.tobosutype.adapter.utils;
+package com.tbs.tobosutype.utils;
 
 import android.annotation.SuppressLint;
 import android.content.ContentUris;

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomGridView;
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.umeng.analytics.MobclickAgent;
 
 import android.app.Activity;

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.bean._MyFans;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,10 +24,10 @@ public class MyFansAdapter
         extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements View.OnClickListener {
     private Context mContext;
-    private List<_MyFans> myFansList;
+    private ArrayList<_MyFans> myFansList;
     private int adapterLoadState = 1;//1.加载更多  2.恢复正常状态
 
-    public MyFansAdapter(Context context, List<_MyFans> myFansList) {
+    public MyFansAdapter(Context context, ArrayList<_MyFans> myFansList) {
         this.mContext = context;
         this.myFansList = myFansList;
     }
@@ -76,7 +77,7 @@ public class MyFansAdapter
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof MyFansViewHolder) {
-            //TODO 数据的适配 当个性签名为空时要判断
+            //TODO 数据的适配 当个性签名为空时要判断 将个性签名的栏目隐藏 添加加为图友的按钮点击事件 思考一下点击头像事件以及图友添加事件写在adapter中
 //            ((MyFansViewHolder) holder).myfansName.setText(myFansList.get(position));
         } else if (holder instanceof MyFansLoadMore) {
             if (position == 0) {
@@ -111,12 +112,14 @@ public class MyFansAdapter
         private ImageView myfansIcon;//我的粉丝头像
         private TextView myfansName;//我的粉丝名字
         private TextView myfansSign;//我的粉丝签名
+        private TextView myfansAdd;//添加图谜或者显示是否已为图友
 
         public MyFansViewHolder(View itemView) {
             super(itemView);
             myfansIcon = (ImageView) itemView.findViewById(R.id.item_myfans_icon);
             myfansName = (TextView) itemView.findViewById(R.id.item_myfans_name);
             myfansSign = (TextView) itemView.findViewById(R.id.item_myfans_sign);
+            myfansAdd = (TextView) itemView.findViewById(R.id.item_myfans_add);
         }
     }
 

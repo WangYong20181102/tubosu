@@ -22,8 +22,8 @@ import android.widget.Toast;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.http.HttpPost;
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
-import com.tbs.tobosutype.adapter.utils.HintInput;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.HintInput;
 /**
  * 用户注册页面1
  * @author dec

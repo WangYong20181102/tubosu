@@ -23,9 +23,9 @@ import com.tbs.tobosutype.fragment.MaterialFragment;
 import com.tbs.tobosutype.fragment.SteelFragment;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
-import com.tbs.tobosutype.adapter.utils.CacheManager;
-import com.tbs.tobosutype.adapter.utils.Util;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.CacheManager;
+import com.tbs.tobosutype.utils.Util;
 
 import org.json.JSONException;
 import org.json.JSONObject;

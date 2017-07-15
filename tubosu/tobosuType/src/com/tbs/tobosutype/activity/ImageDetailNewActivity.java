@@ -17,7 +17,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.fragment.ImageDetailFragment;
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
 
 public class ImageDetailNewActivity extends FragmentActivity {
     private Intent intent;

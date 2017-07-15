@@ -26,6 +26,7 @@ import com.tbs.tobosupicture.fragment.DecorationCaseFragment;
 import com.tbs.tobosupicture.fragment.ImageToFriendFragment;
 import com.tbs.tobosupicture.fragment.MineFragment;
 import com.tbs.tobosupicture.fragment.TemplateFragment;
+import com.tbs.tobosupicture.utils.EventBusUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -129,6 +130,7 @@ public class MainActivity extends BaseActivity {
             case R.id.rb_third:
                 //点击第三个选项 显示以图会友
                 setIndexSelect(2);
+                EventBusUtil.sendEvent(new Event(EC.EventCode.SHOW_IMAGETOFRIEND_FRAGMENT));
                 break;
             case R.id.rb_fourth:
                 //点击第四个选项 显示我的  其中我的界面要分情况考虑
@@ -159,6 +161,7 @@ public class MainActivity extends BaseActivity {
 //                setIndexSelect(1);
                 break;
             case EC.EventCode.SHOW_IMAGETOFRIEND_FRAGMENT:
+                Log.e(TAG, "收到点击以图会友相关消息");
                 //以图会友
 //                rbThird.performClick();
 //                setIndexSelect(2);
@@ -195,7 +198,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
         ButterKnife.bind(this).unbind();
     }

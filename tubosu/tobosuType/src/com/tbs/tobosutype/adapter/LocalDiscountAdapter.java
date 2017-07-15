@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.RoundImageView;
 import com.tbs.tobosutype.global.MyApplication;
-import com.tbs.tobosutype.adapter.utils.DensityUtil;
+import com.tbs.tobosutype.utils.DensityUtil;
 /***
  *  首页 本地优惠数据适配器 adapter
  * @author dec

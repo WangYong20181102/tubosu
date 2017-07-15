@@ -21,10 +21,10 @@ import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
-import com.tbs.tobosutype.adapter.utils.HintInput;
-import com.tbs.tobosutype.adapter.utils.HttpServer;
-import com.tbs.tobosutype.adapter.utils.Util;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.HintInput;
+import com.tbs.tobosutype.utils.HttpServer;
+import com.tbs.tobosutype.utils.Util;
 
 import org.apache.http.Header;
 import org.json.JSONException;

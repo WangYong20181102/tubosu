@@ -22,9 +22,9 @@ import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.DesignChartImageAdapter;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
-import com.tbs.tobosutype.adapter.utils.HttpServer;
-import com.tbs.tobosutype.adapter.utils.PrseImageJsonUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.HttpServer;
+import com.tbs.tobosutype.utils.PrseImageJsonUtil;
 import com.tbs.tobosutype.xlistview.XListView;
 import com.tbs.tobosutype.xlistview.XListView.IXListViewListener;
 

@@ -34,9 +34,9 @@ import com.tbs.tobosutype.customview.CallDialogCompany;
 import com.tbs.tobosutype.customview.LfPwdPopupWindow;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
-import com.tbs.tobosutype.adapter.utils.AppInfoUtil;
-import com.tbs.tobosutype.adapter.utils.CheckOrderUtils;
-import com.tbs.tobosutype.adapter.utils.HttpServer;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.CheckOrderUtils;
+import com.tbs.tobosutype.utils.HttpServer;
 
 /**
  * 全部订单的明细页面

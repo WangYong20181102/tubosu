@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CallDialogCompany;
-import com.tbs.tobosutype.adapter.utils.ImageLoaderUtil;
+import com.tbs.tobosutype.utils.ImageLoaderUtil;
 	/**
 	 * 装修公司跳转到优惠报名页面的优惠报名订单适配器
 	 * @author dec
