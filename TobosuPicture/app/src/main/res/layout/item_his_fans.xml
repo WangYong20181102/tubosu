@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?><!--我的图谜子项-->
+<?xml version="1.0" encoding="utf-8"?>
+<!--他人的粉丝item-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
     android:background="@color/bg_white"
+    android:layout_height="80dp"
     android:orientation="vertical">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:orientation="horizontal">
-        <!--粉丝的头像-->
+        <!--他人粉丝的头像-->
         <ImageView
-            android:id="@+id/item_myfans_icon"
+            android:id="@+id/item_hisfans_icon"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginLeft="12dp"
@@ -21,8 +21,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="4.2">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -38,7 +37,7 @@
                     android:orientation="vertical">
                     <!--粉丝的名字-->
                     <TextView
-                        android:id="@+id/item_myfans_name"
+                        android:id="@+id/item_hisfans_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -49,7 +48,7 @@
                         android:textSize="@dimen/text_size_30px" />
                     <!--粉丝的签名-->
                     <TextView
-                        android:id="@+id/item_myfans_sign"
+                        android:id="@+id/item_hisfans_sign"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
@@ -60,21 +59,6 @@
                         android:textColor="@color/text_gray"
                         android:textSize="@dimen/text_size_24px" />
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/item_myfans_add"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity=""
-                    android:layout_marginRight="15dp"
-                    android:layout_weight="1.2"
-                    android:background="@drawable/shape_btn_yellow"
-                    android:gravity="center"
-                    android:padding="7dp"
-                    android:singleLine="true"
-                    android:text="+加为图友"
-                    android:textColor="@color/text_yellow"
-                    android:textSize="@dimen/text_size_24px" />
             </LinearLayout>
 
             <View

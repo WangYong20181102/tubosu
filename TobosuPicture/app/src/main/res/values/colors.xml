@@ -19,6 +19,8 @@
     <color name="text_gray">#8a8f99</color>
     <!--白色背景色-->
     <color name="bg_white">#ffffff</color>
+    <!--灰色背景色-->
+    <color name="bg_gray">#FFF0F1F5</color>
     <!--分割线颜色-->
     <color name="bg_divide">#e5e5e5</color>
     <!--字体颜色黑色-->

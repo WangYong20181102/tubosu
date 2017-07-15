@@ -71,7 +71,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
         if (isRegisterEventBus()) {
             EventBusUtil.unregister(this);

@@ -120,7 +120,14 @@
         <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
             android:configChanges="orientation|screenSize" />
-        <activity android:name=".activity.MyFansActivity"></activity>
+        <activity android:name=".activity.MyFansActivity" />
+        <activity android:name=".activity.HisFansActivity" />
+        <activity android:name=".activity.MyAttentionDesigner" />
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.SetNewPasswordActivity" />
+        <activity android:name=".activity.FindPasswordActivity" />
+        <activity android:name=".activity.SystemActivity" />
+        <activity android:name=".activity.MyFriendsActivity"></activity>
     </application>
 
 </manifest>

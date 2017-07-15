@@ -6,5 +6,8 @@
     <dimen name="text_size_30px">15sp</dimen>
     <dimen name="text_size_32px">16sp</dimen>
     <dimen name="text_size_36px">18sp</dimen>
+    <dimen name="text_size_38px">19sp</dimen>
     <dimen name="text_size_40px">20sp</dimen>
+
+    <dimen name="banner_height">48dp</dimen>
 </resources>
