@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.RoundImageView;
 import com.tbs.tobosutype.global.MyApplication;
-import com.tbs.tobosutype.utils.DensityUtil;
 
 public class HomeLocalAdapter extends BaseAdapter{
 	private static final String TAG = HomeLocalAdapter.class.getSimpleName();

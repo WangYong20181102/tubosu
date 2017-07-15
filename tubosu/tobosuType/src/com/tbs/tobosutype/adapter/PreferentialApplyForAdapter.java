@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.activity.DecorateCompanyDetailActivity;
 import com.tbs.tobosutype.customview.CallDialogCompany;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 	/**

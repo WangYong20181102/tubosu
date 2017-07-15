@@ -26,7 +26,6 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.Util;

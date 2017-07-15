@@ -1,11 +1,6 @@
 package com.tbs.tobosutype.activity;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import org.apache.http.Header;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -17,7 +12,6 @@ import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -29,17 +23,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CallDialogCompany;
 import com.tbs.tobosutype.customview.CustomProgressDialog;
 import com.tbs.tobosutype.model.DownLoadManager;
-import com.tbs.tobosutype.protocol.JpyProtocol;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CheckUpdateUtils;
 import com.tbs.tobosutype.utils.DataCleanManager;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ShareUtil;
 import com.tbs.tobosutype.utils.ToastUtil;
 import com.tencent.android.tpush.XGIOperateCallback;

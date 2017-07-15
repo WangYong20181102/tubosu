@@ -1,7 +1,6 @@
 package com.tbs.tobosutype.utils;
 
 import android.content.Context;
-import android.renderscript.Float2;
 
 /**
  * 缓存工具类

@@ -10,6 +10,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
@@ -232,5 +233,15 @@ public class Utils {
             }
         }
         return dir.delete();
+	}
+    public static void setLog(String tag, String log){
+        System.out.println("---当前页面是" + tag + "-->>>" + "--打印信息>>>" + log + "<<");
+    }
+
+    public static void setErrorLog(String tag, String log){
+        Log.e("---当前页面是" + tag + "-->>>", "--打印信息>>>" + log + "<<");
+    }
+    public static void setToast(Context context, String msg){
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 }

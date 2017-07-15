@@ -6,14 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Handler;
 import android.widget.TextView;
 

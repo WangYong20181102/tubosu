@@ -1,7 +1,6 @@
 package com.tbs.tobosutype.utils;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;

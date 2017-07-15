@@ -3,7 +3,6 @@ package com.tbs.tobosutype.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -18,7 +17,6 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.Util;
 
 import org.json.JSONException;
