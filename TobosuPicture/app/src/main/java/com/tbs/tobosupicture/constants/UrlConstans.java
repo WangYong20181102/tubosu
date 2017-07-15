@@ -39,4 +39,13 @@ public class UrlConstans {
      * 获取我的图谜url
      */
     public static final String GET_MY_FANS_URL = ZXKK_URL + "";
+
+    /**家装页面 获取筛选类型*/
+    public static final String GET_HOUSE_DECORATE_STYLE_URL = ZXKK_URL + "rapp/TemplateMap/get_home_search_type";
+
+    /**工装页面 获取筛选类型*/
+    public static final String GET_FACTORY_DECORATE_STYLE_SURL = ZXKK_URL + "rapp/TemplateMap/get_tool_search_type";
+
+    /**家装/工装列表url*/
+    public static final String GET_LIST = ZXKK_URL + "rapp/TemplateMap/index";
 }

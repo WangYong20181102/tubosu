@@ -78,6 +78,11 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+    android {
+        dataBinding {
+            enabled = true
+        }
+    }
 }
 repositories {
     maven { url "https://jitpack.io" }

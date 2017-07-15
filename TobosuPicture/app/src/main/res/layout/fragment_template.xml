@@ -4,13 +4,96 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="这个是样板图fragment" />
-    <TextView
-        android:id="@+id/temp_location"
-        android:text="显示的定位城市===="
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="49dp"
+        android:background="@color/bg_banner_black">
+        <LinearLayout
+            android:id="@+id/fragment_location"
+            android:layout_width="wrap_content"
+            android:layout_height="49dp"
+            android:layout_marginLeft="14dp">
+            <TextView
+                android:id="@+id/temp_location"
+                android:text="深圳"
+                android:textSize="14sp"
+                android:textColor="@color/bg_white"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_gravity="center_vertical"
+                android:background="@mipmap/chengshi"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_toRightOf="@+id/fragment_location"
+            android:layout_marginLeft="14dp"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="14dp">
+                <TextView
+                    android:id="@+id/tvHouseDecorateText"
+                    android:text="家装"
+                    android:padding="8dp"
+                    android:textColor="@color/bg_white"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/tvHouseDecorateLine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="2dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@color/text_yellow"
+                    android:layout_alignLeft="@+id/tvHouseDecorateText"
+                    android:layout_alignRight="@+id/tvHouseDecorateText"
+                    android:layout_below="@+id/tvHouseDecorateText"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="14dp">
+                <TextView
+                    android:id="@+id/tvFactoryDecorateText"
+                    android:text="工装"
+                    android:textColor="@color/bg_white"
+                    android:padding="8dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/tvFactoryDecorateLine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="2dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_alignLeft="@+id/tvFactoryDecorateText"
+                    android:layout_alignRight="@+id/tvFactoryDecorateText"
+                    android:layout_below="@+id/tvFactoryDecorateText"/>
+            </RelativeLayout>
+            <View
+                android:layout_width="60dp"
+                android:layout_height="49dp"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/picViewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
+
 </LinearLayout>

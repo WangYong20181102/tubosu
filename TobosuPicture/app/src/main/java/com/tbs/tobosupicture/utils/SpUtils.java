@@ -47,4 +47,75 @@ public class SpUtils {
     public static String getLocationLon(Context context) {
         return context.getSharedPreferences("LocationInfo", 0).getString("Lon", "");
     }
+
+
+
+
+    private static final String XGTKK_PRE = "xgtkk_pre";
+    private static final String house_style_json = "house_style_json";
+    private static final String factory_style_json = "factory_style_json";
+
+    public static void setHouseStyleJson(Context context, String houseJson){
+        context.getSharedPreferences(XGTKK_PRE, 0).edit().putString(house_style_json, houseJson).commit();
+    }
+
+    public static String getHouseStyleJson(Context context){
+        return context.getSharedPreferences(XGTKK_PRE, 0).getString(house_style_json, "");
+    }
+
+    public static void setFactoryStyleJson(Context context, String factoryJson){
+        context.getSharedPreferences(XGTKK_PRE, 0).edit().putString(factory_style_json, factoryJson).commit();
+    }
+
+    public static String getFactoryStyleJson(Context context){
+        return context.getSharedPreferences(XGTKK_PRE, 0).getString(factory_style_json, "");
+    }
+
+
+    private static final String XGTKK_STYLE_PRE = "xgtkk_style_pre";
+
+    private static final String house_style_space_num = "house_style_space_num";
+    public static void setHouseSpaceNum(Context context, int spaceNum){
+        context.getSharedPreferences(XGTKK_STYLE_PRE, 0).edit().putInt(house_style_space_num, spaceNum).commit();
+    }
+    public static int getHouseSpaceNum(Context context){
+        return context.getSharedPreferences(XGTKK_STYLE_PRE, 0).getInt(house_style_space_num, -1);
+    }
+
+    private static final String house_style_style_num = "house_style_style_num";
+    public static void setHouseStyleNum(Context context, int styleNum){
+        context.getSharedPreferences(XGTKK_STYLE_PRE, 0).edit().putInt(house_style_style_num, styleNum).commit();
+    }
+    public static int getHouseStyleNum(Context context){
+        return context.getSharedPreferences(XGTKK_STYLE_PRE, 0).getInt(house_style_style_num, -1);
+    }
+
+
+    private static final String house_style_part_num = "house_style_part_num";
+    public static void setHousePartNum(Context context, int partNum){
+        context.getSharedPreferences(XGTKK_STYLE_PRE, 0).edit().putInt(house_style_part_num, partNum).commit();
+    }
+    public static int getHousePartNum(Context context){
+        return context.getSharedPreferences(XGTKK_STYLE_PRE, 0).getInt(house_style_part_num, -1);
+    }
+
+
+    private static final String house_style_huxing_num = "house_style_huxing_num";
+    public static void setHouseHuxingNum(Context context, int huxingNum){
+        context.getSharedPreferences(XGTKK_STYLE_PRE, 0).edit().putInt(house_style_huxing_num, huxingNum).commit();
+    }
+    public static int getHouseHuxingNum(Context context){
+        return context.getSharedPreferences(XGTKK_STYLE_PRE, 0).getInt(house_style_huxing_num, -1);
+    }
+
+
+    private static final String house_style_color_num = "house_style_color_num";
+    public static void setHouseColorNum(Context context, int colorNum){
+        context.getSharedPreferences(XGTKK_STYLE_PRE, 0).edit().putInt(house_style_color_num, colorNum).commit();
+    }
+    public static int getHouseColorNum(Context context){
+        return context.getSharedPreferences(XGTKK_STYLE_PRE, 0).getInt(house_style_color_num, -1);
+    }
+
+
 }

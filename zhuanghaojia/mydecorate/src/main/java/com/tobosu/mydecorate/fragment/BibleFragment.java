@@ -319,7 +319,6 @@ public class BibleFragment extends Fragment implements View.OnClickListener {
 //            tabTextList.add(tabTextData.get(i).get("title"));
 //        }
 
-        //TODO 上面是没做排序前   排序之后又会怎样呢？
         for(int i=0;i<topTitleHashMapList.size();i++){
             tabTextList.add(topTitleHashMapList.get(i).get("name"));
             tabIdList.add(Integer.parseInt(topTitleHashMapList.get(i).get("id")));

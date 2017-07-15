@@ -121,6 +121,9 @@
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
             android:configChanges="orientation|screenSize" />
         <activity android:name=".activity.MyFansActivity"></activity>
+
+        <activity android:name=".activity.GetPriceActivity"
+            android:launchMode="singleTask"></activity>
     </application>
 
 </manifest>
