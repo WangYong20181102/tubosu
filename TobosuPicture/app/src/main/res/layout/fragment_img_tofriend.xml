@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/banner_height"
+            android:background="@color/bg_banner_black">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="以图会友"
+                android:textColor="@color/text_white"
+                android:textSize="18sp" />
+            <!--以图会友搜索-->
+            <RelativeLayout
+                android:id="@+id/imgtofriend_sousuo"
+                android:layout_width="@dimen/banner_height"
+                android:layout_height="@dimen/banner_height"
+                android:layout_alignParentLeft="true">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/sousuo2" />
+            </RelativeLayout>
+            <!--以图会友发布动态-->
+            <RelativeLayout
+                android:id="@+id/imgtofriend_fabu"
+                android:layout_width="@dimen/banner_height"
+                android:layout_height="@dimen/banner_height"
+                android:layout_alignParentRight="true">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/fabu" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <!--选项卡 最热 最新 有关于我-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:orientation="horizontal">
+            <!--最热-->
+            <LinearLayout
+                android:id="@+id/imgtofriend_zuire"
+                android:layout_width="0dp"
+                android:layout_height="68dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/zuire" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="最热"
+                    android:textColor="@color/bg_banner_black"
+                    android:textSize="@dimen/text_size_30px" />
+            </LinearLayout>
+            <!--最新-->
+            <LinearLayout
+                android:id="@+id/imgtofriend_zuixin"
+                android:layout_width="0dp"
+                android:layout_height="68dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/zuixin" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="最新"
+                    android:textColor="@color/bg_banner_black"
+                    android:textSize="@dimen/text_size_30px" />
+            </LinearLayout>
+            <!--有关于我-->
+            <LinearLayout
+                android:id="@+id/imgtofriend_youguanyuwo"
+                android:layout_width="0dp"
+                android:layout_height="68dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/wo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="有关于我"
+                    android:textColor="@color/bg_banner_black"
+                    android:textSize="@dimen/text_size_30px" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@color/bg_gray" />
+        <!--用于盛放切换的布局-->
+        <FrameLayout
+            android:id="@+id/imgtofriend_framelayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>

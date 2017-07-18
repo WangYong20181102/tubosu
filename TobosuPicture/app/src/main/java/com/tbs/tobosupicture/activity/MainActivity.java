@@ -24,6 +24,7 @@ import com.tbs.tobosupicture.bean.EC;
 import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.fragment.DecorationCaseFragment;
 import com.tbs.tobosupicture.fragment.ImageToFriendFragment;
+import com.tbs.tobosupicture.fragment.ImgToFriendFragment;
 import com.tbs.tobosupicture.fragment.MineFragment;
 import com.tbs.tobosupicture.fragment.TemplateFragment;
 import com.tbs.tobosupicture.utils.EventBusUtil;
@@ -70,7 +71,8 @@ public class MainActivity extends BaseActivity {
         //案例
         DecorationCaseFragment decorationCaseFragment = new DecorationCaseFragment();
         //以图会友
-        ImageToFriendFragment imageToFriendFragment = new ImageToFriendFragment();
+//        ImageToFriendFragment imageToFriendFragment = new ImageToFriendFragment();
+        ImgToFriendFragment imageToFriendFragment = new ImgToFriendFragment();
         //我的
         MineFragment mineFragment = new MineFragment();
         //将fragment添加至数组中

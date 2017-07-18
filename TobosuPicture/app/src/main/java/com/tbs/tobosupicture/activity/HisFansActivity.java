@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.adapter.HisFansAdapter;
 import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.bean._HisFans;
 import com.tbs.tobosupicture.constants.UrlConstans;
@@ -55,7 +56,8 @@ public class HisFansActivity extends BaseActivity {
     private ArrayList<_HisFans> tempHisfansArrayList = new ArrayList<>();//装箱用的集合
     private int mPage = 1;//加载更多用到的页码
     private CustomWaitDialog customWaitDialog;//正在加载的蒙层
-
+    private boolean isLoading = false;//是否正在上拉加载更多数据
+    private HisFansAdapter hisFansAdapter;//适配器
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +125,8 @@ public class HisFansActivity extends BaseActivity {
             int lastVisiableItem = mLinearLayoutManager.findLastVisibleItemPosition();
             if (newState == 0
                     && lastVisiableItem + 2 >= mLinearLayoutManager.getItemCount()
-                    && !hfSwipRefresh.isRefreshing()) {
+                    && !hfSwipRefresh.isRefreshing()
+                    && !isLoading) {
                 loadMore();
             }
         }
@@ -147,9 +150,10 @@ public class HisFansActivity extends BaseActivity {
         }
     }
 
-    //请求数据
+    //TODO 网络请求数据 当请求完成时要修改isLoading=false
     private void HttpGetHisFansList(int page) {
         customWaitDialog.dismiss();
+        isLoading = true;//正在加载数据
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("page", page);

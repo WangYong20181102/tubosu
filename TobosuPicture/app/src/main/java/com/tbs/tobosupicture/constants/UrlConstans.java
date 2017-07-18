@@ -45,13 +45,19 @@ public class UrlConstans {
     public static final String GET_MY_FANS_URL = ZXKK_URL + "";
 
 
-    /**家装页面 获取筛选类型*/
+    /**
+     * 家装页面 获取筛选类型
+     */
     public static final String GET_HOUSE_DECORATE_STYLE_URL = ZXKK_URL + "rapp/TemplateMap/get_home_search_type";
 
-    /**工装页面 获取筛选类型*/
+    /**
+     * 工装页面 获取筛选类型
+     */
     public static final String GET_FACTORY_DECORATE_STYLE_SURL = ZXKK_URL + "rapp/TemplateMap/get_tool_search_type";
 
-    /**家装/工装列表url*/
+    /**
+     * 家装/工装列表url
+     */
     public static final String GET_LIST = ZXKK_URL + "rapp/TemplateMap/index";
 
     /**
@@ -74,5 +80,16 @@ public class UrlConstans {
      * 用户设置新密码
      */
     public static final String SET_NEW_PASSWORD = ZXKK_URL + "";
-
+    /**
+     * 用户获取我的图友列表
+     */
+    public static final String GET_MY_FRIENDS = ZXKK_URL + "";
+    /**
+     * 用户获取推荐图友列表
+     */
+    public static final String GET_RECOMMEND_FRIENDS = ZXKK_URL + "";
+    /**
+     * 以图会友（最热）
+     */
+    public static final String IMAGE_TO_FRIEND_ZUIRE = ZXKK_URL + "rapp/Social/popular_list";
 }

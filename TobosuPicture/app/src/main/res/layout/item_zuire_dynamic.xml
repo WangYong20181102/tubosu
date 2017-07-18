@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?><!--动态的子项-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:id="@+id/zuire_dynamic_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/default_icon" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="18dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/zuire_dynamic_nick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="灵感家居"
+                android:textColor="@color/text_yellow"
+                android:textSize="@dimen/text_size_28px" />
+
+            <TextView
+                android:id="@+id/zuire_dynamic_title"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="时尚简约软装，细节之美~"
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_size_30px" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/zuire_dynamic_img1"
+                        android:layout_width="81dp"
+                        android:layout_height="81dp"
+                        android:layout_marginRight="4dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/test"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/zuire_dynamic_img2"
+                        android:layout_width="81dp"
+                        android:layout_height="81dp"
+                        android:layout_marginRight="4dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/test"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/zuire_dynamic_img3"
+                        android:layout_width="81dp"
+                        android:layout_height="81dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/test"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/zuire_dynamic_img4"
+                        android:layout_width="81dp"
+                        android:layout_height="81dp"
+                        android:layout_marginRight="4dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/test"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/zuire_dynamic_img5"
+                        android:layout_width="81dp"
+                        android:layout_height="81dp"
+                        android:layout_marginRight="4dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/test"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/zuire_dynamic_img6"
+                        android:layout_width="81dp"
+                        android:layout_height="81dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/test"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/zuire_dynamic_img7"
+                        android:layout_width="81dp"
+                        android:layout_height="81dp"
+                        android:layout_marginRight="4dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/test"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/zuire_dynamic_img8"
+                        android:layout_width="81dp"
+                        android:layout_height="81dp"
+                        android:layout_marginRight="4dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/test"
+                        android:visibility="gone" />
+
+                    <ImageView
+                        android:id="@+id/zuire_dynamic_img9"
+                        android:layout_width="81dp"
+                        android:layout_height="81dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/test"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp">
+
+                <TextView
+                    android:id="@+id/zuire_dynamic_view_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="浏览数: 66"
+                    android:textColor="@color/text_gray"
+                    android:textSize="@dimen/text_size_24px" />
+
+                <LinearLayout
+                    android:id="@+id/item_dynamic_pinglun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@mipmap/pinglun" />
+                    <!--评论数-->
+                    <TextView
+                        android:id="@+id/zuire_dynamic_comment_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="24"
+                        android:textColor="@color/text_gray"
+                        android:textSize="@dimen/text_size_24px" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="50dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@mipmap/zan2" />
+                    <!--点赞数-->
+                    <TextView
+                        android:id="@+id/zuire_dynamic_praise_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="24"
+                        android:textColor="@color/text_gray"
+                        android:textSize="@dimen/text_size_24px" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_marginTop="8dp"
+        android:background="@color/bg_divide"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"/>
+</LinearLayout>
