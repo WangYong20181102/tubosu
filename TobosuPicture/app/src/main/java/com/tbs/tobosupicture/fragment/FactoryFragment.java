@@ -3,7 +3,6 @@ package com.tbs.tobosupicture.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,16 +10,24 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.adapter.FactoryStyleAdapter;
 import com.tbs.tobosupicture.adapter.SamplePictureAdapter;
 import com.tbs.tobosupicture.base.BaseFragment;
+import com.tbs.tobosupicture.bean.ChildData;
+import com.tbs.tobosupicture.bean.DecorateFactoryStyle;
+import com.tbs.tobosupicture.bean.FactoryStyrlBean;
 import com.tbs.tobosupicture.bean.SamplePicBeanEntity;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 
 import org.json.JSONArray;
@@ -46,7 +53,10 @@ import okhttp3.Response;
 
 public class FactoryFragment extends BaseFragment {
     private final String TAG = "FactoryFragment";
-    private Context context = getActivity();
+    @BindView(R.id.relStyleLayout)
+    RelativeLayout relStyleLayout;
+
+    private String class_id = "0";
 
 
     @BindView(R.id.ivFactoryChooseStyle)
@@ -62,7 +72,7 @@ public class FactoryFragment extends BaseFragment {
     Unbinder unbinder;
 
     private LinearLayoutManager linearLayoutManager;
-    
+
     private HashMap<String, Object> param;
     private int page = 1;
     private int pageSize = 10;
@@ -82,92 +92,122 @@ public class FactoryFragment extends BaseFragment {
     }
 
     private void getDataFromNet() {
-        param = new HashMap<String, Object>();
-        param.put("token", Utils.getDateToken());
-        param.put("type", "2");
-        param.put("page", page);
-        param.put("page_size", pageSize);
-        HttpUtils.doPost(UrlConstans.GET_LIST, param, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Utils.setToast(getActivity(), "系统繁忙，稍后再试!");
-                    }
-                });
-            }
+        if(Utils.isNetAvailable(getActivity())){
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            factoryRecyclerView.setVisibility(View.VISIBLE);
+            factorySwipRefreshLayout.setVisibility(View.VISIBLE);
+            expandableListview.setVisibility(View.GONE);
 
-                String json = response.body().string();
-                try {
-                    JSONObject object = new JSONObject(json);
-                    if(object.getInt("status")==200){
-                        JSONArray arr = object.getJSONArray("data");
-                        SamplePicBeanEntity entity = null;
-                        for(int i=0, len=arr.length();i<len;i++){
-                            entity = new SamplePicBeanEntity(arr.getJSONObject(i));
-                            samplePicList.add(entity);
+            param = new HashMap<String, Object>();
+            param.put("token", Utils.getDateToken());
+            param.put("type", "2");
+            param.put("class_id", class_id);
+            param.put("page", page);
+            param.put("page_size", pageSize);
+            HttpUtils.doPost(UrlConstans.GET_LIST, param, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Utils.setToast(getActivity(), "系统繁忙，稍后再试!");
                         }
-                    }else if(object.getInt("status")==201){
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if(samplePicAdapter!=null){
-                                    samplePicAdapter.noMoreData();
-                                }
-                            }
-                        });
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    });
                 }
-                Utils.setErrorLog(TAG, json);
 
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        initListViewAdapter();
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+
+                    String json = response.body().string();
+                    try {
+                        final JSONObject object = new JSONObject(json);
+                        if (object.getInt("status") == 200) {
+                            JSONArray arr = object.getJSONArray("data");
+                            SamplePicBeanEntity entity = null;
+                            for (int i = 0, len = arr.length(); i < len; i++) {
+                                entity = new SamplePicBeanEntity(arr.getJSONObject(i));
+                                samplePicList.add(entity);
+                            }
+                        } else if (object.getInt("status") == 201) {
+                            final String msg = object.getString("msg");
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Utils.setToast(getActivity(), msg);
+                                    if (samplePicAdapter != null) {
+                                        samplePicAdapter.noMoreData();
+                                    }
+                                }
+                            });
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                });
+                    Utils.setErrorLog(TAG, json);
 
-            }
-        });
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            initListViewAdapter();
+                        }
+                    });
+
+                }
+            });
+        }else{
+            // 无网络时提醒的图片
+
+        }
+
 
     }
+
+    private ArrayList<FactoryStyrlBean> factoryStyrlBeenList;
+    private ArrayList<ArrayList<ChildData>> childDataListList = new ArrayList<ArrayList<ChildData>>();
 
     private void initData() {
+        String json = SpUtils.getFactoryStyleJson(getActivity());
+        if (!"".equals(json)) {
+            DecorateFactoryStyle factoryStyle = new DecorateFactoryStyle(json);
+            if (factoryStyle.getStatus() == 200) {
+                factoryStyrlBeenList = factoryStyle.getFactoryStyrlBeanList();
 
+            } else if (factoryStyle.getStatus() == 201) {
+
+            } else {
+                Utils.setErrorLog(TAG, "类型无数据");
+            }
+        } else {
+            // 需要发一个event通知TemplateFragment重新请求网络
+
+        }
     }
 
-    private void initListViewAdapter(){
+    private void initListViewAdapter() {
 
         factorySwipRefreshLayout.setRefreshing(false);
-        if(samplePicAdapter==null){
+        if (samplePicAdapter == null) {
             samplePicAdapter = new SamplePictureAdapter(getActivity(), samplePicList);
             factoryRecyclerView.setAdapter(samplePicAdapter);
-        }else{
+        } else {
             samplePicAdapter.notifyDataSetChanged();
         }
 
-        if(samplePicAdapter!=null){
+        if (samplePicAdapter != null) {
             samplePicAdapter.hideLoadMoreMessage();
         }
 
     }
 
 
-
-    private void initListViewSetting(){
+    private void initListViewSetting() {
         // 设置下拉进度的背景颜色，默认就是白色的
         factorySwipRefreshLayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
         // 设置下拉进度的主题颜色
         factorySwipRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
         factorySwipRefreshLayout.setOnRefreshListener(swipeLister);
 
-        linearLayoutManager = new LinearLayoutManager(context);
+        linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         factoryRecyclerView.setLayoutManager(linearLayoutManager);
 
@@ -216,7 +256,7 @@ public class FactoryFragment extends BaseFragment {
             //下拉刷新数据 重新初始化各种数据
             samplePicList.clear();
             page = 1;
-            if(samplePicAdapter!=null){
+            if (samplePicAdapter != null) {
                 samplePicAdapter.hideLoadMoreMessage();
             }
             getDataFromNet();
@@ -224,9 +264,9 @@ public class FactoryFragment extends BaseFragment {
         }
     };
 
-    private void loadMore(){
+    private void loadMore() {
         page++;
-        if(samplePicAdapter!=null){
+        if (samplePicAdapter != null) {
             samplePicAdapter.showLoadMoreMessage();
         }
 
@@ -234,15 +274,88 @@ public class FactoryFragment extends BaseFragment {
         getDataFromNet();
         System.out.println("-----**-onScrolled load more completed------");
     }
-    
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
-    @OnClick(R.id.tvChooseStyle)
-    public void onViewClicked() {
+    @OnClick({R.id.tvChooseStyle})
+    public void onViewClickedFactoryFragment(View view) {
+        switch (view.getId()) {
+            case R.id.tvChooseStyle:
+                factoryRecyclerView.setVisibility(View.GONE);
+                factorySwipRefreshLayout.setVisibility(View.GONE);
+                expandableListview.setVisibility(View.VISIBLE);
+                initExpandableListView();
+                samplePicList.clear();
+                break;
+        }
+    }
+
+    private void initExpandableListView() {
+        FactoryStyleAdapter adapter = new FactoryStyleAdapter(getActivity(), factoryStyrlBeenList, new FactoryStyleAdapter.OnFactoryStyleItemClickListener() {
+            @Override
+            public void onFactoryStyleItemClickListener(String classID) {
+//                Utils.setToast(getActivity(), "class_id 是" + classID);
+                class_id = classID;
+                page = 1;
+                getDataFromNet();
+            }
+
+            @Override
+            public void onFactoryStyleParentClickListener(String parentId) {
+//                Utils.setToast(getActivity(), "group_ class_id 是" + parentId);
+                class_id = parentId;
+                page = 1;
+                getDataFromNet();
+            }
+        });
+        expandableListview.setAdapter(adapter);
+        expandableListview.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                int count = expandableListview.getExpandableListAdapter().getGroupCount();
+                for(int j = 0; j < count; j++){
+                    if(j != groupPosition){
+                        expandableListview.collapseGroup(j);
+                    }
+                }
+            }
+        });
+        expandableListview.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                int len = factoryStyrlBeenList.get(groupPosition).getChild_data().size();
+                if(len==0){
+                    return true;
+                }
+                return false;
+            }
+        });
 
     }
+
+
+    private void setAnimation(final View view, boolean flag) {
+        Animation animation = new RotateAnimation(0f, 180f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        animation.setDuration(500);
+        view.startAnimation(animation);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.setBackgroundResource(R.mipmap.choose_style_up);
+            }
+        });
+    }
+
 }

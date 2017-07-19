@@ -170,7 +170,7 @@ public class HouseFragment extends BaseFragment {
     }
 
     @OnClick({R.id.layoutSpace, R.id.layoutStyle, R.id.layoutPart, R.id.layoutHouseStyle, R.id.layoutColor})
-    public void onViewClicked(View view) {
+    public void onViewClickedHouseFragment(View view) {
         boolean flag = false;
         textDataList.clear();
         iconDataList.clear();
@@ -419,7 +419,7 @@ public class HouseFragment extends BaseFragment {
         houseSwipRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
         houseSwipRefreshLayout.setOnRefreshListener(swipeLister);
         
-        linearLayoutManager = new LinearLayoutManager(context);
+        linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         houseRecyclerview.setLayoutManager(linearLayoutManager);
 

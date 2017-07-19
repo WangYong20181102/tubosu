@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_case_big_sample_pic"
+            android:layout_width="match_parent"
+            android:background="@mipmap/loading_img_fail"
+            android:layout_height="174dp"/>
+
+        <ImageView
+            android:id="@+id/iv_case_designer_pic"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="40dp"
+            android:layout_below="@+id/iv_case_big_sample_pic"
+            android:layout_marginTop="-27dp"
+            android:background="@mipmap/pic"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_case_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="泰国餐厅效果图"
+        android:layout_marginLeft="20dp"
+        android:textSize="16sp"
+        android:textColor="#1a1919"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/tv_case_decription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="现代欧式 | 4室2厅2卫 | 146m²"
+            android:layout_gravity="center_vertical"
+            android:textSize="14sp"
+            android:textColor="#9EA1A6"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_case_design"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:background="@drawable/shape_free_design_textview_bg"
+                android:text="免费设计"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

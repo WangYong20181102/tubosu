@@ -36,12 +36,18 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ExpandableListView
-            android:id="@+id/expandableListview"
+        <RelativeLayout
+            android:id="@+id/relStyleLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-        </ExpandableListView>
+            android:layout_height="wrap_content">
+            <ExpandableListView
+                android:id="@+id/expandableListview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:groupIndicator="@null"
+                android:visibility="gone">
+            </ExpandableListView>
+        </RelativeLayout>
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/factorySwipRefreshLayout"
@@ -54,18 +60,5 @@
             </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
     </RelativeLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="14dp"
-        android:textSize="17sp"
-        android:paddingRight="14dp"
-        android:visibility="gone"
-        android:paddingLeft="14dp"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"
-        android:textColor="#252424"
-        android:background="@drawable/shape_styel_textview_bg"
-        android:text="类型"/>
+
 </LinearLayout>

@@ -60,6 +60,15 @@ public class UrlConstans {
      */
     public static final String GET_LIST = ZXKK_URL + "rapp/TemplateMap/index";
 
+    /**设计师详情url*/
+    public static final String DESIGNER_URL = ZXKK_URL + "rapp/TemplateMap/designer_index";
+
+    /**关注 / 取消关注url 未定 */
+    public static final String CONCERN_URL = ZXKK_URL + "rapp/public/follow";
+
+    /**搜索案例url*/
+    public static final String SEARCH_CASE_URL = ZXKK_URL + "rapp/case/case_list";
+
     /**
      * 获取他人的图谜url
      */

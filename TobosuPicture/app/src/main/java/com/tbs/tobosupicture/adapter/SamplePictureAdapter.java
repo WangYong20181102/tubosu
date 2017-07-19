@@ -2,6 +2,7 @@ package com.tbs.tobosupicture.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.DesignerActivity;
 import com.tbs.tobosupicture.activity.GetPriceActivity;
 import com.tbs.tobosupicture.bean.SamplePicBeanEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
@@ -86,13 +88,18 @@ public class SamplePictureAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof SamplePicViewHolder){
             SamplePicViewHolder itmeHolder = (SamplePicViewHolder) holder;
-            GlideUtils.glideLoader(mContext, dataList.get(position).getImg_url(), R.mipmap.dot_off,R.mipmap.dot_on,itmeHolder.iv_big_sample_pic,1);
-            GlideUtils.glideLoader(mContext, dataList.get(position).getDesigner_icon(), R.mipmap.dot_off,R.mipmap.dot_on,itmeHolder.iv_designer_pic, 0);
+            GlideUtils.glideLoader(mContext, dataList.get(position).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itmeHolder.iv_big_sample_pic,1);
+            GlideUtils.glideLoader(mContext, dataList.get(position).getDesigner_icon(), R.mipmap.pic,R.mipmap.pic,itmeHolder.iv_designer_pic, 0);
             itmeHolder.tv_samplepic_title.setText(dataList.get(position).getTitle());
             itmeHolder.tv_pic_city.setText(dataList.get(position).getCity_name());
+            if(!"".equals(dataList.get(position).getArea_name())){
+                itmeHolder.tv_areah.setText("面积:"+ dataList.get(position).getArea_name());
+            }else {
+                itmeHolder.tv_areah.setVisibility(View.GONE);
+            }
             itmeHolder.tv_buget.setText("预算: " + dataList.get(position).getPlan_price() + "万");
             itmeHolder.tv_pic_num.setText(dataList.get(position).getImage_count());
             itmeHolder.tv_pic_like_num.setText(dataList.get(position).getClick_count());
@@ -103,6 +110,18 @@ public class SamplePictureAdapter extends RecyclerView.Adapter<RecyclerView.View
                 }
             });
             holder.itemView.setTag(dataList.get(position));
+
+            itmeHolder.iv_designer_pic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(mContext, DesignerActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("designer_id", dataList.get(position).getDesigner_id());
+                    i.putExtra("designer_bundle", b);
+                    mContext.startActivity(i);
+                }
+            });
+
         }
 
 //        if(holder instanceof FootViewHolder){
@@ -138,6 +157,7 @@ public class SamplePictureAdapter extends RecyclerView.Adapter<RecyclerView.View
         private TextView tv_samplepic_title;
         private TextView tv_pic_city;
         private TextView tv_buget;
+        private TextView tv_areah;
         private TextView tv_pic_num;
         private TextView tv_pic_like_num;
         private TextView tv_free_design_pic;
@@ -148,6 +168,7 @@ public class SamplePictureAdapter extends RecyclerView.Adapter<RecyclerView.View
             iv_designer_pic = (ImageView) itemView.findViewById(R.id.iv_designer_pic);
             tv_samplepic_title = (TextView) itemView.findViewById(R.id.tv_samplepic_title);
             tv_pic_city = (TextView) itemView.findViewById(R.id.tv_pic_city);
+            tv_areah = (TextView) itemView.findViewById(R.id.tv_areah);
             tv_buget = (TextView) itemView.findViewById(R.id.tv_buget);
             tv_pic_num = (TextView) itemView.findViewById(R.id.tv_pic_num);
             tv_pic_like_num = (TextView) itemView.findViewById(R.id.tv_pic_like_num);

@@ -32,7 +32,7 @@ public class SamplePicBeanEntity {
             this.designer_id = object.getString("designer_id");
             this.image_count = object.getString("image_count");
             this.plan_price = object.getString("plan_price");
-            this.village = object.getString("village");
+//            this.village = object.getString("village");
             this.click_count = object.getString("click_count");
             this.designer_icon = object.getString("designer_icon");
             this.city_name = object.getString("city_name");
@@ -49,7 +49,7 @@ public class SamplePicBeanEntity {
     private String designer_id;
     private String image_count;
     private String plan_price;
-    private String village;
+//    private String village;
     private String click_count;
     private String designer_icon;
     private String city_name;
@@ -96,13 +96,13 @@ public class SamplePicBeanEntity {
         this.plan_price = plan_price;
     }
 
-    public String getVillage() {
-        return village;
-    }
-
-    public void setVillage(String village) {
-        this.village = village;
-    }
+//    public String getVillage() {
+//        return village;
+//    }
+//
+//    public void setVillage(String village) {
+//        this.village = village;
+//    }
 
     public String getClick_count() {
         return click_count;

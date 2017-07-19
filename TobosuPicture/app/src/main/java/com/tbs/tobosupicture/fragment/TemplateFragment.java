@@ -23,7 +23,12 @@ import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -40,6 +45,7 @@ import okhttp3.Response;
  */
 
 public class TemplateFragment extends BaseFragment {
+    private static final String TAG = "TemplateFragment";
 
     @BindView(R.id.temp_location)
     TextView tempLocation;
@@ -121,7 +127,64 @@ public class TemplateFragment extends BaseFragment {
                     SpUtils.setHouseStyleJson(getActivity(), json);
                 }
             });
+
+
+            HttpUtils.doPost(UrlConstans.GET_FACTORY_DECORATE_STYLE_SURL, param, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Utils.setToast(getActivity(),"系统繁忙请稍后再试!");
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String json = response.body().string();
+                    SpUtils.setFactoryStyleJson(getActivity(), json);
+                    Utils.setErrorLog(TAG, json);
+                }
+            });
         }
+    }
+
+    private void writeJsonToText(String json){
+        FileWriter fw = null;//在外面创建，避免里面直接新建后面无法读取fw,fr
+        FileReader fr = null;
+        try {
+            fw = new FileWriter("F:\\git_workspace\\TobosuPicture\\app\\src\\main\\java\\com\\tbs\\tobosupicture\\json.txt");//创建一个h.txt文件
+            fr = new FileReader(json);//读取h.java文件
+
+            char [] buf = new char[1024];//定义数组
+            int num = 0;
+
+            while((num = fr.read(buf))!=-1)//当读取不等于-1时写入
+            {
+                fw.write(buf);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            if(fr!=null){
+                //不为空则关闭
+                try {
+                    fr.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(fw!=null){
+                try {
+                    fw.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
     }
 
     @Override
