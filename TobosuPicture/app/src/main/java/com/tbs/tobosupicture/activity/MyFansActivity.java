@@ -55,7 +55,7 @@ public class MyFansActivity extends BaseActivity {
     private int mPage = 1;
     private MyFansAdapter myFansAdapter;
     private CustomWaitDialog customWaitDialog;
-
+    private boolean isLoading = false;//是否正在上拉加载更多
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +93,7 @@ public class MyFansActivity extends BaseActivity {
         @Override
         public void onRefresh() {
             mPage = 1;
+            //重新加载数据
         }
     };
     //上拉加载更多数据
@@ -104,7 +105,8 @@ public class MyFansActivity extends BaseActivity {
             int lastVisiableItem = mLinearLayoutManager.findLastVisibleItemPosition();
             if (newState == RecyclerView.SCROLL_STATE_IDLE
                     && lastVisiableItem + 2 >= mLinearLayoutManager.getItemCount()
-                    && !mfSwipRefresh.isRefreshing()) {
+                    && !mfSwipRefresh.isRefreshing()
+                    && !isLoading) {
                 //加载更多
                 loadMore();
             }
@@ -127,8 +129,9 @@ public class MyFansActivity extends BaseActivity {
         }
     };
 
-    //网络请求数据
+    //TODO 网络请求数据 当请求完成时要修改isLoading=false
     private void HttpGetMyFansList(int mPage) {
+        isLoading = true;
         HashMap<String, Object> param = new HashMap<>();
         param.put("page", mPage);
         param.put("token", Utils.getDateToken());
@@ -147,6 +150,7 @@ public class MyFansActivity extends BaseActivity {
                     String status = jsonObject.getString("status");
                     if (status.equals("200")) {
                         //处理请求回来的数据 将数据布局
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

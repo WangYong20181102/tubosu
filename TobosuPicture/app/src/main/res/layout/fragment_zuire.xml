@@ -1,25 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?><!--我的图友里的推荐图友-->
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
+    android:background="@color/bg_white"
     android:orientation="vertical">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="推荐图友" />
-
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/recommend_swip_refresh"
+        android:id="@+id/zuire_swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recommend_recyclelist"
+            android:id="@+id/zuire_recycle"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
         </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>
+
 </LinearLayout>
