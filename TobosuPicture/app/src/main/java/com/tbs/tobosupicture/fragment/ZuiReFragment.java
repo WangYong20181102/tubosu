@@ -111,8 +111,10 @@ public class ZuiReFragment extends BaseFragment {
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
             int lastVisiableItem = mLinearLayoutManager.findLastVisibleItemPosition();
-            if (newState == 0 && lastVisiableItem + 2 >= mLinearLayoutManager.getItemCount()
-                    && !zuireSwipe.isRefreshing() && !isLoading) {
+            if (newState == 0
+                    && lastVisiableItem + 2 >= mLinearLayoutManager.getItemCount()
+                    && !zuireSwipe.isRefreshing()
+                    && !isLoading) {
                 loadMore();
             }
 
@@ -173,9 +175,14 @@ public class ZuiReFragment extends BaseFragment {
                         });
                         isLoading = false;
                     } else {
-                        if (mZuiReAdapter != null) {
-                            mZuiReAdapter.changLoadState(2);
-                        }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (mZuiReAdapter != null) {
+                                    mZuiReAdapter.changLoadState(2);
+                                }
+                            }
+                        });
                         isLoading = false;
                     }
                 } catch (JSONException e) {

@@ -92,4 +92,13 @@ public class UrlConstans {
      * 以图会友（最热）
      */
     public static final String IMAGE_TO_FRIEND_ZUIRE = ZXKK_URL + "rapp/Social/popular_list";
+    /**
+     * 查看详细页（动态详情页）动态详细页
+     */
+    public static final String DYNAMIC_DETAIL = ZXKK_URL + "rapp/dynamic/dynamic_detail";
+    /**
+     * 动态评论列表动态详细页
+     */
+    public static final String DYNAMIC_COMMETN_LIST = ZXKK_URL + "rapp/dynamic/dynamic_comment_list";
+
 }

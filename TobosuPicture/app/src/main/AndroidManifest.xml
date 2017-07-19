@@ -131,7 +131,7 @@
         <activity android:name=".activity.FindPasswordActivity" />
         <activity android:name=".activity.SystemActivity" />
         <activity android:name=".activity.MyFriendsActivity" />
-        <activity android:name=".activity.DynamicActivity"></activity>
+        <activity android:name=".activity.DynamicDetailActivity"></activity>
     </application>
 
 </manifest>

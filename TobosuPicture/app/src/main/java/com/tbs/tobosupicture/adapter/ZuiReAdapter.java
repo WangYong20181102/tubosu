@@ -1,6 +1,7 @@
 package com.tbs.tobosupicture.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -9,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.DynamicDetailActivity;
 import com.tbs.tobosupicture.bean._ZuiRe;
 import com.tbs.tobosupicture.utils.GlideUtils;
 
@@ -27,6 +30,7 @@ public class ZuiReAdapter
         extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements View.OnClickListener {
     private Context mContext;
+    private String TAG = "ZuiReAdapter";
     //人气榜（活跃）用户
     private ArrayList<_ZuiRe.ActiveUser> activeUserArrayList;
     //动态列表
@@ -79,15 +83,15 @@ public class ZuiReAdapter
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof ZuiReHeadViewHolder) {
-            //绑定活跃榜数据
+            //TODO 绑定活跃榜数据  用户点击某一活跃者头像可以跳转到用户的详情
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
             ZuiReHeadAdapter zuiReHeadAdapter = new ZuiReHeadAdapter(mContext, activeUserArrayList);
             ((ZuiReHeadViewHolder) holder).zuiReHeadRecycleView.setLayoutManager(linearLayoutManager);
             ((ZuiReHeadViewHolder) holder).zuiReHeadRecycleView.setAdapter(zuiReHeadAdapter);
         } else if (holder instanceof ZuiReDynamicHolder) {
-            //显示动态
+            //TODO 显示动态 点赞请求接口 回复
             //用户头像
             GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getIcon(),
                     R.mipmap.default_icon, R.mipmap.default_icon, ((ZuiReDynamicHolder) holder).zuiReDynamicIcon, 0);
@@ -99,8 +103,24 @@ public class ZuiReAdapter
             ((ZuiReDynamicHolder) holder).zuiReDynamicViewCount.setText("浏览数:" + dynamicArrayList.get(position - 1).getView_count());
             //点赞数
             ((ZuiReDynamicHolder) holder).zuiReDynamicPraiseCount.setText("" + dynamicArrayList.get(position - 1).getPraise_count());
+            ((ZuiReDynamicHolder) holder).zuiReDynamicPraise.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO 进行点赞 调取点赞接口
+                }
+            });
             //回复数
             ((ZuiReDynamicHolder) holder).zuiReDynamicCommentCount.setText("" + dynamicArrayList.get(position - 1).getComment_count());
+            ((ZuiReDynamicHolder) holder).zuiReDynamicPinlun.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO 跳转进入DynamicDetailActivity  回复详情页
+                    Intent intent = new Intent(mContext, DynamicDetailActivity.class);
+                    Log.e("TAG", "进入回复页面的dynamic_id====" + dynamicArrayList.get(position - 1).getId());
+                    intent.putExtra("dynamic_id", dynamicArrayList.get(position - 1).getId());
+                    mContext.startActivity(intent);
+                }
+            });
             //显示动态图片
             //第一张
             if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url())) {
@@ -130,7 +150,7 @@ public class ZuiReAdapter
             if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url4())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag4.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url4(),
-                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag4);
+                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag4, 1);
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag4.setVisibility(View.GONE);
             }
@@ -138,7 +158,7 @@ public class ZuiReAdapter
             if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url5())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag5.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url5(),
-                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag5);
+                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag5, 1);
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag5.setVisibility(View.GONE);
             }
@@ -146,7 +166,7 @@ public class ZuiReAdapter
             if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url6())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag6.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url6(),
-                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag6);
+                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag6, 1);
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag6.setVisibility(View.GONE);
             }
@@ -154,7 +174,7 @@ public class ZuiReAdapter
             if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url7())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag7.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url7(),
-                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag7);
+                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag7, 1);
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag7.setVisibility(View.GONE);
             }
@@ -162,7 +182,7 @@ public class ZuiReAdapter
             if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url8())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag8.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url8(),
-                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag8);
+                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag8, 1);
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag8.setVisibility(View.GONE);
             }
@@ -170,7 +190,7 @@ public class ZuiReAdapter
             if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url9())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag9.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url9(),
-                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag9);
+                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag9, 1);
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag9.setVisibility(View.GONE);
             }
@@ -241,6 +261,9 @@ public class ZuiReAdapter
         private TextView zuiReDynamicCommentCount;//动态评论数
         private TextView zuiReDynamicPraiseCount;//动态点赞数
 
+        private LinearLayout zuiReDynamicPinlun;//评论按钮可点击
+        private LinearLayout zuiReDynamicPraise;//评论按钮可点击
+
         public ZuiReDynamicHolder(View itemView) {
             super(itemView);
             zuiReDynamicIcon = (ImageView) itemView.findViewById(R.id.zuire_dynamic_icon);
@@ -258,6 +281,9 @@ public class ZuiReAdapter
             zuiReDynamicViewCount = (TextView) itemView.findViewById(R.id.zuire_dynamic_view_count);
             zuiReDynamicCommentCount = (TextView) itemView.findViewById(R.id.zuire_dynamic_comment_count);
             zuiReDynamicPraiseCount = (TextView) itemView.findViewById(R.id.zuire_dynamic_praise_count);
+
+            zuiReDynamicPinlun = (LinearLayout) itemView.findViewById(R.id.item_dynamic_pinlun);
+            zuiReDynamicPraise = (LinearLayout) itemView.findViewById(R.id.zuire_dynamic_praise);
         }
     }
 }
