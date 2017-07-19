@@ -134,7 +134,9 @@
         <activity android:name=".activity.FindPasswordActivity" />
         <activity android:name=".activity.SystemActivity" />
         <activity android:name=".activity.MyFriendsActivity"></activity>
-
+        <activity android:name=".activity.DesignerActivity"></activity>
+        <activity android:name=".activity.ConditionActivity"></activity>
+        <activity android:name=".activity.SeeImageActivity"></activity>
     </application>
 
 </manifest>

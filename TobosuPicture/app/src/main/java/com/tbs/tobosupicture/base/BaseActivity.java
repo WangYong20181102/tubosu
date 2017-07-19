@@ -18,8 +18,8 @@ import org.greenrobot.eventbus.ThreadMode;
  */
 
 public class BaseActivity extends AppCompatActivity {
-    protected static final String TAG = BaseActivity.class.getSimpleName();
-    private Context mContext;
+    protected static String TAG = BaseActivity.class.getSimpleName();
+    protected Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

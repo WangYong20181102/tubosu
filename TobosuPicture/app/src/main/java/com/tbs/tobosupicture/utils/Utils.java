@@ -26,6 +26,8 @@ import java.util.Date;
 
 public class Utils {
 
+    private static boolean isPrintLog = true;
+
     //TODO App相关处理工具****************************
 
     /**
@@ -235,11 +237,17 @@ public class Utils {
         return dir.delete();
 	}
     public static void setLog(String tag, String log){
-        System.out.println("---当前页面是" + tag + "-->>>" + "--打印信息>>>" + log + "<<");
+        if(isPrintLog){
+            System.out.println("---当前页面是" + tag + "-->>>" + "--打印信息>>>" + log + "<<");
+        }
+
     }
 
     public static void setErrorLog(String tag, String log){
-        Log.e("---当前页面是" + tag + "-->>>", "--打印信息>>>" + log + "<<");
+        if(isPrintLog){
+            Log.e("---当前页面是" + tag + "-->>>", "--打印信息>>>" + log + "<<");
+        }
+
     }
     public static void setToast(Context context, String msg){
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
