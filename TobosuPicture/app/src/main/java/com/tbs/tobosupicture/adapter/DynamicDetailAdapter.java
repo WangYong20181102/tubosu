@@ -187,6 +187,8 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             ((DynamicDetailHeadHolder) holder).dynamic_zan_num.setText("" + dynamicDetail.getPraise_count() + "人赞过");
             if (commentArrayList.isEmpty()) {
                 ((DynamicDetailHeadHolder) holder).dynamic_none_comment.setVisibility(View.VISIBLE);
+            } else {
+                ((DynamicDetailHeadHolder) holder).dynamic_none_comment.setVisibility(View.GONE);
             }
         } else if (holder instanceof CommentViewHolder) {
             //头像

@@ -65,6 +65,10 @@ public class DynamicDetailActivity extends BaseActivity {
     private Intent mIntent;
     //动态id
     private String dynamicId;
+    //被评论的用户Id号
+    private String commentedUid;
+    //被评论的用户是否是虚拟用户 1--是 2--否
+    private String is_virtual_user;
     //回复列表
     private ArrayList<_DynamicDetail.Comment> commentArrayList = new ArrayList<>();
     private ArrayList<_DynamicDetail.Comment> tempCommentArrayList = new ArrayList<>();
@@ -72,6 +76,8 @@ public class DynamicDetailActivity extends BaseActivity {
     private boolean isLoading = false;
     //列表适配器
     private DynamicDetailAdapter dynamicDetailAdapter;
+    //TODO 用户的id 到时候接入登录模块之后 从Sp中获取
+    private String uId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +91,8 @@ public class DynamicDetailActivity extends BaseActivity {
 
     private void initViewEvent() {
         dynamicId = mIntent.getStringExtra("dynamic_id");
+        commentedUid = mIntent.getStringExtra("commented_uid");
+        is_virtual_user = mIntent.getStringExtra("is_virtual_user");
 
         dyndSwipe.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE);
         dyndSwipe.setBackgroundColor(Color.WHITE);
@@ -133,13 +141,18 @@ public class DynamicDetailActivity extends BaseActivity {
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            mPage = 1;
-            if (!commentArrayList.isEmpty()) {
-                commentArrayList.clear();
-            }
-            HttpGetDynamic();
+            reFresh();
         }
     };
+
+    //下拉刷新数据
+    private void reFresh() {
+        mPage = 1;
+        if (!commentArrayList.isEmpty()) {
+            commentArrayList.clear();
+        }
+        HttpGetDynamic();
+    }
 
     //加载更多数据
     private void loadMore() {
@@ -149,7 +162,7 @@ public class DynamicDetailActivity extends BaseActivity {
         HttpGetComment(mPage);
     }
 
-    @OnClick({R.id.dynd_back, R.id.dynd_send})
+    @OnClick({R.id.dynd_back, R.id.dynd_send, R.id.dynd_revert})
     public void onViewClickedInDynamicDetailActivity(View view) {
         switch (view.getId()) {
             case R.id.dynd_back:
@@ -158,6 +171,15 @@ public class DynamicDetailActivity extends BaseActivity {
             case R.id.dynd_send:
                 //发送评论
                 sendComment();
+                break;
+            case R.id.dynd_revert:
+                //点击了回复
+                if (TextUtils.isEmpty(uId)) {
+                    Log.e(TAG, "当前的用户id为空");
+                } else {
+                    Log.e(TAG, "当前用户可进行评论");
+
+                }
                 break;
         }
     }
@@ -176,6 +198,51 @@ public class DynamicDetailActivity extends BaseActivity {
     private void HttpSendComment(String comment) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
+        param.put("uid", "23109");
+        param.put("user_type", "2");
+        param.put("dynamic_id", dynamicId);
+        param.put("commented_uid", commentedUid);
+        param.put("is_virtual_user", is_virtual_user);
+        param.put("content", comment);
+        HttpUtils.doPost(UrlConstans.USER_SEND_COMMENT, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "链接失败===" + e.toString());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(mContext, "评论失败！", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                Log.e(TAG, "链接成功===" + json);
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.getString("status");
+                    if (status.equals("200")) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //评论成功  强刷数据
+                                Toast.makeText(mContext, "评论成功！", Toast.LENGTH_SHORT).show();
+                                dyndRevert.setText("");
+                                reFresh();
+                            }
+                        });
+                    } else {
+                        Toast.makeText(mContext, "评论失败！", Toast.LENGTH_SHORT).show();
+                        dyndRevert.setText("");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
     }
 
@@ -208,13 +275,9 @@ public class DynamicDetailActivity extends BaseActivity {
                             public void run() {
                                 dyndSwipe.setRefreshing(false);
                                 commentArrayList.addAll(dynamicDetail.getComment());
-                                if (dynamicDetailAdapter == null) {
-                                    dynamicDetailAdapter = new DynamicDetailAdapter(mContext, dynamicDetail, commentArrayList);
-                                    dyndRecycle.setAdapter(dynamicDetailAdapter);
-                                    dynamicDetailAdapter.notifyDataSetChanged();
-                                } else {
-                                    dynamicDetailAdapter.notifyDataSetChanged();
-                                }
+                                dynamicDetailAdapter = new DynamicDetailAdapter(mContext, dynamicDetail, commentArrayList);
+                                dyndRecycle.setAdapter(dynamicDetailAdapter);
+                                dynamicDetailAdapter.notifyDataSetChanged();
                             }
                         });
                     }
@@ -277,6 +340,9 @@ public class DynamicDetailActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                if (!commentArrayList.isEmpty()) {
+                                    Toast.makeText(mContext, "没有更多评论~", Toast.LENGTH_SHORT).show();
+                                }
                                 adapterRevert();
                             }
                         });
@@ -286,6 +352,7 @@ public class DynamicDetailActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 //获取数据失败
+                                Toast.makeText(mContext, "亲~数据获取出了问题，估计是服务器挂了！Waiting...", Toast.LENGTH_SHORT).show();
                                 adapterRevert();
                             }
                         });

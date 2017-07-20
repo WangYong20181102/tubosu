@@ -95,6 +95,8 @@ public class _ZuiRe {
          * praise_count : 0
          * comment_count : 0
          * nick : 谷族滕4e17d2d
+         * is_praise;//是否点赞
+         * is_comment;//是否回复
          * icon : http://wx.qlogo.cn/mmopen/ktZ0nuwFpAarW8QrDj78oKGHUl0Omq0tUHVFMgsKYmGPCpv7t3qlnjdr9PucrY3g2SgnhMMcuY5ic0Yc4NMgZckEiagktIw2dE/0
          */
 
@@ -116,6 +118,24 @@ public class _ZuiRe {
         private String comment_count;//评论数
         private String nick;//用户的昵称
         private String icon;//用户的头像
+        private String is_praise;//是否点赞
+        private String is_comment;//是否回复
+
+        public String getIs_praise() {
+            return is_praise;
+        }
+
+        public void setIs_praise(String is_praise) {
+            this.is_praise = is_praise;
+        }
+
+        public String getIs_comment() {
+            return is_comment;
+        }
+
+        public void setIs_comment(String is_comment) {
+            this.is_comment = is_comment;
+        }
 
         public String getId() {
             return id;

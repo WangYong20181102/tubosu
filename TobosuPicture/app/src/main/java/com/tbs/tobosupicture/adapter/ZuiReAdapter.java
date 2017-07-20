@@ -1,5 +1,6 @@
 package com.tbs.tobosupicture.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,9 +18,21 @@ import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.DynamicDetailActivity;
 import com.tbs.tobosupicture.bean._ZuiRe;
+import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.GlideUtils;
+import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.Utils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by Mr.Lin on 2017/7/17 17:23.
@@ -30,6 +43,7 @@ public class ZuiReAdapter
         extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements View.OnClickListener {
     private Context mContext;
+    private Activity activity;
     private String TAG = "ZuiReAdapter";
     //人气榜（活跃）用户
     private ArrayList<_ZuiRe.ActiveUser> activeUserArrayList;
@@ -38,10 +52,11 @@ public class ZuiReAdapter
     //子项的状态 1.加载更多  2.恢复正常状态
     private int adapterLoadState = 1;
 
-    public ZuiReAdapter(Context context, ArrayList<_ZuiRe.ActiveUser> activeUserArrayList, ArrayList<_ZuiRe.Dynamic> dynamicArrayList) {
+    public ZuiReAdapter(Context context, Activity activity, ArrayList<_ZuiRe.ActiveUser> activeUserArrayList, ArrayList<_ZuiRe.Dynamic> dynamicArrayList) {
         this.mContext = context;
         this.activeUserArrayList = activeUserArrayList;
         this.dynamicArrayList = dynamicArrayList;
+        this.activity = activity;
     }
 
     //图层的变换
@@ -83,7 +98,7 @@ public class ZuiReAdapter
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof ZuiReHeadViewHolder) {
             //TODO 绑定活跃榜数据  用户点击某一活跃者头像可以跳转到用户的详情
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
@@ -103,10 +118,23 @@ public class ZuiReAdapter
             ((ZuiReDynamicHolder) holder).zuiReDynamicViewCount.setText("浏览数:" + dynamicArrayList.get(position - 1).getView_count());
             //点赞数
             ((ZuiReDynamicHolder) holder).zuiReDynamicPraiseCount.setText("" + dynamicArrayList.get(position - 1).getPraise_count());
+            if (dynamicArrayList.get(position - 1).getIs_praise().equals("1")) {
+                ((ZuiReDynamicHolder) holder).zuiReImgZan.setImageResource(R.mipmap.zan_after);
+            } else {
+                ((ZuiReDynamicHolder) holder).zuiReImgZan.setImageResource(R.mipmap.zan2);
+            }
+            if (dynamicArrayList.get(position - 1).getIs_comment().equals("1")) {
+                ((ZuiReDynamicHolder) holder).zuiReImgPinglun.setImageResource(R.mipmap.pinglun_after);
+            } else {
+                ((ZuiReDynamicHolder) holder).zuiReImgPinglun.setImageResource(R.mipmap.pinglun);
+            }
             ((ZuiReDynamicHolder) holder).zuiReDynamicPraise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //TODO 进行点赞 调取点赞接口
+                    HttpPraise("23109", dynamicArrayList.get(position-1).getId(),
+                            dynamicArrayList.get(position-1).getUid(),
+                            ((ZuiReDynamicHolder) holder).zuiReImgZan);
                 }
             });
             //回复数
@@ -118,6 +146,8 @@ public class ZuiReAdapter
                     Intent intent = new Intent(mContext, DynamicDetailActivity.class);
                     Log.e("TAG", "进入回复页面的dynamic_id====" + dynamicArrayList.get(position - 1).getId());
                     intent.putExtra("dynamic_id", dynamicArrayList.get(position - 1).getId());
+                    intent.putExtra("commented_uid", dynamicArrayList.get(position - 1).getUid());
+                    intent.putExtra("is_virtual_user", dynamicArrayList.get(position - 1).getIs_virtual_user());
                     mContext.startActivity(intent);
                 }
             });
@@ -150,7 +180,7 @@ public class ZuiReAdapter
             if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url4())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag4.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url4(),
-                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag4, 1);
+                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag4);
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag4.setVisibility(View.GONE);
             }
@@ -158,7 +188,7 @@ public class ZuiReAdapter
             if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url5())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag5.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url5(),
-                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag5, 1);
+                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag5);
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag5.setVisibility(View.GONE);
             }
@@ -166,15 +196,15 @@ public class ZuiReAdapter
             if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url6())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag6.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url6(),
-                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag6, 1);
+                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag6);
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag6.setVisibility(View.GONE);
             }
-            //第七章
+            //第七张
             if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url7())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag7.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url7(),
-                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag7, 1);
+                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag7);
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag7.setVisibility(View.GONE);
             }
@@ -182,7 +212,7 @@ public class ZuiReAdapter
             if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url8())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag8.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url8(),
-                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag8, 1);
+                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag8);
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag8.setVisibility(View.GONE);
             }
@@ -190,7 +220,7 @@ public class ZuiReAdapter
             if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url9())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag9.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url9(),
-                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag9, 1);
+                        R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag9);
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag9.setVisibility(View.GONE);
             }
@@ -243,7 +273,7 @@ public class ZuiReAdapter
         }
     }
 
-    //普通图层
+    //普通图层  显示动态
     class ZuiReDynamicHolder extends RecyclerView.ViewHolder {
         private ImageView zuiReDynamicIcon;//用户的头像
         private TextView zuiReDynamicNick;//用户的昵称
@@ -257,6 +287,10 @@ public class ZuiReAdapter
         private ImageView zuiReDynamicImag7;//
         private ImageView zuiReDynamicImag8;//
         private ImageView zuiReDynamicImag9;//
+
+        private ImageView zuiReImgZan;//点赞图标
+        private ImageView zuiReImgPinglun;//点赞图标
+
         private TextView zuiReDynamicViewCount;//动态浏览数
         private TextView zuiReDynamicCommentCount;//动态评论数
         private TextView zuiReDynamicPraiseCount;//动态点赞数
@@ -278,6 +312,10 @@ public class ZuiReAdapter
             zuiReDynamicImag7 = (ImageView) itemView.findViewById(R.id.zuire_dynamic_img7);
             zuiReDynamicImag8 = (ImageView) itemView.findViewById(R.id.zuire_dynamic_img8);
             zuiReDynamicImag9 = (ImageView) itemView.findViewById(R.id.zuire_dynamic_img9);
+
+            zuiReImgZan = (ImageView) itemView.findViewById(R.id.zuire_img_zan);
+            zuiReImgPinglun = (ImageView) itemView.findViewById(R.id.zuire_img_pinglun);
+
             zuiReDynamicViewCount = (TextView) itemView.findViewById(R.id.zuire_dynamic_view_count);
             zuiReDynamicCommentCount = (TextView) itemView.findViewById(R.id.zuire_dynamic_comment_count);
             zuiReDynamicPraiseCount = (TextView) itemView.findViewById(R.id.zuire_dynamic_praise_count);
@@ -285,5 +323,61 @@ public class ZuiReAdapter
             zuiReDynamicPinlun = (LinearLayout) itemView.findViewById(R.id.item_dynamic_pinlun);
             zuiReDynamicPraise = (LinearLayout) itemView.findViewById(R.id.zuire_dynamic_praise);
         }
+    }
+
+    /**
+     * 用户点赞
+     * uid 用户的id
+     * dynamicId 动态id
+     * praisedUid 被点赞用户的id号
+     * is_praise 点赞前的状态
+     */
+    private void HttpPraise(String uid, String dynamic_id,
+                            String praised_uid, final ImageView zan) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Utils.getDateToken());
+        param.put("uid", uid);
+        param.put("dynamic_id", dynamic_id);
+        param.put("praised_uid", praised_uid);
+        Log.e(TAG, "praised_uid====" + praised_uid+"===="+uid+"====="+dynamic_id);
+        HttpUtils.doPost(UrlConstans.USER_PRAISE, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "点赞链接失败===" + e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                Log.e(TAG, "点赞链接成功===" + json);
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.getString("status");
+                    if (status.equals("200")) {
+                        final String msg = jsonObject.getString("msg");
+                        Log.e(TAG, "======" + msg);
+                        //操作成功
+                        //点赞操作(之前没有点赞过)
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (msg.equals("点赞成功")) {
+                                    zan.setImageResource(R.mipmap.zan_after);
+                                } else {
+                                    zan.setImageResource(R.mipmap.zan2);
+                                }
+                            }
+                        });
+
+
+                    } else if (status.equals("202")) {
+                        //点赞失败
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 }
