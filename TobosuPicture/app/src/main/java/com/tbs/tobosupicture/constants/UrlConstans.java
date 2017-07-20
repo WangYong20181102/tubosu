@@ -109,5 +109,12 @@ public class UrlConstans {
      * 动态评论列表动态详细页
      */
     public static final String DYNAMIC_COMMETN_LIST = ZXKK_URL + "rapp/dynamic/dynamic_comment_list";
-
+    /**
+     * 评论动态公共功能
+     */
+    public static final String USER_SEND_COMMENT = ZXKK_URL + "rapp/public/comment";
+    /**
+     * 点赞/取消点赞公共功能
+     */
+    public static final String USER_PRAISE = ZXKK_URL + "rapp/public/praise";
 }

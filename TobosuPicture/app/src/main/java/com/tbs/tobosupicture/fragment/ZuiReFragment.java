@@ -132,11 +132,19 @@ public class ZuiReFragment extends BaseFragment {
         HttpGetZuiReList(mPage);
     }
 
+    //TODO 在这个请求中要区分用户的登录状态 已经登录传UID 去识别用户评论过或者点赞过的动态
     private void HttpGetZuiReList(final int mPage) {
         isLoading = true;
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("page", mPage);
+        param.put("uid", "23109");
+        //TODO 判断用户的登录情况
+        if (true) {
+
+        } else {
+
+        }
         param.put("page_size", "10");
         HttpUtils.doPost(UrlConstans.IMAGE_TO_FRIEND_ZUIRE, param, new Callback() {
             @Override
@@ -164,13 +172,10 @@ public class ZuiReFragment extends BaseFragment {
                                     activeUserArrayList.addAll(zuiRe.getActive_user());
                                 }
                                 dynamicArrayList.addAll(zuiRe.getDynamic());
-                                if (mZuiReAdapter == null) {
-                                    mZuiReAdapter = new ZuiReAdapter(mContext, activeUserArrayList, dynamicArrayList);
+                                    mZuiReAdapter = new ZuiReAdapter(mContext,getActivity(), activeUserArrayList, dynamicArrayList);
                                     zuireRecycle.setAdapter(mZuiReAdapter);
                                     mZuiReAdapter.notifyDataSetChanged();
-                                } else {
                                     mZuiReAdapter.notifyDataSetChanged();
-                                }
                             }
                         });
                         isLoading = false;
