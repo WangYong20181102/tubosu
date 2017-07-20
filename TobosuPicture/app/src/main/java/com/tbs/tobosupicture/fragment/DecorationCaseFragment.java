@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.ConditionActivity;
 import com.tbs.tobosupicture.adapter.CaseAdapter;
-import com.tbs.tobosupicture.adapter.SamplePictureAdapter;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.bean.CaseJsonEntity;
 import com.tbs.tobosupicture.constants.UrlConstans;
@@ -55,7 +54,7 @@ public class DecorationCaseFragment extends BaseFragment {
     Unbinder unbinder;
 
     private CaseJsonEntity caseJsonEntity;
-    private ArrayList<CaseJsonEntity.CaseEntity> caseList;
+    private ArrayList<CaseJsonEntity.CaseEntity> caseList = new ArrayList<CaseJsonEntity.CaseEntity>();
     private CaseAdapter caseAdapter;
 
     private int page = 1;
@@ -102,7 +101,7 @@ public class DecorationCaseFragment extends BaseFragment {
                         @Override
                         public void run() {
                             if(caseJsonEntity.getStatus()==200){
-                                caseList = caseJsonEntity.getDataList();
+                                caseList.addAll(caseJsonEntity.getDataList());
                                 initListView();
                             }else {
                                 Utils.setToast(getActivity(), "无更多数据");

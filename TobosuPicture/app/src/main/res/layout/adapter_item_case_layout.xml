@@ -12,7 +12,7 @@
         <ImageView
             android:id="@+id/iv_case_big_sample_pic"
             android:layout_width="match_parent"
-            android:background="@mipmap/loading_img_fail"
+            android:scaleType="centerCrop"
             android:layout_height="174dp"/>
 
         <ImageView
