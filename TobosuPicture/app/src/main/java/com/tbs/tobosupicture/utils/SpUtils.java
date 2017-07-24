@@ -118,4 +118,41 @@ public class SpUtils {
     }
 
 
+
+
+    private static final String XGTKK_SEARCH_CASE_STYLE_PRE = "xgtkk_search_case_style_pre";
+    private static final String area = "search_history_case_area";
+    private static final String layout = "search_history_case_layout";
+    private static final String price = "search_history_case_price";
+    private static final String style = "search_history_case_style";
+
+    public static void setSearchCaseColorAreaNum(Context context, int areaNum){
+        context.getSharedPreferences(XGTKK_SEARCH_CASE_STYLE_PRE, 0).edit().putInt(area, areaNum).commit();
+    }
+    public static int getSearchCaseColorAreaNum(Context context){
+        return context.getSharedPreferences(XGTKK_SEARCH_CASE_STYLE_PRE, 0).getInt(area, -1);
+    }
+
+
+    public static void setSearchCaseColorLayoutNum(Context context, int layoutNum){
+        context.getSharedPreferences(XGTKK_SEARCH_CASE_STYLE_PRE, 0).edit().putInt(layout, layoutNum).commit();
+    }
+    public static int getSearchCaseColorLayoutNum(Context context){
+        return context.getSharedPreferences(XGTKK_SEARCH_CASE_STYLE_PRE, 0).getInt(layout, -1);
+    }
+
+    public static void setSearchCaseColorPriceNum(Context context, int priceNum){
+        context.getSharedPreferences(XGTKK_SEARCH_CASE_STYLE_PRE, 0).edit().putInt(price, priceNum).commit();
+    }
+    public static int getSearchCaseColorPriceNum(Context context){
+        return context.getSharedPreferences(XGTKK_SEARCH_CASE_STYLE_PRE, 0).getInt(price, -1);
+    }
+
+    public static void setSearchCaseColorStyleNum(Context context, int styleNum){
+        context.getSharedPreferences(XGTKK_SEARCH_CASE_STYLE_PRE, 0).edit().putInt(style, styleNum).commit();
+    }
+    public static int getSearchCaseColorStyleNum(Context context){
+        return context.getSharedPreferences(XGTKK_SEARCH_CASE_STYLE_PRE, 0).getInt(style, -1);
+    }
+
 }

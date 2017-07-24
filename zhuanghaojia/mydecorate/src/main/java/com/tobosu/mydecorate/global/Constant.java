@@ -12,11 +12,11 @@ public class Constant {
     /**
      * 正式环境
      */
-//    public static final String ZHJ = "http://www.tobosu.com/";
+    public static final String ZHJ = "http://www.tobosu.com/";
     /**
      * 测试环境
      */
-    public static final String ZHJ = "http://www.dev.tobosu.com/";
+//    public static final String ZHJ = "http://www.dev.tobosu.com/";
 
     public static final int CHANGE_USERNAME_RESULTCODE = 0x000014;
     public static final int CHANGE_USERNAME_REQUESTCODE = 0x000015;

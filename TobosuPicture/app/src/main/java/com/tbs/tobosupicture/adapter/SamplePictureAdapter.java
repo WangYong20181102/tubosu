@@ -177,10 +177,8 @@ public class SamplePictureAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     public class FootViewHolder extends RecyclerView.ViewHolder{
-//        private TextView tvLoadData;
         public FootViewHolder(View itemView) {
             super(itemView);
-//            tvLoadData = (TextView) itemView.findViewById(R.id.FootViewHolder);
         }
     }
 }

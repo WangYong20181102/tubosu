@@ -5,36 +5,76 @@
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:background="@color/bg_banner_black">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="49dp"
+            android:layout_marginLeft="14dp">
+            <TextView
+                android:id="@+id/caseLocation"
+                android:text="深圳"
+                android:textSize="14sp"
+                android:textColor="@color/bg_white"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_gravity="center_vertical"
+                android:background="@mipmap/chengshi"/>
+        </LinearLayout>
+        <TextView
+            android:text="装修案例"
+            android:padding="8dp"
+            android:textColor="@color/bg_white"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="44dp"
         android:background="#E8E9EB">
+
         <TextView
             android:id="@+id/tvSearchCase"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
+            android:layout_marginBottom="6dp"
             android:layout_marginLeft="13dp"
             android:layout_marginRight="13dp"
-            android:layout_marginBottom="6dp"
             android:layout_marginTop="6dp"
-            android:background="@drawable/shape_edittext_search_case"/>
+            android:background="@drawable/shape_edittext_search_case" />
+
         <TextView
             android:id="@+id/tvSearchTipText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:drawableLeft="@mipmap/sousuo"
-            android:text="搜索"/>
+            android:text="搜索" />
     </RelativeLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/caseSwipRefreshLayout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/caseRecyclerView"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/caseSwipRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/caseRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
+
 
 </LinearLayout>

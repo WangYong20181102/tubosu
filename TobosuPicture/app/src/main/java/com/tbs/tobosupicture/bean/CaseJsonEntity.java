@@ -28,30 +28,32 @@ public class CaseJsonEntity {
             JSONObject object = new JSONObject(json);
             this.status = object.getInt("status");
             this.msg = object.getString("msg");
-            this.jsonArray = object.getJSONArray("data");
-            int len = this.jsonArray.length();
-            this.dataList = new ArrayList<CaseEntity>();
-            if(len>0){
-                for(int i=0;i<len;i++){
-                    CaseEntity entity = new CaseEntity();
-                    entity.setCaseid(jsonArray.getJSONObject(i).getString("caseid"));
-                    entity.setImg_url(jsonArray.getJSONObject(i).getString("img_url"));
-                    entity.setOwner_name(jsonArray.getJSONObject(i).getString("owner_name"));
-                    entity.setPrice(jsonArray.getJSONObject(i).getString("price"));
-                    entity.setDesigner_id(jsonArray.getJSONObject(i).getString("designer_id"));
-                    entity.setDesmethod(jsonArray.getJSONObject(i).getString("desmethod"));
-                    entity.setShi(jsonArray.getJSONObject(i).getString("shi"));
-                    entity.setTing(jsonArray.getJSONObject(i).getString("ting"));
-                    entity.setWei(jsonArray.getJSONObject(i).getString("wei"));
-                    entity.setArea(jsonArray.getJSONObject(i).getString("area"));
-                    entity.setDistrict_name(jsonArray.getJSONObject(i).getString("district_name"));
-                    entity.setStyle_name(jsonArray.getJSONObject(i).getString("style_name"));
-                    entity.setDesigner_name(jsonArray.getJSONObject(i).getString("designer_name"));
-                    entity.setDesigner_icon(jsonArray.getJSONObject(i).getString("designer_icon"));
-                    dataList.add(entity);
+            this.msg = object.getString("msg");
+            if(this.status==200){
+                this.jsonArray = object.getJSONArray("data");
+                int len = this.jsonArray.length();
+                this.dataList = new ArrayList<CaseEntity>();
+                if(len>0){
+                    for(int i=0;i<len;i++){
+                        CaseEntity entity = new CaseEntity();
+                        entity.setCaseid(jsonArray.getJSONObject(i).getString("caseid"));
+                        entity.setImg_url(jsonArray.getJSONObject(i).getString("img_url"));
+                        entity.setOwner_name(jsonArray.getJSONObject(i).getString("owner_name"));
+                        entity.setPrice(jsonArray.getJSONObject(i).getString("price"));
+                        entity.setDesigner_id(jsonArray.getJSONObject(i).getString("designer_id"));
+                        entity.setDesmethod(jsonArray.getJSONObject(i).getString("desmethod"));
+                        entity.setShi(jsonArray.getJSONObject(i).getString("shi"));
+                        entity.setTing(jsonArray.getJSONObject(i).getString("ting"));
+                        entity.setWei(jsonArray.getJSONObject(i).getString("wei"));
+                        entity.setArea(jsonArray.getJSONObject(i).getString("area"));
+                        entity.setDistrict_name(jsonArray.getJSONObject(i).getString("district_name"));
+                        entity.setStyle_name(jsonArray.getJSONObject(i).getString("style_name"));
+                        entity.setDesigner_name(jsonArray.getJSONObject(i).getString("designer_name"));
+                        entity.setDesigner_icon(jsonArray.getJSONObject(i).getString("designer_icon"));
+                        dataList.add(entity);
+                    }
                 }
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }

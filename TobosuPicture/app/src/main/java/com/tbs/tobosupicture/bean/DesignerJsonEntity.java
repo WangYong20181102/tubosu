@@ -59,7 +59,7 @@ public class DesignerJsonEntity {
                 }
 
 
-                JSONArray caseArr = jsonObject.getJSONArray("case");
+                JSONArray caseArr = jsonObject.getJSONArray("cases");
                 int caseLen = caseArr.length();
                 ArrayList<DesignerCaseEntity> caseList = new ArrayList<DesignerCaseEntity>();
                 if(caseLen>0){

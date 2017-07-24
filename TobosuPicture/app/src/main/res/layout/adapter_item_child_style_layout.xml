@@ -2,11 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#efeeee">
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/tv_child_style"
-        android:layout_width="wrap_content"
+        android:layout_width="127dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="14sp"
@@ -14,7 +14,7 @@
         android:layout_centerVertical="true"
         android:padding="8dp"
         android:textColor="#252424"
-        android:background="@drawable/shape_child_style_textview_bg_normal"
+        android:background="@drawable/shape_case_textview_bg_item"
         android:layout_centerInParent="true"
         android:text="child text"/>
 </RelativeLayout>

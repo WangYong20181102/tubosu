@@ -137,7 +137,6 @@
         <activity android:name=".activity.DesignerActivity"></activity>
         <activity android:name=".activity.ConditionActivity"></activity>
         <activity android:name=".activity.SeeImageActivity"></activity>
-
         <activity android:name=".activity.DynamicActivity"></activity>
 
     </application>
