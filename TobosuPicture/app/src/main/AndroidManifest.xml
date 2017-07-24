@@ -130,16 +130,13 @@
         <activity android:name=".activity.SetNewPasswordActivity" />
         <activity android:name=".activity.FindPasswordActivity" />
         <activity android:name=".activity.SystemActivity" />
-        <activity android:name=".activity.DynamicDetailActivity"></activity>
-
-
-        <activity android:name=".activity.MyFriendsActivity"></activity>
-        <activity android:name=".activity.DesignerActivity"></activity>
-        <activity android:name=".activity.ConditionActivity"></activity>
-        <activity android:name=".activity.SeeImageActivity"></activity>
-
-        <activity android:name=".activity.DynamicActivity"></activity>
-
+        <activity android:name=".activity.DynamicDetailActivity" />
+        <activity android:name=".activity.MyFriendsActivity" />
+        <activity android:name=".activity.DesignerActivity" />
+        <activity android:name=".activity.ConditionActivity" />
+        <activity android:name=".activity.SeeImageActivity" />
+        <activity android:name=".activity.PersonHomePageActivity" />
+        <activity android:name=".activity.HisFriendsActivity"></activity>
     </application>
 
 </manifest>

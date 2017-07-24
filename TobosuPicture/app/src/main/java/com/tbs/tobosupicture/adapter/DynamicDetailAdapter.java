@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Mr.Lin on 2017/7/18 16:39.
+ * 动态详情 适配器
  */
 
 public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -26,6 +28,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
     private _DynamicDetail dynamicDetail;
     private ArrayList<_DynamicDetail.Comment> commentArrayList;
     private int adapterState = 1;//子项的状态 1.加载更多 2.正常状态
+    private String TAG = "DynamicDetailAdapter";
 
     public DynamicDetailAdapter(Context context, _DynamicDetail dynamicDetail, ArrayList<_DynamicDetail.Comment> commentArrayList) {
         this.mContext = context;
@@ -138,6 +141,19 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag9);
             }
             ((DynamicDetailHeadHolder) holder).DynamicDetailAddTime.setText("" + dynamicDetail.getDynamic().getAdd_time());
+            //设置用户的点赞状态以及评论状态
+            Log.e(TAG, "当前用户的点赞状态====" + dynamicDetail.getDynamic().getIs_praise());
+            Log.e(TAG, "当前用户的评论状态====" + dynamicDetail.getDynamic().getIs_comment());
+            if (dynamicDetail.getDynamic().getIs_praise().equals("0")) {
+                ((DynamicDetailHeadHolder) holder).dynamic_detail_praise.setImageResource(R.mipmap.zan2);
+            } else {
+                ((DynamicDetailHeadHolder) holder).dynamic_detail_praise.setImageResource(R.mipmap.zan_after);
+            }
+            if (dynamicDetail.getDynamic().getIs_comment().equals("0")) {
+                ((DynamicDetailHeadHolder) holder).dynamic_detail_comment.setImageResource(R.mipmap.pinglun);
+            } else {
+                ((DynamicDetailHeadHolder) holder).dynamic_detail_comment.setImageResource(R.mipmap.pinglun_after);
+            }
             ((DynamicDetailHeadHolder) holder).DynamicDetailPraiseCount.setText("" + dynamicDetail.getPraise_count());
             ((DynamicDetailHeadHolder) holder).DynamicDetailCommentCount.setText("" + dynamicDetail.getDynamic().getComment_count());
             //点赞用户的头像
@@ -241,6 +257,8 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         private TextView DynamicDetailAddTime;//时间
         private TextView DynamicDetailCommentCount;//动态评论数
         private TextView DynamicDetailPraiseCount;//动态点赞数
+        private ImageView dynamic_detail_comment;//评论的图标
+        private ImageView dynamic_detail_praise;//点赞的图标
 
         private ImageView dynamic_zan1;
         private ImageView dynamic_zan2;
@@ -269,6 +287,9 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             DynamicDetailAddTime = (TextView) itemView.findViewById(R.id.dynamic_detail_add_time);
             DynamicDetailCommentCount = (TextView) itemView.findViewById(R.id.dynamic_detail_comment_count);
             DynamicDetailPraiseCount = (TextView) itemView.findViewById(R.id.dynamic_detail_praise_count);
+
+            dynamic_detail_praise = (ImageView) itemView.findViewById(R.id.dynamic_detail_praise);
+            dynamic_detail_comment = (ImageView) itemView.findViewById(R.id.dynamic_detail_comment);
 
             dynamic_zan1 = (ImageView) itemView.findViewById(R.id.dynamic_zan1);
             dynamic_zan2 = (ImageView) itemView.findViewById(R.id.dynamic_zan2);

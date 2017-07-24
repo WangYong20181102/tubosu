@@ -246,12 +246,13 @@ public class DynamicDetailActivity extends BaseActivity {
 
     }
 
-    //查看详情页
+    //TODO 查看详情页根据需求暂时先传固定的uid用于点击进入详情页判断当前登录的用户是否点过赞或者p评论过
     private void HttpGetDynamic() {
         isLoading = true;
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("dynamic_id", dynamicId);
+        param.put("uid", "23109");
         HttpUtils.doPost(UrlConstans.DYNAMIC_DETAIL, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

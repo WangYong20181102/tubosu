@@ -29,6 +29,8 @@
     <color name="text_yellow">#ff882e</color>
     <!--背景颜色红色-->
     <color name="bg_red">#FFF10606</color>
+    <!--背景颜色绿色-->
+    <color name="bg_green">#2bcca7</color>
     <!--顶部banner背景颜色黑色-->
     <color name="bg_banner_black">#202124</color>
     <!--顶部banner背景颜色黑色-->

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.DynamicDetailActivity;
+import com.tbs.tobosupicture.activity.PersonHomePageActivity;
 import com.tbs.tobosupicture.bean._ZuiRe;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.GlideUtils;
@@ -100,7 +101,7 @@ public class ZuiReAdapter
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof ZuiReHeadViewHolder) {
-            //TODO 绑定活跃榜数据  用户点击某一活跃者头像可以跳转到用户的详情
+            //TODO 绑定活跃榜数据  用户点击某一活跃者头像可以跳转到用户的详情 (已完成)
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
             ZuiReHeadAdapter zuiReHeadAdapter = new ZuiReHeadAdapter(mContext, activeUserArrayList);
             ((ZuiReHeadViewHolder) holder).zuiReHeadRecycleView.setLayoutManager(linearLayoutManager);
@@ -110,6 +111,17 @@ public class ZuiReAdapter
             //用户头像
             GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getIcon(),
                     R.mipmap.default_icon, R.mipmap.default_icon, ((ZuiReDynamicHolder) holder).zuiReDynamicIcon, 0);
+            //跳转事件  跳转到用户的主页
+            ((ZuiReDynamicHolder) holder).zuiReDynamicIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO 点击人气榜的头像进入详情页
+                    Intent intent = new Intent(mContext, PersonHomePageActivity.class);
+                    intent.putExtra("homepageUid", dynamicArrayList.get(position - 1).getUid());
+                    intent.putExtra("is_virtual_user", dynamicArrayList.get(position - 1).getIs_virtual_user());
+                    mContext.startActivity(intent);
+                }
+            });
             //用户昵称
             ((ZuiReDynamicHolder) holder).zuiReDynamicNick.setText("" + dynamicArrayList.get(position - 1).getNick());
             //动态标题
@@ -131,10 +143,11 @@ public class ZuiReAdapter
             ((ZuiReDynamicHolder) holder).zuiReDynamicPraise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO 进行点赞 调取点赞接口
-                    HttpPraise("23109", dynamicArrayList.get(position-1).getId(),
-                            dynamicArrayList.get(position-1).getUid(),
-                            ((ZuiReDynamicHolder) holder).zuiReImgZan);
+                    //TODO 进行点赞 用户在已经登录的情况下调取点赞接口 缺少用户的ID号
+                    HttpPraise("23109", dynamicArrayList.get(position - 1).getId(),
+                            dynamicArrayList.get(position - 1).getUid(),
+                            ((ZuiReDynamicHolder) holder).zuiReImgZan,
+                            ((ZuiReDynamicHolder) holder).zuiReDynamicZanAdd, ((ZuiReDynamicHolder) holder).zuiReDynamicPraiseCount);
                 }
             });
             //回复数
@@ -294,6 +307,7 @@ public class ZuiReAdapter
         private TextView zuiReDynamicViewCount;//动态浏览数
         private TextView zuiReDynamicCommentCount;//动态评论数
         private TextView zuiReDynamicPraiseCount;//动态点赞数
+        private TextView zuiReDynamicZanAdd;//动态点赞数加一
 
         private LinearLayout zuiReDynamicPinlun;//评论按钮可点击
         private LinearLayout zuiReDynamicPraise;//评论按钮可点击
@@ -319,6 +333,7 @@ public class ZuiReAdapter
             zuiReDynamicViewCount = (TextView) itemView.findViewById(R.id.zuire_dynamic_view_count);
             zuiReDynamicCommentCount = (TextView) itemView.findViewById(R.id.zuire_dynamic_comment_count);
             zuiReDynamicPraiseCount = (TextView) itemView.findViewById(R.id.zuire_dynamic_praise_count);
+            zuiReDynamicZanAdd = (TextView) itemView.findViewById(R.id.zuire_dynamic_zan_add);
 
             zuiReDynamicPinlun = (LinearLayout) itemView.findViewById(R.id.item_dynamic_pinlun);
             zuiReDynamicPraise = (LinearLayout) itemView.findViewById(R.id.zuire_dynamic_praise);
@@ -333,13 +348,13 @@ public class ZuiReAdapter
      * is_praise 点赞前的状态
      */
     private void HttpPraise(String uid, String dynamic_id,
-                            String praised_uid, final ImageView zan) {
+                            String praised_uid, final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("uid", uid);
         param.put("dynamic_id", dynamic_id);
         param.put("praised_uid", praised_uid);
-        Log.e(TAG, "praised_uid====" + praised_uid+"===="+uid+"====="+dynamic_id);
+//        Log.e(TAG, "praised_uid====" + praised_uid + "====" + uid + "=====" + dynamic_id);
         HttpUtils.doPost(UrlConstans.USER_PRAISE, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -363,7 +378,11 @@ public class ZuiReAdapter
                             public void run() {
                                 if (msg.equals("点赞成功")) {
                                     zan.setImageResource(R.mipmap.zan_after);
+                                    zanAddAnimation(tvAdd, tvShowNum);
                                 } else {
+                                    int num = Integer.parseInt(tvShowNum.getText().toString());
+                                    int numAddone = num - 1;
+                                    tvShowNum.setText("" + numAddone);
                                     zan.setImageResource(R.mipmap.zan2);
                                 }
                             }
@@ -379,5 +398,19 @@ public class ZuiReAdapter
             }
         });
 
+    }
+
+    //点赞数加一的动画效果
+    private void zanAddAnimation(final TextView tvAdd, final TextView showNum) {
+        tvAdd.setVisibility(View.VISIBLE);
+        tvAdd.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tvAdd.setVisibility(View.GONE);
+                int num = Integer.parseInt(showNum.getText().toString());
+                int numAddone = num + 1;
+                showNum.setText("" + numAddone);
+            }
+        }, 1000);
     }
 }

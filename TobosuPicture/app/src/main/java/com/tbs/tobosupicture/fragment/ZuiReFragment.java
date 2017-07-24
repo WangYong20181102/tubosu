@@ -172,10 +172,14 @@ public class ZuiReFragment extends BaseFragment {
                                     activeUserArrayList.addAll(zuiRe.getActive_user());
                                 }
                                 dynamicArrayList.addAll(zuiRe.getDynamic());
-                                    mZuiReAdapter = new ZuiReAdapter(mContext,getActivity(), activeUserArrayList, dynamicArrayList);
+                                if(mZuiReAdapter==null){
+                                    mZuiReAdapter = new ZuiReAdapter(mContext, getActivity(), activeUserArrayList, dynamicArrayList);
                                     zuireRecycle.setAdapter(mZuiReAdapter);
                                     mZuiReAdapter.notifyDataSetChanged();
+                                }else {
                                     mZuiReAdapter.notifyDataSetChanged();
+                                }
+
                             }
                         });
                         isLoading = false;

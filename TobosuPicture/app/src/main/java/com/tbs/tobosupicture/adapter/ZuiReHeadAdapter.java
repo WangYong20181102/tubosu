@@ -1,6 +1,7 @@
 package com.tbs.tobosupicture.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.PersonHomePageActivity;
 import com.tbs.tobosupicture.bean._ZuiRe;
 import com.tbs.tobosupicture.utils.GlideUtils;
 
@@ -37,7 +39,7 @@ public class ZuiReHeadAdapter
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof ZuiReHeadItemHolder) {
             GlideUtils.glideLoader(mContext, activeUserArrayList.get(position).getIcon(),
                     R.mipmap.default_icon, R.mipmap.default_icon,
@@ -46,6 +48,10 @@ public class ZuiReHeadAdapter
                 @Override
                 public void onClick(View v) {
                     //TODO 点击人气榜的头像进入详情页
+                    Intent intent = new Intent(mContext, PersonHomePageActivity.class);
+                    intent.putExtra("homepageUid", activeUserArrayList.get(position).getUid());
+                    intent.putExtra("is_virtual_user", activeUserArrayList.get(position).getIs_virtual_user());
+                    mContext.startActivity(intent);
                 }
             });
         }

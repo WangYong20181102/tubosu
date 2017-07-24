@@ -1,7 +1,9 @@
 package com.tbs.tobosupicture.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +12,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.PersonHomePageActivity;
 import com.tbs.tobosupicture.bean._HisFans;
+import com.tbs.tobosupicture.utils.GlideUtils;
 
 import java.util.ArrayList;
 
 /**
  * Created by Mr.Lin on 2017/7/14 10:06.
+ * 他人的图谜
  */
 
 public class HisFansAdapter
@@ -53,18 +58,39 @@ public class HisFansAdapter
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_his_fans, parent, false);
             HisFansViewHolder holder = new HisFansViewHolder(view);
             return holder;
-        } else if (viewType == 1) {
+        } else {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_load_more, parent, false);
             HisFansLoadMore loadMoreHolder = new HisFansLoadMore(view);
             return loadMoreHolder;
         }
-        return null;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof HisFansViewHolder) {
             //TODO 数据的适配 当个性签名为空时要判断 将个性签名的栏目隐藏 思考一下点击头像事件写在adapter中
+            //设置头像
+            GlideUtils.glideLoader(mContext, hisFansArrayList.get(position).getIcon(), R.mipmap.default_icon, R.mipmap.default_icon, ((HisFansViewHolder) holder).hisfansIcon, 0);
+            //名字
+            ((HisFansViewHolder) holder).hisfansName.setText("" + hisFansArrayList.get(position).getNick());
+            //签名
+            if (TextUtils.isEmpty(hisFansArrayList.get(position).getPersonal_signature())) {
+                ((HisFansViewHolder) holder).hisfansSign.setVisibility(View.GONE);
+            } else {
+                ((HisFansViewHolder) holder).hisfansSign.setVisibility(View.VISIBLE);
+                ((HisFansViewHolder) holder).hisfansSign.setText("" + hisFansArrayList.get(position).getPersonal_signature());
+            }
+
+            ((HisFansViewHolder) holder).hisfansIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO 点击头像进入个人信息页
+                    Intent intent = new Intent(mContext, PersonHomePageActivity.class);
+                    intent.putExtra("homepageUid", hisFansArrayList.get(position).getUid());
+                    intent.putExtra("is_virtual_user", hisFansArrayList.get(position).getUser_type());
+                    mContext.startActivity(intent);
+                }
+            });
         } else if (holder instanceof HisFansLoadMore) {
             if (position == 0) {
                 ((HisFansLoadMore) holder).mProgressBar.setVisibility(View.GONE);

@@ -71,6 +71,8 @@ public class _DynamicDetail {
          * praise_count : 0
          * comment_count : 4
          * add_time : 6天前
+         * is_praise: 0//是否点过赞
+         * is_comment:0 //是否评论过
          * nick : HTC123
          * icon : http://member.tobosu.com/public/img/icon/icon21.jpg
          */
@@ -91,8 +93,26 @@ public class _DynamicDetail {
         private String praise_count;
         private String comment_count;
         private String add_time;
+        private String is_praise;
+        private String is_comment;
         private String nick;
         private String icon;
+
+        public String getIs_praise() {
+            return is_praise;
+        }
+
+        public void setIs_praise(String is_praise) {
+            this.is_praise = is_praise;
+        }
+
+        public String getIs_comment() {
+            return is_comment;
+        }
+
+        public void setIs_comment(String is_comment) {
+            this.is_comment = is_comment;
+        }
 
         public String getId() {
             return id;

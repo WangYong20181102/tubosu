@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.tbs.tobosupicture.activity.HisFansActivity">
-    <!--他人的图谜布局-->
+    tools:context="com.tbs.tobosupicture.activity.HisFriendsActivity">
+    <!--他的图友 or 我的图友 看点击进入的uid-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,16 +18,16 @@
             android:background="@color/bg_banner_black">
 
             <TextView
-                android:id="@+id/hf_title"
+                android:id="@+id/friends_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="他的图谜"
+                android:text="他的图友"
                 android:textColor="@color/text_white"
                 android:textSize="18sp" />
             <!--返回按钮-->
             <RelativeLayout
-                android:id="@+id/hf_back"
+                android:id="@+id/friends_back"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:gravity="center">
@@ -40,7 +40,7 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/hf_data_null"
+            android:id="@+id/friends_data_null"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -50,18 +50,18 @@
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center"
-                android:src="@mipmap/none_fans"
+                android:src="@mipmap/none_friends"
                 android:visibility="visible" />
         </LinearLayout>
 
 
         <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/hf_swip_refresh"
+            android:id="@+id/friends_swip_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/hf_myfans_recyclelist"
+                android:id="@+id/friends_recyclelist"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 

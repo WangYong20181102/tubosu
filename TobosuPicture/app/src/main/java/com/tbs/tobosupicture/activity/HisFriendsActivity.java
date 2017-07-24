@@ -1,6 +1,5 @@
 package com.tbs.tobosupicture.activity;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,9 +17,9 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
-import com.tbs.tobosupicture.adapter.HisFansAdapter;
+import com.tbs.tobosupicture.adapter.HisFriendsAdapter;
 import com.tbs.tobosupicture.base.BaseActivity;
-import com.tbs.tobosupicture.bean._HisFans;
+import com.tbs.tobosupicture.bean._HisFriends;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.Utils;
@@ -42,33 +41,29 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
- * create by lin
- * 他人的图谜列表
- * 用户点击进入查看他人的粉丝列表
+ * 他人或者是我的的图友页面
+ * 从个人主页点击进入
  */
-public class HisFansActivity extends BaseActivity {
+public class HisFriendsActivity extends BaseActivity {
 
-    @BindView(R.id.hf_back)
-    RelativeLayout hfBack;//返回
-    @BindView(R.id.hf_myfans_recyclelist)
-    RecyclerView hfMyfansRecyclelist;//粉丝列表
-    @BindView(R.id.hf_swip_refresh)
-    SwipeRefreshLayout hfSwipRefresh;//下拉刷新控件
-    @BindView(R.id.hf_title)
-    TextView hfTitle;
-    @BindView(R.id.hf_data_null)
-    LinearLayout hfDataNull;
+    @BindView(R.id.friends_back)
+    RelativeLayout friendsBack;
+    @BindView(R.id.friends_data_null)
+    LinearLayout friendsDataNull;
+    @BindView(R.id.friends_recyclelist)
+    RecyclerView friendsRecyclelist;
+    @BindView(R.id.friends_swip_refresh)
+    SwipeRefreshLayout friendsSwipRefresh;
 
     private LinearLayoutManager mLinearLayoutManager;
     private Context mContext;
-    private String TAG = "HisFansActivity";
-    private ArrayList<_HisFans> hisFansArrayList = new ArrayList<>();//布局显示用的集合
+    private String TAG = "HisFriendsActivity";
+    private ArrayList<_HisFriends> hisFansArrayList = new ArrayList<>();//布局显示用的集合
     private int mPage = 1;//加载更多用到的页码
     private CustomWaitDialog customWaitDialog;//正在加载的蒙层
     private boolean isLoading = false;//是否正在上拉加载更多数据
-    private HisFansAdapter hisFansAdapter;//适配器
+    private HisFriendsAdapter hisFriendsAdapter;//适配器
     private Intent mIntent;
-    private String mTitle;//页面标题
     private String uId;//被查看用户的id
     private String is_virtual_user;//是否是虚拟用户
     private Gson mGson;//json解析
@@ -76,44 +71,37 @@ public class HisFansActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_his_fans);
+        setContentView(R.layout.activity_his_friends);
         ButterKnife.bind(this);
         mContext = this;
-        initViewEvent();//初始化控件
-        HttpGetHisFansList(mPage);
+        initViewEvent();
+        HttpGetHisFriendsList(mPage);
     }
 
-
-    @OnClick({R.id.hf_back})
-    public void onViewClickedInHisFansActivity(View view) {
-        switch (view.getId()) {
-            case R.id.hf_back:
-                finish();
-                break;
-        }
+    @OnClick(R.id.friends_back)
+    public void onViewClickedInHisFiiendsActivity() {
+        finish();
     }
 
     private void initViewEvent() {
         mIntent = getIntent();
-        mTitle = mIntent.getStringExtra("title");
-        hfTitle.setText("" + mTitle);
         uId = mIntent.getStringExtra("uid");
-        is_virtual_user = mIntent.getStringExtra("is_virtual_user");
+        is_virtual_user = mIntent.getStringExtra("user_type");
         mGson = new Gson();
         //加载的蒙层
         customWaitDialog = new CustomWaitDialog(mContext);
         customWaitDialog.show();
         //初始化下拉控件
-        hfSwipRefresh.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE);
-        hfSwipRefresh.setBackgroundColor(Color.WHITE);
-        hfSwipRefresh.setSize(SwipeRefreshLayout.DEFAULT);
-        hfSwipRefresh.setOnRefreshListener(onRefreshListener);
+        friendsSwipRefresh.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE);
+        friendsSwipRefresh.setBackgroundColor(Color.WHITE);
+        friendsSwipRefresh.setSize(SwipeRefreshLayout.DEFAULT);
+        friendsSwipRefresh.setOnRefreshListener(onRefreshListener);
 
         //初始化列表
         mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
-        hfMyfansRecyclelist.setLayoutManager(mLinearLayoutManager);
-        hfMyfansRecyclelist.setOnTouchListener(onTouchListener);
-        hfMyfansRecyclelist.addOnScrollListener(onScrollListener);
+        friendsRecyclelist.setLayoutManager(mLinearLayoutManager);
+        friendsRecyclelist.setOnTouchListener(onTouchListener);
+        friendsRecyclelist.addOnScrollListener(onScrollListener);
     }
 
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
@@ -125,14 +113,14 @@ public class HisFansActivity extends BaseActivity {
                 hisFansArrayList.clear();
             }
             //重新请求
-            HttpGetHisFansList(mPage);
+            HttpGetHisFriendsList(mPage);
         }
     };
     //控件触碰事件
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            if (hfSwipRefresh.isRefreshing()) {
+            if (friendsSwipRefresh.isRefreshing()) {
                 return true;
             } else {
                 return false;
@@ -147,7 +135,7 @@ public class HisFansActivity extends BaseActivity {
             int lastVisiableItem = mLinearLayoutManager.findLastVisibleItemPosition();
             if (newState == 0
                     && lastVisiableItem + 2 >= mLinearLayoutManager.getItemCount()
-                    && !hfSwipRefresh.isRefreshing()
+                    && !friendsSwipRefresh.isRefreshing()
                     && !isLoading) {
                 loadMore();
             }
@@ -162,36 +150,35 @@ public class HisFansActivity extends BaseActivity {
     //加载更多数据
     private void loadMore() {
         mPage++;
-        if (hisFansAdapter != null) {
-            hisFansAdapter.changeAdapterState(1);
+        if (hisFriendsAdapter != null) {
+            hisFriendsAdapter.changeAdapterState(1);
         }
-        HttpGetHisFansList(mPage);
+        HttpGetHisFriendsList(mPage);
     }
 
     //清除加载状态
     private void cleanLoadAction() {
-        if (hisFansAdapter != null) {
-            hisFansAdapter.changeAdapterState(2);
+        if (hisFriendsAdapter != null) {
+            hisFriendsAdapter.changeAdapterState(2);
         }
-        if (hfSwipRefresh.isRefreshing()) {
-            hfSwipRefresh.setRefreshing(false);
+        if (friendsSwipRefresh.isRefreshing()) {
+            friendsSwipRefresh.setRefreshing(false);
         }
         customWaitDialog.dismiss();
     }
 
+
     //TODO 网络请求数据 当请求完成时要修改isLoading=false 现在暂时用的是固定的UId=23109
-    private void HttpGetHisFansList(int page) {
+    private void HttpGetHisFriendsList(int page) {
         cleanLoadAction();
         isLoading = true;//正在加载数据
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("uid", uId);
-        param.put("followed_user_type", is_virtual_user);
+        param.put("user_type", is_virtual_user);
         param.put("page", page);
         param.put("page_size", "10");
-        Log.e(TAG, "参数uid==" + uId);
-        Log.e(TAG, "参数是否是虚拟用户==" + is_virtual_user);
-        HttpUtils.doPost(UrlConstans.GET_HIS_FANS_URL, param, new Callback() {
+        HttpUtils.doPost(UrlConstans.GET_FRIENDS_URL, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "请求连接失败==" + e.toString());
@@ -210,20 +197,20 @@ public class HisFansActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 try {
-                                    hfDataNull.setVisibility(View.GONE);
+                                    friendsDataNull.setVisibility(View.GONE);
                                     JSONArray dataArray = jsonObject.getJSONArray("data");
                                     for (int i = 0; i < dataArray.length(); i++) {
-                                        _HisFans hisFans = mGson.fromJson(dataArray.get(i).toString(), _HisFans.class);
-                                        hisFansArrayList.add(hisFans);
+                                        _HisFriends hisFriends = mGson.fromJson(dataArray.get(i).toString(), _HisFriends.class);
+                                        hisFansArrayList.add(hisFriends);
                                     }
-                                    if (hisFansAdapter == null) {
-                                        hisFansAdapter = new HisFansAdapter(mContext, hisFansArrayList);
-                                        hfMyfansRecyclelist.setAdapter(hisFansAdapter);
-                                        hisFansAdapter.changeAdapterState(2);
-                                        hisFansAdapter.notifyDataSetChanged();
+                                    if (hisFriendsAdapter == null) {
+                                        hisFriendsAdapter = new HisFriendsAdapter(mContext, hisFansArrayList);
+                                        friendsRecyclelist.setAdapter(hisFriendsAdapter);
+                                        hisFriendsAdapter.changeAdapterState(2);
+                                        hisFriendsAdapter.notifyDataSetChanged();
                                     } else {
-                                        hisFansAdapter.changeAdapterState(2);
-                                        hisFansAdapter.notifyDataSetChanged();
+                                        hisFriendsAdapter.changeAdapterState(2);
+                                        hisFriendsAdapter.notifyDataSetChanged();
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -238,7 +225,7 @@ public class HisFansActivity extends BaseActivity {
                                 Toast.makeText(mContext, "没有更多数据~", Toast.LENGTH_SHORT).show();
                                 if (hisFansArrayList.isEmpty()) {
                                     //TODO 显示没有数据的图层
-                                    hfDataNull.setVisibility(View.VISIBLE);
+                                    friendsDataNull.setVisibility(View.VISIBLE);
                                 }
                             }
                         });
@@ -252,7 +239,7 @@ public class HisFansActivity extends BaseActivity {
     }
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
         ButterKnife.bind(this).unbind();
     }

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?><!--尺寸相关 设计给的字体尺寸是以像素为单位-->
 <resources>
     <dimen name="text_size_20px">10sp</dimen>
+    <dimen name="text_size_22px">11sp</dimen>
     <dimen name="text_size_24px">12sp</dimen>
+    <dimen name="text_size_26px">13sp</dimen>
     <dimen name="text_size_28px">14sp</dimen>
     <dimen name="text_size_30px">15sp</dimen>
     <dimen name="text_size_32px">16sp</dimen>

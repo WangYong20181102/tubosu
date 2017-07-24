@@ -1,12 +1,10 @@
 package com.tbs.tobosupicture.bean;
 
 /**
- * Created by Mr.Lin on 2017/7/14 09:50.
- * 他人的图谜/图友实体类
+ * Created by Mr.Lin on 2017/7/24 15:27.
  */
 
-public class _HisFans {
-
+public class _HisFriends {
     /**
      * id : 29
      * uid : 102949
