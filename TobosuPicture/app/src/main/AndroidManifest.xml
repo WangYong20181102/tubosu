@@ -137,6 +137,9 @@
         <activity android:name=".activity.SeeImageActivity" />
         <activity android:name=".activity.PersonHomePageActivity" />
         <activity android:name=".activity.HisFriendsActivity"></activity>
+
+        <activity android:name=".activity.DynamicActivity"></activity>
+
     </application>
 
 </manifest>

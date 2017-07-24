@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
@@ -34,7 +35,7 @@ public class CaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private int viewItemType = 1;
     private int viewItemFooter = 0;
 
-    private LinearLayout footerLayout;
+    private RelativeLayout footerLayout;
     private TextView tvLoadMore;
     private ProgressBar progressBar;
 
@@ -55,12 +56,12 @@ public class CaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         if(viewType == viewItemFooter){
-            footerView = inflater.inflate(R.layout.item_foot, null);
-            footerLayout = (LinearLayout) footerView.findViewById(R.id.foot_load_more_layout);
-            tvLoadMore = (TextView) footerView.findViewById(R.id.tv_loadmore_text);
+            footerView = inflater.inflate(R.layout.item_foot_case_fragment, null);
+            footerLayout = (RelativeLayout) footerView.findViewById(R.id.foot_load_more_layout_case);
+            tvLoadMore = (TextView) footerView.findViewById(R.id.tv_loadmore_text_case);
+            progressBar = (ProgressBar) footerView.findViewById(R.id.progressBar_case);
             return new FootViewHolder(footerView);
         }
-
         return null;
     }
 
@@ -101,20 +102,35 @@ public class CaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
 
             String str = shi + ting + wei;
-            if(!"".equals(str)){
-                if(!"".equals(area)){
-                    description = style + " | " + str + " | " + area;
-                }else {
-                    description = style + " | " + str;
-                }
+            if(!"".equals(style)){
+                if(!"".equals(str)){
+                    if(!"".equals(area)){
+                        description = style + " | " + str + " | " + area;
+                    }else {
+                        description = style + " | " + str;
+                    }
 
-            }else{
-                if(!"".equals(area)){
-                    description = style + " | " + area;
                 }else{
-                    description = style;
+                    if(!"".equals(area)){
+                        description = style + " | " + area;
+                    }else{
+                        description = style;
+                    }
+                }
+            }else {
+                if(!"".equals(str)){
+                    if(!"".equals(area)){
+                        description = str + " | " + area;
+                    }else {
+                        description = str;
+                    }
+                }else{
+                    if(!"".equals(area)){
+                        description = area;
+                    }
                 }
             }
+
             caseViewHolder.tv_case_title.setText(title);
             caseViewHolder.tv_case_decription.setText(description);
 
@@ -182,6 +198,9 @@ public class CaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if(tvLoadMore!=null){
             tvLoadMore.setText("加载更多数据...");
         }
+        if(progressBar!=null){
+            progressBar.setVisibility(View.VISIBLE);
+        }
     }
 
     public void hideLoadMoreMessage(){
@@ -197,5 +216,9 @@ public class CaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if(tvLoadMore!=null){
             tvLoadMore.setText("别扯了，到底了！");
         }
+        if(progressBar!=null){
+            progressBar.setVisibility(View.GONE);
+        }
+
     }
 }

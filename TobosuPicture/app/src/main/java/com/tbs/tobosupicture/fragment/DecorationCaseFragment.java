@@ -1,5 +1,6 @@
 package com.tbs.tobosupicture.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -48,9 +49,12 @@ public class DecorationCaseFragment extends BaseFragment {
     RecyclerView caseRecyclerView;
     @BindView(R.id.caseSwipRefreshLayout)
     SwipeRefreshLayout caseSwipRefreshLayout;
+    @BindView(R.id.caseLocation)
+    TextView caseLocation;
 
     private LinearLayoutManager linearLayoutManager;
-    
+    private Context mContext;
+
     Unbinder unbinder;
 
     private CaseJsonEntity caseJsonEntity;
@@ -59,6 +63,12 @@ public class DecorationCaseFragment extends BaseFragment {
 
     private int page = 1;
     private int pageSize = 10;
+    private String param_area;
+    private String param_layout;
+    private String param_price;
+    private String param_style;
+
+    private boolean isFromCondictionActivity = false;
 
     public DecorationCaseFragment() {
 
@@ -68,18 +78,23 @@ public class DecorationCaseFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_decoration_case, null);
-        getDataFromNet();
+        mContext = getActivity();
+        getDataFromNet(getCommonHashMap());
         unbinder = ButterKnife.bind(this, view);
         initListViewSetting();
         return view;
     }
 
-    private void getDataFromNet() {
-        if(Utils.isNetAvailable(getActivity())){
-            HashMap<String, Object> hashMap = new HashMap<String, Object>();
-            hashMap.put("token", Utils.getDateToken());
-            hashMap.put("page", page);
-            hashMap.put("pageSize", pageSize);
+    private HashMap<String, Object> getCommonHashMap(){
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        hashMap.put("token", Utils.getDateToken());
+        hashMap.put("page", page);
+        hashMap.put("pageSize", pageSize);
+        return hashMap;
+    }
+
+    private void getDataFromNet(HashMap<String, Object> hashMap) {
+        if (Utils.isNetAvailable(getActivity())) {
             HttpUtils.doPost(UrlConstans.SEARCH_CASE_URL, hashMap, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -96,20 +111,27 @@ public class DecorationCaseFragment extends BaseFragment {
                     String json = response.body().string();
                     Utils.setErrorLog(TAG, json);
                     caseJsonEntity = new CaseJsonEntity(json);
-
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if(caseJsonEntity.getStatus()==200){
+                            if (caseJsonEntity.getStatus() == 200) {
                                 caseList.addAll(caseJsonEntity.getDataList());
                                 initListView();
-                            }else {
-                                Utils.setToast(getActivity(), "无更多数据");
+                            } else {
+                                if (caseAdapter != null) {
+                                    caseAdapter.hideLoadMoreMessage();
+                                    caseAdapter.noMoreData();
+                                }
+//                                caseList.clear();
+//                                Utils.setToast(getActivity(), caseJsonEntity.getMsg());
+                                // 无数据页面在此显示
                             }
                         }
                     });
                 }
             });
+        }else {
+
         }
     }
 
@@ -119,25 +141,54 @@ public class DecorationCaseFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.tvSearchCase)
+    @OnClick({R.id.tvSearchCase, R.id.caseLocation})
     public void onViewClickedDecorateCaseFragment(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tvSearchCase:
-                startActivityForResult(new Intent(getActivity(), ConditionActivity.class), 0);
+                if (Utils.isNetAvailable(mContext)){
+                    startActivityForResult(new Intent(getActivity(), ConditionActivity.class), 0);
+                    isFromCondictionActivity = false;
+                }
+                break;
+            case R.id.caseLocation:
+//                startActivityForResult(new Intent(getActivity(), SelectCityActivity.class));
                 break;
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
-            case 0:
-                getDataFromNet();
+        switch (resultCode) {
+            case 10101:
+                if(data!=null && data.getBundleExtra("params")!=null){
+                    isFromCondictionActivity = true;
+                    Bundle bundle = data.getBundleExtra("params");
+                    param_area = bundle.getString("param_area");
+                    param_layout = bundle.getString("param_layout");
+                    param_price = bundle.getString("param_price");
+                    param_style = bundle.getString("param_style");
+                }
+
+                Utils.setErrorLog(TAG, param_area + "   "+ param_layout + "  "  + param_price + "  " +param_style);
+                page = 1;
+                getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style));
                 break;
         }
     }
 
-    private void initListViewSetting(){
+    private HashMap<String, Object> getPareaHashMap(String area, String layout, String price, String style){
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        hashMap.put("token", Utils.getDateToken());
+        hashMap.put("page", page);
+        hashMap.put("pageSize", pageSize);
+        hashMap.put("area", area);
+        hashMap.put("layout", layout);
+        hashMap.put("price", price);
+        hashMap.put("style", style);
+        return hashMap;
+    }
+
+    private void initListViewSetting() {
         // 设置下拉进度的背景颜色，默认就是白色的
         caseSwipRefreshLayout.setProgressBackgroundColorSchemeResource(android.R.color.white);
         // 设置下拉进度的主题颜色
@@ -145,12 +196,12 @@ public class DecorationCaseFragment extends BaseFragment {
         caseSwipRefreshLayout.setOnRefreshListener(swipeLister);
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         caseRecyclerView.setLayoutManager(linearLayoutManager);
 
         caseRecyclerView.setOnScrollListener(onScrollListener);
         caseRecyclerView.setOnTouchListener(onTouchListener);
     }
+
     //显示列表的滑动监听事件 上拉加载更多
     private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -184,18 +235,17 @@ public class DecorationCaseFragment extends BaseFragment {
         }
     };
 
-    private void initListView(){
+    private void initListView() {
         caseSwipRefreshLayout.setRefreshing(false);
-        if(caseAdapter==null){
-            caseAdapter = new CaseAdapter(getActivity(), caseList);
+        if (caseAdapter == null) {
+            caseAdapter = new CaseAdapter(mContext, caseList);
             caseRecyclerView.setAdapter(caseAdapter);
-        }else {
+        } else {
             caseAdapter.notifyDataSetChanged();
         }
-        if(caseAdapter!=null){
+        if (caseAdapter != null) {
             caseAdapter.hideLoadMoreMessage();
         }
-
     }
 
     //下拉刷新监听事件
@@ -205,22 +255,29 @@ public class DecorationCaseFragment extends BaseFragment {
             //下拉刷新数据 重新初始化各种数据
             caseList.clear();
             page = 1;
-            if(caseAdapter!=null){
+            if (caseAdapter != null) {
                 caseAdapter.hideLoadMoreMessage();
             }
-            getDataFromNet();
-
+            if(isFromCondictionActivity){
+                getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style));
+            }else{
+                getDataFromNet(getCommonHashMap());
+            }
         }
     };
 
-    private void loadMore(){
+    private void loadMore() {
         page++;
-        if(caseAdapter!=null){
+        if (caseAdapter != null) {
             caseAdapter.showLoadMoreMessage();
         }
 
         caseSwipRefreshLayout.setRefreshing(false);
-        getDataFromNet();
-        System.out.println("-----**-onScrolled load more completed------");
+        if(isFromCondictionActivity){
+            getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style));
+        }else{
+            getDataFromNet(getCommonHashMap());
+        }
     }
+
 }

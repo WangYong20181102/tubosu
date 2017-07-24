@@ -1,7 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:context=".activity.ConditionActivity">
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:background="@color/bg_banner_black">
+        <RelativeLayout
+            android:id="@+id/relSearchBack"
+            android:layout_width="49dp"
+            android:layout_height="49dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/back_white"/>
+        </RelativeLayout>
+        <TextView
+            android:text="搜索"
+            android:padding="8dp"
+            android:textColor="@color/bg_white"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_below="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tvHistorySearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="49dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:background="#F5F5F5"
+                    android:text="历史搜索"/>
+                <ListView
+                    android:id="@+id/searchCaseRecord"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvHistorySearch"
+                    android:scrollbars="none">
+                </ListView>
+                <LinearLayout
+                    android:id="@+id/historyLinearlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_below="@+id/searchCaseRecord"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tvSeeMoreCaseHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="查看更多历史"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:background="#d9d7d7"/>
+                    <TextView
+                        android:id="@+id/tvClearCaseHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="清除历史"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:background="#F0F0F0">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:text="搜索条件(可组合多选)"/>
+
+                <TextView
+                    android:id="@+id/tvCaseSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/shape_textview_bg"
+                    android:layout_marginRight="20dp"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/white"
+                    android:text="确认搜索"/>
+
+
+            </RelativeLayout>
+
+
+            <com.tbs.tobosupicture.view.CustomExpandableListView
+                android:id="@+id/expandableConditionListview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:groupIndicator="@null">
+            </com.tbs.tobosupicture.view.CustomExpandableListView>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

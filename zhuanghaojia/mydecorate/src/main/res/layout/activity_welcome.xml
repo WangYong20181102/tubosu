@@ -9,5 +9,5 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:adjustViewBounds="true"
-        android:background="@mipmap/start_img"/>
+        android:background="@mipmap/start_ali"/>
 </LinearLayout>

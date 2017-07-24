@@ -75,6 +75,9 @@ public class UrlConstans {
      */
     public static final String SEARCH_CASE_URL = ZXKK_URL + "rapp/case/case_list";
 
+    /**案例搜索页面url*/
+    public static final String CASE_SEARCH_URL = ZXKK_URL + "/rapp/case/case_search";
+
     /**
      * 获取他人的图谜url
      */
@@ -139,4 +142,5 @@ public class UrlConstans {
      * 关注/取消关注（加为图友）公共功能
      */
     public static final String USER_FOLLOW = ZXKK_URL + "rapp/public/follow";
+
 }

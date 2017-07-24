@@ -45,8 +45,7 @@
                     android:text="家装"
                     android:padding="8dp"
                     android:textColor="@color/bg_white"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
+                    android:layout_centerInParent="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
@@ -70,8 +69,7 @@
                     android:text="工装"
                     android:textColor="@color/bg_white"
                     android:padding="8dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
+                    android:layout_centerInParent="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView

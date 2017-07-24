@@ -120,7 +120,7 @@ public class FactoryStyleAdapter extends BaseExpandableListAdapter {
         holder.gvChild.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String style_id = groupDataList.get(groupPosition).getChild_data().get(childPosition).getId();
+                String style_id = groupDataList.get(groupPosition).getChild_data().get(position).getId();
                 onFactoryStyleItemClickListener.onFactoryStyleItemClickListener(style_id);
             }
         });
