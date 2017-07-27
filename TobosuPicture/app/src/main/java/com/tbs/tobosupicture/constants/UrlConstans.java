@@ -78,6 +78,9 @@ public class UrlConstans {
     /**案例搜索页面url*/
     public static final String CASE_SEARCH_URL = ZXKK_URL + "/rapp/case/case_search";
 
+    /**收藏套图的url*/
+    public static final String COLLECT_PIC_URL = ZXKK_URL + "/rapp/TemplateMap/collect";
+
     /**
      * 获取他人的图谜url
      */
@@ -130,6 +133,10 @@ public class UrlConstans {
      * 点赞/取消点赞公共功能
      */
     public static final String USER_PRAISE = ZXKK_URL + "rapp/public/praise";
+
+    /**图册url*/
+    public static final String PICTURE_LIST_URL = ZXKK_URL + "rapp/TemplateMap/template_atlas";
+
     /**
      * 查看个人主页查看个人主页
      */

@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:horizontalSpacing="3dp"
         android:verticalSpacing="3dp"
-        android:layout_margin="13dp"
         android:background="#efeeee">
     </com.tbs.tobosupicture.view.MyGridView>
 </RelativeLayout>

@@ -146,14 +146,14 @@ public class CaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
 
-            caseViewHolder.iv_case_big_sample_pic.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, SeeImageActivity.class);
-
-                    context.startActivity(intent);
-                }
-            });
+//            caseViewHolder.iv_case_big_sample_pic.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(context, SeeImageActivity.class);
+//
+//                    context.startActivity(intent);
+//                }
+//            });
             caseViewHolder.itemView.setTag(dataList.get(position));
         }
     }

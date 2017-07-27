@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.DesignerActivity;
 import com.tbs.tobosupicture.activity.GetPriceActivity;
+import com.tbs.tobosupicture.activity.SeeImageActivity;
 import com.tbs.tobosupicture.bean.SamplePicBeanEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
 
@@ -109,7 +110,7 @@ public class SamplePictureAdapter extends RecyclerView.Adapter<RecyclerView.View
                     mContext.startActivity(new Intent(mContext, GetPriceActivity.class));
                 }
             });
-            holder.itemView.setTag(dataList.get(position));
+
 
             itmeHolder.iv_designer_pic.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -122,6 +123,19 @@ public class SamplePictureAdapter extends RecyclerView.Adapter<RecyclerView.View
                 }
             });
 
+
+            itmeHolder.iv_big_sample_pic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(mContext, SeeImageActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("img_id", dataList.get(position).getId());
+                    i.putExtra("img_bundle", b);
+                    mContext.startActivity(i);
+                }
+            });
+
+            holder.itemView.setTag(dataList.get(position));
         }
 
 //        if(holder instanceof FootViewHolder){
