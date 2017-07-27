@@ -11,6 +11,7 @@ public class DesignerImpressionEntity {
      * image_count : 4
      * class_id : 0
      * plan_price : 14
+     * collect_count:   收藏数
      * class_name :
      * style_name : 新中式
      * layout_name : 大户型
@@ -22,7 +23,9 @@ public class DesignerImpressionEntity {
     private String class_id;
     private String plan_price;
     private String class_name;
+    private String collect_count;
     private String style_name;
+    private String is_collect;
     private String layout_name;
 
     public String getId() {
@@ -87,5 +90,21 @@ public class DesignerImpressionEntity {
 
     public void setLayout_name(String layout_name) {
         this.layout_name = layout_name;
+    }
+
+    public String getCollect_count() {
+        return collect_count;
+    }
+
+    public String getIs_collect() {
+        return is_collect;
+    }
+
+    public void setIs_collect(String is_collect) {
+        this.is_collect = is_collect;
+    }
+
+    public void setCollect_count(String collect_count) {
+        this.collect_count = collect_count;
     }
 }

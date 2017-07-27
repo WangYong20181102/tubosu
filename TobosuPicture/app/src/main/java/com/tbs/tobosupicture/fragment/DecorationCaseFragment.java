@@ -148,6 +148,7 @@ public class DecorationCaseFragment extends BaseFragment {
                 if (Utils.isNetAvailable(mContext)){
                     startActivityForResult(new Intent(getActivity(), ConditionActivity.class), 0);
                     isFromCondictionActivity = false;
+                    tvSearchTipText.setText("搜索");
                 }
                 break;
             case R.id.caseLocation:
@@ -167,8 +168,10 @@ public class DecorationCaseFragment extends BaseFragment {
                     param_layout = bundle.getString("param_layout");
                     param_price = bundle.getString("param_price");
                     param_style = bundle.getString("param_style");
+                    tvSearchTipText.setText(bundle.getString("condition_text"));
                 }
 
+                caseList.clear();
                 Utils.setErrorLog(TAG, param_area + "   "+ param_layout + "  "  + param_price + "  " +param_style);
                 page = 1;
                 getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style));

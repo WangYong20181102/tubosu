@@ -65,6 +65,7 @@ public class ConditionActivity extends BaseActivity {
     private String param_layout;
     private String param_price;
     private String param_style;
+    private String conditionText = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,8 +175,9 @@ public class ConditionActivity extends BaseActivity {
             // 初始化expandablelistview
             CaseSearchStyleAdapter caseSearchStyleAdapter = new CaseSearchStyleAdapter(mContext, caseConditionTypeList, new CaseSearchStyleAdapter.OnSearchCaseStyleItemClickListener() {
                 @Override
-                public void onSearchCaseStyleParentClickListener(int group, String id, int position) {
+                public void onSearchCaseStyleParentClickListener(int group, String id, int position, String condition) {
 //                    Utils.setToast(mContext, group + "<<<<===>>>>" + id);
+                    conditionText += condition;
                     switch (group) {
                         case 0: // 面积
                             param_area = id;
@@ -208,6 +210,7 @@ public class ConditionActivity extends BaseActivity {
         b.putString("param_layout", param_layout);
         b.putString("param_price", param_price);
         b.putString("param_style", param_style);
+        b.putString("condition_text", conditionText);
         intent.putExtra("params", b);
 
         Utils.setErrorLog(TAG, param_area + "   " + param_layout + "  " + param_price + "  " + param_style);

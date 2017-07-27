@@ -120,7 +120,8 @@ public class CaseSearchStyleAdapter extends BaseExpandableListAdapter {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String _id = groupDataList.get(groupPosition).getCaseTypeChildList().get(position).getId();
-                onSearchCaseStyleItemClickListener.onSearchCaseStyleParentClickListener(groupPosition, _id, position);
+                String cc = groupDataList.get(groupPosition).getCaseTypeChildList().get(position).getValue();
+                onSearchCaseStyleItemClickListener.onSearchCaseStyleParentClickListener(groupPosition, _id, position, cc);
                 // 保存点击position
 //                switch (groupPosition){
 //                    case 0: // 面积
@@ -170,7 +171,7 @@ public class CaseSearchStyleAdapter extends BaseExpandableListAdapter {
 
     private OnSearchCaseStyleItemClickListener onSearchCaseStyleItemClickListener;
     public interface OnSearchCaseStyleItemClickListener{
-        void onSearchCaseStyleParentClickListener(int group, String id, int position);
+        void onSearchCaseStyleParentClickListener(int group, String id, int position, String condiction);
     }
 
     public OnSearchCaseStyleItemClickListener getOnSearchCaseStyleItemClickListener() {

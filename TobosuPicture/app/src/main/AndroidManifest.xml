@@ -140,6 +140,7 @@
         <activity android:name=".activity.DynamicActivity" />
         <activity android:name=".activity.ReplyActivity" />
         <activity android:name=".activity.PhotoDetail"></activity>
+        <activity android:name=".activity.DesignerImgListActivity"></activity>
     </application>
 
 </manifest>
