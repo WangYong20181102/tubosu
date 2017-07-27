@@ -28,6 +28,10 @@ public class DesignerInfoEntity {
     private String style;
     private int impression_count;
     private int case_count;
+    private String fans_count;
+    private String view_count;
+    private String is_follow;
+
 
     public String getDesid() {
         return desid;
@@ -99,5 +103,30 @@ public class DesignerInfoEntity {
 
     public void setCase_count(int case_count) {
         this.case_count = case_count;
+    }
+
+
+    public String getFans_count() {
+        return fans_count;
+    }
+
+    public void setFans_count(String fans_count) {
+        this.fans_count = fans_count;
+    }
+
+    public String getView_count() {
+        return view_count;
+    }
+
+    public void setView_count(String view_count) {
+        this.view_count = view_count;
+    }
+
+    public String getIs_follow() {
+        return is_follow;
+    }
+
+    public void setIs_follow(String is_follow) {
+        this.is_follow = is_follow;
     }
 }

@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class DesignerEntity {
     private DesignerInfoEntity designerInfoEntity; // 设计师类
-    private ArrayList<DesignerImpressionEntity> designerImpressionEntityList;
-    private ArrayList<DesignerCaseEntity> designerCaseEntityList;
+    private ArrayList<DesignerImpressionEntity> designerImpressionEntityList; // 样板图
+    private ArrayList<DesignerCaseEntity> designerCaseEntityList; //  案例图
 
     public DesignerInfoEntity getDesignerInfoEntity() {
         return designerInfoEntity;

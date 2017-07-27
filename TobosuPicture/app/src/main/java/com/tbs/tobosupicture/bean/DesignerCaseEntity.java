@@ -22,6 +22,8 @@ public class DesignerCaseEntity {
     private String ting;
     private String wei;
     private String area;
+    private String is_collect;
+    private String collect_count;
     private String desmethod;
     private String price;
 
@@ -87,5 +89,21 @@ public class DesignerCaseEntity {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getCollect_count() {
+        return collect_count;
+    }
+
+    public void setCollect_count(String collect_count) {
+        this.collect_count = collect_count;
+    }
+
+    public String getIs_collect() {
+        return is_collect;
+    }
+
+    public void setIs_collect(String is_collect) {
+        this.is_collect = is_collect;
     }
 }

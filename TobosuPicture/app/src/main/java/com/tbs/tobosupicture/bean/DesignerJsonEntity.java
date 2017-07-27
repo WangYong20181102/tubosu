@@ -1,4 +1,7 @@
 package com.tbs.tobosupicture.bean;
+
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,13 +21,14 @@ public class DesignerJsonEntity {
     private JSONObject data;
     private DesignerEntity designerEntity;
 
-    public DesignerJsonEntity(String json){
+    public DesignerJsonEntity(String json) {
         try {
             JSONObject jsonObject = new JSONObject(json);
             this.status = jsonObject.getInt("status");
-            if(this.status==0){
+            if (this.status == 200) {
+                this.data = jsonObject.getJSONObject("data");
                 this.designerEntity = new DesignerEntity();
-                JSONObject designerObject = jsonObject.getJSONObject("designer");
+                JSONObject designerObject = this.data.getJSONObject("designer");
                 DesignerInfoEntity designerInfoEntity = new DesignerInfoEntity();
                 designerInfoEntity.setDesid(designerObject.getString("desid"));
                 designerInfoEntity.setDesname(designerObject.getString("desname"));
@@ -35,16 +39,17 @@ public class DesignerJsonEntity {
                 designerInfoEntity.setStyle(designerObject.getString("style"));
                 designerInfoEntity.setImpression_count(designerObject.getInt("impression_count"));
                 designerInfoEntity.setCase_count(designerObject.getInt("case_count"));
+                designerInfoEntity.setFans_count(designerObject.getString("fans_count"));
+                designerInfoEntity.setIs_follow(designerObject.getString("is_follow"));
+                designerInfoEntity.setView_count(designerObject.getString("view_count"));
                 this.designerEntity.setDesignerInfoEntity(designerInfoEntity);
 
-                JSONArray impressionArr = jsonObject.getJSONArray("impression");
+                JSONArray impressionArr = this.data.getJSONArray("impression");
                 int impressLen = impressionArr.length();
                 ArrayList<DesignerImpressionEntity> impressionList = new ArrayList<DesignerImpressionEntity>();
-                if(impressLen>0){
-                    for(int i=0;i<impressLen; i++){
+                if (impressLen > 0) {
+                    for (int i = 0; i < impressLen; i++) {
                         DesignerImpressionEntity entity = new DesignerImpressionEntity();
-                        entity.setId(impressionArr.getJSONObject(i).getString("id"));
-
                         entity.setId(impressionArr.getJSONObject(i).getString("id"));
                         entity.setImg_url(impressionArr.getJSONObject(i).getString("img_url"));
                         entity.setImage_count(impressionArr.getJSONObject(i).getString("image_count"));
@@ -52,18 +57,20 @@ public class DesignerJsonEntity {
                         entity.setPlan_price(impressionArr.getJSONObject(i).getString("plan_price"));
                         entity.setClass_name(impressionArr.getJSONObject(i).getString("class_name"));
                         entity.setStyle_name(impressionArr.getJSONObject(i).getString("style_name"));
+                        entity.setIs_collect(impressionArr.getJSONObject(i).getString("is_collect"));
                         entity.setLayout_name(impressionArr.getJSONObject(i).getString("layout_name"));
+                        entity.setCollect_count(impressionArr.getJSONObject(i).getString("collect_count"));
                         impressionList.add(entity);
                     }
                     this.designerEntity.setDesignerImpressionEntityList(impressionList);
                 }
 
 
-                JSONArray caseArr = jsonObject.getJSONArray("cases");
+                JSONArray caseArr = this.data.getJSONArray("cases");
                 int caseLen = caseArr.length();
                 ArrayList<DesignerCaseEntity> caseList = new ArrayList<DesignerCaseEntity>();
-                if(caseLen>0){
-                    for(int i=0;i<caseLen;i++){
+                if (caseLen > 0) {
+                    for (int i = 0; i < caseLen; i++) {
                         DesignerCaseEntity entity = new DesignerCaseEntity();
                         entity.setCaseid(caseArr.getJSONObject(i).getString("caseid"));
                         entity.setImg_url(caseArr.getJSONObject(i).getString("img_url"));
@@ -72,12 +79,14 @@ public class DesignerJsonEntity {
                         entity.setWei(caseArr.getJSONObject(i).getString("wei"));
                         entity.setArea(caseArr.getJSONObject(i).getString("area"));
                         entity.setDesmethod(caseArr.getJSONObject(i).getString("desmethod"));
+                        entity.setIs_collect(caseArr.getJSONObject(i).getString("is_collect"));
+                        entity.setCollect_count(caseArr.getJSONObject(i).getString("collect_count"));
                         entity.setPrice(caseArr.getJSONObject(i).getString("price"));
                         caseList.add(entity);
                     }
                     designerEntity.setDesignerCaseEntityList(caseList);
                 }
-            }else{
+            } else {
                 this.designerEntity = null;
             }
         } catch (JSONException e) {

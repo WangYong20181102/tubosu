@@ -2,6 +2,7 @@ package com.tbs.tobosupicture.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +67,7 @@ public class CaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof CaseViewHolder){
             CaseViewHolder caseViewHolder = (CaseViewHolder) holder;
             String title = "";
@@ -137,7 +138,11 @@ public class CaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             caseViewHolder.iv_case_designer_pic.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    context.startActivity(new Intent(context, DesignerActivity.class));
+                    Intent intent = new Intent(context, DesignerActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("designer_id", dataList.get(position).getDesigner_id());
+                    intent.putExtra("designer_bundle", b);
+                    context.startActivity(intent);
                 }
             });
 
