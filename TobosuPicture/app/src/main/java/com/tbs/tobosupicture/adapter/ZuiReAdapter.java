@@ -157,7 +157,6 @@ public class ZuiReAdapter
                 public void onClick(View v) {
                     //TODO 跳转进入DynamicDetailActivity  回复详情页
                     Intent intent = new Intent(mContext, DynamicDetailActivity.class);
-                    Log.e("TAG", "进入回复页面的dynamic_id====" + dynamicArrayList.get(position - 1).getId());
                     intent.putExtra("dynamic_id", dynamicArrayList.get(position - 1).getId());
                     intent.putExtra("commented_uid", dynamicArrayList.get(position - 1).getUid());
                     intent.putExtra("is_virtual_user", dynamicArrayList.get(position - 1).getIs_virtual_user());

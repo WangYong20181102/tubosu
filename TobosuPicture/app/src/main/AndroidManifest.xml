@@ -136,7 +136,10 @@
         <activity android:name=".activity.ConditionActivity" />
         <activity android:name=".activity.SeeImageActivity" />
         <activity android:name=".activity.PersonHomePageActivity" />
-        <activity android:name=".activity.HisFriendsActivity"></activity>
+        <activity android:name=".activity.HisFriendsActivity" />
+        <activity android:name=".activity.DynamicActivity" />
+        <activity android:name=".activity.ReplyActivity" />
+        <activity android:name=".activity.PhotoDetail"></activity>
         <activity android:name=".activity.DesignerImgListActivity"></activity>
     </application>
 

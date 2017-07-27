@@ -246,7 +246,7 @@ public class DynamicDetailActivity extends BaseActivity {
 
     }
 
-    //TODO 查看详情页根据需求暂时先传固定的uid用于点击进入详情页判断当前登录的用户是否点过赞或者p评论过
+    //TODO 查看详情页根据需求暂时先传固定的uid用于点击进入详情页判断当前登录的用户是否点过赞或者评论过
     private void HttpGetDynamic() {
         isLoading = true;
         HashMap<String, Object> param = new HashMap<>();
@@ -276,7 +276,7 @@ public class DynamicDetailActivity extends BaseActivity {
                             public void run() {
                                 dyndSwipe.setRefreshing(false);
                                 commentArrayList.addAll(dynamicDetail.getComment());
-                                dynamicDetailAdapter = new DynamicDetailAdapter(mContext, dynamicDetail, commentArrayList);
+                                dynamicDetailAdapter = new DynamicDetailAdapter(mContext, DynamicDetailActivity.this, dynamicDetail, commentArrayList);
                                 dyndRecycle.setAdapter(dynamicDetailAdapter);
                                 dynamicDetailAdapter.notifyDataSetChanged();
                             }
@@ -328,7 +328,7 @@ public class DynamicDetailActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 if (dynamicDetailAdapter == null) {
-                                    dynamicDetailAdapter = new DynamicDetailAdapter(mContext, commentArrayList);
+                                    dynamicDetailAdapter = new DynamicDetailAdapter(mContext, DynamicDetailActivity.this, commentArrayList);
                                     dyndRecycle.setAdapter(dynamicDetailAdapter);
                                     dynamicDetailAdapter.notifyDataSetChanged();
                                 } else {

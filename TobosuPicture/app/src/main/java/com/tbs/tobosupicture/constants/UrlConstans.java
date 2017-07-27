@@ -142,5 +142,21 @@ public class UrlConstans {
      * 关注/取消关注（加为图友）公共功能
      */
     public static final String USER_FOLLOW = ZXKK_URL + "rapp/public/follow";
+    /**
+     * 评论的点赞/取消点赞公共功能
+     */
+    public static final String COMMENT_PRAISE = ZXKK_URL + "rapp/public/comment_praise";
+    /**
+     * 点赞列表动态详细页
+     */
+    public static final String DYNAMIC_PRAISE_LIST = ZXKK_URL + "rapp/dynamic/dynamic_praise_list";
+    /**
+     * 回复评论列表回复评论列表
+     */
+    public static final String REPLY_DYNAMIC_COMMENT_LIST = ZXKK_URL + "rapp/dynamic/reply_dynamic_comment_list";
+    /**
+     * 回复评论公共功能
+     */
+    public static final String REPLY_COMMENT = ZXKK_URL + "rapp/public/reply_comment";
 
 }

@@ -169,13 +169,13 @@ public class PersonHomePageActivity extends BaseActivity {
                                     String data = jsonObject.getString("data");
                                     _PersonHomePage personHomePage = gson.fromJson(data, _PersonHomePage.class);
                                     dynamicList.addAll(personHomePage.getDynamic());
-                                    if (personHomePageAdapter == null) {
+//                                    if (personHomePageAdapter == null) {
                                         personHomePageAdapter = new PersonHomePageAdapter(mContext, PersonHomePageActivity.this, personHomePage, dynamicList);
                                         phpRecyclerview.setAdapter(personHomePageAdapter);
                                         personHomePageAdapter.notifyDataSetChanged();
-                                    } else {
-                                        personHomePageAdapter.notifyDataSetChanged();
-                                    }
+//                                    } else {
+//                                        personHomePageAdapter.notifyDataSetChanged();
+//                                    }
                                     isLoading = false;
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -249,7 +249,12 @@ public class PersonHomePageActivity extends BaseActivity {
                     isLoading = false;
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    personHomePageAdapter.changeLoadState(2);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            personHomePageAdapter.changeLoadState(2);
+                        }
+                    });
                     isLoading = false;
                 }
             }

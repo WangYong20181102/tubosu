@@ -1,22 +1,52 @@
 package com.tbs.tobosupicture.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.PersonHomePageActivity;
+import com.tbs.tobosupicture.activity.ReplyActivity;
 import com.tbs.tobosupicture.bean._DynamicDetail;
+import com.tbs.tobosupicture.bean._ZanUser;
+import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.GlideUtils;
+import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.Utils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+import static com.tbs.tobosupicture.R.mipmap.zan;
 
 /**
  * Created by Mr.Lin on 2017/7/18 16:39.
@@ -29,15 +59,32 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
     private ArrayList<_DynamicDetail.Comment> commentArrayList;
     private int adapterState = 1;//子项的状态 1.加载更多 2.正常状态
     private String TAG = "DynamicDetailAdapter";
+    private Activity mActivity;
 
-    public DynamicDetailAdapter(Context context, _DynamicDetail dynamicDetail, ArrayList<_DynamicDetail.Comment> commentArrayList) {
+    private View popView;//显示点赞列表
+    private ShowZanAdapter showZanAdapter;
+    private boolean isLoading = false;
+    private _ZanUser zanUser;
+    private RecyclerView pop_show_zan_recycle;
+    private TextView pop_show_zan_num;
+    private LinearLayout pop_show_zan_back;
+    private LinearLayoutManager linearLayoutManager;
+    private PopupWindow popupWindow;
+    private int mPage = 1;//点赞列表
+    private Gson gson = new Gson();
+    private List<_ZanUser.PraiseUser> praiseUserList = new ArrayList<>();
+
+    public DynamicDetailAdapter(Context context, Activity activity, _DynamicDetail dynamicDetail, ArrayList<_DynamicDetail.Comment> commentArrayList) {
         this.mContext = context;
         this.dynamicDetail = dynamicDetail;
         this.commentArrayList = commentArrayList;
+        this.mActivity = activity;
+        initPopWindow();
     }
 
-    public DynamicDetailAdapter(Context context, ArrayList<_DynamicDetail.Comment> commentArrayList) {
+    public DynamicDetailAdapter(Context context, Activity activity, ArrayList<_DynamicDetail.Comment> commentArrayList) {
         this.mContext = context;
+        this.mActivity = activity;
         this.commentArrayList = commentArrayList;
     }
 
@@ -77,11 +124,21 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof DynamicDetailHeadHolder) {
             //设置头像
             GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getIcon(), R.mipmap.default_icon,
                     R.mipmap.default_icon, ((DynamicDetailHeadHolder) holder).DynamicDetailIcon, 0);
+            //设置头像点击事件
+            ((DynamicDetailHeadHolder) holder).DynamicDetailIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, PersonHomePageActivity.class);
+                    intent.putExtra("homepageUid", dynamicDetail.getDynamic().getUid());
+                    intent.putExtra("is_virtual_user", dynamicDetail.getDynamic().getIs_virtual_user());
+                    mContext.startActivity(intent);
+                }
+            });
             //设置昵称
             ((DynamicDetailHeadHolder) holder).DynamicDetailNick.setText("" + dynamicDetail.getDynamic().getNick());
             //设置内容
@@ -141,9 +198,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag9);
             }
             ((DynamicDetailHeadHolder) holder).DynamicDetailAddTime.setText("" + dynamicDetail.getDynamic().getAdd_time());
-            //设置用户的点赞状态以及评论状态
-            Log.e(TAG, "当前用户的点赞状态====" + dynamicDetail.getDynamic().getIs_praise());
-            Log.e(TAG, "当前用户的评论状态====" + dynamicDetail.getDynamic().getIs_comment());
+            //设置用户的点赞状态以及评论状态 以及点赞事件的触发
             if (dynamicDetail.getDynamic().getIs_praise().equals("0")) {
                 ((DynamicDetailHeadHolder) holder).dynamic_detail_praise.setImageResource(R.mipmap.zan2);
             } else {
@@ -154,10 +209,34 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             } else {
                 ((DynamicDetailHeadHolder) holder).dynamic_detail_comment.setImageResource(R.mipmap.pinglun_after);
             }
+            //点击显示popwindow
+            ((DynamicDetailHeadHolder) holder).dynamic_zan_ll_pop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mPage = 1;
+                    if (!praiseUserList.isEmpty()) {
+                        praiseUserList.clear();
+                    }
+                    HttpGetUserZanList(mPage);
+                }
+            });
+            //点赞人数为0时隐藏该条框
+            if (dynamicDetail.getPraise_count().equals("0")) {
+                ((DynamicDetailHeadHolder) holder).dynamic_zan_ll_pop.setVisibility(View.GONE);
+            }
+            //点赞
+            ((DynamicDetailHeadHolder) holder).dynamic_detail_ll_praise.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HttpZan(((DynamicDetailHeadHolder) holder).dynamic_detail_praise,
+                            ((DynamicDetailHeadHolder) holder).dynamic_dynamic_zan_add, ((DynamicDetailHeadHolder) holder).DynamicDetailPraiseCount);
+                }
+            });
+
             ((DynamicDetailHeadHolder) holder).DynamicDetailPraiseCount.setText("" + dynamicDetail.getPraise_count());
             ((DynamicDetailHeadHolder) holder).DynamicDetailCommentCount.setText("" + dynamicDetail.getDynamic().getComment_count());
-            //点赞用户的头像
 
+            //点赞用户的头像
             if (dynamicDetail.getPraise_user().size() >= 1 && dynamicDetail.getPraise_user().get(0) != null) {
                 ((DynamicDetailHeadHolder) holder).dynamic_zan1
                         .setVisibility(View.VISIBLE);
@@ -209,6 +288,29 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         } else if (holder instanceof CommentViewHolder) {
             //头像
             GlideUtils.glideLoader(mContext, commentArrayList.get(position - 1).getIcon(), R.mipmap.default_icon, R.mipmap.default_icon, ((CommentViewHolder) holder).commentIcon, 0);
+            //头像点击事件
+            ((CommentViewHolder) holder).commentIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, PersonHomePageActivity.class);
+                    intent.putExtra("homepageUid", dynamicDetail.getComment().get(position - 1).getUid());
+                    intent.putExtra("is_virtual_user", dynamicDetail.getComment().get(position - 1).getIs_virtual_user());
+                    mContext.startActivity(intent);
+                }
+            });
+            //点赞事件
+            ((CommentViewHolder) holder).dynamic_detail_comment_ll_zan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.e(TAG, "点赞参数==commented_uid==" + commentArrayList.get(position - 1).getUid());
+                    Log.e(TAG, "点赞参数==dynamic_id==" + commentArrayList.get(position - 1).getId());
+                    HttpCommentZan(commentArrayList.get(position - 1).getId(),
+                            commentArrayList.get(position - 1).getUid(),
+                            ((CommentViewHolder) holder).commentZan,
+                            ((CommentViewHolder) holder).dynamic_detail_comment_zan_add,
+                            ((CommentViewHolder) holder).commentZanNum);
+                }
+            });
             //昵称
             ((CommentViewHolder) holder).commentNick.setText("" + commentArrayList.get(position - 1).getNick());
             //时间
@@ -217,6 +319,17 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             ((CommentViewHolder) holder).commentZanNum.setText("" + commentArrayList.get(position - 1).getPraise_count());
             //回复数量
             ((CommentViewHolder) holder).commentRevert.setText("" + commentArrayList.get(position - 1).getReply_count() + "回复");
+            //回复的点击事件
+            ((CommentViewHolder) holder).commentRevert.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, ReplyActivity.class);
+                    Log.e(TAG, "检测回复的id====" + commentArrayList.get(position - 1).getId());
+                    intent.putExtra("comment_id", commentArrayList.get(position - 1).getId());
+                    intent.putExtra("dynamic_id", dynamicDetail.getDynamic().getId());
+                    mContext.startActivity(intent);
+                }
+            });
             //回复的内容
             ((CommentViewHolder) holder).commentTitle.setText("" + commentArrayList.get(position - 1).getContent());
         } else if (holder instanceof FootViewHolder) {
@@ -238,7 +351,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemCount() {
-        return commentArrayList != null ? commentArrayList.size() + 2 : 0;
+        return commentArrayList != null ? commentArrayList.size() + 2 : 2;
     }
 
     class DynamicDetailHeadHolder extends RecyclerView.ViewHolder {
@@ -259,6 +372,10 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         private TextView DynamicDetailPraiseCount;//动态点赞数
         private ImageView dynamic_detail_comment;//评论的图标
         private ImageView dynamic_detail_praise;//点赞的图标
+
+        private LinearLayout dynamic_detail_ll_praise;//点赞
+        private LinearLayout dynamic_zan_ll_pop;//点赞pop
+        private TextView dynamic_dynamic_zan_add;//点赞加一字符
 
         private ImageView dynamic_zan1;
         private ImageView dynamic_zan2;
@@ -288,6 +405,8 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             DynamicDetailCommentCount = (TextView) itemView.findViewById(R.id.dynamic_detail_comment_count);
             DynamicDetailPraiseCount = (TextView) itemView.findViewById(R.id.dynamic_detail_praise_count);
 
+            dynamic_detail_ll_praise = (LinearLayout) itemView.findViewById(R.id.dynamic_detail_ll_praise);
+            dynamic_zan_ll_pop = (LinearLayout) itemView.findViewById(R.id.dynamic_zan_ll_pop);
             dynamic_detail_praise = (ImageView) itemView.findViewById(R.id.dynamic_detail_praise);
             dynamic_detail_comment = (ImageView) itemView.findViewById(R.id.dynamic_detail_comment);
 
@@ -299,6 +418,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             dynamic_zan6 = (ImageView) itemView.findViewById(R.id.dynamic_zan6);
             dynamic_none_comment = (ImageView) itemView.findViewById(R.id.dynamic_none_comment);
             dynamic_zan_num = (TextView) itemView.findViewById(R.id.dynamic_zan_num);
+            dynamic_dynamic_zan_add = (TextView) itemView.findViewById(R.id.dynamic_dynamic_zan_add);
         }
     }
 
@@ -310,6 +430,9 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         private TextView commentRevert;//回复按钮
         private ImageView commentZan;//点赞图标
         private TextView commentZanNum;//点赞数
+        private TextView dynamic_detail_comment_zan_add;//点赞数
+
+        private LinearLayout dynamic_detail_comment_ll_zan;
 
         public CommentViewHolder(View itemView) {
             super(itemView);
@@ -320,6 +443,8 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             commentTime = (TextView) itemView.findViewById(R.id.dynamic_detail_comment_time);
             commentRevert = (TextView) itemView.findViewById(R.id.dynamic_detail_comment_revert);
             commentZanNum = (TextView) itemView.findViewById(R.id.dynamic_detail_comment_zannum);
+            dynamic_detail_comment_zan_add = (TextView) itemView.findViewById(R.id.dynamic_detail_comment_zan_add);
+            dynamic_detail_comment_ll_zan = (LinearLayout) itemView.findViewById(R.id.dynamic_detail_comment_ll_zan);
 
         }
     }
@@ -337,5 +462,224 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             mTextView = (TextView) itemView.findViewById(R.id.load_more_tv);
 
         }
+    }
+
+    //TODO 对动态进行点赞 其中uid暂时固定的值
+    private void HttpZan(final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Utils.getDateToken());
+        param.put("uid", "23109");
+        param.put("dynamic_id", dynamicDetail.getDynamic().getId());
+        param.put("praised_uid", dynamicDetail.getDynamic().getUid());
+        HttpUtils.doPost(UrlConstans.USER_PRAISE, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "链接失败===" + e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    Log.e(TAG, "链接成功===" + json);
+                    String status = jsonObject.getString("status");
+                    if (status.equals("200")) {
+                        final String msg = jsonObject.getString("msg");
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (msg.equals("点赞成功")) {
+                                    zan.setImageResource(R.mipmap.zan_after);
+                                    zanAddAnimation(tvAdd, tvShowNum);
+                                } else {
+                                    int num = Integer.parseInt(tvShowNum.getText().toString());
+                                    int numAddone = num - 1;
+                                    tvShowNum.setText("" + numAddone);
+                                    zan.setImageResource(R.mipmap.zan2);
+                                }
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    //TODO 对用户得回复进行点赞 当前用户的id暂时固定
+    private void HttpCommentZan(String comment_id, String praised_uid, final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Utils.getDateToken());
+        param.put("uid", "23109");
+        param.put("comment_id", comment_id);
+        param.put("praised_uid", praised_uid);
+        HttpUtils.doPost(UrlConstans.COMMENT_PRAISE, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "链接失败===" + e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                Log.e(TAG, "链接成功===" + json);
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.getString("status");
+                    final String msg = jsonObject.getString("msg");
+                    if (status.equals("200")) {
+                        //点赞成功
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (msg.equals("点赞成功")) {
+                                    zan.setImageResource(R.mipmap.zan_after);
+                                    zanAddAnimation(tvAdd, tvShowNum);
+                                } else {
+                                    int num = Integer.parseInt(tvShowNum.getText().toString());
+                                    int numAddone = num - 1;
+                                    tvShowNum.setText("" + numAddone);
+                                    zan.setImageResource(R.mipmap.zan2);
+                                }
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    //点赞数加一的动画效果
+    private void zanAddAnimation(final TextView tvAdd, final TextView showNum) {
+        tvAdd.setVisibility(View.VISIBLE);
+        tvAdd.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tvAdd.setVisibility(View.GONE);
+                int num = Integer.parseInt(showNum.getText().toString());
+                int numAddone = num + 1;
+                showNum.setText("" + numAddone);
+            }
+        }, 1000);
+    }
+
+    //显示多少人赞过
+    private void showPopWindow() {
+        WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+        lp.alpha = 0.5f;
+        mActivity.getWindow().setAttributes(lp);
+        popupWindow.showAtLocation(popView, Gravity.BOTTOM, 0, 30);
+    }
+
+    private void initPopWindow() {
+        mPage = 1;
+        popView = mActivity.getLayoutInflater().inflate(R.layout.pop_show_zan, null);
+        pop_show_zan_recycle = (RecyclerView) popView.findViewById(R.id.pop_show_zan_recycle);
+        pop_show_zan_num = (TextView) popView.findViewById(R.id.pop_show_zan_num);
+        pop_show_zan_back = (LinearLayout) popView.findViewById(R.id.pop_show_zan_back);
+
+        linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        pop_show_zan_recycle.setLayoutManager(linearLayoutManager);
+        pop_show_zan_recycle.addOnScrollListener(onScrollListener);
+        int height = mActivity.getResources().getDisplayMetrics().heightPixels * 3 / 4;
+        ;
+        popupWindow = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, height);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#f5f3f2")));
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.update();
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
+                lp.alpha = 1.0f;
+                mActivity.getWindow().setAttributes(lp);
+            }
+        });
+        pop_show_zan_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+    }
+
+    private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            int lastVisiableItem = linearLayoutManager.findLastVisibleItemPosition();
+            if (newState == 0 && lastVisiableItem + 2 > linearLayoutManager.getItemCount() && !isLoading) {
+                LoadMoreZanUser();
+            }
+        }
+    };
+
+    private void LoadMoreZanUser() {
+        mPage++;
+        HttpGetUserZanList(mPage);
+    }
+
+    //获取点赞列表
+    private void HttpGetUserZanList(final int mPage) {
+        isLoading = true;
+        final HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Utils.getDateToken());
+        param.put("dynamic_id", dynamicDetail.getDynamic().getId());
+        param.put("page", mPage);
+        param.put("page_size", "10");
+        Log.e(TAG, "请求参数==dynamic_id==" + dynamicDetail.getDynamic().getId());
+        Log.e(TAG, "请求参数==page==" + mPage);
+        HttpUtils.doPost(UrlConstans.DYNAMIC_PRAISE_LIST, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "链接失败===" + e.toString());
+                isLoading = false;
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                isLoading = false;
+                String json = new String(response.body().string());
+                Log.e(TAG, "链接成功==" + json);
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.getString("status");
+                    if (status.equals("200")) {
+                        final String data = jsonObject.getString("data");
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                zanUser = gson.fromJson(data, _ZanUser.class);
+                                praiseUserList.addAll(zanUser.getPraise_user());
+                                if (showZanAdapter == null) {
+                                    showZanAdapter = new ShowZanAdapter(mContext, praiseUserList);
+                                    pop_show_zan_recycle.setAdapter(showZanAdapter);
+                                    showZanAdapter.notifyDataSetChanged();
+                                } else {
+                                    showZanAdapter.notifyDataSetChanged();
+                                }
+                                pop_show_zan_num.setText(zanUser.getCount() + "人赞过");
+                                showPopWindow();
+                            }
+                        });
+                    } else if (status.equals("201")) {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, "当前没有更多数据", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    isLoading = false;
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

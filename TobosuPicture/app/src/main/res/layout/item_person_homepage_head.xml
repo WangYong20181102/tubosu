@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="180dp">
 
+
         <ImageView
             android:id="@+id/item_php_head_bg"
             android:layout_width="match_parent"
@@ -16,6 +17,18 @@
             android:layout_alignParentTop="true"
             android:scaleType="centerCrop"
             android:src="@mipmap/me_bg" />
+
+        <LinearLayout
+            android:id="@+id/item_php_head_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@mipmap/back_white" />
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -71,24 +84,24 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:singleLine="true"
-                                android:ellipsize="end"
-                                android:maxEms="4"
                                 android:id="@+id/item_php_head_nick"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:maxEms="4"
+                                android:singleLine="true"
                                 android:text="安其拉"
                                 android:textColor="@color/bg_white"
                                 android:textSize="@dimen/text_size_36px" />
 
                             <TextView
-                                android:singleLine="true"
-                                android:ellipsize="end"
-                                android:maxEms="15"
                                 android:id="@+id/item_php_head_user_info"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="15dp"
+                                android:ellipsize="end"
+                                android:maxEms="15"
+                                android:singleLine="true"
                                 android:text="女 广东 深圳"
                                 android:textColor="@color/bg_white"
                                 android:textSize="@dimen/text_size_24px" />
@@ -224,7 +237,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="10dp"
         android:layout_marginBottom="12dp"
+        android:layout_marginTop="10dp"
         android:background="@color/bg_divide" />
 </LinearLayout>
