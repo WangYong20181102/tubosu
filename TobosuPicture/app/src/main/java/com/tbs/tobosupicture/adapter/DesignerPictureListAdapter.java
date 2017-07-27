@@ -256,7 +256,7 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
             }else {
                 return TYPE_FOOTER;
             }
-        }else {
+        }else { // 案例
             if(position==1){
                 return TYPE_HEADER;
             }else if(position<caseDataList.size()){

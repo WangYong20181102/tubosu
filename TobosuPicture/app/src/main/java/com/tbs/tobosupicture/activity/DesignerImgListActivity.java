@@ -66,13 +66,15 @@ public class DesignerImgListActivity extends BaseActivity {
         mContext = DesignerImgListActivity.this;
 
         ButterKnife.bind(this);
+
         initView();
         getIntentData();
-//        getDataFromNet();
+
     }
 
     private void initView(){
         llDesignerlPicBack.bringToFront();
+        initSetting();
     }
 
     private void getIntentData() {
@@ -88,15 +90,19 @@ public class DesignerImgListActivity extends BaseActivity {
         }else{
             des ="粉丝 0  / 浏览 0";
         }
-        initSetting();
+
         getDataFromNet();
     }
 
     private void getDataFromNet() {
         if(dataType == 0){
             designerPictureListAdapter = new DesignerPictureListAdapter(mContext, samplePicDataList, null, SAMPLE_TYPE, designerIcon, name, des);
+            designerImgListRecyclerView.setAdapter(designerPictureListAdapter);
+            designerPictureListAdapter.notifyDataSetChanged();
         }else{
             designerPictureListAdapter = new DesignerPictureListAdapter(mContext, null, casePicDataList, SAMPLE_TYPE, designerIcon, name, des);
+            designerImgListRecyclerView.setAdapter(designerPictureListAdapter);
+            designerPictureListAdapter.notifyDataSetChanged();
         }
 
 
@@ -135,7 +141,7 @@ public class DesignerImgListActivity extends BaseActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         designerImgListRecyclerView.setLayoutManager(linearLayoutManager);
 
-        designerImgListRecyclerView.setOnScrollListener(onScrollListener);
+        designerImgListRecyclerView.addOnScrollListener(onScrollListener);
         designerImgListRecyclerView.setOnTouchListener(onTouchListener);
     }
 
