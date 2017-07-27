@@ -97,6 +97,13 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof PhpHeadHolder) {
+            //返回按钮
+            ((PhpHeadHolder) holder).item_php_head_back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mActivity.finish();
+                }
+            });
             //头像
             GlideUtils.glideLoader(mContext, personHomePage.getUser_info().getIcon(),
                     R.mipmap.default_icon, R.mipmap.default_icon,
@@ -322,6 +329,7 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         private TextView item_php_head_dynamic_count;//动态数量
 
         private LinearLayout item_php_head_ll_followed_count;//整个图谜布局可点击
+        private LinearLayout item_php_head_back;//返回
         private LinearLayout item_php_head_ll_follow_count;//整个图友布局可点击
 
         public PhpHeadHolder(View itemView) {
@@ -339,6 +347,7 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             item_php_head_ll_followed_count = (LinearLayout) itemView.findViewById(R.id.item_php_head_ll_followed_count);
             item_php_head_ll_follow_count = (LinearLayout) itemView.findViewById(R.id.item_php_head_ll_follow_count);
+            item_php_head_back = (LinearLayout) itemView.findViewById(R.id.item_php_head_back);
         }
     }
 

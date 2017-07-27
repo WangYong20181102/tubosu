@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?><!--回复-->
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/bg_white"
     android:orientation="vertical">
 
     <LinearLayout
@@ -14,9 +15,9 @@
             android:layout_height="36dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp">
-
+            <!--头像-->
             <ImageView
-                android:id="@+id/dynamic_detail_comment_icon"
+                android:id="@+id/item_reply_item_comment_icon"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@mipmap/default_icon" />
@@ -33,9 +34,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="32dp"
                 android:orientation="horizontal">
-
+                <!--昵称-->
                 <TextView
-                    android:id="@+id/dynamic_detail_comment_nick"
+                    android:id="@+id/item_reply_item_comment_nick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -52,30 +53,30 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:orientation="vertical">
-
+                    <!--加一图-->
                     <TextView
-                        android:id="@+id/dynamic_detail_comment_zan_add"
+                        android:id="@+id/item_reply_item_comment_zan_add"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="+1"
                         android:textColor="@color/text_yellow"
                         android:textSize="@dimen/text_size_20px"
                         android:visibility="invisible" />
-
+                    <!--点赞包括图标以及点赞数-->
                     <LinearLayout
-                        android:id="@+id/dynamic_detail_comment_ll_zan"
+                        android:id="@+id/item_reply_item_comment_ll_zan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-
+                        <!--点赞图标可用于标识用户是否已经点赞-->
                         <ImageView
-                            android:id="@+id/dynamic_detail_comment_zan"
+                            android:id="@+id/item_reply_item_comment_zan"
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:src="@mipmap/zan2" />
-
+                        <!--点赞数-->
                         <TextView
-                            android:id="@+id/dynamic_detail_comment_zannum"
+                            android:id="@+id/item_reply_item_comment_zannum"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
@@ -86,9 +87,9 @@
 
             </RelativeLayout>
 
-
+            <!--回复内容-->
             <TextView
-                android:id="@+id/dynamic_detail_comment_title"
+                android:id="@+id/item_reply_item_comment_title"
                 android:layout_width="285dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -100,9 +101,9 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp">
-
+                <!--回复时间-->
                 <TextView
-                    android:id="@+id/dynamic_detail_comment_time"
+                    android:id="@+id/item_reply_item_comment_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -110,9 +111,9 @@
                     android:text="07-16 18:20"
                     android:textColor="@color/text_gray"
                     android:textSize="@dimen/text_size_24px" />
-
+                <!--回复按钮-->
                 <TextView
-                    android:id="@+id/dynamic_detail_comment_revert"
+                    android:id="@+id/item_reply_item_comment_revert"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
@@ -131,6 +132,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="6dp"
         android:background="@color/bg_gray" />
 </LinearLayout>

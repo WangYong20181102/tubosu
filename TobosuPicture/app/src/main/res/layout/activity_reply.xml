@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?><!--回复页面-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.tbs.tobosupicture.activity.ReplyActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="48dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/banner_height"
+            android:background="@color/bg_white">
+
+            <LinearLayout
+                android:id="@+id/reply_back"
+                android:layout_width="@dimen/banner_height"
+                android:layout_height="@dimen/banner_height"
+                android:layout_alignParentLeft="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@mipmap/fanhui2" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/reply_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="2条回复"
+                android:textColor="#666666"
+                android:textSize="@dimen/text_size_32px" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bg_divide" />
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/reply_swipe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/reply_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/banner_height"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#f2f3f5"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="8"
+            android:background="@drawable/shape_pinlun"
+            android:gravity="center|right"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/xie" />
+
+            <EditText
+                android:id="@+id/reply_revert"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:hint="写评论..."
+                android:textSize="@dimen/text_size_24px" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/reply_send"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="2"
+            android:background="@drawable/shape_send_comment"
+            android:gravity="center"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            android:text="发送"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_28px" />
+    </LinearLayout>
+</RelativeLayout>
