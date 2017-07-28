@@ -39,6 +39,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/relSearchCaseLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <TextView
@@ -49,13 +50,12 @@
                     android:paddingLeft="14dp"
                     android:background="#F5F5F5"
                     android:text="历史搜索"/>
-                <ListView
+                <com.tbs.tobosupicture.view.MyListView
                     android:id="@+id/searchCaseRecord"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvHistorySearch"
-                    android:scrollbars="none">
-                </ListView>
+                    android:layout_below="@+id/tvHistorySearch">
+                </com.tbs.tobosupicture.view.MyListView>
                 <LinearLayout
                     android:id="@+id/historyLinearlayout"
                     android:layout_width="match_parent"

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+    <RelativeLayout
+        android:id="@+id/rel_sfjp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <ImageView
+            android:id="@+id/iv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/phone"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#575C63"
+            android:layout_marginLeft="14dp"
+            android:textSize="14sp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_phone"
+            android:text="联系方式"/>
+
+        <ImageView
+            android:id="@+id/iv_close_popupwindow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/close2"/>
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/et_input_phone"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/rel_sfjp"
+        android:layout_height="44dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="22dp"
+        android:paddingLeft="10dp"
+        android:digits="0123456789"
+        android:inputType="phone"
+        android:textColorHint="#C8CACC"
+        android:background="@drawable/shape_input_phone_edittext_bg"
+        android:layout_marginRight="14dp"
+        android:hint="输入你的联系电话"/>
+
+    <TextView
+        android:id="@+id/get_this_price"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/et_input_phone"
+        android:layout_height="44dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:background="@drawable/shape_getprice_textview_bg"
+        android:text="免费获取此设计"/>
+
+</RelativeLayout>

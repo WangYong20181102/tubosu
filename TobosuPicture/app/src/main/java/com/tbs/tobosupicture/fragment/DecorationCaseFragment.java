@@ -67,6 +67,7 @@ public class DecorationCaseFragment extends BaseFragment {
     private String param_layout;
     private String param_price;
     private String param_style;
+    private String param_city_id = "";
 
     private boolean isFromCondictionActivity = false;
 
@@ -148,6 +149,7 @@ public class DecorationCaseFragment extends BaseFragment {
                 if (Utils.isNetAvailable(mContext)){
                     startActivityForResult(new Intent(getActivity(), ConditionActivity.class), 0);
                     isFromCondictionActivity = false;
+                    param_city_id = "";
                     tvSearchTipText.setText("搜索");
                 }
                 break;
@@ -168,24 +170,26 @@ public class DecorationCaseFragment extends BaseFragment {
                     param_layout = bundle.getString("param_layout");
                     param_price = bundle.getString("param_price");
                     param_style = bundle.getString("param_style");
+                    param_city_id = bundle.getString("param_city_id");
                     tvSearchTipText.setText(bundle.getString("condition_text"));
                 }
 
                 caseList.clear();
-                Utils.setErrorLog(TAG, param_area + "   "+ param_layout + "  "  + param_price + "  " +param_style);
+                Utils.setErrorLog(TAG, param_area + "   "+ param_layout + "  "  + param_price + "  " +param_style + " " + param_city_id);
                 page = 1;
-                getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style));
+                getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style, param_city_id));
                 break;
         }
     }
 
-    private HashMap<String, Object> getPareaHashMap(String area, String layout, String price, String style){
+    private HashMap<String, Object> getPareaHashMap(String area, String layout, String price, String style, String cityId){
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
         hashMap.put("token", Utils.getDateToken());
         hashMap.put("page", page);
         hashMap.put("pageSize", pageSize);
         hashMap.put("area", area);
         hashMap.put("layout", layout);
+        hashMap.put("city_id", cityId);
         hashMap.put("price", price);
         hashMap.put("style", style);
         return hashMap;
@@ -262,7 +266,7 @@ public class DecorationCaseFragment extends BaseFragment {
                 caseAdapter.hideLoadMoreMessage();
             }
             if(isFromCondictionActivity){
-                getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style));
+                getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style,param_city_id));
             }else{
                 getDataFromNet(getCommonHashMap());
             }
@@ -277,7 +281,7 @@ public class DecorationCaseFragment extends BaseFragment {
 
         caseSwipRefreshLayout.setRefreshing(false);
         if(isFromCondictionActivity){
-            getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style));
+            getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style,param_city_id));
         }else{
             getDataFromNet(getCommonHashMap());
         }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.DesignerActivity;
+import com.tbs.tobosupicture.activity.GetPriceActivity;
 import com.tbs.tobosupicture.activity.SeeImageActivity;
 import com.tbs.tobosupicture.bean.CaseJsonEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
@@ -146,14 +147,20 @@ public class CaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
 
-            caseViewHolder.iv_case_big_sample_pic.setOnClickListener(new View.OnClickListener() {
+            caseViewHolder.tv_case_design.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, SeeImageActivity.class);
-
-                    context.startActivity(intent);
+                    context.startActivity(new Intent(context, GetPriceActivity.class));
                 }
             });
+//            caseViewHolder.iv_case_big_sample_pic.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(context, SeeImageActivity.class);
+//
+//                    context.startActivity(intent);
+//                }
+//            });
             caseViewHolder.itemView.setTag(dataList.get(position));
         }
     }
@@ -178,6 +185,7 @@ public class CaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ImageView iv_case_designer_pic;
         TextView tv_case_title;
         TextView tv_case_decription;
+        TextView tv_case_design;
 
         public CaseViewHolder(View itemView) {
             super(itemView);
@@ -185,6 +193,7 @@ public class CaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             iv_case_designer_pic = (ImageView) itemView.findViewById(R.id.iv_case_designer_pic);
             tv_case_title = (TextView) itemView.findViewById(R.id.tv_case_title);
             tv_case_decription = (TextView) itemView.findViewById(R.id.tv_case_decription);
+            tv_case_design = (TextView) itemView.findViewById(R.id.tv_case_design);
         }
     }
 
