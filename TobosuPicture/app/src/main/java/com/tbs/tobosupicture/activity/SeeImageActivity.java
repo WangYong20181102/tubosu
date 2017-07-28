@@ -6,10 +6,13 @@ import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -30,6 +33,9 @@ import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.TouchImageView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -78,14 +84,15 @@ public class SeeImageActivity extends BaseActivity {
     RelativeLayout seeImgBottom;
     @BindView(R.id.relLayout)
     RelativeLayout relLayout;
+    @BindView(R.id.ivBigCollect)
+    ImageView ivBigCollect;
 
-    private String imgId;
     private int currentPosition = 0;
     private ArrayList<ImgEntity> imgEntityList;
     private boolean isShow = true;
-
+    private String imgId;
     private String uid;
-    private String suite_id;
+    private String isCollect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +131,8 @@ public class SeeImageActivity extends BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    imgEntityList = jsonEntity.getImgEntityList();
+                                    imgEntityList = jsonEntity.getSeeImgEntity().getImgEntityList();
+                                    isCollect = jsonEntity.getSeeImgEntity().getIs_collect();
                                     if (imgEntityList.size() > 0) {
                                         intiViewPager(imgEntityList);
                                     }
@@ -144,6 +152,11 @@ public class SeeImageActivity extends BaseActivity {
     }
 
     private void intiViewPager(final ArrayList<ImgEntity> imgDataList) {
+        if("1".equals(isCollect)){
+            ivCollectImg.setBackgroundResource(R.mipmap.shoucang4);
+        }else{
+            ivCollectImg.setBackgroundResource(R.mipmap.shoucang21);
+        }
         tvImgTotalNum.setText(imgDataList.size() + "");
         ArrayList<TouchImageView> dataList = new ArrayList<TouchImageView>();
         for (int i = 0; i < imgDataList.size(); i++) {
@@ -227,8 +240,8 @@ public class SeeImageActivity extends BaseActivity {
                 if(Utils.isNetAvailable(mContext)){
                     HashMap<String, Object> hashMap = new HashMap<String, Object>();
                     hashMap.put("token", Utils.getDateToken());
-                    hashMap.put("uid", uid);
-                    hashMap.put("suite_id", suite_id);
+                    hashMap.put("uid", UrlConstans.UID);
+                    hashMap.put("suite_id", imgId);
 
                     HttpUtils.doPost(UrlConstans.COLLECT_PIC_URL, hashMap, new Callback() {
                         @Override
@@ -236,17 +249,41 @@ public class SeeImageActivity extends BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-
+                                    Utils.setToast(mContext, "系统繁忙，稍后再试~");
                                 }
                             });
                         }
 
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
+                            final String json = response.body().string();
+
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
 
+                                    int status = -1;
+                                    String msg = "";
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(json);
+                                        status = jsonObject.getInt("status");
+                                        msg = jsonObject.getString("msg");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    if(status==200){
+                                        if(msg.contains("取消")){
+                                            // 取消
+                                            ivCollectImg.setBackgroundResource(R.mipmap.shoucang21);
+                                        }else{
+                                            // 关注
+                                            ivCollectImg.setBackgroundResource(R.mipmap.shoucang4);
+                                            getConcren(ivBigCollect);
+                                        }
+                                        Utils.setToast(mContext, msg);
+                                    }else{
+                                        Utils.setToast(mContext, msg);
+                                    }
                                 }
                             });
                         }
@@ -324,9 +361,14 @@ public class SeeImageActivity extends BaseActivity {
                     Utils.setToast(mContext, "你还没输入电话号码");
                     return;
                 }else{
+                    if(etInputPhone.getText().toString().matches(UrlConstans.PHONE_NUM)) {
+                        Utils.setToast(mContext, "电话号码不正确，重新输入");
+                        return;
+                    }
                     if(Utils.isNetAvailable(mContext)){
                         Utils.setToast(mContext, "发单接口没写啊");
                         HashMap<String, Object> hashMap = new HashMap<String, Object>();
+                        hashMap.put("uid", UrlConstans.UID);
 //                        HttpUtils.doPost(UrlConstans.get, hashMap, new Callback() {
 //                            @Override
 //                            public void onFailure(Call call, IOException e) {
@@ -351,6 +393,7 @@ public class SeeImageActivity extends BaseActivity {
             }
         });
 
+        // 这里有红线 不是出错，不用管
         popupWindow.showAsDropDown(findViewById(R.id.rel_consdfaa),0,0,Gravity.BOTTOM);
 
     }
@@ -359,5 +402,29 @@ public class SeeImageActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.bind(this).unbind();
+    }
+
+    private void getConcren(final View view){
+        view.setVisibility(View.VISIBLE);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.out_down_to_up);
+        animation.setFillAfter(true);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                view.clearAnimation();
+                view.setVisibility(View.GONE);
+            }
+        });
+        view.startAnimation(animation);
     }
 }

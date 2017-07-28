@@ -1,10 +1,13 @@
 package com.tbs.tobosupicture.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -73,6 +76,12 @@ public class DesignerActivity extends BaseActivity {
     TextView tvGoodAtStyle;
     @BindView(R.id.tvDesignerDesc)
     TextView tvDesignerDesc;
+    @BindView(R.id.designerCaseLayout)
+    LinearLayout designerCaseLayout;
+    @BindView(R.id.designerSampleLayout)
+    LinearLayout designerSampleLayout;
+
+
     private SampleHorizontalListViewAdapter sampleAdapter;
     private CaseHorizontalListViewAdapter caseAdapter;
     private DesignerEntity designerEntity;
@@ -82,6 +91,8 @@ public class DesignerActivity extends BaseActivity {
     private String viewNum = "";
     private String fanNum = "";
     private String designerName = "";
+
+    private String designerId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +106,7 @@ public class DesignerActivity extends BaseActivity {
     }
 
     private void getDataFromNet() {
-        String designerId = "";
+
         Intent intent = getIntent();
         if (intent != null && intent.getBundleExtra("designer_bundle") != null) {
             designerId = intent.getBundleExtra("designer_bundle").getString("designer_id");
@@ -138,6 +149,18 @@ public class DesignerActivity extends BaseActivity {
     }
 
     private void initView() {
+        if ("1".equals(designerEntity.getDesignerInfoEntity().getIs_follow())) {
+            tvConcern.setTextColor(Color.parseColor("#FA8817"));
+            Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu);
+            leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
+            tvConcern.setCompoundDrawables(leftDrawable, null, null, null);
+        } else {
+            tvConcern.setTextColor(Color.parseColor("#858585"));
+            Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu2);
+            leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
+            tvConcern.setCompoundDrawables(leftDrawable, null, null, null);
+        }
+
         iconUrl = designerEntity.getDesignerInfoEntity().getIcon();
         if (!"".equals(iconUrl)) {
             GlideUtils.glideLoader(mContext, iconUrl, R.mipmap.pic, R.mipmap.pic, ivDesignerHeadPic, 0);
@@ -145,11 +168,11 @@ public class DesignerActivity extends BaseActivity {
         designerName = designerEntity.getDesignerInfoEntity().getDesname();
         tvDesignerName.setText(designerName);
         viewNum = designerEntity.getDesignerInfoEntity().getView_count();
-        if("".equals(viewNum)){
+        if ("".equals(viewNum)) {
             viewNum = "0";
         }
         fanNum = designerEntity.getDesignerInfoEntity().getFans_count();
-        if("".equals(fanNum)){
+        if ("".equals(fanNum)) {
             fanNum = "0";
         }
         tvNum.setText("粉丝: " + fanNum + " /  浏览" + viewNum);
@@ -170,6 +193,7 @@ public class DesignerActivity extends BaseActivity {
             });
         } else {
             sampleHorizontalListView.setVisibility(View.GONE);
+            designerSampleLayout.setVisibility(View.GONE);
         }
 
         // case
@@ -187,17 +211,18 @@ public class DesignerActivity extends BaseActivity {
             });
         } else {
             caseHorizontalListView.setVisibility(View.GONE);
+            designerCaseLayout.setVisibility(View.GONE);
         }
 
-        if(!"".equals(designerEntity.getDesignerInfoEntity().getArea())){
+        if (!"".equals(designerEntity.getDesignerInfoEntity().getArea())) {
             tvGoodAt.setText(designerEntity.getDesignerInfoEntity().getArea());
         }
 
-        if(!"".equals(designerEntity.getDesignerInfoEntity().getStyle())){
+        if (!"".equals(designerEntity.getDesignerInfoEntity().getStyle())) {
             tvGoodAtStyle.setText(designerEntity.getDesignerInfoEntity().getStyle());
         }
 
-        if(!"".equals(designerEntity.getDesignerInfoEntity().getIntro())){
+        if (!"".equals(designerEntity.getDesignerInfoEntity().getIntro())) {
             tvDesignerDesc.setText(designerEntity.getDesignerInfoEntity().getIntro());
         }
 
@@ -207,11 +232,10 @@ public class DesignerActivity extends BaseActivity {
     public void onViewClickedDesignerActivtiy(View view) {
         switch (view.getId()) {
             case R.id.tvConcern:
-                Utils.setToast(mContext, "关注 接口没有");
                 HashMap<String, Object> hashMap = new HashMap<String, Object>();
-                hashMap.put("", "");
-                // 关注 接口没有
-
+                hashMap.put("token", Utils.getDateToken());
+                hashMap.put("uid", UrlConstans.UID);
+                hashMap.put("designer_id", designerId);
                 HttpUtils.doPost(UrlConstans.CONCERN_URL, hashMap, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -225,15 +249,31 @@ public class DesignerActivity extends BaseActivity {
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
-                        String json = response.body().string();
-                        try {
-                            JSONObject object = new JSONObject(json);
-                            if (object.getInt("status") == 0) {
-
+                        final String json = response.body().string();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    JSONObject object = new JSONObject(json);
+                                    if (object.getInt("status") == 200) {
+                                        if (object.getString("msg").contains("取消")) {
+                                            tvConcern.setTextColor(Color.parseColor("#858585"));
+                                            Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu2);
+                                            leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
+                                            tvConcern.setCompoundDrawables(leftDrawable, null, null, null);
+                                        } else {
+                                            tvConcern.setTextColor(Color.parseColor("#FA8817"));
+                                            Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu);
+                                            leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
+                                            tvConcern.setCompoundDrawables(leftDrawable, null, null, null);
+                                        }
+                                    }
+                                    Utils.setToast(mContext, object.getString("msg"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        });
                     }
                 });
                 break;

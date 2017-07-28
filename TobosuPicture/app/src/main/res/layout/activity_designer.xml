@@ -89,6 +89,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="17sp"
                         android:padding="10dp"
+                        android:textColor="#858585"
                         android:drawableLeft="@mipmap/jiaguanzhu2"
                         android:layout_centerInParent="true"
                         android:gravity="center"
@@ -123,6 +124,7 @@
 
             <!-- 样板图-->
             <LinearLayout
+                android:id="@+id/designerSampleLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -192,10 +194,11 @@
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="14dp"
+                android:layout_height="12dp"
                 android:background="#f5f5f5"/>
             <!-- 案例-->
             <LinearLayout
+                android:id="@+id/designerCaseLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -264,7 +267,7 @@
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="14dp"
+                android:layout_height="12dp"
                 android:background="#f5f5f5"/>
             <RelativeLayout
                 android:layout_width="match_parent"

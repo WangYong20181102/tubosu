@@ -23,6 +23,10 @@ import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.CustomExpandableListView;
+import com.tbs.tobosupicture.view.MyListView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,7 +46,7 @@ import okhttp3.Response;
 public class ConditionActivity extends BaseActivity {
 
     @BindView(R.id.searchCaseRecord)
-    ListView searchCaseRecord;
+    MyListView searchCaseRecord;
     @BindView(R.id.tvSeeMoreCaseHistory)
     TextView tvSeeMoreCaseHistory;
     @BindView(R.id.tvClearCaseHistory)
@@ -57,6 +61,10 @@ public class ConditionActivity extends BaseActivity {
     LinearLayout historyLinearlayout;
     @BindView(R.id.relSearchBack)
     RelativeLayout relSearchBack;
+    @BindView(R.id.relSearchCaseLayout)
+    RelativeLayout relSearchCaseLayout;
+
+
 
     private SearchDataEntity searchDataEntity;
     private SearchCaseConditionEntity searchCaseConditionEntity;
@@ -80,15 +88,11 @@ public class ConditionActivity extends BaseActivity {
     }
 
     private void getDataFromNet() {
-        String uid = "";
-//        if(isUserLogin()){
-//            uid = "**************************";
-//        }
 
         if (Utils.isNetAvailable(mContext)) {
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("token", Utils.getDateToken());
-            hashMap.put("uid", uid);
+            hashMap.put("uid", UrlConstans.UID);
             HttpUtils.doPost(UrlConstans.CASE_SEARCH_URL, hashMap, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -129,46 +133,10 @@ public class ConditionActivity extends BaseActivity {
     private ArrayList<SearchRecordBean> tempRecordBeenList = new ArrayList<SearchRecordBean>();
 
     private SearchCaseAdapter searchCaseAdapter;
-    private boolean seeMoreRecord = false;
 
     private void setDataInView() {
-        if (searchDataEntity != null) {
-            recordBeenList = searchDataEntity.getSearch_record();
 
-
-            if (recordBeenList != null && recordBeenList.size() > 0) {
-                // 历史记录
-                if (seeMoreRecord) {
-                    if (recordBeenList.size() > 20) {
-                        for (int i = 0; i < 20; i++) {
-                            tempRecordBeenList.add(recordBeenList.get(i));
-                        }
-                    } else {
-                        tempRecordBeenList.addAll(recordBeenList);
-                    }
-                } else {
-                    if (recordBeenList.size() > 5) {
-                        for (int i = 0; i < 5; i++) {
-                            tempRecordBeenList.add(recordBeenList.get(i));
-                        }
-                    } else {
-                        tempRecordBeenList.addAll(recordBeenList);
-                    }
-                }
-                searchCaseAdapter = new SearchCaseAdapter(mContext, tempRecordBeenList);
-                searchCaseRecord.setAdapter(searchCaseAdapter);
-                searchCaseRecord.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        // 历史记录的
-                        getParamBack();
-                    }
-                });
-            } else {
-                tvHistorySearch.setVisibility(View.GONE);
-                historyLinearlayout.setVisibility(View.GONE);
-            }
-        }
+        initSearchRecord(false);
 
         if (searchCaseConditionEntity != null) {
             caseConditionTypeList = searchCaseConditionEntity.getConditionTypeList();
@@ -210,6 +178,7 @@ public class ConditionActivity extends BaseActivity {
         b.putString("param_layout", param_layout);
         b.putString("param_price", param_price);
         b.putString("param_style", param_style);
+        b.putString("param_city_id", "");
         b.putString("condition_text", conditionText);
         intent.putExtra("params", b);
 
@@ -218,15 +187,109 @@ public class ConditionActivity extends BaseActivity {
         finish();
     }
 
+    private void initSearchRecord(boolean seemore){
+        if (searchDataEntity != null) {
+            recordBeenList.clear();
+            recordBeenList = searchDataEntity.getSearch_record();
+            if(recordBeenList.size()==0){
+                relSearchCaseLayout.setVisibility(View.GONE);
+            }else {
+                relSearchCaseLayout.setVisibility(View.VISIBLE);
+            }
+
+
+
+            if (recordBeenList != null && recordBeenList.size() > 0) {
+                // 历史记录
+                if (seemore) {
+                    tempRecordBeenList.addAll(recordBeenList);
+                } else {
+                    if (recordBeenList.size() > 5) {
+                        for (int i = 0; i < 5; i++) {
+                            tempRecordBeenList.add(recordBeenList.get(i));
+                        }
+                    } else {
+                        tempRecordBeenList.addAll(recordBeenList);
+                    }
+                }
+                if(searchCaseAdapter==null){
+                    searchCaseAdapter = new SearchCaseAdapter(mContext, tempRecordBeenList);
+                    searchCaseRecord.setAdapter(searchCaseAdapter);
+                }else {
+                    searchCaseAdapter.notifyDataSetChanged();
+                }
+
+                searchCaseRecord.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        // 历史记录的
+                        Intent intent = new Intent();
+                        Bundle b = new Bundle();
+                        b.putString("param_area", tempRecordBeenList.get(position).getArea_key());
+                        b.putString("param_layout", tempRecordBeenList.get(position).getLayout_key());
+                        b.putString("param_price", tempRecordBeenList.get(position).getPrice_key());
+                        b.putString("param_style", tempRecordBeenList.get(position).getStyle_id());
+                        b.putString("param_city_id", tempRecordBeenList.get(position).getCity_id());
+                        String _condiction = tempRecordBeenList.get(position).getCity_name() + " " +
+                                tempRecordBeenList.get(position).getLayout_value() + " " +
+                                tempRecordBeenList.get(position).getArea_value() + " " +
+                                tempRecordBeenList.get(position).getPrice_value() + " " +
+                                tempRecordBeenList.get(position).getStyle_name();
+                        b.putString("condition_text", _condiction);
+                        intent.putExtra("params", b);
+
+                        Utils.setErrorLog(TAG, param_area + "   " + param_layout + "  " + param_price + "  " + param_style);
+                        setResult(10101, intent);
+                        finish();
+                    }
+                });
+            } else {
+                tvHistorySearch.setVisibility(View.GONE);
+                historyLinearlayout.setVisibility(View.GONE);
+            }
+        }
+    }
+
     @OnClick({R.id.tvSeeMoreCaseHistory, R.id.tvClearCaseHistory, R.id.tvCaseSearch, R.id.relSearchBack})
     public void onViewClickedCondictionActivity(View view) {
         switch (view.getId()) {
             case R.id.tvSeeMoreCaseHistory:
                 // 显示20条
-
+                initSearchRecord(true);
                 break;
             case R.id.tvClearCaseHistory:
+                if(Utils.isNetAvailable(mContext)){
+                    HashMap<String, Object> hashMap = new HashMap<String, Object>();
+                    hashMap.put("iud", UrlConstans.UID);
+                    hashMap.put("token", Utils.getDateToken());
+                    HttpUtils.doPost(UrlConstans.CLEAR_CASE_URL, hashMap, new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Utils.setToast(mContext, "系统繁忙，稍后再试~");
+                                }
+                            });
+                        }
 
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            String json = response.body().string();
+                            try {
+                                JSONObject jsonObject = new JSONObject(json);
+                                if(jsonObject.getInt("status") == 200){
+                                    Utils.setToast(mContext, jsonObject.getString("msg"));
+                                    relSearchCaseLayout.setVisibility(View.GONE);
+                                }else{
+                                    Utils.setToast(mContext, jsonObject.getString("msg"));
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
                 break;
             case R.id.tvCaseSearch:
                 getParamBack();

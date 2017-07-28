@@ -21,8 +21,8 @@ public class ImgJsonEntity {
 
     private int status;
     private String msg;
-    private ArrayList<ImgEntity> imgEntityList;
-    private JSONArray dataArr;
+    private SeeImgEntity seeImgEntity;
+    private JSONObject data;
 
     public ImgJsonEntity(){}
     public ImgJsonEntity(String json){
@@ -31,20 +31,26 @@ public class ImgJsonEntity {
             this.status = jsonObject.getInt("status");
             this.msg = jsonObject.getString("msg");
             if(this.status == 200){
-                imgEntityList = new ArrayList<ImgEntity>();
-                this.dataArr = jsonObject.getJSONArray("data");
-                int len = this.dataArr.length();
+
+                this.data = jsonObject.getJSONObject("data");
+                seeImgEntity = new SeeImgEntity();
+                seeImgEntity.setSuite_id(this.data.getString("suite_id"));
+                seeImgEntity.setIs_collect(this.data.getString("is_collect"));
+                JSONArray pictureArr = this.data.getJSONArray("picture");
+                ArrayList<ImgEntity> imgEntityList = new ArrayList<ImgEntity>();
+                int len = pictureArr.length();
                 for(int i=0;i<len;i++){
                     ImgEntity entity = new ImgEntity();
-                    entity.setId(dataArr.getJSONObject(i).getString("id"));
-                    entity.setTitle(dataArr.getJSONObject(i).getString("title"));
-                    entity.setImg_url(dataArr.getJSONObject(i).getString("img_url"));
-                    entity.setSpace_name(dataArr.getJSONObject(i).getString("space_name"));
-                    entity.setPart_name(dataArr.getJSONObject(i).getString("part_name"));
-                    entity.setDesign_concept(dataArr.getJSONObject(i).getString("design_concept"));
-                    entity.setPlan_price(dataArr.getJSONObject(i).getString("plan_price"));
+                    entity.setId(pictureArr.getJSONObject(i).getString("id"));
+                    entity.setTitle(pictureArr.getJSONObject(i).getString("title"));
+                    entity.setImg_url(pictureArr.getJSONObject(i).getString("img_url"));
+                    entity.setSpace_name(pictureArr.getJSONObject(i).getString("space_name"));
+                    entity.setPart_name(pictureArr.getJSONObject(i).getString("part_name"));
+                    entity.setDesign_concept(pictureArr.getJSONObject(i).getString("design_concept"));
+                    entity.setPlan_price(pictureArr.getJSONObject(i).getString("plan_price"));
                     imgEntityList.add(entity);
                 }
+                seeImgEntity.setImgEntityList(imgEntityList);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -68,11 +74,11 @@ public class ImgJsonEntity {
         this.msg = msg;
     }
 
-    public ArrayList<ImgEntity> getImgEntityList() {
-        return imgEntityList;
+    public SeeImgEntity getSeeImgEntity() {
+        return seeImgEntity;
     }
 
-    public void setImgEntityList(ArrayList<ImgEntity> imgEntityList) {
-        imgEntityList = imgEntityList;
+    public void setSeeImgEntity(SeeImgEntity seeImgEntity) {
+        this.seeImgEntity = seeImgEntity;
     }
 }

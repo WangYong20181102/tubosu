@@ -65,10 +65,13 @@ public class UrlConstans {
      */
     public static final String DESIGNER_URL = ZXKK_URL + "rapp/TemplateMap/designer_index";
 
+
+    public static final String UID = "23109";
+
     /**
-     * 关注 / 取消关注url 未定
+     * 关注 / 取消关注 设计师url
      */
-    public static final String CONCERN_URL = ZXKK_URL + "rapp/public/follow";
+    public static final String CONCERN_URL = ZXKK_URL + "/rapp/public/follow_designer";
 
     /**
      * 搜索案例url
@@ -85,6 +88,11 @@ public class UrlConstans {
      * 获取他人的图谜url
      */
     public static final String GET_HIS_FANS_URL = ZXKK_URL + "rapp/user/my_fans";
+
+    /**
+     * 清空搜索记录
+     */
+    public static final String CLEAR_CASE_URL = ZXKK_URL + "rapp/case/clear_search_history";
     /**
      * 获取他人的图友url
      */
