@@ -124,7 +124,9 @@ public class HouseFragment extends BaseFragment {
             R.mipmap.fenlei01,R.mipmap.fenlei02,R.mipmap.fenlei03,R.mipmap.fenlei04,R.mipmap.fenlei05,
             R.mipmap.fenlei06,R.mipmap.fenlei07,R.mipmap.fenlei08,R.mipmap.fenlei09,R.mipmap.fenlei010,R.mipmap.fenlei011,R.mipmap.fenlei012};
 
-    private int[] iconColor = new int[]{};
+    private int[] iconColor = new int[]{R.mipmap.color_all,R.mipmap.color_white,R.mipmap.color_mi,R.mipmap.color_yellow,R.mipmap.color_orange,
+            R.mipmap.color_red,R.mipmap.color_pink,R.mipmap.color_green,R.mipmap.color_blue,R.mipmap.color_puer,R.mipmap.color_black,
+            R.mipmap.color_coffe,R.mipmap.color_gray,R.mipmap.color_colorful};
 
     @Nullable
     @Override
@@ -224,7 +226,7 @@ public class HouseFragment extends BaseFragment {
                 for (int i = 0, size = color.size(); i < size; i++) {
                     idDataList.add(color.get(i).getId());
                     textDataList.add(color.get(i).getClass_name());
-                    iconDataList.add(R.mipmap.pic);
+                    iconDataList.add(iconColor[i]);
                 }
                 type = 4;
                 break;
