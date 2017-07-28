@@ -67,13 +67,33 @@
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:textSize="@dimen/text_size_24px" />
+
+
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/photo_detail_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/shape_send_comment"
+            android:gravity="center"
+            android:paddingBottom="6dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="6dp"
+            android:text="发送"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_28px"
+            android:visibility="gone" />
+
         <RelativeLayout
+            android:id="@+id/photo_detail_rl_gongneng"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginRight="20dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:visibility="visible">
 
             <RelativeLayout
                 android:id="@+id/photo_detail_pinlun"
@@ -97,7 +117,7 @@
                     android:background="@drawable/shape_dot"
                     android:paddingLeft="3dp"
                     android:paddingRight="3dp"
-                    android:text="99"
+                    android:text="0"
                     android:textColor="@color/white"
                     android:textSize="10sp" />
             </RelativeLayout>

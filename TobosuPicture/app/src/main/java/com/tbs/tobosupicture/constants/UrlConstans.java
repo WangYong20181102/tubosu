@@ -1,5 +1,7 @@
 package com.tbs.tobosupicture.constants;
 
+import android.os.Environment;
+
 import com.tbs.tobosupicture.MyApplication;
 import com.tbs.tobosupicture.utils.Utils;
 
@@ -18,7 +20,11 @@ public class UrlConstans {
      * 测试环境的URl
      */
     public static final String ZXKK_URL = "http://www.dev.tobosu.com/";
-
+    /**
+     * 图片存储的位置
+     */
+    public static final String IMG_PATH = Environment.getExternalStorageDirectory() + "/zxkk/";
+    ;
     /**
      * 手机号码 用于验证手机号码是否合法
      */
@@ -78,7 +84,9 @@ public class UrlConstans {
      */
     public static final String SEARCH_CASE_URL = ZXKK_URL + "rapp/case/case_list";
 
-    /**案例搜索页面url*/
+    /**
+     * 案例搜索页面url
+     */
     public static final String CASE_SEARCH_URL = ZXKK_URL + "/rapp/case/case_search";
 
     /**收藏套图的url*/
@@ -130,7 +138,7 @@ public class UrlConstans {
      */
     public static final String DYNAMIC_DETAIL = ZXKK_URL + "rapp/dynamic/dynamic_detail";
     /**
-     * 动态评论列表动态详细页
+     * 动态评论列  表动态详细页
      */
     public static final String DYNAMIC_COMMETN_LIST = ZXKK_URL + "rapp/dynamic/dynamic_comment_list";
     /**
@@ -173,5 +181,13 @@ public class UrlConstans {
      * 回复评论公共功能
      */
     public static final String REPLY_COMMENT = ZXKK_URL + "rapp/public/reply_comment";
+    /**
+     * 回复评论公共功能
+     */
+    public static final String VIEW_DYNAMIC_IMG = ZXKK_URL + "rapp/Social/view_dynamic_img";
+    /**
+     * 收藏动态查看图集
+     */
+    public static final String DYNAMIC_COLLECT = ZXKK_URL + "rapp/dynamic/collect";
 
 }

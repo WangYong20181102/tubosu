@@ -57,10 +57,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/banner_height"
-        android:layout_alignParentBottom="true"
         android:background="#f2f3f5"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="0dp"

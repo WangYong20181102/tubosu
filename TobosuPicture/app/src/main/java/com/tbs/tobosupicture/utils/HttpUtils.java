@@ -1,6 +1,10 @@
 package com.tbs.tobosupicture.utils;
 
+import android.app.Application;
+import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -175,8 +179,10 @@ public class HttpUtils {
                         fos.write(buf, 0, len);
                     }
                     fos.flush();
+                    Log.e("HttpUtils", "下载文件成功！===" + file.getPath());
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Log.e("HttpUtils", "下载出错===" + e.toString());
                 } finally {
                     if (is != null) is.close();
                     if (fos != null) fos.close();
