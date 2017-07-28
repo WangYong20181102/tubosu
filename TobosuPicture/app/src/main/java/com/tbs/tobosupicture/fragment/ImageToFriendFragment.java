@@ -21,15 +21,11 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
-import com.tbs.tobosupicture.activity.FindPasswordActivity;
-import com.tbs.tobosupicture.activity.FreeQuoteActivity;
-import com.tbs.tobosupicture.activity.MyFansActivity;
 import com.tbs.tobosupicture.activity.MyFriendsActivity;
-import com.tbs.tobosupicture.activity.RegisterActivity;
-import com.tbs.tobosupicture.activity.SystemActivity;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.ImgCompressUtils;
+import com.tbs.tobosupicture.view.TouchImageView;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -61,6 +57,8 @@ public class ImageToFriendFragment extends BaseFragment {
     TextView intoShare;
     @BindView(R.id.into_thr_login)
     TextView intoThrLogin;
+    @BindView(R.id.photo_img3)
+    TouchImageView photoImg3;
     private ArrayList<String> imageList = new ArrayList<>();
     private ArrayList<String> path = new ArrayList<>();
 
@@ -270,6 +268,7 @@ public class ImageToFriendFragment extends BaseFragment {
                 }
                 GlideUtils.glideLoader(mContext, path.get(0), 0, 0, photoImg);
                 GlideUtils.glideLoader(mContext, newPath, 0, 0, photoImg2);
+                GlideUtils.glideLoader(mContext, path.get(0), 0, 0, photoImg3);
 //                HttpUtils.doFile(UrlConstans.UPLOAD_IMAGE, path.get(0), file.getName(), new Callback() {
 //                    @Override
 //                    public void onFailure(Call call, IOException e) {

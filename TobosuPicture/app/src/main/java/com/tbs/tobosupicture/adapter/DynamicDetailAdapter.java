@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.PersonHomePageActivity;
+import com.tbs.tobosupicture.activity.PhotoDetail;
 import com.tbs.tobosupicture.activity.ReplyActivity;
 import com.tbs.tobosupicture.bean._DynamicDetail;
 import com.tbs.tobosupicture.bean._ZanUser;
@@ -148,54 +149,135 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag1.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url(),
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag1);
+                ((DynamicDetailHeadHolder) holder).DynamicDetailImag1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicDetail.getDynamic().getId());
+                        intent.putExtra("mImagePosition", 0);
+                        mContext.startActivity(intent);
+                    }
+                });
             }
             if (!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url2())) {
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag2
                         .setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url2(),
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag2);
+                ((DynamicDetailHeadHolder) holder).DynamicDetailImag2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicDetail.getDynamic().getId());
+                        intent.putExtra("mImagePosition", 1);
+                        mContext.startActivity(intent);
+                    }
+                });
             }
             if (!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url3())) {
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag3
                         .setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url3(),
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag3);
+                ((DynamicDetailHeadHolder) holder).DynamicDetailImag3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicDetail.getDynamic().getId());
+                        intent.putExtra("mImagePosition", 2);
+                        mContext.startActivity(intent);
+                    }
+                });
             }
             if (!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url4())) {
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag4
                         .setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url4(),
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag4);
+                ((DynamicDetailHeadHolder) holder).DynamicDetailImag4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicDetail.getDynamic().getId());
+                        intent.putExtra("mImagePosition", 3);
+                        mContext.startActivity(intent);
+                    }
+                });
             }
             if (!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url5())) {
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag5
                         .setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url5(),
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag5);
+                ((DynamicDetailHeadHolder) holder).DynamicDetailImag5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicDetail.getDynamic().getId());
+                        intent.putExtra("mImagePosition", 4);
+                        mContext.startActivity(intent);
+                    }
+                });
             }
             if (!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url6())) {
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag6
                         .setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url6(),
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag6);
+                ((DynamicDetailHeadHolder) holder).DynamicDetailImag6.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicDetail.getDynamic().getId());
+                        intent.putExtra("mImagePosition", 5);
+                        mContext.startActivity(intent);
+                    }
+                });
             }
             if (!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url7())) {
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag7
                         .setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url7(),
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag7);
+                ((DynamicDetailHeadHolder) holder).DynamicDetailImag7.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicDetail.getDynamic().getId());
+                        intent.putExtra("mImagePosition", 6);
+                        mContext.startActivity(intent);
+                    }
+                });
             }
             if (!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url8())) {
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag8
                         .setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url8(),
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag8);
+                ((DynamicDetailHeadHolder) holder).DynamicDetailImag8.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicDetail.getDynamic().getId());
+                        intent.putExtra("mImagePosition", 7);
+                        mContext.startActivity(intent);
+                    }
+                });
             }
             if (!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url9())) {
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag9
                         .setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url9(),
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag9);
+                ((DynamicDetailHeadHolder) holder).DynamicDetailImag9.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicDetail.getDynamic().getId());
+                        intent.putExtra("mImagePosition", 8);
+                        mContext.startActivity(intent);
+                    }
+                });
             }
             ((DynamicDetailHeadHolder) holder).DynamicDetailAddTime.setText("" + dynamicDetail.getDynamic().getAdd_time());
             //设置用户的点赞状态以及评论状态 以及点赞事件的触发
@@ -302,8 +384,6 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             ((CommentViewHolder) holder).dynamic_detail_comment_ll_zan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.e(TAG, "点赞参数==commented_uid==" + commentArrayList.get(position - 1).getUid());
-                    Log.e(TAG, "点赞参数==dynamic_id==" + commentArrayList.get(position - 1).getId());
                     HttpCommentZan(commentArrayList.get(position - 1).getId(),
                             commentArrayList.get(position - 1).getUid(),
                             ((CommentViewHolder) holder).commentZan,
@@ -632,8 +712,6 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         param.put("dynamic_id", dynamicDetail.getDynamic().getId());
         param.put("page", mPage);
         param.put("page_size", "10");
-        Log.e(TAG, "请求参数==dynamic_id==" + dynamicDetail.getDynamic().getId());
-        Log.e(TAG, "请求参数==page==" + mPage);
         HttpUtils.doPost(UrlConstans.DYNAMIC_PRAISE_LIST, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

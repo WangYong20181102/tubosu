@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.DynamicDetailActivity;
 import com.tbs.tobosupicture.activity.PersonHomePageActivity;
+import com.tbs.tobosupicture.activity.PhotoDetail;
 import com.tbs.tobosupicture.bean._ZuiRe;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.GlideUtils;
@@ -165,74 +166,155 @@ public class ZuiReAdapter
             });
             //显示动态图片
             //第一张
-            if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url())) {
+            if (dynamicArrayList.size() >= 1 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag1.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url(),
                         R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag1);
+                ((ZuiReDynamicHolder) holder).zuiReDynamicImag1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicArrayList.get(position - 1).getId());
+                        intent.putExtra("mImagePosition", 0);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag1.setVisibility(View.GONE);
             }
             //第二张
-            if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url2())) {
+            if (dynamicArrayList.size() >= 2 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url2())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag2.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url2(),
                         R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag2);
+                ((ZuiReDynamicHolder) holder).zuiReDynamicImag2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicArrayList.get(position - 1).getId());
+                        intent.putExtra("mImagePosition", 1);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag2.setVisibility(View.GONE);
             }
             //第三张
-            if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url3())) {
+            if (dynamicArrayList.size() >= 3 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url3())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag3.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url3(),
                         R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag3);
+                ((ZuiReDynamicHolder) holder).zuiReDynamicImag3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicArrayList.get(position - 1).getId());
+                        intent.putExtra("mImagePosition", 2);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag3.setVisibility(View.GONE);
             }
             //第四张
-            if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url4())) {
+            if (dynamicArrayList.size() >= 4 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url4())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag4.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url4(),
                         R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag4);
+                ((ZuiReDynamicHolder) holder).zuiReDynamicImag4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicArrayList.get(position - 1).getId());
+                        intent.putExtra("mImagePosition", 3);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag4.setVisibility(View.GONE);
             }
             //第五张
-            if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url5())) {
+            if (dynamicArrayList.size() >= 5 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url5())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag5.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url5(),
                         R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag5);
+                ((ZuiReDynamicHolder) holder).zuiReDynamicImag5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicArrayList.get(position - 1).getId());
+                        intent.putExtra("mImagePosition", 4);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag5.setVisibility(View.GONE);
             }
             //第六张
-            if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url6())) {
+            if (dynamicArrayList.size() >= 6 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url6())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag6.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url6(),
                         R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag6);
+                ((ZuiReDynamicHolder) holder).zuiReDynamicImag6.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicArrayList.get(position - 1).getId());
+                        intent.putExtra("mImagePosition", 5);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag6.setVisibility(View.GONE);
             }
             //第七张
-            if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url7())) {
+            if (dynamicArrayList.size() >= 7 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url7())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag7.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url7(),
                         R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag7);
+                ((ZuiReDynamicHolder) holder).zuiReDynamicImag7.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicArrayList.get(position - 1).getId());
+                        intent.putExtra("mImagePosition", 6);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag7.setVisibility(View.GONE);
             }
             //第八张
-            if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url8())) {
+            if (dynamicArrayList.size() >= 8 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url8())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag8.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url8(),
                         R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag8);
+                ((ZuiReDynamicHolder) holder).zuiReDynamicImag8.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicArrayList.get(position - 1).getId());
+                        intent.putExtra("mImagePosition", 7);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag8.setVisibility(View.GONE);
             }
             //第九张
-            if (!TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url9())) {
+            if (dynamicArrayList.size() >= 9 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url9())) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag9.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url9(),
                         R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag9);
+                ((ZuiReDynamicHolder) holder).zuiReDynamicImag9.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicArrayList.get(position - 1).getId());
+                        intent.putExtra("mImagePosition", 8);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag9.setVisibility(View.GONE);
             }

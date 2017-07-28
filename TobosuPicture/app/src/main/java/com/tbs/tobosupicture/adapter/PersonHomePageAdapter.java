@@ -16,8 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.DynamicDetailActivity;
 import com.tbs.tobosupicture.activity.HisFansActivity;
 import com.tbs.tobosupicture.activity.HisFriendsActivity;
+import com.tbs.tobosupicture.activity.PhotoDetail;
 import com.tbs.tobosupicture.bean._PersonHomePage;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.GlideUtils;
@@ -95,7 +97,7 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof PhpHeadHolder) {
             //返回按钮
             ((PhpHeadHolder) holder).item_php_head_back.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +122,7 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
             //个性签名
             ((PhpHeadHolder) holder).item_php_head_signature.setText("" + personHomePage.getUser_info().getPersonal_signature());
-            //设置是否加为图友  1--已经关注 2--未关注
+            //设置是否加为图友  1--已经关注 0--未关注
             if (personHomePage.getUser_info().getIs_follow().equals("1")) {
                 ((PhpHeadHolder) holder).item_php_head_addfriend.setText("取消关注");
                 ((PhpHeadHolder) holder).item_php_head_addfriend.setBackgroundResource(R.drawable.shape_quxiaoguanzhu);
@@ -186,6 +188,15 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         .setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicList.get(position - 1).getImage_detail().get(0),
                         R.mipmap.loading_img_fail, R.mipmap.loading_img, ((PhpItemHolder) holder).item_php_item_img1);
+                ((PhpItemHolder) holder).item_php_item_img1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicList.get(position - 1).getId());
+                        intent.putExtra("mImagePosition", 0);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {
                 ((PhpItemHolder) holder).item_php_item_img1
                         .setVisibility(View.GONE);
@@ -196,6 +207,15 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         .setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicList.get(position - 1).getImage_detail().get(1),
                         R.mipmap.loading_img_fail, R.mipmap.loading_img, ((PhpItemHolder) holder).item_php_item_img2);
+                ((PhpItemHolder) holder).item_php_item_img2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicList.get(position - 1).getId());
+                        intent.putExtra("mImagePosition", 1);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {
                 ((PhpItemHolder) holder).item_php_item_img2
                         .setVisibility(View.GONE);
@@ -206,6 +226,15 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         .setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicList.get(position - 1).getImage_detail().get(2),
                         R.mipmap.loading_img_fail, R.mipmap.loading_img, ((PhpItemHolder) holder).item_php_item_img3);
+                ((PhpItemHolder) holder).item_php_item_img3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicList.get(position - 1).getId());
+                        intent.putExtra("mImagePosition", 2);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {
                 ((PhpItemHolder) holder).item_php_item_img3
                         .setVisibility(View.GONE);
@@ -216,6 +245,15 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         .setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicList.get(position - 1).getImage_detail().get(3),
                         R.mipmap.loading_img_fail, R.mipmap.loading_img, ((PhpItemHolder) holder).item_php_item_img4);
+                ((PhpItemHolder) holder).item_php_item_img4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicList.get(position - 1).getId());
+                        intent.putExtra("mImagePosition", 3);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {
                 ((PhpItemHolder) holder).item_php_item_img4
                         .setVisibility(View.GONE);
@@ -226,6 +264,15 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         .setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicList.get(position - 1).getImage_detail().get(4),
                         R.mipmap.loading_img_fail, R.mipmap.loading_img, ((PhpItemHolder) holder).item_php_item_img5);
+                ((PhpItemHolder) holder).item_php_item_img5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicList.get(position - 1).getId());
+                        intent.putExtra("mImagePosition", 4);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {
                 ((PhpItemHolder) holder).item_php_item_img5
                         .setVisibility(View.GONE);
@@ -236,6 +283,15 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         .setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicList.get(position - 1).getImage_detail().get(5),
                         R.mipmap.loading_img_fail, R.mipmap.loading_img, ((PhpItemHolder) holder).item_php_item_img6);
+                ((PhpItemHolder) holder).item_php_item_img6.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicList.get(position - 1).getId());
+                        intent.putExtra("mImagePosition", 5);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {
                 ((PhpItemHolder) holder).item_php_item_img6
                         .setVisibility(View.GONE);
@@ -246,6 +302,15 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         .setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicList.get(position - 1).getImage_detail().get(6),
                         R.mipmap.loading_img_fail, R.mipmap.loading_img, ((PhpItemHolder) holder).item_php_item_img7);
+                ((PhpItemHolder) holder).item_php_item_img7.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicList.get(position - 1).getId());
+                        intent.putExtra("mImagePosition", 6);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {
                 ((PhpItemHolder) holder).item_php_item_img7
                         .setVisibility(View.GONE);
@@ -256,6 +321,15 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         .setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicList.get(position - 1).getImage_detail().get(7),
                         R.mipmap.loading_img_fail, R.mipmap.loading_img, ((PhpItemHolder) holder).item_php_item_img8);
+                ((PhpItemHolder) holder).item_php_item_img8.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicList.get(position - 1).getId());
+                        intent.putExtra("mImagePosition", 7);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {
                 ((PhpItemHolder) holder).item_php_item_img8
                         .setVisibility(View.GONE);
@@ -266,6 +340,15 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         .setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicList.get(position - 1).getImage_detail().get(8),
                         R.mipmap.loading_img_fail, R.mipmap.loading_img, ((PhpItemHolder) holder).item_php_item_img9);
+                ((PhpItemHolder) holder).item_php_item_img9.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicList.get(position - 1).getId());
+                        intent.putExtra("mImagePosition", 8);
+                        mContext.startActivity(intent);
+                    }
+                });
             } else {
                 ((PhpItemHolder) holder).item_php_item_img9
                         .setVisibility(View.GONE);
@@ -276,6 +359,17 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             ((PhpItemHolder) holder).item_php_item_praise_count.setText("" + dynamicList.get(position - 1).getPraise_count());
             //回复数
             ((PhpItemHolder) holder).item_php_item_comment_count.setText("" + dynamicList.get(position - 1).getComment_count());
+            //点击回复按钮进入动态详情
+            ((PhpItemHolder) holder).item_dynamic_pinglun.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, DynamicDetailActivity.class);
+                    intent.putExtra("dynamic_id", dynamicList.get(position - 1).getId());
+                    intent.putExtra("commented_uid", dynamicList.get(position - 1).getUid());
+                    intent.putExtra("is_virtual_user", dynamicList.get(position - 1).getIs_virtual_user());
+                    mContext.startActivity(intent);
+                }
+            });
             //点赞和回复的状态改变
             if (dynamicList.get(position - 1).getParticipate_type().equals("1")) {
                 //参与了评论
@@ -374,7 +468,8 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         private TextView item_php_item_comment_count;//评论数
         private ImageView item_php_item_praise_img;//点赞的图标
         private TextView item_php_item_praise_count;//点赞数
-
+        //点击评论按钮
+        private LinearLayout item_dynamic_pinglun;
 
         public PhpItemHolder(View itemView) {
             super(itemView);
@@ -395,6 +490,7 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
             item_php_item_add_time = (TextView) itemView.findViewById(R.id.item_php_item_add_time);
 
+            item_dynamic_pinglun = (LinearLayout) itemView.findViewById(R.id.item_dynamic_pinglun);
             item_php_item_comment_img = (ImageView) itemView.findViewById(R.id.item_php_item_comment_img);
             item_php_item_comment_count = (TextView) itemView.findViewById(R.id.item_php_item_comment_count);
             item_php_item_praise_count = (TextView) itemView.findViewById(R.id.item_php_item_praise_count);

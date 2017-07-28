@@ -175,7 +175,7 @@ public class _PersonHomePage {
          */
 
         private String id;
-        private String uid;
+        private String uid;//发这个动态的用户id
         private String is_virtual_user;
         private String title;
         private String praise_count;
