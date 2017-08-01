@@ -155,4 +155,5 @@ public class SpUtils {
         return context.getSharedPreferences(XGTKK_SEARCH_CASE_STYLE_PRE, 0).getInt(style, -1);
     }
 
+
 }

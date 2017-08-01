@@ -74,6 +74,8 @@ public class UrlConstans {
 
     public static final String UID = "23109";
 
+    public static final String DISTRICT_LIST_URL =  ZXKK_URL + "rapp/village/village_list";
+
     /**
      * 关注 / 取消关注 设计师url
      */

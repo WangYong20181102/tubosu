@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="40dp"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="搜索小区"
+            android:textSize="14sp"/>
+
+        <ImageView
+            android:id="@+id/ivCloseWindown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="14dp"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/close2"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:id="@+id/tvLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:drawableLeft="@mipmap/phone"
+            android:layout_marginLeft="20dp"
+            android:gravity="center"
+            android:text="所在地：广东省 深圳市 宝安区"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tvSearchDistrict"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索"
+            android:padding="11dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:background="@drawable/shape_search_disctrict"
+            android:textSize="14sp"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/editTextSearchDistrct"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:paddingLeft="14dp"
+                    android:background="@drawable/shape_window_edittextview"
+                    android:hint="搜索小区名"
+                    android:drawableLeft="@mipmap/sousuo"
+                    android:textColor="#3e3d3d"
+                    android:textSize="14sp"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="16dp"
+                android:background="#c7c5c5"/>
+
+            <com.tbs.tobosupicture.view.MyGridView
+                android:id="@+id/gvDistrict"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numColumns="3">
+            </com.tbs.tobosupicture.view.MyGridView>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

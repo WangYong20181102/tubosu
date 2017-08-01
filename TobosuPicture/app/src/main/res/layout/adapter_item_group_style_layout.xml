@@ -17,8 +17,9 @@
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:textColor="#252424"
-        android:background="@drawable/shape_styel_textview_bg"
         android:text="casd"/>
+        <!--android:background="@drawable/shape_styel_textview_bg"-->
+
 
 
     <ImageView
