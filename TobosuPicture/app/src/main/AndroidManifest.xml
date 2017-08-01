@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tbs.tobosupicture">
 
+    <!-- 打电话权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <!-- 调取相机的权限 -->
     <!-- <uses-permission android:name="android.permission.CAMERA" /> -->
-
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
@@ -139,8 +140,13 @@
         <activity android:name=".activity.HisFriendsActivity" />
         <activity android:name=".activity.DynamicActivity" />
         <activity android:name=".activity.ReplyActivity" />
-        <activity android:name=".activity.PhotoDetail"></activity>
-        <activity android:name=".activity.DesignerImgListActivity"></activity>
+        <activity android:name=".activity.PhotoDetail" />
+        <activity android:name=".activity.DesignerImgListActivity" />
+        <activity android:name=".activity.ImgToFriendSeachActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.ShareWeixinActivity" />
+        <activity android:name=".activity.PersonInfoActivity" />
+        <activity android:name=".activity.MyDynamicActivity"></activity>
     </application>
 
 </manifest>

@@ -138,4 +138,12 @@
                 android:src="@mipmap/xiazai" />
         </RelativeLayout>
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/photo_detail_shoucang_big"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/adfa"
+        android:visibility="gone" />
 </RelativeLayout>

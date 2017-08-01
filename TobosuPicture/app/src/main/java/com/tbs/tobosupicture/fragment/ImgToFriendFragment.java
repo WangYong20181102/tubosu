@@ -1,6 +1,7 @@
 package com.tbs.tobosupicture.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.ImgToFriendSeachActivity;
 import com.tbs.tobosupicture.base.BaseFragment;
 
 import butterknife.BindView;
@@ -102,6 +104,8 @@ public class ImgToFriendFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.imgtofriend_sousuo:
                 //跳转到搜索页
+                Intent intent = new Intent(mContext, ImgToFriendSeachActivity.class);
+                mContext.startActivity(intent);
                 break;
             case R.id.imgtofriend_fabu:
                 //调用相机或者图册进行动态发布

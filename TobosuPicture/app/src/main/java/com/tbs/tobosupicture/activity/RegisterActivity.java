@@ -1,6 +1,7 @@
 package com.tbs.tobosupicture.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +16,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.base.BaseActivity;
+import com.tbs.tobosupicture.bean._User;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.Md5Utils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 
 import org.json.JSONException;
@@ -38,6 +43,7 @@ public class RegisterActivity extends BaseActivity {
     private Context mContext;
     private String TAG = "RegisterActivity";
     private int count = 60;//倒计时时间60s
+    private Gson mGson;
 
     @BindView(R.id.register_back)
     LinearLayout registerBack;//返回按钮
@@ -65,6 +71,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void initViewEvent() {
+        mGson = new Gson();
         registerPhoneNum.addTextChangedListener(textWatcher);
     }
 
@@ -126,16 +133,17 @@ public class RegisterActivity extends BaseActivity {
         if (!TextUtils.isEmpty(phoneNum) && phoneNum.matches(UrlConstans.PHONE_NUM)) {
             //手机号码当前合法 开始倒计时 获取验证码的按钮不可点击
             startCount();//开始倒计时
-            HttpGetCode();//获取验证码
+            HttpGetCode(phoneNum);//获取验证码
         } else {
             Toast.makeText(mContext, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
         }
     }
 
     //获取验证码
-    private void HttpGetCode() {
+    private void HttpGetCode(String phoneNum) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
+        param.put("cellphone", phoneNum);
         HttpUtils.doPost(UrlConstans.GET_PHONE_CODE_URL, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -149,8 +157,22 @@ public class RegisterActivity extends BaseActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.getString("status");
+                    final String msg = jsonObject.getString("msg");
                     if (status.equals("200")) {
                         //获取数据成功
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, "验证码已发送，请注意查收~", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else if (status.equals("203")) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -204,7 +226,7 @@ public class RegisterActivity extends BaseActivity {
         /**
          * 处理逻辑
          * 1.验证手机号码的合法性
-         * 2.验证服务器发来的验证码是否为空
+         * 2.验证服务器发来的验证码是否为空以及是否为6位
          * 3.验证密码的长度是否符合规定（6-16位）
          * 以上验证成功再走注册接口
          */
@@ -212,12 +234,15 @@ public class RegisterActivity extends BaseActivity {
                 && registerPhoneNum.getText().toString().matches(UrlConstans.PHONE_NUM)) {
             //验证 验证码的合法性
             if (!TextUtils.isEmpty(registerCode.getText().toString())
-                    && registerCode.getText().toString().length() == 4) {
+                    && registerCode.getText().toString().length() == 6) {
                 //验证密码的合法性
                 if (registerPassword.getText().toString().length() >= 6
                         && registerPassword.getText().toString().length() <= 16) {
                     //拿到数据进行注册
-                    HttpIntoRegister();
+                    String phoneNum = registerPhoneNum.getText().toString();
+                    String code = registerCode.getText().toString();
+                    String md5PassWord = Md5Utils.md5(registerPassword.getText().toString());
+                    HttpIntoRegister(phoneNum, code, md5PassWord);
                 } else {
                     Toast.makeText(mContext, "输入的密码长度在6-16位之间哦~", Toast.LENGTH_SHORT).show();
                 }
@@ -230,9 +255,15 @@ public class RegisterActivity extends BaseActivity {
     }
 
     //用户用手机号码注册
-    private void HttpIntoRegister() {
+    private void HttpIntoRegister(String phoneNum, String code, final String md5PassWord) {
         HashMap<String, Object> param = new HashMap<>();
+        Log.e(TAG, "请求参数==phoneNum==" + phoneNum + "==code==" + code + "==md5PassWord==" + md5PassWord);
         param.put("token", Utils.getDateToken());
+        param.put("cellphone", phoneNum);
+        param.put("verify_code", code);
+        param.put("password", md5PassWord);
+        param.put("system_type", "1");
+        param.put("platform_type", "3");
         HttpUtils.doPost(UrlConstans.PHONE_NUM_REGISTER_URL, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -247,9 +278,26 @@ public class RegisterActivity extends BaseActivity {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.getString("status");
                     if (status.equals("200")) {
-                        //用户注册成功返回用户的数据并且将用户的数据保存在sp中
+                        //注册成功 将信息保存 然后跳转到个人信息页
+                        String data = jsonObject.getString("data");
+                        _User user = mGson.fromJson(data, _User.class);
+                        SpUtils.saveUserUid(mContext, user.getUid());
+                        SpUtils.saveUserNick(mContext, user.getNick());
+                        SpUtils.saveUserIcon(mContext, user.getIcon());
+                        SpUtils.saveUserType(mContext, user.getUser_type());
+                        SpUtils.saveUserPersonalSignature(mContext, user.getPersonal_signature());
+                        Intent intent = new Intent(mContext, PersonInfoActivity.class);
+                        intent.putExtra("from", "RegisterActivity");
+                        mContext.startActivity(intent);
+                        finish();
                     } else {
                         //获取数据失败
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, "注册失败！", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

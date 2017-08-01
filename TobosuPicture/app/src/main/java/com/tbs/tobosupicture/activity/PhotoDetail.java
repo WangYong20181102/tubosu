@@ -17,6 +17,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,6 +37,7 @@ import com.tbs.tobosupicture.bean._PhotoDetail;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.fragment.PhotoDetailFragment;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 
 import org.json.JSONArray;
@@ -79,6 +82,8 @@ public class PhotoDetail extends BaseActivity {
     TextView photoDetailSend;
     @BindView(R.id.photo_detail_rl_gongneng)
     RelativeLayout photoDetailRlGongneng;
+    @BindView(R.id.photo_detail_shoucang_big)
+    ImageView photoDetailShoucangBig;
 
 
     private Context mContext;
@@ -161,18 +166,33 @@ public class PhotoDetail extends BaseActivity {
                 break;
             case R.id.photo_detail_revert:
                 //TODO 文本输入框 点击事件  判断用户是否登录
+                if (!Utils.userIsLogin(mContext)) {
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    mContext.startActivity(intent);
+                }
 
                 break;
             case R.id.photo_detail_ll_pinlun:
                 //评论填写
+                if (!Utils.userIsLogin(mContext)) {
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    mContext.startActivity(intent);
+                }
                 break;
             case R.id.photo_detail_send:
                 //发送评论
-                if (TextUtils.isEmpty(photoDetailRevert.getText().toString())) {
-                    Toast.makeText(mContext, "请输入评论内容", Toast.LENGTH_SHORT).show();
+                if (Utils.userIsLogin(mContext)) {
+                    //用户登录的情况下 才可以评论
+                    if (TextUtils.isEmpty(photoDetailRevert.getText().toString())) {
+                        Toast.makeText(mContext, "请输入评论内容", Toast.LENGTH_SHORT).show();
+                    } else {
+                        HttpSendPinglun(photoDetailRevert.getText().toString());
+                    }
                 } else {
-                    HttpSendPinglun(photoDetailRevert.getText().toString());
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    mContext.startActivity(intent);
                 }
+
                 break;
             case R.id.photo_detail_pinlun:
                 //点击滑出评论的popwindow
@@ -183,11 +203,11 @@ public class PhotoDetail extends BaseActivity {
                 HttpGetCommentList(mPage);
                 break;
             case R.id.photo_detail_shoucang:
-                //TODO 收藏该动态 要判断用户是否登录
-                if (false) {
-
-                } else {
+                if (Utils.userIsLogin(mContext)) {
                     HttpShoucan();
+                } else {
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    startActivity(intent);
                 }
                 break;
             case R.id.photo_detail_xiazai:
@@ -260,7 +280,7 @@ public class PhotoDetail extends BaseActivity {
     private void HttpSendPinglun(String content) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
-        param.put("uid", "23109");
+        param.put("uid", SpUtils.getUserUid(mContext));
         param.put("user_type", "2");
         param.put("dynamic_id", mDynamicId);
         param.put("commented_uid", mPhotoDetail.getUid());
@@ -367,7 +387,9 @@ public class PhotoDetail extends BaseActivity {
     private void HttpShoucan() {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
-        param.put("uid", "23109");
+        if(Utils.userIsLogin(mContext)){
+            param.put("uid",SpUtils.getUserUid(mContext));
+        }
         param.put("dynamic_id", mDynamicId);
         HttpUtils.doPost(UrlConstans.DYNAMIC_COLLECT, param, new Callback() {
             @Override
@@ -389,6 +411,7 @@ public class PhotoDetail extends BaseActivity {
                                 if (msg.equals("收藏成功")) {
                                     photoDetailShoucang.setImageResource(R.mipmap.shoucang2);
                                     Toast.makeText(mContext, "收藏成功！", Toast.LENGTH_SHORT).show();
+                                    getConcren(photoDetailShoucangBig);
                                 } else {
                                     photoDetailShoucang.setImageResource(R.mipmap.shoucang3);
                                     Toast.makeText(mContext, "取消收藏成功！", Toast.LENGTH_SHORT).show();
@@ -404,12 +427,14 @@ public class PhotoDetail extends BaseActivity {
     }
 
 
-    //TODO 获取图集的基本信息  缺少用户登录的情况下的收藏状态
+    //用户在登录的
     private void HttpGetImageDetail() {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("id", mDynamicId);
-        param.put("uid", "23109");
+        if (Utils.userIsLogin(mContext)) {
+            param.put("uid", SpUtils.getUserUid(mContext));
+        }
         HttpUtils.doPost(UrlConstans.VIEW_DYNAMIC_IMG, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -480,5 +505,30 @@ public class PhotoDetail extends BaseActivity {
         } else {
             Toast.makeText(mContext, "图片下载失败！", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    //显示收藏动画
+    private void getConcren(final View view) {
+        view.setVisibility(View.VISIBLE);
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.out_down_to_up);
+        animation.setFillAfter(true);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                view.clearAnimation();
+                view.setVisibility(View.GONE);
+            }
+        });
+        view.startAnimation(animation);
     }
 }

@@ -48,26 +48,71 @@ public class SpUtils {
         return context.getSharedPreferences("LocationInfo", 0).getString("Lon", "");
     }
 
+    /**
+     * 存储用户的信息  在退出登录时调用修改这些信息
+     */
+    //用户的昵称
+    public static void saveUserNick(Context context, String nick) {
+        context.getSharedPreferences("UserInfo", 0).edit().putString("nick", nick).commit();
+    }
 
+    public static String getUserNick(Context context) {
+        return context.getSharedPreferences("UserInfo", 0).getString("nick", "");
+    }
 
+    //用户的头像
+    public static void saveUserIcon(Context context, String icon) {
+        context.getSharedPreferences("UserInfo", 0).edit().putString("icon", icon).commit();
+    }
+
+    public static String getUserIcon(Context context) {
+        return context.getSharedPreferences("UserInfo", 0).getString("icon", "");
+    }
+
+    //用户的个性签名
+    public static void saveUserPersonalSignature(Context context, String personal_signature) {
+        context.getSharedPreferences("UserInfo", 0).edit().putString("personal_signature", personal_signature).commit();
+    }
+
+    public static String getUserPersonalSignature(Context context) {
+        return context.getSharedPreferences("personal_signature", 0).getString("personal_signature", "");
+    }
+
+    //用户的uid
+    public static void saveUserUid(Context context, String uid) {
+        context.getSharedPreferences("UserInfo", 0).edit().putString("uid", uid).commit();
+    }
+
+    public static String getUserUid(Context context) {
+        return context.getSharedPreferences("UserInfo", 0).getString("uid", "");
+    }
+
+    //用户的类型
+    public static void saveUserType(Context context, String user_type) {
+        context.getSharedPreferences("UserInfo", 0).edit().putString("user_type", user_type).commit();
+    }
+
+    public static String getUserType(Context context) {
+        return context.getSharedPreferences("UserInfo", 0).getString("user_type", "");
+    }
 
     private static final String XGTKK_PRE = "xgtkk_pre";
     private static final String house_style_json = "house_style_json";
     private static final String factory_style_json = "factory_style_json";
 
-    public static void setHouseStyleJson(Context context, String houseJson){
+    public static void setHouseStyleJson(Context context, String houseJson) {
         context.getSharedPreferences(XGTKK_PRE, 0).edit().putString(house_style_json, houseJson).commit();
     }
 
-    public static String getHouseStyleJson(Context context){
+    public static String getHouseStyleJson(Context context) {
         return context.getSharedPreferences(XGTKK_PRE, 0).getString(house_style_json, "");
     }
 
-    public static void setFactoryStyleJson(Context context, String factoryJson){
+    public static void setFactoryStyleJson(Context context, String factoryJson) {
         context.getSharedPreferences(XGTKK_PRE, 0).edit().putString(factory_style_json, factoryJson).commit();
     }
 
-    public static String getFactoryStyleJson(Context context){
+    public static String getFactoryStyleJson(Context context) {
         return context.getSharedPreferences(XGTKK_PRE, 0).getString(factory_style_json, "");
     }
 
@@ -75,49 +120,57 @@ public class SpUtils {
     private static final String XGTKK_STYLE_PRE = "xgtkk_style_pre";
 
     private static final String house_style_space_num = "house_style_space_num";
-    public static void setHouseSpaceNum(Context context, int spaceNum){
+
+    public static void setHouseSpaceNum(Context context, int spaceNum) {
         context.getSharedPreferences(XGTKK_STYLE_PRE, 0).edit().putInt(house_style_space_num, spaceNum).commit();
     }
-    public static int getHouseSpaceNum(Context context){
+
+    public static int getHouseSpaceNum(Context context) {
         return context.getSharedPreferences(XGTKK_STYLE_PRE, 0).getInt(house_style_space_num, -1);
     }
 
     private static final String house_style_style_num = "house_style_style_num";
-    public static void setHouseStyleNum(Context context, int styleNum){
+
+    public static void setHouseStyleNum(Context context, int styleNum) {
         context.getSharedPreferences(XGTKK_STYLE_PRE, 0).edit().putInt(house_style_style_num, styleNum).commit();
     }
-    public static int getHouseStyleNum(Context context){
+
+    public static int getHouseStyleNum(Context context) {
         return context.getSharedPreferences(XGTKK_STYLE_PRE, 0).getInt(house_style_style_num, -1);
     }
 
 
     private static final String house_style_part_num = "house_style_part_num";
-    public static void setHousePartNum(Context context, int partNum){
+
+    public static void setHousePartNum(Context context, int partNum) {
         context.getSharedPreferences(XGTKK_STYLE_PRE, 0).edit().putInt(house_style_part_num, partNum).commit();
     }
-    public static int getHousePartNum(Context context){
+
+    public static int getHousePartNum(Context context) {
         return context.getSharedPreferences(XGTKK_STYLE_PRE, 0).getInt(house_style_part_num, -1);
     }
 
 
     private static final String house_style_huxing_num = "house_style_huxing_num";
-    public static void setHouseHuxingNum(Context context, int huxingNum){
+
+    public static void setHouseHuxingNum(Context context, int huxingNum) {
         context.getSharedPreferences(XGTKK_STYLE_PRE, 0).edit().putInt(house_style_huxing_num, huxingNum).commit();
     }
-    public static int getHouseHuxingNum(Context context){
+
+    public static int getHouseHuxingNum(Context context) {
         return context.getSharedPreferences(XGTKK_STYLE_PRE, 0).getInt(house_style_huxing_num, -1);
     }
 
 
     private static final String house_style_color_num = "house_style_color_num";
-    public static void setHouseColorNum(Context context, int colorNum){
+
+    public static void setHouseColorNum(Context context, int colorNum) {
         context.getSharedPreferences(XGTKK_STYLE_PRE, 0).edit().putInt(house_style_color_num, colorNum).commit();
     }
-    public static int getHouseColorNum(Context context){
+
+    public static int getHouseColorNum(Context context) {
         return context.getSharedPreferences(XGTKK_STYLE_PRE, 0).getInt(house_style_color_num, -1);
     }
-
-
 
 
     private static final String XGTKK_SEARCH_CASE_STYLE_PRE = "xgtkk_search_case_style_pre";
@@ -126,32 +179,36 @@ public class SpUtils {
     private static final String price = "search_history_case_price";
     private static final String style = "search_history_case_style";
 
-    public static void setSearchCaseColorAreaNum(Context context, int areaNum){
+    public static void setSearchCaseColorAreaNum(Context context, int areaNum) {
         context.getSharedPreferences(XGTKK_SEARCH_CASE_STYLE_PRE, 0).edit().putInt(area, areaNum).commit();
     }
-    public static int getSearchCaseColorAreaNum(Context context){
+
+    public static int getSearchCaseColorAreaNum(Context context) {
         return context.getSharedPreferences(XGTKK_SEARCH_CASE_STYLE_PRE, 0).getInt(area, -1);
     }
 
 
-    public static void setSearchCaseColorLayoutNum(Context context, int layoutNum){
+    public static void setSearchCaseColorLayoutNum(Context context, int layoutNum) {
         context.getSharedPreferences(XGTKK_SEARCH_CASE_STYLE_PRE, 0).edit().putInt(layout, layoutNum).commit();
     }
-    public static int getSearchCaseColorLayoutNum(Context context){
+
+    public static int getSearchCaseColorLayoutNum(Context context) {
         return context.getSharedPreferences(XGTKK_SEARCH_CASE_STYLE_PRE, 0).getInt(layout, -1);
     }
 
-    public static void setSearchCaseColorPriceNum(Context context, int priceNum){
+    public static void setSearchCaseColorPriceNum(Context context, int priceNum) {
         context.getSharedPreferences(XGTKK_SEARCH_CASE_STYLE_PRE, 0).edit().putInt(price, priceNum).commit();
     }
-    public static int getSearchCaseColorPriceNum(Context context){
+
+    public static int getSearchCaseColorPriceNum(Context context) {
         return context.getSharedPreferences(XGTKK_SEARCH_CASE_STYLE_PRE, 0).getInt(price, -1);
     }
 
-    public static void setSearchCaseColorStyleNum(Context context, int styleNum){
+    public static void setSearchCaseColorStyleNum(Context context, int styleNum) {
         context.getSharedPreferences(XGTKK_SEARCH_CASE_STYLE_PRE, 0).edit().putInt(style, styleNum).commit();
     }
-    public static int getSearchCaseColorStyleNum(Context context){
+
+    public static int getSearchCaseColorStyleNum(Context context) {
         return context.getSharedPreferences(XGTKK_SEARCH_CASE_STYLE_PRE, 0).getInt(style, -1);
     }
 

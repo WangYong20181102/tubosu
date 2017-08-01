@@ -16,9 +16,12 @@ import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.PersonHomePageAdapter;
 import com.tbs.tobosupicture.base.BaseActivity;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.bean._PersonHomePage;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 
 import org.json.JSONArray;
@@ -71,6 +74,7 @@ public class PersonHomePageActivity extends BaseActivity {
         HttpGetHomepageMsg();
     }
 
+
     private void initViewEvent() {
         mIntent = getIntent();
         homepageUid = mIntent.getStringExtra("homepageUid");
@@ -93,13 +97,24 @@ public class PersonHomePageActivity extends BaseActivity {
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            mPage = 1;
-            if (dynamicList != null) {
-                dynamicList.clear();
-            }
-            HttpGetHomepageMsg();
+            initData();
         }
     };
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    //重置页面的数据
+    private void initData() {
+        mPage = 1;
+        if (dynamicList != null) {
+            dynamicList.clear();
+        }
+        HttpGetHomepageMsg();
+    }
+
     //触碰事件
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         @Override
@@ -144,7 +159,7 @@ public class PersonHomePageActivity extends BaseActivity {
         param.put("token", Utils.getDateToken());
         param.put("uid", homepageUid);//查看当前主页用户的uid
         //TODO 这里要做用户的登录判断 以及传递是否是真实的用户
-        param.put("login_uid", "23109");//登录的用户的id
+        param.put("login_uid", SpUtils.getUserUid(mContext));//登录的用户的id
         param.put("is_virtual_user", is_virtual_user);//是否是虚拟用户
         HttpUtils.doPost(UrlConstans.HOME_PAGE, param, new Callback() {
             @Override
@@ -170,9 +185,9 @@ public class PersonHomePageActivity extends BaseActivity {
                                     _PersonHomePage personHomePage = gson.fromJson(data, _PersonHomePage.class);
                                     dynamicList.addAll(personHomePage.getDynamic());
 //                                    if (personHomePageAdapter == null) {
-                                        personHomePageAdapter = new PersonHomePageAdapter(mContext, PersonHomePageActivity.this, personHomePage, dynamicList);
-                                        phpRecyclerview.setAdapter(personHomePageAdapter);
-                                        personHomePageAdapter.notifyDataSetChanged();
+                                    personHomePageAdapter = new PersonHomePageAdapter(mContext, PersonHomePageActivity.this, personHomePage, dynamicList);
+                                    phpRecyclerview.setAdapter(personHomePageAdapter);
+                                    personHomePageAdapter.notifyDataSetChanged();
 //                                    } else {
 //                                        personHomePageAdapter.notifyDataSetChanged();
 //                                    }
@@ -259,5 +274,15 @@ public class PersonHomePageActivity extends BaseActivity {
                 }
             }
         });
+    }
+    //EventBus事件处理
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case EC.EventCode.LOGIN_INITDATA:
+                initData();
+                break;
+        }
     }
 }

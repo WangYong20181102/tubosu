@@ -12,16 +12,21 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.MyFriendAdapter;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.bean._MyFriend;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.CustomWaitDialog;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -52,9 +57,9 @@ public class MyFriendFragment extends BaseFragment {
     private Context mContext;
     private String TAG = "MyFriendFragment";
     private int mPage = 1;//加载更多的页码数
+    private Gson mGson;
     private MyFriendAdapter myFriendAdapter;
     private ArrayList<_MyFriend> myFriendArrayList = new ArrayList<>();//正式布局用的集合
-    private ArrayList<_MyFriend> tempMyFriendArrayList = new ArrayList<>();//临时装箱集合
     private LinearLayoutManager mLinearLayoutManager;
     private CustomWaitDialog customWaitDialog;
     private boolean isLoading = false;//是否正在上拉加载更多数据 防止page一直在++
@@ -83,6 +88,7 @@ public class MyFriendFragment extends BaseFragment {
 
     //初始化相关事件
     private void initView() {
+        mGson = new Gson();
         //加载浮层
         customWaitDialog = new CustomWaitDialog(mContext);
         customWaitDialog.show();
@@ -104,6 +110,9 @@ public class MyFriendFragment extends BaseFragment {
         public void onRefresh() {
             //重置页码数 进行网络加载
             mPage = 1;
+            if (!myFriendArrayList.isEmpty()) {
+                myFriendArrayList.clear();
+            }
             HttpGetMyFriendList(mPage);
         }
     };
@@ -142,20 +151,29 @@ public class MyFriendFragment extends BaseFragment {
 
     private void loadMore() {
         mPage++;
+        if (myFriendAdapter != null) {
+            myFriendAdapter.changLoadState(1);
+        }
         HttpGetMyFriendList(mPage);
     }
 
     //网络加载数据
-    private void HttpGetMyFriendList(int mPage) {
+    private void HttpGetMyFriendList(final int mPage) {
         isLoading = true;//网络正在加载中
         customWaitDialog.dismiss();//TODO 图层消失 应该在加载完数据之后到时候修改
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
+        param.put("uid", SpUtils.getUserUid(mContext));
+        param.put("user_type", "2");
         param.put("page", mPage);
+        param.put("page_size", "10");
         HttpUtils.doPost(UrlConstans.GET_MY_FRIENDS, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败===" + e.toString());
+                if (myFriendAdapter != null) {
+                    myFriendAdapter.changLoadState(2);
+                }
             }
 
             @Override
@@ -167,6 +185,39 @@ public class MyFriendFragment extends BaseFragment {
                     String status = jsonObject.getString("status");
                     if (status.equals("200")) {
                         //TODO 请求数据成功将数据布局在列表上 在处理数据时将正在加载 isLoading的值变换
+                        JSONArray jsonArray = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            _MyFriend myFriend = mGson.fromJson(jsonArray.get(i).toString(), _MyFriend.class);
+                            myFriendArrayList.add(myFriend);
+                        }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                myfriendSwipRefresh.setRefreshing(false);
+                                if (myFriendAdapter == null) {
+                                    myFriendAdapter = new MyFriendAdapter(mContext, getActivity(), myFriendArrayList);
+                                    myfriendFragmentRecyclelist.setAdapter(myFriendAdapter);
+                                    myFriendAdapter.notifyDataSetChanged();
+                                } else {
+                                    myFriendAdapter.notifyDataSetChanged();
+                                }
+                                if (myFriendAdapter != null) {
+                                    myFriendAdapter.changLoadState(2);
+                                }
+                                isLoading = false;
+                            }
+                        });
+                    } else if (status.equals("201")) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, "暂无更多数据", Toast.LENGTH_SHORT).show();
+                                isLoading = false;
+                                if (myFriendAdapter != null) {
+                                    myFriendAdapter.changLoadState(2);
+                                }
+                            }
+                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

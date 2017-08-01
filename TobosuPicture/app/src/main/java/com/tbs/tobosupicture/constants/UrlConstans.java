@@ -46,9 +46,9 @@ public class UrlConstans {
      */
     public static final String UPLOAD_IMAGE = ZXKK_URL + "cloud/upload/upload_for_ke?";
     /**
-     * 获取我的图谜url
+     * 获取我的图谜
      */
-    public static final String GET_MY_FANS_URL = ZXKK_URL + "";
+    public static final String GET_MY_FANS_URL = ZXKK_URL + "rapp/MyOwner/my_fans";
 
 
     /**
@@ -91,7 +91,9 @@ public class UrlConstans {
      */
     public static final String CASE_SEARCH_URL = ZXKK_URL + "/rapp/case/case_search";
 
-    /**收藏套图的url*/
+    /**
+     * 收藏套图的url
+     */
     public static final String COLLECT_PIC_URL = ZXKK_URL + "/rapp/TemplateMap/collect";
 
     /**
@@ -114,11 +116,11 @@ public class UrlConstans {
     /**
      * 获取手机验证码
      */
-    public static final String GET_PHONE_CODE_URL = ZXKK_URL + "";
+    public static final String GET_PHONE_CODE_URL = ZXKK_URL + "rapp/public/sms_code";
     /**
      * 用户用手机号码注册
      */
-    public static final String PHONE_NUM_REGISTER_URL = ZXKK_URL + "";
+    public static final String PHONE_NUM_REGISTER_URL = ZXKK_URL + "rapp/public/register";
     /**
      * 用户设置新密码
      */
@@ -126,11 +128,11 @@ public class UrlConstans {
     /**
      * 用户获取我的图友列表
      */
-    public static final String GET_MY_FRIENDS = ZXKK_URL + "";
+    public static final String GET_MY_FRIENDS = ZXKK_URL + "rapp/MyOwner/my_friends";
     /**
      * 用户获取推荐图友列表
      */
-    public static final String GET_RECOMMEND_FRIENDS = ZXKK_URL + "";
+    public static final String GET_RECOMMEND_FRIENDS = ZXKK_URL + "rapp/MyOwner/recomment_friends";
     /**
      * 以图会友（最热）
      */
@@ -152,7 +154,9 @@ public class UrlConstans {
      */
     public static final String USER_PRAISE = ZXKK_URL + "rapp/public/praise";
 
-    /**图册url*/
+    /**
+     * 图册url
+     */
     public static final String PICTURE_LIST_URL = ZXKK_URL + "rapp/TemplateMap/template_atlas";
 
     /**
@@ -191,5 +195,17 @@ public class UrlConstans {
      * 收藏动态查看图集
      */
     public static final String DYNAMIC_COLLECT = ZXKK_URL + "rapp/dynamic/collect";
+    /**
+     * 登录公共功能
+     */
+    public static final String USER_LOGIN = ZXKK_URL + "rapp/public/login";
+    /**
+     * 用户个人信息用户个人信息
+     */
+    public static final String PERSONAL_INFO = ZXKK_URL + "rapp/MyOwner/personal_info";
+    /**
+     * 我的主页我的模块
+     */
+    public static final String MINE_HOME_PAGE = ZXKK_URL + "rapp/MyOwner/home_page";
 
 }

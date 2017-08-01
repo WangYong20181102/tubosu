@@ -23,6 +23,7 @@ import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.bean._DynamicDetail;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 
 import org.json.JSONArray;
@@ -252,7 +253,9 @@ public class DynamicDetailActivity extends BaseActivity {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("dynamic_id", dynamicId);
-        param.put("uid", "23109");
+        if (Utils.userIsLogin(mContext)) {
+            param.put("uid", SpUtils.getUserUid(mContext));
+        }
         HttpUtils.doPost(UrlConstans.DYNAMIC_DETAIL, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

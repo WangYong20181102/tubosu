@@ -259,24 +259,27 @@ public class Utils {
             }
         }
         return dir.delete();
-	}
-    public static void setLog(String tag, String log){
-        if(isPrintLog){
+    }
+
+    public static void setLog(String tag, String log) {
+        if (isPrintLog) {
             System.out.println("---当前页面是" + tag + "-->>>" + "--打印信息>>>" + log + "<<");
         }
 
     }
 
-    public static void setErrorLog(String tag, String log){
-        if(isPrintLog){
+    public static void setErrorLog(String tag, String log) {
+        if (isPrintLog) {
             Log.e("---当前页面是" + tag + "-->>>", "--打印信息>>>" + log + "<<");
         }
 
     }
-    public static void setToast(Context context, String msg){
+
+    public static void setToast(Context context, String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
+<<<<<<< HEAD
 
     public static void hideKeyBoard(Activity context) {
         if (context != null && context.getCurrentFocus() != null) {
@@ -311,4 +314,14 @@ public class Utils {
         }
         return resultString;
     }
+
+    //用户是否登录
+    public static boolean userIsLogin(Context context) {
+        if (!TextUtils.isEmpty(SpUtils.getUserUid(context))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

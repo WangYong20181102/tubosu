@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +20,15 @@ import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.DynamicDetailActivity;
 import com.tbs.tobosupicture.activity.HisFansActivity;
 import com.tbs.tobosupicture.activity.HisFriendsActivity;
+import com.tbs.tobosupicture.activity.LoginActivity;
+import com.tbs.tobosupicture.activity.MyFansActivity;
+import com.tbs.tobosupicture.activity.PersonHomePageActivity;
 import com.tbs.tobosupicture.activity.PhotoDetail;
 import com.tbs.tobosupicture.bean._PersonHomePage;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 
 import org.json.JSONException;
@@ -134,7 +139,13 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 @Override
                 public void onClick(View v) {
                     //TODO 请求接口加为图友或者取消关注(还差用户未登录以及用户点击进入的是自己的个人详情页的判断)
-                    HttpFollow(((PhpHeadHolder) holder).item_php_head_addfriend);
+                    if (Utils.userIsLogin(mContext)) {
+                        HttpFollow(((PhpHeadHolder) holder).item_php_head_addfriend);
+                    } else {
+                        Intent intent = new Intent(mContext, LoginActivity.class);
+                        mContext.startActivity(intent);
+                    }
+
                 }
             });
             //动态数
@@ -513,7 +524,7 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private void HttpFollow(final TextView guanzhuTv) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
-        param.put("uid", "23109");
+        param.put("uid", SpUtils.getUserUid(mContext));
         param.put("user_type", "2");//当前登录的用户的类型是否是虚拟用户
         param.put("followed_id", personHomePage.getUser_info().getId());
         param.put("followed_user_type", personHomePage.getUser_info().getIs_virtual_user());//被关注的用户是否是虚拟用户
