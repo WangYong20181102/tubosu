@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_white"
     tools:context="com.tbs.tobosupicture.activity.MyFansActivity">
     <!--我的图谜布局-->
     <LinearLayout
@@ -22,7 +23,7 @@
                 android:gravity="center"
                 android:text="我的图谜"
                 android:textColor="@color/text_white"
-                android:textSize="20sp" />
+                android:textSize="@dimen/text_size_32px" />
             <!--返回按钮-->
             <RelativeLayout
                 android:id="@+id/mf_back"
@@ -31,8 +32,8 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:src="@mipmap/back_white" />
             </RelativeLayout>
         </RelativeLayout>

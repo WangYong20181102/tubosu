@@ -2,10 +2,511 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_white"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="这是我的fragment" />
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/bolang"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp">
+                    <!--可以更换的背景图-->
+                    <ImageView
+                        android:id="@+id/fm_head_bg"
+                        android:layout_width="match_parent"
+                        android:layout_height="173dp"
+                        android:layout_alignParentTop="true"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/me_bg" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="173dp"
+                        android:background="@mipmap/bg_deip_black"
+                        android:clickable="false" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/hp_head_bg" />
+                    <!--装修公司显示的信息-->
+                    <LinearLayout
+                        android:id="@+id/fm_co_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="125dp"
+                            android:layout_height="64dp"
+                            android:background="@drawable/shape_co_icon_bg"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:id="@+id/fm_co_icon"
+                                android:layout_width="119dp"
+                                android:layout_height="58dp"
+                                android:scaleType="centerCrop"
+                                android:src="@mipmap/test" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/fm_co_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="深圳市千叶装饰有限公司"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_size_30px" />
+
+                        <TextView
+                            android:id="@+id/fm_co_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="广东省深圳市罗湖区"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/text_size_22px" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="120dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/fm_user_icon"
+                            android:layout_width="68dp"
+                            android:layout_height="68dp"
+                            android:src="@mipmap/weidenglu" />
+
+                        <TextView
+                            android:id="@+id/fm_user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/fm_user_icon"
+                            android:layout_marginTop="12dp"
+                            android:text="未登录"
+                            android:textColor="#2e3033"
+                            android:textSize="@dimen/text_size_30px" />
+
+                        <TextView
+                            android:id="@+id/fm_user_sign"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="未填写"
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/text_size_22px"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="35dp"
+                        android:layout_marginRight="35dp"
+                        android:layout_marginTop="12dp">
+                        <!--动态-->
+                        <LinearLayout
+                            android:id="@+id/fm_dongtai_ll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/fm_dongtai_num"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="#2e3033"
+                                android:textSize="@dimen/text_size_30px" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:text="动态"
+                                android:textColor="#a6a9ad"
+                                android:textSize="@dimen/text_size_28px" />
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="30dp"
+                                android:background="@color/bg_divide" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/fm_tumi_ll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/fm_tumi_num"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:text="0"
+                                android:textColor="#2e3033"
+                                android:textSize="@dimen/text_size_30px" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:text="图谜"
+                                android:textColor="#a6a9ad"
+                                android:textSize="@dimen/text_size_28px" />
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="30dp"
+                                android:background="@color/bg_divide" />
+                        </LinearLayout>
+                        <!--图友-->
+                        <LinearLayout
+                            android:id="@+id/fm_tuyou_ll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/fm_tuyou_num"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:text="0"
+                                android:textColor="#2e3033"
+                                android:textSize="@dimen/text_size_30px" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:text="图友"
+                                android:textColor="#a6a9ad"
+                                android:textSize="@dimen/text_size_28px" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="20dp"
+                                android:background="@color/bg_divide" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+            </RelativeLayout>
+            <!--分割线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/bg_gray" />
+            <!--搜索过的装修案例-->
+            <RelativeLayout
+                android:id="@+id/fm_sousuoguo_anli"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+
+                <ImageView
+                    android:id="@+id/mf_01"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/me01" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toEndOf="@+id/mf_01"
+                    android:layout_toRightOf="@+id/mf_01"
+                    android:text="搜索过的装修案例"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/text_size_28px" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/jiantou" />
+            </RelativeLayout>
+            <!--分割线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/bg_gray" />
+            <!--关注的设计师-->
+            <RelativeLayout
+                android:id="@+id/fm_guanzhu_shejishi"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+
+                <ImageView
+                    android:id="@+id/mf_02"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/me02" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/mf_02"
+                    android:text="关注的设计师"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/text_size_28px" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/jiantou" />
+            </RelativeLayout>
+            <!--细分割性-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="50dp"
+                android:background="@color/bg_gray" />
+            <!--收藏的效果图-->
+            <RelativeLayout
+                android:id="@+id/fm_shoucang_xiaoguotu"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+
+                <ImageView
+                    android:id="@+id/mf_03"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/me03" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/mf_03"
+                    android:text="收藏的效果图"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/text_size_28px" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/jiantou" />
+            </RelativeLayout>
+            <!--细分割性-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="50dp"
+                android:background="@color/bg_gray" />
+            <!--收藏的案例-->
+            <RelativeLayout
+                android:id="@+id/fm_shoucang_anli"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+
+                <ImageView
+                    android:id="@+id/mf_04"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/me04" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/mf_04"
+                    android:text="收藏的案例"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/text_size_28px" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/jiantou" />
+            </RelativeLayout>
+            <!--分割线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/bg_gray" />
+            <!--官方微信-->
+            <RelativeLayout
+                android:id="@+id/fm_guanfang_weixin"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+
+                <ImageView
+                    android:id="@+id/mf_05"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/me05" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/mf_05"
+                    android:text="官方微信"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/text_size_28px" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/jiantou" />
+            </RelativeLayout>
+            <!--细分割线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="50dp"
+                android:background="@color/bg_gray" />
+            <!--客服电话-->
+            <RelativeLayout
+                android:id="@+id/fm_kefu_dianhua"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+
+                <ImageView
+                    android:id="@+id/mf_06"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/me06" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/mf_06"
+                    android:text="客服电话"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/text_size_28px" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/jiantou" />
+            </RelativeLayout>
+            <!--细分割性-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="50dp"
+                android:background="@color/bg_gray" />
+            <!--客服电话-->
+            <RelativeLayout
+                android:id="@+id/fm_shezhi"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+
+                <ImageView
+                    android:id="@+id/mf_07"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/me07" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/mf_07"
+                    android:text="系统设置"
+                    android:textColor="#000000"
+                    android:textSize="@dimen/text_size_28px" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/jiantou" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/bg_gray" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

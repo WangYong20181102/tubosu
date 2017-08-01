@@ -17,12 +17,14 @@ import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.DynamicDetailActivity;
+import com.tbs.tobosupicture.activity.LoginActivity;
 import com.tbs.tobosupicture.activity.PersonHomePageActivity;
 import com.tbs.tobosupicture.activity.PhotoDetail;
 import com.tbs.tobosupicture.bean._ZuiRe;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 
 import org.json.JSONException;
@@ -144,11 +146,17 @@ public class ZuiReAdapter
             ((ZuiReDynamicHolder) holder).zuiReDynamicPraise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO 进行点赞 用户在已经登录的情况下调取点赞接口 缺少用户的ID号
-                    HttpPraise("23109", dynamicArrayList.get(position - 1).getId(),
-                            dynamicArrayList.get(position - 1).getUid(),
-                            ((ZuiReDynamicHolder) holder).zuiReImgZan,
-                            ((ZuiReDynamicHolder) holder).zuiReDynamicZanAdd, ((ZuiReDynamicHolder) holder).zuiReDynamicPraiseCount);
+                    if (Utils.userIsLogin(mContext)) {
+                        //用户已经登录
+                        HttpPraise(SpUtils.getUserUid(mContext), dynamicArrayList.get(position - 1).getId(),
+                                dynamicArrayList.get(position - 1).getUid(),
+                                ((ZuiReDynamicHolder) holder).zuiReImgZan,
+                                ((ZuiReDynamicHolder) holder).zuiReDynamicZanAdd, ((ZuiReDynamicHolder) holder).zuiReDynamicPraiseCount);
+
+                    } else {
+                        Intent intent = new Intent(mContext, LoginActivity.class);
+                        mContext.startActivity(intent);
+                    }
                 }
             });
             //回复数

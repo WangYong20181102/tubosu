@@ -12,15 +12,20 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.adapter.RecommendAdapter;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.bean._RecommendFriend;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.CustomWaitDialog;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,14 +54,14 @@ public class RecommendFragment extends BaseFragment {
 
     private Context mContext;
     private String TAG = "RecommendFragment";
+    private Gson mGson;
     private int mPage = 1;//加载更多的页码
     private LinearLayoutManager mLinearLayoutManager;
     private CustomWaitDialog customWaitDialog;
+    private RecommendAdapter recommendAdapter;
     private boolean isLoading = false;//是否正在上拉加载更多数据 防止page一直在++
     //布局显示列表
     private ArrayList<_RecommendFriend> recommendFriensArrayList = new ArrayList<>();
-    //装箱列表
-    private ArrayList<_RecommendFriend> tempRecommendFriensArrayList = new ArrayList<>();
 
     public RecommendFragment() {
 
@@ -74,6 +79,7 @@ public class RecommendFragment extends BaseFragment {
     }
 
     private void initView() {
+        mGson = new Gson();
         //正在加载的图层
         customWaitDialog = new CustomWaitDialog(mContext);
         customWaitDialog.show();
@@ -95,6 +101,9 @@ public class RecommendFragment extends BaseFragment {
         public void onRefresh() {
             //重置数据
             mPage = 1;
+            if (!recommendFriensArrayList.isEmpty()) {
+                recommendFriensArrayList.clear();
+            }
             HttpGetRecommendList(mPage);
         }
     };
@@ -140,12 +149,16 @@ public class RecommendFragment extends BaseFragment {
         customWaitDialog.dismiss();
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
+        param.put("token", Utils.getDateToken());
+        param.put("uid", SpUtils.getUserUid(mContext));
+        param.put("user_type", "2");
         param.put("page", mPage);
         param.put("pageSize", 10);
         HttpUtils.doPost(UrlConstans.GET_RECOMMEND_FRIENDS, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败==" + e.toString());
+                isLoading = false;
             }
 
             @Override
@@ -157,12 +170,41 @@ public class RecommendFragment extends BaseFragment {
                     String status = jsonObject.getString("status");
                     if (status.equals("200")) {
                         //数据请求成功 将正在加载的状态isLoading=false更新
-                    } else {
+                        JSONArray jsonArray = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            _RecommendFriend recommendFriend = mGson.fromJson(jsonArray.get(i).toString(), _RecommendFriend.class);
+                            recommendFriensArrayList.add(recommendFriend);
+                        }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                recommendSwipRefresh.setRefreshing(false);
+                                if (recommendAdapter == null) {
+                                    recommendAdapter = new RecommendAdapter(mContext, getActivity(), recommendFriensArrayList);
+                                    recommendRecyclelist.setAdapter(recommendAdapter);
+                                    recommendAdapter.notifyDataSetChanged();
+                                } else {
+                                    recommendAdapter.notifyDataSetChanged();
+                                }
+                                isLoading = false;
+                            }
+                        });
+
+                    } else if (status.equals("201")) {
                         //暂无更多数据
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                isLoading = false;
+                                Toast.makeText(mContext, "暂无更多数据", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    isLoading = false;
                 }
+
             }
         });
     }

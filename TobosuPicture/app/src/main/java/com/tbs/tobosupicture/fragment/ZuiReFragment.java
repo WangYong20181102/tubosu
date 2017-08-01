@@ -20,6 +20,7 @@ import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.bean._ZuiRe;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 
 import org.json.JSONException;
@@ -138,12 +139,8 @@ public class ZuiReFragment extends BaseFragment {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("page", mPage);
-        param.put("uid", "23109");
-        //TODO 判断用户的登录情况
-        if (true) {
-
-        } else {
-
+        if (Utils.userIsLogin(mContext)) {
+            param.put("uid", SpUtils.getUserUid(mContext));
         }
         param.put("page_size", "10");
         HttpUtils.doPost(UrlConstans.IMAGE_TO_FRIEND_ZUIRE, param, new Callback() {
@@ -172,11 +169,11 @@ public class ZuiReFragment extends BaseFragment {
                                     activeUserArrayList.addAll(zuiRe.getActive_user());
                                 }
                                 dynamicArrayList.addAll(zuiRe.getDynamic());
-                                if(mZuiReAdapter==null){
+                                if (mZuiReAdapter == null) {
                                     mZuiReAdapter = new ZuiReAdapter(mContext, getActivity(), activeUserArrayList, dynamicArrayList);
                                     zuireRecycle.setAdapter(mZuiReAdapter);
                                     mZuiReAdapter.notifyDataSetChanged();
-                                }else {
+                                } else {
                                     mZuiReAdapter.notifyDataSetChanged();
                                 }
 
