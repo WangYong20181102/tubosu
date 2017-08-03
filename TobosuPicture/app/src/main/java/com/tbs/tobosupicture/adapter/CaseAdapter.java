@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.CaseDetailActivity;
 import com.tbs.tobosupicture.activity.DesignerActivity;
 import com.tbs.tobosupicture.activity.GetPriceActivity;
 import com.tbs.tobosupicture.activity.SeeImageActivity;
@@ -153,14 +154,16 @@ public class CaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     context.startActivity(new Intent(context, GetPriceActivity.class));
                 }
             });
-//            caseViewHolder.iv_case_big_sample_pic.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent intent = new Intent(context, SeeImageActivity.class);
-//
-//                    context.startActivity(intent);
-//                }
-//            });
+            caseViewHolder.iv_case_big_sample_pic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, CaseDetailActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("id", dataList.get(position).getCaseid());
+                    intent.putExtra("case_bundle", b);
+                    context.startActivity(intent);
+                }
+            });
             caseViewHolder.itemView.setTag(dataList.get(position));
         }
     }

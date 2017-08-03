@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -450,7 +449,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
 
     @Override
     public void onAddressChangeId(String provinceId, String cityId, String districtId) {
-//        Toast.makeText(mContext, provinceId +" = " + cityId + " = "+districtId, Toast.LENGTH_SHORT).show();
+        Utils.setToast(mContext, provinceId +" = " + cityId + " = "+districtId);
         province_id = provinceId;
         city_id = cityId;
         district_id = districtId;
@@ -475,12 +474,13 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
             }else {
                 hashMap.put("city_id", city_id);
                 hashMap.put("district_id", district_id);
+                Utils.setErrorLog(TAG, "城市id:" + city_id + "     小区id:" + district_id);
             }
 
             hashMap.put("page", districtPage);
             hashMap.put("page_size", districtPageSize);
 
-            HttpUtils.doPost(UrlConstans.CASE_SEARCH_URL, hashMap, new Callback() {
+            HttpUtils.doPost(UrlConstans.DISTRICT_LIST_URL, hashMap, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     runOnUiThread(new Runnable() {

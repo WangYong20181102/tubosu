@@ -82,6 +82,11 @@ public class UrlConstans {
     public static final String CONCERN_URL = ZXKK_URL + "/rapp/public/follow_designer";
 
     /**
+     * 案例详情
+     */
+    public static final String CASE_DETAIL_URL = ZXKK_URL + "/rapp/case/case_detail";
+
+    /**
      * 搜索案例url
      */
     public static final String SEARCH_CASE_URL = ZXKK_URL + "rapp/case/case_list";

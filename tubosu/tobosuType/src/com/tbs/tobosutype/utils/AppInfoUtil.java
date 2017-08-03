@@ -18,6 +18,7 @@ import android.widget.EditText;
 import com.loopj.android.http.RequestParams;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.SystemStatusManager;
 
 import java.lang.reflect.Field;
@@ -175,6 +176,10 @@ public class AppInfoUtil {
         params.put("city", getCityName(context));
         params.put("lat", getLat(context));
         params.put("lng", getLng(context));
+
+//        params.put("lat", !"".equals(getLat(context))? getLat(context) : Constant.LAT);
+//        params.put("lng", !"".equals(getLng(context))? getLng(context) : Constant.LNG);
+
         return params;
     }
 

@@ -1,12 +1,13 @@
 package com.tbs.tobosupicture.bean;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
- * Created by Mr.Lin on 2017/7/20 16:16.
+ * 案例详情实体类
+ * Created by dev on 2017/7/20 16:16.
  */
 
-public class _TestBean {
+public class CaseDetailEntity {
 
 
     /**
@@ -17,9 +18,9 @@ public class _TestBean {
      */
 
     private CaseDataBean case_data;
-    private List<OnlineDiagramBean> online_diagram;
-    private List<StayRealBean> stay_real;
-    private List<SuiteBean> suite;
+    private ArrayList<OnlineDiagramBean> online_diagram;
+    private ArrayList<StayRealBean> stay_real;
+    private ArrayList<SuiteBean> suite;
 
     public CaseDataBean getCase_data() {
         return case_data;
@@ -29,27 +30,27 @@ public class _TestBean {
         this.case_data = case_data;
     }
 
-    public List<OnlineDiagramBean> getOnline_diagram() {
+    public ArrayList<OnlineDiagramBean> getOnline_diagram() {
         return online_diagram;
     }
 
-    public void setOnline_diagram(List<OnlineDiagramBean> online_diagram) {
+    public void setOnline_diagram(ArrayList<OnlineDiagramBean> online_diagram) {
         this.online_diagram = online_diagram;
     }
 
-    public List<StayRealBean> getStay_real() {
+    public ArrayList<StayRealBean> getStay_real() {
         return stay_real;
     }
 
-    public void setStay_real(List<StayRealBean> stay_real) {
+    public void setStay_real(ArrayList<StayRealBean> stay_real) {
         this.stay_real = stay_real;
     }
 
-    public List<SuiteBean> getSuite() {
+    public ArrayList<SuiteBean> getSuite() {
         return suite;
     }
 
-    public void setSuite(List<SuiteBean> suite) {
+    public void setSuite(ArrayList<SuiteBean> suite) {
         this.suite = suite;
     }
 
@@ -81,6 +82,7 @@ public class _TestBean {
         private String area;
         private String desmethod;
         private String designer_id;
+        private String cover_url;
         private String price;
         private String description;
         private String owner_name;
@@ -138,6 +140,14 @@ public class _TestBean {
 
         public void setDesmethod(String desmethod) {
             this.desmethod = desmethod;
+        }
+
+        public String getCover_url() {
+            return cover_url;
+        }
+
+        public void setCover_url(String cover_url) {
+            this.cover_url = cover_url;
         }
 
         public String getDesigner_id() {
@@ -242,7 +252,7 @@ public class _TestBean {
         private String stage;
         private String description;
         private int img_count;
-        private List<String> img_url;
+        private ArrayList<String> img_url;
 
         public String getId() {
             return id;
@@ -276,11 +286,11 @@ public class _TestBean {
             this.img_count = img_count;
         }
 
-        public List<String> getImg_url() {
+        public ArrayList<String> getImg_url() {
             return img_url;
         }
 
-        public void setImg_url(List<String> img_url) {
+        public void setImg_url(ArrayList<String> img_url) {
             this.img_url = img_url;
         }
     }
@@ -296,7 +306,7 @@ public class _TestBean {
         private String id;
         private String description;
         private int img_count;
-        private List<String> img_url;
+        private ArrayList<String> img_url;
 
         public String getId() {
             return id;
@@ -322,11 +332,11 @@ public class _TestBean {
             this.img_count = img_count;
         }
 
-        public List<String> getImg_url() {
+        public ArrayList<String> getImg_url() {
             return img_url;
         }
 
-        public void setImg_url(List<String> img_url) {
+        public void setImg_url(ArrayList<String> img_url) {
             this.img_url = img_url;
         }
     }

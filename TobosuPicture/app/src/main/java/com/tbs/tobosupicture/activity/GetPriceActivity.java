@@ -59,8 +59,6 @@ public class GetPriceActivity extends AppCompatActivity implements OnClickListen
     private String userid;
     private String budget;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

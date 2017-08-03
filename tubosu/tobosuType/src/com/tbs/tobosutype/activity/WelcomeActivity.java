@@ -332,19 +332,14 @@ public class WelcomeActivity extends Activity {
 
     private  void needPermissions(){
         if(Build.VERSION.SDK_INT >= 23){
-            String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+            String[] permissions = new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.READ_PHONE_STATE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_WIFI_STATE,
-
-                    Manifest.permission.ACCESS_NETWORK_STATE
-//                    Manifest.permission.READ_EXTERNAL_STORAGE,
-//                    Manifest.permission.ACCESS_COARSE_LOCATION,
-//                    Manifest.permission.ACCESS_WIFI_STATE
+                    Manifest.permission.ACCESS_NETWORK_STATE,
 
             };
 

@@ -279,7 +279,7 @@ public class Utils {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
-<<<<<<< HEAD
+
 
     public static void hideKeyBoard(Activity context) {
         if (context != null && context.getCurrentFocus() != null) {
