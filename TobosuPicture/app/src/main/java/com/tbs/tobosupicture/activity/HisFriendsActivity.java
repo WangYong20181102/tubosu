@@ -54,6 +54,8 @@ public class HisFriendsActivity extends BaseActivity {
     RecyclerView friendsRecyclelist;
     @BindView(R.id.friends_swip_refresh)
     SwipeRefreshLayout friendsSwipRefresh;
+    @BindView(R.id.friends_title)
+    TextView friendsTitle;
 
     private LinearLayoutManager mLinearLayoutManager;
     private Context mContext;
@@ -65,6 +67,7 @@ public class HisFriendsActivity extends BaseActivity {
     private HisFriendsAdapter hisFriendsAdapter;//适配器
     private Intent mIntent;
     private String uId;//被查看用户的id
+    private String title;//标题
     private String is_virtual_user;//是否是虚拟用户
     private Gson mGson;//json解析
 
@@ -86,6 +89,8 @@ public class HisFriendsActivity extends BaseActivity {
     private void initViewEvent() {
         mIntent = getIntent();
         uId = mIntent.getStringExtra("uid");
+        title = mIntent.getStringExtra("title");
+        friendsTitle.setText(title);
         is_virtual_user = mIntent.getStringExtra("user_type");
         mGson = new Gson();
         //加载的蒙层

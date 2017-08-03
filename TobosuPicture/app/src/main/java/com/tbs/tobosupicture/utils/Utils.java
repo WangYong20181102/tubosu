@@ -1,6 +1,7 @@
 package com.tbs.tobosupicture.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -16,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.tbs.tobosupicture.activity.LoginActivity;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -282,5 +285,11 @@ public class Utils {
         } else {
             return false;
         }
+    }
+
+    //用户去登录
+    public static void gotoLogin(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        context.startActivity(intent);
     }
 }

@@ -93,7 +93,9 @@ public class MainActivity extends BaseActivity {
         //设置依附在那个控件上
         mImgToFriendTag.setTargetView(mianShowNum3);
         //依附的位置
-        mImgToFriendTag.setBadgeGravity(Gravity.RIGHT | Gravity.TOP);
+        mImgToFriendTag.setBadgeGravity(Gravity.CENTER| Gravity.TOP);
+        //设置边距
+        mImgToFriendTag.setBadgeMargin(12,0,0,0);
         //显示数量
         mImgToFriendTag.setBadgeCount(5);
         mImgToFriendTag.setVisibility(View.VISIBLE);

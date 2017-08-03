@@ -13,12 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.LoginActivity;
 import com.tbs.tobosupicture.activity.PersonHomePageActivity;
 import com.tbs.tobosupicture.activity.ReplyActivity;
 import com.tbs.tobosupicture.bean._DynamicDetail;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 
 import org.json.JSONException;
@@ -76,11 +78,17 @@ public class ShowCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ((CommentViewHolder) holder).dynamic_detail_comment_ll_zan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    HttpCommentZan(commentArrayList.get(position).getId(),
-                            commentArrayList.get(position).getUid(),
-                            ((CommentViewHolder) holder).commentZan,
-                            ((CommentViewHolder) holder).dynamic_detail_comment_zan_add,
-                            ((CommentViewHolder) holder).commentZanNum);
+                    if (Utils.userIsLogin(mContext)) {
+                        HttpCommentZan(commentArrayList.get(position).getId(),
+                                commentArrayList.get(position).getUid(),
+                                ((CommentViewHolder) holder).commentZan,
+                                ((CommentViewHolder) holder).dynamic_detail_comment_zan_add,
+                                ((CommentViewHolder) holder).commentZanNum);
+                    } else {
+                        Intent intent = new Intent(mContext, LoginActivity.class);
+                        mContext.startActivity(intent);
+                    }
+
                 }
             });
             //昵称
@@ -143,7 +151,7 @@ public class ShowCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private void HttpCommentZan(String comment_id, String praised_uid, final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
-        param.put("uid", "23109");
+        param.put("uid", SpUtils.getUserUid(mContext));
         param.put("comment_id", comment_id);
         param.put("praised_uid", praised_uid);
         HttpUtils.doPost(UrlConstans.COMMENT_PRAISE, param, new Callback() {

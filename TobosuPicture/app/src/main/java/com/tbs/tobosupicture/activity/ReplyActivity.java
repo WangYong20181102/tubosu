@@ -23,6 +23,7 @@ import com.tbs.tobosupicture.adapter.ReplyAdapter;
 import com.tbs.tobosupicture.bean._Reply;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 
 import org.json.JSONArray;
@@ -168,7 +169,9 @@ public class ReplyActivity extends AppCompatActivity {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("comment_id", comment_id);
-        param.put("uid", "23109");
+        if (Utils.userIsLogin(mContext)) {
+            param.put("uid", SpUtils.getUserUid(mContext));
+        }
         param.put("page", mPage);
         param.put("page_size", "10");
         HttpUtils.doPost(UrlConstans.REPLY_DYNAMIC_COMMENT_LIST, param, new Callback() {
@@ -198,6 +201,7 @@ public class ReplyActivity extends AppCompatActivity {
 //                                if (mReplyAdapter == null) {
                                 mReplyAdapter = new ReplyAdapter(mContext, ReplyActivity.this, mReply, commentList, dynamic_id);
                                 replyRecyclerview.setAdapter(mReplyAdapter);
+                                replyNum.setText(mReply.getCommented().getComment_count() + "条回复");
                                 mReplyAdapter.notifyDataSetChanged();
                                 mReplyAdapter.changeAdapState(2);
 //                                } else {
@@ -244,7 +248,9 @@ public class ReplyActivity extends AppCompatActivity {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("comment_id", comment_id);
-        param.put("uid", "23109");
+        if (Utils.userIsLogin(mContext)) {
+            param.put("uid", SpUtils.getUserUid(mContext));
+        }
         param.put("page", mPage);
         param.put("page_size", "10");
         HttpUtils.doPost(UrlConstans.REPLY_DYNAMIC_COMMENT_LIST, param, new Callback() {
@@ -322,26 +328,31 @@ public class ReplyActivity extends AppCompatActivity {
                 break;
             case R.id.reply_revert:
                 //TODO 点击输入框要判断用户是否登录
-                if (false) {
-                    //TODO 用户没有登录 跳转登录页面
+                if (!Utils.userIsLogin(mContext)) {
+                    Utils.gotoLogin(mContext);
                 }
                 break;
             case R.id.reply_send:
                 //TODO 将写入的内容请求接口发送
-                if (!TextUtils.isEmpty(replyRevert.getText().toString())) {
-                    HttpReplyComment(replyRevert.getText().toString());
+                if (Utils.userIsLogin(mContext)) {
+                    if (!TextUtils.isEmpty(replyRevert.getText().toString())) {
+                        HttpReplyComment(replyRevert.getText().toString());
+                    } else {
+                        Toast.makeText(mContext, "请输入评论的内容", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(mContext, "请输入评论的内容", Toast.LENGTH_SHORT).show();
+                    Utils.gotoLogin(mContext);
                 }
+
                 break;
         }
     }
 
-    //TODO 回复评论接口 其中UID=23109
+    //回复评论接口
     private void HttpReplyComment(String content) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
-        param.put("uid", "23109");
+        param.put("uid", SpUtils.getUserUid(mContext));
         param.put("dynamic_id", dynamic_id);
         param.put("comment_id", comment_id);
         param.put("commented_uid", mReply.getCommented().getUid());

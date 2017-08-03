@@ -77,8 +77,6 @@ public class DynamicDetailActivity extends BaseActivity {
     private boolean isLoading = false;
     //列表适配器
     private DynamicDetailAdapter dynamicDetailAdapter;
-    //TODO 用户的id 到时候接入登录模块之后 从Sp中获取
-    private String uId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,15 +169,17 @@ public class DynamicDetailActivity extends BaseActivity {
                 break;
             case R.id.dynd_send:
                 //发送评论
-                sendComment();
+                if (Utils.userIsLogin(mContext)) {
+                    sendComment();
+                } else {
+                    Utils.gotoLogin(mContext);
+                }
                 break;
             case R.id.dynd_revert:
                 //点击了回复
-                if (TextUtils.isEmpty(uId)) {
+                if (!Utils.userIsLogin(mContext)) {
                     Log.e(TAG, "当前的用户id为空");
-                } else {
-                    Log.e(TAG, "当前用户可进行评论");
-
+                    Utils.gotoLogin(mContext);
                 }
                 break;
         }
@@ -199,7 +199,7 @@ public class DynamicDetailActivity extends BaseActivity {
     private void HttpSendComment(String comment) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
-        param.put("uid", "23109");
+        param.put("uid", SpUtils.getUserUid(mContext));
         param.put("user_type", "2");
         param.put("dynamic_id", dynamicId);
         param.put("commented_uid", commentedUid);
@@ -256,6 +256,7 @@ public class DynamicDetailActivity extends BaseActivity {
         if (Utils.userIsLogin(mContext)) {
             param.put("uid", SpUtils.getUserUid(mContext));
         }
+
         HttpUtils.doPost(UrlConstans.DYNAMIC_DETAIL, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

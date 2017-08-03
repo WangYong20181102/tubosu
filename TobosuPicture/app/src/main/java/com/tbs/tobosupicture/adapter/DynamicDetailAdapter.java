@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.LoginActivity;
 import com.tbs.tobosupicture.activity.PersonHomePageActivity;
 import com.tbs.tobosupicture.activity.PhotoDetail;
 import com.tbs.tobosupicture.activity.ReplyActivity;
@@ -33,6 +34,7 @@ import com.tbs.tobosupicture.bean._ZanUser;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 
 import org.json.JSONException;
@@ -310,8 +312,13 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             ((DynamicDetailHeadHolder) holder).dynamic_detail_ll_praise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    HttpZan(((DynamicDetailHeadHolder) holder).dynamic_detail_praise,
-                            ((DynamicDetailHeadHolder) holder).dynamic_dynamic_zan_add, ((DynamicDetailHeadHolder) holder).DynamicDetailPraiseCount);
+                    if (Utils.userIsLogin(mContext)) {
+                        HttpZan(((DynamicDetailHeadHolder) holder).dynamic_detail_praise,
+                                ((DynamicDetailHeadHolder) holder).dynamic_dynamic_zan_add, ((DynamicDetailHeadHolder) holder).DynamicDetailPraiseCount);
+                    } else {
+                        Intent intent = new Intent(mContext, LoginActivity.class);
+                        mContext.startActivity(intent);
+                    }
                 }
             });
 
@@ -384,13 +391,27 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             ((CommentViewHolder) holder).dynamic_detail_comment_ll_zan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    HttpCommentZan(commentArrayList.get(position - 1).getId(),
-                            commentArrayList.get(position - 1).getUid(),
-                            ((CommentViewHolder) holder).commentZan,
-                            ((CommentViewHolder) holder).dynamic_detail_comment_zan_add,
-                            ((CommentViewHolder) holder).commentZanNum);
+                    if (Utils.userIsLogin(mContext)) {
+                        HttpCommentZan(commentArrayList.get(position - 1).getId(),
+                                commentArrayList.get(position - 1).getUid(),
+                                ((CommentViewHolder) holder).commentZan,
+                                ((CommentViewHolder) holder).dynamic_detail_comment_zan_add,
+                                ((CommentViewHolder) holder).commentZanNum);
+                    } else {
+                        Intent intent = new Intent(mContext, LoginActivity.class);
+                        mContext.startActivity(intent);
+                    }
+
                 }
             });
+            //用户是否点过赞
+            if (commentArrayList.get(position - 1).getIs_praise().equals("1")) {
+                //点过赞
+                ((CommentViewHolder) holder).commentZan.setImageResource(R.mipmap.zan_after);
+            } else {
+                ((CommentViewHolder) holder).commentZan.setImageResource(R.mipmap.zan2);
+
+            }
             //昵称
             ((CommentViewHolder) holder).commentNick.setText("" + commentArrayList.get(position - 1).getNick());
             //时间
@@ -454,9 +475,9 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         private ImageView dynamic_detail_praise;//点赞的图标
 
         private LinearLayout dynamic_detail_ll_praise;//点赞
-        private LinearLayout dynamic_zan_ll_pop;//点赞pop
         private TextView dynamic_dynamic_zan_add;//点赞加一字符
 
+        private LinearLayout dynamic_zan_ll_pop;//点赞pop
         private ImageView dynamic_zan1;
         private ImageView dynamic_zan2;
         private ImageView dynamic_zan3;
@@ -486,10 +507,10 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             DynamicDetailPraiseCount = (TextView) itemView.findViewById(R.id.dynamic_detail_praise_count);
 
             dynamic_detail_ll_praise = (LinearLayout) itemView.findViewById(R.id.dynamic_detail_ll_praise);
-            dynamic_zan_ll_pop = (LinearLayout) itemView.findViewById(R.id.dynamic_zan_ll_pop);
             dynamic_detail_praise = (ImageView) itemView.findViewById(R.id.dynamic_detail_praise);
             dynamic_detail_comment = (ImageView) itemView.findViewById(R.id.dynamic_detail_comment);
 
+            dynamic_zan_ll_pop = (LinearLayout) itemView.findViewById(R.id.dynamic_zan_ll_pop);
             dynamic_zan1 = (ImageView) itemView.findViewById(R.id.dynamic_zan1);
             dynamic_zan2 = (ImageView) itemView.findViewById(R.id.dynamic_zan2);
             dynamic_zan3 = (ImageView) itemView.findViewById(R.id.dynamic_zan3);
@@ -548,7 +569,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
     private void HttpZan(final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
-        param.put("uid", "23109");
+        param.put("uid", SpUtils.getUserUid(mContext));
         param.put("dynamic_id", dynamicDetail.getDynamic().getId());
         param.put("praised_uid", dynamicDetail.getDynamic().getUid());
         HttpUtils.doPost(UrlConstans.USER_PRAISE, param, new Callback() {
@@ -592,7 +613,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
     private void HttpCommentZan(String comment_id, String praised_uid, final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
-        param.put("uid", "23109");
+        param.put("uid", SpUtils.getUserUid(mContext));
         param.put("comment_id", comment_id);
         param.put("praised_uid", praised_uid);
         HttpUtils.doPost(UrlConstans.COMMENT_PRAISE, param, new Callback() {

@@ -52,6 +52,9 @@ public class _PersonHomePage {
         private String icon;
         private String sex;
         private String personal_signature;
+        private String address;//地址
+        private String certification;//如果是装修公司 是否认证过
+        private String user_type;//用户的类型  1---业主  3---装修公司
         private String city_name;
         private String province_name;
         private String id;//当前个人主页的用户id
@@ -63,6 +66,30 @@ public class _PersonHomePage {
 
         public String getNick() {
             return nick;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getCertification() {
+            return certification;
+        }
+
+        public void setCertification(String certification) {
+            this.certification = certification;
+        }
+
+        public String getUser_type() {
+            return user_type;
+        }
+
+        public void setUser_type(String user_type) {
+            this.user_type = user_type;
         }
 
         public void setNick(String nick) {

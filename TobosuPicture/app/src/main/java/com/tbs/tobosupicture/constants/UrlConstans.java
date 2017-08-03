@@ -205,5 +205,16 @@ public class UrlConstans {
      * 我的主页我的模块
      */
     public static final String MINE_HOME_PAGE = ZXKK_URL + "rapp/MyOwner/home_page";
-
+    /**
+     * 搜索记录动态搜索页
+     */
+    public static final String GET_SEARCH_RECORD = ZXKK_URL + "rapp/social/get_search_record";
+    /**
+     * 搜索动态搜索页
+     */
+    public static final String SOCIAL_SEARCH = ZXKK_URL + "rapp/social/search";
+    /**
+     * 最新
+     */
+    public static final String SOCIAL_NEW_LIST = ZXKK_URL + "rapp/Social/new_list";
 }
