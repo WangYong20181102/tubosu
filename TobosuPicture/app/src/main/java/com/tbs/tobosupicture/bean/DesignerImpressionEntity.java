@@ -17,16 +17,16 @@ public class DesignerImpressionEntity {
      * layout_name : 大户型
      */
 
-    private String id;
-    private String img_url;
-    private String image_count;
-    private String class_id;
-    private String plan_price;
-    private String class_name;
-    private String collect_count;
-    private String style_name;
-    private String is_collect;
-    private String layout_name;
+    private String id;                               // 1  "id":"6040",
+    private String img_url;                          // 1  "img_url":"https://opic.tbscache.com/manage/case/2015/06-27/small/e70e2ebc-8ed4-f84a-d3d8-1dc721394cfe.jpg",
+    private String image_count;                      //   "title":"港式奢华风格新世界花园160平大户型装修案例图 ",
+    private String class_id;                         //   "designer_id":"187899",
+    private String plan_price;                       // 1  "image_count":"7",
+    private String class_name;                       // 1  "plan_price":"60",
+    private String collect_count;                    //   "click_count":"300",
+    private String style_name;                       //   "designer_icon":"http://opic.tbscache.com/users/sjs/logo/2015/06-27/cut_0648f67e-0c28-2072-d196-97608289b5c8.jpg",
+    private String is_collect;                       //   "city_name":"沈阳",
+    private String layout_name;                      //   "area_name":"120~180㎡"
 
     public String getId() {
         return id;

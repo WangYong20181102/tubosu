@@ -160,6 +160,21 @@ public class UrlConstans {
     public static final String USER_PRAISE = ZXKK_URL + "rapp/public/praise";
 
     /**
+     * 1 案例，  0 样板
+     * @param type
+     * @return
+     */
+    public static String getListUrl(int type){
+        if(type == 0){
+            // 设计师效果图列表
+            return ZXKK_URL + "rapp/designer/impression_list";
+        }else {
+            // 设计师案例列表
+            return ZXKK_URL + "rapp/designer/case_list";
+        }
+    }
+
+    /**
      * 图册url
      */
     public static final String PICTURE_LIST_URL = ZXKK_URL + "rapp/TemplateMap/template_atlas";

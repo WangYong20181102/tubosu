@@ -289,8 +289,9 @@ public class DesignerActivity extends BaseActivity {
                 caseB.putString("iconUrl", iconUrl);
                 caseB.putString("viewNum", viewNum);
                 caseB.putString("fanNum", fanNum);
+                caseB.putString("desid", designerId);
                 caseB.putString("designerName", designerName);
-                caseB.putInt("type", 1); // 传0表示样板图
+                caseB.putInt("type", 1); // 传1表示案例图
                 caseIntent.putExtra("designerBundle", caseB);
                 startActivity(caseIntent);
                 break;
@@ -300,6 +301,7 @@ public class DesignerActivity extends BaseActivity {
                 b.putString("iconUrl", iconUrl);
                 b.putString("viewNum", viewNum);
                 b.putString("fanNum", fanNum);
+                b.putString("desid", designerId);
                 b.putString("designerName", designerName);
                 b.putInt("type", 0); // 传0表示样板图
                 intent.putExtra("designerBundle", b);

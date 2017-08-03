@@ -16,16 +16,16 @@ public class DesignerCaseEntity {
      * price : 大户型
      */
 
-    private String caseid;
-    private String img_url;
-    private String shi;
-    private String ting;
-    private String wei;
-    private String area;
-    private String is_collect;
-    private String collect_count;
-    private String desmethod;
-    private String price;
+    private String caseid;                              //   "id":"6040",
+    private String img_url;                             //   "img_url":"https://opic.tbsc
+    private String shi;                                 //   "title":"港式奢华风格新世界花园160平大户型装
+    private String ting;                                //   "designer_id":"187899",
+    private String wei;                                 //   "image_count":"7",
+    private String area;                                //   "plan_price":"60",
+    private String is_collect;                          //   "click_count":"300",
+    private String collect_count;                       //   "designer_icon":"http://opic
+    private String desmethod;                           //   "city_name":"沈阳",
+    private String price;                               //   "area_name":"120~180㎡"
 
     public String getCaseid() {
         return caseid;
