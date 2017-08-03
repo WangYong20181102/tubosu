@@ -12,7 +12,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.ConditionActivity;
 import com.tbs.tobosupicture.adapter.CaseAdapter;
@@ -21,11 +20,9 @@ import com.tbs.tobosupicture.bean.CaseJsonEntity;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.Utils;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -68,6 +65,7 @@ public class DecorationCaseFragment extends BaseFragment {
     private String param_price;
     private String param_style;
     private String param_city_id = "";
+    private String param_district_id = "";
 
     private boolean isFromCondictionActivity = false;
 
@@ -171,23 +169,25 @@ public class DecorationCaseFragment extends BaseFragment {
                     param_price = bundle.getString("param_price");
                     param_style = bundle.getString("param_style");
                     param_city_id = bundle.getString("param_city_id");
+                    param_district_id = bundle.getString("param_district_id");//小区id
                     tvSearchTipText.setText(bundle.getString("condition_text"));
                 }
 
                 caseList.clear();
                 Utils.setErrorLog(TAG, param_area + "   "+ param_layout + "  "  + param_price + "  " +param_style + " " + param_city_id);
                 page = 1;
-                getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style, param_city_id));
+                getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style, param_city_id, param_district_id));
                 break;
         }
     }
 
-    private HashMap<String, Object> getPareaHashMap(String area, String layout, String price, String style, String cityId){
+    private HashMap<String, Object> getPareaHashMap(String area, String layout, String price, String style, String cityId, String districtId){
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
         hashMap.put("token", Utils.getDateToken());
         hashMap.put("page", page);
         hashMap.put("pageSize", pageSize);
         hashMap.put("area", area);
+        hashMap.put("district_id", districtId);
         hashMap.put("layout", layout);
         hashMap.put("city_id", cityId);
         hashMap.put("price", price);
@@ -266,7 +266,7 @@ public class DecorationCaseFragment extends BaseFragment {
                 caseAdapter.hideLoadMoreMessage();
             }
             if(isFromCondictionActivity){
-                getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style,param_city_id));
+                getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style,param_city_id,param_district_id));
             }else{
                 getDataFromNet(getCommonHashMap());
             }
@@ -281,7 +281,7 @@ public class DecorationCaseFragment extends BaseFragment {
 
         caseSwipRefreshLayout.setRefreshing(false);
         if(isFromCondictionActivity){
-            getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style,param_city_id));
+            getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style,param_city_id,param_district_id));
         }else{
             getDataFromNet(getCommonHashMap());
         }

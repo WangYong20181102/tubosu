@@ -1,5 +1,6 @@
 package com.tbs.tobosutype.activity;
 
+import android.Manifest;
 import android.app.ActionBar.LayoutParams;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -1395,6 +1397,29 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
             if (intent.getAction().equals(Constant.ACTION_HOME_SELECT_CITY)) {
                 tv_city.setText(intent.getBundleExtra("f_select_city_bundle").getString("city_selected"));
             }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        needPermissions();
+    }
+
+    // 动态获取权限
+    private  void needPermissions(){
+        if(Build.VERSION.SDK_INT >= 23){
+            String[] permissions = new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_WIFI_STATE,
+                    Manifest.permission.ACCESS_NETWORK_STATE,
+            };
+
+            requestPermissions(permissions, 101);
         }
     }
 

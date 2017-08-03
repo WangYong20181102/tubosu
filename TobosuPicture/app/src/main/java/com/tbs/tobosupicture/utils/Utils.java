@@ -1,5 +1,6 @@
 package com.tbs.tobosupicture.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -11,9 +12,11 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 import com.tbs.tobosupicture.activity.LoginActivity;
 
 import java.io.File;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -276,6 +280,42 @@ public class Utils {
 
     public static void setToast(Context context, String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+    }
+
+
+
+    public static void hideKeyBoard(Activity context) {
+        if (context != null && context.getCurrentFocus() != null) {
+            ((InputMethodManager) context
+                    .getSystemService(Context.INPUT_METHOD_SERVICE))
+                    .hideSoftInputFromWindow(context.getCurrentFocus()
+                                    .getWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    public static int getScreenWidth(Context context) {
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        return dm.widthPixels;
+    }
+
+    public static int getScreenHeight(Context context) {
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        return dm.heightPixels;
+    }
+
+    public static String readAssert(Context context,  String fileName){
+        String jsonString="";
+        String resultString="";
+        try {
+            InputStream inputStream=context.getResources().getAssets().open(fileName);
+            byte[] buffer=new byte[inputStream.available()];
+            inputStream.read(buffer);
+            resultString=new String(buffer,"utf-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return resultString;
     }
 
     //用户是否登录

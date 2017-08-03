@@ -157,6 +157,8 @@ public class Constant {
     public static final String PUB_ORDERS = TOBOSU_URL + "tapi/order/pub_order";
     //                              http://www.tobosu.com/tapi/order/pub_order
 
+    public static final String LNG = "114";
+    public static final String LAT = "22";
 
     /**
      * app_type 1是土拨鼠

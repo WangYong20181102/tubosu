@@ -35,4 +35,8 @@
     <color name="bg_banner_black">#202124</color>
     <!--顶部banner背景颜色黑色-->
     <color name="color_black">#202124</color>
+
+    <color name="c3">#dedede</color>
+    <color name="c7">#383838</color>
+    <color name="c9">#cc3333</color>
 </resources>

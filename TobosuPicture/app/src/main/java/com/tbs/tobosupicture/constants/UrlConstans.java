@@ -74,10 +74,17 @@ public class UrlConstans {
 
     public static final String UID = "23109";
 
+    public static final String DISTRICT_LIST_URL =  ZXKK_URL + "rapp/village/village_list";
+
     /**
      * 关注 / 取消关注 设计师url
      */
     public static final String CONCERN_URL = ZXKK_URL + "/rapp/public/follow_designer";
+
+    /**
+     * 案例详情
+     */
+    public static final String CASE_DETAIL_URL = ZXKK_URL + "/rapp/case/case_detail";
 
     /**
      * 搜索案例url

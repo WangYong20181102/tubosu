@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.base.BaseActivity;
@@ -37,6 +38,7 @@ import com.tbs.tobosupicture.view.TouchImageView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -291,9 +293,7 @@ public class SeeImageActivity extends BaseActivity {
                 }
                 break;
             case R.id.ivDownImg:
-                String fileName = "";
-                String fileDir = "";
-                HttpUtils.downFile(imgEntityList.get(currentPosition).getImg_url(), fileDir, fileName);
+                httpDownLoadImg(imgEntityList.get(currentPosition).getImg_url());
                 break;
 
             case R.id.ivShowAndHide:
@@ -309,6 +309,21 @@ public class SeeImageActivity extends BaseActivity {
         }
     }
 
+    //TODO 下载图片
+    private void httpDownLoadImg(String downloadUrl) {
+        //创建文件夹
+        File dirFile = new File(UrlConstans.IMG_PATH);
+        if (!dirFile.exists()) {
+            dirFile.mkdir();
+        }
+        String fileName = System.currentTimeMillis() + ".jpg";
+        HttpUtils.downFile(downloadUrl, dirFile.getPath(), fileName);
+        if (Utils.isNetAvailable(mContext)) {
+            Toast.makeText(mContext, "图片下载成功!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(mContext, "图片下载失败！", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private void goingUp(View view, View view1){
         PropertyValuesHolder valuesHolderX = PropertyValuesHolder.ofFloat("translationX", 0.0f, 0.0f);
