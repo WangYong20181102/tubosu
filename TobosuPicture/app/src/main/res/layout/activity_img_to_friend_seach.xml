@@ -1,9 +1,474 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_white"
     android:orientation="vertical"
     tools:context="com.tbs.tobosupicture.activity.ImgToFriendSeachActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/banner_height"
+        android:background="@color/bg_banner_black"
+        android:gravity="center|left">
+
+        <LinearLayout
+            android:layout_width="290dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="0dp"
+            android:background="@drawable/shape_sousuo_edit"
+            android:gravity="center|right"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="10dp"
+                android:src="@mipmap/sousuo" />
+
+            <EditText
+                android:id="@+id/img_to_friend_search_input"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:hint="搜你想搜..."
+                android:textColor="@color/text_gray"
+                android:textColorHint="@color/text_gray"
+                android:textSize="@dimen/text_size_24px" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/img_to_friend_search_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/banner_height"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/img_to_friend_search_btn_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="取消"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_28px" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/img_to_friend_search_none_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/none_dynamic" />
+    </LinearLayout>
+
+    <!--大家都在搜的项-->
+    <LinearLayout
+        android:id="@+id/img_to_friend_id_search_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/bg_gray"
+            android:gravity="center|left"
+            android:text="   大家都在搜"
+            android:textColor="@color/text_gray"
+            android:textSize="@dimen/text_size_28px" />
+        <!--第一行-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!--第一行第一个-->
+            <RelativeLayout
+                android:id="@+id/itf_search_rl1"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/itf_search_tv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="厨房怎样设计空间更大"
+                    android:textColor="#3d424c"
+                    android:textSize="@dimen/text_size_28px" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/bg_divide" />
+
+                <View
+                    android:layout_width="170dp"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/bg_divide" />
+            </RelativeLayout>
+            <!--第一行第二个-->
+            <RelativeLayout
+                android:id="@+id/itf_search_rl2"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/itf_search_tv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="厨房怎样设计空间更大"
+                    android:textColor="#3d424c"
+                    android:textSize="@dimen/text_size_28px" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/bg_divide" />
+
+                <View
+                    android:layout_width="170dp"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:background="@color/bg_divide" />
+            </RelativeLayout>
+        </LinearLayout>
+        <!--第二行-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!--第二行第一个-->
+            <RelativeLayout
+                android:id="@+id/itf_search_rl3"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/itf_search_tv3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="厨房怎样设计空间更大"
+                    android:textColor="#3d424c"
+                    android:textSize="@dimen/text_size_28px" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/bg_divide" />
+
+                <View
+                    android:layout_width="170dp"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/bg_divide" />
+            </RelativeLayout>
+            <!--第二行第二个-->
+            <RelativeLayout
+                android:id="@+id/itf_search_rl4"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/itf_search_tv4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="厨房怎样设计空间更大"
+                    android:textColor="#3d424c"
+                    android:textSize="@dimen/text_size_28px" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/bg_divide" />
+
+                <View
+                    android:layout_width="170dp"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:background="@color/bg_divide" />
+            </RelativeLayout>
+        </LinearLayout>
+        <!--第三行-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!--第三行第一个-->
+            <RelativeLayout
+                android:id="@+id/itf_search_rl5"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/itf_search_tv5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="厨房怎样设计空间更大"
+                    android:textColor="#3d424c"
+                    android:textSize="@dimen/text_size_28px" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/bg_divide" />
+
+                <View
+                    android:layout_width="170dp"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/bg_divide" />
+            </RelativeLayout>
+            <!--第三行第二个-->
+            <RelativeLayout
+                android:id="@+id/itf_search_rl6"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/itf_search_tv6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="厨房怎样设计空间更大"
+                    android:textColor="#3d424c"
+                    android:textSize="@dimen/text_size_28px" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/bg_divide" />
+
+                <View
+                    android:layout_width="170dp"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:background="@color/bg_divide" />
+            </RelativeLayout>
+        </LinearLayout>
+        <!--第四行-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!--第四行第一个-->
+            <RelativeLayout
+                android:id="@+id/itf_search_rl7"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/itf_search_tv7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="厨房怎样设计空间更大"
+                    android:textColor="#3d424c"
+                    android:textSize="@dimen/text_size_28px" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/bg_divide" />
+
+                <View
+                    android:layout_width="170dp"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/bg_divide" />
+            </RelativeLayout>
+            <!--第四行第二个-->
+            <RelativeLayout
+                android:id="@+id/itf_search_rl8"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/itf_search_tv8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="厨房怎样设计空间更大"
+                    android:textColor="#3d424c"
+                    android:textSize="@dimen/text_size_28px" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/bg_divide" />
+
+                <View
+                    android:layout_width="170dp"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:background="@color/bg_divide" />
+            </RelativeLayout>
+        </LinearLayout>
+        <!--第五行-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!--第五行第一个-->
+            <RelativeLayout
+                android:id="@+id/itf_search_rl9"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/itf_search_tv9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="厨房怎样设计空间更大"
+                    android:textColor="#3d424c"
+                    android:textSize="@dimen/text_size_28px" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/bg_divide" />
+
+                <View
+                    android:layout_width="170dp"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/bg_divide" />
+            </RelativeLayout>
+            <!--第六行第二个-->
+            <RelativeLayout
+                android:id="@+id/itf_search_rl10"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/itf_search_tv10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:ellipsize="end"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="厨房怎样设计空间更大"
+                    android:textColor="#3d424c"
+                    android:textSize="@dimen/text_size_28px" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/bg_divide" />
+
+                <View
+                    android:layout_width="170dp"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:background="@color/bg_divide" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <!--显示搜索结果的项-->
+    <LinearLayout
+        android:id="@+id/mg_to_friend_show_search_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <!--搜索结果列表-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/img_to_friend_show_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
 </LinearLayout>

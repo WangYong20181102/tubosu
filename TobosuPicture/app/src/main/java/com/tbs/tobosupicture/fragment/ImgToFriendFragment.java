@@ -56,6 +56,7 @@ public class ImgToFriendFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_img_tofriend, null);
         unbinder = ButterKnife.bind(this, view);
+        mContext = getActivity();
         initFragment();
         return view;
     }

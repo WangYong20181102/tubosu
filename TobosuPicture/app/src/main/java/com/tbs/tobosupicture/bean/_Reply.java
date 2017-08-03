@@ -66,6 +66,17 @@ public class _Reply {
         private String icon;
         private String is_praise;
 
+        public String getComment_count() {
+            return comment_count;
+        }
+
+        public void setComment_count(String comment_count) {
+            this.comment_count = comment_count;
+        }
+
+        private String comment_count;
+
+
         public String getId() {
             return id;
         }

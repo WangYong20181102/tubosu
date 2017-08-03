@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.LoginActivity;
 import com.tbs.tobosupicture.activity.PersonHomePageActivity;
 import com.tbs.tobosupicture.bean._RecommendFriend;
 import com.tbs.tobosupicture.constants.UrlConstans;
@@ -140,7 +141,12 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     @Override
                     public void onClick(View v) {
                         //进行加为图友请求
-                        HttpAddFrend(myRecommendFriendsList.get(position).getUid(), myRecommendFriendsList.get(position).getUser_type(), ((MyRecommnedFriendViewHolder) holder).myRecommendFriendAdd, position);
+                        if (Utils.userIsLogin(mContext)) {
+                            HttpAddFrend(myRecommendFriendsList.get(position).getUid(), myRecommendFriendsList.get(position).getUser_type(), ((MyRecommnedFriendViewHolder) holder).myRecommendFriendAdd, position);
+                        } else {
+                            Intent intent = new Intent(mContext, LoginActivity.class);
+                            mContext.startActivity(intent);
+                        }
                     }
                 });
             }

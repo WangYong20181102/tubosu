@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.LoginActivity;
 import com.tbs.tobosupicture.activity.PersonHomePageActivity;
 import com.tbs.tobosupicture.activity.ReplyActivity;
 import com.tbs.tobosupicture.bean._Reply;
@@ -29,6 +30,7 @@ import com.tbs.tobosupicture.bean._ZanUser;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 
 import org.json.JSONException;
@@ -143,17 +145,22 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 ((HeadViewHolder) holder).reply_head_praise.setImageResource(R.mipmap.zan_after);
             } else {
                 ((HeadViewHolder) holder).reply_head_praise.setImageResource(R.mipmap.zan2);
-
             }
             //用户点赞接口
             ((HeadViewHolder) holder).reply_head_ll_praise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //调用点赞接口
-                    HttpCommnetZan(mReply.getCommented().getId(), mReply.getCommented().getUid()
-                            , ((HeadViewHolder) holder).reply_head_praise,
-                            ((HeadViewHolder) holder).reply_head_reply_head_zan_add,
-                            ((HeadViewHolder) holder).reply_head_praise_count);
+                    if (Utils.userIsLogin(mContext)) {
+                        //调用点赞接口
+                        HttpCommnetZan(mReply.getCommented().getId(), mReply.getCommented().getUid()
+                                , ((HeadViewHolder) holder).reply_head_praise,
+                                ((HeadViewHolder) holder).reply_head_reply_head_zan_add,
+                                ((HeadViewHolder) holder).reply_head_praise_count);
+                    } else {
+                        Intent intent = new Intent(mContext, LoginActivity.class);
+                        mContext.startActivity(intent);
+                    }
+
                 }
             });
             //显示总点赞数  按需求当点赞人数为0时隐藏
@@ -280,10 +287,16 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ((ItemViewHolder) holder).item_reply_item_comment_ll_zan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    HttpCommnetZan(commentList.get(position - 1).getId(), commentList.get(position - 1).getUid(),
-                            ((ItemViewHolder) holder).item_reply_item_comment_zan,
-                            ((ItemViewHolder) holder).item_reply_item_comment_zan_add,
-                            ((ItemViewHolder) holder).item_reply_item_comment_zannum);
+                    if (Utils.userIsLogin(mContext)) {
+                        HttpCommnetZan(commentList.get(position - 1).getId(), commentList.get(position - 1).getUid(),
+                                ((ItemViewHolder) holder).item_reply_item_comment_zan,
+                                ((ItemViewHolder) holder).item_reply_item_comment_zan_add,
+                                ((ItemViewHolder) holder).item_reply_item_comment_zannum);
+                    } else {
+                        Intent intent = new Intent(mContext, LoginActivity.class);
+                        mContext.startActivity(intent);
+                    }
+
                 }
             });
             //该条回复的点赞数量
@@ -411,7 +424,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    //TODO 用户点赞 当前用户的Uid固定  23109
+    //TODO 用户点赞
 
     /**
      * @param comment_id  内容id
@@ -423,7 +436,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private void HttpCommnetZan(String comment_id, String praised_uid, final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
-        param.put("uid", "23109");
+        param.put("uid", SpUtils.getUserUid(mContext));
         param.put("comment_id", comment_id);
         param.put("praised_uid", praised_uid);
         HttpUtils.doPost(UrlConstans.COMMENT_PRAISE, param, new Callback() {
@@ -536,7 +549,6 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         param.put("dynamic_id", mReply.getCommented().getId());
         param.put("page", mPage);
         param.put("page_size", "10");
-        Log.e(TAG, "请求参数==page==" + mPage);
         HttpUtils.doPost(UrlConstans.DYNAMIC_PRAISE_LIST, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

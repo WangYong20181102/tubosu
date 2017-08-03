@@ -383,7 +383,7 @@ public class PhotoDetail extends BaseActivity {
         });
     }
 
-    //TODO 用户收藏该图集 要进行登录判断
+    //用户收藏该图集 要进行登录判断
     private void HttpShoucan() {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());

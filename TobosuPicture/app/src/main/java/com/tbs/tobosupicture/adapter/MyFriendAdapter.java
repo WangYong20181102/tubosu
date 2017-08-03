@@ -129,18 +129,6 @@ public class MyFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((MyFriendsViewHolder) holder).myfriendAdd.setClickable(false);
             } else {
                 ((MyFriendsViewHolder) holder).myfriendAdd.setVisibility(View.GONE);
-                //加为图友
-//                ((MyFriendsViewHolder) holder).myfriendAdd.setText("+ 加为图友");
-//                ((MyFriendsViewHolder) holder).myfriendAdd.setTextColor(Color.parseColor("#ff882e"));
-//                ((MyFriendsViewHolder) holder).myfriendAdd.setBackgroundResource(R.drawable.shape_btn_yellow);
-//                ((MyFriendsViewHolder) holder).myfriendAdd.setClickable(true);
-//                ((MyFriendsViewHolder) holder).myfriendAdd.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        //进行加为图友请求
-//                        HttpAddFrend(myFriendList.get(position).getUid(), myFriendList.get(position).getUser_type(), ((MyFriendsViewHolder) holder).myfriendAdd, position);
-//                    }
-//                });
             }
         } else if (holder instanceof MyFriendLoadMore) {
             if (position == 0) {

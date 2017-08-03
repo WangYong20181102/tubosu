@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="他的图友"
+                android:text=""
                 android:textColor="@color/text_white"
                 android:textSize="18sp" />
             <!--返回按钮-->

@@ -306,6 +306,7 @@ public class _DynamicDetail {
          * nick : zfsoft
          * icon : http://member.tobosu.com/public/img/icon/icon18.jpg
          * reply_count : 0
+         *  "is_praise": "0"
          */
 
         private String id;
@@ -317,6 +318,16 @@ public class _DynamicDetail {
         private String nick;
         private String icon;
         private String reply_count;
+        private String is_praise;//是否点过赞
+
+        public String getIs_praise() {
+            return is_praise;
+        }
+
+        public void setIs_praise(String is_praise) {
+            this.is_praise = is_praise;
+        }
+
 
         public String getId() {
             return id;

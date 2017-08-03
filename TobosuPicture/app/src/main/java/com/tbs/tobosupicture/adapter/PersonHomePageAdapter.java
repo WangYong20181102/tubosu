@@ -111,6 +111,26 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     mActivity.finish();
                 }
             });
+            //根据用户的身份加载不同的显示
+            if (personHomePage.getUser_info().getUser_type().equals("3")) {
+                //装修公司  整个业主层隐藏
+                ((PhpHeadHolder) holder).item_php_head_yz.setVisibility(View.GONE);
+                ((PhpHeadHolder) holder).item_php_head_zxgs.setVisibility(View.VISIBLE);
+            } else {
+                ((PhpHeadHolder) holder).item_php_head_yz.setVisibility(View.VISIBLE);
+                ((PhpHeadHolder) holder).item_php_head_zxgs.setVisibility(View.GONE);
+            }
+            //设置装修公司头像
+            GlideUtils.glideLoader(mContext, personHomePage.getUser_info().getIcon(), 0, 0,
+                    ((PhpHeadHolder) holder).item_php_head_zxgs_icon);
+            //设置装修公司的名称
+            ((PhpHeadHolder) holder).item_php_head_zxgs_name.setText(personHomePage.getUser_info().getNick());
+            //设置装修公司的地址
+            ((PhpHeadHolder) holder).item_php_head_zxgs_address.setText(personHomePage.getUser_info().getAddress());
+            //设置装修公司的验证情况
+            if (personHomePage.getUser_info().getCertification().equals("1")) {
+                //已认证
+            }
             //头像
             GlideUtils.glideLoader(mContext, personHomePage.getUser_info().getIcon(),
                     R.mipmap.default_icon, R.mipmap.default_icon,
@@ -127,7 +147,15 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
             //个性签名
             ((PhpHeadHolder) holder).item_php_head_signature.setText("" + personHomePage.getUser_info().getPersonal_signature());
-            //设置是否加为图友  1--已经关注 0--未关注
+            //设置是否加为图友  1--已经关注 0--未关注  当用户进入自己的个人主页时隐藏加为好友的按钮
+            if (Utils.userIsLogin(mContext)) {
+                if (personHomePage.getUser_info().getId().equals(SpUtils.getUserUid(mContext))) {
+                    //进入了自己的主页
+                    ((PhpHeadHolder) holder).item_php_head_addfriend.setVisibility(View.GONE);
+                } else {
+                    ((PhpHeadHolder) holder).item_php_head_addfriend.setVisibility(View.VISIBLE);
+                }
+            }
             if (personHomePage.getUser_info().getIs_follow().equals("1")) {
                 ((PhpHeadHolder) holder).item_php_head_addfriend.setText("取消关注");
                 ((PhpHeadHolder) holder).item_php_head_addfriend.setBackgroundResource(R.drawable.shape_quxiaoguanzhu);
@@ -157,7 +185,11 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 public void onClick(View v) {
                     //TODO 点击跳转到图谜页
                     Intent intent = new Intent(mContext, HisFansActivity.class);
-                    intent.putExtra("title", "他的图谜");
+                    if (personHomePage.getUser_info().getId().equals(SpUtils.getUserUid(mContext))) {
+                        intent.putExtra("title", "我的图谜");
+                    } else {
+                        intent.putExtra("title", "他的图谜");
+                    }
                     intent.putExtra("uid", personHomePage.getUser_info().getId());//被查看用户的id
                     intent.putExtra("is_virtual_user", personHomePage.getUser_info().getIs_virtual_user());//是否是虚拟用户
                     mContext.startActivity(intent);
@@ -170,6 +202,11 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 public void onClick(View v) {
                     //TODO 点击跳转到图友页面
                     Intent intent = new Intent(mContext, HisFriendsActivity.class);
+                    if (personHomePage.getUser_info().getId().equals(SpUtils.getUserUid(mContext))) {
+                        intent.putExtra("title", "我的图友");
+                    } else {
+                        intent.putExtra("title", "他的图友");
+                    }
                     intent.putExtra("uid", personHomePage.getUser_info().getId());//被查看用户的id
                     intent.putExtra("user_type", personHomePage.getUser_info().getIs_virtual_user());//是否是虚拟用户
                     mContext.startActivity(intent);
@@ -423,7 +460,10 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     class PhpHeadHolder extends RecyclerView.ViewHolder {
         private ImageView item_php_head_bg;//背景图片
         private ImageView item_php_head_icon;//用户头像
+        private ImageView item_php_head_zxgs_icon;//装修公司头像
         private TextView item_php_head_nick;//用户昵称
+        private TextView item_php_head_zxgs_name;//装修公司名称
+        private TextView item_php_head_zxgs_address;//装修公司地址
         private TextView item_php_head_user_info;//用户信息
         private TextView item_php_head_signature;//用户签名
         private TextView item_php_head_addfriend;//添加好友
@@ -437,14 +477,21 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         private LinearLayout item_php_head_back;//返回
         private LinearLayout item_php_head_ll_follow_count;//整个图友布局可点击
 
+        private LinearLayout item_php_head_yz;//业主层
+        private LinearLayout item_php_head_zxgs;//装修公司层
+
+
         public PhpHeadHolder(View itemView) {
             super(itemView);
             item_php_head_bg = (ImageView) itemView.findViewById(R.id.item_php_head_bg);
             item_php_head_icon = (ImageView) itemView.findViewById(R.id.item_php_head_icon);
+            item_php_head_zxgs_icon = (ImageView) itemView.findViewById(R.id.item_php_head_zxgs_icon);
             item_php_head_nick = (TextView) itemView.findViewById(R.id.item_php_head_nick);
             item_php_head_user_info = (TextView) itemView.findViewById(R.id.item_php_head_user_info);
             item_php_head_signature = (TextView) itemView.findViewById(R.id.item_php_head_signature);
             item_php_head_addfriend = (TextView) itemView.findViewById(R.id.item_php_head_addfriend);
+            item_php_head_zxgs_name = (TextView) itemView.findViewById(R.id.item_php_head_zxgs_name);
+            item_php_head_zxgs_address = (TextView) itemView.findViewById(R.id.item_php_head_zxgs_address);
 
             item_php_head_followed_count = (TextView) itemView.findViewById(R.id.item_php_head_followed_count);
             item_php_head_follow_count = (TextView) itemView.findViewById(R.id.item_php_head_follow_count);
@@ -453,6 +500,9 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             item_php_head_ll_followed_count = (LinearLayout) itemView.findViewById(R.id.item_php_head_ll_followed_count);
             item_php_head_ll_follow_count = (LinearLayout) itemView.findViewById(R.id.item_php_head_ll_follow_count);
             item_php_head_back = (LinearLayout) itemView.findViewById(R.id.item_php_head_back);
+
+            item_php_head_yz = (LinearLayout) itemView.findViewById(R.id.item_php_head_yz);
+            item_php_head_zxgs = (LinearLayout) itemView.findViewById(R.id.item_php_head_zxgs);
         }
     }
 
