@@ -77,6 +77,7 @@ public class CaseDetailActivity extends BaseActivity {
     // 数据源
     private CaseDetailEntity caseDetailEntity;
     private String id;
+    private String des = "";
 
 
     @Override
@@ -147,7 +148,8 @@ public class CaseDetailActivity extends BaseActivity {
     }
 
     private void initDataInView() {
-        tvCaseDescription.setText(caseDetailEntity.getCase_data().getDescription());
+        des = caseDetailEntity.getCase_data().getDescription();
+        tvCaseDescription.setText(des);
         GlideUtils.glideLoader(mContext, caseDetailEntity.getCase_data().getCover_url(), R.mipmap.loading_img_fail, R.mipmap.loading_img, ivDetailImg);
         GlideUtils.glideLoader(mContext, caseDetailEntity.getCase_data().getDesigner_icon(), R.mipmap.pic, R.mipmap.pic, ivDesinHead, 0);
         GlideUtils.glideLoader(mContext, caseDetailEntity.getCase_data().getLayout_url(),R.mipmap.loading_img_fail, R.mipmap.loading_img,ivBigHuxingTu, 1);

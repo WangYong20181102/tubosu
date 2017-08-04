@@ -1,4 +1,5 @@
 package com.tbs.tobosupicture.activity;
+
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -115,6 +116,8 @@ public class DesignerImgListActivity extends BaseActivity {
                         @Override
                         public void run() {
                             Utils.setToast(mContext, "系统繁忙");
+                            designerImgListSwipRefreshLayout.setRefreshing(false);
+                            designerPictureListAdapter.hideLoadMoreMessage();
                         }
                     });
                 }
@@ -131,13 +134,20 @@ public class DesignerImgListActivity extends BaseActivity {
                         XiaoGuoTuJsonEntity xiaoGuoTuJsonEntity = gson.fromJson(json, XiaoGuoTuJsonEntity.class);
                         if(xiaoGuoTuJsonEntity.getStatus() == 200){
                             samplePicDataList = xiaoGuoTuJsonEntity.getData();
-                            initAdapter(sourceType);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    initAdapter(sourceType);
+                                }
+                            });
                         }else {
                             final String msg = xiaoGuoTuJsonEntity.getMsg();
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     Utils.setToast(mContext, msg);
+                                    designerImgListSwipRefreshLayout.setRefreshing(false);
+                                    designerPictureListAdapter.hideLoadMoreMessage();
                                 }
                             });
                         }
@@ -157,12 +167,7 @@ public class DesignerImgListActivity extends BaseActivity {
                         }
                     }
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            initAdapter(sourceType);
-                        }
-                    });
+
                 }
             });
         }
@@ -178,6 +183,8 @@ public class DesignerImgListActivity extends BaseActivity {
             designerImgListRecyclerView.setAdapter(designerPictureListAdapter);
             designerPictureListAdapter.notifyDataSetChanged();
         }
+        designerImgListSwipRefreshLayout.setRefreshing(false);
+        designerPictureListAdapter.hideLoadMoreMessage();
     }
 
     @OnClick({R.id.relConcernDesigner, R.id.relDesignerGetDesign,R.id.llDesignerlPicBack})

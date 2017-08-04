@@ -16,10 +16,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.tbs.tobosupicture.activity.MyDesignerListActivity;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.LoginActivity;
 import com.tbs.tobosupicture.activity.MyFansActivity;
 import com.tbs.tobosupicture.activity.MyFriendsActivity;
+import com.tbs.tobosupicture.activity.MySampleListActivity;
 import com.tbs.tobosupicture.activity.PersonInfoActivity;
 import com.tbs.tobosupicture.activity.ShareWeixinActivity;
 import com.tbs.tobosupicture.activity.SystemActivity;
@@ -214,12 +216,28 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.fm_guanzhu_shejishi:
                 //点击进入关注的设计师
+                if(Utils.userIsLogin(mContext)){
+                    mContext.startActivity(new Intent(mContext, MyDesignerListActivity.class));
+                }else {
+                    Utils.gotoLogin(mContext);
+                }
+
                 break;
             case R.id.fm_shoucang_xiaoguotu:
                 //点击进入收藏的效果图
+                if(Utils.userIsLogin(mContext)){
+                    mContext.startActivity(new Intent(mContext, MySampleListActivity.class));
+                }else {
+                    Utils.gotoLogin(mContext);
+                }
                 break;
             case R.id.fm_shoucang_anli:
                 //点击进入收藏的案例
+                if(Utils.userIsLogin(mContext)){
+//                    mContext.startActivity(new Intent(mContext, MyCaseListActivity.class));
+                }else {
+                    Utils.gotoLogin(mContext);
+                }
                 break;
             case R.id.fm_guanfang_weixin:
                 //分享官方微信

@@ -22,6 +22,7 @@ import com.tbs.tobosupicture.bean.DesignerJsonEntity;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.HorizontalListView;
 
@@ -232,50 +233,54 @@ public class DesignerActivity extends BaseActivity {
     public void onViewClickedDesignerActivtiy(View view) {
         switch (view.getId()) {
             case R.id.tvConcern:
-                HashMap<String, Object> hashMap = new HashMap<String, Object>();
-                hashMap.put("token", Utils.getDateToken());
-                hashMap.put("uid", UrlConstans.UID);
-                hashMap.put("designer_id", designerId);
-                HttpUtils.doPost(UrlConstans.CONCERN_URL, hashMap, new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Utils.setToast(mContext, "关注失败，稍后再试");
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        final String json = response.body().string();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    JSONObject object = new JSONObject(json);
-                                    if (object.getInt("status") == 200) {
-                                        if (object.getString("msg").contains("取消")) {
-                                            tvConcern.setTextColor(Color.parseColor("#858585"));
-                                            Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu2);
-                                            leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
-                                            tvConcern.setCompoundDrawables(leftDrawable, null, null, null);
-                                        } else {
-                                            tvConcern.setTextColor(Color.parseColor("#FA8817"));
-                                            Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu);
-                                            leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
-                                            tvConcern.setCompoundDrawables(leftDrawable, null, null, null);
-                                        }
-                                    }
-                                    Utils.setToast(mContext, object.getString("msg"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                if(Utils.userIsLogin(mContext)){
+                    HashMap<String, Object> hashMap = new HashMap<String, Object>();
+                    hashMap.put("token", Utils.getDateToken());
+                    hashMap.put("uid", SpUtils.getUserUid(mContext));
+                    hashMap.put("designer_id", designerId);
+                    HttpUtils.doPost(UrlConstans.CONCERN_URL, hashMap, new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Utils.setToast(mContext, "关注失败，稍后再试");
                                 }
-                            }
-                        });
-                    }
-                });
+                            });
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            final String json = response.body().string();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        JSONObject object = new JSONObject(json);
+                                        if (object.getInt("status") == 200) {
+                                            if (object.getString("msg").contains("取消")) {
+                                                tvConcern.setTextColor(Color.parseColor("#858585"));
+                                                Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu2);
+                                                leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
+                                                tvConcern.setCompoundDrawables(leftDrawable, null, null, null);
+                                            } else {
+                                                tvConcern.setTextColor(Color.parseColor("#FA8817"));
+                                                Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu);
+                                                leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
+                                                tvConcern.setCompoundDrawables(leftDrawable, null, null, null);
+                                            }
+                                        }
+                                        Utils.setToast(mContext, object.getString("msg"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }else {
+                    Utils.gotoLogin(mContext);
+                }
                 break;
             case R.id.tvDesigneForme:
                 startActivity(new Intent(mContext, GetPriceActivity.class));

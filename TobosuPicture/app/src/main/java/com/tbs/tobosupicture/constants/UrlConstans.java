@@ -50,6 +50,7 @@ public class UrlConstans {
      */
     public static final String GET_MY_FANS_URL = ZXKK_URL + "rapp/MyOwner/my_fans";
 
+    public static final String FADAN_URL = ZXKK_URL + "rapp/order/pub_order";
 
     /**
      * 家装页面 获取筛选类型
@@ -70,9 +71,6 @@ public class UrlConstans {
      * 设计师详情url
      */
     public static final String DESIGNER_URL = ZXKK_URL + "rapp/TemplateMap/designer_index";
-
-
-    public static final String UID = "23109";
 
     public static final String DISTRICT_LIST_URL =  ZXKK_URL + "rapp/village/village_list";
 
@@ -96,10 +94,7 @@ public class UrlConstans {
      */
     public static final String CASE_SEARCH_URL = ZXKK_URL + "/rapp/case/case_search";
 
-    /**
-     * 收藏套图的url
-     */
-    public static final String COLLECT_PIC_URL = ZXKK_URL + "/rapp/TemplateMap/collect";
+
 
     /**
      * 获取他人的图谜url
@@ -173,6 +168,32 @@ public class UrlConstans {
             return ZXKK_URL + "rapp/designer/case_list";
         }
     }
+
+    /**
+     * 关注的设计师列表
+     */
+    public static final String DESIGNER_LIST_COLLECT_URL = ZXKK_URL + "rapp/MyOwner/my_follow_designer";
+
+    /**
+     * 收藏套图的url
+     */
+    public static final String COLLECT_PIC_URL = ZXKK_URL + "/rapp/TemplateMap/collect";
+
+    /**
+     * 点击案例收藏   (UI图内无此需求？？？)
+     */
+    public static final String CLICK_CASE_COLLECT_URL = ZXKK_URL + "rapp/case/collect";
+
+    /**
+     * 案例收藏列表
+     */
+    public static final String CASE_COLLECT_LIST_URL = ZXKK_URL + "rapp/MyOwner/my_collect_case";
+
+    /**
+     * 样板图收藏列表
+     */
+    public static final String SAMPLE_COLLECT_LIST_URL = ZXKK_URL + "rapp/MyOwner/my_collect_impression";
+
 
     /**
      * 图册url

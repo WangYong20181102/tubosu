@@ -146,6 +146,8 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.ShareWeixinActivity" />
         <activity android:name=".activity.PersonInfoActivity" />
+        <activity android:name=".activity.MyDesignerListActivity" />
+        <activity android:name=".activity.MySampleListActivity" />
         <activity android:name=".activity.MyDynamicActivity"></activity>
     </application>
 

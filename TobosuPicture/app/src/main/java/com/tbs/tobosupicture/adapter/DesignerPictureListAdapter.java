@@ -1,5 +1,4 @@
 package com.tbs.tobosupicture.adapter;
-
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,15 +9,14 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.bean.AnLiJsonEntity;
 import com.tbs.tobosupicture.bean.XiaoGuoTuJsonEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
-
 import java.util.ArrayList;
 
 /**
+ * 设计师主页的案例或者样板图 点击全部 分别跳转到各自的列表的适配器
  * Created by Lie on 2017/7/15.
  */
 
@@ -220,23 +218,42 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public int getItemViewType(int position) {
-        if(type==0){ // 样板
-            if(position==1){
-                return TYPE_HEADER;
-            }else if(position<sampleDataList.size()){
+//        if(type==0){ // 样板
+            if(footerView == null && headView == null){
                 return TYPE_ITEM;
-            }else {
+            }else if(position<sampleDataList.size()-1){
                 return TYPE_FOOTER;
-            }
-        }else { // 案例
-            if(position==1){
-                return TYPE_HEADER;
-            }else if(position<caseDataList.size()){
+            }else if(position==0){
+                return TYPE_FOOTER;
+            }else{
                 return TYPE_ITEM;
-            }else {
-                return TYPE_FOOTER;
             }
-        }
+//        }else { // 案例
+//            if(footerView == null && headView == null){
+//                return TYPE_ITEM;
+//            }else if(position<caseDataList.size()-1){
+//                return TYPE_FOOTER;
+//            }else if(position==0){
+//                return TYPE_HEADER;
+//            }else {
+//                return TYPE_ITEM;
+//            }
+//        }
+
+
+//        if (footerView == null && headView == null){
+//            return TYPE_ITEM;
+//        }
+//        if (position == 0){
+//            //第一个item应该加载Header
+//            return TYPE_HEADER;
+//        }
+//        if (position == getItemCount()-1){
+//            //最后一个,应该加载Footer
+//            return TYPE_FOOTER;
+//        }
+//        return TYPE_ITEM;
+
     }
 
 

@@ -103,17 +103,25 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         TAG = "ConditionActivity";
         mContext = ConditionActivity.this;
         setContentView(R.layout.activity_condition);
-        getDataFromNet();
+
         ButterKnife.bind(this);
+        getDataFromNet();
         init();
     }
 
     private void getDataFromNet() {
 
         if (Utils.isNetAvailable(mContext)) {
+
+            if(Utils.userIsLogin(mContext)){
+
+            }else {
+                relSearchCaseLayout.setVisibility(View.GONE);
+            }
+
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("token", Utils.getDateToken());
-            hashMap.put("uid", UrlConstans.UID);
+            hashMap.put("uid", SpUtils.getUserUid(mContext));
             HttpUtils.doPost(UrlConstans.CASE_SEARCH_URL, hashMap, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -147,6 +155,10 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         } else {
 
         }
+
+
+
+
     }
 
     private ArrayList<SearchRecordBean> recordBeenList;
@@ -294,37 +306,41 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                 initSearchRecord(true);
                 break;
             case R.id.tvClearCaseHistory:
-                if (Utils.isNetAvailable(mContext)) {
-                    HashMap<String, Object> hashMap = new HashMap<String, Object>();
-                    hashMap.put("iud", UrlConstans.UID);
-                    hashMap.put("token", Utils.getDateToken());
-                    HttpUtils.doPost(UrlConstans.CLEAR_CASE_URL, hashMap, new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Utils.setToast(mContext, "系统繁忙，稍后再试~");
-                                }
-                            });
-                        }
-
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException {
-                            String json = response.body().string();
-                            try {
-                                JSONObject jsonObject = new JSONObject(json);
-                                if (jsonObject.getInt("status") == 200) {
-                                    Utils.setToast(mContext, jsonObject.getString("msg"));
-                                    relSearchCaseLayout.setVisibility(View.GONE);
-                                } else {
-                                    Utils.setToast(mContext, jsonObject.getString("msg"));
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                if(Utils.userIsLogin(mContext)){
+                    if (Utils.isNetAvailable(mContext)) {
+                        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+                        hashMap.put("iud", SpUtils.getUserUid(mContext));
+                        hashMap.put("token", Utils.getDateToken());
+                        HttpUtils.doPost(UrlConstans.CLEAR_CASE_URL, hashMap, new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Utils.setToast(mContext, "系统繁忙，稍后再试~");
+                                    }
+                                });
                             }
-                        }
-                    });
+
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                String json = response.body().string();
+                                try {
+                                    JSONObject jsonObject = new JSONObject(json);
+                                    if (jsonObject.getInt("status") == 200) {
+                                        Utils.setToast(mContext, jsonObject.getString("msg"));
+                                        relSearchCaseLayout.setVisibility(View.GONE);
+                                    } else {
+                                        Utils.setToast(mContext, jsonObject.getString("msg"));
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                }else {
+                    Utils.gotoLogin(mContext);
                 }
                 break;
             case R.id.tvCaseSearch:

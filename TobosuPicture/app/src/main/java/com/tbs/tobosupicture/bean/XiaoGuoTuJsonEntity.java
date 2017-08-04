@@ -71,7 +71,7 @@ public class XiaoGuoTuJsonEntity {
 
         // 叫昭仲给我补上的
         private String style_name;  //风格名称
-        private String layout;  //户型
+        private String layout_name;  //户型
 
         public String getStyle_name() {
             return style_name;
@@ -82,11 +82,11 @@ public class XiaoGuoTuJsonEntity {
         }
 
         public String getLayout() {
-            return layout;
+            return layout_name;
         }
 
         public void setLayout(String layout) {
-            this.layout = layout;
+            this.layout_name = layout;
         }
 
         public String getId() {

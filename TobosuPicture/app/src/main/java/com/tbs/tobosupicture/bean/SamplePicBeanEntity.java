@@ -27,15 +27,15 @@ public class SamplePicBeanEntity {
 
     public SamplePicBeanEntity(JSONObject object){
         try {
-            this.id = object.getString("id");
-            this.img_url = object.getString("img_url");
-            this.designer_id = object.getString("designer_id");
-            this.image_count = object.getString("image_count");
-            this.plan_price = object.getString("plan_price");
-//            this.village = object.getString("village");
-            this.click_count = object.getString("click_count");
-            this.designer_icon = object.getString("designer_icon");
-            this.city_name = object.getString("city_name");
+            this.id = object.getString("id");                         //  "title": "现代简约三居室",
+            this.img_url = object.getString("img_url");               //  "id": "4478",
+            this.designer_id = object.getString("designer_id");       //  "img_url": "https://opic.tbscache.com/manage/case/2015/05-31/small/3fa9b71d-75dc-2a50-c76f-2ad1c99cfd21.jpg",
+            this.image_count = object.getString("image_count");       //  "village": "0",
+            this.plan_price = object.getString("plan_price");         //  "designer_id": "271567",
+//            this.village = object.getString("village");             //  "click_count": "281",
+            this.click_count = object.getString("click_count");       //  "plan_price": "28",
+            this.designer_icon = object.getString("designer_icon");   //  "designer_icon": "http://opic.tbscache.com/users/sjs/logo/2015/04-14/cut_83169aa1-f0b9-dbaf-2484-ae46725e414b.jpg",
+            this.city_name = object.getString("city_name");           //  "area_name": "",
             this.area_name = object.getString("area_name");
             this.title = object.getString("title");
 
