@@ -17,5 +17,6 @@ public final class EC {
         public static final int SHOW_MINE_FRAGMENT = 0x000005;//显示我的
         public static final int WELCOMETOMAIN = 0x000006;//测试欢迎页
         public static final int LOGIN_INITDATA = 0x000007;//登录成功以后刷新相关页面的数据
+        public static final int LOGIN_OUT = 0x000008;//用户登出App
     }
 }

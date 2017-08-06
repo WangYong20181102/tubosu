@@ -71,6 +71,7 @@
                     android:src="@mipmap/zuire" />
 
                 <TextView
+                    android:id="@+id/text_zuire"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -95,6 +96,7 @@
                     android:src="@mipmap/zuixin" />
 
                 <TextView
+                    android:id="@+id/text_zuixin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -119,6 +121,7 @@
                     android:src="@mipmap/wo" />
 
                 <TextView
+                    android:id="@+id/text_youguanyuwo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"

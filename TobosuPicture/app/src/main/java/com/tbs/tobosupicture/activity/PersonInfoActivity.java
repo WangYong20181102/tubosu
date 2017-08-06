@@ -14,8 +14,11 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.base.BaseActivity;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.bean._PersonInfo;
 import com.tbs.tobosupicture.constants.UrlConstans;
+import com.tbs.tobosupicture.utils.EventBusUtil;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
@@ -108,6 +111,11 @@ public class PersonInfoActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
     @OnClick({R.id.person_info_back, R.id.person_info_icon_rl, R.id.person_info_nick_rl,
             R.id.person_info_sex_rl, R.id.person_info_city_rl, R.id.person_info_sign_rl, R.id.person_info_bind_wx_rl, R.id.person_info_bind_phone_rl, R.id.person_info_btn_rl})
     public void onViewClickedInPersonInfoActivity(View view) {
@@ -145,6 +153,7 @@ public class PersonInfoActivity extends BaseActivity {
                     SpUtils.saveUserPersonalSignature(mContext, "");
                     SpUtils.saveUserType(mContext, "");
                     SpUtils.saveUserUid(mContext, "");
+                    EventBusUtil.sendEvent(new Event(EC.EventCode.LOGIN_OUT));
                     finish();
                 } else {
                     //注册之后的确定按钮
@@ -197,10 +206,10 @@ public class PersonInfoActivity extends BaseActivity {
         //设置昵称
         personInfoNick.setText(personInfo.getNick());
         //设置性别
-        if(personInfo.getGender().equals("1")){
+        if (personInfo.getGender().equals("1")) {
             //男
             personInfoSex.setText("男");
-        }else {
+        } else {
             personInfoSex.setText("女");
         }
 

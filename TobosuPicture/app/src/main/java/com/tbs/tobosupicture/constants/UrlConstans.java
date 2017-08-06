@@ -224,4 +224,21 @@ public class UrlConstans {
      * 最新
      */
     public static final String SOCIAL_NEW_LIST = ZXKK_URL + "rapp/Social/new_list";
+    /**
+     * 接收动态消息有关于我
+     */
+    public static final String RECEIVE_INFORMATION = ZXKK_URL + "rapp/MyRelevance/receive_information";
+    /**
+     * 我的发起有关于我
+     */
+    public static final String MY_SPONSOR = ZXKK_URL + "rapp/MyRelevance/my_sponsor";
+    /**
+     * 我的图友动态有关于我
+     */
+    public static final String MY_FRIENDS_DYNAMIC = ZXKK_URL + "rapp/MyRelevance/my_friends_dynamic";
+    /**
+     * 找回密码公共功能
+     */
+    public static final String SEARCH_PASSWORD = ZXKK_URL + "rapp/public/search_password";
+
 }
