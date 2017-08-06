@@ -112,6 +112,7 @@ public class SeeImageActivity extends BaseActivity {
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("suite_id", imgId);
             hashMap.put("token", Utils.getDateToken());
+            hashMap.put("uid", SpUtils.getUserUid(mContext));
             if (Utils.isNetAvailable(mContext)) {
                 HttpUtils.doPost(UrlConstans.PICTURE_LIST_URL, hashMap, new Callback() {
                     @Override
@@ -133,11 +134,21 @@ public class SeeImageActivity extends BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    imgEntityList = jsonEntity.getSeeImgEntity().getImgEntityList();
+
                                     isCollect = jsonEntity.getSeeImgEntity().getIs_collect();
+
+                                    if("1".equals(isCollect)){
+                                        ivCollectImg.setBackgroundResource(R.mipmap.shoucang4);
+                                    }else{
+                                        ivCollectImg.setBackgroundResource(R.mipmap.shoucang21);
+                                    }
+
+                                    imgEntityList = jsonEntity.getSeeImgEntity().getImgEntityList();
+
                                     if (imgEntityList.size() > 0) {
                                         intiViewPager(imgEntityList);
                                     }
+
                                 }
                             });
                         } else {
@@ -154,11 +165,7 @@ public class SeeImageActivity extends BaseActivity {
     }
 
     private void intiViewPager(final ArrayList<ImgEntity> imgDataList) {
-        if("1".equals(isCollect)){
-            ivCollectImg.setBackgroundResource(R.mipmap.shoucang4);
-        }else{
-            ivCollectImg.setBackgroundResource(R.mipmap.shoucang21);
-        }
+
         tvImgTotalNum.setText(imgDataList.size() + "");
         ArrayList<TouchImageView> dataList = new ArrayList<TouchImageView>();
         for (int i = 0; i < imgDataList.size(); i++) {
@@ -239,58 +246,67 @@ public class SeeImageActivity extends BaseActivity {
                 initPopupWindow();
                 break;
             case R.id.ivCollectImg:
-                if(Utils.isNetAvailable(mContext)){
-                    HashMap<String, Object> hashMap = new HashMap<String, Object>();
-                    hashMap.put("token", Utils.getDateToken());
-                    hashMap.put("uid", UrlConstans.UID);
-                    hashMap.put("suite_id", imgId);
 
-                    HttpUtils.doPost(UrlConstans.COLLECT_PIC_URL, hashMap, new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Utils.setToast(mContext, "系统繁忙，稍后再试~");
-                                }
-                            });
-                        }
+                if(Utils.userIsLogin(mContext)){
+                    if(Utils.isNetAvailable(mContext)){
+                        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+                        hashMap.put("token", Utils.getDateToken());
+                        hashMap.put("uid", SpUtils.getUserUid(mContext));
+                        hashMap.put("suite_id", imgId);
 
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException {
-                            final String json = response.body().string();
+//                        Utils.setErrorLog(TAG, "参数 " + Utils.getDateToken()  + "   " +Utils.getDateToken()
+//                         + "   " + SpUtils.getUserUid(mContext)+ "   " + imgId);
 
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-
-                                    int status = -1;
-                                    String msg = "";
-                                    try {
-                                        JSONObject jsonObject = new JSONObject(json);
-                                        status = jsonObject.getInt("status");
-                                        msg = jsonObject.getString("msg");
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
+                        HttpUtils.doPost(UrlConstans.COLLECT_PIC_URL, hashMap, new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Utils.setToast(mContext, "系统繁忙，稍后再试~");
                                     }
-                                    if(status==200){
-                                        if(msg.contains("取消")){
-                                            // 取消
-                                            ivCollectImg.setBackgroundResource(R.mipmap.shoucang21);
-                                        }else{
-                                            // 关注
-                                            ivCollectImg.setBackgroundResource(R.mipmap.shoucang4);
-                                            getConcren(ivBigCollect);
+                                });
+                            }
+
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                final String json = response.body().string();
+                                Utils.setErrorLog(TAG, json);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        int status = -1;
+                                        String msg = "";
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(json);
+                                            status = jsonObject.getInt("status");
+                                            msg = jsonObject.getString("msg");
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
                                         }
-                                        Utils.setToast(mContext, msg);
-                                    }else{
-                                        Utils.setToast(mContext, msg);
+                                        if(status==200){
+                                            if(msg.contains("取消")){
+                                                // 取消
+                                                ivCollectImg.setBackgroundResource(R.mipmap.shoucang21);
+                                            }else{
+                                                // 关注
+                                                ivCollectImg.setBackgroundResource(R.mipmap.shoucang4);
+                                                getConcren(ivBigCollect);
+                                            }
+                                            Utils.setToast(mContext, msg);
+                                        }else{
+                                            Utils.setToast(mContext, msg);
+                                        }
                                     }
-                                }
-                            });
-                        }
-                    });
+                                });
+                            }
+                        });
+                    }
+                }else{
+                    Utils.gotoLogin(mContext);
                 }
+
                 break;
             case R.id.ivDownImg:
                 httpDownLoadImg(imgEntityList.get(currentPosition).getImg_url());
@@ -372,29 +388,40 @@ public class SeeImageActivity extends BaseActivity {
         getThisPrice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if("".equals(etInputPhone.getText().toString())){
+                String phone = etInputPhone.getText().toString();
+                if("".equals(phone)){
                     Utils.setToast(mContext, "你还没输入电话号码");
                     return;
                 }else{
-                    if(etInputPhone.getText().toString().matches(UrlConstans.PHONE_NUM)) {
+                    if(phone.matches(UrlConstans.PHONE_NUM)) {
                         Utils.setToast(mContext, "电话号码不正确，重新输入");
                         return;
                     }
+
                     if(Utils.isNetAvailable(mContext)){
                         Utils.setToast(mContext, "发单接口没写啊");
                         HashMap<String, Object> hashMap = new HashMap<String, Object>();
-                        hashMap.put("uid", UrlConstans.UID);
-//                        HttpUtils.doPost(UrlConstans.get, hashMap, new Callback() {
-//                            @Override
-//                            public void onFailure(Call call, IOException e) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onResponse(Call call, Response response) throws IOException {
-//
-//                            }
-//                        });
+                        hashMap.put("cellphone", phone);
+                        hashMap.put("token", Utils.getDateToken());
+                        hashMap.put("urlhistory", "");
+                        hashMap.put("comeurl", "");
+                        HttpUtils.doPost(UrlConstans.FADAN_URL, hashMap, new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Utils.setToast(mContext, "系统繁忙， 稍后再试~");
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                String json = response.body().string();
+                                Utils.setErrorLog(TAG, json);
+                            }
+                        });
                     }
                 }
             }

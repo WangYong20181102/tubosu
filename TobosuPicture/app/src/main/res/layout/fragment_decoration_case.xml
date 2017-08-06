@@ -15,6 +15,7 @@
                 android:id="@+id/caseLocation"
                 android:text="深圳"
                 android:textSize="14sp"
+                android:visibility="gone"
                 android:textColor="@color/bg_white"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"

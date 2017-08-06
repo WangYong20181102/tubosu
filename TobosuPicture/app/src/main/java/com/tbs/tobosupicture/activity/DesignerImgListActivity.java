@@ -1,6 +1,5 @@
 package com.tbs.tobosupicture.activity;
 
-
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,18 +8,24 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-
+import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.DesignerPictureListAdapter;
 import com.tbs.tobosupicture.base.BaseActivity;
-import com.tbs.tobosupicture.bean.DesignerCaseEntity;
-import com.tbs.tobosupicture.bean.DesignerImpressionEntity;
-
+import com.tbs.tobosupicture.bean.AnLiJsonEntity;
+import com.tbs.tobosupicture.bean.XiaoGuoTuJsonEntity;
+import com.tbs.tobosupicture.constants.UrlConstans;
+import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.Utils;
+import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 设计师案例 样板图 列表
@@ -46,11 +51,12 @@ public class DesignerImgListActivity extends BaseActivity {
     private String viewCount = "";
     private String fansCount = "";
     private String designerIcon = "";
+    private String designerId;
     private String des = ""; // 描述
 
     private DesignerPictureListAdapter designerPictureListAdapter;
-    private ArrayList<DesignerImpressionEntity> samplePicDataList = new ArrayList<DesignerImpressionEntity>(); // 样板图
-    private ArrayList<DesignerCaseEntity> casePicDataList = new ArrayList<DesignerCaseEntity>(); //  案例图
+    private ArrayList<XiaoGuoTuJsonEntity.XiaoGuoTu> samplePicDataList = new ArrayList<XiaoGuoTuJsonEntity.XiaoGuoTu>(); // 样板图
+    private ArrayList<AnLiJsonEntity.AnLiEntity> casePicDataList = new ArrayList<AnLiJsonEntity.AnLiEntity>(); //  案例图
 
     private LinearLayoutManager linearLayoutManager;
 
@@ -84,36 +90,108 @@ public class DesignerImgListActivity extends BaseActivity {
             viewCount = b.getString("viewNum");
             fansCount = b.getString("fanNum");
             designerIcon = b.getString("iconUrl");
-            dataType = b.getInt("type");
+            designerId = b.getString("desid");
+            dataType = b.getInt("type");  // 1 案例，  0 样板
             des ="粉丝 "+fansCount + " / 浏览" + viewCount;
 
         }else{
             des ="粉丝 0  / 浏览 0";
         }
 
-        getDataFromNet();
+        getDataFromNet(dataType);
     }
 
-    private void getDataFromNet() {
-        if(dataType == 0){
+
+    private void getDataFromNet(final int sourceType) {
+        if(Utils.isNetAvailable(mContext)){
+            HashMap<String, Object> hashMap = new HashMap<String, Object>();
+            hashMap.put("token", Utils.getDateToken());
+            hashMap.put("designer_id", designerId);
+            hashMap.put("page", page);
+            hashMap.put("page_size", pageSize);
+            HttpUtils.doPost(UrlConstans.getListUrl(sourceType), hashMap, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Utils.setToast(mContext, "系统繁忙");
+                            designerImgListSwipRefreshLayout.setRefreshing(false);
+                            designerPictureListAdapter.hideLoadMoreMessage();
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String json = response.body().string();
+
+                    Utils.setErrorLog(TAG, json);
+
+                    Gson gson = new Gson();
+                    // 1 案例，  0 样板效果
+                    if(sourceType == 0){
+                        XiaoGuoTuJsonEntity xiaoGuoTuJsonEntity = gson.fromJson(json, XiaoGuoTuJsonEntity.class);
+                        if(xiaoGuoTuJsonEntity.getStatus() == 200){
+                            samplePicDataList = xiaoGuoTuJsonEntity.getData();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    initAdapter(sourceType);
+                                }
+                            });
+                        }else {
+                            final String msg = xiaoGuoTuJsonEntity.getMsg();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Utils.setToast(mContext, msg);
+                                    designerImgListSwipRefreshLayout.setRefreshing(false);
+                                    designerPictureListAdapter.hideLoadMoreMessage();
+                                }
+                            });
+                        }
+                    }else{
+                        AnLiJsonEntity anLiJsonEntity = gson.fromJson(json, AnLiJsonEntity.class);
+                        if(anLiJsonEntity.getStatus() == 200){
+                            casePicDataList = anLiJsonEntity.getData();
+                            initAdapter(sourceType);
+                        }else {
+                            final String msg = anLiJsonEntity.getMsg();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Utils.setToast(mContext, msg);
+                                }
+                            });
+                        }
+                    }
+
+
+                }
+            });
+        }
+    }
+
+    private void initAdapter(int type){
+        if(type == 0){
             designerPictureListAdapter = new DesignerPictureListAdapter(mContext, samplePicDataList, null, SAMPLE_TYPE, designerIcon, name, des);
             designerImgListRecyclerView.setAdapter(designerPictureListAdapter);
             designerPictureListAdapter.notifyDataSetChanged();
         }else{
-            designerPictureListAdapter = new DesignerPictureListAdapter(mContext, null, casePicDataList, SAMPLE_TYPE, designerIcon, name, des);
+            designerPictureListAdapter = new DesignerPictureListAdapter(mContext, null, casePicDataList, CASE_TYPE, designerIcon, name, des);
             designerImgListRecyclerView.setAdapter(designerPictureListAdapter);
             designerPictureListAdapter.notifyDataSetChanged();
         }
-
-
-//        DesignerPictureListAdapter
+        designerImgListSwipRefreshLayout.setRefreshing(false);
+        designerPictureListAdapter.hideLoadMoreMessage();
     }
 
     @OnClick({R.id.relConcernDesigner, R.id.relDesignerGetDesign,R.id.llDesignerlPicBack})
     public void onViewClickedDesignerImgActivity(View view) {
         switch (view.getId()) {
             case R.id.relConcernDesigner:
-
+                Utils.setToast(mContext, "54613");
                 break;
             case R.id.relDesignerGetDesign:
 
@@ -195,7 +273,8 @@ public class DesignerImgListActivity extends BaseActivity {
             if(designerPictureListAdapter!=null){
                 designerPictureListAdapter.hideLoadMoreMessage();
             }
-            getDataFromNet();
+
+            getDataFromNet(dataType);
 
         }
     };
@@ -207,7 +286,7 @@ public class DesignerImgListActivity extends BaseActivity {
         }
 
         designerImgListSwipRefreshLayout.setRefreshing(false);
-        getDataFromNet();
+        getDataFromNet(dataType);
         System.out.println("-----**-onScrolled load more completed------");
     }
 }

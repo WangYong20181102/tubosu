@@ -19,6 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="6"
+            android:padding="10dp"
             android:background="@drawable/shape_designer_textview_num"
             android:textSize="16sp"
             android:layout_margin="14dp"

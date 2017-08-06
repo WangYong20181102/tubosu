@@ -1,5 +1,4 @@
 package com.tbs.tobosupicture.adapter;
-
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,15 +9,14 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.tbs.tobosupicture.R;
-import com.tbs.tobosupicture.bean.DesignerCaseEntity;
-import com.tbs.tobosupicture.bean.DesignerImpressionEntity;
+import com.tbs.tobosupicture.bean.AnLiJsonEntity;
+import com.tbs.tobosupicture.bean.XiaoGuoTuJsonEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
-
 import java.util.ArrayList;
 
 /**
+ * 设计师主页的案例或者样板图 点击全部 分别跳转到各自的列表的适配器
  * Created by Lie on 2017/7/15.
  */
 
@@ -36,15 +34,15 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
     private Context mContext;
     private LayoutInflater inflater;
 //    private ArrayList<SamplePicBeanEntity> dataList;
-    private ArrayList<DesignerImpressionEntity> sampleDataList; // 样板图
-    private ArrayList<DesignerCaseEntity> caseDataList; //  案例图
+    private ArrayList<XiaoGuoTuJsonEntity.XiaoGuoTu> sampleDataList; // 样板图
+    private ArrayList<AnLiJsonEntity.AnLiEntity> caseDataList; //  案例图
     private int type = -1;
     private String headUrl;
     private String desingerName;
     private String designerDesc;
 
-    public DesignerPictureListAdapter(Context mContext, ArrayList<DesignerImpressionEntity> sampleDataList,
-                                      ArrayList<DesignerCaseEntity> caseDataList, int type,
+    public DesignerPictureListAdapter(Context mContext, ArrayList<XiaoGuoTuJsonEntity.XiaoGuoTu> sampleDataList,
+                                      ArrayList<AnLiJsonEntity.AnLiEntity> caseDataList, int type,
                                       String headUrl, String desingerName, String designerDesc){
         this.mContext = mContext;
         this.sampleDataList = sampleDataList;
@@ -111,10 +109,10 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
             if(type == 0){// 样板图  sampleDataList
                 GlideUtils.glideLoader(mContext, sampleDataList.get(position).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itemHolder.iv_big_pic,1);
                 itemHolder.tv_big_pic_num.setText(sampleDataList.get(position).getImage_count());
-                itemHolder.tv_designer_collect_count.setText(sampleDataList.get(position).getCollect_count());
+                itemHolder.tv_designer_collect_count.setText(sampleDataList.get(position).getClick_count());
                 String desc = "";
                 String style = sampleDataList.get(position).getStyle_name();
-                String layout = sampleDataList.get(position).getLayout_name();
+                String layout = sampleDataList.get(position).getLayout();
                 String budget =sampleDataList.get(position).getPlan_price();
                 if(!"".equals(style)){
                     desc += style + " ";
@@ -126,28 +124,14 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
                    desc += "预算" + budget + "万";
                 }
                 itemHolder.tv_pic_desa.setText(desc);
-                itemHolder.tv_designer_collect_count.setText(sampleDataList.get(position).getCollect_count());
-                String isCollect = sampleDataList.get(position).getIs_collect();
+                itemHolder.tv_designer_collect_count.setText(sampleDataList.get(position).getClick_count());
+                String isCollect = sampleDataList.get(position).getClick_count();
                 if("0".equals(isCollect)){
                     // 未被收藏
                     itemHolder.iv_designer_image_like.setBackgroundResource(R.mipmap.shoucang3);
-                    itemHolder.rel_like.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //  FIXME 点击收藏
-
-                        }
-                    });
                 }else{
                     // 被收藏
                     itemHolder.iv_designer_image_like.setBackgroundResource(R.mipmap.shoucang);
-                    itemHolder.rel_like.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //  FIXME 点击取消收藏
-
-                        }
-                    });
                 }
 
                 itemHolder.iv_big_pic.setOnClickListener(new View.OnClickListener() {
@@ -195,28 +179,14 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
                     desc += "(" + method+")";
                 }
                 itemHolder.tv_pic_desa.setText(desc);
-                itemHolder.tv_designer_collect_count.setText(sampleDataList.get(position).getCollect_count());
-                String isCollect = sampleDataList.get(position).getIs_collect();
+                itemHolder.tv_designer_collect_count.setText(caseDataList.get(position).getCollect_count());
+                String isCollect = caseDataList.get(position).getIs_collect();
                 if("0".equals(isCollect)){
                     // 未被收藏
                     itemHolder.iv_designer_image_like.setBackgroundResource(R.mipmap.shoucang3);
-                    itemHolder.rel_like.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //  FIXME 点击收藏
-
-                        }
-                    });
                 }else{
                     // 被收藏
                     itemHolder.iv_designer_image_like.setBackgroundResource(R.mipmap.shoucang);
-                    itemHolder.rel_like.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //  FIXME 点击取消收藏
-
-                        }
-                    });
                 }
 
                 itemHolder.iv_big_pic.setOnClickListener(new View.OnClickListener() {
@@ -229,7 +199,7 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
 //                        mContext.startActivity(i);
                     }
                 });
-                holder.itemView.setTag(sampleDataList.get(position));
+                holder.itemView.setTag(caseDataList.get(position));
             }
         }
 
@@ -248,23 +218,42 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public int getItemViewType(int position) {
-        if(type==0){ // 样板
-            if(position==1){
-                return TYPE_HEADER;
-            }else if(position<sampleDataList.size()){
+//        if(type==0){ // 样板
+            if(footerView == null && headView == null){
                 return TYPE_ITEM;
-            }else {
+            }else if(position<sampleDataList.size()-1){
                 return TYPE_FOOTER;
-            }
-        }else { // 案例
-            if(position==1){
-                return TYPE_HEADER;
-            }else if(position<caseDataList.size()){
+            }else if(position==0){
+                return TYPE_FOOTER;
+            }else{
                 return TYPE_ITEM;
-            }else {
-                return TYPE_FOOTER;
             }
-        }
+//        }else { // 案例
+//            if(footerView == null && headView == null){
+//                return TYPE_ITEM;
+//            }else if(position<caseDataList.size()-1){
+//                return TYPE_FOOTER;
+//            }else if(position==0){
+//                return TYPE_HEADER;
+//            }else {
+//                return TYPE_ITEM;
+//            }
+//        }
+
+
+//        if (footerView == null && headView == null){
+//            return TYPE_ITEM;
+//        }
+//        if (position == 0){
+//            //第一个item应该加载Header
+//            return TYPE_HEADER;
+//        }
+//        if (position == getItemCount()-1){
+//            //最后一个,应该加载Footer
+//            return TYPE_FOOTER;
+//        }
+//        return TYPE_ITEM;
+
     }
 
 
@@ -287,8 +276,8 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
         public HeadViewHolder(View itemView) {
             super(itemView);
             ivDesignerHeadPicture = (ImageView) itemView.findViewById(R.id.ivDesignerHeadPicture);
-            tvDesignerName = (TextView) itemView.findViewById(R.id.tvDesignerName);
-            tvDesiNum = (TextView) itemView.findViewById(R.id.tvDesiNum);
+            tvDesignerName = (TextView) itemView.findViewById(R.id.tvDesignerName1);
+            tvDesiNum = (TextView) itemView.findViewById(R.id.tvDesiNum1);
         }
     }
 

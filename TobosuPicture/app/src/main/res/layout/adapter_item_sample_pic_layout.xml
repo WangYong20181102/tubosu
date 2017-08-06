@@ -70,6 +70,7 @@
             android:layout_marginRight="8dp"
             android:textColor="#9EA1A6"/>
         <ImageView
+            android:id="@+id/sdiv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="3dp"
