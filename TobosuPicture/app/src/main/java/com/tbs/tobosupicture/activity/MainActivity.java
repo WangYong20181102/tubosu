@@ -54,7 +54,6 @@ public class MainActivity extends BaseActivity {
     private String TAG = "MainActivity";
     private Context mContext;
     private BadgeView mImgToFriendTag;//以图会友提示
-    private BadgeView mMineTag;//以图会友提示
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

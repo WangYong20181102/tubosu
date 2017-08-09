@@ -1,6 +1,8 @@
 package com.tbs.tobosupicture.activity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -82,6 +84,14 @@ public class FindPasswordActivity extends BaseActivity {
             } else {
                 findPwCleanPhoneNum.setVisibility(View.VISIBLE);
             }
+            if (s.length() == 11) {
+                //获取验证码的按钮变颜色
+                findPwGetCode.setBackgroundResource(R.drawable.shape_get_code_yellow);
+                findPwGetCode.setTextColor(Color.parseColor("#ffffff"));
+            } else {
+                findPwGetCode.setBackgroundResource(R.drawable.shape_get_code);
+                findPwGetCode.setTextColor(Color.parseColor("#86898f"));
+            }
         }
 
         @Override
@@ -98,6 +108,7 @@ public class FindPasswordActivity extends BaseActivity {
                 break;
             case R.id.find_pw_clean_phone_num:
                 //清除输入的手机号码
+                findPwPhoneNum.setText("");
                 break;
             case R.id.find_pw_get_code:
                 //获取验证码
@@ -115,7 +126,7 @@ public class FindPasswordActivity extends BaseActivity {
         if (!TextUtils.isEmpty(findPwPhoneNum.getText().toString())
                 && findPwPhoneNum.getText().toString().matches(UrlConstans.PHONE_NUM)) {
             startCount();
-            HttpGetCode();
+            HttpGetCode(findPwPhoneNum.getText().toString());
         } else {
             Toast.makeText(mContext, "您输入的手机号码有误！", Toast.LENGTH_SHORT).show();
         }
@@ -160,9 +171,10 @@ public class FindPasswordActivity extends BaseActivity {
     }
 
     //网络请求获取验证码
-    private void HttpGetCode() {
+    private void HttpGetCode(String phoneNum) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
+        param.put("cellphone", phoneNum);
         HttpUtils.doPost(UrlConstans.GET_PHONE_CODE_URL, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -177,7 +189,12 @@ public class FindPasswordActivity extends BaseActivity {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.getString("status");
                     if (status.equals("200")) {
-
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, "获取验证码成功请注意查收~", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     } else {
 
                     }
@@ -188,8 +205,41 @@ public class FindPasswordActivity extends BaseActivity {
         });
     }
 
-    //TODO 进行下一步操作 验证码验证是否成功验证成功则进入下一步
+    //TODO 进行下一步操作 验证码验证是否成功验证成功则进入下一步 设置新的密码 在下一个界面按钮确认登录
     private void nextStep() {
+        //验证去进入下一个页面修改密码
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Utils.getDateToken());
+        param.put("cellphone", findPwPhoneNum.getText().toString());
+        param.put("verify_code", findPwCode.getText().toString());
+        HttpUtils.doPost(UrlConstans.SEARCH_PASSWORD, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "链接失败=======" + e.toString());
+            }
 
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                Log.e(TAG, "链接成功====" + json);
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.getString("status");
+                    if (status.equals("200")) {
+                        //验证成功
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+//                                Intent intent = new Intent(mContext,);
+                            }
+                        });
+                    } else {
+                        //验证失败
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

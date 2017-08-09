@@ -1,10 +1,11 @@
 package com.tbs.tobosupicture.bean;
 
 /**
- * Created by Mr.Lin on 2017/7/20 16:16.
+ * Created by Mr.Lin on 2017/8/3 17:39.
+ * 接收到的动态消息
  */
 
-public class _TestBean {
+public class _ReceiveMsg {
 
     /**
      * my_sponsor : {"msg_count":"0","icon":""}
@@ -12,23 +13,23 @@ public class _TestBean {
      * all_msg_count : 0
      */
 
-    private MySponsorBean my_sponsor;
-    private MyParticipationBean my_participation;
-    private String all_msg_count;
+    private MySponsor my_sponsor;//我的发起
+    private MyParticipation my_participation;//我的参与
+    private String all_msg_count;//消息总数
 
-    public MySponsorBean getMy_sponsor() {
+    public MySponsor getMy_sponsor() {
         return my_sponsor;
     }
 
-    public void setMy_sponsor(MySponsorBean my_sponsor) {
+    public void setMy_sponsor(MySponsor my_sponsor) {
         this.my_sponsor = my_sponsor;
     }
 
-    public MyParticipationBean getMy_participation() {
+    public MyParticipation getMy_participation() {
         return my_participation;
     }
 
-    public void setMy_participation(MyParticipationBean my_participation) {
+    public void setMy_participation(MyParticipation my_participation) {
         this.my_participation = my_participation;
     }
 
@@ -40,7 +41,7 @@ public class _TestBean {
         this.all_msg_count = all_msg_count;
     }
 
-    public static class MySponsorBean {
+    public static class MySponsor {
         /**
          * msg_count : 0
          * icon :
@@ -66,7 +67,7 @@ public class _TestBean {
         }
     }
 
-    public static class MyParticipationBean {
+    public static class MyParticipation {
         /**
          * msg_count : 0
          * icon :

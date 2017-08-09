@@ -16,7 +16,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/my_orgin"
+                android:id="@+id/about_me_my_orgin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
@@ -26,6 +26,8 @@
                 android:textSize="@dimen/text_size_28px" />
 
             <View
+                android:visibility="gone"
+                android:id="@+id/about_me_my_orgin_tag"
                 android:layout_width="25dp"
                 android:layout_height="4dp"
                 android:layout_alignParentBottom="true"
@@ -39,7 +41,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/my_join"
+                android:id="@+id/about_me_my_join"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
@@ -49,6 +51,8 @@
                 android:textSize="@dimen/text_size_28px" />
 
             <View
+                android:visibility="gone"
+                android:id="@+id/about_me_my_join_tag"
                 android:layout_width="25dp"
                 android:layout_height="4dp"
                 android:layout_alignParentBottom="true"
@@ -62,6 +66,7 @@
             android:layout_weight="1">
 
             <TextView
+                android:id="@+id/about_me_my_friend"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
@@ -71,6 +76,8 @@
                 android:textSize="@dimen/text_size_28px" />
 
             <View
+                android:visibility="gone"
+                android:id="@+id/about_me_my_friend_tag"
                 android:layout_width="25dp"
                 android:layout_height="4dp"
                 android:layout_alignParentBottom="true"
@@ -85,6 +92,7 @@
         android:background="@color/bg_divide" />
     <!--盛放布局的容器-->
     <FrameLayout
+        android:id="@+id/about_me_framelayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"></FrameLayout>

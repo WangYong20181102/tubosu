@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,16 +85,6 @@ public class DynamicBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof DynamicBaseHolder) {
-            List<ImageView> imageViewList = new ArrayList<>();//动态图片集
-            imageViewList.add(((DynamicBaseHolder) holder).dynamic_base_img1);
-            imageViewList.add(((DynamicBaseHolder) holder).dynamic_base_img2);
-            imageViewList.add(((DynamicBaseHolder) holder).dynamic_base_img3);
-            imageViewList.add(((DynamicBaseHolder) holder).dynamic_base_img4);
-            imageViewList.add(((DynamicBaseHolder) holder).dynamic_base_img5);
-            imageViewList.add(((DynamicBaseHolder) holder).dynamic_base_img6);
-            imageViewList.add(((DynamicBaseHolder) holder).dynamic_base_img7);
-            imageViewList.add(((DynamicBaseHolder) holder).dynamic_base_img8);
-            imageViewList.add(((DynamicBaseHolder) holder).dynamic_base_img9);
             //设置头像
             String iconUrl = dynamicBaseList.get(position).getIcon();
             GlideUtils.glideLoader(mContext, iconUrl, 0, 0, ((DynamicBaseHolder) holder).dynamic_base_icon, 0);
@@ -112,10 +103,158 @@ public class DynamicBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             //设置内容
             ((DynamicBaseHolder) holder).dynamic_base_title.setText(dynamicBaseList.get(position).getTitle());
             //设置图片以及点击事件
-            for (int i = 0; i < dynamicBaseList.get(position).getImage_url().size(); i++) {
-                imageViewList.get(i).setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicBaseList.get(position).getImage_url().get(i), R.mipmap.loading_img_fail, R.mipmap.loading_img, imageViewList.get(i));
-                ImageClick(imageViewList.get(i), dynamicBaseList.get(position).getId(), i);
+            //第一张
+            if (dynamicBaseList.get(position).getImage_url().size() >= 1 && !TextUtils.isEmpty(dynamicBaseList.get(position).getImage_url().get(0))) {
+                ((DynamicBaseHolder) holder).dynamic_base_img1.setVisibility(View.VISIBLE);
+                GlideUtils.glideLoader(mContext, dynamicBaseList.get(position).getImage_url().get(0),
+                        R.mipmap.loading_img, R.mipmap.loading_img, ((DynamicBaseHolder) holder).dynamic_base_img1);
+                ((DynamicBaseHolder) holder).dynamic_base_img1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicBaseList.get(position).getId());
+                        intent.putExtra("mImagePosition", 0);
+                        mContext.startActivity(intent);
+                    }
+                });
+            } else {
+                ((DynamicBaseHolder) holder).dynamic_base_img1.setVisibility(View.GONE);
+            }
+            //第二张
+            if (dynamicBaseList.get(position).getImage_url().size() >= 2 && !TextUtils.isEmpty(dynamicBaseList.get(position).getImage_url().get(1))) {
+                ((DynamicBaseHolder) holder).dynamic_base_img2.setVisibility(View.VISIBLE);
+                GlideUtils.glideLoader(mContext, dynamicBaseList.get(position).getImage_url().get(1),
+                        R.mipmap.loading_img, R.mipmap.loading_img, ((DynamicBaseHolder) holder).dynamic_base_img2);
+                ((DynamicBaseHolder) holder).dynamic_base_img2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicBaseList.get(position).getId());
+                        intent.putExtra("mImagePosition", 1);
+                        mContext.startActivity(intent);
+                    }
+                });
+            } else {
+                ((DynamicBaseHolder) holder).dynamic_base_img2.setVisibility(View.GONE);
+            }
+            //第三张
+            if (dynamicBaseList.get(position).getImage_url().size() >= 3 && !TextUtils.isEmpty(dynamicBaseList.get(position).getImage_url().get(2))) {
+                ((DynamicBaseHolder) holder).dynamic_base_img3.setVisibility(View.VISIBLE);
+                GlideUtils.glideLoader(mContext, dynamicBaseList.get(position).getImage_url().get(2),
+                        R.mipmap.loading_img, R.mipmap.loading_img, ((DynamicBaseHolder) holder).dynamic_base_img3);
+                ((DynamicBaseHolder) holder).dynamic_base_img3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicBaseList.get(position).getId());
+                        intent.putExtra("mImagePosition", 2);
+                        mContext.startActivity(intent);
+                    }
+                });
+            } else {
+                ((DynamicBaseHolder) holder).dynamic_base_img3.setVisibility(View.GONE);
+            }
+            //第四张
+            if (dynamicBaseList.get(position).getImage_url().size() >= 4 && !TextUtils.isEmpty(dynamicBaseList.get(position).getImage_url().get(3))) {
+                ((DynamicBaseHolder) holder).dynamic_base_img4.setVisibility(View.VISIBLE);
+                GlideUtils.glideLoader(mContext, dynamicBaseList.get(position).getImage_url().get(3),
+                        R.mipmap.loading_img, R.mipmap.loading_img, ((DynamicBaseHolder) holder).dynamic_base_img4);
+                ((DynamicBaseHolder) holder).dynamic_base_img4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicBaseList.get(position).getId());
+                        intent.putExtra("mImagePosition", 3);
+                        mContext.startActivity(intent);
+                    }
+                });
+            } else {
+                ((DynamicBaseHolder) holder).dynamic_base_img4.setVisibility(View.GONE);
+            }
+            //第五张
+            if (dynamicBaseList.get(position).getImage_url().size() >= 5 && !TextUtils.isEmpty(dynamicBaseList.get(position).getImage_url().get(4))) {
+                ((DynamicBaseHolder) holder).dynamic_base_img5.setVisibility(View.VISIBLE);
+                GlideUtils.glideLoader(mContext, dynamicBaseList.get(position).getImage_url().get(4),
+                        R.mipmap.loading_img, R.mipmap.loading_img, ((DynamicBaseHolder) holder).dynamic_base_img5);
+                ((DynamicBaseHolder) holder).dynamic_base_img5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicBaseList.get(position).getId());
+                        intent.putExtra("mImagePosition", 4);
+                        mContext.startActivity(intent);
+                    }
+                });
+            } else {
+                ((DynamicBaseHolder) holder).dynamic_base_img5.setVisibility(View.GONE);
+            }
+            //第六张
+            if (dynamicBaseList.get(position).getImage_url().size() >= 6 && !TextUtils.isEmpty(dynamicBaseList.get(position).getImage_url().get(5))) {
+                ((DynamicBaseHolder) holder).dynamic_base_img6.setVisibility(View.VISIBLE);
+                GlideUtils.glideLoader(mContext, dynamicBaseList.get(position).getImage_url().get(5),
+                        R.mipmap.loading_img, R.mipmap.loading_img, ((DynamicBaseHolder) holder).dynamic_base_img6);
+                ((DynamicBaseHolder) holder).dynamic_base_img6.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicBaseList.get(position).getId());
+                        intent.putExtra("mImagePosition", 5);
+                        mContext.startActivity(intent);
+                    }
+                });
+            } else {
+                ((DynamicBaseHolder) holder).dynamic_base_img6.setVisibility(View.GONE);
+            }
+            //第七张
+            if (dynamicBaseList.get(position).getImage_url().size() >= 7 && !TextUtils.isEmpty(dynamicBaseList.get(position).getImage_url().get(6))) {
+                ((DynamicBaseHolder) holder).dynamic_base_img7.setVisibility(View.VISIBLE);
+                GlideUtils.glideLoader(mContext, dynamicBaseList.get(position).getImage_url().get(6),
+                        R.mipmap.loading_img, R.mipmap.loading_img, ((DynamicBaseHolder) holder).dynamic_base_img7);
+                ((DynamicBaseHolder) holder).dynamic_base_img7.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicBaseList.get(position).getId());
+                        intent.putExtra("mImagePosition", 6);
+                        mContext.startActivity(intent);
+                    }
+                });
+            } else {
+                ((DynamicBaseHolder) holder).dynamic_base_img7.setVisibility(View.GONE);
+            }
+            //第八章
+            if (dynamicBaseList.get(position).getImage_url().size() >= 8 && !TextUtils.isEmpty(dynamicBaseList.get(position).getImage_url().get(7))) {
+                ((DynamicBaseHolder) holder).dynamic_base_img8.setVisibility(View.VISIBLE);
+                GlideUtils.glideLoader(mContext, dynamicBaseList.get(position).getImage_url().get(7),
+                        R.mipmap.loading_img, R.mipmap.loading_img, ((DynamicBaseHolder) holder).dynamic_base_img8);
+                ((DynamicBaseHolder) holder).dynamic_base_img8.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicBaseList.get(position).getId());
+                        intent.putExtra("mImagePosition", 7);
+                        mContext.startActivity(intent);
+                    }
+                });
+            } else {
+                ((DynamicBaseHolder) holder).dynamic_base_img8.setVisibility(View.GONE);
+            }
+            //第九张
+            if (dynamicBaseList.get(position).getImage_url().size() >= 9 && !TextUtils.isEmpty(dynamicBaseList.get(position).getImage_url().get(8))) {
+                ((DynamicBaseHolder) holder).dynamic_base_img9.setVisibility(View.VISIBLE);
+                GlideUtils.glideLoader(mContext, dynamicBaseList.get(position).getImage_url().get(8),
+                        R.mipmap.loading_img, R.mipmap.loading_img, ((DynamicBaseHolder) holder).dynamic_base_img9);
+                ((DynamicBaseHolder) holder).dynamic_base_img9.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, PhotoDetail.class);
+                        intent.putExtra("mDynamicId", dynamicBaseList.get(position).getId());
+                        intent.putExtra("mImagePosition", 8);
+                        mContext.startActivity(intent);
+                    }
+                });
+            } else {
+                ((DynamicBaseHolder) holder).dynamic_base_img9.setVisibility(View.GONE);
             }
             //设置用户是否对该动态点赞或者评论的状态
             if (dynamicBaseList.get(position).getIs_praise().equals("0")) {
@@ -174,18 +313,6 @@ public class DynamicBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 ((FootViewHolder) holder).mTextView.setVisibility(View.GONE);
             }
         }
-    }
-
-    private void ImageClick(ImageView imageView, final String mDynamicId, final int imagePosition) {
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, PhotoDetail.class);
-                intent.putExtra("mDynamicId", mDynamicId);
-                intent.putExtra("mImagePosition", imagePosition);
-                mContext.startActivity(intent);
-            }
-        });
     }
 
     @Override
