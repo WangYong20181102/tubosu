@@ -24,6 +24,7 @@ import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.MyFriendsActivity;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.utils.GlideUtils;
+import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.ImgCompressUtils;
 import com.tbs.tobosupicture.view.TouchImageView;
 import com.umeng.socialize.ShareAction;
@@ -33,6 +34,7 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -41,6 +43,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.nereo.multi_image_selector.MultiImageSelector;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -59,6 +64,8 @@ public class ImageToFriendFragment extends BaseFragment {
     TextView intoThrLogin;
     @BindView(R.id.photo_img3)
     TouchImageView photoImg3;
+    @BindView(R.id.up_load_image)
+    TextView upLoadImage;
     private ArrayList<String> imageList = new ArrayList<>();
     private ArrayList<String> path = new ArrayList<>();
 
@@ -67,6 +74,7 @@ public class ImageToFriendFragment extends BaseFragment {
     private static final int REQUEST_IMAGE = 3;//图片选择器用到的code
     private static final String IMAGE_FILE_NAME = "avatarImage.jpg";
     private UMShareAPI mShareAPI;
+    private File newFile;//压缩之后的文件
 
 
     @BindView(R.id.into_photo)
@@ -106,7 +114,8 @@ public class ImageToFriendFragment extends BaseFragment {
         super.onDestroyView();
     }
 
-    @OnClick({R.id.into_free_quote, R.id.into_imgae, R.id.into_img, R.id.into_photo, R.id.into_share, R.id.into_thr_login})
+    @OnClick({R.id.into_free_quote, R.id.into_imgae, R.id.into_img,
+            R.id.into_photo, R.id.into_share, R.id.into_thr_login, R.id.up_load_image})
     public void onViewClickedAtImageToFriendFragment(View view) {
         switch (view.getId()) {
             case R.id.into_free_quote:
@@ -147,7 +156,7 @@ public class ImageToFriendFragment extends BaseFragment {
 
                     @Override
                     public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-                        Log.e(TAG, "微信授权成功!===" + map.get("openid"));
+                        Log.e(TAG, "微信授权成功!===openid" + map.get("openid") + "==name==" + map.get("name")+"==icon=="+map.get("iconurl"));
                     }
 
                     @Override
@@ -160,6 +169,10 @@ public class ImageToFriendFragment extends BaseFragment {
 
                     }
                 });
+                break;
+            case R.id.up_load_image:
+                //TODO 进行图片上传
+                HttpUpLoadImage();
                 break;
         }
     }
@@ -259,7 +272,7 @@ public class ImageToFriendFragment extends BaseFragment {
                 //原始图片
                 File file = new File(path.get(0));
                 //压缩的图片
-                File newFile = new File(ImgCompressUtils.CompressAndGetPath(mContext, path.get(0)));
+                newFile = new File(ImgCompressUtils.CompressAndGetPath(mContext, path.get(0)));
                 newPath = ImgCompressUtils.CompressAndGetPath(mContext, path.get(0));
                 Log.e(TAG, "压缩前图片的大小=" + (file.length() / 1024) + "压缩后的图片大小=" + newFile.length() / 1024);
                 for (int i = 0; i < path.size(); i++) {
@@ -336,4 +349,19 @@ public class ImageToFriendFragment extends BaseFragment {
         startActivityForResult(intent, REQUESTCODE_CUTTING);
     }
 
+    private void HttpUpLoadImage() {
+        HttpUtils.doFile("http://www.dev.tobosu.com/cloud/upload/upload_for_ke", newFile.getPath(), newFile.getName(), new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "上传失败====" + e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                Log.e(TAG, "上传成功=====" + json);
+
+            }
+        });
+    }
 }

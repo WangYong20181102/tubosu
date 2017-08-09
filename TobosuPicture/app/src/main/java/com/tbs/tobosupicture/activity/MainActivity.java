@@ -70,7 +70,7 @@ public class MainActivity extends BaseActivity {
         //案例
         DecorationCaseFragment decorationCaseFragment = new DecorationCaseFragment();
         //以图会友
-//        ImageToFriendFragment imageToFriendFragment = new ImageToFriendFragment();
+//        ImageToFriendFragment imageToFriendFragment = new ImageToFriendFragment();//用来测试的fragment
         ImgToFriendFragment imageToFriendFragment = new ImgToFriendFragment();
         //我的
         MineFragment mineFragment = new MineFragment();

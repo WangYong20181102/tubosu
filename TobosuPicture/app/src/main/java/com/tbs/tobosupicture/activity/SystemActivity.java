@@ -79,6 +79,12 @@ public class SystemActivity extends AppCompatActivity {
                 break;
             case R.id.system_suggest:
                 //反馈意见
+                if (Utils.userIsLogin(mContext)) {
+                    intoSuggest();
+                } else {
+                    Utils.gotoLogin(mContext);
+                }
+
                 break;
             case R.id.system_clean:
                 //清理缓存
@@ -146,4 +152,9 @@ public class SystemActivity extends AppCompatActivity {
 
         }
     };
+
+    private void intoSuggest() {
+        Intent intent = new Intent(mContext, SuggestActivity.class);
+        mContext.startActivity(intent);
+    }
 }

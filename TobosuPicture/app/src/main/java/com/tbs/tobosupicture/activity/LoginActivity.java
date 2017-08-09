@@ -25,12 +25,16 @@ import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.Md5Utils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,6 +63,7 @@ public class LoginActivity extends BaseActivity {
     private Context mContext;
     private String TAG = "LoginActivity";
     private Gson mGson;
+    private UMShareAPI mShareAPI;
 
 
     @Override
@@ -72,7 +77,7 @@ public class LoginActivity extends BaseActivity {
 
     private void initViewEvent() {
         mGson = new Gson();
-
+        mShareAPI = UMShareAPI.get(mContext);
     }
 
     @Override
@@ -100,6 +105,7 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.login_weixin_login:
                 //微信登录
+                weChatLogin();
                 break;
         }
     }
@@ -164,6 +170,79 @@ public class LoginActivity extends BaseActivity {
                                 Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
                             }
                         });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    //微信登录
+    private void weChatLogin() {
+        mShareAPI.getPlatformInfo(LoginActivity.this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
+            @Override
+            public void onStart(SHARE_MEDIA share_media) {
+
+            }
+
+            @Override
+            public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                //授权成功 获取信息
+                String icon = map.get("iconurl");//微信的头像
+                String nickname = map.get("name");//微信的昵称
+                String account = map.get("openid");//微信的openid
+                Log.e(TAG, "授权成功==头像==" + icon + "===nickname===" + nickname + "===account===" + account);
+                HttpWeChatLogin(icon, nickname, account);
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+                //授权出错
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA share_media, int i) {
+                //取消微信授权
+                Toast.makeText(mContext, "取消了微信授权登录！", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void HttpWeChatLogin(String icon, String nickname, String account) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Utils.getDateToken());
+        param.put("icon", icon);
+        param.put("nickname", nickname);
+        param.put("account", account);
+        param.put("system_type", "1");
+        param.put("chcode", Utils.getChannType(mContext));
+        HttpUtils.doPost(UrlConstans.WECHAT_LOGIN, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "链接失败========" + e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                Log.e(TAG, "链接成功======" + json);
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.getString("status");
+                    if (status.equals("200")) {
+                        //登录成功
+                        String data = jsonObject.getString("data");
+                        _User user = mGson.fromJson(data, _User.class);
+                        //将数据注入Sp中
+                        SpUtils.saveUserNick(mContext, user.getNick());
+                        SpUtils.saveUserIcon(mContext, user.getIcon());
+                        SpUtils.saveUserPersonalSignature(mContext, user.getPersonal_signature());
+                        SpUtils.saveUserUid(mContext, user.getUid());
+                        SpUtils.saveUserType(mContext, user.getUser_type());
+                        Log.e(TAG, "获取用户的uid====" + SpUtils.getUserUid(mContext));
+                        EventBusUtil.sendEvent(new Event(EC.EventCode.LOGIN_INITDATA));
+                        finish();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

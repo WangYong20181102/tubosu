@@ -135,6 +135,8 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             GlideUtils.glideLoader(mContext, personHomePage.getUser_info().getIcon(),
                     R.mipmap.default_icon, R.mipmap.default_icon,
                     ((PhpHeadHolder) holder).item_php_head_icon, 0);
+            //背景图
+            GlideUtils.glideLoader(mContext,personHomePage.getUser_info().getCover_url(),R.mipmap.me_bg,R.mipmap.me_bg,((PhpHeadHolder) holder).item_php_head_bg);
             //昵称
             ((PhpHeadHolder) holder).item_php_head_nick.setText("" + personHomePage.getUser_info().getNick());
             //性别以及所在地

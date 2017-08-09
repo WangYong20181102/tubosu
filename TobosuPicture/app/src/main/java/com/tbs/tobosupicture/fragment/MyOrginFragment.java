@@ -102,6 +102,9 @@ public class MyOrginFragment extends BaseFragment {
         if (!dynamicBaseArrayList.isEmpty()) {
             dynamicBaseArrayList.clear();
         }
+        if (receiveMsg != null) {
+//            receiveMsg.getMy_sponsor().setMsg_count("0");
+        }
         HttpGetMsg();
     }
 
@@ -233,10 +236,12 @@ public class MyOrginFragment extends BaseFragment {
                                 myOrginSwipe.setRefreshing(false);
                                 //将数据填充
                                 if (myOrginAdapter == null) {
+                                    Log.e(TAG, "数据填充====adapter为null时我发起的数量===" + receiveMsg.getMy_sponsor().getMsg_count());
                                     myOrginAdapter = new MyOrginAdapter(mContext, getActivity(), receiveMsg.getMy_sponsor(), dynamicBaseArrayList);
                                     myOrginRecyclerview.setAdapter(myOrginAdapter);
                                     myOrginAdapter.notifyDataSetChanged();
                                 } else {
+                                    Log.e(TAG, "数据填充====adapter已经实例化时我发起的数量===" + receiveMsg.getMy_sponsor().getMsg_count());
                                     myOrginAdapter.notifyDataSetChanged();
                                 }
                                 if (myOrginAdapter != null) {

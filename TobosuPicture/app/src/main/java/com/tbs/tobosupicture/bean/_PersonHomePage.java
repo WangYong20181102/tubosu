@@ -56,6 +56,7 @@ public class _PersonHomePage {
         private String certification;//如果是装修公司 是否认证过
         private String user_type;//用户的类型  1---业主  3---装修公司
         private String city_name;
+        private String cover_url;
         private String province_name;
         private String id;//当前个人主页的用户id
         private String is_virtual_user;//是否是虚拟用户： 1--是  2--不是
@@ -63,6 +64,14 @@ public class _PersonHomePage {
         private String followed_count;
         private String follow_count;
         private String is_follow;
+
+        public String getCover_url() {
+            return cover_url;
+        }
+
+        public void setCover_url(String cover_url) {
+            this.cover_url = cover_url;
+        }
 
         public String getNick() {
             return nick;

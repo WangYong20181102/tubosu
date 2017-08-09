@@ -100,6 +100,7 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             } else {
                 ((MyOrginHeadHolder) holder).head_hint_rl.setVisibility(View.VISIBLE);
                 ((MyOrginHeadHolder) holder).head_hint_text.setText(myOrginMsg.getMsg_count() + "条新消息");
+                Log.e(TAG, "消息数据======" + myOrginMsg.getMsg_count());
                 GlideUtils.glideLoader(mContext, myOrginMsg.getIcon(), 0, 0, ((MyOrginHeadHolder) holder).head_hint_icon, 0);
             }
         } else if (holder instanceof MyOrginItemHolder) {
