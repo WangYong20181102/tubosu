@@ -154,7 +154,9 @@
         <activity android:name=".activity.TestActivitity" />
         <activity android:name=".activity.BindPhoneNumActivity" />
         <activity android:name=".activity.InputPasswordActivity" />
-        <activity android:name=".activity.SuggestActivity"></activity>
+        <activity android:name=".activity.SuggestActivity" />
+        <activity android:name=".activity.WebViewActivity" />
+        <activity android:name=".activity.SystemMessageActivity"></activity>
     </application>
 
 </manifest>

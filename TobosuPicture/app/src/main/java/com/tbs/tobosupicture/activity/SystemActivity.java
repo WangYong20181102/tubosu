@@ -76,6 +76,7 @@ public class SystemActivity extends AppCompatActivity {
                 break;
             case R.id.system_msg:
                 //进入系统消息
+                intoSystemMessage();
                 break;
             case R.id.system_suggest:
                 //反馈意见
@@ -153,8 +154,15 @@ public class SystemActivity extends AppCompatActivity {
         }
     };
 
+    //去建议界面
     private void intoSuggest() {
         Intent intent = new Intent(mContext, SuggestActivity.class);
+        mContext.startActivity(intent);
+    }
+
+    //进入系统
+    private void intoSystemMessage() {
+        Intent intent = new Intent(mContext, SystemMessageActivity.class);
         mContext.startActivity(intent);
     }
 }

@@ -327,5 +327,9 @@ public class UrlConstans {
      * 反馈建议公共功能
      */
     public static final String FEEDBACK = ZXKK_URL + "rapp/public/feedback";
+    /**
+     * 系统消息公共功能
+     */
+    public static final String SYSTEM_MSG = ZXKK_URL + "rapp/appMsg/system_msg";
 
 }

@@ -203,6 +203,7 @@ public class PersonInfoActivity extends BaseActivity {
                 break;
             case R.id.person_info_city_rl:
                 //点击更换城市
+                changeCity();
                 break;
             case R.id.person_info_sign_rl:
                 //点击更换签名
@@ -235,6 +236,10 @@ public class PersonInfoActivity extends BaseActivity {
         }
     }
 
+    //更换城市
+    private void changeCity() {
+
+    }
 
     //用户修改昵称
     private void changeNick() {

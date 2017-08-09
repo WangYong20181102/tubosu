@@ -88,6 +88,7 @@ public class MyFansActivity extends BaseActivity {
         mfMyfansRecyclelist.setLayoutManager(mLinearLayoutManager);
         mfMyfansRecyclelist.setOnTouchListener(onTouchListener);
         mfMyfansRecyclelist.addOnScrollListener(onScrollLister);//上拉加载更多
+
     }
 
     //下拉刷新重置数据
