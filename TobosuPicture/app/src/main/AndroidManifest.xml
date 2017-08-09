@@ -148,7 +148,13 @@
         <activity android:name=".activity.PersonInfoActivity" />
         <activity android:name=".activity.MyDesignerListActivity" />
         <activity android:name=".activity.MySampleListActivity" />
-        <activity android:name=".activity.MyDynamicActivity"></activity>
+        <activity android:name=".activity.MyDynamicActivity" />
+        <activity android:name=".activity.ChangeNickActivity" />
+        <activity android:name=".activity.ChangeSiginActivity" />
+        <activity android:name=".activity.TestActivitity" />
+        <activity android:name=".activity.BindPhoneNumActivity" />
+        <activity android:name=".activity.InputPasswordActivity" />
+        <activity android:name=".activity.SuggestActivity"></activity>
     </application>
 
 </manifest>

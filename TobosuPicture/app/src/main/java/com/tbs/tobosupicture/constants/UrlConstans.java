@@ -72,7 +72,7 @@ public class UrlConstans {
      */
     public static final String DESIGNER_URL = ZXKK_URL + "rapp/TemplateMap/designer_index";
 
-    public static final String DISTRICT_LIST_URL =  ZXKK_URL + "rapp/village/village_list";
+    public static final String DISTRICT_LIST_URL = ZXKK_URL + "rapp/village/village_list";
 
     /**
      * 关注 / 取消关注 设计师url
@@ -94,7 +94,9 @@ public class UrlConstans {
      */
     public static final String CASE_SEARCH_URL = ZXKK_URL + "/rapp/case/case_search";
 
+
     public static final String HOT_CITY_URL = ZXKK_URL + "tapp/util/change_city";
+
 
     /**
      * 获取他人的图谜url
@@ -124,7 +126,7 @@ public class UrlConstans {
     /**
      * 用户设置新密码
      */
-    public static final String SET_NEW_PASSWORD = ZXKK_URL + "";
+    public static final String SET_NEW_PASSWORD = ZXKK_URL + "rapp/public/modify_password";
     /**
      * 用户获取我的图友列表
      */
@@ -156,14 +158,15 @@ public class UrlConstans {
 
     /**
      * 1 案例，  0 样板
+     *
      * @param type
      * @return
      */
-    public static String getListUrl(int type){
-        if(type == 0){
+    public static String getListUrl(int type) {
+        if (type == 0) {
             // 设计师效果图列表
             return ZXKK_URL + "rapp/designer/impression_list";
-        }else {
+        } else {
             // 设计师案例列表
             return ZXKK_URL + "rapp/designer/case_list";
         }
@@ -276,5 +279,53 @@ public class UrlConstans {
      * 找回密码公共功能
      */
     public static final String SEARCH_PASSWORD = ZXKK_URL + "rapp/public/search_password";
+    /**
+     * 我的动态
+     */
+    public static final String MY_DYNAMIC = ZXKK_URL + "rapp/MyOwner/my_dynamic";
+    /**
+     * 修改昵称用户个人信息
+     */
+    public static final String MODIFY_NICK = ZXKK_URL + "rapp/MyOwner/modify_nick";
+    /**
+     * 修改个性签名信息用户个人信息
+     */
+    public static final String MODIFY_PERSONAL_SIGNATURE = ZXKK_URL + "rapp/MyOwner/modify_personal_signature";
+    /**
+     * 修改性别信息用户个人信息
+     */
+    public static final String MODIFY_SEX = ZXKK_URL + "rapp/MyOwner/modify_sex";
+    /**
+     * 校验手机是否注册公共功能
+     */
+    public static final String IS_REGISTER = ZXKK_URL + "rapp/public/is_register";
+    /**
+     * 校验验证码公共功能
+     */
+    public static final String CHECK_VERIFY_CODE = ZXKK_URL + "rapp/public/check_verify_code";
+    /**
+     * 绑定手机号公共功能
+     */
+    public static final String BIND_CELLPHONE = ZXKK_URL + "rapp/public/bind_cellphone";
+    /**
+     * 微信登录
+     */
+    public static final String WECHAT_LOGIN = ZXKK_URL + "rapp/public/wechat_login";
+    /**
+     * 微信登录
+     */
+    public static final String BIND_WECHAT = ZXKK_URL + "rapp/public/bind_wechat";
+    /**
+     * 修改头像
+     */
+    public static final String MODIFY_AVATAR = ZXKK_URL + "rapp/MyOwner/modify_avatar";
+    /**
+     * 修改封面图
+     */
+    public static final String MODIFY_COVER_URL = ZXKK_URL + "rapp/MyOwner/modify_cover_url";
+    /**
+     * 反馈建议公共功能
+     */
+    public static final String FEEDBACK = ZXKK_URL + "rapp/public/feedback";
 
 }

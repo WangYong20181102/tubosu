@@ -85,6 +85,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="点击进行第三方登录" />
+
+            <TextView
+                android:id="@+id/up_load_image"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="上传图片" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

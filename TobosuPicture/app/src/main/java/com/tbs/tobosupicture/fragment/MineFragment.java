@@ -1,12 +1,21 @@
 package com.tbs.tobosupicture.fragment;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +23,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.tbs.tobosupicture.activity.MyDesignerListActivity;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.LoginActivity;
+import com.tbs.tobosupicture.activity.MyDesignerListActivity;
+import com.tbs.tobosupicture.activity.MyDynamicActivity;
 import com.tbs.tobosupicture.activity.MyFansActivity;
 import com.tbs.tobosupicture.activity.MyFriendsActivity;
 import com.tbs.tobosupicture.activity.MySampleListActivity;
@@ -27,17 +38,28 @@ import com.tbs.tobosupicture.activity.ShareWeixinActivity;
 import com.tbs.tobosupicture.activity.SystemActivity;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.bean._HomePage;
+import com.tbs.tobosupicture.bean._ImageUpLoad;
 import com.tbs.tobosupicture.constants.UrlConstans;
+import com.tbs.tobosupicture.utils.FileUtil;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
+import com.tbs.tobosupicture.utils.WriteUtil;
+import com.tbs.tobosupicture.view.SelectPersonalPopupWindow;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -97,12 +119,34 @@ public class MineFragment extends BaseFragment {
     LinearLayout fmCoInfo;//整个公司信息层
     @BindView(R.id.fm_user_sign)
     TextView fmUserSign;
+    @BindView(R.id.fm_pop_location)
+    View fmPopLocation;
     Unbinder unbinder;
 
 
     private Context mContext;
     private String TAG = "MineFragment";
     private Gson mGson;
+
+    //开启图片调取
+    private SelectPersonalPopupWindow menuWindow;
+
+    //TODO 调取相机要用的值
+    private static final int REQUESTCODE_PICK = 0;
+    private static final int REQUESTCODE_TAKE = 1;
+    private static final int REQUESTCODE_CUTTING = 2;
+    /**
+     * 头像存储的名称
+     */
+    private static final String IMAGE_FILE_NAME = "avatarImage.jpg";
+    private String urlpath;
+    private Bitmap photo = null;
+
+    //上传时候的loading
+    private ProgressDialog pd;
+
+    //结果字符串
+    private String resultStr = "";
 
     public MineFragment() {
 
@@ -151,6 +195,7 @@ public class MineFragment extends BaseFragment {
             fmTumiNum.setText("0");
             fmTuyouNum.setText("0");
             fmDongtaiNum.setText("0");
+            fmHeadBg.setImageResource(R.mipmap.me_bg);
         }
     }
 
@@ -168,6 +213,7 @@ public class MineFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.fm_head_bg:
                 //点击更换背景
+                changeBg();
                 break;
             case R.id.fm_user_icon:
                 //TODO 判断用户登录的情况   用户头像点击事件
@@ -191,6 +237,12 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.fm_dongtai_ll:
                 //进入用户的动态
+                if (Utils.userIsLogin(mContext)) {
+                    Intent intent1 = new Intent(mContext, MyDynamicActivity.class);
+                    mContext.startActivity(intent1);
+                } else {
+                    Utils.gotoLogin(mContext);
+                }
 
                 break;
             case R.id.fm_tumi_ll:
@@ -205,9 +257,9 @@ public class MineFragment extends BaseFragment {
             case R.id.fm_tuyou_ll:
                 //点击进入我的图友
                 if (Utils.userIsLogin(mContext)) {
-                    Intent intent=new Intent(mContext, MyFriendsActivity.class);
+                    Intent intent = new Intent(mContext, MyFriendsActivity.class);
                     mContext.startActivity(intent);
-                }else {
+                } else {
                     gotoLogin();
                 }
                 break;
@@ -216,26 +268,26 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.fm_guanzhu_shejishi:
                 //点击进入关注的设计师
-                if(Utils.userIsLogin(mContext)){
+                if (Utils.userIsLogin(mContext)) {
                     mContext.startActivity(new Intent(mContext, MyDesignerListActivity.class));
-                }else {
+                } else {
                     Utils.gotoLogin(mContext);
                 }
 
                 break;
             case R.id.fm_shoucang_xiaoguotu:
                 //点击进入收藏的效果图
-                if(Utils.userIsLogin(mContext)){
+                if (Utils.userIsLogin(mContext)) {
                     mContext.startActivity(new Intent(mContext, MySampleListActivity.class));
-                }else {
+                } else {
                     Utils.gotoLogin(mContext);
                 }
                 break;
             case R.id.fm_shoucang_anli:
                 //点击进入收藏的案例
-                if(Utils.userIsLogin(mContext)){
+                if (Utils.userIsLogin(mContext)) {
 //                    mContext.startActivity(new Intent(mContext, MyCaseListActivity.class));
-                }else {
+                } else {
                     Utils.gotoLogin(mContext);
                 }
                 break;
@@ -254,6 +306,162 @@ public class MineFragment extends BaseFragment {
                 mContext.startActivity(intent);
                 break;
         }
+    }
+
+    //更换背景
+    private void changeBg() {
+        menuWindow = new SelectPersonalPopupWindow(mContext, popClickLister);
+        menuWindow.showAtLocation(fmPopLocation, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+    }
+
+    private View.OnClickListener popClickLister = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            menuWindow.dismiss();
+            switch (v.getId()) {
+                case R.id.takePhotoBtn:
+                    //开启相机
+                    Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
+                    startActivityForResult(takeIntent, REQUESTCODE_TAKE);
+
+                    break;
+                case R.id.pickPhotoBtn:
+                    //开启图册
+                    Intent pickIntent = new Intent(Intent.ACTION_PICK, null);
+                    pickIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                    startActivityForResult(pickIntent, REQUESTCODE_PICK);
+                    break;
+            }
+        }
+    };
+
+    /***
+     * 裁剪图片
+     * @param uri
+     */
+    public void startPhotoZoom(Uri uri) {
+
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 300);
+        intent.putExtra("outputY", 300);
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, REQUESTCODE_CUTTING);
+    }
+
+    /***
+     * 上传用户头像至服务器
+     * @param picdata
+     */
+    private void setPicToView(Intent picdata) {
+        Bundle extras = picdata.getExtras();
+        if (extras != null) {
+            photo = extras.getParcelable("data");
+            urlpath = FileUtil.saveFile(mContext, "temphead.jpg", photo);
+            Log.e(TAG, "上传头像的文件流地址======" + urlpath);
+            pd = ProgressDialog.show(mContext, null, "正在上传图片，请稍候...");
+            // 开启线程上传
+            new Thread(uploadImageRunnable).start();
+        }
+    }
+
+    //上传图片的线程
+    Runnable uploadImageRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Looper.prepare();
+            if (TextUtils.isEmpty(UrlConstans.UPLOAD_IMAGE)) {
+                Toast.makeText(mContext, "还没有设置上传服务器的路径！", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Map<String, String> textParams = null;
+            Map<String, File> fileparams = null;
+            try {
+                URL url = new URL(UrlConstans.UPLOAD_IMAGE);
+                textParams = new HashMap<String, String>();
+                fileparams = new HashMap<String, File>();
+                File file = new File(urlpath);
+                fileparams.put("filedata", file);
+                textParams.put("s_code", "head_file");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setConnectTimeout(5000);
+                conn.setDoOutput(true);
+                conn.setRequestMethod("POST");
+                conn.setUseCaches(false);
+                conn.setRequestProperty("Charset", "UTF-8");
+                conn.setRequestProperty("ser-Agent", "Fiddler");
+                conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + WriteUtil.BOUNDARY);
+                OutputStream os = conn.getOutputStream();
+                DataOutputStream ds = new DataOutputStream(os);
+                WriteUtil.writeStringParams(textParams, ds);
+                WriteUtil.writeFileParams(fileparams, ds);
+                WriteUtil.paramsEnd(ds);
+                // 对文件流操作完,要记得及时关闭
+                os.close();
+                // 服务器返回的响应吗
+                int code = conn.getResponseCode(); // 从Internet获取网页,发送请求,将网页以流的形式读回来
+                // 对响应码进行判断
+                if (code == 200) {// 返回的响应码200,是成功
+                    // 得到网络返回的输入流
+                    InputStream is = conn.getInputStream();
+                    resultStr = WriteUtil.readString(is);
+                } else {
+                    Toast.makeText(mContext, "请求URL失败！", Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            handlerUpload.sendEmptyMessage(0);
+        }
+    };
+    private Handler handlerUpload = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    pd.dismiss();
+                    Log.e(TAG, "获取的结果=====" + resultStr);
+                    _ImageUpLoad imageUpLoad = mGson.fromJson(resultStr, _ImageUpLoad.class);
+                    HttpChangeUserBg(imageUpLoad.getUrl());
+                    GlideUtils.glideLoader(mContext, imageUpLoad.getUrl(), R.mipmap.me_bg,
+                            R.mipmap.me_bg, fmHeadBg);
+                    break;
+            }
+            return false;
+        }
+    });
+
+    //网络修改封面
+    private void HttpChangeUserBg(String url) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Utils.getDateToken());
+        param.put("uid", SpUtils.getUserUid(mContext));
+        param.put("is_virtual_user", "2");
+        param.put("cover_url", url);
+        HttpUtils.doPost(UrlConstans.MODIFY_COVER_URL, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.getString("status");
+                    if (status.equals("200")) {
+                        Log.e(TAG, "上传成功====");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     //拨打客服电话
@@ -306,6 +514,8 @@ public class MineFragment extends BaseFragment {
 
     //布局
     private void initView(_HomePage homePage) {
+        //封面背景
+        GlideUtils.glideLoader(mContext, homePage.getCover_url(), R.mipmap.me_bg, R.mipmap.me_bg, fmHeadBg);
         //昵称
         fmUserName.setText(homePage.getNick());//业主
         fmCoName.setText(homePage.getNick());//公司
@@ -326,6 +536,33 @@ public class MineFragment extends BaseFragment {
         fmTuyouNum.setText(homePage.getFollow_count());
         //公司的地址
         fmCoAddress.setText(homePage.getProvince_name() + homePage.getCity_name() + homePage.getAddress());
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUESTCODE_TAKE:
+                File temp = new File(Environment.getExternalStorageDirectory() + "/" + IMAGE_FILE_NAME);
+                if (resultCode == 0) {
+                    Intent it = new Intent(mContext, PersonInfoActivity.class);
+                    startActivity(it);
+
+                } else {
+                    startPhotoZoom(Uri.fromFile(temp));
+                }
+                break;
+            case REQUESTCODE_CUTTING:
+                if (data != null) {
+                    setPicToView(data);
+                }
+                break;
+            case REQUESTCODE_PICK:
+                try {
+                    startPhotoZoom(data.getData());
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
     }
 }

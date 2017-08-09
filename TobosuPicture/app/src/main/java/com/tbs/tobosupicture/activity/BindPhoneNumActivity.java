@@ -1,5 +1,6 @@
 package com.tbs.tobosupicture.activity;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -34,41 +35,38 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-/**
- * create by lin
- * 找回密码页面
- */
-public class FindPasswordActivity extends BaseActivity {
+//绑定手机号码
+public class BindPhoneNumActivity extends BaseActivity {
 
-    private Context mContext;
-    private String TAG = "FindPasswordActivity";
-    private int count = 60;
-
-    @BindView(R.id.find_pw_back)
-    LinearLayout findPwBack;
-    @BindView(R.id.find_pw_phone_num)
-    EditText findPwPhoneNum;
+    @BindView(R.id.bind_phone_back)
+    LinearLayout bindPhoneBack;
+    @BindView(R.id.bind_phone_num)
+    EditText bindPhoneNum;
     @BindView(R.id.find_pw_clean_phone_num)
     ImageView findPwCleanPhoneNum;
-    @BindView(R.id.find_pw_code)
-    EditText findPwCode;
-    @BindView(R.id.find_pw_get_code)
-    TextView findPwGetCode;
-    @BindView(R.id.find_pw_ok)
-    TextView findPwOk;
+    @BindView(R.id.bind_phone_code)
+    EditText bindPhoneCode;
+    @BindView(R.id.bind_phone_get_code)
+    TextView bindPhoneGetCode;
+    @BindView(R.id.bind_phone_ok)
+    TextView bindPhoneOk;
+
+    private Context mContext;
+    private String TAG = "BindPhoneNumActivity";
+    private int count = 60;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_password);
+        setContentView(R.layout.activity_bind_phone_num);
         ButterKnife.bind(this);
         mContext = this;
         initViewEvent();
     }
 
-    //初始化控件事件
+    //初始化控件
     private void initViewEvent() {
-        findPwPhoneNum.addTextChangedListener(textWatcher);
+        bindPhoneNum.addTextChangedListener(textWatcher);
     }
 
     private TextWatcher textWatcher = new TextWatcher() {
@@ -86,11 +84,11 @@ public class FindPasswordActivity extends BaseActivity {
             }
             if (s.length() == 11) {
                 //获取验证码的按钮变颜色
-                findPwGetCode.setBackgroundResource(R.drawable.shape_get_code_yellow);
-                findPwGetCode.setTextColor(Color.parseColor("#ffffff"));
+                bindPhoneGetCode.setBackgroundResource(R.drawable.shape_get_code_yellow);
+                bindPhoneGetCode.setTextColor(Color.parseColor("#ffffff"));
             } else {
-                findPwGetCode.setBackgroundResource(R.drawable.shape_get_code);
-                findPwGetCode.setTextColor(Color.parseColor("#86898f"));
+                bindPhoneGetCode.setBackgroundResource(R.drawable.shape_get_code);
+                bindPhoneGetCode.setTextColor(Color.parseColor("#86898f"));
             }
         }
 
@@ -100,36 +98,88 @@ public class FindPasswordActivity extends BaseActivity {
         }
     };
 
-    @OnClick({R.id.find_pw_back, R.id.find_pw_clean_phone_num, R.id.find_pw_get_code, R.id.find_pw_ok})
-    public void onViewClickedInFindPasswordActivity(View view) {
+    @OnClick({R.id.bind_phone_back, R.id.find_pw_clean_phone_num, R.id.bind_phone_get_code, R.id.bind_phone_ok})
+    public void onViewClickedInBindPhoneActivity(View view) {
         switch (view.getId()) {
-            case R.id.find_pw_back:
+            case R.id.bind_phone_back:
                 finish();
                 break;
             case R.id.find_pw_clean_phone_num:
                 //清除输入的手机号码
-                findPwPhoneNum.setText("");
+                bindPhoneNum.setText("");
                 break;
-            case R.id.find_pw_get_code:
-                //获取验证码
+            case R.id.bind_phone_get_code:
+                //获取验证码  在这之前要进行手机号码是否注册验证
                 getPhoenCode();
                 break;
-            case R.id.find_pw_ok:
-                //下一步
-                nextStep();
+            case R.id.bind_phone_ok:
+                //下一步 进入输入密码页面====输入密码再次验证
+                if (!TextUtils.isEmpty(bindPhoneNum.getText().toString())
+                        && bindPhoneNum.getText().toString().matches(UrlConstans.PHONE_NUM)) {
+                    if (bindPhoneCode.getText().toString().length() == 6) {
+                        HttpCheckCode(bindPhoneNum.getText().toString(), bindPhoneCode.getText().toString());
+                    } else {
+                        Toast.makeText(mContext, "您输入的验证码长度不符！", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(mContext, "您输入的手机号码有误！", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
 
     //获取验证码
     private void getPhoenCode() {
-        if (!TextUtils.isEmpty(findPwPhoneNum.getText().toString())
-                && findPwPhoneNum.getText().toString().matches(UrlConstans.PHONE_NUM)) {
-            startCount();
-            HttpGetCode(findPwPhoneNum.getText().toString());
+        if (!TextUtils.isEmpty(bindPhoneNum.getText().toString())
+                && bindPhoneNum.getText().toString().matches(UrlConstans.PHONE_NUM)) {
+            //验证手机号码是否被注册过
+            checkPhoneNumIsUser(bindPhoneNum.getText().toString());
         } else {
             Toast.makeText(mContext, "您输入的手机号码有误！", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    //验证手机是否注册过
+    private void checkPhoneNumIsUser(final String phoneNum) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Utils.getDateToken());
+        param.put("cellphone", phoneNum);
+        HttpUtils.doPost(UrlConstans.IS_REGISTER, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "链接失败=============" + e.toString());
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                Log.e(TAG, "链接成功========" + json);
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.getString("status");
+                    if (status.equals("200")) {
+                        //手机号未注册
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                startCount();
+                            }
+                        });
+                        HttpGetCode(phoneNum);
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, "该手机号码已经被注册，无法进行绑定。", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     //获取验证码倒计时
@@ -155,21 +205,22 @@ public class FindPasswordActivity extends BaseActivity {
 
         @Override
         public void run() {
-            if (count > 0 && findPwGetCode != null) {
-                findPwGetCode.setText(count + " s");
-                findPwGetCode.setEnabled(false);
-                findPwGetCode.setClickable(false);
+            if (count > 0 && bindPhoneGetCode != null) {
+                bindPhoneGetCode.setText(count + " s");
+                bindPhoneGetCode.setEnabled(false);
+                bindPhoneGetCode.setClickable(false);
             } else {
-                if (findPwGetCode != null) {
-                    findPwGetCode.setText("重新获取");
-                    findPwGetCode.setEnabled(true);
-                    findPwGetCode.setClickable(true);
+                if (bindPhoneGetCode != null) {
+                    bindPhoneGetCode.setText("重新获取");
+                    bindPhoneGetCode.setEnabled(true);
+                    bindPhoneGetCode.setClickable(true);
                     count = 60;
                 }
             }
         }
     }
 
+    //获取验证码
     //网络请求获取验证码
     private void HttpGetCode(String phoneNum) {
         HashMap<String, Object> param = new HashMap<>();
@@ -205,44 +256,40 @@ public class FindPasswordActivity extends BaseActivity {
         });
     }
 
-
-    //TODO 进行下一步操作 验证码验证是否成功验证成功则进入下一步 设置新的密码 在下一个界面按钮确认登录
-    private void nextStep() {
-        //验证去进入下一个页面修改密码
+    private void HttpCheckCode(final String phoneNum, String code) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
-        param.put("cellphone", findPwPhoneNum.getText().toString());
-        param.put("verify_code", findPwCode.getText().toString());
-        HttpUtils.doPost(UrlConstans.SEARCH_PASSWORD, param, new Callback() {
+        param.put("cellphone", phoneNum);
+        param.put("verify_code", code);
+        HttpUtils.doPost(UrlConstans.CHECK_VERIFY_CODE, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "链接失败=======" + e.toString());
+                Log.e(TAG, "链接失败=========" + e.toString());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String json = new String(response.body().string());
-                Log.e(TAG, "链接成功====" + json);
+                Log.e(TAG, "链接成功=====" + json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.getString("status");
                     if (status.equals("200")) {
-                        //验证成功
+                        //验证码校验成功
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Intent intent = new Intent(mContext, SetNewPasswordActivity.class);
-                                intent.putExtra("cellphone", findPwPhoneNum.getText().toString());
+                                Intent intent = new Intent(mContext, InputPasswordActivity.class);
+                                intent.putExtra("cellphone", phoneNum);
                                 mContext.startActivity(intent);
                                 finish();
                             }
                         });
                     } else {
-                        //验证失败
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(mContext, "校验失败，请确认手机号码和验证码输入是否正确！", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "您输入的验证码有误~", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

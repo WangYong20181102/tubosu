@@ -2,6 +2,7 @@ package com.tbs.tobosupicture.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
@@ -88,6 +89,14 @@ public class RegisterActivity extends BaseActivity {
             } else {
                 registerCleanPhoneNum.setVisibility(View.VISIBLE);
             }
+            if (s.length() == 11) {
+                //获取验证码的按钮变颜色
+                registerGetCode.setBackgroundResource(R.drawable.shape_get_code_yellow);
+                registerGetCode.setTextColor(Color.parseColor("#ffffff"));
+            } else {
+                registerGetCode.setBackgroundResource(R.drawable.shape_get_code);
+                registerGetCode.setTextColor(Color.parseColor("#86898f"));
+            }
         }
 
         @Override
@@ -102,17 +111,11 @@ public class RegisterActivity extends BaseActivity {
             case R.id.register_back:
                 finish();
                 break;
-            case R.id.register_phone_num:
-                break;
             case R.id.register_clean_phone_num:
                 cleanPhoneNum();
                 break;
-            case R.id.register_code:
-                break;
             case R.id.register_get_code:
                 getCode();
-                break;
-            case R.id.register_password:
                 break;
             case R.id.register_ok:
                 //各种验证最后才进入注册成功页
@@ -262,6 +265,7 @@ public class RegisterActivity extends BaseActivity {
         param.put("cellphone", phoneNum);
         param.put("verify_code", code);
         param.put("password", md5PassWord);
+        param.put("chcode",Utils.getChannType(mContext));
         param.put("system_type", "1");
         param.put("platform_type", "3");
         HttpUtils.doPost(UrlConstans.PHONE_NUM_REGISTER_URL, param, new Callback() {

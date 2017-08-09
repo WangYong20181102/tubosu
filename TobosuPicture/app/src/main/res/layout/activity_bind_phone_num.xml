@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     android:background="@color/bg_white"
     android:orientation="vertical"
-    tools:context="com.tbs.tobosupicture.activity.RegisterActivity">
+    tools:context="com.tbs.tobosupicture.activity.BindPhoneNumActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
         <LinearLayout
-            android:id="@+id/register_back"
+            android:id="@+id/bind_phone_back"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:gravity="center">
@@ -31,9 +31,10 @@
         android:gravity="center">
 
         <TextView
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="注册新账号"
+            android:text="绑定手机号"
             android:textColor="#000000"
             android:textSize="26sp" />
     </LinearLayout>
@@ -51,7 +52,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/register_phone_num"
+                android:id="@+id/bind_phone_num"
                 android:layout_width="wrap_content"
                 android:layout_height="44dp"
                 android:layout_alignParentLeft="true"
@@ -64,7 +65,7 @@
                 android:textSize="@dimen/text_size_28px" />
 
             <ImageView
-                android:id="@+id/register_clean_phone_num"
+                android:id="@+id/find_pw_clean_phone_num"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_alignParentEnd="true"
@@ -85,7 +86,7 @@
             android:layout_marginTop="30dp">
 
             <EditText
-                android:id="@+id/register_code"
+                android:id="@+id/bind_phone_code"
                 android:layout_width="wrap_content"
                 android:layout_height="44dp"
                 android:layout_alignParentLeft="true"
@@ -98,7 +99,7 @@
                 android:textSize="@dimen/text_size_28px" />
 
             <TextView
-                android:id="@+id/register_get_code"
+                android:id="@+id/bind_phone_get_code"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
@@ -110,25 +111,8 @@
                 android:paddingRight="15dp"
                 android:text="获取"
                 android:textColor="#86898f"
-                android:textSize="@dimen/text_size_30px" />
+                android:textSize="@dimen/text_size_32px" />
         </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/bg_divide" />
-        <!--密码的长度为6-16位-->
-        <EditText
-            android:id="@+id/register_password"
-            android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            android:layout_marginTop="30dp"
-            android:background="@null"
-            android:hint="请设置登录密码(长度6-16位)"
-            android:singleLine="true"
-            android:textColor="#000000"
-            android:textColorHint="@color/text_gray"
-            android:textSize="@dimen/text_size_28px" />
 
         <View
             android:layout_width="match_parent"
@@ -136,15 +120,14 @@
             android:background="@color/bg_divide" />
 
         <TextView
-            android:id="@+id/register_ok"
+            android:id="@+id/bind_phone_ok"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:layout_marginTop="25dp"
             android:background="@drawable/shape_register"
             android:gravity="center"
-            android:text="注册"
+            android:text="下一步"
             android:textColor="@color/text_white"
             android:textSize="@dimen/text_size_32px" />
     </LinearLayout>
-
 </LinearLayout>

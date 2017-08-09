@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_white"
     android:orientation="vertical"
-    tools:context="com.tbs.tobosupicture.activity.MyDynamicActivity">
+    tools:context="com.tbs.tobosupicture.activity.ChangeSiginActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,7 +14,7 @@
         android:background="@color/bg_banner_black">
 
         <LinearLayout
-            android:id="@+id/my_dynamic_back"
+            android:id="@+id/change_sigin_back"
             android:layout_width="@dimen/banner_height"
             android:layout_height="@dimen/banner_height"
             android:layout_alignParentLeft="true"
@@ -30,35 +31,44 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="我的动态"
+            android:text="修改签名"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_30px" />
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/my_dynamic_null"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
-        <ImageView
+        <EditText
+            android:id="@+id/change_sigin_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/my_dynamic_null" />
+            android:layout_height="@dimen/banner_height"
+            android:background="@null"
+            android:gravity="center"
+            android:hint="在此处填写修改的签名"
+            android:textSize="@dimen/text_size_30px" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/bg_gray" />
     </LinearLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/my_dynamic_swipe"
+    <TextView
+        android:id="@+id/change_sigin_ok"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/my_dynamic_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </android.support.v7.widget.RecyclerView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+        android:layout_height="40dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="@dimen/banner_height"
+        android:background="@drawable/shape_register"
+        android:gravity="center"
+        android:text="确认修改"
+        android:textColor="@color/bg_white" />
 </LinearLayout>
