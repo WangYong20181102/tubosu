@@ -213,4 +213,19 @@ public class SpUtils {
     }
 
 
+    public static void setBaiduLocationCity(Context context, String locationCity){
+        context.getSharedPreferences("baidu_baidu_city", 0).edit().putString("location_city_baidu", locationCity).commit();
+    }
+
+    public static String getBaiduLocationCity(Context context){
+        return context.getSharedPreferences("baidu_baidu_city", 0).getString("location_city_baidu", "");
+    }
+
+    public static void setCacheLocalCityJson(Context context, String json){
+        context.getSharedPreferences("CacheLocalCityJson", 0).edit().putString("LocalCityJson", json).commit();
+    }
+
+    public static String getCacheLocalCityJson(Context context){
+        return context.getSharedPreferences("CacheLocalCityJson", 0).getString("LocalCityJson", "");
+    }
 }

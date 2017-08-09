@@ -137,6 +137,7 @@ public class DesignerImgListActivity extends BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    designerImgListSwipRefreshLayout.setRefreshing(false);
                                     initAdapter(sourceType);
                                 }
                             });

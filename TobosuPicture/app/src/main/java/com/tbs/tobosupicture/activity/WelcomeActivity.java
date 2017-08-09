@@ -221,15 +221,19 @@ public class WelcomeActivity extends BaseActivity {
                     sb.append(p.getId() + " " + p.getName() + " " + p.getRank());
                 }
             }
-
+            Log.e(TAG, "定位1>>>>" + sb.toString() + "br/具体城市1>>>" + location.getCity());
+            SpUtils.setBaiduLocationCity(WelcomeActivity.this, location.getCity());
             Log.i("BaiduLocationApiDem", sb.toString());
             if (!TextUtils.isEmpty(location.getCity()) && !(location.getCity().equals(SpUtils.getLocationCity(mContext)))) {
                 //当获取的城市不为空且和之前的定位城市不相同则修改定位的城市
                 SpUtils.setLocationCity(getApplicationContext(), location.getCity());
+                Log.e(TAG, "定位>>>>" + sb.toString() + "br/具体城市>>>" + location.getCity());
+            }else {
+                Log.e(TAG, "定位>>>> br/具体城市>>>");
             }
             SpUtils.setLocationLat(getApplicationContext(), "" + location.getLatitude());
             SpUtils.setLocationLon(getApplicationContext(), "" + location.getLongitude());
-            Log.e(TAG, "定位======" + sb.toString() + "具体城市===" + SpUtils.getLocationCity(getApplicationContext()));
+
         }
 
         @Override

@@ -39,4 +39,7 @@
     <color name="c3">#dedede</color>
     <color name="c7">#383838</color>
     <color name="c9">#cc3333</color>
+    <color name="color_neutralgrey">#74777a</color>
+    <color name="dividing_line_bg">#E5E5E5</color>
+    <color name="color_darkgray">#1e1f1f</color>
 </resources>
