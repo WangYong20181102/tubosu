@@ -95,7 +95,7 @@ public class UrlConstans {
     public static final String CASE_SEARCH_URL = ZXKK_URL + "/rapp/case/case_search";
 
 
-    public static final String HOT_CITY_URL = ZXKK_URL + "tapp/util/change_city";
+    public static final String HOT_CITY_URL = ZXKK_URL + "rapp/city/city_list";
 
 
     /**

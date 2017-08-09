@@ -291,7 +291,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                 chooseAddressWheel.show(view);
                 break;
             case R.id.tvChooseDisctrict:
-                initDistrictPopupWindow();
+                initDistrictPopupWindow(selectText);
                 break;
             case R.id.relShowAndHideCity:
                 if(isHide){
@@ -364,7 +364,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
 
     private PopupWindow popupWindow;
     private ArrayList<DistrictEntity> districtDataList;
-    private void initDistrictPopupWindow(){
+    private void initDistrictPopupWindow(String text){
         View contentView = LayoutInflater.from(mContext).inflate(R.layout.popuplayout_district, null);
         MyGridView gv = (MyGridView) contentView.findViewById(R.id.gvDistrict);
         ImageView ivClose = (ImageView) contentView.findViewById(R.id.ivCloseWindown);
@@ -411,7 +411,8 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
 
             }
         });
-        tvLocation.setText("所在地" + "  " + SpUtils.getLocationCity(mContext));
+//        tvLocation.setText("所在地" + "  " + SpUtils.getLocationCity(mContext));
+        tvLocation.setText("所在地 " + text);
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -461,8 +462,11 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
     @Override
     public void onAddressChange(String province, String city, String district) {
         tvChooseCity.setText(province + " " + city + " " + district);
+        selectText = province + " " + city + " " + district;
     }
 
+
+    private String selectText;
     @Override
     public void onAddressChangeId(String provinceId, String cityId, String districtId) {
         Utils.setToast(mContext, provinceId +" = " + cityId + " = "+districtId);

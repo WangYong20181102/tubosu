@@ -63,7 +63,7 @@
         android:background="@color/dividing_line_bg" />
     
 	<!-- 热门城市gridview -->
-    <mcom.tbs.tobosupicture.view.MyGridView
+    <com.tbs.tobosupicture.view.MyGridView
         android:id="@+id/city_gridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,6 +71,6 @@
         android:horizontalSpacing="7dp"
         android:numColumns="4"
         android:verticalSpacing="7dp" >
-    </mcom.tbs.tobosupicture.view.MyGridView>
+    </com.tbs.tobosupicture.view.MyGridView>
 
 </LinearLayout>

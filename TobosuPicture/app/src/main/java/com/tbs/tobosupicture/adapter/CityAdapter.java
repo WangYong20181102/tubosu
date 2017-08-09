@@ -26,7 +26,7 @@ public class CityAdapter extends BaseAdapter implements SectionIndexer, PinnedHe
 	private List<String> mSections;
 	private List<Integer> mPositions;
 	private LayoutInflater inflater;
-	Context context;
+	private Context context;
 
 	public CityAdapter(Context context, List<City> cities,
                        Map<String, List<City>> map, List<String> sections,

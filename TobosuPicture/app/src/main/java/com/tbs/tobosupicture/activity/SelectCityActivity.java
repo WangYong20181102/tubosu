@@ -63,10 +63,6 @@ public class SelectCityActivity extends Activity implements OnClickListener {
 	private PinnedHeaderListView mCityListView;
 	private LinearLayout citysListEmpty;
 
-	private SharedPreferences selectCitySP;
-
-	private boolean isFirstSelectCity = false;
-
 	/***右边字母列表view*/
 	private BladeView mLetter;
 
@@ -77,7 +73,6 @@ public class SelectCityActivity extends Activity implements OnClickListener {
 	private Map<String, List<City>> mMap;
 	private List<Integer> mPositions;
 	private Map<String, Integer> mIndexer;
-	private MyApplication mApplication;
 
 	private int from = -1;
 
@@ -93,11 +88,6 @@ public class SelectCityActivity extends Activity implements OnClickListener {
 	private View headView;
 
 	private List<String> hotCityNames = new ArrayList<String>();
-	private LocationClient mLocationClient = null;
-
-	/**定位得到的真实城市地理地址*/
-	private String realLocationCity = "";
-
 
 	/**选择城市页面的所有布局*/
 	private LinearLayout select_city_layout;
@@ -128,17 +118,18 @@ public class SelectCityActivity extends Activity implements OnClickListener {
 
 
 	private void getCityJson(){
-		String cityJson = SpUtils.getCacheLocalCityJson(context);
-		if("".equals(cityJson)){
+		if("".equals(cityJsonString)){
 			requestSelectCity();
 		}else{
-			prseSelectDataJson(cityJson);
+			prseSelectDataJson(SpUtils.getCacheLocalCityJson(context));
 		}
 	}
 
 	private void requestSelectCity(){
         if(Utils.isNetAvailable(context)){
-            HttpUtils.doPost(UrlConstans.HOT_CITY_URL, null, new Callback() {
+			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			hashMap.put("token", Utils.getDateToken());
+            HttpUtils.doPost(UrlConstans.HOT_CITY_URL, hashMap, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     Utils.setErrorLog(TAG, e.getMessage());
@@ -147,6 +138,8 @@ public class SelectCityActivity extends Activity implements OnClickListener {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     final String json = response.body().string();
+					Utils.setErrorLog(TAG, json);
+					SpUtils.setCacheLocalCityJson(context, json);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -161,6 +154,8 @@ public class SelectCityActivity extends Activity implements OnClickListener {
 
     }
 
+
+    private String cityJsonString = "";
 
 	private List<City> mCityList;
 	private CityData mCityData;
@@ -210,7 +205,7 @@ public class SelectCityActivity extends Activity implements OnClickListener {
 
 	private static final String FORMAT = "^[a-z,A-Z].*$";
 	private boolean prepareCityList() {
-		mCityList = mCityData.getAllCity();
+		mCityList = mCityData.getAllCity(cityJsonString);
 		for (City city : mCityList) {
 			String firstName = city.getFirstPY();
 			if (firstName.matches(FORMAT)) {
@@ -259,6 +254,15 @@ public class SelectCityActivity extends Activity implements OnClickListener {
 		headView = getLayoutInflater().inflate(R.layout.head_view_select_city, null);
 		mCity_gridView = (MyGridView) headView.findViewById(R.id.city_gridView);
 		select_positioning = (TextView) headView.findViewById(R.id.select_positioning);
+		String s = SpUtils.getLocationCity(context);
+		String cit = "";
+		if(s.contains("市") || s.contains("县")){
+			cit = s.substring(0, s.length()-1);
+		}else {
+			cit = s;
+		}
+//		Utils.setToast(context, s);
+		select_positioning.setText(cit);
 		select_positioning.setOnClickListener(this);
 
 		city_title_back.setOnClickListener(this);
@@ -327,7 +331,7 @@ public class SelectCityActivity extends Activity implements OnClickListener {
 			}
 		});
 
-        select_positioning.setText(SpUtils.getBaiduLocationCity(context));
+//        select_positioning.setText(SpUtils.getLocationCity(context));
 	}
 
 	private String choose = "";
@@ -335,16 +339,30 @@ public class SelectCityActivity extends Activity implements OnClickListener {
 	private void prseSelectDataJson(String result) {
 		try {
 			JSONObject object = new JSONObject(result);
-			if (object.getInt("error_code") == 0) {
-				JSONArray array = object.getJSONArray("data");
-				for (int i = 0; i < array.length(); i++) {
-					JSONObject dataObject = array.getJSONObject(i);
-					String _cityName = dataObject.getString("simpname");
-					String hotFlag = dataObject.getString("hot_flag");
-					if (hotFlag.equals("1")) {
-						hotCityNames.add(_cityName);
-					}
+			if (object.getInt("status") == 200) {
+				cityJsonString = result;
+				JSONObject data = object.getJSONObject("data");
+
+//				JSONArray arr = data.getJSONArray("opened_city");
+//				for(int i=0;i<arr.length();i++){
+//
+//				}
+
+
+				JSONArray hotArr = data.getJSONArray("popular_city");
+				for(int i=0;i<hotArr.length();i++){
+					hotCityNames.add(hotArr.getJSONObject(i).getString("city_name"));
 				}
+
+//				JSONArray array = object.getJSONArray("data");
+//				for (int i = 0; i < array.length(); i++) {
+//					JSONObject dataObject = array.getJSONObject(i);
+//					String _cityName = dataObject.getString("simpname");
+//					String hotFlag = dataObject.getString("hot_flag");
+//					if (hotFlag.equals("1")) {
+//						hotCityNames.add(_cityName);
+//					}
+//				}
 				loadCityGridView();
 			}
 		} catch (JSONException e) {
