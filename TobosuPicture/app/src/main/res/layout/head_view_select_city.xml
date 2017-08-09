@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#CCCCCC"
+        android:gravity="center_vertical"
+        android:paddingLeft="12dp"
+        android:text="定位城市"
+        android:textColor="@color/color_neutralgrey" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dividing_line_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#FFF"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="17dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="12dp"
+            android:background="@mipmap/map_flag" />
+
+        <TextView
+            android:id="@+id/select_positioning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:clickable="true"
+            android:padding="5dp"
+            android:text="定位中……"
+            android:textColor="@color/color_neutralgrey"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dividing_line_bg" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#CCCCCC"
+        android:gravity="center_vertical"
+        android:paddingLeft="12dp"
+        android:text="热门城市"
+        android:textColor="@color/color_neutralgrey" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dividing_line_bg" />
+    
+	<!-- 热门城市gridview -->
+    <mcom.tbs.tobosupicture.view.MyGridView
+        android:id="@+id/city_gridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:horizontalSpacing="7dp"
+        android:numColumns="4"
+        android:verticalSpacing="7dp" >
+    </mcom.tbs.tobosupicture.view.MyGridView>
+
+</LinearLayout>

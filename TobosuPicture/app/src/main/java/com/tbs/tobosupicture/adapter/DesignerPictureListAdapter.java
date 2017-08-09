@@ -13,6 +13,8 @@ import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.bean.AnLiJsonEntity;
 import com.tbs.tobosupicture.bean.XiaoGuoTuJsonEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
+import com.tbs.tobosupicture.utils.Utils;
+
 import java.util.ArrayList;
 
 /**
@@ -107,13 +109,13 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
         if(holder instanceof PicViewHolder){
             PicViewHolder itemHolder = (PicViewHolder) holder;
             if(type == 0){// 样板图  sampleDataList
-                GlideUtils.glideLoader(mContext, sampleDataList.get(position).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itemHolder.iv_big_pic,1);
-                itemHolder.tv_big_pic_num.setText(sampleDataList.get(position).getImage_count());
-                itemHolder.tv_designer_collect_count.setText(sampleDataList.get(position).getClick_count());
+                GlideUtils.glideLoader(mContext, sampleDataList.get(position-1).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itemHolder.iv_big_pic,1);
+                itemHolder.tv_big_pic_num.setText(sampleDataList.get(position-1).getImage_count());
+                itemHolder.tv_designer_collect_count.setText(sampleDataList.get(position-1).getClick_count());
                 String desc = "";
-                String style = sampleDataList.get(position).getStyle_name();
-                String layout = sampleDataList.get(position).getLayout();
-                String budget =sampleDataList.get(position).getPlan_price();
+                String style = sampleDataList.get(position-1).getStyle_name();
+                String layout = sampleDataList.get(position-1).getLayout();
+                String budget =sampleDataList.get(position-1).getPlan_price();
                 if(!"".equals(style)){
                     desc += style + " ";
                 }
@@ -121,11 +123,11 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
                     desc += layout + " ";
                 }
                 if(!"".equals(budget)){
-                   desc += "预算" + budget + "万";
+                    desc += "预算" + budget + "万";
                 }
                 itemHolder.tv_pic_desa.setText(desc);
-                itemHolder.tv_designer_collect_count.setText(sampleDataList.get(position).getClick_count());
-                String isCollect = sampleDataList.get(position).getClick_count();
+                itemHolder.tv_designer_collect_count.setText(sampleDataList.get(position-1).getClick_count());
+                String isCollect = sampleDataList.get(position-1).getClick_count();
                 if("0".equals(isCollect)){
                     // 未被收藏
                     itemHolder.iv_designer_image_like.setBackgroundResource(R.mipmap.shoucang3);
@@ -144,22 +146,22 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
 //                        mContext.startActivity(i);
                     }
                 });
-                holder.itemView.setTag(sampleDataList.get(position));
+                holder.itemView.setTag(sampleDataList.get(position-1));
 
             }else if(type == 1){
                 // 案例图
 
-                GlideUtils.glideLoader(mContext, caseDataList.get(position).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itemHolder.iv_big_pic,1);
+                GlideUtils.glideLoader(mContext, caseDataList.get(position-1).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itemHolder.iv_big_pic,1);
 //                itemHolder.tv_big_pic_num.setText(caseDataList.get(position).get());
                 itemHolder.tv_big_pic_num.setText("曾");
-                itemHolder.tv_designer_collect_count.setText(caseDataList.get(position).getCollect_count());
+                itemHolder.tv_designer_collect_count.setText(caseDataList.get(position-1).getCollect_count());
                 String desc = "";
-                String shi = caseDataList.get(position).getShi();
-                String wei = caseDataList.get(position).getWei();
-                String ting = caseDataList.get(position).getTing();
-                String area = caseDataList.get(position).getArea();
-                String budget = caseDataList.get(position).getPrice();
-                String method = caseDataList.get(position).getDesmethod();
+                String shi = caseDataList.get(position-1).getShi();
+                String wei = caseDataList.get(position-1).getWei();
+                String ting = caseDataList.get(position-1).getTing();
+                String area = caseDataList.get(position-1).getArea();
+                String budget = caseDataList.get(position-1).getPrice();
+                String method = caseDataList.get(position-1).getDesmethod();
                 if(!"".equals(shi)){
                     desc += shi + "室 ";
                 }
@@ -179,8 +181,8 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
                     desc += "(" + method+")";
                 }
                 itemHolder.tv_pic_desa.setText(desc);
-                itemHolder.tv_designer_collect_count.setText(caseDataList.get(position).getCollect_count());
-                String isCollect = caseDataList.get(position).getIs_collect();
+                itemHolder.tv_designer_collect_count.setText(caseDataList.get(position-1).getCollect_count());
+                String isCollect = caseDataList.get(position-1).getIs_collect();
                 if("0".equals(isCollect)){
                     // 未被收藏
                     itemHolder.iv_designer_image_like.setBackgroundResource(R.mipmap.shoucang3);
@@ -199,9 +201,10 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
 //                        mContext.startActivity(i);
                     }
                 });
-                holder.itemView.setTag(caseDataList.get(position));
+                holder.itemView.setTag(caseDataList.get(position-1));
             }
         }
+
 
         if(holder instanceof HeadViewHolder){
             HeadViewHolder headHolder = (HeadViewHolder) holder;
@@ -218,15 +221,6 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public int getItemViewType(int position) {
-
-//        if (position + 1 == getItemCount()) {
-//            return 1;//返回加载更多
-//        } else if (position == 0) {
-//            return 0;//返回头部
-//        } else {
-//            return 2;//中间图层
-//        }
-
         if(position + 1 == getItemCount()){
             return TYPE_FOOTER;
         }else if(position == 0){
@@ -234,51 +228,16 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
         }else{
             return TYPE_ITEM;
         }
-
-//        if(type==0){ // 样板
-//            if(footerView == null && headView == null){
-//                return TYPE_ITEM;
-//            }else if(position<sampleDataList.size()-1){
-//                return TYPE_FOOTER;
-//            }else if(position==0){
-//                return TYPE_FOOTER;
-//            }else{
-//                return TYPE_ITEM;
-//            }
-//        }else { // 案例
-//            if(footerView == null && headView == null){
-//                return TYPE_ITEM;
-//            }else if(position<caseDataList.size()-1){
-//                return TYPE_FOOTER;
-//            }else if(position==0){
-//                return TYPE_HEADER;
-//            }else {
-//                return TYPE_ITEM;
-//            }
-//        }
-
-
-//        if (footerView == null && headView == null){
-//            return TYPE_ITEM;
-//        }
-//        if (position == 0){
-//            //第一个item应该加载Header
-//            return TYPE_HEADER;
-//        }
-//        if (position == getItemCount()-1){
-//            //最后一个,应该加载Footer
-//            return TYPE_FOOTER;
-//        }
-//        return TYPE_ITEM;
-
     }
 
 
     @Override
     public int getItemCount() {
         if(type==0) { // 样板
+            Utils.setErrorLog("", "来到这里了");
             return sampleDataList==null?0:sampleDataList.size() + 2;
         }else {
+            // 案例
             return caseDataList==null?0:caseDataList.size() + 2;
         }
 
