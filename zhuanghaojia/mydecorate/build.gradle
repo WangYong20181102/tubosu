@@ -8,10 +8,10 @@ android {
 
     defaultConfig {
         applicationId "com.tobosu.mydecorate" // 程序的包名
-        minSdkVersion 11
+        minSdkVersion 14
         targetSdkVersion 17
-        versionCode 4
-        versionName "1.2.1"
+        versionCode 5
+        versionName "1.3"
         multiDexEnabled true  // 消去重复的jar 引用
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "aisi"]//多渠道打包标识 默认爱思 到时候可以修改
     }
@@ -203,6 +203,7 @@ dependencies {
     compile 'com.jude:rollviewpager:1.4.6'
     compile 'com.google.code.gson:gson:2.2.4'
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support:cardview-v7:26.0.0-alpha1'
 }
 android.applicationVariants.all { variant ->
     variant.outputs.each { output ->
@@ -212,10 +213,10 @@ android.applicationVariants.all { variant ->
             def fileName
             if (variant.buildType.name == "release") {
 //                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_${variant.productFlavors[0].name}.apk"
-                fileName = "zhuanghaojia_v1.2.1_${variant.productFlavors[0].name}.apk"
+                fileName = "zhuanghaojia_v1.3_${variant.productFlavors[0].name}.apk"
             } else {
 //                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_beta.apk"
-                fileName = "zhuanghaojia_v1.2.1_${variant.productFlavors[0].name}_beta.apk"
+                fileName = "zhuanghaojia_v1.3_${variant.productFlavors[0].name}_beta.apk"
             }
             output.outputFile = new File(outputDirectory, fileName)
         }

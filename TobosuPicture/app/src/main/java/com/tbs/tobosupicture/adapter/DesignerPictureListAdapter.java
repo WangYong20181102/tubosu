@@ -218,16 +218,33 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
 
     @Override
     public int getItemViewType(int position) {
+
+//        if (position + 1 == getItemCount()) {
+//            return 1;//返回加载更多
+//        } else if (position == 0) {
+//            return 0;//返回头部
+//        } else {
+//            return 2;//中间图层
+//        }
+
+        if(position + 1 == getItemCount()){
+            return TYPE_FOOTER;
+        }else if(position == 0){
+            return TYPE_HEADER;
+        }else{
+            return TYPE_ITEM;
+        }
+
 //        if(type==0){ // 样板
-            if(footerView == null && headView == null){
-                return TYPE_ITEM;
-            }else if(position<sampleDataList.size()-1){
-                return TYPE_FOOTER;
-            }else if(position==0){
-                return TYPE_FOOTER;
-            }else{
-                return TYPE_ITEM;
-            }
+//            if(footerView == null && headView == null){
+//                return TYPE_ITEM;
+//            }else if(position<sampleDataList.size()-1){
+//                return TYPE_FOOTER;
+//            }else if(position==0){
+//                return TYPE_FOOTER;
+//            }else{
+//                return TYPE_ITEM;
+//            }
 //        }else { // 案例
 //            if(footerView == null && headView == null){
 //                return TYPE_ITEM;

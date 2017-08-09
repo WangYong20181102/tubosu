@@ -72,7 +72,8 @@ public class CaseDetailActivity extends BaseActivity {
     LinearLayout layoutIneedPrice;
     @BindView(R.id.layoutGetPriceKnow)
     LinearLayout layoutGetPriceKnow;
-
+    @BindView(R.id.ivCollect)
+    ImageView ivCollect;
 
     // 数据源
     private CaseDetailEntity caseDetailEntity;
@@ -147,9 +148,17 @@ public class CaseDetailActivity extends BaseActivity {
         }
     }
 
+    private String isCollect = "3"; // 3是无意义的
     private void initDataInView() {
         des = caseDetailEntity.getCase_data().getDescription();
         tvCaseDescription.setText(des);
+        isCollect = caseDetailEntity.getCase_data().getIs_collect();
+        if("0".equals(isCollect)){
+            // 未收藏
+            ivCollect.setBackgroundResource(R.mipmap.shoucang21);
+        }else{
+            ivCollect.setBackgroundResource(R.mipmap.shoucang4);
+        }
         GlideUtils.glideLoader(mContext, caseDetailEntity.getCase_data().getCover_url(), R.mipmap.loading_img_fail, R.mipmap.loading_img, ivDetailImg);
         GlideUtils.glideLoader(mContext, caseDetailEntity.getCase_data().getDesigner_icon(), R.mipmap.pic, R.mipmap.pic, ivDesinHead, 0);
         GlideUtils.glideLoader(mContext, caseDetailEntity.getCase_data().getLayout_url(),R.mipmap.loading_img_fail, R.mipmap.loading_img,ivBigHuxingTu, 1);

@@ -16,9 +16,7 @@
     <color name="subscribe_item_text_color_pressed">#ffb9b9b9</color>
     <item name="subscribe_item_text_color_normal" type="color">@color/default_text</item>
     <color name="default_text">#ff454545</color>
-
-
-
+    <drawable name="color_first_head">#888887</drawable>
 
 
 </resources>

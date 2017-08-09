@@ -1,20 +1,22 @@
 package com.tobosu.mydecorate.fragment;
-
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.jude.rollviewpager.OnItemClickListener;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.LoopPagerAdapter;
@@ -22,23 +24,19 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.activity.CalculaterActivity;
-import com.tobosu.mydecorate.activity.FreeActivity;
-import com.tobosu.mydecorate.activity.MainActivity;
-import com.tobosu.mydecorate.activity.NewArticleDetailActivity;
-import com.tobosu.mydecorate.activity.NewAuthorDetailActivity;
+import com.tobosu.mydecorate.activity.GetPriceActivity;
 import com.tobosu.mydecorate.activity.PopOrderActivity;
 import com.tobosu.mydecorate.activity.SmartQuote;
-import com.tobosu.mydecorate.activity.WelcomeActivity;
+import com.tobosu.mydecorate.adapter.AuthorAdapter;
+import com.tobosu.mydecorate.adapter.DecorateTitleAdapter;
 import com.tobosu.mydecorate.entity._HomePage;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
-import com.tobosu.mydecorate.util.CacheManager;
 import com.tobosu.mydecorate.util.GlideUtils;
 import com.tobosu.mydecorate.util.Util;
-
+import com.tobosu.mydecorate.view.ScrollViewExtend;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,6 +49,7 @@ import java.util.List;
 public class NewHomeFragment extends Fragment {
     private String TAG = "NewHomeFragment";
     private Context mContext;//关联的上下文  nhf==new home fragment
+    private ScrollViewExtend scrollViewExtend;
     private _HomePage homePage;
 
     private ImageView nhfFadan;//发单按钮
@@ -63,44 +62,55 @@ public class NewHomeFragment extends Fragment {
 
     private LinearLayout nhfGengduozhuangxiutoutiao;//更多装修头条
 
-    private LinearLayout nhfFirstText;//第一篇文章 用于点击进入文章的详情
-    private LinearLayout nhfSecondText;//第二篇文章 用于点击进入文章的详情
-    private LinearLayout nhfThirdText;//第三篇文章 用于点击进入文章的详情
-    //装修头条的文章 封面图
-    private ImageView nhfTextImg1;//第一篇文章的图片
-    private ImageView nhfTextImg2;//第二篇文章的图片
-    private ImageView nhfTextImg3;//第三篇文章的图片
-    //装修头条文章的人气值
-    private TextView nhfTextRenqi1;//第一篇文章的人气值
-    private TextView nhfTextRenqi2;//第二篇文章的人气值
-    private TextView nhfTextRenqi3;//第三篇文章的人气值
-    //装修头条文章的标题
-    private TextView nhfTextTitle1;//第一篇文章的标题
-    private TextView nhfTextTitle2;//第二篇文章的标题
-    private TextView nhfTextTitle3;//第三篇文章的标题
+    private static final int START_ALPHA = 0;
+    private static final int END_ALPHA = 255;
+    private int fadingHeight = 400;
+    /*-----------------------------------*/
 
-    //活跃作者
-    private LinearLayout nhfAuthor1;//活跃第一的作者
-    private LinearLayout nhfAuthor2;//活跃第二的作者
-    private LinearLayout nhfAuthor3;//活跃第三的作者
-    //活跃作者的头像
-    private ImageView nhfAuthorIcon1;//第一个作者的头像
-    private ImageView nhfAuthorIcon2;//第二个作者的头像
-    private ImageView nhfAuthorIcon3;//第三个作者的头像
-    //活跃作者的名字
-    private TextView nhfAuthorName1;//第一个作者名字
-    private TextView nhfAuthorName2;//第二个作者名字
-    private TextView nhfAuthorName3;//第三个作者名字
-    //活跃作者的浏览量
-    private TextView nhfLiulan1;
-    private TextView nhfLiulan2;
-    private TextView nhfLiulan3;
-    //活跃作者文章数
-    private TextView nhfWenzhang1;
-    private TextView nhfWenzhang2;
-    private TextView nhfWenzhang3;
+//    private LinearLayout nhfFirstText;//第一篇文章 用于点击进入文章的详情
+//    private LinearLayout nhfSecondText;//第二篇文章 用于点击进入文章的详情
+//    private LinearLayout nhfThirdText;//第三篇文章 用于点击进入文章的详情
+//    //装修头条的文章 封面图
+//    private ImageView nhfTextImg1;//第一篇文章的图片
+//    private ImageView nhfTextImg2;//第二篇文章的图片
+//    private ImageView nhfTextImg3;//第三篇文章的图片
+//    //装修头条文章的人气值
+//    private TextView nhfTextRenqi1;//第一篇文章的人气值
+//    private TextView nhfTextRenqi2;//第二篇文章的人气值
+//    private TextView nhfTextRenqi3;//第三篇文章的人气值
+//    //装修头条文章的标题
+//    private TextView nhfTextTitle1;//第一篇文章的标题
+//    private TextView nhfTextTitle2;//第二篇文章的标题
+//    private TextView nhfTextTitle3;//第三篇文章的标题
+//
+//    //活跃作者
+//    private LinearLayout nhfAuthor1;//活跃第一的作者
+//    private LinearLayout nhfAuthor2;//活跃第二的作者
+//    private LinearLayout nhfAuthor3;//活跃第三的作者
+//    //活跃作者的头像
+//    private ImageView nhfAuthorIcon1;//第一个作者的头像
+//    private ImageView nhfAuthorIcon2;//第二个作者的头像
+//    private ImageView nhfAuthorIcon3;//第三个作者的头像
+//    //活跃作者的名字
+//    private TextView nhfAuthorName1;//第一个作者名字
+//    private TextView nhfAuthorName2;//第二个作者名字
+//    private TextView nhfAuthorName3;//第三个作者名字
+//    //活跃作者的浏览量
+//    private TextView nhfLiulan1;
+//    private TextView nhfLiulan2;
+//    private TextView nhfLiulan3;
+//    //活跃作者文章数
+//    private TextView nhfWenzhang1;
+//    private TextView nhfWenzhang2;
+//    private TextView nhfWenzhang3;
 
     private List<_HomePage.Carousel> carouselList = new ArrayList<>();//轮播图集合
+
+
+    private RecyclerView recyclerViewDecorateTitle; // 装修头条
+    private LinearLayoutManager linearManager;
+    private RecyclerView recyclerViewAuthor; // 作者排行榜
+    private LinearLayoutManager linearManager1;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -163,50 +173,91 @@ public class NewHomeFragment extends Fragment {
         });
     }
 
+    /**
+     * 顶部标题栏的透明度监控
+     */
+    private ScrollViewExtend.OnScrollChangedListener scrollChangedListener = new ScrollViewExtend.OnScrollChangedListener() {
+
+        @Override
+        public void onScrollChanged(ScrollView who, int x, int y, int oldx, int oldy) {
+            if(y<=7) {
+                home_textView.setAlpha(0);
+            }
+
+            if (y > fadingHeight) {
+                y = fadingHeight;
+            }
+
+            if (y>7 && y<=fadingHeight){
+                home_textView.setAlpha(y/4);
+            }
+
+        }
+    };
+
+    private Drawable drawable;
+    private TextView home_textView;
+//    private FrameLayout rel_homebar;
     private void bindView(View rootView) {
+        scrollViewExtend = (ScrollViewExtend) rootView.findViewById(R.id.scrollViewExtend);
+        scrollViewExtend.scrollTo(0, 0);
+        home_textView = (TextView) rootView.findViewById(R.id.home_textView);
+//        home_textView.setAlpha(0);
+//        rel_homebar = (FrameLayout) rootView.findViewById(R.id.rel_homebar);
+//        rel_homebar.bringToFront();
+
         nhfViewPage = (RollPagerView) rootView.findViewById(R.id.nhf_roll_pagerview);
         nhfFadan = (ImageView) rootView.findViewById(R.id.nhf_fadan);
         nhfMianfeisheji = (LinearLayout) rootView.findViewById(R.id.nhf_mianfeisheji);
         nhfZhinengbaojia = (LinearLayout) rootView.findViewById(R.id.nhf_zhinengbaojia);
         nhfZhuangxiujisuanqi = (LinearLayout) rootView.findViewById(R.id.nhf_zhuangxiujisuanqi);
-
         nhfGengduozhuangxiutoutiao = (LinearLayout) rootView.findViewById(R.id.nhf_gengduozhuangxiutoutiao);
+//        drawable = getResources().getDrawable(R.drawable.color_first_head);
+//        drawable.setAlpha(START_ALPHA);
+//        rel_homebar.setBackgroundDrawable(drawable);
+        scrollViewExtend.setOnScrollChangedListener(scrollChangedListener);
+//        nhfFirstText = (LinearLayout) rootView.findViewById(R.id.nhf_first_text);
+//        nhfSecondText = (LinearLayout) rootView.findViewById(R.id.nhf_second_text);
+//        nhfThirdText = (LinearLayout) rootView.findViewById(R.id.nhf_third_text);
+//
+//        nhfTextImg1 = (ImageView) rootView.findViewById(R.id.nhf_img_text1);
+//        nhfTextImg2 = (ImageView) rootView.findViewById(R.id.nhf_img_text2);
+//        nhfTextImg3 = (ImageView) rootView.findViewById(R.id.nhf_img_text3);
+//
+//        nhfTextRenqi1 = (TextView) rootView.findViewById(R.id.nhf_renqi1);
+//        nhfTextRenqi2 = (TextView) rootView.findViewById(R.id.nhf_renqi2);
+//        nhfTextRenqi3 = (TextView) rootView.findViewById(R.id.nhf_renqi3);
+//
+//        nhfTextTitle1 = (TextView) rootView.findViewById(R.id.nhf_text_title1);
+//        nhfTextTitle2 = (TextView) rootView.findViewById(R.id.nhf_text_title2);
+//        nhfTextTitle3 = (TextView) rootView.findViewById(R.id.nhf_text_title3);
+//
+//        nhfAuthor1 = (LinearLayout) rootView.findViewById(R.id.nhf_author1);
+//        nhfAuthor2 = (LinearLayout) rootView.findViewById(R.id.nhf_author2);
+//        nhfAuthor3 = (LinearLayout) rootView.findViewById(R.id.nhf_author3);
+//
+//        nhfAuthorIcon1 = (ImageView) rootView.findViewById(R.id.nhf_author_icon1);
+//        nhfAuthorIcon2 = (ImageView) rootView.findViewById(R.id.nhf_author_icon2);
+//        nhfAuthorIcon3 = (ImageView) rootView.findViewById(R.id.nhf_author_icon3);
+//
+//        nhfAuthorName1 = (TextView) rootView.findViewById(R.id.nhf_author_name1);
+//        nhfAuthorName2 = (TextView) rootView.findViewById(R.id.nhf_author_name2);
+//        nhfAuthorName3 = (TextView) rootView.findViewById(R.id.nhf_author_name3);
+//
+//        nhfLiulan1 = (TextView) rootView.findViewById(R.id.nhf_liulang1);
+//        nhfLiulan2 = (TextView) rootView.findViewById(R.id.nhf_liulang2);
+//        nhfLiulan3 = (TextView) rootView.findViewById(R.id.nhf_liulang3);
+//
+//        nhfWenzhang1 = (TextView) rootView.findViewById(R.id.nhf_wenzhang1);
+//        nhfWenzhang2 = (TextView) rootView.findViewById(R.id.nhf_wenzhang2);
+//        nhfWenzhang3 = (TextView) rootView.findViewById(R.id.nhf_wenzhang3);
 
-        nhfFirstText = (LinearLayout) rootView.findViewById(R.id.nhf_first_text);
-        nhfSecondText = (LinearLayout) rootView.findViewById(R.id.nhf_second_text);
-        nhfThirdText = (LinearLayout) rootView.findViewById(R.id.nhf_third_text);
-
-        nhfTextImg1 = (ImageView) rootView.findViewById(R.id.nhf_img_text1);
-        nhfTextImg2 = (ImageView) rootView.findViewById(R.id.nhf_img_text2);
-        nhfTextImg3 = (ImageView) rootView.findViewById(R.id.nhf_img_text3);
-
-        nhfTextRenqi1 = (TextView) rootView.findViewById(R.id.nhf_renqi1);
-        nhfTextRenqi2 = (TextView) rootView.findViewById(R.id.nhf_renqi2);
-        nhfTextRenqi3 = (TextView) rootView.findViewById(R.id.nhf_renqi3);
-
-        nhfTextTitle1 = (TextView) rootView.findViewById(R.id.nhf_text_title1);
-        nhfTextTitle2 = (TextView) rootView.findViewById(R.id.nhf_text_title2);
-        nhfTextTitle3 = (TextView) rootView.findViewById(R.id.nhf_text_title3);
-
-        nhfAuthor1 = (LinearLayout) rootView.findViewById(R.id.nhf_author1);
-        nhfAuthor2 = (LinearLayout) rootView.findViewById(R.id.nhf_author2);
-        nhfAuthor3 = (LinearLayout) rootView.findViewById(R.id.nhf_author3);
-
-        nhfAuthorIcon1 = (ImageView) rootView.findViewById(R.id.nhf_author_icon1);
-        nhfAuthorIcon2 = (ImageView) rootView.findViewById(R.id.nhf_author_icon2);
-        nhfAuthorIcon3 = (ImageView) rootView.findViewById(R.id.nhf_author_icon3);
-
-        nhfAuthorName1 = (TextView) rootView.findViewById(R.id.nhf_author_name1);
-        nhfAuthorName2 = (TextView) rootView.findViewById(R.id.nhf_author_name2);
-        nhfAuthorName3 = (TextView) rootView.findViewById(R.id.nhf_author_name3);
-
-        nhfLiulan1 = (TextView) rootView.findViewById(R.id.nhf_liulang1);
-        nhfLiulan2 = (TextView) rootView.findViewById(R.id.nhf_liulang2);
-        nhfLiulan3 = (TextView) rootView.findViewById(R.id.nhf_liulang3);
-
-        nhfWenzhang1 = (TextView) rootView.findViewById(R.id.nhf_wenzhang1);
-        nhfWenzhang2 = (TextView) rootView.findViewById(R.id.nhf_wenzhang2);
-        nhfWenzhang3 = (TextView) rootView.findViewById(R.id.nhf_wenzhang3);
+        recyclerViewDecorateTitle = (RecyclerView) rootView.findViewById(R.id.recyclerviewDecorateTitle);
+        recyclerViewAuthor = (RecyclerView) rootView.findViewById(R.id.recyclerviewAuthor);
+        linearManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewDecorateTitle.setLayoutManager(linearManager);
+        linearManager1 = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
+        recyclerViewAuthor.setLayoutManager(linearManager1);
     }
 
     /**
@@ -222,13 +273,13 @@ public class NewHomeFragment extends Fragment {
         nhfZhuangxiujisuanqi.setOnClickListener(occl);
         nhfGengduozhuangxiutoutiao.setOnClickListener(occl);
 
-        nhfFirstText.setOnClickListener(occl);
-        nhfSecondText.setOnClickListener(occl);
-        nhfThirdText.setOnClickListener(occl);
-
-        nhfAuthor1.setOnClickListener(occl);
-        nhfAuthor2.setOnClickListener(occl);
-        nhfAuthor3.setOnClickListener(occl);
+//        nhfFirstText.setOnClickListener(occl);
+//        nhfSecondText.setOnClickListener(occl);
+//        nhfThirdText.setOnClickListener(occl);
+//
+//        nhfAuthor1.setOnClickListener(occl);
+//        nhfAuthor2.setOnClickListener(occl);
+//        nhfAuthor3.setOnClickListener(occl);
 
         carouselList.addAll(homePage.getCarouselList());
         nhfViewPage.setAdapter(new MyPageAdapter(nhfViewPage));
@@ -241,58 +292,69 @@ public class NewHomeFragment extends Fragment {
     //初始化UI的显示
     private void initView() {
         //设置装修头条 标题
-        if (homePage.getArticleList().get(0).getTitle().length() > 14) {
-            nhfTextTitle1.setText("" + homePage.getArticleList().get(0).getTitle().substring(0, 13) + "...");
-        } else {
-            nhfTextTitle1.setText("" + homePage.getArticleList().get(0).getTitle());
-        }
-        if (homePage.getArticleList().get(1).getTitle().length() > 14) {
-            nhfTextTitle2.setText("" + homePage.getArticleList().get(1).getTitle().substring(0, 13) + "...");
-        } else {
-            nhfTextTitle2.setText("" + homePage.getArticleList().get(1).getTitle());
-        }
-        if (homePage.getArticleList().get(2).getTitle().length() > 14) {
-            nhfTextTitle3.setText("" + homePage.getArticleList().get(2).getTitle().substring(0, 13) + "...");
-        } else {
-            nhfTextTitle3.setText("" + homePage.getArticleList().get(2).getTitle());
-        }
-        //设置装修头条 封面图
-        GlideUtils.glideLoader(mContext, homePage.getArticleList().get(0).getImage_url(), 0, R.mipmap.jiazai_loading, nhfTextImg1, GlideUtils.ROUND_IMAGE);
-        GlideUtils.glideLoader(mContext, homePage.getArticleList().get(1).getImage_url(), 0, R.mipmap.jiazai_loading, nhfTextImg2, GlideUtils.ROUND_IMAGE);
-        GlideUtils.glideLoader(mContext, homePage.getArticleList().get(2).getImage_url(), 0, R.mipmap.jiazai_loading, nhfTextImg3, GlideUtils.ROUND_IMAGE);
-        //设置人气值
-        nhfTextRenqi1.setText("" + homePage.getArticleList().get(0).getView_count());
-        nhfTextRenqi2.setText("" + homePage.getArticleList().get(1).getView_count());
-        nhfTextRenqi3.setText("" + homePage.getArticleList().get(2).getView_count());
+        initRecyclerViewAdapter();
+//        if (homePage.getArticleList().get(0).getTitle().length() > 14) {
+//            nhfTextTitle1.setText("" + homePage.getArticleList().get(0).getTitle().substring(0, 13) + "...");
+//        } else {
+//            nhfTextTitle1.setText("" + homePage.getArticleList().get(0).getTitle());
+//        }
+//        if (homePage.getArticleList().get(1).getTitle().length() > 14) {
+//            nhfTextTitle2.setText("" + homePage.getArticleList().get(1).getTitle().substring(0, 13) + "...");
+//        } else {
+//            nhfTextTitle2.setText("" + homePage.getArticleList().get(1).getTitle());
+//        }
+//        if (homePage.getArticleList().get(2).getTitle().length() > 14) {
+//            nhfTextTitle3.setText("" + homePage.getArticleList().get(2).getTitle().substring(0, 13) + "...");
+//        } else {
+//            nhfTextTitle3.setText("" + homePage.getArticleList().get(2).getTitle());
+//        }
+//        //设置装修头条 封面图
+//        GlideUtils.glideLoader(mContext, homePage.getArticleList().get(0).getImage_url(), 0, R.mipmap.jiazai_loading, nhfTextImg1, GlideUtils.ROUND_IMAGE);
+//        GlideUtils.glideLoader(mContext, homePage.getArticleList().get(1).getImage_url(), 0, R.mipmap.jiazai_loading, nhfTextImg2, GlideUtils.ROUND_IMAGE);
+//        GlideUtils.glideLoader(mContext, homePage.getArticleList().get(2).getImage_url(), 0, R.mipmap.jiazai_loading, nhfTextImg3, GlideUtils.ROUND_IMAGE);
+//        //设置人气值
+//        nhfTextRenqi1.setText("" + homePage.getArticleList().get(0).getView_count());
+//        nhfTextRenqi2.setText("" + homePage.getArticleList().get(1).getView_count());
+//        nhfTextRenqi3.setText("" + homePage.getArticleList().get(2).getView_count());
+//
+//        //设置作者排行榜 头像
+//        GlideUtils.glideLoader(mContext, homePage.getAuthorList().get(0).getIcon(), 0, R.mipmap.jiazai_loading, nhfAuthorIcon1, GlideUtils.CIRCLE_IMAGE);
+//        GlideUtils.glideLoader(mContext, homePage.getAuthorList().get(1).getIcon(), 0, R.mipmap.jiazai_loading, nhfAuthorIcon2, GlideUtils.CIRCLE_IMAGE);
+//        GlideUtils.glideLoader(mContext, homePage.getAuthorList().get(2).getIcon(), 0, R.mipmap.jiazai_loading, nhfAuthorIcon3, GlideUtils.CIRCLE_IMAGE);
+//        //名称
+//        if (homePage.getAuthorList().get(0).getNick().length() > 5) {
+//            nhfAuthorName1.setText("" + homePage.getAuthorList().get(0).getNick().substring(0, 4) + "...");
+//        } else {
+//            nhfAuthorName1.setText("" + homePage.getAuthorList().get(0).getNick());
+//        }
+//        if (homePage.getAuthorList().get(1).getNick().length() > 5) {
+//            nhfAuthorName2.setText("" + homePage.getAuthorList().get(1).getNick().substring(0, 4) + "...");
+//        } else {
+//            nhfAuthorName2.setText("" + homePage.getAuthorList().get(1).getNick());
+//        }
+//        if (homePage.getAuthorList().get(2).getNick().length() > 5) {
+//            nhfAuthorName3.setText("" + homePage.getAuthorList().get(2).getNick().substring(0, 4) + "...");
+//        } else {
+//            nhfAuthorName3.setText("" + homePage.getAuthorList().get(2).getNick());
+//        }
+//        //浏览量
+//        nhfLiulan1.setText("" + homePage.getAuthorList().get(0).getView_count());
+//        nhfLiulan2.setText("" + homePage.getAuthorList().get(1).getView_count());
+//        nhfLiulan3.setText("" + homePage.getAuthorList().get(2).getView_count());
+//        //发布文章量
+//        nhfWenzhang1.setText("" + homePage.getAuthorList().get(0).getArticle_count());
+//        nhfWenzhang2.setText("" + homePage.getAuthorList().get(1).getArticle_count());
+//        nhfWenzhang3.setText("" + homePage.getAuthorList().get(2).getArticle_count());
+    }
 
-        //设置作者排行榜 头像
-        GlideUtils.glideLoader(mContext, homePage.getAuthorList().get(0).getIcon(), 0, R.mipmap.jiazai_loading, nhfAuthorIcon1, GlideUtils.CIRCLE_IMAGE);
-        GlideUtils.glideLoader(mContext, homePage.getAuthorList().get(1).getIcon(), 0, R.mipmap.jiazai_loading, nhfAuthorIcon2, GlideUtils.CIRCLE_IMAGE);
-        GlideUtils.glideLoader(mContext, homePage.getAuthorList().get(2).getIcon(), 0, R.mipmap.jiazai_loading, nhfAuthorIcon3, GlideUtils.CIRCLE_IMAGE);
-        //名称
-        if (homePage.getAuthorList().get(0).getNick().length() > 5) {
-            nhfAuthorName1.setText("" + homePage.getAuthorList().get(0).getNick().substring(0, 4) + "...");
-        } else {
-            nhfAuthorName1.setText("" + homePage.getAuthorList().get(0).getNick());
-        }
-        if (homePage.getAuthorList().get(1).getNick().length() > 5) {
-            nhfAuthorName2.setText("" + homePage.getAuthorList().get(1).getNick().substring(0, 4) + "...");
-        } else {
-            nhfAuthorName2.setText("" + homePage.getAuthorList().get(1).getNick());
-        }
-        if (homePage.getAuthorList().get(2).getNick().length() > 5) {
-            nhfAuthorName3.setText("" + homePage.getAuthorList().get(2).getNick().substring(0, 4) + "...");
-        } else {
-            nhfAuthorName3.setText("" + homePage.getAuthorList().get(2).getNick());
-        }
-        //浏览量
-        nhfLiulan1.setText("" + homePage.getAuthorList().get(0).getView_count());
-        nhfLiulan2.setText("" + homePage.getAuthorList().get(1).getView_count());
-        nhfLiulan3.setText("" + homePage.getAuthorList().get(2).getView_count());
-        //发布文章量
-        nhfWenzhang1.setText("" + homePage.getAuthorList().get(0).getArticle_count());
-        nhfWenzhang2.setText("" + homePage.getAuthorList().get(1).getArticle_count());
-        nhfWenzhang3.setText("" + homePage.getAuthorList().get(2).getArticle_count());
+
+    private void initRecyclerViewAdapter(){
+        Util.setErrorLog(TAG, homePage.getArticleList().size() + " ----kkkk" );
+        DecorateTitleAdapter adapter = new DecorateTitleAdapter(getActivity(), homePage.getArticleList());
+        recyclerViewDecorateTitle.setAdapter(adapter);
+        Util.setErrorLog(TAG, homePage.getAuthorList().size() + " ----kkkk" );
+        AuthorAdapter authorAdapter = new AuthorAdapter(getActivity(), homePage.getAuthorList());
+        recyclerViewAuthor.setAdapter(authorAdapter);
     }
 
     private View.OnClickListener occl = new View.OnClickListener() {
@@ -308,7 +370,8 @@ public class NewHomeFragment extends Fragment {
                     break;
                 case R.id.nhf_mianfeisheji:
                     //进入免费设计
-                    startActivity(new Intent(mContext, FreeActivity.class));
+//                    startActivity(new Intent(mContext, FreeActivity.class));
+                    startActivity(new Intent(mContext, GetPriceActivity.class));
                     break;
                 case R.id.nhf_zhinengbaojia:
                     //进入装修报价
@@ -321,52 +384,51 @@ public class NewHomeFragment extends Fragment {
                     break;
                 case R.id.nhf_gengduozhuangxiutoutiao:
                     //更多进入装修宝典
-
                     Intent intent = new Intent(Constant.GO_DECORATE_BIBLE_ACTION);
                     mContext.sendBroadcast(intent);
                     break;
-                case R.id.nhf_first_text:
-                    //进入第一篇文章详情
-                    intent = new Intent(mContext, NewArticleDetailActivity.class);
-                    intent.putExtra("id", homePage.getArticleList().get(0).getAid());
-                    intent.putExtra("author_id", homePage.getArticleList().get(0).getUid());
-                    startActivity(intent);
-                    break;
-                case R.id.nhf_second_text:
-                    //进入第二篇文章
-                    intent = new Intent(mContext, NewArticleDetailActivity.class);
-                    intent.putExtra("id", homePage.getArticleList().get(1).getAid());
-                    intent.putExtra("author_id", homePage.getArticleList().get(1).getUid());
-                    startActivity(intent);
-                    break;
-                case R.id.nhf_third_text:
-                    //进入第三篇文章
-                    intent = new Intent(mContext, NewArticleDetailActivity.class);
-                    intent.putExtra("id", homePage.getArticleList().get(2).getAid());
-                    intent.putExtra("author_id", homePage.getArticleList().get(2).getUid());
-                    startActivity(intent);
-                    break;
-                case R.id.nhf_author1:
-                    //进入第一个作者的详情
-                    Intent intent1 = new Intent(mContext, NewAuthorDetailActivity.class);
-                    intent1.putExtra("author_id", homePage.getAuthorList().get(0).getUid());
-                    intent1.putExtra("page_num", homePage.getAuthorList().get(0).getArticle_count());
-                    startActivity(intent1);
-                    break;
-                case R.id.nhf_author2:
-                    //进入第二个作者的详情
-                    Intent intent2 = new Intent(mContext, NewAuthorDetailActivity.class);
-                    intent2.putExtra("author_id", homePage.getAuthorList().get(1).getUid());
-                    intent2.putExtra("page_num", homePage.getAuthorList().get(1).getArticle_count());
-                    startActivity(intent2);
-                    break;
-                case R.id.nhf_author3:
-                    //进入第三个作者的详情
-                    Intent intent3 = new Intent(mContext, NewAuthorDetailActivity.class);
-                    intent3.putExtra("author_id", homePage.getAuthorList().get(2).getUid());
-                    intent3.putExtra("page_num", homePage.getAuthorList().get(2).getArticle_count());
-                    startActivity(intent3);
-                    break;
+//                case R.id.nhf_first_text:
+//                    //进入第一篇文章详情
+//                    intent = new Intent(mContext, NewArticleDetailActivity.class);
+//                    intent.putExtra("id", homePage.getArticleList().get(0).getAid());
+//                    intent.putExtra("author_id", homePage.getArticleList().get(0).getUid());
+//                    startActivity(intent);
+//                    break;
+//                case R.id.nhf_second_text:
+//                    //进入第二篇文章
+//                    intent = new Intent(mContext, NewArticleDetailActivity.class);
+//                    intent.putExtra("id", homePage.getArticleList().get(1).getAid());
+//                    intent.putExtra("author_id", homePage.getArticleList().get(1).getUid());
+//                    startActivity(intent);
+//                    break;
+//                case R.id.nhf_third_text:
+//                    //进入第三篇文章
+//                    intent = new Intent(mContext, NewArticleDetailActivity.class);
+//                    intent.putExtra("id", homePage.getArticleList().get(2).getAid());
+//                    intent.putExtra("author_id", homePage.getArticleList().get(2).getUid());
+//                    startActivity(intent);
+//                    break;
+//                case R.id.nhf_author1:
+//                    //进入第一个作者的详情
+//                    Intent intent1 = new Intent(mContext, NewAuthorDetailActivity.class);
+//                    intent1.putExtra("author_id", homePage.getAuthorList().get(0).getUid());
+//                    intent1.putExtra("page_num", homePage.getAuthorList().get(0).getArticle_count());
+//                    startActivity(intent1);
+//                    break;
+//                case R.id.nhf_author2:
+//                    //进入第二个作者的详情
+//                    Intent intent2 = new Intent(mContext, NewAuthorDetailActivity.class);
+//                    intent2.putExtra("author_id", homePage.getAuthorList().get(1).getUid());
+//                    intent2.putExtra("page_num", homePage.getAuthorList().get(1).getArticle_count());
+//                    startActivity(intent2);
+//                    break;
+//                case R.id.nhf_author3:
+//                    //进入第三个作者的详情
+//                    Intent intent3 = new Intent(mContext, NewAuthorDetailActivity.class);
+//                    intent3.putExtra("author_id", homePage.getAuthorList().get(2).getUid());
+//                    intent3.putExtra("page_num", homePage.getAuthorList().get(2).getArticle_count());
+//                    startActivity(intent3);
+//                    break;
             }
         }
     };

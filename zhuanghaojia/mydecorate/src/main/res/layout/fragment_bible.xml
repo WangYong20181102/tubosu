@@ -47,6 +47,7 @@
             android:layout_height="@dimen/top_category_height"
             android:background="@mipmap/pop"
             android:layout_marginRight="10dp"
+            android:visibility="gone"
             android:contentDescription="@string/app_name"
             android:scaleType="center"
             android:layout_alignParentRight="true"
