@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#FEFEFF"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v7.widget.CardView
+        android:layout_width="137dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="8dp"
+        app:cardUseCompatPadding="true"
+        app:cardElevation="10dp">
+
+        <LinearLayout
+            android:id="@+id/decorate_title_whole"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/nhf_wz_shape"
+            android:orientation="vertical">
+            <!--单项的显示图层-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!--第一篇文章的封面图片-->
+                <ImageView
+                    android:id="@+id/decorate_title_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_margin="1dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/test" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="100dp"
+                android:layout_height="44dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="2dp">
+                <TextView
+                    android:id="@+id/decorate_title_bottom_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="环保墙纸，装扮绿色安全家"
+                    android:textColor="#5c5f66"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

@@ -3,7 +3,6 @@ package com.tobosu.mydecorate.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
@@ -33,7 +31,6 @@ import com.tobosu.mydecorate.activity.NewMycollectActivity;
 import com.tobosu.mydecorate.activity.NewMylikeActivity;
 import com.tobosu.mydecorate.activity.SettingActivity;
 import com.tobosu.mydecorate.activity.UserInfoActivity;
-import com.tobosu.mydecorate.activity.WriterActivity;
 import com.tobosu.mydecorate.adapter.MyRecommendAdapter;
 import com.tobosu.mydecorate.entity._MinePage;
 import com.tobosu.mydecorate.global.Constant;
@@ -41,7 +38,6 @@ import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.tobosu.mydecorate.util.GlideUtils;
 import com.tobosu.mydecorate.util.Util;
 import com.tobosu.mydecorate.view.CustomWaitDialog;
-import com.tobosu.mydecorate.view.RoundImageView;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.media.QQShareContent;
 import com.umeng.socialize.media.QZoneShareContent;
@@ -53,10 +49,8 @@ import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -69,7 +63,7 @@ public class NewMineFragment extends Fragment {
     private String TAG = "NewMineFragment";
     private Context mContext;
     private CustomWaitDialog customWaitDialog;
-    private Boolean isShowTuijian = false;//是否显示推荐
+    private Boolean isShowTuijian = true;   //是否显示推荐  默认展开
     private _MinePage minePage;//我的界面数据
 
 
@@ -299,6 +293,11 @@ public class NewMineFragment extends Fragment {
 
     //初始化用户的基础的信息  源于用户登录之后拉取的信息
     private void initUserBasicInfo() {
+
+        // 默认展开
+        nmfTuijianRecycleView.setVisibility(View.VISIBLE);
+        nmfShowTuijian.setImageResource(R.mipmap.nmf_back_down);
+
         SharedPreferences sp = mContext.getSharedPreferences("User_Info_SP", Context.MODE_PRIVATE);
         if (Util.isLogin(mContext)) {
             //已经登录状态

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.activity.NewAuthorDetailActivity;
 import com.tobosu.mydecorate.entity._MinePage;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
@@ -73,6 +74,17 @@ public class MyRecommendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     ((MyRecommendViewHolder) holder).recommendAdd.setImageResource(R.mipmap.is_recommend);
                 }
             });
+
+
+            ((MyRecommendViewHolder) holder).recommendIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, NewAuthorDetailActivity.class);
+                    intent.putExtra("author_id", followList.get(position).getUid());
+                    mContext.startActivity(intent);
+                }
+            });
+
         }
     }
 

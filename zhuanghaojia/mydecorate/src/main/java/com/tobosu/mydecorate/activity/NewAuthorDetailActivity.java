@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
@@ -24,10 +23,8 @@ import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.tobosu.mydecorate.util.GlideUtils;
 import com.tobosu.mydecorate.util.Util;
 import com.tobosu.mydecorate.view.CustomWaitDialog;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +34,7 @@ public class NewAuthorDetailActivity extends AppCompatActivity {
     private Context mContext;
     private String TAG = "NewAuthorDetailActivity";
     private _AuthorDetail authorDetail;
+    private String authorUrl;
 
     private String author_id = "";//作者的id 要从上一个界面中传来
     private String page_num;//文章数量
@@ -104,6 +102,7 @@ public class NewAuthorDetailActivity extends AppCompatActivity {
     private void initViewEvent() {
         new_author_back.setOnClickListener(occl);
         tv_is_concernuser_concerned.setOnClickListener(occl);
+        riv_concerned_head_picture.setOnClickListener(occl);
     }
 
     private View.OnClickListener occl = new View.OnClickListener() {
@@ -116,6 +115,14 @@ public class NewAuthorDetailActivity extends AppCompatActivity {
                     break;
                 case R.id.tv_is_concernuser_concerned:
                     //关注作者按钮
+                    break;
+                case R.id.riv_concerned_head_picture:
+                    Intent intent = new Intent(mContext, SeeCompanyImgActivity.class);
+                    Util.setErrorLog(TAG, authorUrl);
+                    Bundle b = new Bundle();
+                    b.putString("company_img", authorUrl);
+                    intent.putExtra("company_img_bundle", b);
+                    startActivity(intent);
                     break;
             }
         }
@@ -165,6 +172,7 @@ public class NewAuthorDetailActivity extends AppCompatActivity {
             if (status.equals("200")) {
                 //数据请求成功  解析数据
                 authorDetail = new _AuthorDetail(jsonObject.getString("data"));
+                authorUrl = authorDetail.getAuthor().getIcon();
                 GlideUtils.glideLoader(mContext, authorDetail.getAuthor().getIcon(),
                         0, R.mipmap.jiazai_loading, riv_concerned_head_picture, GlideUtils.CIRCLE_IMAGE);
                 tv_concern_username.setText("" + authorDetail.getAuthor().getNick());

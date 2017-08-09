@@ -129,6 +129,8 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 	
 	private LinearLayout select_city_activity_netoutview;
 
+	private int fromCode = 101;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -138,8 +140,14 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 		initBaidu();
 		initView();
 		getCityJson();
+		getDataIntent();
 
+	}
 
+	private void getDataIntent(){
+		if(getIntent()!=null && getIntent().getBundleExtra("GetPriceSelectcityBundle")!=null){
+			fromCode = Integer.parseInt(getIntent().getBundleExtra("GetPriceSelectcityBundle").getString("fromGetPrice"));
+		}
 	}
 
 	private void initBaidu(){
@@ -357,8 +365,12 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 	private void initView() {
 		SDKInitializer.initialize(getApplicationContext());
 
-		Bundle b = getIntent().getBundleExtra("pop_bundle");
-		from = b.getInt("frompop");
+		Bundle b;
+		if(getIntent()!=null && getIntent().getBundleExtra("pop_bundle")!=null){
+			b = getIntent().getBundleExtra("pop_bundle");
+			from = b.getInt("frompop");
+		}
+
 		city_title_back = (ImageView) findViewById(R.id.city_title_back);
 
 		if(from==31){
@@ -538,6 +550,12 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 			b.putString("ci", ci);
 			cityData.putExtra("city_bundle", b);
 			setResult(77, cityData);
+		}else if(fromCode == 647){
+			Intent cityData = new Intent();
+			Bundle b = new Bundle();
+			b.putString("ci", ci);
+			cityData.putExtra("city_bundle", b);
+			setResult(70, cityData);
 		}else{
 			startActivity(new Intent(context, MainActivity.class));
 		}

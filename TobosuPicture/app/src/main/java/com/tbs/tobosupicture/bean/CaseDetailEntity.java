@@ -93,6 +93,15 @@ public class CaseDetailEntity {
         private String designer_icon;
         private String designer_position;
         private String layout_url;
+        private String is_collect;
+
+        public String getIs_collect() {
+            return is_collect;
+        }
+
+        public void setIs_collect(String is_collect) {
+            this.is_collect = is_collect;
+        }
 
         public String getCaseid() {
             return caseid;

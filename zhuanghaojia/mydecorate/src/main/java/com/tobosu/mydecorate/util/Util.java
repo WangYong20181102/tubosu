@@ -36,11 +36,17 @@ import java.util.regex.Pattern;
  */
 public class Util {
     public static void setErrorLog(String tag, String msg) {
-        Log.e(tag, msg);
+        if(true){
+            Log.e(tag, msg);
+        }
+
     }
 
     public static void setLog(String tag, String msg) {
-        Log.d(tag, msg);
+        if(true){
+            Log.d(tag, msg);
+        }
+
     }
 
     public static void setToast(Context context, String msg) {

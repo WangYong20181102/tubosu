@@ -14,8 +14,12 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#69000000" >
+                android:layout_height="200dp" >
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#49000000"/>
 
                 <ImageView
                     android:id="@+id/ivDetailImg"
@@ -24,15 +28,31 @@
                     android:scaleType="fitXY"/>
 
                 <RelativeLayout
-                    android:id="@+id/relCaseDetailBack"
-                    android:layout_width="49dp"
+                    android:id="@+id/re_deatilsf_case"
+                    android:layout_width="match_parent"
                     android:layout_height="49dp">
+                    <RelativeLayout
+                        android:id="@+id/relCaseDetailBack"
+                        android:layout_width="49dp"
+                        android:layout_height="49dp">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@mipmap/back_white"/>
+                    </RelativeLayout>
+
                     <ImageView
+                        android:id="@+id/ivCollect"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:background="@mipmap/back_white"/>
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="26dp"
+                        android:background="@mipmap/shoucang21"/>
+
                 </RelativeLayout>
+
 
                 <TextView
                     android:id="@+id/tvCaseText"
@@ -42,7 +62,7 @@
                     android:textSize="16sp"
                     android:layout_marginTop="4dp"
                     android:layout_marginLeft="30dp"
-                    android:layout_below="@+id/relCaseDetailBack"
+                    android:layout_below="@+id/re_deatilsf_case"
                     android:textColor="@color/white"/>
 
                 <LinearLayout
@@ -178,6 +198,9 @@
                         android:layout_gravity="center_vertical"
                         android:background="@mipmap/shouxi"/>
                 </LinearLayout>
+
+
+
 
             </RelativeLayout>
 

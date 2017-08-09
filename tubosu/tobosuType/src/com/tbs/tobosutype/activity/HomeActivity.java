@@ -1,5 +1,4 @@
 package com.tbs.tobosutype.activity;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -27,7 +26,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
@@ -47,12 +45,10 @@ import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.umeng.analytics.MobclickAgent;
-
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
