@@ -82,7 +82,6 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
     private List<Integer> mPositions;
     private Map<String, Integer> mIndexer;
 
-    private int from = -1;
     private Intent mIntent;
     private String whereFrom="";
     /**
@@ -258,17 +257,7 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
     }
 
     private void initView() {
-        Bundle b;
-        if (getIntent() != null && getIntent().getBundleExtra("pop_bundle") != null) {
-            b = getIntent().getBundleExtra("pop_bundle");
-            from = b.getInt("frompop");
-        }
         city_title_back = (ImageView) findViewById(R.id.city_title_back);
-        if (from == 31) {
-            city_title_back.setVisibility(View.INVISIBLE);
-        } else {
-            city_title_back.setVisibility(View.VISIBLE);
-        }
         headView = getLayoutInflater().inflate(R.layout.head_view_select_city, null);
         mCity_gridView = (MyGridView) headView.findViewById(R.id.city_gridView);
         select_positioning = (TextView) headView.findViewById(R.id.select_positioning);
@@ -279,7 +268,6 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
         } else {
             cit = s;
         }
-//		Utils.setToast(context, s);
         select_positioning.setText(cit);
         select_positioning.setOnClickListener(this);
 
@@ -411,9 +399,14 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
      * 跳转不同activity
      */
     private void goActivity(String ci) {
+//        Utils.setToast(this, "66==" + whereFrom + "==" + ci);
+        if (ci.contains("市") || ci.contains("县")) {
+            ci = ci.substring(0, ci.length() - 1);
+        }
         if("TemplateFragment".equals(whereFrom)){
             EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_CODE, ci));
         }else {
+
 //            EventBusUtil.sendEvent(new Event(EC.EventCode.SHOW_TEMPLATE_FRAGMENT, ci));
         }
         finish();
@@ -432,7 +425,7 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
         switch (v.getId()) {
             case R.id.city_title_back:
             case R.id.select_positioning:
-                goActivity(SpUtils.getBaiduLocationCity(context));
+                goActivity(SpUtils.getLocationCity(context));
                 break;
         }
 

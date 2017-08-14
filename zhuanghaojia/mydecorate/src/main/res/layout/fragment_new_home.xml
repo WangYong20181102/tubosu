@@ -190,7 +190,7 @@
             android:id="@+id/relTransparenbt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#63FF9C00">
+            android:background="#60FF9C00">
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"

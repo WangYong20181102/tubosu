@@ -54,6 +54,7 @@ public class DecorateTitleAdapter extends RecyclerView.Adapter<DecorateTitleAdap
                 Intent intent = new Intent(mContext, NewArticleDetailActivity.class);
                 intent.putExtra("id", dataList.get(position).getAid());
                 intent.putExtra("author_id", dataList.get(position).getUid());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             }
         });

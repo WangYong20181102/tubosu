@@ -59,6 +59,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
                 Intent intent = new Intent(mContext, NewAuthorDetailActivity.class);
                 intent.putExtra("author_id", dataList.get(position).getUid());
                 intent.putExtra("page_num", dataList.get(position).getArticle_count());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
             }
         });
