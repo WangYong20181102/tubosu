@@ -4,8 +4,8 @@ package com.tbs.tobosupicture.bean;
  * Created by Mr.Lin on 2017/6/30 08:29.
  * Eventbus 处理事务总线
  * 事件总线的code使用：
- * 吴天保同学 0x00000N
- * 林承文同学 0x10000N
+ * 吴天保同学 0x10000N
+ * 林承文同学 0x00000N
  */
 
 public final class EC {
@@ -25,6 +25,6 @@ public final class EC {
         public static final int REFRESH_MY_JOIN_NUM = 0x000013;//刷新我参与的页面获取fragment中的提示
         public static final int GOTO_SEND_DYNAMIC = 0x000014;//去发动态
         public static final int FNISHI_LOGINACTIVITY = 0x000015;//销毁登录页面
-        public static final int CHECK_ABOUTME_MYORG_HAS_MSG = 0x000016;//销毁登录页面
+        public static final int CHECK_ABOUTME_MYORG_HAS_MSG = 0x000016;//点击了关于我按钮刷新数据
     }
 }

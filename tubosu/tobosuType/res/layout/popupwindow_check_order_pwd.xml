@@ -39,7 +39,8 @@
             android:textColor="@color/color_neutralgrey"
             android:textSize="12.0sp" />
 
-        <Button
+        <TextView
+            android:gravity="center"
             android:id="@+id/bt_subit"
             android:layout_width="fill_parent"
             android:layout_height="40.0dip"

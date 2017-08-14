@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
 
@@ -17,7 +18,7 @@ import com.tbs.tobosupicture.R;
  */
 @SuppressLint("ViewConstructor")
 public class SelectPersonalPopupWindow extends PopupWindow {
-    private Button takePhotoBtn, pickPhotoBtn, cancelBtn;
+    private TextView takePhotoBtn, pickPhotoBtn, cancelBtn;
     private View mMenuView;
 
     @SuppressLint("InflateParams")
@@ -25,9 +26,9 @@ public class SelectPersonalPopupWindow extends PopupWindow {
         super(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMenuView = inflater.inflate(R.layout.popupwindow_setting_image, null);
-        takePhotoBtn = (Button) mMenuView.findViewById(R.id.takePhotoBtn);
-        pickPhotoBtn = (Button) mMenuView.findViewById(R.id.pickPhotoBtn);
-        cancelBtn = (Button) mMenuView.findViewById(R.id.cancelBtn);
+        takePhotoBtn = (TextView) mMenuView.findViewById(R.id.takePhotoBtn);
+        pickPhotoBtn = (TextView) mMenuView.findViewById(R.id.pickPhotoBtn);
+        cancelBtn = (TextView) mMenuView.findViewById(R.id.cancelBtn);
         cancelBtn.setOnClickListener(itemsOnClick);
         pickPhotoBtn.setOnClickListener(itemsOnClick);
         takePhotoBtn.setOnClickListener(itemsOnClick);
@@ -36,8 +37,8 @@ public class SelectPersonalPopupWindow extends PopupWindow {
         this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         this.setFocusable(true);
         this.setAnimationStyle(R.style.PopupAnimation);
-        ColorDrawable dw = new ColorDrawable(0x80000000);
-        this.setBackgroundDrawable(dw);
+//        ColorDrawable dw = new ColorDrawable(0x80000000);
+//        this.setBackgroundDrawable(dw);
         this.setAnimationStyle(R.style.custom_popupwindow_animstyle);
         mMenuView.setOnTouchListener(new View.OnTouchListener() {
 

@@ -120,6 +120,7 @@ public class MyFansAdapter
             if (TextUtils.isEmpty(myFansList.get(position).getPersonal_signature())) {
                 ((MyFansViewHolder) holder).myfansSign.setVisibility(View.GONE);
             } else {
+                ((MyFansViewHolder) holder).myfansSign.setVisibility(View.VISIBLE);
                 ((MyFansViewHolder) holder).myfansSign.setText(myFansList.get(position).getPersonal_signature());
             }
             //设置和“我”的关系

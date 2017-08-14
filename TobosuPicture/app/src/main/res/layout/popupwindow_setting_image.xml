@@ -13,7 +13,8 @@
         android:gravity="center_horizontal"
         android:orientation="vertical" >
 
-        <Button
+        <TextView
+            android:gravity="center"
             android:id="@+id/takePhotoBtn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -23,12 +24,12 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <ImageView
+        <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/bg_divide" />
 
-        <Button
+        <TextView
             android:id="@+id/pickPhotoBtn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -39,12 +40,13 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <ImageView
+        <View
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:background="@color/bg_divide" />
 
-        <Button
+        <TextView
+            android:gravity="center"
             android:id="@+id/cancelBtn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
