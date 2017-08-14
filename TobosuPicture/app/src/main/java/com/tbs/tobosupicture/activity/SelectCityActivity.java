@@ -405,9 +405,6 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
         }
         if("TemplateFragment".equals(whereFrom)){
             EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_CODE, ci));
-        }else {
-
-//            EventBusUtil.sendEvent(new Event(EC.EventCode.SHOW_TEMPLATE_FRAGMENT, ci));
         }
         finish();
     }
