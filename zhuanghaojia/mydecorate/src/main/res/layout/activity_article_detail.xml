@@ -166,8 +166,8 @@
 
                     <ImageView
                         android:id="@+id/new_detail_icon"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:src="@mipmap/icon_head_default" />
 
                     <TextView

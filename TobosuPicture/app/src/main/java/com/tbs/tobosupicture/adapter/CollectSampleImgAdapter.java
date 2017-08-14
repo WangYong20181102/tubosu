@@ -137,6 +137,7 @@ public class CollectSampleImgAdapter extends RecyclerView.Adapter<RecyclerView.V
             });
 
             holder.itemView.setTag(dataList.get(position));
+
         }
 
 //        if(holder instanceof FootViewHolder){

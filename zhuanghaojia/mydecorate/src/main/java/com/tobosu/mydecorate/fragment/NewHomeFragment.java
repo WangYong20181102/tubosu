@@ -1,4 +1,5 @@
 package com.tobosu.mydecorate.fragment;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,9 +28,10 @@ import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.activity.CalculaterActivity;
 import com.tobosu.mydecorate.activity.GetPriceActivity;
 import com.tobosu.mydecorate.activity.PopOrderActivity;
-import com.tobosu.mydecorate.activity.SmartQuote;
+import com.tobosu.mydecorate.activity.SmartDesignActivity;
 import com.tobosu.mydecorate.adapter.AuthorAdapter;
 import com.tobosu.mydecorate.adapter.DecorateTitleAdapter;
+import com.tobosu.mydecorate.application.MyApplication;
 import com.tobosu.mydecorate.entity._HomePage;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
@@ -61,9 +64,6 @@ public class NewHomeFragment extends Fragment {
     private LinearLayout nhfZhuangxiujisuanqi;//装修计算器的浮层
 
     private LinearLayout nhfGengduozhuangxiutoutiao;//更多装修头条
-
-    private static final int START_ALPHA = 0;
-    private static final int END_ALPHA = 255;
     private int fadingHeight = 400;
     /*-----------------------------------*/
 
@@ -139,6 +139,7 @@ public class NewHomeFragment extends Fragment {
         OKHttpUtil okHttpUtil = new OKHttpUtil();
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("token", Util.getDateToken());
+        hashMap.put("is_default", "4");
         okHttpUtil.post(Constant.HOME_FRAGMENT_URL, hashMap, new OKHttpUtil.BaseCallBack() {
 
             @Override
@@ -180,32 +181,31 @@ public class NewHomeFragment extends Fragment {
 
         @Override
         public void onScrollChanged(ScrollView who, int x, int y, int oldx, int oldy) {
-            if(y<=7) {
-                home_textView.setAlpha(0);
+            if(y<=2) {
+                relTransparenbt.setAlpha(0);
             }
 
             if (y > fadingHeight) {
                 y = fadingHeight;
             }
 
-            if (y>7 && y<=fadingHeight){
-                home_textView.setAlpha(y/4);
+            if (y>0 && y<=fadingHeight){
+                relTransparenbt.setAlpha(y/4);
+                Util.setErrorLog("NewHomeFragment", y/4 + "");
             }
-
         }
     };
 
     private Drawable drawable;
     private TextView home_textView;
-//    private FrameLayout rel_homebar;
+    private RelativeLayout relTransparenbt;
     private void bindView(View rootView) {
         scrollViewExtend = (ScrollViewExtend) rootView.findViewById(R.id.scrollViewExtend);
         scrollViewExtend.scrollTo(0, 0);
         home_textView = (TextView) rootView.findViewById(R.id.home_textView);
-//        home_textView.setAlpha(0);
-//        rel_homebar = (FrameLayout) rootView.findViewById(R.id.rel_homebar);
-//        rel_homebar.bringToFront();
 
+        relTransparenbt = (RelativeLayout) rootView.findViewById(R.id.relTransparenbt);
+        relTransparenbt.setAlpha(0);
         nhfViewPage = (RollPagerView) rootView.findViewById(R.id.nhf_roll_pagerview);
         nhfFadan = (ImageView) rootView.findViewById(R.id.nhf_fadan);
         nhfMianfeisheji = (LinearLayout) rootView.findViewById(R.id.nhf_mianfeisheji);
@@ -289,10 +289,24 @@ public class NewHomeFragment extends Fragment {
 //        Log.e(TAG, "处理后的Token===" + Util.getDateToken());
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mContext = activity;//mCtx 是成员变量，上下文引用
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mContext = null;
+    }
+
+
     //初始化UI的显示
     private void initView() {
         //设置装修头条 标题
-        initRecyclerViewAdapter();
+        initRecyclerViewAdapter(mContext);
+
 //        if (homePage.getArticleList().get(0).getTitle().length() > 14) {
 //            nhfTextTitle1.setText("" + homePage.getArticleList().get(0).getTitle().substring(0, 13) + "...");
 //        } else {
@@ -348,12 +362,10 @@ public class NewHomeFragment extends Fragment {
     }
 
 
-    private void initRecyclerViewAdapter(){
-        Util.setErrorLog(TAG, homePage.getArticleList().size() + " ----kkkk" );
-        DecorateTitleAdapter adapter = new DecorateTitleAdapter(getActivity(), homePage.getArticleList());
+    private void initRecyclerViewAdapter(Context context){
+        DecorateTitleAdapter adapter = new DecorateTitleAdapter(MyApplication.getApp(), homePage.getArticleList());
         recyclerViewDecorateTitle.setAdapter(adapter);
-        Util.setErrorLog(TAG, homePage.getAuthorList().size() + " ----kkkk" );
-        AuthorAdapter authorAdapter = new AuthorAdapter(getActivity(), homePage.getAuthorList());
+        AuthorAdapter authorAdapter = new AuthorAdapter(MyApplication.getApp(), homePage.getAuthorList());
         recyclerViewAuthor.setAdapter(authorAdapter);
     }
 
@@ -375,7 +387,7 @@ public class NewHomeFragment extends Fragment {
                     break;
                 case R.id.nhf_zhinengbaojia:
                     //进入装修报价
-                    startActivity(new Intent(mContext, SmartQuote.class));
+                    startActivity(new Intent(mContext, SmartDesignActivity.class));
                     break;
                 case R.id.nhf_zhuangxiujisuanqi:
                     //进入装修计算器

@@ -139,12 +139,19 @@ public class NewArticleDetailActivity extends AppCompatActivity {
         newDetailCollect.setOnClickListener(occl);
         newDetailGood.setOnClickListener(occl);
         newDetailAttention.setOnClickListener(occl);
+        newDatailIcon.setOnClickListener(occl);
     }
 
     private View.OnClickListener occl = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
+                case R.id.new_detail_icon:
+                    Intent intent = new Intent(mContext, NewAuthorDetailActivity.class);
+                    intent.putExtra("author_id", detail.getAuthor_id());
+                    intent.putExtra("page_num", "");
+                    startActivity(intent);
+                    break;
                 case R.id.new_detail_back:
                     finish();
                     break;
@@ -167,7 +174,7 @@ public class NewArticleDetailActivity extends AppCompatActivity {
                     HttpGood();
                     break;
                 case R.id.new_detail_attention:
-                    Log.e(TAG, "点击了关注按钮");
+
                     //关注作者
                     if (Util.isLogin(mContext)) {
                         //请求关注接口

@@ -2,11 +2,13 @@ package com.tobosu.mydecorate.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.activity.NewArticleDetailActivity;
@@ -55,6 +57,13 @@ public class DecorateTitleAdapter extends RecyclerView.Adapter<DecorateTitleAdap
                 mContext.startActivity(intent);
             }
         });
+
+
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+
+        } else {
+            holder.decorate_title_whole.setBackgroundResource(R.drawable.nhf_wz_shape);
+        }
     }
 
     @Override
@@ -65,10 +74,12 @@ public class DecorateTitleAdapter extends RecyclerView.Adapter<DecorateTitleAdap
     class DecorateTitleViewHolder extends RecyclerView.ViewHolder{
         private TextView decorate_title_bottom_title;
         private ImageView decorate_title_img;
+        private LinearLayout decorate_title_whole;
         public DecorateTitleViewHolder(View itemView) {
             super(itemView);
             decorate_title_bottom_title = (TextView) itemView.findViewById(R.id.decorate_title_bottom_title);
             decorate_title_img = (ImageView) itemView.findViewById(R.id.decorate_title_img);
+            decorate_title_whole = (LinearLayout) itemView.findViewById(R.id.decorate_title_whole);
         }
     }
 }

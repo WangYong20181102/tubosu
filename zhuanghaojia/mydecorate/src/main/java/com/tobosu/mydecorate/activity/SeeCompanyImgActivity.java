@@ -31,6 +31,7 @@ import com.tobosu.mydecorate.util.GlideUtils;
 import com.tobosu.mydecorate.util.Util;
 import com.tobosu.mydecorate.view.DragGrid;
 import com.tobosu.mydecorate.view.OtherGridView;
+import com.tobosu.mydecorate.view.TouchImageView;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -43,7 +44,8 @@ import java.util.List;
 public class SeeCompanyImgActivity extends Activity{
     private static final String TAG = SeeCompanyImgActivity.class.getSimpleName();
     private Context mContext;
-    private ImageView see_img;
+    private TouchImageView see_img;
+    private RelativeLayout see_img_activity;
     private String url;
 
 
@@ -60,8 +62,15 @@ public class SeeCompanyImgActivity extends Activity{
     }
 
     private void initView() {
-        see_img = (ImageView) findViewById(R.id.see_img);
+        see_img = (TouchImageView) findViewById(R.id.see_img);
+        see_img_activity = (RelativeLayout) findViewById(R.id.see_img_activity);
         see_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        see_img_activity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -72,7 +81,7 @@ public class SeeCompanyImgActivity extends Activity{
     private void initData(){
         if(getIntent()!=null && getIntent().getBundleExtra("company_img_bundle")!=null){
             url = getIntent().getBundleExtra("company_img_bundle").getString("company_img");
-            GlideUtils.glideLoader(mContext, url, R.mipmap.jiazai_loading, R.mipmap.jiazai_loading, see_img);
+            GlideUtils.glideLoader(mContext, url, R.mipmap.case_loading_img, R.mipmap.case_loading_img, see_img);
         }
     }
 

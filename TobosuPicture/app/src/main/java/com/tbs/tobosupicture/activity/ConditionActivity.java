@@ -2,12 +2,14 @@ package com.tbs.tobosupicture.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -33,8 +35,9 @@ import com.tbs.tobosupicture.utils.JsonUtil;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.CustomExpandableListView;
-import com.tbs.tobosupicture.view.MyGridView;
 import com.tbs.tobosupicture.view.MyListView;
+import com.tbs.tobosupicture.view.library.PullToRefreshBase;
+import com.tbs.tobosupicture.view.library.PullToRefreshGridView;
 import com.tbs.tobosupicture.view.wheelviews.ChooseAddressWheel;
 import com.tbs.tobosupicture.view.wheelviews.listener.OnAddressChangeListener;
 import org.json.JSONException;
@@ -82,6 +85,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
     @BindView(R.id.hideCityLayout)
     LinearLayout hideCityLayout;
 
+
     private boolean isHide = true;
 
 
@@ -106,11 +110,12 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
 
         ButterKnife.bind(this);
         getDataFromNet();
+//        init("1", "1");
         init();
     }
 
     private void getDataFromNet() {
-
+        tvChooseCity.setText(defaultAddr); // 默认
         if (Utils.isNetAvailable(mContext)) {
 
             if(Utils.userIsLogin(mContext)){
@@ -155,10 +160,6 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         } else {
 
         }
-
-
-
-
     }
 
     private ArrayList<SearchRecordBean> recordBeenList;
@@ -203,8 +204,14 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
     }
 
 
-    private void getParamBack() {
-        // 获取数据
+    private Intent setIntent(){
+        if(!isHide){
+            city_id = "";
+            district_id = "";
+            param_vilige_id = "";
+            Utils.setErrorLog(TAG, "===未进入===");
+        }
+
         Intent intent = new Intent();
         Bundle b = new Bundle();
         b.putString("param_area", param_area);
@@ -213,10 +220,16 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         b.putString("param_style", param_style);
         b.putString("param_city_id", city_id);
         b.putString("param_district_id", district_id);//小区id
+        b.putString("param_vilige_id", param_vilige_id);//花园小区id  param_vilige_id
         b.putString("condition_text", conditionText);
         intent.putExtra("params", b);
 
-        Utils.setErrorLog(TAG, param_area + "   " + param_layout + "  " + param_price + "  " + param_style);
+        Utils.setErrorLog(TAG, param_area + "   " + param_layout + "  " + param_price + "  " + param_style + "  返回城市id " + city_id+  "  返回小区id " + district_id+ "  返回花园小区id " + param_vilige_id);
+        return intent;
+    }
+
+    private void getParamBack(Intent intent) {
+        // 获取数据
         setResult(10101, intent);
         finish();
     }
@@ -288,10 +301,12 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         switch (view.getId()) {
             case R.id.tvChooseCity:
                 Utils.hideKeyBoard(this);
+                // 显示小区
                 chooseAddressWheel.show(view);
                 break;
             case R.id.tvChooseDisctrict:
-                initDistrictPopupWindow(selectText);
+                // 显示 花园小区
+                initDistrictPopupWindow(defaultAddr);
                 break;
             case R.id.relShowAndHideCity:
                 if(isHide){
@@ -344,7 +359,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                 }
                 break;
             case R.id.tvCaseSearch:
-                getParamBack();
+                getParamBack(setIntent());
                 break;
             case R.id.relSearchBack:
                 finish();
@@ -352,47 +367,74 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         }
     }
 
-    private void initDistrictAdapter(MyGridView gridview, ArrayList<DistrictEntity> list){
-        DistrictAdapter gvAdapter = null;
-        if(gvAdapter==null){
-            gvAdapter = new DistrictAdapter(mContext, list);
-            gridview.setAdapter(gvAdapter);
+    private void initDistrictAdapter(PullToRefreshGridView gv, ArrayList<DistrictEntity> list){
+        DistrictAdapter adapter = null;
+        if(adapter==null){
+            adapter = new DistrictAdapter(mContext, list);
+            gv.setAdapter(adapter);
         }else{
-            gvAdapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
         }
+        gv.onRefreshComplete();
     }
 
     private PopupWindow popupWindow;
     private ArrayList<DistrictEntity> districtDataList;
+
+    /***
+     * 花园小区列表
+     * @param text
+     */
     private void initDistrictPopupWindow(String text){
+
         View contentView = LayoutInflater.from(mContext).inflate(R.layout.popuplayout_district, null);
-        MyGridView gv = (MyGridView) contentView.findViewById(R.id.gvDistrict);
+        final PullToRefreshGridView gridView = (PullToRefreshGridView) contentView.findViewById(R.id.gvDistrict);
         ImageView ivClose = (ImageView) contentView.findViewById(R.id.ivCloseWindown);
         TextView tvLocation = (TextView) contentView.findViewById(R.id.tvLocation);
         final EditText editTextSearchDistrct = (EditText) contentView.findViewById(R.id.editTextSearchDistrct);
-        TextView tvSearchDistrict = (TextView) contentView.findViewById(R.id.tvSearchDistrict);
+        TextView tvSearchDistrict = (TextView) contentView.findViewById(R.id.tvSearchDistrict); // 搜索按钮
 
-        popupWindow = new PopupWindow(contentView,
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setContentView(contentView);
 
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
 
-        initDistrictAdapter(gv, districtDataList);
+        initDistrictAdapter(gridView, districtDataList);
 
-
-
-        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //FIXME 获取 id
-                district_id = districtDataList.get(position).getId();
-                districtName = districtDataList.get(position).getName();
+                param_vilige_id = districtDataList.get(position).getId();
+                villigeName = districtDataList.get(position).getName();
+                tvChooseDisctrict.setText(villigeName);
+                setIntent();
                 popupWindow.dismiss();
             }
         });
+
+
+        gridView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
+                districtPage = 1;
+                districtDataList.clear();
+                getDstrictData(false, null, city_id, district_id);
+                initDistrictAdapter(gridView, districtDataList);
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
+                Utils.setToast(mContext, "Pull up!");
+//                districtPage++;
+//                getDstrictData(false, null, city_id, district_id);
+//                initDistrictAdapter(gridView, districtDataList);
+            }
+        });
+
+
 
         tvSearchDistrict.setOnClickListener(new View.OnClickListener() {
 
@@ -405,8 +447,9 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                 }else{
                     districtDataList.clear();
                     districtPage = 1;
-                    getDstrictData(true, searchText);
-
+                    Utils.setErrorLog(TAG, "两个id>" + city_id + "<====>" + district_id);
+                    // 搜索花园小区
+                    getDstrictData(true, searchText, city_id, district_id);
                 }
 
             }
@@ -416,12 +459,10 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 popupWindow.dismiss();
             }
         });
-        popupWindow.showAsDropDown(findViewById(R.id.readjof), 0, 0, Gravity.BOTTOM);
+        popupWindow.showAtLocation(findViewById(R.id.condictionMainLayout), 0, 0, Gravity.BOTTOM);
     }
 
     @Override
@@ -433,7 +474,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
     private void init() {
         initWheel();
         initData();
-        getDstrictData(false, null);
+        getDstrictData(false, null, "1", "1"); // 先默认 北京 北京 东城区
     }
 
     private void initWheel() {
@@ -441,6 +482,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         chooseAddressWheel.setOnAddressChangeListener(this);
     }
 
+    private String defaultAddr = "北京市 北京 东城区";
     private void initData() {
         String address = Utils.readAssert(this, "address.txt");
         AddressModel model = JsonUtil.parseJson(address, AddressModel.class);
@@ -450,7 +492,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                 return;
             }else {
 //                tvChooseCity.setText(data.Province + " " + data.City + " " + data.Area);
-                tvChooseCity.setText("北京 北京 东城区"); // 默认
+
                 if (data.ProvinceItems != null && data.ProvinceItems.Province != null) {
                     chooseAddressWheel.setProvince(data.ProvinceItems.Province);
                     chooseAddressWheel.defaultValue(data.Province, data.City, data.Area);
@@ -462,39 +504,41 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
     @Override
     public void onAddressChange(String province, String city, String district) {
         tvChooseCity.setText(province + " " + city + " " + district);
-        selectText = province + " " + city + " " + district;
+        defaultAddr = province + " " + city + " " + district;
+
     }
 
 
-    private String selectText;
     @Override
     public void onAddressChangeId(String provinceId, String cityId, String districtId) {
         Utils.setToast(mContext, provinceId +" = " + cityId + " = "+districtId);
         province_id = provinceId;
         city_id = cityId;
         district_id = districtId;
+        getDstrictData(false, null, city_id, district_id);
     }
 
     private String province_id = "";
-    private String city_id = "";
-    private String district_id = "";
-    private String districtName = "";
+    private String city_id = "1";         //  默认为 北京 北京 东城区
+    private String district_id = "1";     //  默认为 北京 北京 东城区
+    private String param_vilige_id = "";  //  默认为 北京 北京 东城区
+    private String villigeName = "";
     private int districtPage = 1;
-    private int districtPageSize = 10;
+    private int districtPageSize = 12;
 
     /**
      * 小区数据
      */
-    private void getDstrictData(boolean isTextSearch, String text){
+    private void getDstrictData(boolean isTextSearch, String text, String _ciyt_id, String _disc_id){
         if (Utils.isNetAvailable(mContext)) {
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("token", Utils.getDateToken());
             if(isTextSearch){
                 hashMap.put("name", text);
             }else {
-                hashMap.put("city_id", city_id);
-                hashMap.put("district_id", district_id);
-                Utils.setErrorLog(TAG, "城市id:" + city_id + "     小区id:" + district_id);
+                hashMap.put("city_id", _ciyt_id);
+                hashMap.put("district_id", _disc_id);
+//                Utils.setErrorLog(TAG, "城市id:" + _ciyt_id + "     小区id:" + _disc_id);
             }
 
             hashMap.put("page", districtPage);
@@ -523,7 +567,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                             if (jsonEntity.getStatus() == 200) {
                                 districtDataList = jsonEntity.getDistrictEntityList();
                             } else {
-                                Utils.setToast(mContext, jsonEntity.getMsg());
+                                Utils.setToast(mContext, "无更多数据");
                             }
                         }
                     });

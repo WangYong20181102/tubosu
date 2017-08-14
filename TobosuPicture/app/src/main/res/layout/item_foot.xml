@@ -3,6 +3,7 @@
     android:id="@+id/foot_load_more_layout"
     android:layout_width="match_parent"
     android:layout_height="49dp"
+    android:visibility="gone"
     android:gravity="center_horizontal"
     android:orientation="horizontal" >
 

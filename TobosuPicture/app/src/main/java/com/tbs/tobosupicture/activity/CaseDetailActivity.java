@@ -18,6 +18,7 @@ import com.tbs.tobosupicture.bean.CaseDetailEntity;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.MyListView;
 
@@ -90,15 +91,69 @@ public class CaseDetailActivity extends BaseActivity {
         TAG = "CaseDetailActivity";
 
         getIntentData();
+        setClick();
     }
 
     private void getIntentData() {
         if (getIntent() != null && getIntent().getBundleExtra("case_bundle") != null) {
             id = getIntent().getBundleExtra("case_bundle").getString("id");
+
             getDataFromNet(id);
         }
+        Utils.setErrorLog(TAG, "case——id是什么呢" + id +"  用户id"+ SpUtils.getUserUid(mContext) + " ***  " + Utils.getDateToken());
     }
 
+
+    private void setClick(){
+        ivCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(Utils.isNetAvailable(mContext)){
+                    if(Utils.userIsLogin(mContext)){
+                        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+                        hashMap.put("case_id", id);
+                        hashMap.put("uid", SpUtils.getUserUid(mContext));
+                        hashMap.put("token", Utils.getDateToken());
+                        HttpUtils.doPost(UrlConstans.CLICK_CASE_COLLECT_URL, hashMap, new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Utils.setToast(mContext, "网络繁忙1，请稍后再试~");
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+                                final String json = response.body().string();
+                                Utils.setErrorLog(TAG, json);
+
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(json);
+                                            if(jsonObject.getInt("status") == 200){
+
+                                            }else {
+                                                Utils.setToast(mContext, "收藏失败，稍后再试~");
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    }else {
+                        startActivity(new Intent(mContext, LoginActivity.class));
+                    }
+                }
+            }
+        });
+    }
     private void getDataFromNet(String param) {
         if (Utils.isNetAvailable(mContext)) {
             HashMap<String, Object> hashMap = new HashMap<String, Object>();

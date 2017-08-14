@@ -10,12 +10,12 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="49dp"
+            android:visibility="gone"
             android:layout_marginLeft="14dp">
             <TextView
                 android:id="@+id/caseLocation"
                 android:text="深圳"
                 android:textSize="14sp"
-                android:visibility="gone"
                 android:textColor="@color/bg_white"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"

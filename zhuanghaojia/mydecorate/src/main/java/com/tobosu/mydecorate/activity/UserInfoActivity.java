@@ -3,6 +3,7 @@ package com.tobosu.mydecorate.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -40,6 +41,7 @@ import com.tobosu.mydecorate.view.RoundImageView;
 import com.tobosu.mydecorate.view.SelectPictureWindow;
 import com.tobosu.mydecorate.view.SetSexPopWindow;
 import com.tobosu.mydecorate.view.SetZhuangxiuPopWindow;
+import com.tobosu.mydecorate.view.WarnDialog;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -287,18 +289,39 @@ public class UserInfoActivity extends AppCompatActivity {
                             Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                     break;
                 case R.id.rel_user_login_out:
-                    //退出当前账户
-                    SharedPreferences saveInfo = getSharedPreferences("User_Info_SP", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = saveInfo.edit();
-                    editor.putString("user_name", "");
-                    editor.putString("head_pic_url", "");
-                    editor.putString("mark", "");
-                    editor.putString("user_id", "");
-                    editor.putString("token", "");
-                    editor.putString("city_name", "");
-                    editor.commit();
-                    CacheManager.setUserUid(mContext, "");
-                    finish();
+
+
+                    WarnDialog.Builder builder = new WarnDialog.Builder(mContext);
+                    builder.setMessage("你要退出登录吗？")
+                            .setPositiveButton("确定",
+                                    new DialogInterface.OnClickListener() {
+
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                            //退出当前账户
+                                            SharedPreferences saveInfo = getSharedPreferences("User_Info_SP", Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = saveInfo.edit();
+                                            editor.putString("user_name", "");
+                                            editor.putString("head_pic_url", "");
+                                            editor.putString("mark", "");
+                                            editor.putString("user_id", "");
+                                            editor.putString("token", "");
+                                            editor.putString("city_name", "");
+                                            editor.commit();
+                                            CacheManager.setUserUid(mContext, "");
+                                            finish();
+                                        }
+                                    })
+                            .setNegativeButton("取消",
+                                    new DialogInterface.OnClickListener() {
+
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                    builder.create().show();
                     break;
             }
         }

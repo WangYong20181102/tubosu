@@ -17,5 +17,8 @@
     </declare-styleable>
 
     <style name="Widget_GifView"></style>
-
+    <declare-styleable name="MyChatView">
+        <attr name="MyChatView_radius" format="dimension" />
+        <attr name="MyChatView_strokewidth" format="dimension" />
+    </declare-styleable>
 </resources>

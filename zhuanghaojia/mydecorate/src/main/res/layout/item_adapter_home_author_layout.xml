@@ -1,110 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="144dp"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#FEFEFF"
+    android:layout_marginBottom="14dp"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.CardView
-        android:layout_width="137dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="8dp"
-        app:cardUseCompatPadding="true"
-        app:cardElevation="10dp">
+        app:cardCornerRadius="4dp"
+        app:cardBackgroundColor="#fffffc"
+        android:layout_margin="10dp"
+        app:cardElevation="6dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/rel_shape"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="14dp"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:padding="14dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <FrameLayout
-                    android:id="@+id/frad"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginRight="7dp">
+                    <FrameLayout
+                        android:id="@+id/frad"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/item_author_icon"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginRight="14dp">
+
+
+                    </FrameLayout>
+
+
+
+
+                    <ImageView
+                        android:id="@+id/item_author_icon"
+                        android:layout_width="66dp"
+                        android:layout_height="66dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_centerHorizontal="true"/>
+                    <ImageView
+                        android:id="@+id/iv_scircel"
+                        android:layout_width="73dp"
+                        android:layout_height="73dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@mipmap/circle"
+                        android:layout_centerHorizontal="true"/>
 
                     <ImageView
                         android:id="@+id/iv_rank"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/iv_scircel"
+                        android:layout_marginTop="7dp"
+                        android:layout_marginRight="16dp"
                         android:background="@mipmap/jin" />
-                </FrameLayout>
 
-                <ImageView
-                    android:id="@+id/item_author_icon"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:background="@mipmap/default_icon"
-                    android:layout_centerHorizontal="true"/>
+                </RelativeLayout>
 
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/item_author_name"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="第一名作者"
-                    android:textColor="#5c5f66"
-                    android:textSize="12sp" />
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/item_author_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="第一名作者"
+                        android:textColor="#5c5f66"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <!--浏览数-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="9dp"
+                        android:src="@mipmap/liulan" />
+
+                    <TextView
+                        android:id="@+id/item_liulang"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="128"
+                        android:textColor="#8a8f99"
+                        android:textSize="9sp" />
+
+                    <!--文章数-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="9dp"
+                        android:src="@mipmap/nhf_wenzhang" />
+
+                    <TextView
+                        android:id="@+id/item_wenzhang"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="162"
+                        android:textColor="#8a8f99"
+                        android:textSize="9sp" />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"/>
             </LinearLayout>
+        </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <!--浏览数-->
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="9dp"
-                    android:layout_weight="1"
-                    android:src="@mipmap/liulan" />
-
-                <TextView
-                    android:id="@+id/item_liulang"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="128"
-                    android:textColor="#8a8f99"
-                    android:textSize="9sp" />
-
-                <!--文章数-->
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="9dp"
-                    android:layout_weight="1"
-                    android:src="@mipmap/nhf_wenzhang" />
-
-                <TextView
-                    android:id="@+id/item_wenzhang"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="162"
-                    android:textColor="#8a8f99"
-                    android:textSize="9sp" />
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"/>
-        </LinearLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

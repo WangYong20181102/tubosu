@@ -66,6 +66,7 @@ public class DecorationCaseFragment extends BaseFragment {
     private String param_style;
     private String param_city_id = "";
     private String param_district_id = "";
+    private String param_vilige_id = "";
 
     private boolean isFromCondictionActivity = false;
 
@@ -118,8 +119,12 @@ public class DecorationCaseFragment extends BaseFragment {
                                 initListView();
                             } else {
                                 if (caseAdapter != null) {
-                                    caseAdapter.hideLoadMoreMessage();
                                     caseAdapter.noMoreData();
+                                    caseAdapter.hideLoadMoreMessage();
+                                    if(caseAdapter.getItemCount() == 0){
+                                        // FIXME: 2017/8/11  显示 占位图
+                                        Utils.setToast(mContext, "占位图在哪里");
+                                    }
                                 }
 //                                caseList.clear();
 //                                Utils.setToast(getActivity(), caseJsonEntity.getMsg());
@@ -148,12 +153,14 @@ public class DecorationCaseFragment extends BaseFragment {
                     startActivityForResult(new Intent(getActivity(), ConditionActivity.class), 0);
                     isFromCondictionActivity = false;
                     param_city_id = "";
+                    param_district_id = "";
+                    param_vilige_id = "";
                     tvSearchTipText.setText("搜索");
                 }
                 break;
-            case R.id.caseLocation:
+//            case R.id.caseLocation:
 //                startActivityForResult(new Intent(getActivity(), SelectCityActivity.class));
-                break;
+//                break;
         }
     }
 
@@ -170,18 +177,23 @@ public class DecorationCaseFragment extends BaseFragment {
                     param_style = bundle.getString("param_style");
                     param_city_id = bundle.getString("param_city_id");
                     param_district_id = bundle.getString("param_district_id");//小区id
+                    param_vilige_id = bundle.getString("param_vilige_id"); // 花园小区id
                     tvSearchTipText.setText(bundle.getString("condition_text"));
                 }
 
                 caseList.clear();
-                Utils.setErrorLog(TAG, param_area + "   "+ param_layout + "  "  + param_price + "  " +param_style + " " + param_city_id);
+                if(caseAdapter!=null){
+                    caseAdapter.notifyDataSetChanged();
+                }
+                Utils.setErrorLog(TAG, "返回请求参数" + param_area + " ----  "+ param_layout + " --- "  + param_price + " --- " +param_style + " --- " + param_city_id + " --  "  + param_district_id+ "--- " +param_vilige_id);
                 page = 1;
-                getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style, param_city_id, param_district_id));
+
+                getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style, param_city_id, param_district_id,param_vilige_id));
                 break;
         }
     }
 
-    private HashMap<String, Object> getPareaHashMap(String area, String layout, String price, String style, String cityId, String districtId){
+    private HashMap<String, Object> getPareaHashMap(String area, String layout, String price, String style, String cityId, String districtId, String village_id){
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
         hashMap.put("token", Utils.getDateToken());
         hashMap.put("page", page);
@@ -190,6 +202,10 @@ public class DecorationCaseFragment extends BaseFragment {
         hashMap.put("district_id", districtId);
         hashMap.put("layout", layout);
         hashMap.put("city_id", cityId);
+
+        hashMap.put("district_id", districtId); // 区域id
+        hashMap.put("village_id", village_id); // 小区id
+
         hashMap.put("price", price);
         hashMap.put("style", style);
         return hashMap;
@@ -266,7 +282,7 @@ public class DecorationCaseFragment extends BaseFragment {
                 caseAdapter.hideLoadMoreMessage();
             }
             if(isFromCondictionActivity){
-                getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style,param_city_id,param_district_id));
+                getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style,param_city_id,param_district_id,param_vilige_id));
             }else{
                 getDataFromNet(getCommonHashMap());
             }
@@ -281,7 +297,7 @@ public class DecorationCaseFragment extends BaseFragment {
 
         caseSwipRefreshLayout.setRefreshing(false);
         if(isFromCondictionActivity){
-            getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style,param_city_id,param_district_id));
+            getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style,param_city_id,param_district_id,param_vilige_id));
         }else{
             getDataFromNet(getCommonHashMap());
         }

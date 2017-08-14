@@ -77,12 +77,12 @@ public class UrlConstans {
     /**
      * 关注 / 取消关注 设计师url
      */
-    public static final String CONCERN_URL = ZXKK_URL + "/rapp/public/follow_designer";
+    public static final String CONCERN_URL = ZXKK_URL + "rapp/public/follow_designer";
 
     /**
      * 案例详情
      */
-    public static final String CASE_DETAIL_URL = ZXKK_URL + "/rapp/case/case_detail";
+    public static final String CASE_DETAIL_URL = ZXKK_URL + "rapp/case/case_detail";
 
     /**
      * 搜索案例url
@@ -92,7 +92,7 @@ public class UrlConstans {
     /**
      * 案例搜索页面url
      */
-    public static final String CASE_SEARCH_URL = ZXKK_URL + "/rapp/case/case_search";
+    public static final String CASE_SEARCH_URL = ZXKK_URL + "rapp/case/case_search";
 
 
     public static final String HOT_CITY_URL = ZXKK_URL + "rapp/city/city_list";
@@ -183,7 +183,7 @@ public class UrlConstans {
     public static final String COLLECT_PIC_URL = ZXKK_URL + "/rapp/TemplateMap/collect";
 
     /**
-     * 点击案例收藏   (UI图内无此需求？？？)
+     * 点击案例收藏
      */
     public static final String CLICK_CASE_COLLECT_URL = ZXKK_URL + "rapp/case/collect";
 

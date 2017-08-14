@@ -116,6 +116,7 @@
         <activity
             android:name=".activity.GetPriceActivity"
             android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SettingActivity"
@@ -129,7 +130,19 @@
         <activity
             android:name=".activity.FeedBackActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" />\
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.FreeDesignPrice"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.SmartDesignActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.SeeCompanyImgActivity"
             android:configChanges="orientation|keyboardHidden"
