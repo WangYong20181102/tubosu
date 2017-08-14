@@ -501,16 +501,16 @@
                         android:textSize="14sp" />
 
                     <EditText
-                        android:id="@+id/fd_edit_phone_num"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
                         android:layout_alignBaseline="@+id/fd_phone"
                         android:layout_alignBottom="@+id/fd_phone"
+                        android:id="@+id/fd_edit_phone_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:layout_centerHorizontal="true"
-                        android:background="@color/white"
                         android:hint="报价将发送短信给您"
                         android:inputType="number"
+                        android:background="@null"
                         android:maxLength="11"
                         android:maxLines="1"
                         android:textSize="13sp" />
