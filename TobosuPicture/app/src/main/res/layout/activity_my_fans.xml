@@ -38,6 +38,20 @@
             </RelativeLayout>
         </RelativeLayout>
 
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/mf_null_myfans"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="180dp"
+                android:src="@mipmap/none_fans" />
+        </LinearLayout>
+
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/mf_swip_refresh"
             android:layout_width="match_parent"

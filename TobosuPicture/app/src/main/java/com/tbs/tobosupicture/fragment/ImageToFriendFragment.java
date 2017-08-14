@@ -156,7 +156,7 @@ public class ImageToFriendFragment extends BaseFragment {
 
                     @Override
                     public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-                        Log.e(TAG, "微信授权成功!===openid" + map.get("openid") + "==name==" + map.get("name")+"==icon=="+map.get("iconurl"));
+                        Log.e(TAG, "微信授权成功!===openid" + map.get("openid") + "==name==" + map.get("name") + "==icon==" + map.get("iconurl"));
                     }
 
                     @Override

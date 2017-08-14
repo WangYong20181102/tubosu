@@ -47,13 +47,14 @@ public class ZuiXinFragment extends BaseFragment {
     @BindView(R.id.zuixin_swipe)
     SwipeRefreshLayout zuixinSwipe;
     Unbinder unbinder;
-    
+
     private Context mContext;
     private String TAG = "ZuiReFragment";
     private LinearLayoutManager mLinearLayoutManager;
     private ZuiXinAdapter mZuiXinAdapter;
     private boolean isLoading = false;//是否正在加载更多数据
     private int mPage = 1;
+    private Gson gson;
     //人气榜
     private ArrayList<_ZuiXin.ActiveUser> activeUserArrayList = new ArrayList<>();
     //动态列表
@@ -72,6 +73,8 @@ public class ZuiXinFragment extends BaseFragment {
     }
 
     private void initView() {
+        gson = new Gson();
+
         zuixinSwipe.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE);
         zuixinSwipe.setBackgroundColor(Color.WHITE);
         zuixinSwipe.setSize(SwipeRefreshLayout.DEFAULT);
@@ -160,7 +163,6 @@ public class ZuiXinFragment extends BaseFragment {
                     String status = jsonObject.getString("status");
                     if (status.equals("200")) {
                         String data = jsonObject.getString("data");
-                        Gson gson = new Gson();
                         final _ZuiXin zuiXin = gson.fromJson(data, _ZuiXin.class);
                         getActivity().runOnUiThread(new Runnable() {
                             @Override

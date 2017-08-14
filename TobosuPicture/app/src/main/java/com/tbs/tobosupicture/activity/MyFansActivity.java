@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -21,7 +22,6 @@ import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
-import com.tbs.tobosupicture.view.CustomWaitDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +30,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +49,8 @@ public class MyFansActivity extends BaseActivity {
     RecyclerView mfMyfansRecyclelist;
     @BindView(R.id.mf_swip_refresh)
     SwipeRefreshLayout mfSwipRefresh;
+    @BindView(R.id.mf_null_myfans)
+    LinearLayout mfNullMyfans;
 
     private LinearLayoutManager mLinearLayoutManager;
     private Context mContext;
@@ -200,9 +201,15 @@ public class MyFansActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(mContext, "没有更多数据~", Toast.LENGTH_SHORT).show();
+
                                 if (myFansAdapter != null) {
                                     myFansAdapter.changLoadState(2);
+                                }
+                                if (myFansList.isEmpty()) {
+                                    mfNullMyfans.setVisibility(View.VISIBLE);
+                                } else {
+                                    Toast.makeText(mContext, "没有更多数据~", Toast.LENGTH_SHORT).show();
+                                    mfNullMyfans.setVisibility(View.GONE);
                                 }
                             }
                         });

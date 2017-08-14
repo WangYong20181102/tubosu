@@ -20,8 +20,11 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.base.BaseActivity;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.bean._User;
 import com.tbs.tobosupicture.constants.UrlConstans;
+import com.tbs.tobosupicture.utils.EventBusUtil;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.Md5Utils;
 import com.tbs.tobosupicture.utils.SpUtils;
@@ -74,6 +77,11 @@ public class RegisterActivity extends BaseActivity {
     private void initViewEvent() {
         mGson = new Gson();
         registerPhoneNum.addTextChangedListener(textWatcher);
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
     }
 
     private TextWatcher textWatcher = new TextWatcher() {
@@ -265,7 +273,7 @@ public class RegisterActivity extends BaseActivity {
         param.put("cellphone", phoneNum);
         param.put("verify_code", code);
         param.put("password", md5PassWord);
-        param.put("chcode",Utils.getChannType(mContext));
+        param.put("chcode", Utils.getChannType(mContext));
         param.put("system_type", "1");
         param.put("platform_type", "3");
         HttpUtils.doPost(UrlConstans.PHONE_NUM_REGISTER_URL, param, new Callback() {
@@ -293,6 +301,7 @@ public class RegisterActivity extends BaseActivity {
                         Intent intent = new Intent(mContext, PersonInfoActivity.class);
                         intent.putExtra("from", "RegisterActivity");
                         mContext.startActivity(intent);
+                        EventBusUtil.sendEvent(new Event(EC.EventCode.FNISHI_LOGINACTIVITY));
                         finish();
                     } else {
                         //获取数据失败

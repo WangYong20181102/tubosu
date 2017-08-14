@@ -20,6 +20,7 @@ import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.bean.EC;
 import com.tbs.tobosupicture.bean.Event;
+import com.tbs.tobosupicture.utils.EventBusUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,9 @@ public class AboutMeFragment extends BaseFragment {
     private List<View> tagViewList = new ArrayList<>();//标签集合
     private BadgeView mMyOrginTag;//我的发起
     private BadgeView mMyJoinTag;//我的参与
+    private MyOrginFragment myOrginFragment;
+    private MyJoinFragment myJoinFragment;
+    private MyFriendDynamicFragment myFriendDynamicFragment;
 
     @Nullable
     @Override
@@ -76,26 +80,39 @@ public class AboutMeFragment extends BaseFragment {
     protected boolean isRegisterEventBus() {
         return true;
     }
+
     //接收相关通知
-
-
     @Override
     protected void receiveEvent(Event event) {
         switch (event.getCode()) {
-            case EC.EventCode.LOGIN_INITDATA:
-                Log.e(TAG, "重置数据=========");
-                initFragment();
+//            case EC.EventCode.LOGIN_INITDATA:
+//                Log.e(TAG, "重置数据=========");
+//                initFragment();
+//                break;
+            case EC.EventCode.MY_JOIN_NUM:
+                //我参与的数量
+                mMyJoinTag.setBadgeCount((int) event.getData());
+                break;
+            case EC.EventCode.MY_ORGIN_NUM:
+                //我发起的数量
+                mMyOrginTag.setBadgeCount((int) event.getData());
+                break;
+            case EC.EventCode.CHECK_ABOUTME_MYORG_HAS_MSG:
+                //监测是否有消息
+//                if (!mMyOrginTag.getBadgeCount().equals("0")) {
+//                    EventBusUtil.sendEvent(new Event(EC.EventCode.REFRESH_MY_ORGIN_NUM));
+//                }
                 break;
         }
     }
 
     private void initFragment() {
         //我的发起
-        MyOrginFragment myOrginFragment = new MyOrginFragment();
+        myOrginFragment = new MyOrginFragment();
         //我的参与
-        MyJoinFragment myJoinFragment = new MyJoinFragment();
+        myJoinFragment = new MyJoinFragment();
         //我的好友动态
-        MyFriendDynamicFragment myFriendDynamicFragment = new MyFriendDynamicFragment();
+        myFriendDynamicFragment = new MyFriendDynamicFragment();
         //加入集合
         mFragments = new Fragment[]{myOrginFragment, myJoinFragment, myFriendDynamicFragment};
         //fragment任务切换
@@ -123,14 +140,12 @@ public class AboutMeFragment extends BaseFragment {
         mMyOrginTag.setTargetView(aboutMeMyOrgin);
         mMyOrginTag.setBadgeGravity(Gravity.RIGHT | Gravity.TOP);
         mMyOrginTag.setBadgeMargin(0, 7, 13, 0);
-        mMyOrginTag.setBadgeCount(3);
         //我参加的
         mMyJoinTag = new BadgeView(mContext);
         mMyJoinTag.setBackground(8, Color.parseColor("#FFF10606"));
         mMyJoinTag.setTargetView(aboutMeMyJoin);
         mMyJoinTag.setBadgeGravity(Gravity.RIGHT | Gravity.TOP);
         mMyJoinTag.setBadgeMargin(0, 7, 13, 0);
-        mMyJoinTag.setBadgeCount(5);
     }
 
     //切换选择
@@ -160,12 +175,25 @@ public class AboutMeFragment extends BaseFragment {
     public void onViewClickedInAboutMeFragment(View view) {
         switch (view.getId()) {
             case R.id.about_me_my_orgin:
+                //我的发起
                 setIndexSelect(0);
                 clickChange(0);
+                if (!mMyOrginTag.getBadgeCount().equals(0)) {
+                    //我的发起消息数量不为0时通知刷新界面
+                    if (myOrginFragment != null) {
+                        EventBusUtil.sendEvent(new Event(EC.EventCode.REFRESH_MY_ORGIN_NUM));
+                    }
+                }
                 break;
             case R.id.about_me_my_join:
                 setIndexSelect(1);
                 clickChange(1);
+                if (!mMyJoinTag.getBadgeCount().equals(0)) {
+                    //消息数量不为0时通知刷新界面
+                    if (myJoinFragment != null) {
+                        EventBusUtil.sendEvent(new Event(EC.EventCode.REFRESH_MY_JOIN_NUM));
+                    }
+                }
                 break;
             case R.id.about_me_my_friend:
                 setIndexSelect(2);

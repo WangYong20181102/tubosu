@@ -2,12 +2,17 @@ package com.tbs.tobosupicture.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +23,26 @@ import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.ImgToFriendSeachActivity;
+import com.tbs.tobosupicture.activity.SendDynamicActivity;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.bean.EC;
 import com.tbs.tobosupicture.bean.Event;
+import com.tbs.tobosupicture.utils.FileUtil;
 import com.tbs.tobosupicture.utils.Utils;
+import com.tbs.tobosupicture.view.SelectPersonalPopupWindow;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import me.nereo.multi_image_selector.MultiImageSelector;
+import me.nereo.multi_image_selector.MultiImageSelectorActivity;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Mr.Lin on 2017/7/17 14:14.
@@ -52,11 +68,25 @@ public class ImgToFriendFragment extends BaseFragment {
     TextView textZuixin;
     @BindView(R.id.text_youguanyuwo)
     TextView textYouguanyuwo;
+    @BindView(R.id.img_to_friend_show_pop)
+    View imgToFriendShowPop;
 
     private Context mContext;
     private String TAG = "ImgToFriendFragment";
     private Fragment[] mFragments;
     private int mIndex;//fragment数据下标
+    private SelectPersonalPopupWindow menuWindow;
+
+
+    //TODO 调取相机要用的值
+    private static final int REQUESTCODE_PICK = 0;
+    private static final int REQUESTCODE_TAKE = 1;
+    private static final int REQUESTCODE_CUTTING = 2;
+    private static final int REQUEST_IMAGE = 3;//图片选择器用到的code
+    //存储的名称
+    private static final String IMAGE_FILE_NAME = Utils.getNowTime() + "avatarImage.jpg";
+    //默认已选择图片. 只有在选择模式为多选时有效
+    private ArrayList<String> imageList = new ArrayList<>();
 
     public ImgToFriendFragment() {
 
@@ -123,6 +153,11 @@ public class ImgToFriendFragment extends BaseFragment {
                 break;
             case R.id.imgtofriend_fabu:
                 //调用相机或者图册进行动态发布
+                if (Utils.userIsLogin(mContext)) {
+                    CreatDynamic();
+                } else {
+                    Utils.gotoLogin(mContext);
+                }
                 break;
             case R.id.imgtofriend_zuire:
                 //切换至最热
@@ -176,6 +211,93 @@ public class ImgToFriendFragment extends BaseFragment {
                 //用户已经登出
                 setIndexSelect(0);
                 clcikChange(0);
+                break;
+            case EC.EventCode.SHOW_ABOUT_ME:
+                //有消息
+                setIndexSelect(2);
+                clcikChange(2);
+                break;
+            case EC.EventCode.GOTO_SEND_DYNAMIC:
+                CreatDynamic();
+                break;
+        }
+    }
+
+    //发布动态
+    private void CreatDynamic() {
+        menuWindow = new SelectPersonalPopupWindow(mContext, popClickLister);
+        menuWindow.showAtLocation(imgToFriendShowPop, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+    }
+
+    //弹窗点击事件
+    private View.OnClickListener popClickLister = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            menuWindow.dismiss();
+            switch (v.getId()) {
+                case R.id.takePhotoBtn:
+                    //开启相机 调用原生相机
+                    Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
+                    startActivityForResult(takeIntent, REQUESTCODE_TAKE);
+                    break;
+                case R.id.pickPhotoBtn:
+                    //开启图册 采用图册选择框架
+                    MultiImageSelector.create(mContext)
+                            .showCamera(false)
+                            .count(9)
+                            .multi()
+                            .origin(imageList)
+                            .start(ImgToFriendFragment.this, REQUEST_IMAGE);
+                    break;
+            }
+        }
+    };
+
+    /***
+     * 裁剪图片
+     * @param uri
+     */
+    public void startPhotoZoom(Uri uri) {
+
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 300);
+        intent.putExtra("outputY", 300);
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, REQUESTCODE_CUTTING);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUESTCODE_TAKE:
+                File temp = new File(Environment.getExternalStorageDirectory() + "/" + IMAGE_FILE_NAME);
+                startPhotoZoom(Uri.fromFile(temp));
+                break;
+            case REQUESTCODE_CUTTING:
+                //拍照处理之后将图片发给下一个页面
+                if (data != null) {
+                    Bitmap photo = data.getExtras().getParcelable("data");
+                    String ImgPath = FileUtil.saveFile(mContext, Utils.getNowTime() + "lin_zxkk.jpg", photo);
+                    ArrayList<String> imgPathList = new ArrayList<>();
+                    imgPathList.add(ImgPath);
+                    Intent intent = new Intent(mContext, SendDynamicActivity.class);
+                    intent.putStringArrayListExtra("ImageList", imgPathList);
+                    startActivity(intent);
+                }
+                break;
+            case REQUEST_IMAGE:
+                if (resultCode == RESULT_OK) {
+                    ArrayList<String> imgPathList = new ArrayList<>();
+                    imgPathList = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+                    Intent intent = new Intent(mContext, SendDynamicActivity.class);
+                    intent.putStringArrayListExtra("ImageList", imgPathList);
+                    startActivity(intent);
+                }
                 break;
         }
     }

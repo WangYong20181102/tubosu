@@ -331,5 +331,24 @@ public class UrlConstans {
      * 系统消息公共功能
      */
     public static final String SYSTEM_MSG = ZXKK_URL + "rapp/appMsg/system_msg";
-
+    /**
+     * 我的消息/查看动态消息有关于我
+     */
+    public static final String MY_MESSAGE = ZXKK_URL + "rapp/MyRelevance/my_message";
+    /**
+     * 发布动态查看图集
+     */
+    public static final String PUBLISH_DYNAMIC = ZXKK_URL + "rapp/dynamic/publish_dynamic";
+    /**
+     * 是否存在新案例业主主页
+     */
+    public static final String OWNER_GET_MSG = ZXKK_URL + "rapp/owner/get_msg";
+    /**
+     * 修改城市信息用户个人信息
+     */
+    public static final String MODIFY_CITY = ZXKK_URL + "rapp/MyOwner/modify_city";
+    /**
+     * 我的发起我的参与
+     */
+    public static final String MY_PARTICIPATION = ZXKK_URL + "rapp/MyRelevance/my_participation";
 }

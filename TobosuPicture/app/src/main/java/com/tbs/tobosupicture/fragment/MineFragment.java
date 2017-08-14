@@ -213,7 +213,9 @@ public class MineFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.fm_head_bg:
                 //点击更换背景
-                changeBg();
+                if (Utils.userIsLogin(mContext)) {
+                    changeBg();
+                }
                 break;
             case R.id.fm_user_icon:
                 //TODO 判断用户登录的情况   用户头像点击事件
@@ -361,8 +363,7 @@ public class MineFragment extends BaseFragment {
         Bundle extras = picdata.getExtras();
         if (extras != null) {
             photo = extras.getParcelable("data");
-            urlpath = FileUtil.saveFile(mContext, "temphead.jpg", photo);
-            Log.e(TAG, "上传头像的文件流地址======" + urlpath);
+            urlpath = FileUtil.saveFile(mContext, Utils.getNowTime() + "temphead.jpg", photo);
             pd = ProgressDialog.show(mContext, null, "正在上传图片，请稍候...");
             // 开启线程上传
             new Thread(uploadImageRunnable).start();
@@ -386,7 +387,7 @@ public class MineFragment extends BaseFragment {
                 fileparams = new HashMap<String, File>();
                 File file = new File(urlpath);
                 fileparams.put("filedata", file);
-                textParams.put("s_code", "head_file");
+                textParams.put("s_code", "app");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setConnectTimeout(5000);
                 conn.setDoOutput(true);
@@ -424,9 +425,9 @@ public class MineFragment extends BaseFragment {
             switch (msg.what) {
                 case 0:
                     pd.dismiss();
-                    Log.e(TAG, "获取的结果=====" + resultStr);
                     _ImageUpLoad imageUpLoad = mGson.fromJson(resultStr, _ImageUpLoad.class);
                     HttpChangeUserBg(imageUpLoad.getUrl());
+                    Log.e(TAG, "获取的结果=====" + resultStr + "图片的地址===" + imageUpLoad.getUrl());
                     GlideUtils.glideLoader(mContext, imageUpLoad.getUrl(), R.mipmap.me_bg,
                             R.mipmap.me_bg, fmHeadBg);
                     break;
@@ -546,7 +547,6 @@ public class MineFragment extends BaseFragment {
                 if (resultCode == 0) {
                     Intent it = new Intent(mContext, PersonInfoActivity.class);
                     startActivity(it);
-
                 } else {
                     startPhotoZoom(Uri.fromFile(temp));
                 }

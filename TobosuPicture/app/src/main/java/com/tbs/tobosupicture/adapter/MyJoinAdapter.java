@@ -41,25 +41,23 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
- * Created by Mr.Lin on 2017/8/3 15:08.
- * 我的发起的适配器
+ * Created by Mr.Lin on 2017/8/12 19:32.
  */
 
-public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MyJoinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private List<_DynamicBase> dynamicBaseList;
-    private _ReceiveMsg.MySponsor myOrginMsg;
+    private _ReceiveMsg.MyParticipation myJoinMsg;
     private Activity mActivity;
-    private String TAG = "MyOrginAdapter";
+    private String TAG = "MyJoinAdapter";
     private int adapterLoadState = 1;//子项加载情况
 
-    public MyOrginAdapter(Context context, Activity activity, _ReceiveMsg.MySponsor myOrginMsg, List<_DynamicBase> dynamicBaseList) {
+    public MyJoinAdapter(Context context, Activity activity, _ReceiveMsg.MyParticipation myJoinMsg, List<_DynamicBase> dynamicBaseList) {
         this.mContext = context;
-        this.myOrginMsg = myOrginMsg;
+        this.myJoinMsg = myJoinMsg;
         this.dynamicBaseList = dynamicBaseList;
         this.mActivity = activity;
     }
-
     //图层的变换
     public void changeLoadState(int state) {
         this.adapterLoadState = state;
@@ -77,58 +75,59 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_my_orgin_head, parent, false);
-            MyOrginHeadHolder headHolder = new MyOrginHeadHolder(view);
+            MyJoinHeadHolder headHolder = new MyJoinHeadHolder(view);
             return headHolder;
         } else if (viewType == 1) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_load_more, parent, false);
-            MyOrginLoadMoreHolder loadMoreHolder = new MyOrginLoadMoreHolder(view);
+            MyJoinLoadMoreHolder loadMoreHolder = new MyJoinLoadMoreHolder(view);
             return loadMoreHolder;
         } else {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_dynamic_base, parent, false);
-            MyOrginItemHolder itemHolder = new MyOrginItemHolder(view);
+            MyJoinItemHolder itemHolder = new MyJoinItemHolder(view);
             return itemHolder;
         }
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        if (holder instanceof MyOrginHeadHolder) {
-            if (myOrginMsg.getMsg_count().equals("0")) {
-                ((MyOrginHeadHolder) holder).head_hint_rl.setVisibility(View.INVISIBLE);
+        if (holder instanceof MyJoinHeadHolder) {
+            if (myJoinMsg.getMsg_count().equals("0")) {
+                ((MyJoinHeadHolder) holder).head_hint_rl.setVisibility(View.INVISIBLE);
             } else {
-                ((MyOrginHeadHolder) holder).head_hint_rl.setVisibility(View.VISIBLE);
-                ((MyOrginHeadHolder) holder).head_hint_text.setText(myOrginMsg.getMsg_count() + "条新消息");
-                Log.e(TAG, "消息数据======" + myOrginMsg.getMsg_count());
-                GlideUtils.glideLoader(mContext, myOrginMsg.getIcon(), 0, 0, ((MyOrginHeadHolder) holder).head_hint_icon, 0);
-                ((MyOrginHeadHolder) holder).head_hint_rl.setOnClickListener(new View.OnClickListener() {
+                ((MyJoinHeadHolder) holder).head_hint_rl.setVisibility(View.VISIBLE);
+                ((MyJoinHeadHolder) holder).head_hint_text.setText(myJoinMsg.getMsg_count() + "条新消息");
+                Log.e(TAG, "消息数据======" + myJoinMsg.getMsg_count());
+                GlideUtils.glideLoader(mContext, myJoinMsg.getIcon(), 0, 0, ((MyJoinHeadHolder) holder).head_hint_icon, 0);
+                ((MyJoinHeadHolder) holder).head_hint_rl.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext, DynamicMsgActivity.class);
-                        intent.putExtra("type", "1");
+                        intent.putExtra("type", "2");
                         mContext.startActivity(intent);
-                        ((MyOrginHeadHolder) holder).head_hint_rl.setVisibility(View.INVISIBLE);
+                        ((MyJoinHeadHolder) holder).head_hint_rl.setVisibility(View.INVISIBLE);
                     }
                 });
             }
-        } else if (holder instanceof MyOrginItemHolder) {
+        } else if (holder instanceof MyJoinItemHolder) {
             List<ImageView> imageViewList = new ArrayList<>();//动态图集
-            imageViewList.add(((MyOrginItemHolder) holder).dynamic_base_img1);
-            imageViewList.add(((MyOrginItemHolder) holder).dynamic_base_img2);
-            imageViewList.add(((MyOrginItemHolder) holder).dynamic_base_img3);
-            imageViewList.add(((MyOrginItemHolder) holder).dynamic_base_img4);
-            imageViewList.add(((MyOrginItemHolder) holder).dynamic_base_img5);
-            imageViewList.add(((MyOrginItemHolder) holder).dynamic_base_img6);
-            imageViewList.add(((MyOrginItemHolder) holder).dynamic_base_img7);
-            imageViewList.add(((MyOrginItemHolder) holder).dynamic_base_img8);
-            imageViewList.add(((MyOrginItemHolder) holder).dynamic_base_img9);
+            imageViewList.add(((MyJoinItemHolder) holder).dynamic_base_img1);
+            imageViewList.add(((MyJoinItemHolder) holder).dynamic_base_img2);
+            imageViewList.add(((MyJoinItemHolder) holder).dynamic_base_img3);
+            imageViewList.add(((MyJoinItemHolder) holder).dynamic_base_img4);
+            imageViewList.add(((MyJoinItemHolder) holder).dynamic_base_img5);
+            imageViewList.add(((MyJoinItemHolder) holder).dynamic_base_img6);
+            imageViewList.add(((MyJoinItemHolder) holder).dynamic_base_img7);
+            imageViewList.add(((MyJoinItemHolder) holder).dynamic_base_img8);
+            imageViewList.add(((MyJoinItemHolder) holder).dynamic_base_img9);
             //设置头像
-            GlideUtils.glideLoader(mContext, dynamicBaseList.get(position - 1).getIcon(), 0, 0, ((MyOrginItemHolder) holder).dynamic_base_icon, 0);
+            GlideUtils.glideLoader(mContext, dynamicBaseList.get(position-1).getIcon(), 0, 0, ((MyJoinItemHolder) holder).dynamic_base_icon, 0);
             //头像点击事件
-            ((MyOrginItemHolder) holder).dynamic_base_icon.setOnClickListener(new View.OnClickListener() {
+            ((MyJoinItemHolder) holder).dynamic_base_icon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, PersonHomePageActivity.class);
@@ -138,9 +137,9 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             });
             //设置昵称
-            ((MyOrginItemHolder) holder).dynamic_base_nick.setText(dynamicBaseList.get(position - 1).getNick());
+            ((MyJoinItemHolder) holder).dynamic_base_nick.setText(dynamicBaseList.get(position - 1).getNick());
             //设置内容
-            ((MyOrginItemHolder) holder).dynamic_base_title.setText(dynamicBaseList.get(position - 1).getTitle());
+            ((MyJoinItemHolder) holder).dynamic_base_title.setText(dynamicBaseList.get(position - 1).getTitle());
             //设置图片以及点击事件
 //            for (int i = 0; i < dynamicBaseList.get(position - 1).getImage_url().size(); i++) {
 //                imageViewList.get(i).setVisibility(View.VISIBLE);
@@ -150,11 +149,11 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             //第一张
             if (dynamicBaseList.get(position - 1).getImage_url().size() >= 1 && !TextUtils.isEmpty(dynamicBaseList.get(position - 1).getImage_url().get(0))) {
                 //设置图片
-                ((MyOrginItemHolder) holder).dynamic_base_img1.setVisibility(View.VISIBLE);
+                ((MyJoinItemHolder) holder).dynamic_base_img1.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicBaseList.get(position - 1).getImage_url().get(0),
-                        R.mipmap.loading_img_fail, R.mipmap.loading_img, ((MyOrginItemHolder) holder).dynamic_base_img1);
+                        R.mipmap.loading_img_fail, R.mipmap.loading_img, ((MyJoinItemHolder) holder).dynamic_base_img1);
                 //点击事件
-                ((MyOrginItemHolder) holder).dynamic_base_img1.setOnClickListener(new View.OnClickListener() {
+                ((MyJoinItemHolder) holder).dynamic_base_img1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext, PhotoDetail.class);
@@ -164,16 +163,16 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 });
             } else {
-                ((MyOrginItemHolder) holder).dynamic_base_img1.setVisibility(View.GONE);
+                ((MyJoinItemHolder) holder).dynamic_base_img1.setVisibility(View.GONE);
             }
             //第二张
             if (dynamicBaseList.get(position - 1).getImage_url().size() >= 2 && !TextUtils.isEmpty(dynamicBaseList.get(position - 1).getImage_url().get(1))) {
                 //设置图片
-                ((MyOrginItemHolder) holder).dynamic_base_img2.setVisibility(View.VISIBLE);
+                ((MyJoinItemHolder) holder).dynamic_base_img2.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicBaseList.get(position - 1).getImage_url().get(1),
-                        R.mipmap.loading_img_fail, R.mipmap.loading_img, ((MyOrginItemHolder) holder).dynamic_base_img2);
+                        R.mipmap.loading_img_fail, R.mipmap.loading_img, ((MyJoinItemHolder) holder).dynamic_base_img2);
                 //点击事件
-                ((MyOrginItemHolder) holder).dynamic_base_img2.setOnClickListener(new View.OnClickListener() {
+                ((MyJoinItemHolder) holder).dynamic_base_img2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext, PhotoDetail.class);
@@ -183,16 +182,16 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 });
             } else {
-                ((MyOrginItemHolder) holder).dynamic_base_img2.setVisibility(View.GONE);
+                ((MyJoinItemHolder) holder).dynamic_base_img2.setVisibility(View.GONE);
             }
             //第三张
             if (dynamicBaseList.get(position - 1).getImage_url().size() >= 3 && !TextUtils.isEmpty(dynamicBaseList.get(position - 1).getImage_url().get(2))) {
                 //设置图片
-                ((MyOrginItemHolder) holder).dynamic_base_img3.setVisibility(View.VISIBLE);
+                ((MyJoinItemHolder) holder).dynamic_base_img3.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicBaseList.get(position - 1).getImage_url().get(2),
-                        R.mipmap.loading_img_fail, R.mipmap.loading_img, ((MyOrginItemHolder) holder).dynamic_base_img3);
+                        R.mipmap.loading_img_fail, R.mipmap.loading_img, ((MyJoinItemHolder) holder).dynamic_base_img3);
                 //点击事件
-                ((MyOrginItemHolder) holder).dynamic_base_img3.setOnClickListener(new View.OnClickListener() {
+                ((MyJoinItemHolder) holder).dynamic_base_img3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext, PhotoDetail.class);
@@ -202,16 +201,16 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 });
             } else {
-                ((MyOrginItemHolder) holder).dynamic_base_img3.setVisibility(View.GONE);
+                ((MyJoinItemHolder) holder).dynamic_base_img3.setVisibility(View.GONE);
             }
             //第四张
             if (dynamicBaseList.get(position - 1).getImage_url().size() >= 4 && !TextUtils.isEmpty(dynamicBaseList.get(position - 1).getImage_url().get(3))) {
                 //设置图片
-                ((MyOrginItemHolder) holder).dynamic_base_img4.setVisibility(View.VISIBLE);
+                ((MyJoinItemHolder) holder).dynamic_base_img4.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicBaseList.get(position - 1).getImage_url().get(3),
-                        R.mipmap.loading_img_fail, R.mipmap.loading_img, ((MyOrginItemHolder) holder).dynamic_base_img4);
+                        R.mipmap.loading_img_fail, R.mipmap.loading_img, ((MyJoinItemHolder) holder).dynamic_base_img4);
                 //点击事件
-                ((MyOrginItemHolder) holder).dynamic_base_img4.setOnClickListener(new View.OnClickListener() {
+                ((MyJoinItemHolder) holder).dynamic_base_img4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext, PhotoDetail.class);
@@ -221,16 +220,16 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 });
             } else {
-                ((MyOrginItemHolder) holder).dynamic_base_img4.setVisibility(View.GONE);
+                ((MyJoinItemHolder) holder).dynamic_base_img4.setVisibility(View.GONE);
             }
             //第五张
             if (dynamicBaseList.get(position - 1).getImage_url().size() >= 5 && !TextUtils.isEmpty(dynamicBaseList.get(position - 1).getImage_url().get(4))) {
                 //设置图片
-                ((MyOrginItemHolder) holder).dynamic_base_img5.setVisibility(View.VISIBLE);
+                ((MyJoinItemHolder) holder).dynamic_base_img5.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicBaseList.get(position - 1).getImage_url().get(4),
-                        R.mipmap.loading_img_fail, R.mipmap.loading_img, ((MyOrginItemHolder) holder).dynamic_base_img5);
+                        R.mipmap.loading_img_fail, R.mipmap.loading_img, ((MyJoinItemHolder) holder).dynamic_base_img5);
                 //点击事件
-                ((MyOrginItemHolder) holder).dynamic_base_img5.setOnClickListener(new View.OnClickListener() {
+                ((MyJoinItemHolder) holder).dynamic_base_img5.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext, PhotoDetail.class);
@@ -240,16 +239,16 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 });
             } else {
-                ((MyOrginItemHolder) holder).dynamic_base_img5.setVisibility(View.GONE);
+                ((MyJoinItemHolder) holder).dynamic_base_img5.setVisibility(View.GONE);
             }
             //第六张
             if (dynamicBaseList.get(position - 1).getImage_url().size() >= 6 && !TextUtils.isEmpty(dynamicBaseList.get(position - 1).getImage_url().get(5))) {
                 //设置图片
-                ((MyOrginItemHolder) holder).dynamic_base_img6.setVisibility(View.VISIBLE);
+                ((MyJoinItemHolder) holder).dynamic_base_img6.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicBaseList.get(position - 1).getImage_url().get(5),
-                        R.mipmap.loading_img_fail, R.mipmap.loading_img, ((MyOrginItemHolder) holder).dynamic_base_img6);
+                        R.mipmap.loading_img_fail, R.mipmap.loading_img, ((MyJoinItemHolder) holder).dynamic_base_img6);
                 //点击事件
-                ((MyOrginItemHolder) holder).dynamic_base_img6.setOnClickListener(new View.OnClickListener() {
+                ((MyJoinItemHolder) holder).dynamic_base_img6.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext, PhotoDetail.class);
@@ -259,16 +258,16 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 });
             } else {
-                ((MyOrginItemHolder) holder).dynamic_base_img6.setVisibility(View.GONE);
+                ((MyJoinItemHolder) holder).dynamic_base_img6.setVisibility(View.GONE);
             }
             //第七张
             if (dynamicBaseList.get(position - 1).getImage_url().size() >= 7 && !TextUtils.isEmpty(dynamicBaseList.get(position - 1).getImage_url().get(6))) {
                 //设置图片
-                ((MyOrginItemHolder) holder).dynamic_base_img7.setVisibility(View.VISIBLE);
+                ((MyJoinItemHolder) holder).dynamic_base_img7.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicBaseList.get(position - 1).getImage_url().get(6),
-                        R.mipmap.loading_img_fail, R.mipmap.loading_img, ((MyOrginItemHolder) holder).dynamic_base_img7);
+                        R.mipmap.loading_img_fail, R.mipmap.loading_img, ((MyJoinItemHolder) holder).dynamic_base_img7);
                 //点击事件
-                ((MyOrginItemHolder) holder).dynamic_base_img7.setOnClickListener(new View.OnClickListener() {
+                ((MyJoinItemHolder) holder).dynamic_base_img7.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext, PhotoDetail.class);
@@ -278,16 +277,16 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 });
             } else {
-                ((MyOrginItemHolder) holder).dynamic_base_img7.setVisibility(View.GONE);
+                ((MyJoinItemHolder) holder).dynamic_base_img7.setVisibility(View.GONE);
             }
             //第八张
             if (dynamicBaseList.get(position - 1).getImage_url().size() >= 8 && !TextUtils.isEmpty(dynamicBaseList.get(position - 1).getImage_url().get(7))) {
                 //设置图片
-                ((MyOrginItemHolder) holder).dynamic_base_img8.setVisibility(View.VISIBLE);
+                ((MyJoinItemHolder) holder).dynamic_base_img8.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicBaseList.get(position - 1).getImage_url().get(7),
-                        R.mipmap.loading_img_fail, R.mipmap.loading_img, ((MyOrginItemHolder) holder).dynamic_base_img8);
+                        R.mipmap.loading_img_fail, R.mipmap.loading_img, ((MyJoinItemHolder) holder).dynamic_base_img8);
                 //点击事件
-                ((MyOrginItemHolder) holder).dynamic_base_img8.setOnClickListener(new View.OnClickListener() {
+                ((MyJoinItemHolder) holder).dynamic_base_img8.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext, PhotoDetail.class);
@@ -297,16 +296,16 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 });
             } else {
-                ((MyOrginItemHolder) holder).dynamic_base_img8.setVisibility(View.GONE);
+                ((MyJoinItemHolder) holder).dynamic_base_img8.setVisibility(View.GONE);
             }
             //第九张
             if (dynamicBaseList.get(position - 1).getImage_url().size() >= 9 && !TextUtils.isEmpty(dynamicBaseList.get(position - 1).getImage_url().get(8))) {
                 //设置图片
-                ((MyOrginItemHolder) holder).dynamic_base_img9.setVisibility(View.VISIBLE);
+                ((MyJoinItemHolder) holder).dynamic_base_img9.setVisibility(View.VISIBLE);
                 GlideUtils.glideLoader(mContext, dynamicBaseList.get(position - 1).getImage_url().get(8),
-                        R.mipmap.loading_img_fail, R.mipmap.loading_img, ((MyOrginItemHolder) holder).dynamic_base_img9);
+                        R.mipmap.loading_img_fail, R.mipmap.loading_img, ((MyJoinItemHolder) holder).dynamic_base_img9);
                 //点击事件
-                ((MyOrginItemHolder) holder).dynamic_base_img9.setOnClickListener(new View.OnClickListener() {
+                ((MyJoinItemHolder) holder).dynamic_base_img9.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext, PhotoDetail.class);
@@ -316,43 +315,43 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     }
                 });
             } else {
-                ((MyOrginItemHolder) holder).dynamic_base_img9.setVisibility(View.GONE);
+                ((MyJoinItemHolder) holder).dynamic_base_img9.setVisibility(View.GONE);
             }
             //设置用户是否对该动态点赞或者评论的状态
             if (dynamicBaseList.get(position - 1).getIs_praise().equals("0")) {
-                ((MyOrginItemHolder) holder).dynamic_base_praise.setImageResource(R.mipmap.zan2);
+                ((MyJoinItemHolder) holder).dynamic_base_praise.setImageResource(R.mipmap.zan2);
             } else {
-                ((MyOrginItemHolder) holder).dynamic_base_praise.setImageResource(R.mipmap.zan_after);
+                ((MyJoinItemHolder) holder).dynamic_base_praise.setImageResource(R.mipmap.zan_after);
             }
             if (dynamicBaseList.get(position - 1).getIs_comment().equals("0")) {
-                ((MyOrginItemHolder) holder).dynamic_base_comment.setImageResource(R.mipmap.pinglun);
+                ((MyJoinItemHolder) holder).dynamic_base_comment.setImageResource(R.mipmap.pinglun);
             } else {
-                ((MyOrginItemHolder) holder).dynamic_base_comment.setImageResource(R.mipmap.pinglun_after);
+                ((MyJoinItemHolder) holder).dynamic_base_comment.setImageResource(R.mipmap.pinglun_after);
             }
             //点赞数
-            ((MyOrginItemHolder) holder).dynamic_base_praise_count.setText(dynamicBaseList.get(position - 1).getPraise_count());
+            ((MyJoinItemHolder) holder).dynamic_base_praise_count.setText(dynamicBaseList.get(position - 1).getPraise_count());
             //评论数
-            ((MyOrginItemHolder) holder).dynamic_base_comment_count.setText(dynamicBaseList.get(position - 1).getComment_count());
+            ((MyJoinItemHolder) holder).dynamic_base_comment_count.setText(dynamicBaseList.get(position - 1).getComment_count());
             Log.e(TAG, "点赞数====" + dynamicBaseList.get(position - 1).getPraise_count() + "评论数====" + dynamicBaseList.get(position - 1).getComment_count());
             //时间
-            ((MyOrginItemHolder) holder).dynamic_base_add_time.setText(dynamicBaseList.get(position - 1).getAdd_time());
+            ((MyJoinItemHolder) holder).dynamic_base_add_time.setText(dynamicBaseList.get(position - 1).getAdd_time());
             //浏览数
-            ((MyOrginItemHolder) holder).dynamic_base_view_count.setText("浏览数:" + dynamicBaseList.get(position - 1).getView_count());
+            ((MyJoinItemHolder) holder).dynamic_base_view_count.setText("浏览数:" + dynamicBaseList.get(position - 1).getView_count());
             //点赞事件
-            ((MyOrginItemHolder) holder).dynamic_base_zan_ll.setOnClickListener(new View.OnClickListener() {
+            ((MyJoinItemHolder) holder).dynamic_base_zan_ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (Utils.userIsLogin(mContext)) {
                         HttpPraise(SpUtils.getUserUid(mContext), dynamicBaseList.get(position - 1).getId(),
-                                dynamicBaseList.get(position - 1).getUid(), ((MyOrginItemHolder) holder).dynamic_base_praise,
-                                ((MyOrginItemHolder) holder).dynamic_base_zan_add, ((MyOrginItemHolder) holder).dynamic_base_praise_count, position - 1);
+                                dynamicBaseList.get(position - 1).getUid(), ((MyJoinItemHolder) holder).dynamic_base_praise,
+                                ((MyJoinItemHolder) holder).dynamic_base_zan_add, ((MyJoinItemHolder) holder).dynamic_base_praise_count, position - 1);
                     } else {
                         Utils.gotoLogin(mContext);
                     }
                 }
             });
             //进入评论事件
-            ((MyOrginItemHolder) holder).dynamic_base_pinglun_ll.setOnClickListener(new View.OnClickListener() {
+            ((MyJoinItemHolder) holder).dynamic_base_pinglun_ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, DynamicDetailActivity.class);
@@ -362,55 +361,41 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     mContext.startActivity(intent);
                 }
             });
-        } else if (holder instanceof MyOrginLoadMoreHolder) {
+        } else if (holder instanceof MyJoinLoadMoreHolder) {
             //加载更多
             if (position == 0) {
-                ((MyOrginLoadMoreHolder) holder).mProgressBar.setVisibility(View.GONE);
-                ((MyOrginLoadMoreHolder) holder).mTextView.setVisibility(View.GONE);
+                ((MyJoinLoadMoreHolder) holder).mProgressBar.setVisibility(View.GONE);
+                ((MyJoinLoadMoreHolder) holder).mTextView.setVisibility(View.GONE);
             }
             if (adapterLoadState == 1) {
-                ((MyOrginLoadMoreHolder) holder).mProgressBar.setVisibility(View.VISIBLE);
-                ((MyOrginLoadMoreHolder) holder).mTextView.setVisibility(View.VISIBLE);
+                ((MyJoinLoadMoreHolder) holder).mProgressBar.setVisibility(View.VISIBLE);
+                ((MyJoinLoadMoreHolder) holder).mTextView.setVisibility(View.VISIBLE);
             } else {
-                ((MyOrginLoadMoreHolder) holder).mProgressBar.setVisibility(View.GONE);
-                ((MyOrginLoadMoreHolder) holder).mTextView.setVisibility(View.GONE);
+                ((MyJoinLoadMoreHolder) holder).mProgressBar.setVisibility(View.GONE);
+                ((MyJoinLoadMoreHolder) holder).mTextView.setVisibility(View.GONE);
             }
         }
-    }
-
-    private void ImageClick(ImageView imageView, final String mDynamicId, final int imagePosition) {
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, PhotoDetail.class);
-                intent.putExtra("mDynamicId", mDynamicId);
-                intent.putExtra("mImagePosition", imagePosition);
-                mContext.startActivity(intent);
-            }
-        });
     }
 
     @Override
     public int getItemCount() {
         return dynamicBaseList != null ? dynamicBaseList.size() + 2 : 0;
     }
-
     //头部viewHolder
-    class MyOrginHeadHolder extends RecyclerView.ViewHolder {
+    class MyJoinHeadHolder extends RecyclerView.ViewHolder {
         private ImageView head_hint_icon;//提醒所用的头像
         private TextView head_hint_text;//提醒用的文本框
         private RelativeLayout head_hint_rl;//整个布局
 
-        public MyOrginHeadHolder(View itemView) {
+        public MyJoinHeadHolder(View itemView) {
             super(itemView);
             head_hint_text = (TextView) itemView.findViewById(R.id.head_hint_text);
             head_hint_icon = (ImageView) itemView.findViewById(R.id.head_hint_icon);
             head_hint_rl = (RelativeLayout) itemView.findViewById(R.id.head_hint_rl);
         }
     }
-
     //子项viewHolder
-    class MyOrginItemHolder extends RecyclerView.ViewHolder {
+    class MyJoinItemHolder extends RecyclerView.ViewHolder {
         private ImageView dynamic_base_icon;//用户的头像
         private TextView dynamic_base_nick;//用户的昵称
         private TextView dynamic_base_title;//用户发布的内容
@@ -437,7 +422,7 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         private LinearLayout dynamic_base_pinglun_ll;//评论布局
         private LinearLayout dynamic_base_zan_ll;//赞布局
 
-        public MyOrginItemHolder(View itemView) {
+        public MyJoinItemHolder(View itemView) {
             super(itemView);
             dynamic_base_icon = (ImageView) itemView.findViewById(R.id.dynamic_base_icon);
             dynamic_base_nick = (TextView) itemView.findViewById(R.id.dynamic_base_nick);
@@ -465,11 +450,11 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     //加载更多
-    class MyOrginLoadMoreHolder extends RecyclerView.ViewHolder {
+    class MyJoinLoadMoreHolder extends RecyclerView.ViewHolder {
         private ProgressBar mProgressBar;//进度条
         private TextView mTextView;//显示加载更多的字段
 
-        public MyOrginLoadMoreHolder(View itemView) {
+        public MyJoinLoadMoreHolder(View itemView) {
             super(itemView);
             mProgressBar = (ProgressBar) itemView.findViewById(R.id.load_more_bar);
             mTextView = (TextView) itemView.findViewById(R.id.load_more_tv);

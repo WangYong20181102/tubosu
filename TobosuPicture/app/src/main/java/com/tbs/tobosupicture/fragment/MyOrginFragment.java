@@ -12,15 +12,20 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.MyOrginAdapter;
 import com.tbs.tobosupicture.base.BaseFragment;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.bean._DynamicBase;
 import com.tbs.tobosupicture.bean._ReceiveMsg;
 import com.tbs.tobosupicture.constants.UrlConstans;
+import com.tbs.tobosupicture.utils.EventBusUtil;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
@@ -35,6 +40,7 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -51,6 +57,10 @@ public class MyOrginFragment extends BaseFragment {
     @BindView(R.id.my_orgin_swipe)
     SwipeRefreshLayout myOrginSwipe;
     Unbinder unbinder;
+    @BindView(R.id.my_orgin_orgin_btn)
+    TextView myOrginOrginBtn;
+    @BindView(R.id.my_orgin_null_data)
+    LinearLayout myOrginNullData;
     private Context mContext;
     private String TAG = "MyOrginFragment";
     private MyOrginAdapter myOrginAdapter;
@@ -73,6 +83,11 @@ public class MyOrginFragment extends BaseFragment {
         return view;
     }
 
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
     private void initViewEvent() {
         mGson = new Gson();
 
@@ -91,7 +106,6 @@ public class MyOrginFragment extends BaseFragment {
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-
             initGetMsg();
         }
     };
@@ -186,6 +200,11 @@ public class MyOrginFragment extends BaseFragment {
                             public void run() {
                                 myOrginSwipe.setRefreshing(false);
                                 Toast.makeText(mContext, "暂无更多数据~", Toast.LENGTH_SHORT).show();
+                                if (dynamicBaseArrayList.isEmpty()) {
+                                    myOrginNullData.setVisibility(View.VISIBLE);
+                                } else {
+                                    myOrginNullData.setVisibility(View.GONE);
+                                }
                             }
                         });
                     } else if (status.equals("0")) {
@@ -233,9 +252,8 @@ public class MyOrginFragment extends BaseFragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                myOrginSwipe.setRefreshing(false);
                                 //将数据填充
-                                if (myOrginAdapter == null) {
+                                if (myOrginAdapter == null || myOrginSwipe.isRefreshing()) {
                                     Log.e(TAG, "数据填充====adapter为null时我发起的数量===" + receiveMsg.getMy_sponsor().getMsg_count());
                                     myOrginAdapter = new MyOrginAdapter(mContext, getActivity(), receiveMsg.getMy_sponsor(), dynamicBaseArrayList);
                                     myOrginRecyclerview.setAdapter(myOrginAdapter);
@@ -247,6 +265,8 @@ public class MyOrginFragment extends BaseFragment {
                                 if (myOrginAdapter != null) {
                                     myOrginAdapter.changeLoadState(2);
                                 }
+                                myOrginSwipe.setRefreshing(false);
+                                myOrginNullData.setVisibility(View.GONE);
                             }
                         });
                     } else if (status.equals("201")) {
@@ -257,6 +277,9 @@ public class MyOrginFragment extends BaseFragment {
                                 if (myOrginAdapter != null) {
                                     myOrginAdapter.changeLoadState(2);
                                     Toast.makeText(mContext, "暂无更多数据~", Toast.LENGTH_SHORT).show();
+                                }
+                                if (dynamicBaseArrayList.isEmpty()) {
+                                    myOrginNullData.setVisibility(View.VISIBLE);
                                 }
                             }
                         });
@@ -278,5 +301,22 @@ public class MyOrginFragment extends BaseFragment {
                 }
             }
         });
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case EC.EventCode.REFRESH_MY_ORGIN_NUM:
+                //收到刷新通知
+                initGetMsg();
+                break;
+        }
+    }
+
+    @OnClick(R.id.my_orgin_orgin_btn)
+    public void onViewClickedInMyOrginFragment() {
+        //点击发起动态
+        Log.e(TAG, "点击了发起动态按钮======");
+        EventBusUtil.sendEvent(new Event(EC.EventCode.GOTO_SEND_DYNAMIC));
     }
 }

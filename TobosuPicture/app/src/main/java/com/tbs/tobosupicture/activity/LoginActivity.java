@@ -85,6 +85,15 @@ public class LoginActivity extends BaseActivity {
         return true;
     }
 
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case EC.EventCode.FNISHI_LOGINACTIVITY:
+                finish();
+                break;
+        }
+    }
+
     @OnClick({R.id.login_close, R.id.login_forgot_password, R.id.login_regist, R.id.login_login, R.id.login_weixin_login})
     public void onViewClickedInLoginActivity(View view) {
         switch (view.getId()) {
@@ -162,6 +171,7 @@ public class LoginActivity extends BaseActivity {
                         SpUtils.saveUserType(mContext, user.getUser_type());
                         Log.e(TAG, "获取用户的uid====" + SpUtils.getUserUid(mContext));
                         EventBusUtil.sendEvent(new Event(EC.EventCode.LOGIN_INITDATA));
+                        EventBusUtil.sendEvent(new Event(EC.EventCode.REFRESH_MY_ORGIN_NUM));
                         finish();
                     } else if (status.equals("0")) {
                         runOnUiThread(new Runnable() {
@@ -242,6 +252,7 @@ public class LoginActivity extends BaseActivity {
                         SpUtils.saveUserType(mContext, user.getUser_type());
                         Log.e(TAG, "获取用户的uid====" + SpUtils.getUserUid(mContext));
                         EventBusUtil.sendEvent(new Event(EC.EventCode.LOGIN_INITDATA));
+                        EventBusUtil.sendEvent(new Event(EC.EventCode.REFRESH_MY_ORGIN_NUM));
                         finish();
                     }
                 } catch (JSONException e) {

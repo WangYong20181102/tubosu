@@ -283,7 +283,6 @@ public class Utils {
     }
 
 
-
     public static void hideKeyBoard(Activity context) {
         if (context != null && context.getCurrentFocus() != null) {
             ((InputMethodManager) context
@@ -304,14 +303,14 @@ public class Utils {
         return dm.heightPixels;
     }
 
-    public static String readAssert(Context context,  String fileName){
-        String jsonString="";
-        String resultString="";
+    public static String readAssert(Context context, String fileName) {
+        String jsonString = "";
+        String resultString = "";
         try {
-            InputStream inputStream=context.getResources().getAssets().open(fileName);
-            byte[] buffer=new byte[inputStream.available()];
+            InputStream inputStream = context.getResources().getAssets().open(fileName);
+            byte[] buffer = new byte[inputStream.available()];
             inputStream.read(buffer);
-            resultString=new String(buffer,"utf-8");
+            resultString = new String(buffer, "utf-8");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -331,5 +330,13 @@ public class Utils {
     public static void gotoLogin(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
         context.startActivity(intent);
+    }
+
+    //获取当前时间的String值
+    public static String getNowTime() {
+        Date date = new Date();
+        DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time=format.format(date);
+        return time;
     }
 }

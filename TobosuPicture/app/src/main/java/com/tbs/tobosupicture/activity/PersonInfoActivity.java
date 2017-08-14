@@ -3,6 +3,7 @@ package com.tbs.tobosupicture.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -161,7 +163,12 @@ public class PersonInfoActivity extends BaseActivity {
         if (whereFrom.equals("RegisterActivity")) {
             //从注册进来
             personInfoBtn.setText("确定");
-            personInfoCity.setText(SpUtils.getLocationCity(mContext));
+            if (TextUtils.isEmpty(SpUtils.getLocationCity(mContext))) {
+                personInfoCity.setText("");
+            } else {
+                personInfoCity.setText(SpUtils.getLocationCity(mContext));
+            }
+
         } else if (whereFrom.equals("MineFragment")) {
             //从“我的”进来
             personInfoBtn.setText("退出登录");
@@ -221,15 +228,30 @@ public class PersonInfoActivity extends BaseActivity {
                 //底部按钮事件
                 if (personInfoBtn.getText().equals("退出登录")) {
                     //清除用户数据
-                    SpUtils.saveUserNick(mContext, "");
-                    SpUtils.saveUserIcon(mContext, "");
-                    SpUtils.saveUserPersonalSignature(mContext, "");
-                    SpUtils.saveUserType(mContext, "");
-                    SpUtils.saveUserUid(mContext, "");
-                    EventBusUtil.sendEvent(new Event(EC.EventCode.LOGIN_OUT));
-                    finish();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setMessage("确定要退出登录吗？");
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            SpUtils.saveUserNick(mContext, "");
+                            SpUtils.saveUserIcon(mContext, "");
+                            SpUtils.saveUserPersonalSignature(mContext, "");
+                            SpUtils.saveUserType(mContext, "");
+                            SpUtils.saveUserUid(mContext, "");
+                            EventBusUtil.sendEvent(new Event(EC.EventCode.LOGIN_OUT));
+                            finish();
+                        }
+                    }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 } else {
-                    //注册之后的确定按钮
+                    //注册之后的确定按钮 拿到城市信息将信息保存
+                    HttpChangeCity(personInfoCity.getText().toString());
                     finish();
                 }
                 break;
@@ -238,7 +260,9 @@ public class PersonInfoActivity extends BaseActivity {
 
     //更换城市
     private void changeCity() {
-
+        Intent intent = new Intent(mContext, SelectCityActivity.class);
+//        intent.putExtra("")
+        mContext.startActivity(intent);
     }
 
     //用户修改昵称
@@ -382,7 +406,6 @@ public class PersonInfoActivity extends BaseActivity {
     private View.OnClickListener popClickLister = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            menuWindow.dismiss();
             switch (v.getId()) {
                 case R.id.pop_set_man:
                     //设置性别男性
@@ -398,16 +421,20 @@ public class PersonInfoActivity extends BaseActivity {
                     break;
                 case R.id.takePhotoBtn:
                     //开启相机
+                    menuWindow.dismiss();
                     Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
                     startActivityForResult(takeIntent, REQUESTCODE_TAKE);
-
                     break;
                 case R.id.pickPhotoBtn:
                     //开启图册
+                    menuWindow.dismiss();
                     Intent pickIntent = new Intent(Intent.ACTION_PICK, null);
                     pickIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                     startActivityForResult(pickIntent, REQUESTCODE_PICK);
+                    break;
+                case R.id.cancelBtn:
+                    menuWindow.dismiss();
                     break;
             }
         }
@@ -575,6 +602,35 @@ public class PersonInfoActivity extends BaseActivity {
         }
     });
 
+    //修改城市
+    private void HttpChangeCity(String cityName) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Utils.getDateToken());
+        param.put("uid", SpUtils.getUserUid(mContext));
+        param.put("city_name", cityName);
+        HttpUtils.doPost(UrlConstans.MODIFY_CITY, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.getString("status");
+                    if (status.equals("200")) {
+                        //修改成功
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    //修改头像
     private void HttpChangeUserIcon(String icon) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());

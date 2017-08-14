@@ -5,6 +5,31 @@
     android:background="@color/bg_white"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/my_orgin_null_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="180dp"
+            android:src="@mipmap/null_orgin" />
+
+        <TextView
+            android:id="@+id/my_orgin_orgin_btn"
+            android:layout_width="120dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/shape_btn_30dp"
+            android:gravity="center"
+            android:text="发起话题"
+            android:textColor="@color/bg_white"
+            android:textSize="@dimen/text_size_30px" />
+    </LinearLayout>
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/my_orgin_swipe"
         android:layout_width="match_parent"

@@ -18,5 +18,13 @@ public final class EC {
         public static final int WELCOMETOMAIN = 0x000006;//测试欢迎页
         public static final int LOGIN_INITDATA = 0x000007;//登录成功以后刷新相关页面的数据
         public static final int LOGIN_OUT = 0x000008;//用户登出App
+        public static final int SHOW_ABOUT_ME = 0x000009;//显示有关于我
+        public static final int MY_JOIN_NUM = 0x000010;//我参加的数量
+        public static final int MY_ORGIN_NUM = 0x000011;//我发起的数量
+        public static final int REFRESH_MY_ORGIN_NUM = 0x000012;//刷新我发起的页面获取fragment中的提示
+        public static final int REFRESH_MY_JOIN_NUM = 0x000013;//刷新我参与的页面获取fragment中的提示
+        public static final int GOTO_SEND_DYNAMIC = 0x000014;//去发动态
+        public static final int FNISHI_LOGINACTIVITY = 0x000015;//销毁登录页面
+        public static final int CHECK_ABOUTME_MYORG_HAS_MSG = 0x000016;//销毁登录页面
     }
 }

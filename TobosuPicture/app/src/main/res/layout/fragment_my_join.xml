@@ -2,9 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_white"
     android:orientation="vertical">
-    <TextView
-        android:text="我的参与"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
+    <LinearLayout
+        android:id="@+id/my_join_null_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="180dp"
+            android:src="@mipmap/null_join" />
+
+        <TextView
+            android:id="@+id/my_join_join_btn"
+            android:layout_width="120dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/shape_btn_30dp"
+            android:gravity="center"
+            android:text="发起话题"
+            android:textColor="@color/bg_white"
+            android:textSize="@dimen/text_size_30px" />
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/my_join_swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_join_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
