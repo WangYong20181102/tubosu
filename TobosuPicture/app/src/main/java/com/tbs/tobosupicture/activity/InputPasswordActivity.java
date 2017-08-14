@@ -13,7 +13,10 @@ import android.widget.Toast;
 
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.base.BaseActivity;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.constants.UrlConstans;
+import com.tbs.tobosupicture.utils.EventBusUtil;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.Md5Utils;
 import com.tbs.tobosupicture.utils.SpUtils;
@@ -60,6 +63,11 @@ public class InputPasswordActivity extends BaseActivity {
         cellphone = mIntent.getStringExtra("cellphone");
     }
 
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
     @OnClick({R.id.check_pw_back, R.id.bind_phone_ok})
     public void onViewClickedInInputPasswordActivity(View view) {
         switch (view.getId()) {
@@ -102,6 +110,7 @@ public class InputPasswordActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 Toast.makeText(mContext, "绑定成功！", Toast.LENGTH_SHORT).show();
+                                EventBusUtil.sendEvent(new Event(EC.EventCode.PERSON_INFO_ACTIVITY_CHANGE_MSG));
                                 finish();
                             }
                         });

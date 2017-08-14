@@ -147,12 +147,12 @@ public class PersonInfoActivity extends BaseActivity {
         ButterKnife.bind(this);
         mContext = this;
         initViewEvent();
+        HttpGetPersonInfo();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        HttpGetPersonInfo();
     }
 
     private void initViewEvent() {
@@ -185,6 +185,19 @@ public class PersonInfoActivity extends BaseActivity {
     @Override
     protected boolean isRegisterEventBus() {
         return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case EC.EventCode.PERSON_INFO_ACTIVITY_CHANGE_CITY:
+                personInfoCity.setText("" + (String) event.getData());
+                break;
+            case EC.EventCode.PERSON_INFO_ACTIVITY_CHANGE_MSG:
+                //修改了 昵称 个性签名 绑定手机等等的信息后返回进行数据的刷新
+                HttpGetPersonInfo();
+                break;
+        }
     }
 
     @OnClick({R.id.person_info_back, R.id.person_info_icon_rl, R.id.person_info_nick_rl,
@@ -261,7 +274,7 @@ public class PersonInfoActivity extends BaseActivity {
     //更换城市
     private void changeCity() {
         Intent intent = new Intent(mContext, SelectCityActivity.class);
-//        intent.putExtra("")
+        intent.putExtra("from", "PersonInfoActivity");
         mContext.startActivity(intent);
     }
 

@@ -11,7 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.base.BaseActivity;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.constants.UrlConstans;
+import com.tbs.tobosupicture.utils.EventBusUtil;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
@@ -29,7 +33,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class ChangeSiginActivity extends AppCompatActivity {
+public class ChangeSiginActivity extends BaseActivity {
 
     @BindView(R.id.change_sigin_back)
     LinearLayout changeSiginBack;
@@ -47,6 +51,11 @@ public class ChangeSiginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change_sigin);
         ButterKnife.bind(this);
         mContext = this;
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
     }
 
     @OnClick({R.id.change_sigin_back, R.id.change_sigin_ok})
@@ -84,6 +93,7 @@ public class ChangeSiginActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 Toast.makeText(mContext, "修改成功！", Toast.LENGTH_SHORT).show();
+                                EventBusUtil.sendEvent(new Event(EC.EventCode.PERSON_INFO_ACTIVITY_CHANGE_MSG));
                                 finish();
                             }
                         });
