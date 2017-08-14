@@ -102,7 +102,9 @@ public class MySampleListActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     Utils.setToast(mContext, msg);
-                                    samplePicAdapter.hideLoadMoreMessage();
+                                    if(samplePicAdapter!=null){
+                                        samplePicAdapter.hideLoadMoreMessage();
+                                    }
                                 }
                             });
                         }

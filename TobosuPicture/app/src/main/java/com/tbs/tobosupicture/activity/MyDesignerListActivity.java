@@ -7,10 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
-
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
-import com.tbs.tobosupicture.adapter.CollectSampleImgAdapter;
 import com.tbs.tobosupicture.adapter.MyDesignerAdapter;
 import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.bean.DesignerListJsonEntity;
@@ -18,12 +16,9 @@ import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
-
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -77,7 +72,11 @@ public class MyDesignerListActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                collectDesignerSwipeRefreshLayout.setRefreshing(false);
                                 Utils.setToast(mContext, "系统繁忙，稍后再试");
+                                if(myDesignerAdapter!=null){
+                                    myDesignerAdapter.hideLoadMoreMessage();
+                                }
                             }
                         });
                     }
@@ -93,7 +92,11 @@ public class MyDesignerListActivity extends BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    collectDesignerSwipeRefreshLayout.setRefreshing(false);
                                     initAdapter();
+                                    if(myDesignerAdapter!=null){
+                                        myDesignerAdapter.hideLoadMoreMessage();
+                                    }
                                 }
                             });
                         } else {
@@ -104,6 +107,7 @@ public class MyDesignerListActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     Utils.setToast(mContext, msg);
+                                    collectDesignerSwipeRefreshLayout.setRefreshing(false);
                                     if(myDesignerAdapter!=null){
                                         myDesignerAdapter.hideLoadMoreMessage();
                                     }
@@ -119,13 +123,17 @@ public class MyDesignerListActivity extends BaseActivity {
     }
 
     private void initAdapter() {
+
         if (myDesignerAdapter == null) {
             myDesignerAdapter = new MyDesignerAdapter(mContext, myDesignerList);
             collectionDesignerRecyclerView.setAdapter(myDesignerAdapter);
+            myDesignerAdapter.hideLoadMoreMessage();
         } else {
             myDesignerAdapter.notifyDataSetChanged();
         }
 
+
+        myDesignerAdapter.hideLoadMoreMessage();
     }
 
 
@@ -182,7 +190,7 @@ public class MyDesignerListActivity extends BaseActivity {
         @Override
         public void onRefresh() {
             //下拉刷新数据 重新初始化各种数据
-            myDesignerList.clear();
+//            myDesignerList.clear();
             page = 1;
             if (myDesignerAdapter != null) {
                 myDesignerAdapter.hideLoadMoreMessage();

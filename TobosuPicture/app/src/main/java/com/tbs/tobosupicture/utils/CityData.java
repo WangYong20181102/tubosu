@@ -1,19 +1,14 @@
 package com.tbs.tobosupicture.utils;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 import com.tbs.tobosupicture.bean.City;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-@SuppressLint("DefaultLocale")
 public class CityData {
 	private Context context;
 	private List<HashMap<String, City>> city_list = new ArrayList<HashMap<String, City>>();
@@ -22,44 +17,29 @@ public class CityData {
 		this.context = context;
 	}
 
-	public List<City> getAllCity() {
+	public List<City> getAllCity(String json) {
 		List<City> list = new ArrayList<City>();
-		InputStream is = null;
 		try {
-			is = context.getAssets().open("cities.json");
-			int len = 0;
-			byte[] buf = new byte[1024];
-			StringBuilder builder = new StringBuilder();
-			while ((len = is.read(buf)) != -1) {
-				builder.append(new String(buf, 0, len));
-			}
-			JSONObject json = new JSONObject(builder.toString());
-			JSONArray cities = json.getJSONArray("data");
-			int length = cities.length();
-			for (int i = 0; i < length; i++) {
-				JSONObject cityObj = cities.getJSONObject(i);
-				String id = cityObj.getString("cityid");
-				String nm = cityObj.getString("simpname");
-				String py = cityObj.getString("pinyin_sort");
-				City city = new City(id, nm, py, py.toUpperCase());
-				HashMap<String, City> map = new HashMap<String, City>();
-				map.put(nm, city);
-				list.add(city);
-				city_list.add(map);
-			}
-			return list;
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (JSONException e) {
-			e.printStackTrace();
-		} finally {
-			if (is != null) {
-				try {
-					is.close();
-				} catch (IOException e) {
-					e.printStackTrace();
+			JSONObject object = new JSONObject(json);
+			if(object.getInt("status") == 200){
+				JSONObject cityObject = object.getJSONObject("data");
+				JSONArray cities = cityObject.getJSONArray("opened_city");
+				int length = cities.length();
+				for (int i = 0; i < length; i++) {
+					JSONObject cityObj = cities.getJSONObject(i);
+					String id = cityObj.getString("city_id");
+					String name = cityObj.getString("city_name");
+					String py = cityObj.getString("pinyin");
+					City city = new City(id, name, py, py.toUpperCase());
+					HashMap<String, City> map = new HashMap<String, City>();
+					map.put(name, city);
+					list.add(city);
+					city_list.add(map);
 				}
 			}
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}

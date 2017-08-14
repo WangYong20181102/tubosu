@@ -1,5 +1,6 @@
 package com.tbs.tobosupicture.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.SelectCityActivity;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
@@ -190,7 +192,7 @@ public class TemplateFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.temp_location:
-//                startActivityforresul(new Intent(getActivity(), SelectCityActivity.class));
+                startActivityForResult(new Intent(getActivity(), SelectCityActivity.class), 10);
                 break;
             case R.id.tvHouseDecorateText:
                 picViewpager.setCurrentItem(0);

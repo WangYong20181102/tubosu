@@ -23,7 +23,6 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -67,17 +66,12 @@ import java.util.Map;
  */
 public class SelectCityActivity extends Activity implements OnClickListener{
 	private static final String TAG = SelectCityActivity.class.getSimpleName();
-	
 	private Context context;
 	private View mSearchContainer;
-	
 	private PinnedHeaderListView mCityListView;
 	private LinearLayout citysListEmpty;
-	
 	private SharedPreferences selectCitySP;
-	
-	private boolean isFirstSelectCity = false;
-	
+
 	/***右边字母列表view*/
 	private BladeView mLetter;
 	
@@ -89,9 +83,6 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 	private List<Integer> mPositions;
 	private Map<String, Integer> mIndexer;
 	private MyApplication mApplication;
-
-	private int from = -1;
-	
 	/**热门城市gridview*/
 	private FirstGridView mCity_gridView;
 	
@@ -102,33 +93,12 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 	private ImageView city_title_back;
 	
 	private View headView;
-	
-//	/***选择城市正在加载网络时的布局*/
-//	private LinearLayout select_loading;
-	
-
 	private List<String> hotCityNames = new ArrayList<String>();
-//	private MapView mMapView;
-//	private BaiduMap mBaiduMap;
 	private LocationClient mLocationClient = null;
 	private BitmapDescriptor mCurrentMarker = null;
-//	private double mLantitude;
-//	private double mLongtitude;
-//	private LatLng mLoactionLatLng;
-//	private boolean isFirstLoc = true;
-//	private Point mCenterPoint = null;
-//	private Double lat;
-//	private Double lng;
-	
-	/**定位得到的真实城市地理地址*/
-	private String realLocationCity = "";
-	
-
 	/**选择城市页面的所有布局*/
 	private LinearLayout select_city_layout;
-	
 	private LinearLayout select_city_activity_netoutview;
-
 	private int fromCode = 101;
 
 	@Override
@@ -140,15 +110,9 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 		initBaidu();
 		initView();
 		getCityJson();
-		getDataIntent();
 
 	}
 
-	private void getDataIntent(){
-		if(getIntent()!=null && getIntent().getBundleExtra("GetPriceSelectcityBundle")!=null){
-			fromCode = Integer.parseInt(getIntent().getBundleExtra("GetPriceSelectcityBundle").getString("fromGetPrice"));
-		}
-	}
 
 	private void initBaidu(){
 		SDKInitializer.initialize(getApplicationContext());
@@ -176,9 +140,9 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 			mLocationClient.setLocOption(option);
 
 			if (mLocationClient != null && mLocationClient.isStarted()){
-				System.out.println("--MainActivity-->>" + mLocationClient.requestLocation());
+//				System.out.println("--MainActivity-->>" + mLocationClient.requestLocation());
 			}else{
-				System.out.println("MainActivity === locClient is null or not started");
+//				System.out.println("MainActivity === locClient is null or not started");
 			}
 
 			mLocationClient.registerLocationListener(new MyLocationListener());    //注册监听函数
@@ -186,12 +150,7 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 			e.printStackTrace();
 		}
 	}
-
-
 	private String locationCity = "";
-
-
-
 	public class MyLocationListener implements BDLocationListener {
 
 		@Override
@@ -209,7 +168,7 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 			locationCity = location.getCity();
 			if(locationCity!=null){
 				locationCity= locationCity.replaceAll("[^\u4E00-\u9FA5]", "");
-                System.out.println("=============有没有city>>>" + locationCity +"<<<");
+//                System.out.println("=============有没有city>>>" + locationCity +"<<<");
 				CacheManager.setCity(context, locationCity);
 				select_positioning.setText(locationCity);
 			}else{
@@ -274,7 +233,6 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 		if("".equals(cityJson)){
 			requestSelectCity();
 		}else{
-			System.out.println("------本地获取json-->>>");
 			prseSelectDataJson(cityJson);
 		}
 	}
@@ -365,19 +323,19 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 	private void initView() {
 		SDKInitializer.initialize(getApplicationContext());
 
-		Bundle b;
-		if(getIntent()!=null && getIntent().getBundleExtra("pop_bundle")!=null){
-			b = getIntent().getBundleExtra("pop_bundle");
-			from = b.getInt("frompop");
+
+		if(getIntent()!=null && getIntent().getBundleExtra("choose_city_bundle")!=null){
+			fromCode = Integer.parseInt(getIntent().getBundleExtra("choose_city_bundle").getString("from_home_getcity"));
 		}
+
 
 		city_title_back = (ImageView) findViewById(R.id.city_title_back);
 
-		if(from==31){
-			city_title_back.setVisibility(View.INVISIBLE);
-		}else{
-			city_title_back.setVisibility(View.VISIBLE);
-		}
+//		if(from==31){
+//			city_title_back.setVisibility(View.INVISIBLE);
+//		}else{
+//			city_title_back.setVisibility(View.VISIBLE);
+//		}
 
 //		mMapView = new MapView(SelectCityActivity.this);
 		headView = getLayoutInflater().inflate(R.layout.head_view_select_city, null);
@@ -432,15 +390,11 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 						if (cityString.contains("市") || cityString.contains("县")) {
 							cityString = cityString.substring(0, cityString.length() - 1);
 						}
-//						Util.setToast(context, "-->> " + cityString);
-//						CacheManager.setCity(context, cityString); // 城市存本地
 						choose = cityString;
 						goActivity(cityString);
-//						startActivityWithCity(cityString);
 					}
 				});
 
-//		initBDMap();
 
 		mCity_gridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
 		// 热门城市跳转
@@ -452,11 +406,8 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 				if (hot.contains("市") || hot.contains("县")) {
 					hot = hot.substring(0, hot.length() - 1);
 				}
-//				Util.setToast(context, "-->> " + hot);
-//				CacheManager.setCity(context, hot); // 城市存本地
 				choose = hot;
 				goActivity(hot);
-//				startActivityWithCity(hot);
 			}
 		});
 	}
@@ -473,14 +424,13 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 			@Override
 			public void onResponse(String s) {
 				CacheManager.setCityJson(context, s);
-				System.out.println("------请求获取json-->>>" + s);
 				prseSelectDataJson(s);
 			}
 		}, new Response.ErrorListener() {
 
 			@Override
 			public void onErrorResponse(VolleyError volleyError) {
-				System.out.println("-----获取省城市json失败-->>>");
+//				System.out.println("-----获取省城市json失败-->>>");
 			}
 		}){
 			@Override
@@ -543,22 +493,18 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 	 */
 	private void goActivity(String ci){
 		CacheManager.setCity(context, ci);
-
-		if(from==31){
-			Intent cityData = new Intent();
-			Bundle b = new Bundle();
-			b.putString("ci", ci);
-			cityData.putExtra("city_bundle", b);
-			setResult(77, cityData);
-		}else if(fromCode == 647){
-			Intent cityData = new Intent();
-			Bundle b = new Bundle();
-			b.putString("ci", ci);
-			cityData.putExtra("city_bundle", b);
-			setResult(70, cityData);
-		}else{
-			startActivity(new Intent(context, MainActivity.class));
+		Intent cityData = new Intent();
+		Bundle b = new Bundle();
+		b.putString("ci", ci);
+		cityData.putExtra("city_bundle", b);
+		if(fromCode == 66) {
+			setResult(71, cityData);
 		}
+
+		if(fromCode == 67){
+			setResult(70, cityData);
+		}
+
 		finish();
 	}
 

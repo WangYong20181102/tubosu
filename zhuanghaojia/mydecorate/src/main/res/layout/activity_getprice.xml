@@ -129,7 +129,7 @@
                     android:gravity="center_vertical" >
 
                     <EditText
-                        android:id="@+id/getprice_name"
+                        android:id="@+id/getprice_nam1e"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/shape_getprice_edittext_bg"
@@ -151,7 +151,7 @@
                     android:gravity="center_vertical" >
 
                     <EditText
-                        android:id="@+id/getprice_phone"
+                        android:id="@+id/getprice_phon1e"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/shape_getprice_edittext_bg"
@@ -258,6 +258,7 @@
                                 android:id="@+id/dot_view_group"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
+                                android:focusable="false"
                                 android:layout_marginBottom="30dp"
                                 android:gravity="center_horizontal"
                                 android:orientation="horizontal" >

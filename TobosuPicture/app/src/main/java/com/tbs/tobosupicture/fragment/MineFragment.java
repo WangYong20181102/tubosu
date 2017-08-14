@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.LoginActivity;
+import com.tbs.tobosupicture.activity.MyCaseListActivity;
 import com.tbs.tobosupicture.activity.MyDesignerListActivity;
 import com.tbs.tobosupicture.activity.MyDynamicActivity;
 import com.tbs.tobosupicture.activity.MyFansActivity;
@@ -267,6 +268,16 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.fm_sousuoguo_anli:
                 //点击展开搜索过的案例
+                if("1".equals(SpUtils.getUserType(mContext))){
+                    // 业主
+
+                }else if("3".equals(SpUtils.getUserType(mContext))){
+                    // 公司
+
+                }else {
+                    startActivity(new Intent(mContext, LoginActivity.class));
+                }
+
                 break;
             case R.id.fm_guanzhu_shejishi:
                 //点击进入关注的设计师
@@ -288,7 +299,7 @@ public class MineFragment extends BaseFragment {
             case R.id.fm_shoucang_anli:
                 //点击进入收藏的案例
                 if (Utils.userIsLogin(mContext)) {
-//                    mContext.startActivity(new Intent(mContext, MyCaseListActivity.class));
+                    mContext.startActivity(new Intent(mContext, MyCaseListActivity.class));
                 } else {
                     Utils.gotoLogin(mContext);
                 }

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent" >
 
     <com.tobosu.mydecorate.view.ScrollViewExtend
         android:id="@+id/scrollViewExtend"
@@ -32,13 +32,12 @@
                     app:rollviewpager_hint_paddingTop="16dp"
                     app:rollviewpager_play_delay="3500" />
 
-
-
             </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
                 android:background="@mipmap/nave"
                 android:orientation="horizontal">
 
@@ -85,22 +84,21 @@
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/iv7"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
-                        android:layout_marginRight="5dp"
-                        android:layout_toLeftOf="@+id/textView2"
-                        android:layout_toStartOf="@+id/textView2"
+                        android:layout_marginRight="6dp"
+                        android:layout_marginLeft="14dp"
                         android:src="@mipmap/hot" />
 
                     <TextView
                         android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/iv7"
                         android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="center"
                         android:text="装修头条"
                         android:textColor="#8a8f99"
                         android:textSize="14sp" />
@@ -151,18 +149,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/i8v"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginRight="6dp"
                         android:src="@mipmap/paihang" />
 
                     <TextView
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -174,7 +174,8 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerviewAuthor"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp">
                 </android.support.v7.widget.RecyclerView>
             </LinearLayout>
         </LinearLayout>
@@ -183,38 +184,43 @@
     <FrameLayout
         android:id="@+id/rel_homebar1"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="62dp">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:visibility="gone"
-            android:scaleType="matrix"
-            android:src="@mipmap/nhp_banner"/>
-
-        <TextView
-            android:id="@+id/home_textView"
+        <RelativeLayout
+            android:id="@+id/relTransparenbt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="装好家"
-            android:alpha="0"
-            android:background="#74c9c9c7"
-            android:gravity="center"
-            android:textColor="@color/bg_white"
-            android:textSize="18sp" />
+            android:background="#63FF9C00">
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:visibility="gone"
+                android:scaleType="matrix"
+                android:src="@mipmap/nhp_banner"/>
 
-        <ImageView
-            android:id="@+id/nhf_fadan"
-            android:layout_width="21dp"
-            android:layout_height="21dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/home_textView"
-            android:layout_marginEnd="15dp"
-            android:visibility="gone"
-            android:layout_marginRight="15dp"
-            android:src="@mipmap/fadan" />
+            <TextView
+                android:id="@+id/home_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="装好家"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/nhf_fadan"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/home_textView"
+                android:layout_marginEnd="15dp"
+                android:visibility="gone"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/fadan" />
+        </RelativeLayout>
     </FrameLayout>
 
 </RelativeLayout>

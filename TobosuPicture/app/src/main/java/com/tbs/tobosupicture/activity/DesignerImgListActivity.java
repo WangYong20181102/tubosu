@@ -70,9 +70,7 @@ public class DesignerImgListActivity extends BaseActivity {
         setContentView(R.layout.activity_designer_list);
         TAG = "DesignerImgListActivity";
         mContext = DesignerImgListActivity.this;
-
         ButterKnife.bind(this);
-
         initView();
         getIntentData();
 

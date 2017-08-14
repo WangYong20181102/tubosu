@@ -2,12 +2,14 @@ package com.tobosu.mydecorate.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.activity.NewArticleDetailActivity;
@@ -77,6 +79,13 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
         }else if(position == 7){
             holder.iv_rank.setBackgroundResource(R.mipmap.img8);
         }
+
+
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+
+        } else {
+            holder.rel_shape.setBackgroundResource(R.drawable.nhf_wz_shape);
+        }
     }
 
     @Override
@@ -91,6 +100,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
         private TextView item_liulang;
         private TextView item_wenzhang;
         private FrameLayout frameLayout;
+        private RelativeLayout rel_shape;
 
         public AuthorViewHolder(View itemView) {
             super(itemView);
@@ -100,6 +110,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
             item_liulang = (TextView) itemView.findViewById(R.id.item_liulang);
             item_wenzhang = (TextView) itemView.findViewById(R.id.item_wenzhang);
             frameLayout = (FrameLayout) itemView.findViewById(R.id.frad);
+            rel_shape = (RelativeLayout) itemView.findViewById(R.id.rel_shape);
         }
     }
 }

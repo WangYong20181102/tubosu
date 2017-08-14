@@ -156,10 +156,13 @@
         <activity android:name=".activity.InputPasswordActivity" />
         <activity android:name=".activity.SuggestActivity" />
         <activity android:name=".activity.WebViewActivity" />
-        <activity android:name=".activity.SelectCityActivity" />
-        <activity android:name=".activity.SystemMessageActivity" />
+
+    
         <activity android:name=".activity.SendDynamicActivity" />
         <activity android:name=".activity.DynamicMsgActivity"></activity>
+        <activity android:name=".activity.SelectCityActivity"/>
+        <activity android:name=".activity.MyCaseListActivity"/>
+        <activity android:name=".activity.SystemMessageActivity"></activity>
     </application>
 
 </manifest>

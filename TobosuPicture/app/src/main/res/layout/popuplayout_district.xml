@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="40dp"
+    android:layout_height="344dp"
+    android:layout_marginTop="60dp"
     android:orientation="vertical"
     android:background="@color/white">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#dfdddd"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -47,7 +52,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="搜索"
-            android:padding="11dp"
+            android:paddingBottom="6dp"
+            android:paddingTop="6dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
             android:layout_centerVertical="true"
@@ -57,44 +65,39 @@
             android:textColor="@color/white"/>
     </RelativeLayout>
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/editTextSearchDistrct"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:paddingLeft="14dp"
+                android:background="@drawable/shape_window_edittextview"
+                android:hint="搜索小区名"
+                android:drawableLeft="@mipmap/sousuo"
+                android:textColor="#3e3d3d"
+                android:textSize="14sp"/>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="16dp"
+            android:background="#c7c5c5"/>
+        <com.tbs.tobosupicture.view.library.PullToRefreshGridView
+            android:id="@+id/gvDistrict"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:id="@+id/editTextSearchDistrct"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:paddingLeft="14dp"
-                    android:background="@drawable/shape_window_edittextview"
-                    android:hint="搜索小区名"
-                    android:drawableLeft="@mipmap/sousuo"
-                    android:textColor="#3e3d3d"
-                    android:textSize="14sp"/>
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_margin="16dp"
-                android:background="#c7c5c5"/>
-
-            <com.tbs.tobosupicture.view.MyGridView
-                android:id="@+id/gvDistrict"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:numColumns="3">
-            </com.tbs.tobosupicture.view.MyGridView>
-        </LinearLayout>
-
-    </ScrollView>
+            android:verticalSpacing="1dp"
+            android:horizontalSpacing="1dp"
+            android:numColumns="3">
+        </com.tbs.tobosupicture.view.library.PullToRefreshGridView>
+    </LinearLayout>
 
 </LinearLayout>

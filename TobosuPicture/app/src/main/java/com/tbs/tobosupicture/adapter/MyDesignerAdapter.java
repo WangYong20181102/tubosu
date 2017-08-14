@@ -19,6 +19,7 @@ import com.tbs.tobosupicture.activity.SeeImageActivity;
 import com.tbs.tobosupicture.bean.CollectionSampleJsonEntity;
 import com.tbs.tobosupicture.bean.DesignerListJsonEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
+import com.tbs.tobosupicture.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -27,6 +28,7 @@ import java.util.ArrayList;
  */
 
 public class MyDesignerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener{
+    private String TAG = "MyDesignerAdapter";
     private static final int TYPE_ITEM = 1;
     private View itmeView;
     private static final int TYPE_FOOTER = 2;
@@ -77,6 +79,9 @@ public class MyDesignerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if(footerLayout!=null){
             footerLayout.setVisibility(View.GONE);
         }
+        if(tvLoadMore!=null){
+            tvLoadMore.setVisibility(View.GONE);
+        }
     }
 
     public void noMoreData(){
@@ -92,31 +97,19 @@ public class MyDesignerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof DesignerViewHolder){
             DesignerViewHolder itmeHolder = (DesignerViewHolder) holder;
-            GlideUtils.glideLoader(mContext, dataList.get(position).getIcon(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itmeHolder.iv_designer_pic,1);
+            GlideUtils.glideLoader(mContext, dataList.get(position).getIcon(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itmeHolder.iv_designer_pic, 0);
             itmeHolder.tv_desinger_name.setText(dataList.get(position).getDesigner_name());
-            String text = "";
+
+
             String fan = dataList.get(position).getFans_count();
             String view = dataList.get(position).getView_count();
             String impres = dataList.get(position).getImpression_count();
             String anli = dataList.get(position).getCase_count();
 
-            if(!"".equals(fan)){
-                text = "粉丝 " + fan + " | ";
-            }
+            String text = "粉丝 " + fan + " | 浏览数 " + view + " | 效果图 " + impres + " | 案例 " + anli;
 
-            if(!"".equals(view)){
-                text = "浏览数 " + view + " | ";
-            }
-
-            if(!"".equals(impres)){
-                text = " | 效果图 " + impres ;
-            }
-
-            if(!"".equals(anli)){
-                text = " | 案例 " + anli ;
-            }
-
-            itmeHolder.tv_desinger_text.setText(text);
+            Utils.setErrorLog(TAG, text + "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+            itmeHolder.tv_desinger_caokun_text.setText(text);
 
             itmeHolder.iv_designer_pic.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -144,10 +137,10 @@ public class MyDesignerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             holder.itemView.setTag(dataList.get(position));
         }
 
-//        if(holder instanceof FootViewHolder){
-//            FootViewHolder footHolder = (FootViewHolder) holder;
-//
-//        }
+        if(holder instanceof FootViewHolder){
+            FootViewHolder footHolder = (FootViewHolder) holder;
+
+        }
     }
 
 
@@ -172,7 +165,7 @@ public class MyDesignerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public class DesignerViewHolder extends RecyclerView.ViewHolder{
-        private TextView tv_desinger_text;
+        private TextView tv_desinger_caokun_text;
         private TextView  tv_desinger_name;
         private ImageView  iv_designer_pic;
 
@@ -180,7 +173,7 @@ public class MyDesignerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             super(itemView);
             iv_designer_pic = (ImageView) itemView.findViewById(R.id.iv_designer1_pic);
             tv_desinger_name = (TextView) itemView.findViewById(R.id.tv_desinger1_name);
-            tv_desinger_text = (TextView) itemView.findViewById(R.id.tv_desinger_text);
+            tv_desinger_caokun_text = (TextView) itemView.findViewById(R.id.tv_desinger_caokun_text);
         }
     }
     public class FootViewHolder extends RecyclerView.ViewHolder{

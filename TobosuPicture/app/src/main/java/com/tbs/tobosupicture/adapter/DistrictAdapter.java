@@ -1,5 +1,7 @@
 package com.tbs.tobosupicture.adapter;
 import android.content.Context;
+import android.content.IntentFilter;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +28,9 @@ public class DistrictAdapter extends BaseAdapter {
         this.inflater = LayoutInflater.from(context);
     }
 
-
     @Override
     public int getCount() {
-        return dataList == null ?0 : dataList.size();
+        return dataList==null ?0 :dataList.size();
     }
 
     @Override
@@ -50,14 +51,14 @@ public class DistrictAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.adapter_item_gv_district, null);
             holder.iv = (ImageView) convertView.findViewById(R.id.ivDistrictIcon);
             holder.tv = (TextView) convertView.findViewById(R.id.tvDistrictName);
+
             convertView.setTag(holder);
         }else {
             holder = (DistrictViewHolder) convertView.getTag();
         }
 
-        GlideUtils.glideLoader(context, dataList.get(position).getImage_url(), R.mipmap.loading_img_fail, R.mipmap.loading_img, holder.iv, 1);
+        GlideUtils.glideLoader(context, dataList.get(position).getImage_url(), R.mipmap.loading_img_fail, R.mipmap.loading_img, holder.iv);
         holder.tv.setText(dataList.get(position).getName());
-
         return convertView;
     }
 
@@ -65,5 +66,7 @@ public class DistrictAdapter extends BaseAdapter {
         ImageView iv;
         TextView tv;
     }
+
+
 
 }

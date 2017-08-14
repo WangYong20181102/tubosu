@@ -1,6 +1,7 @@
 package com.tobosu.mydecorate.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -12,12 +13,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
@@ -27,7 +28,7 @@ import com.tobosu.mydecorate.util.DensityUtil;
 import com.tobosu.mydecorate.util.Util;
 import com.tobosu.mydecorate.view.CustomWaitDialog;
 import com.tobosu.mydecorate.view.ObservableScrollView;
-
+import com.tobosu.mydecorate.view.TipDialog1;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -72,12 +73,11 @@ public class GetPriceActivity extends AppCompatActivity implements OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getprice);
         mContext = GetPriceActivity.this;
-        initView();
-        initData();
-        initViewpagerAdapter();
-        initEvent();
-    }
 
+        initView();
+        initEvent();
+        initViewpagerAdapter();
+    }
 
     private void initView() {
         relBack = (RelativeLayout) findViewById(R.id.rel_getprice_back);
@@ -85,13 +85,12 @@ public class GetPriceActivity extends AppCompatActivity implements OnClickListen
         scrollview = (ObservableScrollView) findViewById(R.id.scrollview_getprice);
         vpGetpriceImg = (ViewPager) findViewById(R.id.vp_getprice_img);
         group = (ViewGroup) findViewById(R.id.dot_view_group);
-        etName = (EditText) findViewById(R.id.getprice_name);
-        etPhone = (EditText) findViewById(R.id.getprice_phone);
+        etName = (EditText) findViewById(R.id.getprice_nam1e);
+        etPhone = (EditText) findViewById(R.id.getprice_phon1e);
         tvCity = (TextView) findViewById(R.id.tv_getprice_city);
         relChooseCity = (RelativeLayout) findViewById(R.id.rel_choose_city);
         tvSummit = (TextView) findViewById(R.id.getprice_submit);
         tvCheatTextView = (TextView) findViewById(R.id.cheat_textview);
-
 
         scrollview.setOnScollChangedListener(new ObservableScrollView.OnScollChangedListener() {
             @Override
@@ -161,16 +160,32 @@ public class GetPriceActivity extends AppCompatActivity implements OnClickListen
         cheatTextAnimation();
     }
 
-    private void initData() {
-
-
-    }
 
     private void initEvent() {
         tvSummit.setOnClickListener(this);
         relBack.setOnClickListener(this);
         relChooseCity.setOnClickListener(this);
         ivGotop.setOnClickListener(this);
+
+//        hideEdittext(etName);
+//        hideEdittext(etPhone);
+//        etName.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                etName.setFocusable(true);
+//                etName.requestFocus();
+//                return true;
+//            }
+//        });
+//        etPhone.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                etPhone.setFocusable(true);
+//                etPhone.requestFocus();
+//                return true;
+//            }
+//        });
+
     }
 
     private void initViewpagerAdapter() {
@@ -253,6 +268,15 @@ public class GetPriceActivity extends AppCompatActivity implements OnClickListen
     }
 
 
+    private void hideEdittext(EditText myEditText){
+
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        boolean isOpen = imm.isActive();//isOpen若返回true，则表示输入法打开
+        if(isOpen){
+            imm.hideSoftInputFromWindow(myEditText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -265,9 +289,10 @@ public class GetPriceActivity extends AppCompatActivity implements OnClickListen
             case R.id.rel_choose_city:
                 Intent selectCityIntent = new Intent(mContext, SelectCityActivity.class);
                 Bundle b = new Bundle();
-                b.putString("fromGetPrice", "647");
-                selectCityIntent.putExtra("GetPriceSelectcityBundle", b);
+                b.putString("from_home_getcity", "67");
+                selectCityIntent.putExtra("choose_city_bundle", b);
                 startActivityForResult(selectCityIntent, 0);
+
                 break;
             case R.id.getprice_submit:
                 String name = etName.getText().toString().trim();
@@ -286,8 +311,10 @@ public class GetPriceActivity extends AppCompatActivity implements OnClickListen
                     HashMap<String, Object> hashMap = new HashMap<String, Object>();
                     hashMap.put("cellphone", phone);
                     hashMap.put("city", city);
+                    hashMap.put("ownername", name);
                     hashMap.put("urlhistory", Constant.PIPE_CODE);
                     hashMap.put("comeurl", Constant.PIPE_CODE);
+                    hashMap.put("source", "1111");
                     if (Util.isLogin(mContext)) {
                         hashMap.put("userid", Util.getUserId(mContext));
                     } else {
@@ -303,8 +330,21 @@ public class GetPriceActivity extends AppCompatActivity implements OnClickListen
                                 JSONObject jsonObject = new JSONObject(json);
 
                                 if(jsonObject.getInt("error_code") == 0){
-                                    Util.setToast(mContext, "发单成功,稍后给你电话");
-                                    finish();
+//                                    Util.setToast(mContext, "发单成功,稍后给你电话");
+
+                                    TipDialog1.Builder builder = new TipDialog1.Builder(mContext);
+                                    builder.setTitle("温馨提醒")
+                                            .setPositiveButton("确定",
+                                                    new DialogInterface.OnClickListener() {
+
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int id) {
+                                                            dialog.cancel();
+                                                            //退出当前账户
+                                                            finish();
+                                                        }
+                                                    });
+                                    builder.create().show();
                                 }else {
                                     Util.setToast(mContext, "系统繁忙，稍后再试~");
                                 }

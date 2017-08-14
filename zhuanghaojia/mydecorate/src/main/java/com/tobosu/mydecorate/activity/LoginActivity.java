@@ -270,6 +270,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String headPicUrl = "";
         String userName = "";
         String mark = "";
+        String phone = "";
         try {
             JSONObject loginJsonObject = new JSONObject(loginJson);
             if (loginJsonObject.getInt("error_code") == 0) {
@@ -285,6 +286,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String userid = data.getString("uid");
                 CacheManager.setUserUid(mContext, userid); // 保存uid
                 String cityname = data.getString("cityname");
+                phone = data.getString("cellphone");
 
                 /*
                     "id":"27**0",
@@ -311,6 +313,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 editor.putString("mark", mark);
                 editor.putString("user_id", userid);
                 editor.putString("token", token);
+                editor.putString("cellphone", phone);
                 editor.putString("city_name", cityname);
                 editor.commit();
                 hideLoadingView();
