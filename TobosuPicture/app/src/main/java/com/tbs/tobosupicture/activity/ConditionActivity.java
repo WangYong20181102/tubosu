@@ -1,16 +1,13 @@
 package com.tbs.tobosupicture.activity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -39,7 +36,6 @@ import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.CustomExpandableListView;
 import com.tbs.tobosupicture.view.GridView2;
 import com.tbs.tobosupicture.view.MyListView;
-import com.tbs.tobosupicture.view.library.PullToRefreshBase;
 import com.tbs.tobosupicture.view.library.PullToRefreshGridView;
 import com.tbs.tobosupicture.view.wheelviews.ChooseAddressWheel;
 import com.tbs.tobosupicture.view.wheelviews.listener.OnAddressChangeListener;
@@ -48,8 +44,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -90,9 +84,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
     @BindView(R.id.hideCityLayout)
     LinearLayout hideCityLayout;
 
-
     private boolean isHide = true;
-
 
     private SearchDataEntity searchDataEntity;
     private SearchCaseConditionEntity searchCaseConditionEntity;
@@ -115,7 +107,6 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
 
         ButterKnife.bind(this);
         getDataFromNet();
-//        init("1", "1");
         init();
     }
 
@@ -210,11 +201,11 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
 
 
     private Intent setIntent(){
-        if(!isHide){
+        if(isHide){
             city_id = "";
             district_id = "";
             param_vilige_id = "";
-            Utils.setErrorLog(TAG, "===未进入===");
+            Utils.setErrorLog(TAG, "===关闭了城市小区===");
         }
 
         Intent intent = new Intent();

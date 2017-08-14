@@ -31,5 +31,7 @@ public final class EC {
 
 
         public static final int CHOOSE_CITY_CODE = 0x100001;//选择城市
+        public static final int GET_DISTRICT_DATA_CODE = 0x100002;//获取小区数据
+        public static final int GET_DISTRICT_DATA_CODE2 = 0x100003;//获取小区数据
     }
 }

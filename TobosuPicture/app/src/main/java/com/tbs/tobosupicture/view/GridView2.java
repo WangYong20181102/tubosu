@@ -208,7 +208,7 @@ public class GridView2 extends GridView {
 				/* 下拉 */
 				stateTextView.setVisibility(TextView.VISIBLE);
 				arrowImgView.setVisibility(View.VISIBLE);
-				arrowImgView.setImageResource(R.mipmap.down_arrow);
+				arrowImgView.setImageResource(R.mipmap.default_ptr_flip);
 				// lastUpdateTimeTextView.setVisibility(TextView.VISIBLE);
 				arrowImgView.clearAnimation();
 				arrowImgView.startAnimation(animationRotate01);
@@ -219,7 +219,7 @@ public class GridView2 extends GridView {
 				/* 释放 */
 				stateTextView.setVisibility(TextView.VISIBLE);
 				arrowImgView.setVisibility(View.VISIBLE);
-				arrowImgView.setImageResource(R.mipmap.down_arrow);
+				arrowImgView.setImageResource(R.mipmap.default_ptr_flip);
 				// lastUpdateTimeTextView.setVisibility(TextView.VISIBLE);
 				arrowImgView.clearAnimation();
 				arrowImgView.startAnimation(animationRotate02);
@@ -289,10 +289,8 @@ public class GridView2 extends GridView {
 				arrowImgView.setVisibility(View.VISIBLE);
 				lastUpdateTimeTextView.setVisibility(View.VISIBLE);
 				stateTextView.setVisibility(View.VISIBLE);
-				SimpleDateFormat sdf = new SimpleDateFormat(
-						"yyyy-MM-dd HH:mm:ss");
-				lastUpdateTimeTextView
-						.setText("上次更新：" + sdf.format(new Date()));
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				lastUpdateTimeTextView.setText("上次更新：" + sdf.format(new Date()));
 			}
 
 		}
