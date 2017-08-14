@@ -26,5 +26,8 @@ public final class EC {
         public static final int GOTO_SEND_DYNAMIC = 0x000014;//去发动态
         public static final int FNISHI_LOGINACTIVITY = 0x000015;//销毁登录页面
         public static final int CHECK_ABOUTME_MYORG_HAS_MSG = 0x000016;//销毁登录页面
+
+
+        public static final int CHOOSE_CITY_CODE = 0x100001;//选择城市
     }
 }

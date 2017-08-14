@@ -16,10 +16,14 @@ import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.SelectCityActivity;
 import com.tbs.tobosupicture.base.BaseFragment;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
+
+import org.xml.sax.helpers.XMLReaderAdapter;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -99,6 +103,11 @@ public class TemplateFragment extends BaseFragment {
 
             }
         });
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
     }
 
     private void getDataFromNet(){
@@ -192,7 +201,10 @@ public class TemplateFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.temp_location:
-                startActivityForResult(new Intent(getActivity(), SelectCityActivity.class), 10);
+//                startActivityForResult(new Intent(getActivity(), SelectCityActivity.class), 10);
+                Intent intent=new Intent(getActivity(), SelectCityActivity.class);
+                intent.putExtra("from","TemplateFragment");
+                startActivity(intent);
                 break;
             case R.id.tvHouseDecorateText:
                 picViewpager.setCurrentItem(0);
@@ -239,4 +251,12 @@ public class TemplateFragment extends BaseFragment {
         }
     }
 
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()){
+            case EC.EventCode.CHOOSE_CITY_CODE:
+                tempLocation.setText((String)event.getData());
+                break;
+        }
+    }
 }

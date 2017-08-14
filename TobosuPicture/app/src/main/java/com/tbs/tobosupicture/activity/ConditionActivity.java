@@ -1,6 +1,7 @@
 package com.tbs.tobosupicture.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.Gravity;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.CaseSearchStyleAdapter;
 import com.tbs.tobosupicture.adapter.DistrictAdapter;
+import com.tbs.tobosupicture.adapter.LoadMoreAdapter;
 import com.tbs.tobosupicture.adapter.SearchCaseAdapter;
 import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.bean.AddressDtailsEntity;
@@ -35,6 +37,7 @@ import com.tbs.tobosupicture.utils.JsonUtil;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.CustomExpandableListView;
+import com.tbs.tobosupicture.view.GridView2;
 import com.tbs.tobosupicture.view.MyListView;
 import com.tbs.tobosupicture.view.library.PullToRefreshBase;
 import com.tbs.tobosupicture.view.library.PullToRefreshGridView;
@@ -45,6 +48,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -380,7 +385,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
 
     private PopupWindow popupWindow;
     private ArrayList<DistrictEntity> districtDataList;
-
+    private LoadMoreAdapter adapter;
     /***
      * 花园小区列表
      * @param text
@@ -388,7 +393,12 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
     private void initDistrictPopupWindow(String text){
 
         View contentView = LayoutInflater.from(mContext).inflate(R.layout.popuplayout_district, null);
-        final PullToRefreshGridView gridView = (PullToRefreshGridView) contentView.findViewById(R.id.gvDistrict);
+        final GridView2 pullGridView = (GridView2) contentView.findViewById(R.id.pullGridView);
+        LinearLayout pullHeadedLayout = (LinearLayout) contentView.findViewById(R.id.pullHeadedLayout);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
+        // 获取PullToRefreshGridView里面的head布局
+        pullHeadedLayout.addView(pullGridView.getHeaderView(), params);
         ImageView ivClose = (ImageView) contentView.findViewById(R.id.ivCloseWindown);
         TextView tvLocation = (TextView) contentView.findViewById(R.id.tvLocation);
         final EditText editTextSearchDistrct = (EditText) contentView.findViewById(R.id.editTextSearchDistrct);
@@ -400,9 +410,23 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
 
-        initDistrictAdapter(gridView, districtDataList);
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        adapter = new LoadMoreAdapter(pullGridView, districtDataList, this);
+        pullGridView.setAdapter(adapter);
+
+        pullGridView.setOnPullToRefreshingListener(new GridView2.PullToRefreshListener() {
+            @Override
+            public void onPullToRefreshing() {
+                if(pullGridView.isPullRefreshCompleted() && pullGridView.isLoadingMoreCompleted()){
+                    pullGridView.setPullRefreshCompleted(false);
+                    pullGridView.setLoadingMoreCompleted(false);
+                    loadMore(0);
+                }
+            }
+        });
+//        initDistrictAdapter(gridView, districtDataList);
+//
+        pullGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -416,24 +440,23 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         });
 
 
-        gridView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
-            @Override
-            public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
-                districtPage = 1;
-                districtDataList.clear();
-                getDstrictData(false, null, city_id, district_id);
-                initDistrictAdapter(gridView, districtDataList);
-            }
-
-            @Override
-            public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
-                Utils.setToast(mContext, "Pull up!");
-//                districtPage++;
+//        pullGridView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<GridView>() {
+//            @Override
+//            public void onPullDownToRefresh(PullToRefreshBase<GridView> refreshView) {
+//                districtPage = 1;
+//                districtDataList.clear();
 //                getDstrictData(false, null, city_id, district_id);
 //                initDistrictAdapter(gridView, districtDataList);
-            }
-        });
-
+//            }
+//
+//            @Override
+//            public void onPullUpToRefresh(PullToRefreshBase<GridView> refreshView) {
+//                Utils.setToast(mContext, "Pull up!");
+////                districtPage++;
+////                getDstrictData(false, null, city_id, district_id);
+////                initDistrictAdapter(gridView, districtDataList);
+//            }
+//        });
 
 
         tvSearchDistrict.setOnClickListener(new View.OnClickListener() {
@@ -464,6 +487,18 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         });
         popupWindow.showAtLocation(findViewById(R.id.condictionMainLayout), 0, 0, Gravity.BOTTOM);
     }
+
+    int index = 0;
+    public void loadMore(int i) {
+        if (i == 0) {
+            index = 0;
+        } else {
+            ++index;
+        }
+    }
+
+
+
 
     @Override
     protected void onDestroy() {
