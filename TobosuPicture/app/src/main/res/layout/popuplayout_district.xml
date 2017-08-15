@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <com.tbs.tobosupicture.view.GridView2
+            <com.tbs.tobosupicture.view.PullToRefreshGridView
                 android:id="@+id/pullGridView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
                 android:padding="2dp"
                 android:stretchMode="columnWidth"
                 android:verticalSpacing="2dp" >
-            </com.tbs.tobosupicture.view.GridView2>
+            </com.tbs.tobosupicture.view.PullToRefreshGridView>
         </LinearLayout>
     </LinearLayout>
 

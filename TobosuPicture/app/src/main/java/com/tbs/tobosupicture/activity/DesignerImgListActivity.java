@@ -1,5 +1,8 @@
 package com.tbs.tobosupicture.activity;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +11,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.DesignerPictureListAdapter;
@@ -16,7 +21,12 @@ import com.tbs.tobosupicture.bean.AnLiJsonEntity;
 import com.tbs.tobosupicture.bean.XiaoGuoTuJsonEntity;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +56,8 @@ public class DesignerImgListActivity extends BaseActivity {
     RelativeLayout relDesignerGetDesign;
     @BindView(R.id.llDesignerlPicBack)
     FrameLayout llDesignerlPicBack;
+    @BindView(R.id.tvGetConcern)
+    TextView tvGetConcern;
 
     private String name = "";
     private String viewCount = "";
@@ -190,10 +202,57 @@ public class DesignerImgListActivity extends BaseActivity {
     public void onViewClickedDesignerImgActivity(View view) {
         switch (view.getId()) {
             case R.id.relConcernDesigner:
-                Utils.setToast(mContext, "54613");
+                if(Utils.userIsLogin(mContext)){
+                    HashMap<String, Object> hashMap = new HashMap<String, Object>();
+                    hashMap.put("token", Utils.getDateToken());
+                    hashMap.put("uid", SpUtils.getUserUid(mContext));
+                    hashMap.put("designer_id", designerId);
+                    HttpUtils.doPost(UrlConstans.CONCERN_URL, hashMap, new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Utils.setToast(mContext, "关注失败，稍后再试");
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            final String json = response.body().string();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        JSONObject object = new JSONObject(json);
+                                        if (object.getInt("status") == 200) {
+                                            if (object.getString("msg").contains("取消")) {
+                                                tvGetConcern.setTextColor(Color.parseColor("#858585"));
+                                                Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu2);
+                                                leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
+                                                tvGetConcern.setCompoundDrawables(leftDrawable, null, null, null);
+                                            } else {
+                                                tvGetConcern.setTextColor(Color.parseColor("#FA8817"));
+                                                Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu);
+                                                leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
+                                                tvGetConcern.setCompoundDrawables(leftDrawable, null, null, null);
+                                            }
+                                        }
+                                        Utils.setToast(mContext, object.getString("msg"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }else {
+                    Utils.gotoLogin(mContext);
+                }
                 break;
             case R.id.relDesignerGetDesign:
-
+                startActivity(new Intent(mContext, GetPriceActivity.class));
                 break;
             case R.id.llDesignerlPicBack:
                 finish();

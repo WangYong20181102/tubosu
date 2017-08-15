@@ -55,7 +55,7 @@ public class LoadMoreAdapter extends BaseAdapter implements AbsListView.OnScroll
                             gView.setPullRefreshCompleted(false);
                             gView.setLoadingMoreCompleted(false);
                             setLoadding();
-                            ((ConditionActivity) context).loadMore(1);
+//                            ((ConditionActivity) context).loadMore(1);
                         }
 
                     }
@@ -101,7 +101,7 @@ public class LoadMoreAdapter extends BaseAdapter implements AbsListView.OnScroll
                 gView.setPullRefreshCompleted(false);
                 gView.setLoadingMoreCompleted(false);
                 setLoadding();
-                ((ConditionActivity) context).loadMore(1);
+//                ((ConditionActivity) context).loadMore(1);
             }
         }
     }
