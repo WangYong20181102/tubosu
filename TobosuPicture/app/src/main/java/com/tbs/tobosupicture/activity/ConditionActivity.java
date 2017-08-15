@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.CaseSearchStyleAdapter;
 import com.tbs.tobosupicture.adapter.DistrictAdapter;
-import com.tbs.tobosupicture.adapter.LoadMoreAdapter;
 import com.tbs.tobosupicture.adapter.SearchCaseAdapter;
 import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.bean.AddressDtailsEntity;
@@ -33,13 +32,10 @@ import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.JsonUtil;
 import com.tbs.tobosupicture.utils.SpUtils;
-import com.tbs.tobosupicture.utils.TimeUtil;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.CustomExpandableListView;
-import com.tbs.tobosupicture.view.GridView2;
 import com.tbs.tobosupicture.view.MyListView;
 import com.tbs.tobosupicture.view.PullToRefreshBase;
-import com.tbs.tobosupicture.view.library.PullToRefreshGridView;
 import com.tbs.tobosupicture.view.wheelviews.ChooseAddressWheel;
 import com.tbs.tobosupicture.view.wheelviews.listener.OnAddressChangeListener;
 import org.json.JSONException;
@@ -113,6 +109,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         init();
     }
 
+    // 获取搜索条件
     private void getDataFromNet() {
         tvChooseCity.setText(defaultAddr); // 默认
         if (Utils.isNetAvailable(mContext)) {
@@ -127,6 +124,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
             hashMap.put("token", Utils.getDateToken());
             hashMap.put("uid", SpUtils.getUserUid(mContext));
             HttpUtils.doPost(UrlConstans.CASE_SEARCH_URL, hashMap, new Callback() {
+
                 @Override
                 public void onFailure(Call call, IOException e) {
                     runOnUiThread(new Runnable() {

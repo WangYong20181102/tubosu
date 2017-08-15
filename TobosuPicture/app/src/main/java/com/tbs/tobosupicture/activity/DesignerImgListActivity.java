@@ -75,6 +75,7 @@ public class DesignerImgListActivity extends BaseActivity {
     private int page = 1;
     private int pageSize = 10;
     private int dataType = -1;
+    private String isCollect = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +103,21 @@ public class DesignerImgListActivity extends BaseActivity {
             designerIcon = b.getString("iconUrl");
             designerId = b.getString("desid");
             dataType = b.getInt("type");  // 1 案例，  0 样板
+            isCollect = b.getString("isCollect");
             des ="粉丝 "+fansCount + " / 浏览" + viewCount;
+
+
+            if ("1".equals(isCollect)) {
+                tvGetConcern.setTextColor(Color.parseColor("#FA8817"));
+                Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu);
+                leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
+                tvGetConcern.setCompoundDrawables(leftDrawable, null, null, null);
+            } else {
+                tvGetConcern.setTextColor(Color.parseColor("#858585"));
+                Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu2);
+                leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
+                tvGetConcern.setCompoundDrawables(leftDrawable, null, null, null);
+            }
 
         }else{
             des ="粉丝 0  / 浏览 0";

@@ -117,6 +117,7 @@ public class DesignerActivity extends BaseActivity {
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("id", designerId);
             hashMap.put("token", Utils.getDateToken());
+            hashMap.put("uid", SpUtils.getUserUid(mContext));
             HttpUtils.doPost(UrlConstans.DESIGNER_URL, hashMap, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -297,6 +298,7 @@ public class DesignerActivity extends BaseActivity {
                 caseB.putString("desid", designerId);
                 caseB.putString("designerName", designerName);
                 caseB.putInt("type", 1); // 传1表示案例图
+                caseB.putString("isCollect", designerEntity.getDesignerInfoEntity().getIs_follow());
                 caseIntent.putExtra("designerBundle", caseB);
                 startActivity(caseIntent);
                 break;
@@ -309,6 +311,7 @@ public class DesignerActivity extends BaseActivity {
                 b.putString("desid", designerId);
                 b.putString("designerName", designerName);
                 b.putInt("type", 0); // 传0表示样板图
+                b.putString("isCollect", designerEntity.getDesignerInfoEntity().getIs_follow());
                 intent.putExtra("designerBundle", b);
                 startActivity(intent);
                 break;
@@ -321,4 +324,9 @@ public class DesignerActivity extends BaseActivity {
         ButterKnife.bind(this).unbind();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDataFromNet();
+    }
 }

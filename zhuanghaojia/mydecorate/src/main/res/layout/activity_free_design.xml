@@ -509,7 +509,7 @@
                         android:layout_alignBaseline="@+id/fd_phone"
                         android:layout_alignBottom="@+id/fd_phone"
                         android:layout_centerHorizontal="true"
-                        android:background="@color/white"
+                        android:background="@null"
                         android:hint="报价将发送短信给您"
                         android:inputType="number"
                         android:maxLength="11"
