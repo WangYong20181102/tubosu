@@ -261,7 +261,7 @@ public class CaseDetailActivity extends BaseActivity {
                 startActivity(new Intent(mContext, GetPriceActivity.class));
                 break;
             case R.id.layoutGetPriceKnow:
-                Utils.setToast(mContext, "咨询报价");
+                startActivity(new Intent(mContext, SmartDesignActivity.class));
                 break;
         }
     }

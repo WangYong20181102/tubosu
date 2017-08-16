@@ -7,10 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.ConditionActivity;
@@ -49,6 +52,13 @@ public class DecorationCaseFragment extends BaseFragment {
     @BindView(R.id.caseLocation)
     TextView caseLocation;
 
+    @BindView(R.id.ivNoCaseData)
+    ImageView ivNoCaseData;
+    @BindView(R.id.linearLayoutHasCaseData)
+    LinearLayout linearLayoutHasCaseData;
+
+
+
     private LinearLayoutManager linearLayoutManager;
     private Context mContext;
 
@@ -73,6 +83,7 @@ public class DecorationCaseFragment extends BaseFragment {
     public DecorationCaseFragment() {
 
     }
+
 
     @Nullable
     @Override
@@ -109,26 +120,23 @@ public class DecorationCaseFragment extends BaseFragment {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String json = response.body().string();
-                    Utils.setErrorLog(TAG, json);
+                    Utils.setErrorLog(TAG, " ===decoratefragment== "+ json);
                     caseJsonEntity = new CaseJsonEntity(json);
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             if (caseJsonEntity.getStatus() == 200) {
                                 caseList.addAll(caseJsonEntity.getDataList());
+                                linearLayoutHasCaseData.setVisibility(View.VISIBLE);
+                                ivNoCaseData.setVisibility(View.GONE);
                                 initListView();
                             } else {
-                                if (caseAdapter != null) {
+                                if(caseList.size()==0){
                                     caseAdapter.noMoreData();
                                     caseAdapter.hideLoadMoreMessage();
-                                    if(caseAdapter.getItemCount() == 0){
-                                        // FIXME: 2017/8/11  显示 占位图
-                                        Utils.setToast(mContext, "占位图在哪里");
-                                    }
+                                    linearLayoutHasCaseData.setVisibility(View.GONE);
+                                    ivNoCaseData.setVisibility(View.VISIBLE);
                                 }
-//                                caseList.clear();
-//                                Utils.setToast(getActivity(), caseJsonEntity.getMsg());
-                                // 无数据页面在此显示
                             }
                         }
                     });
@@ -152,10 +160,10 @@ public class DecorationCaseFragment extends BaseFragment {
                 if (Utils.isNetAvailable(mContext)){
                     startActivityForResult(new Intent(getActivity(), ConditionActivity.class), 0);
                     isFromCondictionActivity = false;
-                    param_city_id = "";
-                    param_district_id = "";
-                    param_vilige_id = "";
-                    tvSearchTipText.setText("搜索");
+//                    param_city_id = "";
+//                    param_district_id = "";
+//                    param_vilige_id = "";
+//                    tvSearchTipText.setText("搜索");
                 }
                 break;
 //            case R.id.caseLocation:
@@ -187,7 +195,6 @@ public class DecorationCaseFragment extends BaseFragment {
                 }
                 Utils.setErrorLog(TAG, "返回请求参数" + param_area + " ----  "+ param_layout + " --- "  + param_price + " --- " +param_style + " --- " + param_city_id + " --  "  + param_district_id+ "--- " +param_vilige_id);
                 page = 1;
-
                 getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style, param_city_id, param_district_id,param_vilige_id));
                 break;
         }

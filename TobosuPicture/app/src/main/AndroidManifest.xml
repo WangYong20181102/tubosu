@@ -124,7 +124,10 @@
         <activity android:name=".activity.MyFansActivity" />
         <activity
             android:name=".activity.GetPriceActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:launchMode="singleTask" />
+        <activity android:name=".activity.SmartDesignActivity" />
+        <activity android:name=".activity.FreeDesignPrice" />
         <activity android:name=".activity.HisFansActivity" />
         <activity android:name=".activity.MyAttentionDesigner" />
         <activity android:name=".activity.RegisterActivity" />
@@ -156,8 +159,8 @@
         <activity android:name=".activity.InputPasswordActivity" />
         <activity android:name=".activity.SuggestActivity" />
         <activity android:name=".activity.WebViewActivity" />
-
-    
+        <activity android:name=".activity.OwnerCaseActivity" />
+        <activity android:name=".activity.DecorateCompanyCaseActivity" />
         <activity android:name=".activity.SendDynamicActivity" />
         <activity android:name=".activity.DynamicMsgActivity"></activity>
         <activity android:name=".activity.SelectCityActivity"/>

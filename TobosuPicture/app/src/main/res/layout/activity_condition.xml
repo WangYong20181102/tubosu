@@ -198,7 +198,7 @@
                             android:layout_height="46dp"
                             android:gravity="center_vertical"
                             android:layout_marginLeft="20dp"
-                            android:text="城市"/>
+                            android:text="小区"/>
 
                         <TextView
                             android:id="@+id/tvChooseDisctrict"

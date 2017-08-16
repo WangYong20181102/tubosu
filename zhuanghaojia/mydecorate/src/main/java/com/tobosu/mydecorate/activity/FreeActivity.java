@@ -1,5 +1,4 @@
 package com.tobosu.mydecorate.activity;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -19,16 +18,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.view.BackDialog;
 import com.umeng.analytics.MobclickAgent;
 
 
-/***
- * android发单入口 页面
- * @author dec
- *
+/**
+ * 有问题 废弃  不再使用
  */
 public class FreeActivity extends Activity {
 	private Context mContext;
@@ -36,7 +32,7 @@ public class FreeActivity extends Activity {
 	private RelativeLayout rel_free_back;
 	private ProgressDialog pbDialog;
 //	private String dataurl = "";
-	private String html_url = "http://m.tobosu.com/app/pub?channel=seo&subchannel=zhjandroid";
+	private String html_url = "http://m.tobosu.com/app/pub?channel=seo&subchannel=android";
 //	                           http://m.tobosu.com/app/pub?channel=seo&amp;subchannel=android
 
 	private Handler myHandler = new Handler(){

@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
@@ -79,7 +80,11 @@ public class TemplateFragment extends BaseFragment {
     }
 
     private void initView() {
-        tempLocation.setText("".equals(SpUtils.getLocationCity(getActivity()))?"深圳":SpUtils.getLocationCity(getActivity()));
+        String city = SpUtils.getLocationCity(getActivity());
+        if(city.contains("市") || city.contains("县")){
+            city = city.substring(0, city.length()-1);
+        }
+        tempLocation.setText("".equals(city)?"深圳": city);
 
         listFragments.add(new HouseFragment());
         listFragments.add(new FactoryFragment());

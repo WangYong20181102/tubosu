@@ -77,4 +77,25 @@
         <attr name="ptrDrawableBottom" format="reference" />
     </declare-styleable>
 
+
+
+    <style name="Widget_GifView"></style>
+    <declare-styleable name="MyChatView">
+        <attr name="MyChatView_radius" format="dimension" />
+        <attr name="MyChatView_strokewidth" format="dimension" />
+    </declare-styleable>
+
+    <!-- 退出时警告dialog样式 -->
+    <style name="warn_dialog_style" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+
 </resources>

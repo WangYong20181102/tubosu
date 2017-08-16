@@ -42,4 +42,10 @@
     <color name="color_neutralgrey">#74777a</color>
     <color name="dividing_line_bg">#E5E5E5</color>
     <color name="color_darkgray">#1e1f1f</color>
+    <color name="bg_fd_title">#ff882e</color>
+
+    <color name="color_icon">#FFBD25</color>
+
+
+
 </resources>

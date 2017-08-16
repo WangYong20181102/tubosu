@@ -351,4 +351,16 @@ public class UrlConstans {
      * 我的发起我的参与
      */
     public static final String MY_PARTICIPATION = ZXKK_URL + "rapp/MyRelevance/my_participation";
+
+    //  获取短信验证码
+    public static final String GET_MSM_URL = ZXKK_URL + "rapp/public/sms_code";
+
+    // 校验短信验证码
+    public static final String CHECK_MSM_CODE_URL = ZXKK_URL + "rapp/public/check_verify_code";
+
+    // 同城用户搜索案例（装修公司）
+    public static final String SAME_CITY_DECORATE_CASE_LIST_URL = ZXKK_URL + "rapp/company/case_search_list";
+
+    // 同城用户搜索案例（业主）
+    public static final String SAME_CITY_OWENER_CASE_LIST_URL = ZXKK_URL + "rapp/owner/search_list";
 }
