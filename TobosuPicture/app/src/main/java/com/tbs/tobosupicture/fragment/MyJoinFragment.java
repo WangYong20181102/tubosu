@@ -25,6 +25,7 @@ import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.bean._DynamicBase;
 import com.tbs.tobosupicture.bean._ReceiveMsg;
 import com.tbs.tobosupicture.constants.UrlConstans;
+import com.tbs.tobosupicture.utils.EventBusUtil;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
@@ -85,7 +86,6 @@ public class MyJoinFragment extends BaseFragment {
     protected boolean isRegisterEventBus() {
         return true;
     }
-
     private void initViewEvent() {
         mGson = new Gson();
 
@@ -314,5 +314,6 @@ public class MyJoinFragment extends BaseFragment {
     @OnClick(R.id.my_join_join_btn)
     public void onViewClickedInMyJoinFragment() {
         //点击去最新 去浏览最新消息
+        EventBusUtil.sendEvent(new Event(EC.EventCode.GOTO_ZUIXIN));
     }
 }

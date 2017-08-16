@@ -65,11 +65,11 @@ public class GetVerificationPopupwindow extends PopupWindow {
         tv_ensure = (TextView) mView.findViewById(R.id.tv_ensure);
         et_input = (EditText) mView.findViewById(R.id.et_input);
         this.setContentView(mView);
-        this.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        this.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+        this.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         this.setFocusable(true);
-        ColorDrawable dw = new ColorDrawable(0x80000000);
-        this.setBackgroundDrawable(dw);
+//        ColorDrawable dw = new ColorDrawable(0x80000000);
+//        this.setBackgroundDrawable(dw);
 //        this.setAnimationStyle(R.style.custom_popupwindow_animstyle);
         this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 

@@ -83,7 +83,7 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
     private Map<String, Integer> mIndexer;
 
     private Intent mIntent;
-    private String whereFrom="";
+    private String whereFrom = "";
     /**
      * 热门城市gridview
      */
@@ -114,7 +114,7 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
         setContentView(R.layout.activity_selectcity);
         context = SelectCityActivity.this;
         mIntent = getIntent();
-        whereFrom=mIntent.getStringExtra("from");
+        whereFrom = mIntent.getStringExtra("from");
         initView();
         getCityJson();
         getDataIntent();
@@ -403,8 +403,11 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
         if (ci.contains("市") || ci.contains("县")) {
             ci = ci.substring(0, ci.length() - 1);
         }
-        if("TemplateFragment".equals(whereFrom)){
+        if ("TemplateFragment".equals(whereFrom)) {
             EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_CODE, ci));
+        }
+        if (whereFrom.equals("PersonInfoActivity")) {
+            EventBusUtil.sendEvent(new Event(EC.EventCode.PERSON_INFO_ACTIVITY_CHANGE_CITY, ci));
         }
         finish();
     }

@@ -1,5 +1,6 @@
 package com.tbs.tobosupicture.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -71,7 +72,7 @@ public class _PhotoDetail {
         this.image_detail = image_detail;
     }
 
-    public static class ImageDetail {
+    public static class ImageDetail implements Serializable {
         /**
          * title : 1/9 小清新的色调，加上柔和的灯光，非常怡人。地面是经典的黑白混搭瓷砖，整体给人的感觉，清新又明快。全部放置吧台椅，占据空间小，而且非常时尚。
          * <p>

@@ -88,7 +88,7 @@ public class SendDynamicActivity extends BaseActivity {
     private String TAG = "SendDynamicActivity";
     //本地的图片集 可以从上一个界面传来也可以在这个页面添加
     private ArrayList<String> mImageUriPath = new ArrayList<>();
-    //压缩图片的地址 最终将压缩的图片上传
+    //压缩图片的地址集合 最终将压缩的图片上传
     private ArrayList<String> mCompressImageUriPath = new ArrayList<>();
     //上传图片后返回的地址集合
     private ArrayList<String> mImageUrlList = new ArrayList<>();
@@ -160,24 +160,26 @@ public class SendDynamicActivity extends BaseActivity {
 
     //点击发送处理逻辑
     private void sendEvent() {
-        //拿到子标题
-        if (!mTitleList.isEmpty()) {
-            mTitleList.clear();
-        }
-        //压缩图片
-        for (int i = 0; i < mImageUriPath.size(); i++) {
-//            Log.e(TAG, "压缩前的图片本地地址=====" + mImageUriPath.get(i)+"==大小=="+new File(mImageUriPath.get(i)).length()/1024);
-            mCompressImageUriPath.add(ImgCompressUtils.CompressAndGetPath(mContext, mImageUriPath.get(i)));
-//            Log.e(TAG, "压缩过后的图片本地地址=====" + mCompressImageUriPath.get(i)+"==大小=="+new File(mCompressImageUriPath.get(i)).length()/1024);
-        }
-        mTitleList.addAll(sendDynamicAdapter.getmTitleList());
-        if (!mCompressImageUriPath.isEmpty()
-                && mCompressImageUriPath.size() == mImageUriPath.size()
-                && !TextUtils.isEmpty(sendDynamicTitle.getText().toString())) {
-            pd = ProgressDialog.show(mContext, null, "正在上传图片，请稍候...");
+        //显示加载的进度条
+        pd = ProgressDialog.show(mContext, null, "正在上传图片，请稍候...");
+        if (!TextUtils.isEmpty(sendDynamicTitle.getText().toString()) && mImageUriPath.size() >= 1) {
+            //拿到子标题
+            if (!mTitleList.isEmpty()) {
+                mTitleList.clear();
+            }
+            mTitleList.addAll(sendDynamicAdapter.getmTitleList());
+            //压缩图片 生成压缩图片的地址
+            if (!mCompressImageUriPath.isEmpty()) {
+                mCompressImageUriPath.clear();
+            }
+            for (int i = 0; i < mImageUriPath.size(); i++) {
+                mCompressImageUriPath.add(ImgCompressUtils.CompressAndGetPath(mContext, mImageUriPath.get(i)));
+            }
+
             new Thread(uploadImageRunnable).start();
         } else {
-            Toast.makeText(mContext, "标题不能为空~", Toast.LENGTH_SHORT).show();
+            pd.dismiss();
+            Toast.makeText(mContext, "标题或图片不能为空~", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -188,7 +190,7 @@ public class SendDynamicActivity extends BaseActivity {
         public void run() {
             Looper.prepare();
             for (int i = 0; i < mImageUriPath.size(); i++) {
-
+                Log.e(TAG, "要上传的照片======" + mImageUriPath.get(i));
                 if (TextUtils.isEmpty(UrlConstans.UPLOAD_IMAGE)) {
                     Toast.makeText(mContext, "还没有设置上传服务器的路径！", Toast.LENGTH_SHORT).show();
                     return;
@@ -257,7 +259,6 @@ public class SendDynamicActivity extends BaseActivity {
                         for (int k = 0; k < mTitleList.size(); k++) {
                             param.put("sub_title" + k, mTitleList.get(k));
                         }
-                        Log.e(TAG, "参数===第一张图片======" + param.get("image_url0"));
                         HttpUtils.doPost(UrlConstans.PUBLISH_DYNAMIC, param, new Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {
@@ -277,6 +278,7 @@ public class SendDynamicActivity extends BaseActivity {
                                             @Override
                                             public void run() {
                                                 pd.dismiss();
+                                                Toast.makeText(mContext, "发布动态成功~", Toast.LENGTH_SHORT).show();
                                                 EventBusUtil.sendEvent(new Event(EC.EventCode.REFRESH_MY_ORGIN_NUM));
                                                 finish();
                                             }
@@ -301,10 +303,6 @@ public class SendDynamicActivity extends BaseActivity {
             return false;
         }
     });
-
-    private void HttpSendDynamic() {
-
-    }
 
     private View.OnClickListener popClickLister = new View.OnClickListener() {
         @Override
@@ -377,14 +375,14 @@ public class SendDynamicActivity extends BaseActivity {
                 }
                 break;
             case REQUEST_IMAGE:
-                Log.e(TAG, "图片选择器=======");
+                //图片选择器处理回调
                 if (resultCode == RESULT_OK) {
                     ArrayList<String> imaPathList = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+                    //删除重复的照片  策略二  只有策略二行得通
                     if (!mImageUriPath.isEmpty()) {
                         mImageUriPath.clear();
                     }
                     mImageUriPath.addAll(imaPathList);
-                    Log.e(TAG, "进入图片选择器选择图片完成===最终图片的长度===" + imaPathList.size());
                     sendDynamicAdapter.notifyDataSetChanged();
                 }
                 break;

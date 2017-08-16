@@ -89,9 +89,11 @@
                         android:textSize="@dimen/text_size_30px" />
 
                     <ImageView
+                        android:visibility="gone"
+                        android:src="@mipmap/renzheng"
                         android:id="@+id/item_php_head_zxgs_renzheng"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
                         android:layout_marginLeft="5dp" />
                 </LinearLayout>
 
@@ -131,8 +133,8 @@
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="3dp"
+                        android:layout_marginTop="3dp"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
