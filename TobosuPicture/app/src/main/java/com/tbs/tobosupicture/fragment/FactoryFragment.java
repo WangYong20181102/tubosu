@@ -70,6 +70,8 @@ public class FactoryFragment extends BaseFragment {
     @BindView(R.id.factorySwipRefreshLayout)
     SwipeRefreshLayout factorySwipRefreshLayout;
     Unbinder unbinder;
+    @BindView(R.id.iv_factory_no_data)
+    ImageView iv_factory_no_data;
 
     private LinearLayoutManager linearLayoutManager;
 
@@ -179,7 +181,7 @@ public class FactoryFragment extends BaseFragment {
             }
         } else {
             // 需要发一个event通知TemplateFragment重新请求网络
-
+            iv_factory_no_data.setVisibility(View.VISIBLE);
         }
     }
 
@@ -193,9 +195,16 @@ public class FactoryFragment extends BaseFragment {
             samplePicAdapter.notifyDataSetChanged();
         }
 
+        if(samplePicList.size()==0){
+            iv_factory_no_data.setVisibility(View.VISIBLE);
+        }else {
+            iv_factory_no_data.setVisibility(View.GONE);
+        }
+
         if (samplePicAdapter != null) {
             samplePicAdapter.hideLoadMoreMessage();
         }
+
 
     }
 
@@ -288,6 +297,7 @@ public class FactoryFragment extends BaseFragment {
                 factoryRecyclerView.setVisibility(View.GONE);
                 factorySwipRefreshLayout.setVisibility(View.GONE);
                 expandableListview.setVisibility(View.VISIBLE);
+                iv_factory_no_data.setVisibility(View.GONE);
                 initExpandableListView();
                 samplePicList.clear();
                 break;

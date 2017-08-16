@@ -1,9 +1,5 @@
 package com.tbs.tobosupicture.activity;
-
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
@@ -23,10 +19,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.tbs.tobosupicture.MyApplication;
 import com.tbs.tobosupicture.R;
-import com.baidu.location.LocationClient;
 import com.tbs.tobosupicture.adapter.CityAdapter;
 import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.bean.City;
@@ -41,18 +34,15 @@ import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.BladeView;
 import com.tbs.tobosupicture.view.MyGridView;
 import com.tbs.tobosupicture.view.PinnedHeaderListView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -64,8 +54,6 @@ import okhttp3.Response;
  */
 public class SelectCityActivity extends BaseActivity implements OnClickListener {
     private static final String TAG = SelectCityActivity.class.getSimpleName();
-
-    private Context context;
     private View mSearchContainer;
 
     private PinnedHeaderListView mCityListView;
@@ -112,7 +100,7 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selectcity);
-        context = SelectCityActivity.this;
+        mContext = SelectCityActivity.this;
         mIntent = getIntent();
         whereFrom = mIntent.getStringExtra("from");
         initView();
@@ -132,7 +120,7 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
         if ("".equals(cityJsonString)) {
             requestSelectCity();
         } else {
-            prseSelectDataJson(SpUtils.getCacheLocalCityJson(context));
+            prseSelectDataJson(SpUtils.getCacheLocalCityJson(mContext));
         }
     }
 
@@ -142,7 +130,7 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
     }
 
     private void requestSelectCity() {
-        if (Utils.isNetAvailable(context)) {
+        if (Utils.isNetAvailable(mContext)) {
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("token", Utils.getDateToken());
             HttpUtils.doPost(UrlConstans.HOT_CITY_URL, hashMap, new Callback() {
@@ -155,7 +143,7 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
                 public void onResponse(Call call, Response response) throws IOException {
                     final String json = response.body().string();
                     Utils.setErrorLog(TAG, json);
-                    SpUtils.setCacheLocalCityJson(context, json);
+                    SpUtils.setCacheLocalCityJson(mContext, json);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -261,7 +249,7 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
         headView = getLayoutInflater().inflate(R.layout.head_view_select_city, null);
         mCity_gridView = (MyGridView) headView.findViewById(R.id.city_gridView);
         select_positioning = (TextView) headView.findViewById(R.id.select_positioning);
-        String s = SpUtils.getLocationCity(context);
+        String s = SpUtils.getLocationCity(mContext);
         String cit = "";
         if (s.contains("市") || s.contains("县")) {
             cit = s.substring(0, s.length() - 1);
@@ -406,8 +394,17 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
         if ("TemplateFragment".equals(whereFrom)) {
             EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_CODE, ci));
         }
+
         if (whereFrom.equals("PersonInfoActivity")) {
             EventBusUtil.sendEvent(new Event(EC.EventCode.PERSON_INFO_ACTIVITY_CHANGE_CITY, ci));
+		}
+
+        if("SmartDesignActivity".equals(whereFrom)){
+            EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_CODE_FOR_PRICE, ci));
+        }
+
+        if("GetPriceActivity".equals(whereFrom)){
+            EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_CODE_FOR_FREE_PRICE, ci));
         }
         finish();
     }
@@ -425,7 +422,7 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
         switch (v.getId()) {
             case R.id.city_title_back:
             case R.id.select_positioning:
-                goActivity(SpUtils.getLocationCity(context));
+                goActivity(SpUtils.getLocationCity(mContext));
                 break;
         }
 
@@ -475,7 +472,7 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
                         @Override
                         public void onClick(View v) {
                             if (!checkNetState()) {
-                                Toast.makeText(context, "请检查网络", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "请检查网络", Toast.LENGTH_SHORT).show();
                                 return;
                             } else {
                                 getCityJson();

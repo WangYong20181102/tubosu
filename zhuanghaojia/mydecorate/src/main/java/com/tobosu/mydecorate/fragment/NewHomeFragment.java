@@ -26,7 +26,9 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.activity.CalculaterActivity;
+import com.tobosu.mydecorate.activity.FreeActivity;
 import com.tobosu.mydecorate.activity.GetPriceActivity;
+import com.tobosu.mydecorate.activity.MyWebViewActivity;
 import com.tobosu.mydecorate.activity.PopOrderActivity;
 import com.tobosu.mydecorate.activity.SmartDesignActivity;
 import com.tobosu.mydecorate.adapter.AuthorAdapter;
@@ -452,6 +454,21 @@ public class NewHomeFragment extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
             }
+
+//                if(homePage.getCarouselList().get(position).getContent_url().contains("http://m.tobosu.com/app/pub?channel=seo")){
+//                    Intent it = new Intent(mContext, FreeActivity.class);
+////                    it.putExtra("urldata", homePage.getCarouselList().get(position).getContent_url());
+//                    startActivity(it);
+//                }else {
+////                    Uri uri = Uri.parse(homePage.getCarouselList().get(position).getContent_url());
+////                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+////                    startActivity(intent);
+//                    Intent i = new Intent(mContext, MyWebViewActivity.class);
+//                    Bundle b = new Bundle();
+//                    b.putString("urldata", homePage.getCarouselList().get(position).getContent_url());
+//                    i.putExtra("urlbundle", b);
+//                    startActivity(i);
+//                }
         }
     };
 

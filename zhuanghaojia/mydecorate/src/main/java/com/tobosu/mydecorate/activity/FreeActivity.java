@@ -1,8 +1,8 @@
 package com.tobosu.mydecorate.activity;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -18,22 +18,22 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.view.BackDialog;
 import com.umeng.analytics.MobclickAgent;
 
 
-/***
- * android发单入口 页面
- * @author dec
- *
+/**
+ * 有问题 废弃  不再使用
  */
 public class FreeActivity extends Activity {
 	private Context mContext;
 	private WebView webView;
 	private RelativeLayout rel_free_back;
 	private ProgressDialog pbDialog;
-	private String html_url = "http://m.tobosu.com/app/pub?channel=seo&subchannel=zhjandroid";
+//	private String dataurl = "";
+	private String html_url = "http://m.tobosu.com/app/pub?channel=seo&subchannel=android";
+//	                           http://m.tobosu.com/app/pub?channel=seo&amp;subchannel=android
 
 	private Handler myHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -153,22 +153,22 @@ public class FreeActivity extends Activity {
 		}
 	}
 
-	//	private void showTipDilog(){
-//		BackDialog.Builder builder = new BackDialog.Builder(mContext);
-//		builder.setTitle("预约成功")
-//				.setMessage("请留意手机，我们会尽快以0574开头座机联系您！")
-//				.setNegativeButton("确定",
-//						new DialogInterface.OnClickListener() {
-//
-//							@Override
-//							public void onClick(DialogInterface dialog, int id) {
-//								dialog.cancel();
-//								finish();
-//							}
-//						});
-//		builder.create().show();
-//		return;
-//	}
+		private void showTipDilog(){
+		BackDialog.Builder builder = new BackDialog.Builder(mContext);
+		builder.setTitle("预约成功")
+				.setMessage("请留意手机，我们会尽快以0574开头座机联系您！")
+				.setNegativeButton("确定",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog, int id) {
+								dialog.cancel();
+								finish();
+							}
+						});
+		builder.create().show();
+		return;
+	}
 
 
 	@Override

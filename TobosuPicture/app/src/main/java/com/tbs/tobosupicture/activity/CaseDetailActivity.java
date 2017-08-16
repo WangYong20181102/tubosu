@@ -97,7 +97,6 @@ public class CaseDetailActivity extends BaseActivity {
     private void getIntentData() {
         if (getIntent() != null && getIntent().getBundleExtra("case_bundle") != null) {
             id = getIntent().getBundleExtra("case_bundle").getString("id");
-
             getDataFromNet(id);
         }
         Utils.setErrorLog(TAG, "case——id是什么呢" + id +"  用户id"+ SpUtils.getUserUid(mContext) + " ***  " + Utils.getDateToken());
@@ -114,13 +113,16 @@ public class CaseDetailActivity extends BaseActivity {
                         hashMap.put("case_id", id);
                         hashMap.put("uid", SpUtils.getUserUid(mContext));
                         hashMap.put("token", Utils.getDateToken());
+
+                        Utils.setErrorLog(TAG, "==案例id>>" + id +"     用户id"+ SpUtils.getUserUid(mContext) + "   ==>>>" + Utils.getDateToken());
+
                         HttpUtils.doPost(UrlConstans.CLICK_CASE_COLLECT_URL, hashMap, new Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Utils.setToast(mContext, "网络繁忙1，请稍后再试~");
+                                        Utils.setToast(mContext, "网络繁忙，请稍后再试~");
                                     }
                                 });
                             }
@@ -135,10 +137,18 @@ public class CaseDetailActivity extends BaseActivity {
                                     public void run() {
                                         try {
                                             JSONObject jsonObject = new JSONObject(json);
+                                            String ms = jsonObject.getString("msg");
                                             if(jsonObject.getInt("status") == 200){
-
+                                                if(ms.contains("取消")){
+                                                    // 取消收藏成功
+                                                    ivCollect.setBackgroundResource(R.mipmap.shoucang21);
+                                                }else {
+                                                    // 收藏成功
+                                                    ivCollect.setBackgroundResource(R.mipmap.shoucang4);
+                                                }
+                                                Utils.setToast(mContext, ms);
                                             }else {
-                                                Utils.setToast(mContext, "收藏失败，稍后再试~");
+                                                Utils.setToast(mContext, "操作失败，稍后再试~");
                                             }
                                         } catch (JSONException e) {
                                             e.printStackTrace();
@@ -154,11 +164,12 @@ public class CaseDetailActivity extends BaseActivity {
             }
         });
     }
-    private void getDataFromNet(String param) {
+    private void getDataFromNet(String caseid) {
         if (Utils.isNetAvailable(mContext)) {
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
-            hashMap.put("case_id", param);
+            hashMap.put("case_id", caseid);
             hashMap.put("token", Utils.getDateToken());
+            hashMap.put("uid", SpUtils.getUserUid(mContext));
             HttpUtils.doPost(UrlConstans.CASE_DETAIL_URL, hashMap, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -208,6 +219,7 @@ public class CaseDetailActivity extends BaseActivity {
         des = caseDetailEntity.getCase_data().getDescription();
         tvCaseDescription.setText(des);
         isCollect = caseDetailEntity.getCase_data().getIs_collect();
+        Utils.setErrorLog(TAG, "当前进入页面时的标识是" + isCollect);
         if("0".equals(isCollect)){
             // 未收藏
             ivCollect.setBackgroundResource(R.mipmap.shoucang21);
@@ -249,7 +261,7 @@ public class CaseDetailActivity extends BaseActivity {
                 startActivity(new Intent(mContext, GetPriceActivity.class));
                 break;
             case R.id.layoutGetPriceKnow:
-                Utils.setToast(mContext, "咨询报价");
+                startActivity(new Intent(mContext, SmartDesignActivity.class));
                 break;
         }
     }

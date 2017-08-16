@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_free_design_price"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".activity.FreeDesignPrice">
+
+    <com.tbs.tobosupicture.view.ScrollViewExtend
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/fd_title"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/bg_fd_title">
+
+                <ImageView
+                    android:id="@+id/fdp_back"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:padding="5dp"
+                    android:src="@mipmap/back_up" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/fdp_banner2" />
+
+                <TextView
+                    android:id="@+id/fdp_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="36dp"
+                    android:text="¥10000"
+                    android:textColor="#FE3222"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="260dp"
+                android:layout_centerHorizontal="true">
+
+                <TextView
+                    android:id="@+id/fdp_weishengjian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="112dp"
+                    android:layout_marginTop="15dp"
+                    android:text="卫生间12.63%"
+                    android:textColor="#ff882e"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/fdp_text_weishengjian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/fdp_weishengjian"
+                    android:layout_marginLeft="125dp"
+                    android:layout_marginTop="2dp"
+                    android:text="¥8632"
+                    android:textColor="#959ba6"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/fdp_keting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="50dp"
+                    android:text="客厅22.81%"
+                    android:textColor="#ff882e"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/fdp_text_keting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/fdp_keting"
+                    android:layout_marginRight="42dp"
+                    android:layout_marginTop="2dp"
+                    android:text="¥14522"
+                    android:textColor="#959ba6"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/fdp_qita"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="90dp"
+                    android:text="其他20.00%"
+                    android:textColor="#ff882e"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/fdp_text_qita"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/fdp_qita"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="2dp"
+                    android:text="¥12666"
+                    android:textColor="#959ba6"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/fdp_chufang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="140dp"
+                    android:text="厨房9.19%"
+                    android:textColor="#ff882e"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/fdp_text_chufang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/fdp_chufang"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginTop="2dp"
+                    android:text="¥7589"
+                    android:textColor="#959ba6"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/fdp_woshi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="140dp"
+                    android:layout_marginTop="210dp"
+                    android:text="卧室26.37%"
+                    android:textColor="#ff882e"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/fdp_text_woshi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/fdp_woshi"
+                    android:layout_marginLeft="150dp"
+                    android:layout_marginTop="2dp"
+                    android:text="¥16588"
+                    android:textColor="#959ba6"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/fdp_yangtai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="170dp"
+                    android:text="阳台9.00%"
+                    android:textColor="#ff882e"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/fdp_text_yangtai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/fdp_yangtai"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="2dp"
+                    android:text="¥4589"
+                    android:textColor="#959ba6"
+                    android:textSize="14sp" />
+
+                <com.tbs.tobosupicture.view.MyChatView
+                    android:id="@+id/fdp_my_chat_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    app:MyChatView_radius="100dp"
+                    app:MyChatView_strokewidth="50dp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="#f5f5f5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="25dp"
+                        android:background="@drawable/fdp_keting" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="客厅"
+                        android:textColor="#a8abb2"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/fdp_keiting_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="18000"
+                        android:textColor="#525866"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="元"
+                        android:textColor="#a8abb2"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="18dp"
+                        android:background="@drawable/fdp_weishengjian" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="卫生间"
+                        android:textColor="#a8abb2"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/fdp_weishengjian_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="18000"
+                        android:textColor="#525866"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="元"
+                        android:textColor="#a8abb2"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="25dp"
+                        android:background="@drawable/fdp_chufang" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="厨房"
+                        android:textColor="#a8abb2"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/fdp_chufang_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="18000"
+                        android:textColor="#525866"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="元"
+                        android:textColor="#a8abb2"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="18dp"
+                        android:background="@drawable/fdp_yangtai" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="阳台"
+                        android:textColor="#a8abb2"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/fdp_yangtai_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="18000"
+                        android:textColor="#525866"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="元"
+                        android:textColor="#a8abb2"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="25dp"
+                        android:background="@drawable/fdp_woshi" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="卧室"
+                        android:textColor="#a8abb2"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/fdp_woshi_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="18000"
+                        android:textColor="#525866"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="元"
+                        android:textColor="#a8abb2"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="18dp"
+                        android:background="@drawable/fdp_qita" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="其他"
+                        android:textColor="#a8abb2"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/fdp_qita_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="18000"
+                        android:textColor="#525866"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:text="元"
+                        android:textColor="#a8abb2"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="*该结果仅为参考价格，实际价格以量房为准"
+                android:textColor="#ff882e"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="稍后土拨鼠客服会以0754开头的座机联系您"
+                android:textColor="#a8abb2"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="#f5f5f5" />
+
+            <LinearLayout
+                android:id="@+id/fdp_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="2dp"
+                        android:layout_marginLeft="24dp"
+                        android:layout_weight="1"
+                        android:background="#f5f5f5" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:text="手机验证,即可查看装修进度"
+                        android:textColor="#a8abb2"
+                        android:textSize="12sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="2dp"
+                        android:layout_marginRight="24dp"
+                        android:layout_weight="1"
+                        android:background="#f5f5f5" />
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_edit_line">
+
+                    <TextView
+                        android:id="@+id/fdp_phone_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:text="18911966795"
+                        android:textColor="#a8abb2"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/fdp_get_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="14dp"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:background="@drawable/bg_getcode"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        android:text="获取验证码"
+                        android:textColor="@color/white" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/bg_edit_line">
+
+                    <EditText
+                        android:id="@+id/fpd_input_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="20dp"
+                        android:background="@null"
+                        android:hint="请输入验证码"
+                        android:textColor="#a8abb2"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/fdp_ok_send"
+                    android:layout_width="300dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginTop="30dp"
+                    android:src="@mipmap/fd_btn_2" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.tbs.tobosupicture.view.ScrollViewExtend>
+</LinearLayout>

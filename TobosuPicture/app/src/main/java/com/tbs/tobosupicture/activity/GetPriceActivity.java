@@ -1,6 +1,7 @@
 package com.tbs.tobosupicture.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -19,15 +20,30 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.base.BaseActivity;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
+import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.DensityUtil;
+import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.CustomWaitDialog;
 import com.tbs.tobosupicture.view.ObservableScrollView;
+import com.tbs.tobosupicture.view.TipDialog1;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.HashMap;
 
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 
-public class GetPriceActivity extends AppCompatActivity implements OnClickListener {
+public class GetPriceActivity extends BaseActivity implements OnClickListener {
     private static final String TAG = GetPriceActivity.class.getSimpleName();
 
     private final int[] imgIdList = {R.mipmap.vp1, R.mipmap.vp2, R.mipmap.vp3};
@@ -36,7 +52,6 @@ public class GetPriceActivity extends AppCompatActivity implements OnClickListen
     private ImageView[] tips;
     private ImageView[] mImageViews;
 
-    private Context mContext;
     private RelativeLayout relBack;
     private ObservableScrollView scrollview;
     private ImageView ivGotop;
@@ -258,11 +273,9 @@ public class GetPriceActivity extends AppCompatActivity implements OnClickListen
                 scrollview.smoothScrollTo(0, DensityUtil.dip2px(mContext, 160));
                 break;
             case R.id.rel_choose_city:
-//			Intent selectCityIntent = new Intent(mContext, SelectCityActivity.class);
-//			Bundle b = new Bundle();
-//			b.putString("fromGetPrice", "647");
-//			selectCityIntent.putExtra("GetPriceSelectcityBundle", b);
-//			startActivityForResult(selectCityIntent, 0);
+			    Intent selectCityIntent = new Intent(mContext, SelectCityActivity.class);
+                selectCityIntent.putExtra("from", "GetPriceActivity");
+			    startActivity(selectCityIntent);
                 break;
             case R.id.getprice_submit:
                 String name = etName.getText().toString().trim();
@@ -278,71 +291,79 @@ public class GetPriceActivity extends AppCompatActivity implements OnClickListen
                 }
 
                 if (Utils.isNetAvailable(mContext)) {
-//				pubOrderParams.put("cellphone", phone);
-//				pubOrderParams.put("city", city);
-//				Utils.setLog(TAG, "免费预约的城市是" + city);
-//				pubOrderParams.put("urlhistory", Constant.PIPE);
-//				// 发单入口
-//				pubOrderParams.put("comeurl", Constant.PIPE);
-//				if (!TextUtils.isEmpty(userid)) {
-//					pubOrderParams.put("userid", userid);
-//				} else {
-//					pubOrderParams.put("userid", "0");
-//				}
-//				pubOrderParams.put("source", "1112");
-                    requestPubOrder();
-                } else {
-//				Constant.toastNetOut(mContext);
-                }
+                    showLoadingView();
+                    HashMap<String, Object> hashMap = new HashMap<String, Object>();
+                    hashMap.put("token", Utils.getDateToken());
+                    hashMap.put("cellphone", etPhone.getText().toString().toString());
+                    hashMap.put("urlhistory", Utils.getChannType(mContext));
+                    hashMap.put("comeurl", Utils.getChannType(mContext));
+
+                    HttpUtils.doPost(UrlConstans.PUB_ORDER_URL, hashMap, new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Utils.setToast(mContext, "获取失败，请稍后再试~");
+                                    hideLoadingView();
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            final String json = response.body().string();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(json);
+                                        if(jsonObject.getInt("error_code") == 0){
+
+                                            TipDialog1.Builder builder = new TipDialog1.Builder(mContext);
+                                            builder.setTitle("温馨提醒")
+                                                    .setPositiveButton("确定",
+                                                            new DialogInterface.OnClickListener() {
+
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int id) {
+                                                                    dialog.cancel();
+                                                                    //退出当前账户
+                                                                    finish();
+                                                                }
+                                                            });
+                                            builder.create().show();
+                                        }else {
+                                            Utils.setToast(mContext, "系统繁忙，稍后再试~");
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    hideLoadingView();
+                                }
+                            });
+
+                        }
+                    });
+                    }
                 break;
         }
 
     }
 
-    /***
-     * 发单接口请求
-     */
-    private void requestPubOrder() {
-        showLoadingView();
-//		HttpServer.getInstance().requestPOST(Constant.PUB_ORDERS, pubOrderParams, new AsyncHttpResponseHandler() {
-//
-//					@Override
-//					public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-//						String result = new String(body);
-//						try {
-//							JSONObject jsonObject = new JSONObject(result);
-//							if (jsonObject.getInt("error_code") == 0) {
-//								Intent intent = new Intent(GetPriceActivity.this, ApplyforSuccessActivity.class);
-//								intent.putExtra("phone", phone);
-//								startActivity(intent);
-//								finish();
-//							} else {
-//                                Util.setToast(mContext, jsonObject.getString("msg"));
-//							}
-//
-//							hideLoadingView();
-//						} catch (JSONException e) {
-//							e.printStackTrace();
-//						}
-//					}
-//
-//					@Override
-//					public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-//                        Util.setToast(mContext, "请稍后再试~");
-//                        hideLoadingView();
-//					}
-//				});
-    }
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode) {
-            case 124:
-                Bundle cityBundle = data.getBundleExtra("city_bundle");
-                city = cityBundle.getString("ci");
-                tvCity.setText(city);
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()){
+            case EC.EventCode.CHOOSE_CITY_CODE_FOR_FREE_PRICE:
+                tvCity.setText("" + event.getData());
                 break;
         }
     }

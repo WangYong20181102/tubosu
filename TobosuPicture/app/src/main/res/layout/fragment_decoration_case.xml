@@ -62,21 +62,35 @@
             android:text="搜索" />
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/caseSwipRefreshLayout"
+
+        <ImageView
+            android:id="@+id/ivNoCaseData"
+            android:layout_centerInParent="true"
+            android:background="@mipmap/no_case"
+            android:layout_width="wrap_content"
+            android:visibility="gone"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/linearLayoutHasCaseData"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/caseRecyclerView"
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/caseSwipRefreshLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            </android.support.v7.widget.RecyclerView>
-        </android.support.v4.widget.SwipeRefreshLayout>
-    </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/caseRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </android.support.v7.widget.RecyclerView>
+            </android.support.v4.widget.SwipeRefreshLayout>
+        </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>

@@ -92,6 +92,10 @@ public class HouseFragment extends BaseFragment {
     @BindView(R.id.houseSwipRefreshLayout)
     SwipeRefreshLayout houseSwipRefreshLayout;
 
+    @BindView(R.id.iv_template_no_data)
+    ImageView iv_template_no_data;
+
+
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<SamplePicBeanEntity> samplePicList = new ArrayList<SamplePicBeanEntity>();
 
@@ -406,6 +410,12 @@ public class HouseFragment extends BaseFragment {
             houseRecyclerview.setAdapter(samplePicAdapter);
         }else{
             samplePicAdapter.notifyDataSetChanged();
+        }
+
+        if(samplePicList.size()==0){
+            iv_template_no_data.setVisibility(View.VISIBLE);
+        }else {
+            iv_template_no_data.setVisibility(View.GONE);
         }
 
         if(samplePicAdapter!=null){

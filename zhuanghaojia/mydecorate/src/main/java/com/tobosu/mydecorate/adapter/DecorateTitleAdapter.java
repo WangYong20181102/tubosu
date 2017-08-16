@@ -47,7 +47,7 @@ public class DecorateTitleAdapter extends RecyclerView.Adapter<DecorateTitleAdap
     public void onBindViewHolder(DecorateTitleViewHolder holder, final int position) {
         Util.setErrorLog(TAG, dataList.get(position).getImage_url());
         holder.decorate_title_bottom_title.setText(dataList.get(position).getTitle());
-        GlideUtils.glideLoader(mContext, dataList.get(position).getImage_url(), 0, R.mipmap.jiazai_loading,holder.decorate_title_img, 1);
+        GlideUtils.glideLoader(mContext, dataList.get(position).getImage_url(), 0, R.mipmap.jiazai_loading,holder.decorate_title_img);
         holder.decorate_title_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

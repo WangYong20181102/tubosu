@@ -12,13 +12,11 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.ConditionActivity;
 import com.tbs.tobosupicture.bean.DistrictEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.view.GridView2;
-
 import java.util.ArrayList;
 
 /**
@@ -89,8 +87,7 @@ public class LoadMoreAdapter extends BaseAdapter implements AbsListView.OnScroll
     }
 
     @Override
-    public void onScroll(AbsListView view, int firstVisibleItem,
-                         int visibleItemCount, int totalItemCount) {
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         // TODO Auto-generated method stub
         ((GridView2) gView).setGridViewScrollY(getGriViewScrollY());
     }
@@ -104,7 +101,7 @@ public class LoadMoreAdapter extends BaseAdapter implements AbsListView.OnScroll
                 gView.setPullRefreshCompleted(false);
                 gView.setLoadingMoreCompleted(false);
                 setLoadding();
-                ((ConditionActivity) context).loadMore(1);
+//                ((ConditionActivity) context).loadMore(1);
             }
         }
     }
@@ -114,10 +111,8 @@ public class LoadMoreAdapter extends BaseAdapter implements AbsListView.OnScroll
      */
     public void setLoadding() {
         if (footerView != null && !isLoadding) {
-            footerView.findViewById(R.id.footer_loading).setVisibility(
-                    View.VISIBLE);
-            ((TextView) footerView.findViewById(R.id.footer_text))
-                    .setText("正在加载...");
+            footerView.findViewById(R.id.footer_loading).setVisibility( View.VISIBLE);
+            ((TextView) footerView.findViewById(R.id.footer_text)).setText("正在加载...");
             isLoadding = true;
             footerView.setEnabled(false);
         }
