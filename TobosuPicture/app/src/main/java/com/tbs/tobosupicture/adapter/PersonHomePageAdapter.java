@@ -130,13 +130,16 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             //设置装修公司的验证情况
             if (personHomePage.getUser_info().getCertification().equals("1")) {
                 //已认证
+                ((PhpHeadHolder) holder).item_php_head_zxgs_renzheng.setVisibility(View.VISIBLE);
+            } else {
+                ((PhpHeadHolder) holder).item_php_head_zxgs_renzheng.setVisibility(View.GONE);
             }
             //头像
             GlideUtils.glideLoader(mContext, personHomePage.getUser_info().getIcon(),
                     R.mipmap.default_icon, R.mipmap.default_icon,
                     ((PhpHeadHolder) holder).item_php_head_icon, 0);
             //背景图
-            GlideUtils.glideLoader(mContext,personHomePage.getUser_info().getCover_url(),R.mipmap.me_bg,R.mipmap.me_bg,((PhpHeadHolder) holder).item_php_head_bg);
+            GlideUtils.glideLoader(mContext, personHomePage.getUser_info().getCover_url(), R.mipmap.me_bg, R.mipmap.me_bg, ((PhpHeadHolder) holder).item_php_head_bg);
             //昵称
             ((PhpHeadHolder) holder).item_php_head_nick.setText("" + personHomePage.getUser_info().getNick());
             //性别以及所在地
@@ -470,6 +473,7 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         private TextView item_php_head_signature;//用户签名
         private TextView item_php_head_addfriend;//添加好友
 
+        private ImageView item_php_head_zxgs_renzheng;//装修公司是否认证
 
         private TextView item_php_head_followed_count;//图谜数量
         private TextView item_php_head_follow_count;//图友数量
@@ -488,6 +492,8 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             item_php_head_bg = (ImageView) itemView.findViewById(R.id.item_php_head_bg);
             item_php_head_icon = (ImageView) itemView.findViewById(R.id.item_php_head_icon);
             item_php_head_zxgs_icon = (ImageView) itemView.findViewById(R.id.item_php_head_zxgs_icon);
+            item_php_head_zxgs_renzheng = (ImageView) itemView.findViewById(R.id.item_php_head_zxgs_renzheng);
+
             item_php_head_nick = (TextView) itemView.findViewById(R.id.item_php_head_nick);
             item_php_head_user_info = (TextView) itemView.findViewById(R.id.item_php_head_user_info);
             item_php_head_signature = (TextView) itemView.findViewById(R.id.item_php_head_signature);

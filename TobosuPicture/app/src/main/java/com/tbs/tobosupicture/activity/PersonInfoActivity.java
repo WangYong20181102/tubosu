@@ -192,6 +192,7 @@ public class PersonInfoActivity extends BaseActivity {
         switch (event.getCode()) {
             case EC.EventCode.PERSON_INFO_ACTIVITY_CHANGE_CITY:
                 personInfoCity.setText("" + (String) event.getData());
+                HttpChangeCity((String) event.getData());
                 break;
             case EC.EventCode.PERSON_INFO_ACTIVITY_CHANGE_MSG:
                 //修改了 昵称 个性签名 绑定手机等等的信息后返回进行数据的刷新
@@ -506,7 +507,12 @@ public class PersonInfoActivity extends BaseActivity {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.getString("status");
                     if (status.equals("200")) {
-                        Log.e(TAG, "绑定成功！");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.e(TAG, "绑定成功！");
+                            }
+                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -633,6 +639,7 @@ public class PersonInfoActivity extends BaseActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.getString("status");
+                    Log.e(TAG, "修改城市信息=========" + json);
                     if (status.equals("200")) {
                         //修改成功
                     }

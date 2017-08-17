@@ -63,6 +63,7 @@
                 android:background="#edeef0">
                 <!--主题-->
                 <EditText
+                    android:gravity="center"
                     android:id="@+id/send_dynamic_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

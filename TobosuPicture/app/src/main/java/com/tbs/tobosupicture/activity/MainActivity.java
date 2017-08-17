@@ -235,7 +235,7 @@ public class MainActivity extends BaseActivity {
         public void run() {
             while (isLoop) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                     HttpGetMsg();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -283,10 +283,14 @@ public class MainActivity extends BaseActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (is_exist_case.equals("1")) {
-                                mianAboutReddot.setVisibility(View.VISIBLE);
-                            } else {
-                                mianAboutReddot.setVisibility(View.GONE);
+                            if(mianAboutReddot!=null){
+                                if (is_exist_case.equals("1")) {
+                                    Log.e(TAG,"显示‘我的’红点提示======");
+                                    mianAboutReddot.setVisibility(View.VISIBLE);
+                                } else {
+                                    Log.e(TAG,"隐藏‘我的’红点提示======");
+                                    mianAboutReddot.setVisibility(View.GONE);
+                                }
                             }
                         }
                     });

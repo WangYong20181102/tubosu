@@ -28,6 +28,8 @@ public final class EC {
         public static final int CHECK_ABOUTME_MYORG_HAS_MSG = 0x000016;//点击了关于我按钮刷新数据
         public static final int PERSON_INFO_ACTIVITY_CHANGE_CITY = 0x000017;//个人信息 点击城市选择
         public static final int PERSON_INFO_ACTIVITY_CHANGE_MSG = 0x000018;//个人信息 修改了数据  重新刷新数据
+        public static final int GOTO_ZUIXIN = 0x000019;//当我的参与页面没有任何数据的时候去最新页面
+        public static final int INIT_MY_FRIEND_DYNAMIC = 0x000020;//初始化我的图友动态
 
 
         public static final int CHOOSE_CITY_CODE = 0x100001;//选择城市

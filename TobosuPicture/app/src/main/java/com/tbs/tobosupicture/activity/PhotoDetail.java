@@ -462,7 +462,7 @@ public class PhotoDetail extends BaseActivity {
                                     tempImageDetailList.addAll(mPhotoDetail.getImage_detail());
                                 }
                                 for (int i = 0; i < tempImageDetailList.size(); i++) {
-                                    fragmentList.add(new PhotoDetailFragment(tempImageDetailList.get(i)));
+                                    fragmentList.add(PhotoDetailFragment.newInstance(tempImageDetailList.get(i)));
                                 }
                                 mPhotoFragmentPagerAdapter = new PhotoFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
 

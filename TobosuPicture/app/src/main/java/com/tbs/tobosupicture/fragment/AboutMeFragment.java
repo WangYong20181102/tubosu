@@ -198,6 +198,9 @@ public class AboutMeFragment extends BaseFragment {
             case R.id.about_me_my_friend:
                 setIndexSelect(2);
                 clickChange(2);
+                if (myFriendDynamicFragment != null) {
+                    EventBusUtil.sendEvent(new Event(EC.EventCode.INIT_MY_FRIEND_DYNAMIC));
+                }
                 break;
         }
     }

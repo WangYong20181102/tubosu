@@ -15,6 +15,7 @@ import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.utils.GlideUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Mr.Lin on 2017/8/11 14:39.
@@ -24,6 +25,7 @@ public class SendDynamicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private Context mContext;
     private ArrayList<String> mImageUrlPathList;
     private ArrayList<String> mTitleList;//标题集合
+    private HashMap<String, String> mTitleMap = new HashMap<>();
 
     public SendDynamicAdapter(Context context, ArrayList<String> imageUrlPathList) {
         this.mContext = context;
@@ -48,16 +50,6 @@ public class SendDynamicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if (holder instanceof SendDynamicViewHolder) {
             //显示图片
             GlideUtils.glideLoader(mContext, mImageUrlPathList.get(position), R.mipmap.loading_img_fail, R.mipmap.loading_img, ((SendDynamicViewHolder) holder).item_send_dynamic_image);
-            //删除按钮点击事件
-            ((SendDynamicViewHolder) holder).item_send_dynamic_del.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mImageUrlPathList.remove(position);
-                    mTitleList.set(position, "");
-                    notifyDataSetChanged();
-                }
-            });
-//            ((SendDynamicViewHolder) holder).item_send_dynamic_edit.setText(mTitleList.get(position));
             //标题的添加
             ((SendDynamicViewHolder) holder).item_send_dynamic_edit.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -74,10 +66,23 @@ public class SendDynamicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 public void afterTextChanged(Editable s) {
                     if (!TextUtils.isEmpty(((SendDynamicViewHolder) holder).item_send_dynamic_edit.getText().toString())) {
                         mTitleList.set(position, ((SendDynamicViewHolder) holder).item_send_dynamic_edit.getText().toString());
+//                        mTitleMap.put(mImageUrlPathList.get(position), ((SendDynamicViewHolder) holder).item_send_dynamic_edit.getText().toString());
                     }
                 }
             });
-            ((SendDynamicViewHolder) holder).itemView.setTag(position);
+            ((SendDynamicViewHolder) holder).item_send_dynamic_edit.setText(mTitleList.get(position));
+            //删除按钮点击事件
+            ((SendDynamicViewHolder) holder).item_send_dynamic_del.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mImageUrlPathList.remove(position);
+                    mTitleList.clear();
+                    for (int i = 0; i < 9; i++) {
+                        mTitleList.add("");
+                    }
+                    notifyDataSetChanged();
+                }
+            });
         }
     }
 

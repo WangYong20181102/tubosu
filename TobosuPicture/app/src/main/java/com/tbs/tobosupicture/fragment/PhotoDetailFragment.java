@@ -2,6 +2,7 @@ package com.tbs.tobosupicture.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,8 +36,29 @@ public class PhotoDetailFragment extends BaseFragment {
     private Context mContext;
     private TouchImageView mTouchImageView;
 
-    public PhotoDetailFragment(_PhotoDetail.ImageDetail imageDetail) {
-        this.mImageDetail = imageDetail;
+    public PhotoDetailFragment() {
+
+    }
+
+//    public PhotoDetailFragment(_PhotoDetail.ImageDetail imageDetail) {
+//        this.mImageDetail = imageDetail;
+//    }
+
+    public static final PhotoDetailFragment newInstance(_PhotoDetail.ImageDetail imageDetail) {
+        PhotoDetailFragment newPhotoDetailFragment = new PhotoDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("ImageDetail", imageDetail);
+        newPhotoDetailFragment.setArguments(bundle);
+        return newPhotoDetailFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle args = getArguments();
+        if(args!=null){
+            this.mImageDetail= (_PhotoDetail.ImageDetail) args.getSerializable("ImageDetail");
+        }
     }
 
     @Nullable

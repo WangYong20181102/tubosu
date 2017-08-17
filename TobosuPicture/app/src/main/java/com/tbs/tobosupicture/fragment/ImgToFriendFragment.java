@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,7 +34,6 @@ import com.tbs.tobosupicture.view.SelectPersonalPopupWindow;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,6 +70,12 @@ public class ImgToFriendFragment extends BaseFragment {
     TextView textYouguanyuwo;
     @BindView(R.id.img_to_friend_show_pop)
     View imgToFriendShowPop;
+    @BindView(R.id.img_zuire)
+    ImageView imgZuire;
+    @BindView(R.id.img_zuixin)
+    ImageView imgZuixin;
+    @BindView(R.id.img_wo)
+    ImageView imgWo;
 
     private Context mContext;
     private String TAG = "ImgToFriendFragment";
@@ -184,17 +190,30 @@ public class ImgToFriendFragment extends BaseFragment {
     //切换文字的改变
     private void clcikChange(int position) {
         if (position == 0) {
+            //最热
             textZuire.setTextColor(Color.parseColor("#202124"));
             textZuixin.setTextColor(Color.parseColor("#8a8f99"));
             textYouguanyuwo.setTextColor(Color.parseColor("#8a8f99"));
+
+            imgZuire.setImageResource(R.mipmap.zuire_after);
+            imgZuixin.setImageResource(R.mipmap.zuixin);
+            imgWo.setImageResource(R.mipmap.wo);
         } else if (position == 1) {
             textZuire.setTextColor(Color.parseColor("#8a8f99"));
             textZuixin.setTextColor(Color.parseColor("#202124"));
             textYouguanyuwo.setTextColor(Color.parseColor("#8a8f99"));
+
+            imgZuire.setImageResource(R.mipmap.zuire);
+            imgZuixin.setImageResource(R.mipmap.zuixin_after);
+            imgWo.setImageResource(R.mipmap.wo);
         } else if (position == 2) {
             textZuire.setTextColor(Color.parseColor("#8a8f99"));
             textZuixin.setTextColor(Color.parseColor("#8a8f99"));
             textYouguanyuwo.setTextColor(Color.parseColor("#202124"));
+
+            imgZuire.setImageResource(R.mipmap.zuire);
+            imgZuixin.setImageResource(R.mipmap.zuixin);
+            imgWo.setImageResource(R.mipmap.wo_after);
         }
     }
 
@@ -219,6 +238,11 @@ public class ImgToFriendFragment extends BaseFragment {
                 break;
             case EC.EventCode.GOTO_SEND_DYNAMIC:
                 CreatDynamic();
+                break;
+            case EC.EventCode.GOTO_ZUIXIN:
+                //切换到最新页面
+                setIndexSelect(1);
+                clcikChange(1);
                 break;
         }
     }

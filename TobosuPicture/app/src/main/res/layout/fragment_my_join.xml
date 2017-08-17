@@ -24,7 +24,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/shape_btn_30dp"
             android:gravity="center"
-            android:text="发起话题"
+            android:text="去逛逛"
             android:textColor="@color/bg_white"
             android:textSize="@dimen/text_size_30px" />
     </LinearLayout>

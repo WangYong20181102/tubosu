@@ -217,7 +217,10 @@ public class MyFriendFragment extends BaseFragment {
                                 if (myFriendAdapter != null) {
                                     myFriendAdapter.changLoadState(2);
                                 }
+                                Log.e(TAG, "我的图友列表尺寸=======" + myFriendArrayList.size());
                                 if (myFriendArrayList.isEmpty()) {
+                                    //显示没有图友的图层
+                                    Log.e(TAG, "显示没有图友======");
                                     myfriendNoneFriend.setVisibility(View.VISIBLE);
                                 } else {
                                     myfriendNoneFriend.setVisibility(View.GONE);

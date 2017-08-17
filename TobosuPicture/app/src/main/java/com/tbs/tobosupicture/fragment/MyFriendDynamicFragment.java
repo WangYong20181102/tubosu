@@ -12,15 +12,18 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.DynamicBaseAdapter;
 import com.tbs.tobosupicture.base.BaseFragment;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.bean._DynamicBase;
 import com.tbs.tobosupicture.constants.UrlConstans;
+import com.tbs.tobosupicture.utils.EventBusUtil;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
@@ -32,7 +35,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,6 +53,8 @@ public class MyFriendDynamicFragment extends BaseFragment {
     @BindView(R.id.mfd_swipe)
     SwipeRefreshLayout mfdSwipe;
     Unbinder unbinder;
+    @BindView(R.id.myfriend_none_dynamic)
+    LinearLayout myfriendNoneDynamic;
     private Context mContext;
     private String TAG = "MyFriendDynamicFragment";
     private int mPage = 1;
@@ -69,6 +73,23 @@ public class MyFriendDynamicFragment extends BaseFragment {
         initViewEvent();
         HttpGetDynamicList(mPage);
         return view;
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case EC.EventCode.INIT_MY_FRIEND_DYNAMIC:
+                if(dynamicBaseArrayList.isEmpty()){
+                    mPage = 1;
+                    HttpGetDynamicList(mPage);
+                }
+                break;
+        }
     }
 
     private void initViewEvent() {
@@ -92,6 +113,8 @@ public class MyFriendDynamicFragment extends BaseFragment {
             mPage = 1;
             if (!dynamicBaseArrayList.isEmpty()) {
                 dynamicBaseArrayList.clear();
+            } else {
+
             }
             HttpGetDynamicList(mPage);
         }
@@ -154,6 +177,7 @@ public class MyFriendDynamicFragment extends BaseFragment {
                     String status = jsonObject.getString("status");
                     if (status.equals("200")) {
                         //获取数据成功
+
                         JSONArray jsonArray = jsonObject.getJSONArray("data");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             _DynamicBase dynamicBase = mGson.fromJson(jsonArray.get(i).toString(), _DynamicBase.class);
@@ -162,6 +186,7 @@ public class MyFriendDynamicFragment extends BaseFragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                myfriendNoneDynamic.setVisibility(View.GONE);
                                 if (dynamicBaseAdapter == null) {
                                     dynamicBaseAdapter = new DynamicBaseAdapter(mContext, getActivity(), dynamicBaseArrayList);
                                     mfdRecycleview.setAdapter(dynamicBaseAdapter);
@@ -186,6 +211,7 @@ public class MyFriendDynamicFragment extends BaseFragment {
                                 }
                                 if (dynamicBaseArrayList.isEmpty()) {
                                     //添加占位图
+                                    myfriendNoneDynamic.setVisibility(View.VISIBLE);
                                 }
                             }
                         });

@@ -534,7 +534,7 @@ public class MineFragment extends BaseFragment {
         fmUserName.setText(homePage.getNick());//业主
         fmCoName.setText(homePage.getNick());//公司
         //头像
-        GlideUtils.glideLoader(mContext, homePage.getIcon(), 0, 0, fmUserIcon, 0);//业主
+        GlideUtils.glideLoader(mContext, homePage.getIcon(), R.mipmap.loading_img_fail, R.mipmap.loading_img, fmUserIcon, 0);//业主
         GlideUtils.glideLoader(mContext, homePage.getIcon(), 0, 0, fmCoIcon);
         //业主个性签名
         if (TextUtils.isEmpty(homePage.getPersonal_signature())) {
