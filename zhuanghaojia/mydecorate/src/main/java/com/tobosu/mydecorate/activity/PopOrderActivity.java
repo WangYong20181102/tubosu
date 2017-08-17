@@ -675,15 +675,16 @@ public class PopOrderActivity extends AppCompatActivity {
 
     }
 
+    private String chosenCity = "0";
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (resultCode) {
             case 77:
-                String city = data.getBundleExtra("city_bundle").getString("ci");
-                CacheManager.setCity(mContext, city);
-                tvCityLocation.setText(" 当前位置 " + city);
-                tvCityLocation1.setText(" 当前位置 " + city);
+                chosenCity = data.getBundleExtra("city_bundle").getString("ci");
+                CacheManager.setCity(mContext, chosenCity);
+                tvCityLocation.setText(" 当前位置 " + chosenCity);
+                tvCityLocation1.setText(" 当前位置 " + chosenCity);
                 break;
         }
         if (Constant.HOMEFRAGMENT_REQUESTCODE == requestCode) {
@@ -1364,7 +1365,7 @@ public class PopOrderActivity extends AppCompatActivity {
                 hashMap.put("style", style); // 风格
                 hashMap.put("device", "android");
                 hashMap.put("source", "1016");
-                hashMap.put("city", CacheManager.getCity(mContext));
+                hashMap.put("city", "0".equals(chosenCity) ? CacheManager.getCity(mContext):chosenCity);
                 hashMap.put("version", Util.getAppVersionName(mContext));
                 hashMap.put("urlhistory", Constant.PIPE_CODE); // 渠道代码
                 hashMap.put("comeurl", Constant.PIPE_CODE); //订单发布页面

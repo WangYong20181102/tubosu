@@ -455,20 +455,7 @@ public class NewHomeFragment extends Fragment {
                 startActivity(intent);
             }
 
-//                if(homePage.getCarouselList().get(position).getContent_url().contains("http://m.tobosu.com/app/pub?channel=seo")){
-//                    Intent it = new Intent(mContext, FreeActivity.class);
-////                    it.putExtra("urldata", homePage.getCarouselList().get(position).getContent_url());
-//                    startActivity(it);
-//                }else {
-////                    Uri uri = Uri.parse(homePage.getCarouselList().get(position).getContent_url());
-////                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-////                    startActivity(intent);
-//                    Intent i = new Intent(mContext, MyWebViewActivity.class);
-//                    Bundle b = new Bundle();
-//                    b.putString("urldata", homePage.getCarouselList().get(position).getContent_url());
-//                    i.putExtra("urlbundle", b);
-//                    startActivity(i);
-//                }
+
         }
     };
 

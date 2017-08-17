@@ -132,8 +132,10 @@ public class DecorationCaseFragment extends BaseFragment {
                                 initListView();
                             } else {
                                 if(caseList.size()==0){
-                                    caseAdapter.noMoreData();
-                                    caseAdapter.hideLoadMoreMessage();
+                                    if(caseAdapter!=null){
+                                        caseAdapter.noMoreData();
+                                        caseAdapter.hideLoadMoreMessage();
+                                    }
                                     linearLayoutHasCaseData.setVisibility(View.GONE);
                                     ivNoCaseData.setVisibility(View.VISIBLE);
                                 }

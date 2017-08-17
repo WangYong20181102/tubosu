@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/ivCaseIcon"
+        android:layout_width="67dp"
+        android:layout_height="67dp"
+        android:layout_margin="14dp"/>
+
+    <TextView
+        android:id="@+id/tvTopText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="#74787F"
+        android:text="用户:灵感家居 2017-04-14 深圳南山"
+        android:layout_marginTop="10dp"
+        android:layout_alignTop="@+id/ivCaseIcon"
+        android:layout_toRightOf="@+id/ivCaseIcon"/>
+
+    <TextView
+        android:id="@+id/tvBottomText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="#15171B"
+        android:text="搜索案例:城市+小区 面积 户型 价格 风格"
+        android:layout_marginTop="10dp"
+        android:layout_alignBottom="@+id/ivCaseIcon"
+        android:layout_toRightOf="@+id/ivCaseIcon"/>
+
+    <ImageView
+        android:id="@+id/ivCaseRedFlag"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
+        android:background="@mipmap/flag"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:layout_alignBottom="@+id/tvBottomText"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/dividing_line_bg"
+        android:layout_alignParentBottom="true"
+        android:layout_height="0.4dp"/>
+
+</RelativeLayout>
