@@ -1,5 +1,4 @@
 package com.tbs.tobosupicture.activity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.DesignerPictureListAdapter;
@@ -23,10 +21,8 @@ import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -105,7 +101,7 @@ public class DesignerImgListActivity extends BaseActivity {
             dataType = b.getInt("type");  // 1 案例，  0 样板
             isCollect = b.getString("isCollect");
             des ="粉丝 "+fansCount + " / 浏览" + viewCount;
-
+            Utils.setToast(mContext, Utils.getDateToken());
 
             if ("1".equals(isCollect)) {
                 tvGetConcern.setTextColor(Color.parseColor("#FA8817"));
@@ -192,8 +188,6 @@ public class DesignerImgListActivity extends BaseActivity {
                             });
                         }
                     }
-
-
                 }
             });
         }

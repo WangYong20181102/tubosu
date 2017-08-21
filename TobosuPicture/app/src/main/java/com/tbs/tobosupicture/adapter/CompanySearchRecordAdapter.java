@@ -65,18 +65,18 @@ public class CompanySearchRecordAdapter extends RecyclerView.Adapter<RecyclerVie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof CompanyViewHolder){
             CompanyViewHolder companyViewHolder = (CompanyViewHolder) holder;
-            String topText = "用户名:" + dataList.get(position).getNick() + " " +dataList.get(position).getAdd_time() + " " + dataList.get(position).getCity();
-            String bottomText = dataList.get(position).getSearch_condition();
+            String topText = "用户名:" + dataList.get(position-1).getNick() + " " +dataList.get(position-1).getAdd_time() + " " + dataList.get(position-1).getCity();
+            String bottomText = dataList.get(position-1).getSearch_condition();
 
             companyViewHolder.tvTopText.setText(topText);
             companyViewHolder.tvBottomText.setText(bottomText);
-            String isread = dataList.get(position).getIs_read();
+            String isread = dataList.get(position-1).getIs_read();
             if("0".equals(isread)){
                 companyViewHolder.ivCaseRedFlag.setVisibility(View.GONE);
             }else {
                 companyViewHolder.ivCaseRedFlag.setVisibility(View.VISIBLE);
             }
-            GlideUtils.glideLoader(context, dataList.get(position).getIcon(), R.mipmap.pic, R.mipmap.pic, companyViewHolder.ivCaseIcon, 0);
+            GlideUtils.glideLoader(context, dataList.get(position-1).getIcon(), R.mipmap.pic, R.mipmap.pic, companyViewHolder.ivCaseIcon, 0);
         }
     }
 

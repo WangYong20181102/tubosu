@@ -93,7 +93,12 @@ public class SamplePictureAdapter extends RecyclerView.Adapter<RecyclerView.View
         if(holder instanceof SamplePicViewHolder){
             SamplePicViewHolder itmeHolder = (SamplePicViewHolder) holder;
             GlideUtils.glideLoader(mContext, dataList.get(position).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itmeHolder.iv_big_sample_pic,1);
-            GlideUtils.glideLoader(mContext, dataList.get(position).getDesigner_icon(), R.mipmap.pic,R.mipmap.pic,itmeHolder.iv_designer_pic, 0);
+            String picUrl = dataList.get(position).getDesigner_icon();
+            if(!"".equals(picUrl)){
+                GlideUtils.glideLoader(mContext, picUrl, R.mipmap.pic,R.mipmap.pic,itmeHolder.iv_designer_pic, 0);
+            }else {
+                itmeHolder.iv_designer_pic.setVisibility(View.GONE);
+            }
             itmeHolder.tv_samplepic_title.setText(dataList.get(position).getTitle());
             itmeHolder.tv_pic_city.setText(dataList.get(position).getCity_name());
             if(!"".equals(dataList.get(position).getArea_name())){
