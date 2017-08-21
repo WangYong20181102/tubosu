@@ -32,7 +32,6 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
     private LinearLayout footerLayout;
     private TextView tvLoadMore;
     private ProgressBar progressBar;
-
     private Context mContext;
     private LayoutInflater inflater;
 //    private ArrayList<SamplePicBeanEntity> dataList;
@@ -234,13 +233,12 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public int getItemCount() {
         if(type==0) { // 样板
-            Utils.setErrorLog("", "来到这里了");
+            Utils.setErrorLog("CompanySearchRecordAdapter", "来到这里了");
             return sampleDataList==null?0:sampleDataList.size() + 2;
         }else {
             // 案例
             return caseDataList==null?0:caseDataList.size() + 2;
         }
-
     }
 
 

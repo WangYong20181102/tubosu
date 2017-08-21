@@ -2,10 +2,12 @@ package com.tobosu.mydecorate.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -13,10 +15,12 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +40,7 @@ import com.tobosu.mydecorate.util.Util;
 import com.tobosu.mydecorate.view.CustomWaitDialog;
 import com.tobosu.mydecorate.view.GetVerificationPopupwindow;
 import com.tobosu.mydecorate.view.LoadingWindow;
+import com.tobosu.mydecorate.view.VerifyCodeDialog;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -193,9 +198,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 finish();
                 break;
             case R.id.tv_verify_code:
-                if (Util.judgePhone(mContext, et_phonenum.getText().toString().trim().replace("-", ""))) {
-                    getVerifyCode();
+                String tempPhone = et_phonenum.getText().toString().trim().replace("-", "");
+                if("".equals(tempPhone)){
+                    Util.setToast(mContext, "电话号码不能为空");
+                    return;
                 }
+
+                if (Util.judgePhone(mContext, tempPhone)) {
+//                    getVerifyCode();
+                    VerifyCodeDialog.Builder builder = new VerifyCodeDialog.Builder(mContext, tv_verify_code, tempPhone);
+                    builder.setCancelButton(new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    builder.create().show();
+
+                }
+
                 break;
             case R.id.btn_login:
                 MobclickAgent.onEvent(mContext, "click_login_mobile");
@@ -338,17 +359,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private void getVerifyCode() {
-        if (Util.isNetAvailable(mContext)) {
-            popupwindow = new GetVerificationPopupwindow(mContext);
-            popupwindow.phone = et_phonenum.getText().toString().trim().replaceAll("-", "");
-            popupwindow.version = Util.getAppVersionName(mContext);
-            popupwindow.showAtLocation(findViewById(R.id.rel_login_activity), Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
-        } else {
-            Toast.makeText(mContext, "请检查网络是否可用", Toast.LENGTH_SHORT).show();
-            return;
-        }
-    }
+//    private void getVerifyCode() {
+//        if (Util.isNetAvailable(mContext)) {
+//            popupwindow = new GetVerificationPopupwindow(mContext);
+//            popupwindow.phone = et_phonenum.getText().toString().trim().replaceAll("-", "");
+//            popupwindow.version = Util.getAppVersionName(mContext);
+//            popupwindow.showAtLocation(findViewById(R.id.rel_login_activity), Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+//        } else {
+//            Toast.makeText(mContext, "请检查网络是否可用", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -438,7 +459,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Constant.SEND_STARTCOUNT_ACTION)) {
-                startDownCount();
+                Util.setToast(context, "验证码错误!");
             }
         }
     }
@@ -581,4 +602,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         wxCircleHandler.setToCircle(true);
         wxCircleHandler.addToSocialSDK();
     }
+
+
 }

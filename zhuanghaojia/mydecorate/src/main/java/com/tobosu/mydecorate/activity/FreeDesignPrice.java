@@ -1,9 +1,13 @@
 package com.tobosu.mydecorate.activity;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.Log;
@@ -26,9 +30,12 @@ import com.tobosu.mydecorate.util.Util;
 import com.tobosu.mydecorate.view.CustomWaitDialog;
 import com.tobosu.mydecorate.view.GetVerificationPopupwindow;
 import com.tobosu.mydecorate.view.MyChatView;
+import com.tobosu.mydecorate.view.VerifyCodeDialog;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -95,6 +102,7 @@ public class FreeDesignPrice extends Activity {
         setContentView(R.layout.activity_free_design_price);
         mContext = FreeDesignPrice.this;
         intent = getIntent();
+        initReceiver();
         customWaitDialog = new CustomWaitDialog(mContext);
         bindView();
         initView();
@@ -170,6 +178,7 @@ public class FreeDesignPrice extends Activity {
         return saveInfo.getString("cellphone", "");
     }
 
+
     private View.OnClickListener occl = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -180,14 +189,14 @@ public class FreeDesignPrice extends Activity {
                 case R.id.fdp_get_code:
                     //走获取验证码的方法
                     if (Util.checkNetwork(mContext)) {
-                        if ("重新获取".equals(fdpGetcode.getText().toString()) || "获取验证码".equals(fdpGetcode.getText().toString())) {
-                            GetVerificationPopupwindow popupwindow = new GetVerificationPopupwindow(mContext);
-                            popupwindow.phone = mPhoneNum;
-                            popupwindow.version = Util.getAppVersionName(mContext);
-                            popupwindow.showAtLocation(fdpGetcode.getRootView(), Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
-                        } else {
-                            Toast.makeText(getApplicationContext(), "您已经获取过了!", Toast.LENGTH_SHORT).show();
-                        }
+                        VerifyCodeDialog.Builder builder = new VerifyCodeDialog.Builder(mContext, fdpGetcode, mPhoneNum);
+                        builder.setCancelButton(new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        builder.create().show();
                     } else {
                         Toast.makeText(mContext, "当前无网络连接", Toast.LENGTH_LONG).show();
                     }
@@ -210,6 +219,32 @@ public class FreeDesignPrice extends Activity {
             }
         }
     };
+
+
+    private ToastReceiver receiver;
+    private class ToastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Constant.SEND_STARTCOUNT_ACTION)) {
+                Util.setToast(context, "验证码错误!");
+            }
+        }
+    }
+
+    private void initReceiver() {
+        IntentFilter filter = new IntentFilter(Constant.SEND_STARTCOUNT_ACTION);
+        receiver = new ToastReceiver();
+        registerReceiver(receiver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(receiver!=null){
+            unregisterReceiver(receiver);
+        }
+    }
 
     private void setText(String mPhoneNum, float mPrice,
                          float mWeiPrice, float mTingPrice,

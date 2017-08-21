@@ -27,38 +27,6 @@
             android:layout_height="wrap_content" />
     </RelativeLayout>
 
-
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/ivLogos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="20dp"
-            android:background="@mipmap/tbs_tsd"/>
-
-        <TextView
-            android:id="@+id/tvTiptext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_marginLeft="23dp"
-            android:layout_marginRight="23dp"
-            android:layout_marginBottom="10dp"
-            android:textSize="15.1sp"
-            android:layout_below="@+id/ivLogos"
-            android:text="去网站上传对应新的案例， 可直接在用户端展示自己的案例以及联系方式， 获取更多装修资源哦。"/>
-
-    </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="14dp"
-        android:background="@color/bg_divide"/>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

@@ -75,7 +75,12 @@ public class CaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             String title = "";
             String description = "";
             GlideUtils.glideLoader(context, dataList.get(position).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,caseViewHolder.iv_case_big_sample_pic,1);
-            GlideUtils.glideLoader(context, dataList.get(position).getDesigner_icon(), R.mipmap.pic,R.mipmap.pic,caseViewHolder.iv_case_designer_pic, 0);
+            String picUrl = dataList.get(position).getDesigner_icon();
+            if(!"".equals(picUrl)){
+                GlideUtils.glideLoader(context, picUrl, R.mipmap.pic,R.mipmap.pic,caseViewHolder.iv_case_designer_pic, 0);
+            }else {
+                caseViewHolder.iv_case_designer_pic.setVisibility(View.GONE);
+            }
             String district = dataList.get(position).getDistrict_name();
             String budget = dataList.get(position).getPrice();
             String method = dataList.get(position).getDesmethod();

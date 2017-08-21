@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="77dp">
+
+    <TextView
+        android:id="@+id/tvOwenCaseTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#A4A4A5"
+        android:textSize="14sp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="26dp"
+        android:text="2017-04-44"/>
+
+
+    <TextView
+        android:id="@+id/tvOwnerCaseDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#030303"
+        android:textSize="14sp"
+        android:layout_marginLeft="17dp"
+        android:layout_toRightOf="@+id/tvOwenCaseTime"
+        android:layout_marginTop="26dp"
+        android:text="你大爷的什么玩意？"/>
+
+
+    <TextView
+        android:id="@+id/tvOwnerCaseCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FF9A34"
+        android:textSize="14sp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="7dp"
+        android:layout_toRightOf="@+id/tvOwenCaseTime"
+        android:layout_below="@+id/tvOwnerCaseDesc"
+        android:layout_centerVertical="true"
+        android:text="你大爷的什么玩意？"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignLeft="@+id/tvOwenCaseTime"
+        android:layout_marginRight="14dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/dividing_line_bg"/>
+
+
+</RelativeLayout>

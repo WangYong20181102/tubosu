@@ -101,6 +101,7 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 	private LinearLayout select_city_activity_netoutview;
 	private int fromCode = 101;
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -328,6 +329,9 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 			fromCode = Integer.parseInt(getIntent().getBundleExtra("choose_city_bundle").getString("from_home_getcity"));
 		}
 
+		if(getIntent()!=null && getIntent().getBundleExtra("pop_bundle")!=null){
+			fromCode = getIntent().getBundleExtra("pop_bundle").getInt("frompop");
+		}
 
 		city_title_back = (ImageView) findViewById(R.id.city_title_back);
 
@@ -505,6 +509,9 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 			setResult(70, cityData);
 		}
 
+		if(fromCode == 31){
+			setResult(77, cityData);
+		}
 		finish();
 	}
 

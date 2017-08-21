@@ -1403,7 +1403,7 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
     @Override
     protected void onResume() {
         super.onResume();
-        needPermissions();
+//        needPermissions();
     }
 
     // 动态获取权限
@@ -1413,7 +1413,6 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_WIFI_STATE,
                     Manifest.permission.ACCESS_NETWORK_STATE,

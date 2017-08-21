@@ -235,6 +235,7 @@ public class CaseDetailActivity extends BaseActivity {
         CaseDetailImgGVAdapter imgGVAdapter = new CaseDetailImgGVAdapter(mContext, caseDetailEntity.getOnline_diagram());
         myStageCaseDetial.setAdapter(imgGVAdapter);
 
+        // 入住场景 // FIXME: 2017/8/17 闪退就是这里有问题
         CaseDetailStayInAdapter stayInAdapter = new CaseDetailStayInAdapter(mContext, caseDetailEntity.getStay_real().get(0).getImg_url());
         mylistviewStayIn.setAdapter(stayInAdapter);
 
