@@ -48,14 +48,14 @@ import okhttp3.Response;
 public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private List<_DynamicBase> dynamicBaseList;
-    private _ReceiveMsg.MySponsor myOrginMsg;
+    private List<String> myOrginMsgList;
     private Activity mActivity;
     private String TAG = "MyOrginAdapter";
     private int adapterLoadState = 1;//子项加载情况
 
-    public MyOrginAdapter(Context context, Activity activity, _ReceiveMsg.MySponsor myOrginMsg, List<_DynamicBase> dynamicBaseList) {
+    public MyOrginAdapter(Context context, Activity activity, List<String> myOrginMsgList, List<_DynamicBase> dynamicBaseList) {
         this.mContext = context;
-        this.myOrginMsg = myOrginMsg;
+        this.myOrginMsgList = myOrginMsgList;
         this.dynamicBaseList = dynamicBaseList;
         this.mActivity = activity;
     }
@@ -97,13 +97,14 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof MyOrginHeadHolder) {
-            if (myOrginMsg.getMsg_count().equals("0")) {
+            if (myOrginMsgList.isEmpty() || TextUtils.isEmpty(myOrginMsgList.get(0))) {
                 ((MyOrginHeadHolder) holder).head_hint_rl.setVisibility(View.INVISIBLE);
+//                ((MyOrginHeadHolder) holder).head_hint_rl.setLayoutParams(new RelativeLayout.LayoutParams());
             } else {
                 ((MyOrginHeadHolder) holder).head_hint_rl.setVisibility(View.VISIBLE);
-                ((MyOrginHeadHolder) holder).head_hint_text.setText(myOrginMsg.getMsg_count() + "条新消息");
-                Log.e(TAG, "消息数据======" + myOrginMsg.getMsg_count());
-                GlideUtils.glideLoader(mContext, myOrginMsg.getIcon(), 0, 0, ((MyOrginHeadHolder) holder).head_hint_icon, 0);
+                ((MyOrginHeadHolder) holder).head_hint_text.setText(myOrginMsgList.get(1) + "条新消息");
+                Log.e(TAG, "消息数据======" + myOrginMsgList.get(1));
+                GlideUtils.glideLoader(mContext, myOrginMsgList.get(0), 0, 0, ((MyOrginHeadHolder) holder).head_hint_icon, 0);
                 ((MyOrginHeadHolder) holder).head_hint_rl.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -142,11 +143,6 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             //设置内容
             ((MyOrginItemHolder) holder).dynamic_base_title.setText(dynamicBaseList.get(position - 1).getTitle());
             //设置图片以及点击事件
-//            for (int i = 0; i < dynamicBaseList.get(position - 1).getImage_url().size(); i++) {
-//                imageViewList.get(i).setVisibility(View.VISIBLE);
-//                GlideUtils.glideLoader(mContext, dynamicBaseList.get(position - 1).getImage_url().get(i), R.mipmap.loading_img_fail, R.mipmap.loading_img, imageViewList.get(i));
-//                ImageClick(imageViewList.get(i), dynamicBaseList.get(position - 1).getId(), i);
-//            }
             //第一张
             if (dynamicBaseList.get(position - 1).getImage_url().size() >= 1 && !TextUtils.isEmpty(dynamicBaseList.get(position - 1).getImage_url().get(0))) {
                 //设置图片

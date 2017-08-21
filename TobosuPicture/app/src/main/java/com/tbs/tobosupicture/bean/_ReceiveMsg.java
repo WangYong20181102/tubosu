@@ -50,6 +50,16 @@ public class _ReceiveMsg {
         private String msg_count;
         private String icon;
 
+        //我的发起
+        public MySponsor(String msg_count, String icon) {
+            this.msg_count = msg_count;
+            this.icon = icon;
+        }
+
+        public MySponsor() {
+
+        }
+
         public String getMsg_count() {
             return msg_count;
         }

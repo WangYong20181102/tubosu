@@ -124,8 +124,8 @@
         <activity android:name=".activity.MyFansActivity" />
         <activity
             android:name=".activity.GetPriceActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".activity.SmartDesignActivity" />
         <activity android:name=".activity.FreeDesignPrice" />
         <activity android:name=".activity.HisFansActivity" />
@@ -162,10 +162,12 @@
         <activity android:name=".activity.OwnerCaseActivity" />
         <activity android:name=".activity.DecorateCompanyCaseActivity" />
         <activity android:name=".activity.SendDynamicActivity" />
-        <activity android:name=".activity.DynamicMsgActivity"></activity>
-        <activity android:name=".activity.SelectCityActivity"/>
-        <activity android:name=".activity.MyCaseListActivity"/>
-        <activity android:name=".activity.SystemMessageActivity"></activity>
+        <activity android:name=".activity.DynamicMsgActivity" />
+        <activity android:name=".activity.SelectCityActivity" />
+        <activity android:name=".activity.MyCaseListActivity" />
+        <activity android:name=".activity.SystemMessageActivity" />
+        <activity android:name=".activity.NewSendDynamicActivity" />
+        <activity android:name=".activity.SendDynamicDetailActivity"></activity>
     </application>
 
 </manifest>

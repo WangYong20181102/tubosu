@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="110.4dp"
+        android:layout_height="110dp"
+        android:layout_margin="1.2dp"
+        android:layout_marginBottom="0.6dp">
+
+        <ImageView
+            android:id="@+id/item_new_send_dynamic_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/test" />
+
+        <ImageView
+            android:id="@+id/item_new_send_dynamic_close"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/dynamic_close" />
+
+        <TextView
+            android:id="@+id/item_new_send_dynamic_edit"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/shape_edit_send_dynamic"
+            android:gravity="center"
+            android:text="点击编辑"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_22px" />
+    </RelativeLayout>
+</LinearLayout>

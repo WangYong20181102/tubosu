@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f7f7f7"
+    android:orientation="vertical"
+    tools:context="com.tbs.tobosupicture.activity.NewSendDynamicActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/banner_height"
+            android:background="@color/bg_banner_black">
+            <!--取消按钮-->
+            <LinearLayout
+                android:id="@+id/new_send_back_btn"
+                android:layout_width="@dimen/banner_height"
+                android:layout_height="@dimen/banner_height"
+                android:layout_alignParentLeft="true"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="取消"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_28px" />
+            </LinearLayout>
+            <!--发送按钮-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="发布动态"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_28px" />
+
+            <LinearLayout
+                android:id="@+id/new_send_dynamic_btn"
+                android:layout_width="@dimen/banner_height"
+                android:layout_height="@dimen/banner_height"
+                android:layout_alignParentRight="true">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="发送"
+                    android:textColor="#ff882e"
+                    android:textSize="@dimen/text_size_28px" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="108dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/new_send_edit_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="为图配文，说你所想..."
+                android:textColor="@color/text_black"
+                android:textSize="@dimen/text_size_30px" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/new_send_dynamic_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/new_send_show_pop"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+</LinearLayout>

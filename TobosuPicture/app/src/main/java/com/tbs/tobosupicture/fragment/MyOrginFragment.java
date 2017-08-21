@@ -1,23 +1,28 @@
 package com.tbs.tobosupicture.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.DynamicMsgActivity;
 import com.tbs.tobosupicture.adapter.MyOrginAdapter;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.bean.EC;
@@ -26,6 +31,7 @@ import com.tbs.tobosupicture.bean._DynamicBase;
 import com.tbs.tobosupicture.bean._ReceiveMsg;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.EventBusUtil;
+import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
@@ -61,6 +67,13 @@ public class MyOrginFragment extends BaseFragment {
     TextView myOrginOrginBtn;
     @BindView(R.id.my_orgin_null_data)
     LinearLayout myOrginNullData;
+//    @BindView(R.id.my_orgin_msg_icon)
+//    ImageView myOrginMsgIcon;
+//    @BindView(R.id.my_orgin_msg_text)
+//    TextView myOrginMsgText;
+//    @BindView(R.id.my_orgin_msg_rl)
+//    RelativeLayout myOrginMsgRl;
+
     private Context mContext;
     private String TAG = "MyOrginFragment";
     private MyOrginAdapter myOrginAdapter;
@@ -68,7 +81,8 @@ public class MyOrginFragment extends BaseFragment {
     private boolean isLoading = false;//是否加载更多
     private int mPage = 1;
     private ArrayList<_DynamicBase> dynamicBaseArrayList = new ArrayList<>();
-    private _ReceiveMsg receiveMsg;
+    private ArrayList<String> mMsgArrayList = new ArrayList<>();
+    //    private _ReceiveMsg.MySponsor mySponsor;
     private Gson mGson;
 
     @Nullable
@@ -79,7 +93,7 @@ public class MyOrginFragment extends BaseFragment {
         mContext = getActivity();
         Log.e(TAG, "当前用户的uid=====" + SpUtils.getUserUid(mContext));
         initViewEvent();
-        HttpGetMsg();
+        HttpGetDynamicList(mPage);
         return view;
     }
 
@@ -88,9 +102,10 @@ public class MyOrginFragment extends BaseFragment {
         return true;
     }
 
+
     private void initViewEvent() {
         mGson = new Gson();
-
+//        mySponsor = new _ReceiveMsg.MySponsor();
         myOrginSwipe.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE);
         myOrginSwipe.setBackgroundColor(Color.WHITE);
         myOrginSwipe.setSize(SwipeRefreshLayout.DEFAULT);
@@ -116,10 +131,7 @@ public class MyOrginFragment extends BaseFragment {
         if (!dynamicBaseArrayList.isEmpty()) {
             dynamicBaseArrayList.clear();
         }
-        if (receiveMsg != null) {
-//            receiveMsg.getMy_sponsor().setMsg_count("0");
-        }
-        HttpGetMsg();
+        HttpGetDynamicList(mPage);
     }
 
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
@@ -151,6 +163,7 @@ public class MyOrginFragment extends BaseFragment {
         if (myOrginAdapter != null) {
             myOrginAdapter.changeLoadState(1);
         }
+        Log.e(TAG, "上拉加载更多====" + mPage);
         HttpGetDynamicList(mPage);
     }
 
@@ -158,68 +171,6 @@ public class MyOrginFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    //链式请求
-    private void HttpGetMsg() {
-        myOrginSwipe.setRefreshing(true);
-        isLoading = true;
-        HashMap<String, Object> param = new HashMap<>();
-        param.put("token", Utils.getDateToken());
-        param.put("uid", SpUtils.getUserUid(mContext));
-        param.put("is_icon", "1");
-        HttpUtils.doPost(UrlConstans.RECEIVE_INFORMATION, param, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                isLoading = false;
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String json = new String(response.body().string());
-                Log.e(TAG, "链接成功====" + json);
-                try {
-                    JSONObject jsonObject = new JSONObject(json);
-                    String status = jsonObject.getString("status");
-                    if (status.equals("200")) {
-                        //获取成功
-                        String data = jsonObject.getString("data");
-                        receiveMsg = mGson.fromJson(data, _ReceiveMsg.class);
-                        Log.e(TAG, "当前用户的“我的发起”消息数量======" + receiveMsg.getMy_sponsor().getMsg_count());
-                        //将数据导入开始下一个请求
-                        HttpGetDynamicList(1);
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                            }
-                        });
-                    } else if (status.equals("201")) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                myOrginSwipe.setRefreshing(false);
-                                Toast.makeText(mContext, "暂无更多数据~", Toast.LENGTH_SHORT).show();
-                                if (dynamicBaseArrayList.isEmpty()) {
-                                    myOrginNullData.setVisibility(View.VISIBLE);
-                                } else {
-                                    myOrginNullData.setVisibility(View.GONE);
-                                }
-                            }
-                        });
-                    } else if (status.equals("0")) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                myOrginSwipe.setRefreshing(false);
-                            }
-                        });
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     //请求列表数据
@@ -254,12 +205,10 @@ public class MyOrginFragment extends BaseFragment {
                             public void run() {
                                 //将数据填充
                                 if (myOrginAdapter == null || myOrginSwipe.isRefreshing()) {
-                                    Log.e(TAG, "数据填充====adapter为null时我发起的数量===" + receiveMsg.getMy_sponsor().getMsg_count());
-                                    myOrginAdapter = new MyOrginAdapter(mContext, getActivity(), receiveMsg.getMy_sponsor(), dynamicBaseArrayList);
+                                    myOrginAdapter = new MyOrginAdapter(mContext, getActivity(), mMsgArrayList, dynamicBaseArrayList);
                                     myOrginRecyclerview.setAdapter(myOrginAdapter);
                                     myOrginAdapter.notifyDataSetChanged();
                                 } else {
-                                    Log.e(TAG, "数据填充====adapter已经实例化时我发起的数量===" + receiveMsg.getMy_sponsor().getMsg_count());
                                     myOrginAdapter.notifyDataSetChanged();
                                 }
                                 if (myOrginAdapter != null) {
@@ -307,16 +256,43 @@ public class MyOrginFragment extends BaseFragment {
     protected void receiveEvent(Event event) {
         switch (event.getCode()) {
             case EC.EventCode.REFRESH_MY_ORGIN_NUM:
-                //收到刷新通知
-                initGetMsg();
+                break;
+            //获取我的发起头像地址
+            case EC.EventCode.MY_ORGIN_ICON:
+                break;
+            //获取我的发起的数量
+            case EC.EventCode.MY_ORGIN_NUM:
+                break;
+            case EC.EventCode.MY_ORGIN_MSG:
+                //获取我的发起消息
+                _ReceiveMsg.MySponsor mySponsor = (_ReceiveMsg.MySponsor) event.getData();
+                Log.e(TAG, "收到了我的发起消息12138=====" + mySponsor.getMsg_count());
+                if (!mMsgArrayList.isEmpty()) {
+                    mMsgArrayList.clear();
+                }
+                mMsgArrayList.add(mySponsor.getIcon());
+                mMsgArrayList.add(mySponsor.getMsg_count());
+                myOrginAdapter.notifyItemChanged(0);
                 break;
         }
     }
 
-    @OnClick(R.id.my_orgin_orgin_btn)
-    public void onViewClickedInMyOrginFragment() {
-        //点击发起动态
-        Log.e(TAG, "点击了发起动态按钮======");
-        EventBusUtil.sendEvent(new Event(EC.EventCode.GOTO_SEND_DYNAMIC));
+    @OnClick({R.id.my_orgin_orgin_btn})
+    public void onViewClickedInMyOrginFragment(View view) {
+        switch (view.getId()) {
+            case R.id.my_orgin_orgin_btn:
+                //点击发起动态
+                Log.e(TAG, "点击了发起动态按钮======");
+                EventBusUtil.sendEvent(new Event(EC.EventCode.GOTO_SEND_DYNAMIC));
+                break;
+//            case R.id.my_orgin_msg_rl:
+//                //点击了消息的模块
+//                myOrginMsgRl.setVisibility(View.GONE);
+//                Intent intent = new Intent(mContext, DynamicMsgActivity.class);
+//                intent.putExtra("type", "1");
+//                mContext.startActivity(intent);
+//                break;
+        }
+
     }
 }

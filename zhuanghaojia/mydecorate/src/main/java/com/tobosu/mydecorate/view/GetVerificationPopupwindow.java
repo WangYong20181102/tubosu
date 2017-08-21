@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,7 @@ public class GetVerificationPopupwindow extends PopupWindow {
     private TextView tv_another;
     private TextView tv_cancel;
     private TextView tv_ensure;
+    private LinearLayout pop_linearlayout;
     public EditText et_input;
     private HashMap<String, Object> headerMap = new HashMap<String, Object>();
     private String urlBase = Constant.ZHJ + "tapp/passport/get_pic_code?version=";
@@ -64,13 +66,14 @@ public class GetVerificationPopupwindow extends PopupWindow {
         tv_cancel = (TextView) mView.findViewById(R.id.tv_cancel);
         tv_ensure = (TextView) mView.findViewById(R.id.tv_ensure);
         et_input = (EditText) mView.findViewById(R.id.et_input);
+        pop_linearlayout= (LinearLayout) mView.findViewById(R.id.pop_linearlayout);
         this.setContentView(mView);
         this.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         this.setFocusable(true);
 //        ColorDrawable dw = new ColorDrawable(0x80000000);
 //        this.setBackgroundDrawable(dw);
-//        this.setAnimationStyle(R.style.custom_popupwindow_animstyle);
+        this.setAnimationStyle(R.style.custom_popupwindow_animstyle);
         this.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         tv_cancel.setOnClickListener(new View.OnClickListener() {

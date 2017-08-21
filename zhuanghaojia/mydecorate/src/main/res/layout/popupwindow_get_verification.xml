@@ -5,6 +5,7 @@
 
     <!--style="@style/verifycode_dialog"-->
     <LinearLayout
+        android:id="@+id/pop_linearlayout"
         android:layout_width="300dp"
         android:layout_height="220dp"
         android:background="@drawable/custom_dialog_bg"

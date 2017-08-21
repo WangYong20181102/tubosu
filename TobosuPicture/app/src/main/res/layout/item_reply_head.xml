@@ -202,11 +202,11 @@
         android:textSize="@dimen/text_size_28px" />
 
     <ImageView
+        android:layout_gravity="center"
         android:id="@+id/reply_head_none_comment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_marginTop="35dp"
-        android:scaleType="center"
         android:src="@mipmap/none_comment"
         android:visibility="gone" />
 </LinearLayout>

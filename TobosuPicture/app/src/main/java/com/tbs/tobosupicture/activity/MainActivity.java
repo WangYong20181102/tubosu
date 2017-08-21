@@ -74,7 +74,9 @@ public class MainActivity extends BaseActivity {
     private boolean isLoop = false;//是否需要循环
     private Gson mGson;
     private int mMyOrginNum = 0;//我的发起的数量
+    private String mMyOrginIconUrl = "";//我的发起用户头像发
     private int mMyJoinNum = 0;//我的参与的数量
+    private String mMyJoinIconUrl = "";//我的参与用户头像
     private String is_exist_case = "";
 
     @Override
@@ -283,12 +285,12 @@ public class MainActivity extends BaseActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if(mianAboutReddot!=null){
+                            if (mianAboutReddot != null) {
                                 if (is_exist_case.equals("1")) {
-                                    Log.e(TAG,"显示‘我的’红点提示======");
+                                    Log.e(TAG, "显示‘我的’红点提示======");
                                     mianAboutReddot.setVisibility(View.VISIBLE);
                                 } else {
-                                    Log.e(TAG,"隐藏‘我的’红点提示======");
+                                    Log.e(TAG, "隐藏‘我的’红点提示======");
                                     mianAboutReddot.setVisibility(View.GONE);
                                 }
                             }
@@ -323,9 +325,17 @@ public class MainActivity extends BaseActivity {
                         String data = jsonObject.getString("data");
                         final _ReceiveMsg receiveMsg = mGson.fromJson(data, _ReceiveMsg.class);
                         mMyOrginNum = Integer.parseInt(receiveMsg.getMy_sponsor().getMsg_count());//发起的数量
+                        mMyOrginIconUrl = receiveMsg.getMy_sponsor().getIcon();//发起的数量
                         mMyJoinNum = Integer.parseInt(receiveMsg.getMy_participation().getMsg_count());//参与的数量
+                        mMyJoinIconUrl = receiveMsg.getMy_participation().getIcon();//参与的数量
+
                         EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_NUM, mMyJoinNum));
+                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_ICON, mMyJoinIconUrl));
                         EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_NUM, mMyOrginNum));
+                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_ICON, mMyOrginIconUrl));
+                        //我的发起的消息 包含消息的数量消息的头像
+                        _ReceiveMsg.MySponsor mySponsor = new _ReceiveMsg.MySponsor(receiveMsg.getMy_sponsor().getMsg_count(), mMyOrginIconUrl);
+                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_MSG, mySponsor));
                         //将数值布局
                         runOnUiThread(new Runnable() {
                             @Override

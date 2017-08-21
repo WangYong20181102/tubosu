@@ -29,6 +29,36 @@
             android:textColor="@color/bg_white"
             android:textSize="@dimen/text_size_30px" />
     </LinearLayout>
+    <!--我的参与消息提示-->
+    <!--<RelativeLayout-->
+        <!--android:visibility="visible"-->
+        <!--android:id="@+id/my_orgin_msg_rl"-->
+        <!--android:layout_width="115dp"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginTop="6dp"-->
+        <!--android:background="@drawable/shape_about_me_head_hint">-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/my_orgin_msg_icon"-->
+            <!--android:layout_width="21dp"-->
+            <!--android:layout_height="21dp"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="12dp"-->
+            <!--android:src="@mipmap/default_icon" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/my_orgin_msg_text"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:text="3条新消息>"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textSize="@dimen/text_size_24px" />-->
+    <!--</RelativeLayout>-->
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/my_orgin_swipe"

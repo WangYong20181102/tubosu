@@ -418,6 +418,12 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             ((CommentViewHolder) holder).commentTime.setText("" + commentArrayList.get(position - 1).getAdd_time());
             //点赞数量
             ((CommentViewHolder) holder).commentZanNum.setText("" + commentArrayList.get(position - 1).getPraise_count());
+            //当前用户无法回复自己
+//            if (SpUtils.getUserUid(mContext).equals(commentArrayList.get(position - 1).getUid())) {
+//                ((CommentViewHolder) holder).commentRevert.setVisibility(View.GONE);
+//            } else {
+//                ((CommentViewHolder) holder).commentRevert.setVisibility(View.VISIBLE);
+//            }
             //回复数量
             ((CommentViewHolder) holder).commentRevert.setText("" + commentArrayList.get(position - 1).getReply_count() + "回复");
             //回复的点击事件

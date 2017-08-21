@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -12,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,7 @@ import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.ImgToFriendSeachActivity;
+import com.tbs.tobosupicture.activity.NewSendDynamicActivity;
 import com.tbs.tobosupicture.activity.SendDynamicActivity;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.bean.EC;
@@ -89,6 +92,7 @@ public class ImgToFriendFragment extends BaseFragment {
     private static final int REQUESTCODE_TAKE = 1;
     private static final int REQUESTCODE_CUTTING = 2;
     private static final int REQUEST_IMAGE = 3;//图片选择器用到的code
+    private static final int REQUESTCODE_XIAO_MI_TAKE = 4;//图片选择器用到的code
     //存储的名称
     private static final String IMAGE_FILE_NAME = Utils.getNowTime() + "avatarImage.jpg";
     //默认已选择图片. 只有在选择模式为多选时有效
@@ -164,6 +168,7 @@ public class ImgToFriendFragment extends BaseFragment {
                 } else {
                     Utils.gotoLogin(mContext);
                 }
+                Log.e(TAG, "获取手机品牌======" + Build.BRAND);
                 break;
             case R.id.imgtofriend_zuire:
                 //切换至最热
@@ -261,9 +266,17 @@ public class ImgToFriendFragment extends BaseFragment {
             switch (v.getId()) {
                 case R.id.takePhotoBtn:
                     //开启相机 调用原生相机
-                    Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
-                    startActivityForResult(takeIntent, REQUESTCODE_TAKE);
+                    if (android.os.Build.BRAND.equals("Xiaomi")) {
+                        //小米专用
+                        Log.e(TAG, "进入的了小米专用==========");
+                        Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(takeIntent, REQUESTCODE_XIAO_MI_TAKE);
+                    } else {
+                        Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
+                        startActivityForResult(takeIntent, REQUESTCODE_TAKE);
+                    }
+
                     break;
                 case R.id.pickPhotoBtn:
                     //开启图册 采用图册选择框架
@@ -309,16 +322,36 @@ public class ImgToFriendFragment extends BaseFragment {
                     String ImgPath = FileUtil.saveFile(mContext, Utils.getNowTime() + "lin_zxkk.jpg", photo);
                     ArrayList<String> imgPathList = new ArrayList<>();
                     imgPathList.add(ImgPath);
-                    Intent intent = new Intent(mContext, SendDynamicActivity.class);
+//                    Intent intent = new Intent(mContext, SendDynamicActivity.class);
+                    Intent intent = new Intent(mContext, NewSendDynamicActivity.class);
                     intent.putStringArrayListExtra("ImageList", imgPathList);
                     startActivity(intent);
+                }
+                break;
+            case REQUESTCODE_XIAO_MI_TAKE:
+                //小米专用拍照
+                if (data != null) {
+                    if (data.getExtras() != null) {
+                        Bundle bundle = data.getExtras();
+                        Bitmap photo = (Bitmap) bundle.get("data");
+                        if (photo != null) {
+                            String ImgPath = FileUtil.saveFile(mContext, Utils.getNowTime() + "lin_zxkk.jpg", photo);
+                            ArrayList<String> imgPathList = new ArrayList<>();
+                            imgPathList.add(ImgPath);
+//                            Intent intent = new Intent(mContext, SendDynamicActivity.class);
+                            Intent intent = new Intent(mContext, NewSendDynamicActivity.class);
+                            intent.putStringArrayListExtra("ImageList", imgPathList);
+                            startActivity(intent);
+                        }
+                    }
                 }
                 break;
             case REQUEST_IMAGE:
                 if (resultCode == RESULT_OK) {
                     ArrayList<String> imgPathList = new ArrayList<>();
                     imgPathList = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                    Intent intent = new Intent(mContext, SendDynamicActivity.class);
+//                    Intent intent = new Intent(mContext, SendDynamicActivity.class);
+                    Intent intent = new Intent(mContext, NewSendDynamicActivity.class);
                     intent.putStringArrayListExtra("ImageList", imgPathList);
                     startActivity(intent);
                 }
