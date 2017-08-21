@@ -3,6 +3,7 @@ package com.tbs.tobosutype.customview;
 import com.tbs.tobosutype.R;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,7 @@ public class CheckOrderPwdPopupWindow extends PopupWindow {
         mMenuView = inflater.inflate(R.layout.popupwindow_check_order_pwd, null);
         this.et_check_order_pwd = ((EditText) this.mMenuView.findViewById(R.id.et_check_order_pwd));
         this.bt_subit = ((TextView) this.mMenuView.findViewById(R.id.bt_subit));
+        this.bt_subit.setBackgroundColor(Color.parseColor("#ff882e"));
         this.setContentView(mMenuView);
         this.setWidth(LayoutParams.MATCH_PARENT);
         this.setHeight(LayoutParams.WRAP_CONTENT);

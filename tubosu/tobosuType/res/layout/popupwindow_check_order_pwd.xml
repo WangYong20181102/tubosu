@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
@@ -42,14 +42,14 @@
         <TextView
             android:gravity="center"
             android:id="@+id/bt_subit"
-            android:layout_width="fill_parent"
-            android:layout_height="40.0dip"
-            android:layout_marginTop="10.0dip"
-            android:background="@color/color_icon"
-            android:padding="2.0dip"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="#ff882e"
+            android:padding="2dp"
             android:text="确定"
             android:textColor="@android:color/white"
-            android:textSize="15.0sp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
 </RelativeLayout>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.TextUtils;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +65,7 @@ public class FreeDesignPrice extends Activity {
     private ImageView fdpBack;//返回键
     private TextView fdpPrice;//显示的半包总价
     private LinearLayout fdpLL;//显示发送验证码界面
+    private RelativeLayout fdpRl;//标题栏
     /**
      * 饼图上显示的价格
      */
@@ -117,7 +120,7 @@ public class FreeDesignPrice extends Activity {
 
         fdpBack = (ImageView) findViewById(R.id.fdp_back);
         fdpPrice = (TextView) findViewById(R.id.fdp_price);
-
+        fdpRl= (RelativeLayout) findViewById(R.id.fd_title);
         fdpTextWeishengjian = (TextView) findViewById(R.id.fdp_text_weishengjian);
         fdpTextKeting = (TextView) findViewById(R.id.fdp_text_keting);
         fdpTextQita = (TextView) findViewById(R.id.fdp_text_qita);
@@ -139,6 +142,7 @@ public class FreeDesignPrice extends Activity {
     }
 
     private void initView() {
+        fdpRl.setBackgroundColor(Color.parseColor("#ff882e"));
         myChatView.setFloatList(floatList);
         //设置点击事件监听
         fdpBack.setOnClickListener(occl);

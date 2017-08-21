@@ -2,6 +2,7 @@ package com.tbs.tobosutype.customview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -43,6 +44,7 @@ public class DesignFreePopupWindow extends PopupWindow {
 		dialog_freedesign_submit = (TextView) mView.findViewById(R.id.dialog_freedesign_submit);
 		dialog_freedesign_title = (TextView) mView.findViewById(R.id.dialog_freedesign_title);
 		dialog_freedesign_submit.setOnClickListener(itemsOnClick);
+		dialog_freedesign_submit.setBackgroundColor(Color.parseColor("#ff882e"));
 
 		this.setContentView(mView);
 		this.setWidth(LayoutParams.MATCH_PARENT);
