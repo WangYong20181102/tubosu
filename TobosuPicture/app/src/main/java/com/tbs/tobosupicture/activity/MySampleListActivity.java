@@ -93,7 +93,7 @@ public class MySampleListActivity extends BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    collectSampleSwipeRefreshLayout.setFocusable(false);
+                                    collectSampleSwipeRefreshLayout.setRefreshing(false);
                                     initAdapter();
                                 }
                             });
@@ -106,7 +106,7 @@ public class MySampleListActivity extends BaseActivity {
                                     if(samplePicAdapter!=null){
                                         samplePicAdapter.hideLoadMoreMessage();
                                     }
-                                    collectSampleSwipeRefreshLayout.setFocusable(false);
+                                    collectSampleSwipeRefreshLayout.setRefreshing(false);
                                 }
                             });
                         }
@@ -131,7 +131,7 @@ public class MySampleListActivity extends BaseActivity {
 
         samplePicAdapter.hideLoadMoreMessage();
 
-        collectSampleSwipeRefreshLayout.setFocusable(false);
+        collectSampleSwipeRefreshLayout.setRefreshing(false);
     }
 
 
