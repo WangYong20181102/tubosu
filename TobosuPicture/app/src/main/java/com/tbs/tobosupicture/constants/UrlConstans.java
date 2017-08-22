@@ -32,7 +32,7 @@ public class UrlConstans {
     /**
      * 发单所要用到的标识码
      */
-    public static final String PIPE_CODE = "http://m.tobosu.com/app/pub?channel=seo&subchannel=zhjandroid&chcode=" + Utils.getChannType(MyApplication.getContexts()) + "&app_type=2";
+    public static final String PIPE_CODE = "http://m.tobosu.com/app/pub?channel=seo&subchannel=android&chcode=" + Utils.getChannType(MyApplication.getContexts()) + "&app_type=3";
     /**
      * 发单入口url
      */
