@@ -159,7 +159,7 @@ public class PersonHomePageActivity extends BaseActivity {
         param.put("token", Utils.getDateToken());
         param.put("uid", homepageUid);//查看当前主页用户的uid
         //TODO 这里要做用户的登录判断 以及传递是否是真实的用户
-        if(Utils.userIsLogin(mContext)){
+        if (Utils.userIsLogin(mContext)) {
             param.put("login_uid", SpUtils.getUserUid(mContext));//登录的用户的id
         }
         param.put("is_virtual_user", is_virtual_user);//是否是虚拟用户
