@@ -4,6 +4,7 @@
     android:layout_height="match_parent">
 
     <ScrollView
+        android:id="@+id/caseDetailScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -43,13 +44,23 @@
                     </RelativeLayout>
 
                     <ImageView
-                        android:id="@+id/ivCollect"
+                        android:id="@+id/ivShareCase"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="26dp"
+                        android:background="@mipmap/zhuanfa"/>
+
+                    <ImageView
+                        android:id="@+id/ivCollect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/ivShareCase"
+                        android:layout_marginRight="10dp"
                         android:background="@mipmap/shoucang21"/>
+
 
                 </RelativeLayout>
 
@@ -433,4 +444,11 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/shareProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 </RelativeLayout>

@@ -36,6 +36,12 @@ public class ImgJsonEntity {
                 seeImgEntity = new SeeImgEntity();
                 seeImgEntity.setSuite_id(this.data.getString("suite_id"));
                 seeImgEntity.setIs_collect(this.data.getString("is_collect"));
+                seeImgEntity.setShare_desc(this.data.getString("share_title"));
+                seeImgEntity.setShare_image(this.data.getString("share_image"));
+                seeImgEntity.setShare_title(this.data.getString("share_desc"));
+                seeImgEntity.setShare_url(this.data.getString("share_url"));
+
+
                 JSONArray pictureArr = this.data.getJSONArray("picture");
                 ArrayList<ImgEntity> imgEntityList = new ArrayList<ImgEntity>();
                 int len = pictureArr.length();

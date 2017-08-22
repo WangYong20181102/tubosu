@@ -19,6 +19,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,11 @@ import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.TouchImageView;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,6 +94,9 @@ public class SeeImageActivity extends BaseActivity {
     RelativeLayout relLayout;
     @BindView(R.id.ivBigCollect)
     ImageView ivBigCollect;
+    @BindView(R.id.shareProgress)
+    ProgressBar shareProgress;
+
 
     private int currentPosition = 0;
     private ArrayList<ImgEntity> imgEntityList;
@@ -95,6 +104,11 @@ public class SeeImageActivity extends BaseActivity {
     private String imgId;
     private String uid;
     private String isCollect;
+    private String shareTitle;  // 分享 标题
+    private String shareImage;  // 分享 图片
+    private String shareDesc;   // 分享 简介
+    private String shareUrl;    // 分享 链接
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +150,10 @@ public class SeeImageActivity extends BaseActivity {
                                 public void run() {
 
                                     isCollect = jsonEntity.getSeeImgEntity().getIs_collect();
+                                    shareTitle = jsonEntity.getSeeImgEntity().getShare_title();
+                                    shareImage = jsonEntity.getSeeImgEntity().getShare_image();
+                                    shareDesc = jsonEntity.getSeeImgEntity().getShare_desc();
+                                    shareUrl = jsonEntity.getSeeImgEntity().getShare_url();
 
                                     if("1".equals(isCollect)){
                                         ivCollectImg.setBackgroundResource(R.mipmap.shoucang4);
@@ -232,6 +250,29 @@ public class SeeImageActivity extends BaseActivity {
 
     }
 
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onStart(SHARE_MEDIA share_media) {
+            shareProgress.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        public void onResult(SHARE_MEDIA share_media) {
+            shareProgress.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+            shareProgress.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA share_media) {
+            shareProgress.setVisibility(View.GONE);
+        }
+    };
+
+
     @OnClick({R.id.relSeeImgBack, R.id.ivImgShare, R.id.tvGetPrice, R.id.ivCollectImg, R.id.ivDownImg, R.id.ivShowAndHide})
     public void onViewClickedSeeImageActivity(View view) {
         switch (view.getId()) {
@@ -239,7 +280,15 @@ public class SeeImageActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.ivImgShare:
-                Utils.setToast(mContext, "分享啊");
+                UMWeb umWeb = new UMWeb(shareUrl);
+                umWeb.setDescription(shareDesc);
+                umWeb.setTitle(shareTitle);
+                umWeb.setThumb(new UMImage(mContext,shareImage));
+                new ShareAction(SeeImageActivity.this)
+                        .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
+                        .withMedia(umWeb)
+                        .setCallback(umShareListener)
+                        .open();
                 break;
             case R.id.tvGetPrice:
                 // 底部弹框

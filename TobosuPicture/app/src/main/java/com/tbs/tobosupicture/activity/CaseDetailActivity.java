@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -21,6 +23,11 @@ import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.MyListView;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,12 +82,23 @@ public class CaseDetailActivity extends BaseActivity {
     LinearLayout layoutGetPriceKnow;
     @BindView(R.id.ivCollect)
     ImageView ivCollect;
+    @BindView(R.id.ivShareCase)
+    ImageView ivShareCase;
+    @BindView(R.id.shareProgressBar)
+    ProgressBar shareProgressBar;
+    @BindView(R.id.caseDetailScrollView)
+    ScrollView caseDetailScrollView;
+
+
+
 
     // 数据源
     private CaseDetailEntity caseDetailEntity;
     private String id;
-    private String des = "";
-
+    private String des = "";            // 分享 简介
+    private String shareUrl = "";       // 分享 链接
+    private String shareTitle = "";     // 分享 标题
+    private String shareImg = "";       // 分享 图片
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +107,7 @@ public class CaseDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
         mContext = CaseDetailActivity.this;
         TAG = "CaseDetailActivity";
-
+        caseDetailScrollView.scrollTo(0,0);
         getIntentData();
         setClick();
     }
@@ -218,6 +236,11 @@ public class CaseDetailActivity extends BaseActivity {
     private void initDataInView() {
         des = caseDetailEntity.getCase_data().getDescription();
         tvCaseDescription.setText(des);
+
+        shareUrl = caseDetailEntity.getCase_data().getShare_url();
+        shareTitle = caseDetailEntity.getCase_data().getTitle();
+        shareImg = caseDetailEntity.getCase_data().getCover_url();
+
         isCollect = caseDetailEntity.getCase_data().getIs_collect();
         Utils.setErrorLog(TAG, "当前进入页面时的标识是" + isCollect);
         if("0".equals(isCollect)){
@@ -252,7 +275,7 @@ public class CaseDetailActivity extends BaseActivity {
         tvDesignerName.setText(caseDetailEntity.getCase_data().getDesigner_name());
     }
 
-    @OnClick({R.id.relCaseDetailBack, R.id.layoutIneedPrice, R.id.layoutGetPriceKnow})
+    @OnClick({R.id.relCaseDetailBack, R.id.layoutIneedPrice, R.id.layoutGetPriceKnow, R.id.ivShareCase})
     public void onViewClickedCaseDetailActivity(View view) {
         switch (view.getId()) {
             case R.id.relCaseDetailBack:
@@ -264,8 +287,41 @@ public class CaseDetailActivity extends BaseActivity {
             case R.id.layoutGetPriceKnow:
                 startActivity(new Intent(mContext, SmartDesignActivity.class));
                 break;
+            case R.id.ivShareCase:
+                UMWeb umWeb = new UMWeb(shareUrl);
+                umWeb.setDescription(des);
+                umWeb.setTitle(shareTitle);
+                umWeb.setThumb(new UMImage(mContext,shareImg));
+                new ShareAction(CaseDetailActivity.this)
+                        .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
+                        .withMedia(umWeb)
+                        .setCallback(umShareListener)
+                        .open();
+                break;
         }
     }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onStart(SHARE_MEDIA share_media) {
+            shareProgressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        public void onResult(SHARE_MEDIA share_media) {
+            shareProgressBar.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+            shareProgressBar.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA share_media) {
+            shareProgressBar.setVisibility(View.GONE);
+        }
+    };
 
 
     @Override

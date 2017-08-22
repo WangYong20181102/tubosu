@@ -6,13 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.tbs.tobosupicture.R;
-import com.tbs.tobosupicture.bean.CaseDetailEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
-import com.tbs.tobosupicture.utils.Utils;
-
 import java.util.ArrayList;
 
 /**

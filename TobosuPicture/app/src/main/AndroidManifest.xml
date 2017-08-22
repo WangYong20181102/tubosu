@@ -138,7 +138,8 @@
         <activity android:name=".activity.MyFriendsActivity" />
         <activity android:name=".activity.DesignerActivity" />
         <activity android:name=".activity.ConditionActivity" />
-        <activity android:name=".activity.SeeImageActivity" />
+        <activity android:name=".activity.SeeImageActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|stateVisible|adjustResize"/>
         <activity android:name=".activity.PersonHomePageActivity" />
         <activity android:name=".activity.HisFriendsActivity" />
         <activity android:name=".activity.CaseDetailActivity" />

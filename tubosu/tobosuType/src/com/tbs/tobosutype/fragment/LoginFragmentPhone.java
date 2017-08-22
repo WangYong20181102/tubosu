@@ -91,7 +91,6 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
     private LinearLayout ll_obtain_weixin_login2;
 
 
-
     /*-------------手机登录相关------------*/
     private RequestParams fastLoginParams;
 
@@ -186,7 +185,6 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
 
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {
-
         return false;
     }
 

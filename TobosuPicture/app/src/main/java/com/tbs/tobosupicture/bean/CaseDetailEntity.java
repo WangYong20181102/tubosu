@@ -78,6 +78,7 @@ public class CaseDetailEntity {
         private String caseid;
         private String shi;
         private String ting;
+        private String title;
         private String wei;
         private String area;
         private String desmethod;
@@ -94,6 +95,23 @@ public class CaseDetailEntity {
         private String designer_position;
         private String layout_url;
         private String is_collect;
+        private String share_url;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getShare_url() {
+            return share_url;
+        }
+
+        public void setShare_url(String share_url) {
+            this.share_url = share_url;
+        }
 
         public String getIs_collect() {
             return is_collect;
