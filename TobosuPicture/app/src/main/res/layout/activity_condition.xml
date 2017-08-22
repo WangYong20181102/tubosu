@@ -4,7 +4,7 @@
     android:id="@+id/condictionMainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#F0F0F0"
     tools:context=".activity.ConditionActivity">
 
     <RelativeLayout
@@ -51,6 +51,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="14dp"
                     android:background="#F5F5F5"
+                    android:textColor="#9d9fa4"
                     android:text="历史搜索"/>
                 <com.tbs.tobosupicture.view.MyListView
                     android:id="@+id/searchCaseRecord"
@@ -95,6 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:textColor="#9d9fa4"
                     android:layout_marginLeft="14dp"
                     android:text="搜索条件(可组合多选)"/>
 
@@ -113,6 +115,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:layout_below="@+id/lp">
                 <RelativeLayout
                     android:id="@+id/relShowAndHideCity"
@@ -234,6 +237,7 @@
                 android:id="@+id/expandableConditionListview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:groupIndicator="@null">
             </com.tbs.tobosupicture.view.CustomExpandableListView>
         </LinearLayout>

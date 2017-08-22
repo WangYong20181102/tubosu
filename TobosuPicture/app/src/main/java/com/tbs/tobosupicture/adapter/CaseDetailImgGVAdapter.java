@@ -15,6 +15,7 @@ import com.tbs.tobosupicture.activity.SeeImageActivity;
 import com.tbs.tobosupicture.bean.CaseDetailEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.view.MyGridView;
+import com.tbs.tobosupicture.view.RoundAngleImageView;
 
 import java.util.ArrayList;
 
@@ -27,7 +28,7 @@ public class CaseDetailImgGVAdapter extends BaseAdapter {
     private ArrayList<CaseDetailEntity.OnlineDiagramBean> dataList;
     private Context context;
     private LayoutInflater inflater;
-    private String stage[] = {"水电", "泥木", "油漆", "竣工"}; //阶段：1水电；2泥木；3油漆；4竣工
+    private String stage[] = {"水电", "泥木", "油漆", "竣工"};   //阶段：1水电；2泥木；3油漆；4竣工
 
     public CaseDetailImgGVAdapter(Context context, ArrayList<CaseDetailEntity.OnlineDiagramBean> dataList){
         this.context = context;
@@ -59,7 +60,7 @@ public class CaseDetailImgGVAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.adapter_item_case_detail_gv_img, null);
             holder.tv = (TextView) convertView.findViewById(R.id.tvTitleCaseDetailGv);
             holder.gv = (MyGridView) convertView.findViewById(R.id.gv_detail_case_gv);
-            holder.iv = (ImageView) convertView.findViewById(R.id.iv_detail_case_gv);
+            holder.iv = (RoundAngleImageView) convertView.findViewById(R.id.iv_detail_case_gv_more);
             holder.tvDesc = (TextView) convertView.findViewById(R.id.tvDescription);
             convertView.setTag(holder);
         }else {
@@ -68,15 +69,17 @@ public class CaseDetailImgGVAdapter extends BaseAdapter {
 
         ArrayList<String> imgList = dataList.get(position).getImg_url();
         if(imgList.size() % 2 == 0){
+            // 偶数
             GvStageAdapter stageAdapter = new GvStageAdapter(context, imgList, dataList.get(position).getId());
             holder.gv.setAdapter(stageAdapter);
             holder.iv.setVisibility(View.GONE);
         }else {
+            // 奇数
             holder.iv.setVisibility(View.VISIBLE);
             String url = imgList.remove(imgList.size()-1);
             GvStageAdapter stageAdapter = new GvStageAdapter(context, imgList, dataList.get(position).getId());
             holder.gv.setAdapter(stageAdapter);
-            GlideUtils.glideLoader(context, url, R.mipmap.loading_img_fail, R.mipmap.loading_img, holder.iv, 1);
+            GlideUtils.glideLoader(context, url, R.mipmap.loading_img_fail, R.mipmap.loading_img, holder.iv);
             holder.iv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -108,7 +111,7 @@ public class CaseDetailImgGVAdapter extends BaseAdapter {
     class ImgViewHolder{
         MyGridView gv;
         TextView tv;
-        ImageView iv;
+        RoundAngleImageView iv;  // 奇数，多出来的一张
         TextView tvDesc;
     }
 }

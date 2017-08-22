@@ -68,14 +68,14 @@ public class CaseDetailActivity extends BaseActivity {
     TextView tvDesignerName;
     @BindView(R.id.ivBigHuxingTu)
     ImageView ivBigHuxingTu;
-    @BindView(R.id.mylistviewCaseDetial)
+    @BindView(R.id.mylistviewCaseDetial)  // 设计图
     MyListView mylistviewCaseDetial;
     @BindView(R.id.tvCaseDescription)
     TextView tvCaseDescription;
     @BindView(R.id.myStageCaseDetial)
-    MyListView myStageCaseDetial;
+    MyListView myStageCaseDetial;   // 装修阶段
     @BindView(R.id.mylistviewStayIn)
-    MyListView mylistviewStayIn;
+    MyListView mylistviewStayIn;  // 入住场景
     @BindView(R.id.layoutIneedPrice)
     LinearLayout layoutIneedPrice;
     @BindView(R.id.layoutGetPriceKnow)
@@ -107,7 +107,7 @@ public class CaseDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
         mContext = CaseDetailActivity.this;
         TAG = "CaseDetailActivity";
-        caseDetailScrollView.scrollTo(0,0);
+        caseDetailScrollView.smoothScrollTo(0,20);
         getIntentData();
         setClick();
     }
@@ -255,12 +255,18 @@ public class CaseDetailActivity extends BaseActivity {
 
         CaseDetailImgAdapter imgAdapter = new CaseDetailImgAdapter(mContext, caseDetailEntity.getSuite());
         mylistviewCaseDetial.setAdapter(imgAdapter);
+
         CaseDetailImgGVAdapter imgGVAdapter = new CaseDetailImgGVAdapter(mContext, caseDetailEntity.getOnline_diagram());
         myStageCaseDetial.setAdapter(imgGVAdapter);
 
         // 入住场景 // FIXME: 2017/8/17 闪退就是这里有问题
-        CaseDetailStayInAdapter stayInAdapter = new CaseDetailStayInAdapter(mContext, caseDetailEntity.getStay_real().get(0).getImg_url());
-        mylistviewStayIn.setAdapter(stayInAdapter);
+        if(caseDetailEntity.getStay_real().size()>0){
+            CaseDetailStayInAdapter stayInAdapter = new CaseDetailStayInAdapter(mContext, caseDetailEntity.getStay_real().get(0).getImg_url());
+            mylistviewStayIn.setAdapter(stayInAdapter);
+        }else{
+            // 无入住场景
+
+        }
 
 
         tvCaseText.setText(caseDetailEntity.getCase_data().getCity_name() + " " +
@@ -295,7 +301,7 @@ public class CaseDetailActivity extends BaseActivity {
                 new ShareAction(CaseDetailActivity.this)
                         .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
                         .withMedia(umWeb)
-                        .setCallback(umShareListener)
+//                        .setCallback(umShareListener)
                         .open();
                 break;
         }

@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.utils.GlideUtils;
+import com.tbs.tobosupicture.view.RoundAngleImageView;
+
 import java.util.ArrayList;
 
 /**
@@ -48,7 +50,7 @@ public class CaseDetailStayInAdapter extends BaseAdapter {
         if(convertView==null){
             holder = new ImgViewHolder();
             convertView = inflater.inflate(R.layout.adapter_item_case_001_img, null);
-            holder.iv = (ImageView) convertView.findViewById(R.id.iv_detail_case21);
+            holder.iv = (RoundAngleImageView) convertView.findViewById(R.id.iv_detail_case21);
 //            holder.tv = (TextView) convertView.findViewById(R.id.tvTitleCaseDetail);
             convertView.setTag(holder);
         }else {
@@ -56,14 +58,14 @@ public class CaseDetailStayInAdapter extends BaseAdapter {
         }
 
 
-        GlideUtils.glideLoader(context, dataList.get(position), R.mipmap.loading_img_fail, R.mipmap.loading_img, holder.iv, 1);
+        GlideUtils.glideLoader(context, dataList.get(position), R.mipmap.loading_img_fail, R.mipmap.loading_img, holder.iv);
 //        holder.tv.setText(dataList.get(position).getSpace_name());
 
         return convertView;
     }
 
     class ImgViewHolder{
-        ImageView iv;
+        RoundAngleImageView iv;
 //        TextView tv;
     }
 }

@@ -287,7 +287,7 @@ public class SeeImageActivity extends BaseActivity {
                 new ShareAction(SeeImageActivity.this)
                         .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
                         .withMedia(umWeb)
-                        .setCallback(umShareListener)
+//                        .setCallback(umShareListener)
                         .open();
                 break;
             case R.id.tvGetPrice:

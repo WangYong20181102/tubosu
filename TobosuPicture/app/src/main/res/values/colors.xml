@@ -45,7 +45,9 @@
     <color name="bg_fd_title">#ff882e</color>
 
     <color name="color_icon">#FFBD25</color>
+    <color name="color_dividing_color">#F5F5F5</color>
+    <color name="color_gv_color">#F3F3F3</color>
 
-
+    <color name="color_dividings_color">#E6E6E6</color>
 
 </resources>

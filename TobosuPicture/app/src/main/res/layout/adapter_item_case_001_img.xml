@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <ImageView
+    <com.tbs.tobosupicture.view.RoundAngleImageView
         android:id="@+id/iv_detail_case21"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="222dp"
         android:layout_margin="10dp"
         android:scaleType="centerInside"/>
 

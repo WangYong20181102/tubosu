@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
@@ -92,8 +93,16 @@ public class CollectSampleImgAdapter extends RecyclerView.Adapter<RecyclerView.V
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof SamplePicViewHolder){
             SamplePicViewHolder itmeHolder = (SamplePicViewHolder) holder;
-            GlideUtils.glideLoader(mContext, dataList.get(position).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itmeHolder.iv_big_sample_pic,1);
-            GlideUtils.glideLoader(mContext, dataList.get(position).getDesigner_icon(), R.mipmap.pic,R.mipmap.pic,itmeHolder.iv_designer_pic, 0);
+            GlideUtils.glideLoader(mContext, dataList.get(position).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itmeHolder.iv_big_sample_pic);
+
+
+            if(!"".equals(dataList.get(position).getDesigner_icon())){
+                GlideUtils.glideLoader(mContext, dataList.get(position).getDesigner_icon(), R.mipmap.pic,R.mipmap.pic,itmeHolder.iv_designer_pic, 0);
+                itmeHolder.rel_desiner_layout.setVisibility(View.VISIBLE);
+            }else {
+                itmeHolder.rel_desiner_layout.setVisibility(View.GONE);
+            }
+
             itmeHolder.tv_samplepic_title.setText(dataList.get(position).getTitle());
             itmeHolder.tv_pic_city.setText(dataList.get(position).getCity_name());
             if(!"".equals(dataList.get(position).getArea_name())){
@@ -168,6 +177,7 @@ public class CollectSampleImgAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     public class SamplePicViewHolder extends RecyclerView.ViewHolder{
+        private RelativeLayout rel_desiner_layout;
         private ImageView iv_big_sample_pic;
         private ImageView iv_designer_pic;
         private TextView tv_samplepic_title;
@@ -181,6 +191,7 @@ public class CollectSampleImgAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         public SamplePicViewHolder(View itemView) {
             super(itemView);
+            rel_desiner_layout = (RelativeLayout) itemView.findViewById(R.id.rel_desiner_layout);
             iv_big_sample_pic = (ImageView) itemView.findViewById(R.id.iv_big_sample_pic);
             iv_designer_pic = (ImageView) itemView.findViewById(R.id.iv_designer_pic);
             tv_samplepic_title = (TextView) itemView.findViewById(R.id.tv_samplepic_title);

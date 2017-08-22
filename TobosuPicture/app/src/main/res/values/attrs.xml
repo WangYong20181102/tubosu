@@ -97,5 +97,9 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
+    <declare-styleable name="RoundAngleImageView">
+        <attr name="roundWidth" format="dimension" />
+        <attr name="roundHeight" format="dimension" />
+    </declare-styleable>
 
 </resources>
