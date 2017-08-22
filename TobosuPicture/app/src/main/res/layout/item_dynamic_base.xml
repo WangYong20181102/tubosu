@@ -20,7 +20,7 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="8dp">
                 <!--头像-->
                 <ImageView
                     android:id="@+id/dynamic_base_icon"
@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="16dp"
                 android:orientation="vertical">
                 <!--昵称-->
                 <TextView

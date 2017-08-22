@@ -25,6 +25,7 @@ import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.Md5Utils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
+import com.tbs.tobosupicture.view.CustomWaitDialog;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -64,6 +65,7 @@ public class LoginActivity extends BaseActivity {
     private String TAG = "LoginActivity";
     private Gson mGson;
     private UMShareAPI mShareAPI;
+    private CustomWaitDialog customWaitDialog;
 
 
     @Override
@@ -78,6 +80,7 @@ public class LoginActivity extends BaseActivity {
     private void initViewEvent() {
         mGson = new Gson();
         mShareAPI = UMShareAPI.get(mContext);
+        customWaitDialog = new CustomWaitDialog(mContext);
     }
 
     @Override
@@ -114,6 +117,7 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.login_weixin_login:
                 //微信登录
+                customWaitDialog.show();
                 weChatLogin();
                 break;
         }
@@ -202,18 +206,20 @@ public class LoginActivity extends BaseActivity {
                 String icon = map.get("iconurl");//微信的头像
                 String nickname = map.get("name");//微信的昵称
                 String account = map.get("openid");//微信的openid
-                Log.e(TAG, "授权成功==头像==" + icon + "===nickname===" + nickname + "===account===" + account);
+//                Log.e(TAG, "授权成功==头像==" + icon + "===nickname===" + nickname + "===account===" + account);
                 HttpWeChatLogin(icon, nickname, account);
             }
 
             @Override
             public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
                 //授权出错
+                customWaitDialog.dismiss();
             }
 
             @Override
             public void onCancel(SHARE_MEDIA share_media, int i) {
                 //取消微信授权
+                customWaitDialog.dismiss();
                 Toast.makeText(mContext, "取消了微信授权登录！", Toast.LENGTH_SHORT).show();
             }
         });
@@ -231,6 +237,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败========" + e.toString());
+                customWaitDialog.dismiss();
             }
 
             @Override
@@ -253,6 +260,7 @@ public class LoginActivity extends BaseActivity {
                         Log.e(TAG, "获取用户的uid====" + SpUtils.getUserUid(mContext));
                         EventBusUtil.sendEvent(new Event(EC.EventCode.LOGIN_INITDATA));
                         EventBusUtil.sendEvent(new Event(EC.EventCode.REFRESH_MY_ORGIN_NUM));
+                        customWaitDialog.dismiss();
                         finish();
                     }
                 } catch (JSONException e) {

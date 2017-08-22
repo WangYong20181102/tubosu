@@ -191,7 +191,6 @@ public class MyFansActivity extends BaseActivity {
                                 } else {
                                     myFansAdapter.notifyDataSetChanged();
                                 }
-                                Log.e(TAG, "查看修改的数据==第三个是否互为好友==" + myFansList.get(2).getIs_friends());
                                 if (myFansAdapter != null) {
                                     myFansAdapter.changLoadState(2);
                                 }

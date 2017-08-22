@@ -67,12 +67,6 @@ public class MyOrginFragment extends BaseFragment {
     TextView myOrginOrginBtn;
     @BindView(R.id.my_orgin_null_data)
     LinearLayout myOrginNullData;
-//    @BindView(R.id.my_orgin_msg_icon)
-//    ImageView myOrginMsgIcon;
-//    @BindView(R.id.my_orgin_msg_text)
-//    TextView myOrginMsgText;
-//    @BindView(R.id.my_orgin_msg_rl)
-//    RelativeLayout myOrginMsgRl;
 
     private Context mContext;
     private String TAG = "MyOrginFragment";
@@ -82,7 +76,6 @@ public class MyOrginFragment extends BaseFragment {
     private int mPage = 1;
     private ArrayList<_DynamicBase> dynamicBaseArrayList = new ArrayList<>();
     private ArrayList<String> mMsgArrayList = new ArrayList<>();
-    //    private _ReceiveMsg.MySponsor mySponsor;
     private Gson mGson;
 
     @Nullable
@@ -105,7 +98,6 @@ public class MyOrginFragment extends BaseFragment {
 
     private void initViewEvent() {
         mGson = new Gson();
-//        mySponsor = new _ReceiveMsg.MySponsor();
         myOrginSwipe.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE);
         myOrginSwipe.setBackgroundColor(Color.WHITE);
         myOrginSwipe.setSize(SwipeRefreshLayout.DEFAULT);
@@ -225,7 +217,9 @@ public class MyOrginFragment extends BaseFragment {
                                 myOrginSwipe.setRefreshing(false);
                                 if (myOrginAdapter != null) {
                                     myOrginAdapter.changeLoadState(2);
-                                    Toast.makeText(mContext, "暂无更多数据~", Toast.LENGTH_SHORT).show();
+                                    if (!dynamicBaseArrayList.isEmpty()) {
+                                        Toast.makeText(mContext, "暂无更多数据~", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                                 if (dynamicBaseArrayList.isEmpty()) {
                                     myOrginNullData.setVisibility(View.VISIBLE);
@@ -267,12 +261,25 @@ public class MyOrginFragment extends BaseFragment {
                 //获取我的发起消息
                 _ReceiveMsg.MySponsor mySponsor = (_ReceiveMsg.MySponsor) event.getData();
                 Log.e(TAG, "收到了我的发起消息12138=====" + mySponsor.getMsg_count());
-                if (!mMsgArrayList.isEmpty()) {
-                    mMsgArrayList.clear();
+                if (!myOrginSwipe.isRefreshing() && !isLoading) {
+                    if (!mMsgArrayList.isEmpty()) {
+                        mMsgArrayList.clear();
+                    }
+                    mMsgArrayList.add(mySponsor.getIcon());
+                    mMsgArrayList.add(mySponsor.getMsg_count());
+                    if (myOrginAdapter != null) {
+                        myOrginAdapter.notifyItemChanged(0);
+                    }
                 }
-                mMsgArrayList.add(mySponsor.getIcon());
-                mMsgArrayList.add(mySponsor.getMsg_count());
-                myOrginAdapter.notifyItemChanged(0);
+                break;
+            case EC.EventCode.LOGIN_INITDATA:
+                initGetMsg();
+                break;
+            case EC.EventCode.REFRESH_MY_ORGIN:
+                //用户第一次发动态之后刷新数据
+                if (dynamicBaseArrayList.isEmpty()) {
+                    initGetMsg();
+                }
                 break;
         }
     }

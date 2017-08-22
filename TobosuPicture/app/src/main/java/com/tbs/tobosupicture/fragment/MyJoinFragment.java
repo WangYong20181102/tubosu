@@ -68,7 +68,7 @@ public class MyJoinFragment extends BaseFragment {
     private boolean isLoading = false;//是否加载更多
     private int mPage = 1;
     private ArrayList<_DynamicBase> dynamicBaseArrayList = new ArrayList<>();
-    private _ReceiveMsg receiveMsg;
+    private ArrayList<String> mMsgArrayList = new ArrayList<>();
     private Gson mGson;
 
     @Nullable
@@ -78,7 +78,7 @@ public class MyJoinFragment extends BaseFragment {
         mContext = getActivity();
         unbinder = ButterKnife.bind(this, view);
         initViewEvent();
-        HttpGetMsg();
+        HttpGetDynamicList(mPage);
         return view;
     }
 
@@ -86,6 +86,7 @@ public class MyJoinFragment extends BaseFragment {
     protected boolean isRegisterEventBus() {
         return true;
     }
+
     private void initViewEvent() {
         mGson = new Gson();
 
@@ -114,10 +115,7 @@ public class MyJoinFragment extends BaseFragment {
         if (!dynamicBaseArrayList.isEmpty()) {
             dynamicBaseArrayList.clear();
         }
-        if (receiveMsg != null) {
-//            receiveMsg.getMy_sponsor().setMsg_count("0");
-        }
-        HttpGetMsg();
+        HttpGetDynamicList(mPage);
     }
 
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
@@ -158,68 +156,6 @@ public class MyJoinFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    //链式请求
-    private void HttpGetMsg() {
-        myJoinSwipe.setRefreshing(true);
-        isLoading = true;
-        HashMap<String, Object> param = new HashMap<>();
-        param.put("token", Utils.getDateToken());
-        param.put("uid", SpUtils.getUserUid(mContext));
-        param.put("is_icon", "1");
-        HttpUtils.doPost(UrlConstans.RECEIVE_INFORMATION, param, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                isLoading = false;
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String json = new String(response.body().string());
-                Log.e(TAG, "链接成功====" + json);
-                try {
-                    JSONObject jsonObject = new JSONObject(json);
-                    String status = jsonObject.getString("status");
-                    if (status.equals("200")) {
-                        //获取成功
-                        String data = jsonObject.getString("data");
-                        receiveMsg = mGson.fromJson(data, _ReceiveMsg.class);
-                        Log.e(TAG, "当前用户的“我参与的”消息数量======" + receiveMsg.getMy_participation().getMsg_count());
-                        //将数据导入开始下一个请求
-                        HttpGetDynamicList(1);
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                            }
-                        });
-                    } else if (status.equals("201")) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                myJoinSwipe.setRefreshing(false);
-                                Toast.makeText(mContext, "暂无更多数据~", Toast.LENGTH_SHORT).show();
-                                if (dynamicBaseArrayList.isEmpty()) {
-                                    myJoinNullData.setVisibility(View.VISIBLE);
-                                } else {
-                                    myJoinNullData.setVisibility(View.GONE);
-                                }
-                            }
-                        });
-                    } else if (status.equals("0")) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                myJoinSwipe.setRefreshing(false);
-                            }
-                        });
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
     //请求列表数据
     private void HttpGetDynamicList(int mPage) {
         isLoading = true;
@@ -252,12 +188,10 @@ public class MyJoinFragment extends BaseFragment {
                             public void run() {
                                 //将数据填充
                                 if (myJoinAdapter == null || myJoinSwipe.isRefreshing()) {
-                                    Log.e(TAG, "数据填充====adapter为null时我发起的数量===" + receiveMsg.getMy_sponsor().getMsg_count());
-                                    myJoinAdapter = new MyJoinAdapter(mContext, getActivity(), receiveMsg.getMy_participation(), dynamicBaseArrayList);
+                                    myJoinAdapter = new MyJoinAdapter(mContext, getActivity(), mMsgArrayList, dynamicBaseArrayList);
                                     myJoinRecyclerview.setAdapter(myJoinAdapter);
                                     myJoinAdapter.notifyDataSetChanged();
                                 } else {
-                                    Log.e(TAG, "数据填充====adapter已经实例化时我发起的数量===" + receiveMsg.getMy_sponsor().getMsg_count());
                                     myJoinAdapter.notifyDataSetChanged();
                                 }
                                 if (myJoinAdapter != null) {
@@ -274,7 +208,9 @@ public class MyJoinFragment extends BaseFragment {
                                 myJoinSwipe.setRefreshing(false);
                                 if (myJoinAdapter != null) {
                                     myJoinAdapter.changeLoadState(2);
-                                    Toast.makeText(mContext, "暂无更多数据~", Toast.LENGTH_SHORT).show();
+                                    if (!dynamicBaseArrayList.isEmpty()) {
+                                        Toast.makeText(mContext, "暂无更多数据~", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                                 if (dynamicBaseArrayList.isEmpty()) {
                                     myJoinNullData.setVisibility(View.VISIBLE);
@@ -306,6 +242,22 @@ public class MyJoinFragment extends BaseFragment {
         switch (event.getCode()) {
             case EC.EventCode.REFRESH_MY_JOIN_NUM:
                 //收到刷新通知
+//                initGetMsg();
+                break;
+            case EC.EventCode.MY_JOIN_MSG:
+                _ReceiveMsg.MyParticipation myParticipation = (_ReceiveMsg.MyParticipation) event.getData();
+                if (!myJoinSwipe.isRefreshing() && !isLoading) {
+                    if (!mMsgArrayList.isEmpty()) {
+                        mMsgArrayList.clear();
+                    }
+                    mMsgArrayList.add(myParticipation.getIcon());
+                    mMsgArrayList.add(myParticipation.getMsg_count());
+                    if (myJoinAdapter != null) {
+                        myJoinAdapter.notifyItemChanged(0);
+                    }
+                }
+                break;
+            case EC.EventCode.LOGIN_INITDATA:
                 initGetMsg();
                 break;
         }
