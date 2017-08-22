@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/bg_white"
@@ -7,30 +7,35 @@
 
     <RelativeLayout
         android:id="@+id/head_hint_rl"
-        android:layout_width="115dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="6dp"
-        android:background="@drawable/shape_about_me_head_hint">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/head_hint_icon"
-            android:layout_width="21dp"
-            android:layout_height="21dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:src="@mipmap/default_icon" />
+        <RelativeLayout
+            android:layout_width="115dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/shape_about_me_head_hint">
 
-        <TextView
-            android:id="@+id/head_hint_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:text="3条新消息>"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_24px" />
+            <ImageView
+                android:id="@+id/head_hint_icon"
+                android:layout_width="21dp"
+                android:layout_height="21dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:src="@mipmap/default_icon" />
+
+            <TextView
+                android:id="@+id/head_hint_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:text="3条新消息>"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_24px" />
+        </RelativeLayout>
     </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

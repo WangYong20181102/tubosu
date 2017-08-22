@@ -302,6 +302,7 @@ public class RegisterActivity extends BaseActivity {
                         intent.putExtra("from", "RegisterActivity");
                         mContext.startActivity(intent);
                         EventBusUtil.sendEvent(new Event(EC.EventCode.FNISHI_LOGINACTIVITY));
+                        EventBusUtil.sendEvent(new Event(EC.EventCode.LOGIN_INITDATA));
                         finish();
                     } else {
                         //获取数据失败

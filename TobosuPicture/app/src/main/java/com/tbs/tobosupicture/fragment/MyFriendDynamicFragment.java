@@ -45,6 +45,7 @@ import okhttp3.Response;
 
 /**
  * Created by Mr.Lin on 2017/8/3 11:14.
+ * 我的图友相关页面
  */
 
 public class MyFriendDynamicFragment extends BaseFragment {
@@ -84,11 +85,16 @@ public class MyFriendDynamicFragment extends BaseFragment {
     protected void receiveEvent(Event event) {
         switch (event.getCode()) {
             case EC.EventCode.INIT_MY_FRIEND_DYNAMIC:
-                if(dynamicBaseArrayList.isEmpty()){
+                if (dynamicBaseArrayList.isEmpty()) {
                     mPage = 1;
                     HttpGetDynamicList(mPage);
                 }
                 break;
+            case EC.EventCode.LOGIN_INITDATA:
+                initGetMsg();
+                break;
+
+
         }
     }
 
@@ -110,15 +116,20 @@ public class MyFriendDynamicFragment extends BaseFragment {
         @Override
         public void onRefresh() {
             //下拉刷新重置数据
-            mPage = 1;
-            if (!dynamicBaseArrayList.isEmpty()) {
-                dynamicBaseArrayList.clear();
-            } else {
-
-            }
-            HttpGetDynamicList(mPage);
+            initGetMsg();
         }
     };
+
+    private void initGetMsg() {
+        mPage = 1;
+        if (!dynamicBaseArrayList.isEmpty()) {
+            dynamicBaseArrayList.clear();
+        } else {
+
+        }
+        HttpGetDynamicList(mPage);
+    }
+
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -205,9 +216,11 @@ public class MyFriendDynamicFragment extends BaseFragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(mContext, "暂无更多数据。", Toast.LENGTH_SHORT).show();
                                 if (dynamicBaseAdapter != null) {
                                     dynamicBaseAdapter.changeAdapterState(2);
+                                    if (!dynamicBaseArrayList.isEmpty()) {
+                                        Toast.makeText(mContext, "暂无更多数据。", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                                 if (dynamicBaseArrayList.isEmpty()) {
                                     //添加占位图

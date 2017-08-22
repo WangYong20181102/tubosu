@@ -47,17 +47,18 @@ import okhttp3.Response;
 public class MyJoinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private List<_DynamicBase> dynamicBaseList;
-    private _ReceiveMsg.MyParticipation myJoinMsg;
+    private List<String> myJoinMsgList;
     private Activity mActivity;
     private String TAG = "MyJoinAdapter";
     private int adapterLoadState = 1;//子项加载情况
 
-    public MyJoinAdapter(Context context, Activity activity, _ReceiveMsg.MyParticipation myJoinMsg, List<_DynamicBase> dynamicBaseList) {
+    public MyJoinAdapter(Context context, Activity activity, List<String> myJoinMsgList, List<_DynamicBase> dynamicBaseList) {
         this.mContext = context;
-        this.myJoinMsg = myJoinMsg;
+        this.myJoinMsgList = myJoinMsgList;
         this.dynamicBaseList = dynamicBaseList;
         this.mActivity = activity;
     }
+
     //图层的变换
     public void changeLoadState(int state) {
         this.adapterLoadState = state;
@@ -96,13 +97,12 @@ public class MyJoinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof MyJoinHeadHolder) {
-            if (myJoinMsg.getMsg_count().equals("0")) {
+            if (myJoinMsgList.isEmpty() || TextUtils.isEmpty(myJoinMsgList.get(0))) {
                 ((MyJoinHeadHolder) holder).head_hint_rl.setVisibility(View.INVISIBLE);
             } else {
                 ((MyJoinHeadHolder) holder).head_hint_rl.setVisibility(View.VISIBLE);
-                ((MyJoinHeadHolder) holder).head_hint_text.setText(myJoinMsg.getMsg_count() + "条新消息");
-                Log.e(TAG, "消息数据======" + myJoinMsg.getMsg_count());
-                GlideUtils.glideLoader(mContext, myJoinMsg.getIcon(), 0, 0, ((MyJoinHeadHolder) holder).head_hint_icon, 0);
+                ((MyJoinHeadHolder) holder).head_hint_text.setText(myJoinMsgList.get(1) + "条新消息");
+                GlideUtils.glideLoader(mContext, myJoinMsgList.get(0), R.mipmap.default_icon, R.mipmap.default_icon, ((MyJoinHeadHolder) holder).head_hint_icon, 0);
                 ((MyJoinHeadHolder) holder).head_hint_rl.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -125,7 +125,7 @@ public class MyJoinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             imageViewList.add(((MyJoinItemHolder) holder).dynamic_base_img8);
             imageViewList.add(((MyJoinItemHolder) holder).dynamic_base_img9);
             //设置头像
-            GlideUtils.glideLoader(mContext, dynamicBaseList.get(position-1).getIcon(), 0, 0, ((MyJoinItemHolder) holder).dynamic_base_icon, 0);
+            GlideUtils.glideLoader(mContext, dynamicBaseList.get(position - 1).getIcon(), 0, 0, ((MyJoinItemHolder) holder).dynamic_base_icon, 0);
             //头像点击事件
             ((MyJoinItemHolder) holder).dynamic_base_icon.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -140,12 +140,6 @@ public class MyJoinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ((MyJoinItemHolder) holder).dynamic_base_nick.setText(dynamicBaseList.get(position - 1).getNick());
             //设置内容
             ((MyJoinItemHolder) holder).dynamic_base_title.setText(dynamicBaseList.get(position - 1).getTitle());
-            //设置图片以及点击事件
-//            for (int i = 0; i < dynamicBaseList.get(position - 1).getImage_url().size(); i++) {
-//                imageViewList.get(i).setVisibility(View.VISIBLE);
-//                GlideUtils.glideLoader(mContext, dynamicBaseList.get(position - 1).getImage_url().get(i), R.mipmap.loading_img_fail, R.mipmap.loading_img, imageViewList.get(i));
-//                ImageClick(imageViewList.get(i), dynamicBaseList.get(position - 1).getId(), i);
-//            }
             //第一张
             if (dynamicBaseList.get(position - 1).getImage_url().size() >= 1 && !TextUtils.isEmpty(dynamicBaseList.get(position - 1).getImage_url().get(0))) {
                 //设置图片
@@ -381,6 +375,7 @@ public class MyJoinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public int getItemCount() {
         return dynamicBaseList != null ? dynamicBaseList.size() + 2 : 0;
     }
+
     //头部viewHolder
     class MyJoinHeadHolder extends RecyclerView.ViewHolder {
         private ImageView head_hint_icon;//提醒所用的头像
@@ -394,6 +389,7 @@ public class MyJoinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             head_hint_rl = (RelativeLayout) itemView.findViewById(R.id.head_hint_rl);
         }
     }
+
     //子项viewHolder
     class MyJoinItemHolder extends RecyclerView.ViewHolder {
         private ImageView dynamic_base_icon;//用户的头像

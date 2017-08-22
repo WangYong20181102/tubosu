@@ -35,6 +35,7 @@ public final class EC {
         public static final int MY_ORGIN_ICON = 0x000024;//拿到我发起的头像
         public static final int MY_ORGIN_MSG = 0x000025;//拿到我发起消息
         public static final int MY_JOIN_MSG = 0x000026;//拿到我参与的消息
+        public static final int REFRESH_MY_ORGIN = 0x000027;//刷新我的发起数据（用户第一次发动态的时候调用）
 
 
         public static final int CHOOSE_CITY_CODE = 0x100001;//选择城市

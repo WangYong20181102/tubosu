@@ -293,6 +293,7 @@ public class NewSendDynamicActivity extends BaseActivity {
                                                 pd.dismiss();
                                                 Toast.makeText(mContext, "发布动态成功~", Toast.LENGTH_SHORT).show();
                                                 EventBusUtil.sendEvent(new Event(EC.EventCode.REFRESH_MY_ORGIN_NUM));
+                                                EventBusUtil.sendEvent(new Event(EC.EventCode.REFRESH_MY_ORGIN));
                                                 finish();
                                             }
                                         });

@@ -86,6 +86,15 @@ public class _ReceiveMsg {
         private String msg_count;
         private String icon;
 
+        public MyParticipation(String msg_count, String icon) {
+            this.msg_count = msg_count;
+            this.icon = icon;
+        }
+
+        public MyParticipation() {
+
+        }
+
         public String getMsg_count() {
             return msg_count;
         }

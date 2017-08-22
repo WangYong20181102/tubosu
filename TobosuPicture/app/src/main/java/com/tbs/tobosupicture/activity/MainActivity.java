@@ -335,6 +335,8 @@ public class MainActivity extends BaseActivity {
                         EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_ICON, mMyOrginIconUrl));
                         //我的发起的消息 包含消息的数量消息的头像
                         _ReceiveMsg.MySponsor mySponsor = new _ReceiveMsg.MySponsor(receiveMsg.getMy_sponsor().getMsg_count(), mMyOrginIconUrl);
+                        _ReceiveMsg.MyParticipation myParticipation = new _ReceiveMsg.MyParticipation(receiveMsg.getMy_participation().getMsg_count(), mMyJoinIconUrl);
+                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_MSG, myParticipation));
                         EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_MSG, mySponsor));
                         //将数值布局
                         runOnUiThread(new Runnable() {

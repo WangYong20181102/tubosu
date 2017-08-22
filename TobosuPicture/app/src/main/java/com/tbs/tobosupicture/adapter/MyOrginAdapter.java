@@ -98,13 +98,13 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof MyOrginHeadHolder) {
             if (myOrginMsgList.isEmpty() || TextUtils.isEmpty(myOrginMsgList.get(0))) {
+//                ((MyOrginHeadHolder) holder).head_hint_rl.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,1));
                 ((MyOrginHeadHolder) holder).head_hint_rl.setVisibility(View.INVISIBLE);
-//                ((MyOrginHeadHolder) holder).head_hint_rl.setLayoutParams(new RelativeLayout.LayoutParams());
             } else {
+//                ((MyOrginHeadHolder) holder).head_hint_rl.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 ((MyOrginHeadHolder) holder).head_hint_rl.setVisibility(View.VISIBLE);
                 ((MyOrginHeadHolder) holder).head_hint_text.setText(myOrginMsgList.get(1) + "条新消息");
-                Log.e(TAG, "消息数据======" + myOrginMsgList.get(1));
-                GlideUtils.glideLoader(mContext, myOrginMsgList.get(0), 0, 0, ((MyOrginHeadHolder) holder).head_hint_icon, 0);
+                GlideUtils.glideLoader(mContext, myOrginMsgList.get(0), R.mipmap.default_icon, R.mipmap.default_icon, ((MyOrginHeadHolder) holder).head_hint_icon, 0);
                 ((MyOrginHeadHolder) holder).head_hint_rl.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
