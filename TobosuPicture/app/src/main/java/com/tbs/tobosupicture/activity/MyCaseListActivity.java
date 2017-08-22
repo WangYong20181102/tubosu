@@ -46,6 +46,7 @@ public class MyCaseListActivity extends BaseActivity {
     @BindView(R.id.CollectCaseSwipeRefreshLayout)
     SwipeRefreshLayout CollectCaseSwipeRefreshLayout;
     private ArrayList<CollectCaseJsonEntity.CollectCaseEntity> casePicList;
+    private ArrayList<CollectCaseJsonEntity.CollectCaseEntity> templCasePicList = new ArrayList<CollectCaseJsonEntity.CollectCaseEntity>();
 
     private int page = 1;
     private int pageSize = 10;
@@ -94,7 +95,7 @@ public class MyCaseListActivity extends BaseActivity {
                         CollectCaseJsonEntity entity = gson.fromJson(json, CollectCaseJsonEntity.class);
                         if (entity.getStatus() == 200) {
                             casePicList = entity.getData();
-
+                            templCasePicList.addAll(casePicList);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -126,12 +127,13 @@ public class MyCaseListActivity extends BaseActivity {
 
     private void initAdapter() {
         if (casePicAdapter == null) {
-            casePicAdapter = new CollectCaseImgAdapter(mContext, casePicList);
+            casePicAdapter = new CollectCaseImgAdapter(mContext, templCasePicList);
             collectionCaseRecyclerView.setAdapter(casePicAdapter);
         } else {
             casePicAdapter.notifyDataSetChanged();
         }
         casePicAdapter.hideLoadMoreMessage();
+        CollectCaseSwipeRefreshLayout.setRefreshing(false);
     }
 
 
@@ -188,7 +190,7 @@ public class MyCaseListActivity extends BaseActivity {
         @Override
         public void onRefresh() {
             //下拉刷新数据 重新初始化各种数据
-            casePicList.clear();
+            templCasePicList.clear();
             page = 1;
             if (casePicAdapter != null) {
                 casePicAdapter.hideLoadMoreMessage();

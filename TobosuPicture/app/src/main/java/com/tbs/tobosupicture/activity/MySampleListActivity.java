@@ -41,7 +41,7 @@ public class MySampleListActivity extends BaseActivity {
     SwipeRefreshLayout collectSampleSwipeRefreshLayout;
     
     private ArrayList<CollectionSampleJsonEntity.CollectionSampleImg> samplePicList;
-    
+    private ArrayList<CollectionSampleJsonEntity.CollectionSampleImg> tempSamplePicList = new ArrayList<CollectionSampleJsonEntity.CollectionSampleImg>();
     private int page = 1;
     private int pageSize = 10;
 
@@ -89,7 +89,7 @@ public class MySampleListActivity extends BaseActivity {
                         CollectionSampleJsonEntity entity = gson.fromJson(json, CollectionSampleJsonEntity.class);
                         if(entity.getStatus() == 200){
                             samplePicList = entity.getData();
-
+                            tempSamplePicList.addAll(samplePicList);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -129,6 +129,7 @@ public class MySampleListActivity extends BaseActivity {
 
         samplePicAdapter.hideLoadMoreMessage();
 
+        collectSampleSwipeRefreshLayout.setFocusable(false);
     }
 
 
@@ -186,7 +187,10 @@ public class MySampleListActivity extends BaseActivity {
         @Override
         public void onRefresh() {
             //下拉刷新数据 重新初始化各种数据
-            samplePicList.clear();
+            if(tempSamplePicList!=null){
+                tempSamplePicList.clear();
+            }
+
             page = 1;
             if(samplePicAdapter!=null){
                 samplePicAdapter.hideLoadMoreMessage();

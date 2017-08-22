@@ -95,7 +95,7 @@ public class DecorateCompanyCaseActivity extends BaseActivity {
                     public void onResponse(Call call, Response response) throws IOException {
                         String json = response.body().string();
                         Gson gson = new Gson();
-                        CompanySearchRecordJsonEntity entity = gson.fromJson(json, CompanySearchRecordJsonEntity.class);
+                        final CompanySearchRecordJsonEntity entity = gson.fromJson(json, CompanySearchRecordJsonEntity.class);
                         if(entity.getStatus() == 200){
                             companyDataList.addAll(entity.getData());
                             runOnUiThread(new Runnable() {
@@ -105,6 +105,16 @@ public class DecorateCompanyCaseActivity extends BaseActivity {
                                 }
                             });
                         }else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    DecorateCaseSwipeRefreshLayout.setRefreshing(false);
+                                    if(recordAdapter != null){
+                                        recordAdapter.hideLoadMoreMessage();
+                                    }
+                                    Utils.setToast(mContext, entity.getMsg());
+                                }
+                            });
 
                         }
 
@@ -124,7 +134,7 @@ public class DecorateCompanyCaseActivity extends BaseActivity {
         }else {
             recordAdapter.notifyDataSetChanged();
         }
-
+        DecorateCaseSwipeRefreshLayout.setRefreshing(false);
 
     }
 
@@ -217,7 +227,6 @@ public class DecorateCompanyCaseActivity extends BaseActivity {
             recordAdapter.showLoadMoreMessage();
         }
 
-        DecorateCaseSwipeRefreshLayout.setRefreshing(false);
         getDataFromNet();
         System.out.println("-----**-onScrolled load more completed------");
     }

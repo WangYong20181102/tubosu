@@ -103,7 +103,6 @@ public class OwnerCaseActivity extends BaseActivity {
                                             adapter.noMoreData();
                                             adapter.hideLoadMoreMessage();
                                         }
-
                                         OwenerCaseSwipeRefreshLayout.setVisibility(View.GONE);
                                         ivNoOwenerCaseData.setVisibility(View.VISIBLE);
                                     }
@@ -178,6 +177,7 @@ public class OwnerCaseActivity extends BaseActivity {
         if (adapter != null) {
             adapter.hideLoadMoreMessage();
         }
+        OwenerCaseSwipeRefreshLayout.setRefreshing(false);
     }
 
     //下拉刷新监听事件
