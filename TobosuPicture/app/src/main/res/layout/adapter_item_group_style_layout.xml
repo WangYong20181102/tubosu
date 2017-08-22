@@ -1,33 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
     android:background="@color/white">
 
-    <TextView
-        android:id="@+id/tv_group_style_text"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:gravity="center"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp"
-        android:layout_marginLeft="14dp"
-        android:textSize="14sp"
-        android:layout_centerVertical="true"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
-        android:textColor="#252424"
-        android:text="casd"/>
+    <View
+        android:id="@+id/v_group_divide"
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        android:background="#F0F0F0"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/v_group_divide">
+        <TextView
+            android:id="@+id/tv_group_style_text"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="14dp"
+            android:textSize="14sp"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:textColor="#252424"
+            android:text="casd"/>
         <!--android:background="@drawable/shape_styel_textview_bg"-->
 
 
 
-    <ImageView
-        android:id="@+id/iv_group_style_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="14dp"
-        android:background="@mipmap/xiala"/>
+        <ImageView
+            android:id="@+id/iv_group_style_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="14dp"
+            android:background="@mipmap/xiala"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.4dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_dividings_color"/>
+    </RelativeLayout>
 </RelativeLayout>

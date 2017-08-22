@@ -15,10 +15,12 @@ import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.SeeImageActivity;
 import com.tbs.tobosupicture.bean.CaseTypeChild;
 import com.tbs.tobosupicture.utils.GlideUtils;
+import com.tbs.tobosupicture.view.RoundAngleImageView;
 
 import java.util.ArrayList;
 
 /**
+ *
  * Created by Lie on 2017/7/17.
  */
 
@@ -57,14 +59,14 @@ public class GvStageAdapter extends BaseAdapter {
         if(convertView == null){
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.adapter_item_img, null);
-            holder.iv = (ImageView) convertView.findViewById(R.id.iv_imgs);
+            holder.iv = (RoundAngleImageView) convertView.findViewById(R.id.iv_imgs);
 
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
 
-        GlideUtils.glideLoader(context, dataList.get(position),R.mipmap.loading_img_fail, R.mipmap.loading_img,holder.iv, 1);
+        GlideUtils.glideLoader(context, dataList.get(position),R.mipmap.loading_img_fail, R.mipmap.loading_img,holder.iv);
 
         holder.iv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +83,6 @@ public class GvStageAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        ImageView iv;
+        RoundAngleImageView iv;
     }
 }

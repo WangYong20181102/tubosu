@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
@@ -96,7 +97,13 @@ public class CollectCaseImgAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             String title = "";
             String description = "";
             GlideUtils.glideLoader(mContext, dataList.get(position).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itmeHolder.iv_case_big_sample_pic,1);
-            GlideUtils.glideLoader(mContext, dataList.get(position).getDesigner_icon(), R.mipmap.pic,R.mipmap.pic,itmeHolder.iv_case_designer_pic, 0);
+
+            if(!"".equals(dataList.get(position).getDesigner_icon())){
+                GlideUtils.glideLoader(mContext, dataList.get(position).getDesigner_icon(), R.mipmap.pic,R.mipmap.pic,itmeHolder.iv_case_designer_pic, 0);
+                itmeHolder.re_case_desiner_layout.setVisibility(View.VISIBLE);
+            }else {
+                itmeHolder.re_case_desiner_layout.setVisibility(View.GONE);
+            }
             String district = dataList.get(position).getDistrict_name();
             String budget = dataList.get(position).getPrice();
             String method = dataList.get(position).getDesmethod();
@@ -217,6 +224,7 @@ public class CollectCaseImgAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     public class CasePicViewHolder extends RecyclerView.ViewHolder{
+        RelativeLayout re_case_desiner_layout;
         ImageView iv_case_big_sample_pic;
         ImageView iv_case_designer_pic;
         TextView tv_case_title;
@@ -225,6 +233,7 @@ public class CollectCaseImgAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public CasePicViewHolder(View itemView) {
             super(itemView);
+            re_case_desiner_layout = (RelativeLayout) itemView.findViewById(R.id.re_case_desiner_layout);
             iv_case_big_sample_pic = (ImageView) itemView.findViewById(R.id.iv_case_big_sample_pic);
             iv_case_designer_pic = (ImageView) itemView.findViewById(R.id.iv_case_designer_pic);
             tv_case_title = (TextView) itemView.findViewById(R.id.tv_case_title);

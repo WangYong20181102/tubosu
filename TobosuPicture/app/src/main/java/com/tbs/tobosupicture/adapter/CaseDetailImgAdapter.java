@@ -12,6 +12,7 @@ import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.bean.CaseDetailEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.Utils;
+import com.tbs.tobosupicture.view.RoundAngleImageView;
 
 import java.util.ArrayList;
 
@@ -53,7 +54,7 @@ public class CaseDetailImgAdapter extends BaseAdapter {
         if(convertView==null){
             holder = new ImgViewHolder();
             convertView = inflater.inflate(R.layout.adapter_item_case_detail_img, null);
-            holder.iv = (ImageView) convertView.findViewById(R.id.iv_detail_case);
+            holder.iv = (RoundAngleImageView) convertView.findViewById(R.id.iv_detail_case);
             holder.tv = (TextView) convertView.findViewById(R.id.tvTitleCaseDetail);
             convertView.setTag(holder);
         }else {
@@ -67,7 +68,7 @@ public class CaseDetailImgAdapter extends BaseAdapter {
     }
 
     class ImgViewHolder{
-        ImageView iv;
+        RoundAngleImageView iv;
         TextView tv;
     }
 }

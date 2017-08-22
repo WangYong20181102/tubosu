@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
@@ -19,6 +20,7 @@ import com.tbs.tobosupicture.activity.GetPriceActivity;
 import com.tbs.tobosupicture.activity.SeeImageActivity;
 import com.tbs.tobosupicture.bean.SamplePicBeanEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
+import com.tbs.tobosupicture.view.RoundAngleImageView;
 
 import java.util.ArrayList;
 
@@ -92,12 +94,13 @@ public class SamplePictureAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof SamplePicViewHolder){
             SamplePicViewHolder itmeHolder = (SamplePicViewHolder) holder;
-            GlideUtils.glideLoader(mContext, dataList.get(position).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itmeHolder.iv_big_sample_pic,1);
+            GlideUtils.glideLoader(mContext, dataList.get(position).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itmeHolder.iv_big_sample_pic);
             String picUrl = dataList.get(position).getDesigner_icon();
             if(!"".equals(picUrl)){
                 GlideUtils.glideLoader(mContext, picUrl, R.mipmap.pic,R.mipmap.pic,itmeHolder.iv_designer_pic, 0);
+                itmeHolder.rel_desiner_layout.setVisibility(View.VISIBLE);
             }else {
-                itmeHolder.iv_designer_pic.setVisibility(View.GONE);
+                itmeHolder.rel_desiner_layout.setVisibility(View.GONE);
             }
             itmeHolder.tv_samplepic_title.setText(dataList.get(position).getTitle());
             itmeHolder.tv_pic_city.setText(dataList.get(position).getCity_name());
@@ -171,7 +174,8 @@ public class SamplePictureAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     public class SamplePicViewHolder extends RecyclerView.ViewHolder{
-        private ImageView iv_big_sample_pic;
+        private RelativeLayout rel_desiner_layout;
+        private RoundAngleImageView iv_big_sample_pic;
         private ImageView iv_designer_pic;
         private TextView tv_samplepic_title;
         private TextView tv_pic_city;
@@ -183,7 +187,8 @@ public class SamplePictureAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         public SamplePicViewHolder(View itemView) {
             super(itemView);
-            iv_big_sample_pic = (ImageView) itemView.findViewById(R.id.iv_big_sample_pic);
+            rel_desiner_layout = (RelativeLayout) itemView.findViewById(R.id.rel_desiner_layout);
+            iv_big_sample_pic = (RoundAngleImageView) itemView.findViewById(R.id.iv_big_sample_pic);
             iv_designer_pic = (ImageView) itemView.findViewById(R.id.iv_designer_pic);
             tv_samplepic_title = (TextView) itemView.findViewById(R.id.tv_samplepic_title);
             tv_pic_city = (TextView) itemView.findViewById(R.id.tv_pic_city);
