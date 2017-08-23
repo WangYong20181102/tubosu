@@ -11,27 +11,22 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.SelectCityActivity;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.bean.EC;
 import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.constants.UrlConstans;
+import com.tbs.tobosupicture.utils.EventBusUtil;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
-
-import org.xml.sax.helpers.XMLReaderAdapter;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -46,6 +41,7 @@ import okhttp3.Response;
 
 public class TemplateFragment extends BaseFragment {
     private static final String TAG = "TemplateFragment";
+    private String chosenCity;
 
     @BindView(R.id.temp_location)
     TextView tempLocation;
@@ -84,7 +80,10 @@ public class TemplateFragment extends BaseFragment {
         if(city.contains("市") || city.contains("县")){
             city = city.substring(0, city.length()-1);
         }
-        tempLocation.setText("".equals(city)?"深圳": city);
+        chosenCity = "".equals(city)?"深圳": city;
+        tempLocation.setText(chosenCity);
+        SpUtils.setTemplateFragmentCity(getActivity(), chosenCity);
+
 
         listFragments.add(new HouseFragment());
         listFragments.add(new FactoryFragment());
@@ -260,7 +259,10 @@ public class TemplateFragment extends BaseFragment {
     protected void receiveEvent(Event event) {
         switch (event.getCode()){
             case EC.EventCode.CHOOSE_CITY_CODE:
+                chosenCity = (String)event.getData();
                 tempLocation.setText((String)event.getData());
+                EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_TO_GET_DATA_FROM_NET_HOUSE, chosenCity));
+                EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_TO_GET_DATA_FROM_NET_FACTORY, chosenCity));
                 break;
         }
     }

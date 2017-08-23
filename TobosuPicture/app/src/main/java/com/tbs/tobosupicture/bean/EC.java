@@ -43,5 +43,7 @@ public final class EC {
 //        public static final int GET_DISTRICT_DATA_CODE2 = 0x100003;//获取小区数据
         public static final int CHOOSE_CITY_CODE_FOR_PRICE = 0x100002;//报价获取城市名称
         public static final int CHOOSE_CITY_CODE_FOR_FREE_PRICE = 0x100003;//报价获取城市名称
+        public static final int CHOOSE_CITY_TO_GET_DATA_FROM_NET_HOUSE = 0x100004;//报价获取城市名称
+        public static final int CHOOSE_CITY_TO_GET_DATA_FROM_NET_FACTORY = 0x100006;//报价获取城市名称
     }
 }

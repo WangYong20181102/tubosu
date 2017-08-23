@@ -18,25 +18,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.SamplePictureAdapter;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.bean.DecorateImgStyle;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.bean.SamplePicBeanEntity;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -95,6 +93,8 @@ public class HouseFragment extends BaseFragment {
     @BindView(R.id.iv_template_no_data)
     ImageView iv_template_no_data;
 
+    private String city;
+
 
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<SamplePicBeanEntity> samplePicList = new ArrayList<SamplePicBeanEntity>();
@@ -144,12 +144,14 @@ public class HouseFragment extends BaseFragment {
         return view;
     }
 
+
     /***
      * 初始化标题上的类型的数据
      */
     private void initStyleData() {
-        // 未选择类型时 显示数据
-        getDataFromNet(null, page, pageSize, false);
+        // 未选择类型时， 未选择城市时  显示数据
+        city = SpUtils.getTemplateFragmentCity(getActivity());
+        getDataFromNet(null, page, pageSize, city, false);
 
         String json = SpUtils.getHouseStyleJson(context);
         Utils.setErrorLog(TAG, json);
@@ -327,7 +329,7 @@ public class HouseFragment extends BaseFragment {
                 }
                 page = 1;
                 pageSize = 10;
-                getDataFromNet(parameter, page, pageSize, false);
+                getDataFromNet(parameter, page, pageSize, city, false);
             }
         });
         popupWindow.showAsDropDown(vAnchor);
@@ -340,7 +342,7 @@ public class HouseFragment extends BaseFragment {
      * @param _page
      * @param _pageSize
      */
-    private void getDataFromNet(HashMap<String, Object> param, int _page, int _pageSize, final boolean addMore) {
+    private void getDataFromNet(HashMap<String, Object> param, int _page, int _pageSize, String city,  final boolean addMore) {
         if(!addMore){
             samplePicList.clear();
         }
@@ -351,6 +353,7 @@ public class HouseFragment extends BaseFragment {
 
         param.put("token", Utils.getDateToken());
         param.put("page", _page);
+        param.put("city_name", city);
         param.put("page_size", _pageSize);
         HttpUtils.doPost(UrlConstans.GET_LIST, param, new Callback() {
             @Override
@@ -483,7 +486,7 @@ public class HouseFragment extends BaseFragment {
             if(samplePicAdapter!=null){
                 samplePicAdapter.hideLoadMoreMessage();
             }
-            getDataFromNet(parameter,page,10, false);
+            getDataFromNet(parameter,page,10, city, false);
 
         }
     };
@@ -495,7 +498,7 @@ public class HouseFragment extends BaseFragment {
         }
 
         houseSwipRefreshLayout.setRefreshing(false);
-        getDataFromNet(parameter,page,10, true);
+        getDataFromNet(parameter,page,10, city, true);
         System.out.println("-----**-onScrolled load more completed------");
     }
 
@@ -666,6 +669,23 @@ public class HouseFragment extends BaseFragment {
                 ivHouseStyleIcon.setBackgroundResource(R.mipmap.daohang);
                 tvHouseColor.setTextColor(Color.parseColor("#FFA64F"));
                 ivColorIcon.setBackgroundResource(R.mipmap.daohang2);
+                break;
+        }
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()){
+            case EC.EventCode.CHOOSE_CITY_TO_GET_DATA_FROM_NET_HOUSE:
+                city = (String)event.getData();
+                page = 1;
+                pageSize = 10;
+                getDataFromNet(parameter, page, pageSize, city, false);
                 break;
         }
     }

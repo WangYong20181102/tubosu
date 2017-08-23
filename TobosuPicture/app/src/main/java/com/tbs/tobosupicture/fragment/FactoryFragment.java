@@ -1,6 +1,5 @@
 package com.tbs.tobosupicture.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,28 +15,26 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.FactoryStyleAdapter;
 import com.tbs.tobosupicture.adapter.SamplePictureAdapter;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.bean.ChildData;
 import com.tbs.tobosupicture.bean.DecorateFactoryStyle;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.bean.FactoryStyrlBean;
 import com.tbs.tobosupicture.bean.SamplePicBeanEntity;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -50,7 +47,6 @@ import okhttp3.Response;
  * 工装
  * Created by Lie on 2017/7/14.
  */
-
 public class FactoryFragment extends BaseFragment {
     private final String TAG = "FactoryFragment";
     @BindView(R.id.relStyleLayout)
@@ -58,6 +54,7 @@ public class FactoryFragment extends BaseFragment {
 
     private String class_id = "0";
 
+    private String city;
 
     @BindView(R.id.ivFactoryChooseStyle)
     ImageView ivFactoryChooseStyle;
@@ -87,10 +84,30 @@ public class FactoryFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_factory, null, false);
         unbinder = ButterKnife.bind(this, view);
+        initCity();
         initListViewSetting();
         getDataFromNet();
         initData();
         return view;
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()){
+            case EC.EventCode.CHOOSE_CITY_TO_GET_DATA_FROM_NET_FACTORY:
+                city = (String) event.getData();
+                getDataFromNet();
+                break;
+        }
+    }
+
+    private void initCity(){
+        city = SpUtils.getTemplateFragmentCity(getActivity());
     }
 
     private void getDataFromNet() {
@@ -104,6 +121,7 @@ public class FactoryFragment extends BaseFragment {
             param.put("token", Utils.getDateToken());
             param.put("type", "2");
             param.put("class_id", class_id);
+            param.put("city_name", city);
             param.put("page", page);
             param.put("page_size", pageSize);
             HttpUtils.doPost(UrlConstans.GET_LIST, param, new Callback() {

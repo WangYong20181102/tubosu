@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
@@ -72,8 +73,8 @@ public class SeeImageActivity extends BaseActivity {
     TextView tvImgDesc;
     @BindView(R.id.tvImgDesc2)
     TextView tvImgDesc2;
-    @BindView(R.id.tvGetPrice)
-    TextView tvGetPrice;
+    @BindView(R.id.tvNeedGetPrice) // 获取设计和报价
+    TextView tvNeedGetPrice;
     @BindView(R.id.ivCollectImg)
     ImageView ivCollectImg;
     @BindView(R.id.ivDownImg)
@@ -273,7 +274,7 @@ public class SeeImageActivity extends BaseActivity {
     };
 
 
-    @OnClick({R.id.relSeeImgBack, R.id.ivImgShare, R.id.tvGetPrice, R.id.ivCollectImg, R.id.ivDownImg, R.id.ivShowAndHide})
+    @OnClick({R.id.relSeeImgBack, R.id.ivImgShare, R.id.tvNeedGetPrice, R.id.ivCollectImg, R.id.ivDownImg, R.id.ivShowAndHide})
     public void onViewClickedSeeImageActivity(View view) {
         switch (view.getId()) {
             case R.id.relSeeImgBack:
@@ -290,9 +291,9 @@ public class SeeImageActivity extends BaseActivity {
 //                        .setCallback(umShareListener)
                         .open();
                 break;
-            case R.id.tvGetPrice:
+            case R.id.tvNeedGetPrice:
                 // 底部弹框
-                initPopupWindow();
+                showPopupWindow();
                 break;
             case R.id.ivCollectImg:
 
@@ -420,16 +421,18 @@ public class SeeImageActivity extends BaseActivity {
     }
 
 
-    private PopupWindow popupWindow;
-    private void initPopupWindow() {
+    private void showPopupWindow() {
+
         View contentView = LayoutInflater.from(mContext).inflate(R.layout.popuplayout_getprice, null);
+        contentView.setFocusable(true);
         ImageView close = (ImageView) contentView.findViewById(R.id.iv_close_popupwindow);
         final EditText etInputPhone = (EditText) contentView.findViewById(R.id.et_input_phone);
         TextView getThisPrice = (TextView) contentView.findViewById(R.id.get_this_price);
 
-        popupWindow = new PopupWindow(contentView,
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        final PopupWindow popupWindow = new PopupWindow(SeeImageActivity.this);
         popupWindow.setContentView(contentView);
+        popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
 
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
@@ -485,8 +488,7 @@ public class SeeImageActivity extends BaseActivity {
         });
 
         // 这里有红线 不是出错，不用管
-        popupWindow.showAsDropDown(findViewById(R.id.rel_consdfaa),0,0,Gravity.BOTTOM);
-
+        popupWindow.showAtLocation(findViewById(R.id.rel_consdfaa), Gravity.BOTTOM, 0, 0);
     }
 
     @Override

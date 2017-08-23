@@ -228,4 +228,14 @@ public class SpUtils {
     public static String getCacheLocalCityJson(Context context){
         return context.getSharedPreferences("CacheLocalCityJson", 0).getString("LocalCityJson", "");
     }
+
+
+    // 以下是为了给家装和工装请求网络时用到的城市
+    public static String getTemplateFragmentCity(Context context) {
+        return context.getSharedPreferences("TemplateFragmentCity", 0).getString("template_fragment_city", "");
+    }
+    public static void setTemplateFragmentCity(Context context, String fragment_city) {
+        context.getSharedPreferences("TemplateFragmentCity", 0).edit().putString("template_fragment_city", fragment_city).commit();
+    }
+
 }

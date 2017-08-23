@@ -128,6 +128,7 @@ public class MyDesignerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 public void onClick(View v) {
                     Intent i = new Intent(mContext, DesignerActivity.class);
                     Bundle b = new Bundle();
+                    Utils.setErrorLog(TAG, dataList.get(position).getDesigner_id());
                     b.putString("designer_id", dataList.get(position).getId());
                     i.putExtra("designer_bundle", b);
                     mContext.startActivity(i);
