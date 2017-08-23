@@ -139,7 +139,7 @@
         <activity android:name=".activity.DesignerActivity" />
         <activity android:name=".activity.ConditionActivity" />
         <activity android:name=".activity.SeeImageActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|stateVisible|adjustResize"/>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize|stateVisible"/>
         <activity android:name=".activity.PersonHomePageActivity" />
         <activity android:name=".activity.HisFriendsActivity" />
         <activity android:name=".activity.CaseDetailActivity" />

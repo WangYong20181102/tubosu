@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -97,7 +98,6 @@ public class SeeImageActivity extends BaseActivity {
     ImageView ivBigCollect;
     @BindView(R.id.shareProgress)
     ProgressBar shareProgress;
-
 
     private int currentPosition = 0;
     private ArrayList<ImgEntity> imgEntityList;
@@ -422,7 +422,6 @@ public class SeeImageActivity extends BaseActivity {
 
 
     private void showPopupWindow() {
-
         View contentView = LayoutInflater.from(mContext).inflate(R.layout.popuplayout_getprice, null);
         contentView.setFocusable(true);
         ImageView close = (ImageView) contentView.findViewById(R.id.iv_close_popupwindow);
@@ -433,7 +432,8 @@ public class SeeImageActivity extends BaseActivity {
         popupWindow.setContentView(contentView);
         popupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-
+        popupWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+        popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
 
@@ -445,18 +445,19 @@ public class SeeImageActivity extends BaseActivity {
                     Utils.setToast(mContext, "你还没输入电话号码");
                     return;
                 }else{
-                    if(phone.matches(UrlConstans.PHONE_NUM)) {
+                    if(!phone.matches(UrlConstans.PHONE_NUM)) {
                         Utils.setToast(mContext, "电话号码不正确，重新输入");
                         return;
                     }
 
                     if(Utils.isNetAvailable(mContext)){
-                        Utils.setToast(mContext, "发单接口没写啊");
                         HashMap<String, Object> hashMap = new HashMap<String, Object>();
                         hashMap.put("cellphone", phone);
                         hashMap.put("token", Utils.getDateToken());
                         hashMap.put("urlhistory", UrlConstans.PIPE_CODE);
                         hashMap.put("comeurl", UrlConstans.PIPE_CODE);
+                        Utils.setErrorLog(TAG, phone + "****" +Utils.getDateToken() + "****" +UrlConstans.PIPE_CODE);
+
                         HttpUtils.doPost(UrlConstans.FADAN_URL, hashMap, new Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {
@@ -470,8 +471,30 @@ public class SeeImageActivity extends BaseActivity {
 
                             @Override
                             public void onResponse(Call call, Response response) throws IOException {
-                                String json = response.body().string();
+                                final String json = response.body().string();
                                 Utils.setErrorLog(TAG, json);
+                                if(json.contains("DOCTYPE")){
+                                    return;
+                                }
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+
+                                            JSONObject jsonObject = new JSONObject(json);
+                                            String msg = jsonObject.getString("msg");
+
+                                            if(jsonObject.getInt("status") == 200){
+                                                Utils.setToast(mContext, msg);
+                                                popupWindow.dismiss();
+                                            }else{
+                                                Utils.setToast(mContext, msg);
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
                             }
                         });
                     }
@@ -487,8 +510,12 @@ public class SeeImageActivity extends BaseActivity {
             }
         });
 
-        // 这里有红线 不是出错，不用管
-        popupWindow.showAtLocation(findViewById(R.id.rel_consdfaa), Gravity.BOTTOM, 0, 0);
+//        WindowManager.LayoutParams lp = getWindow().getAttributes();
+//        lp.alpha = 0.5f;
+//        getWindow().setAttributes(lp);
+//        popupWindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 30);
+
+        popupWindow.showAtLocation(findViewById(R.id.resdfa), Gravity.BOTTOM, 0, 0);
     }
 
     @Override

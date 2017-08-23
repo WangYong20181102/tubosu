@@ -44,6 +44,7 @@
         android:paddingLeft="10dp"
         android:digits="0123456789"
         android:inputType="phone"
+        android:maxLines="11"
         android:textColorHint="#C8CACC"
         android:background="@drawable/shape_input_phone_edittext_bg"
         android:layout_marginRight="14dp"
