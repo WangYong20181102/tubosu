@@ -455,8 +455,8 @@ public class SeeImageActivity extends BaseActivity {
                         HashMap<String, Object> hashMap = new HashMap<String, Object>();
                         hashMap.put("cellphone", phone);
                         hashMap.put("token", Utils.getDateToken());
-                        hashMap.put("urlhistory", "");
-                        hashMap.put("comeurl", "");
+                        hashMap.put("urlhistory", UrlConstans.PIPE_CODE);
+                        hashMap.put("comeurl", UrlConstans.PIPE_CODE);
                         HttpUtils.doPost(UrlConstans.FADAN_URL, hashMap, new Callback() {
                             @Override
                             public void onFailure(Call call, IOException e) {
