@@ -64,7 +64,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" >
 
         <ImageView
             android:id="@+id/ivNoCaseData"
@@ -77,7 +77,8 @@
         <LinearLayout
             android:id="@+id/linearLayoutHasCaseData"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp">
             <android.support.v4.widget.SwipeRefreshLayout
                 android:id="@+id/caseSwipRefreshLayout"
                 android:layout_width="match_parent"

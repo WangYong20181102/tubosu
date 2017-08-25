@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="4dp"
     android:background="@color/bg_white"
     android:orientation="vertical">
     <RelativeLayout
@@ -24,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/iv_big_sample_pic"
-            android:layout_marginTop="-22dp">
+            android:layout_marginTop="-32dp">
 
             <ImageView
                 android:layout_width="49dp"
@@ -134,6 +133,6 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="13dp"
+        android:layout_height="14dp"
         android:background="@color/color_dividing_color"/>
 </LinearLayout>

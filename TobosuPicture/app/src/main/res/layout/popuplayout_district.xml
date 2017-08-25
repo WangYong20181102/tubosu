@@ -11,10 +11,12 @@
         android:background="@drawable/shape_popupwindow"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true">
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.4dp"
             android:background="#dfdddd"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dp">
@@ -125,7 +127,7 @@
                             android:id="@+id/pullGridView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:horizontalSpacing="2dp"
+                            android:horizontalSpacing="10dp"
                             android:background="@color/white"
                             android:listSelector="@android:color/transparent"
                             android:numColumns="3"
