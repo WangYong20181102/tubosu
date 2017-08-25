@@ -28,6 +28,7 @@ import com.tbs.tobosupicture.adapter.NewSendDynamicAdapter;
 import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.bean.EC;
 import com.tbs.tobosupicture.bean.Event;
+import com.tbs.tobosupicture.bean._DynamicImageUpload;
 import com.tbs.tobosupicture.bean._ImageUpLoad;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.EventBusUtil;
@@ -182,7 +183,7 @@ public class NewSendDynamicActivity extends BaseActivity {
         for (int i = 0; i < mImageUriList.size(); i++) {
             if (mTitleMap.get(mImageUriList.get(i)) == null) {
                 mTitleList.add("");
-            }else {
+            } else {
                 mTitleList.add(mTitleMap.get(mImageUriList.get(i)));
             }
             Log.e(TAG, "发送动态前遍历标题=======" + mTitleList.get(i));
@@ -204,17 +205,20 @@ public class NewSendDynamicActivity extends BaseActivity {
             Looper.prepare();
             for (int i = 0; i < mCompressImageUriPath.size(); i++) {
                 Log.e(TAG, "要上传的照片======" + mCompressImageUriPath.get(i));
-                if (TextUtils.isEmpty(UrlConstans.UPLOAD_IMAGE)) {
+                if (TextUtils.isEmpty(UrlConstans.UPLOAD_DYNAMIC_IMAGE)) {
                     Toast.makeText(mContext, "还没有设置上传服务器的路径！", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Map<String, String> textParams = null;
                 Map<String, File> fileparams = null;
+                Map<String, String> token = null;
                 try {
-                    URL url = new URL(UrlConstans.UPLOAD_IMAGE);
+                    URL url = new URL(UrlConstans.UPLOAD_DYNAMIC_IMAGE);
                     textParams = new HashMap<String, String>();
                     fileparams = new HashMap<String, File>();
+                    token = new HashMap<String, String>();
                     File file = new File(mCompressImageUriPath.get(i));
+                    token.put("token", Utils.getDateToken());
                     fileparams.put("filedata", file);
                     textParams.put("s_code", "app");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -228,6 +232,7 @@ public class NewSendDynamicActivity extends BaseActivity {
                     OutputStream os = conn.getOutputStream();
                     DataOutputStream ds = new DataOutputStream(os);
                     WriteUtil.writeStringParams(textParams, ds);
+                    WriteUtil.writeStringParams(token, ds);
                     WriteUtil.writeFileParams(fileparams, ds);
                     WriteUtil.paramsEnd(ds);
                     // 对文件流操作完,要记得及时关闭
@@ -239,6 +244,7 @@ public class NewSendDynamicActivity extends BaseActivity {
                         // 得到网络返回的输入流
                         InputStream is = conn.getInputStream();
                         resultStr = WriteUtil.readString(is);
+                        Log.e(TAG, "上传操作之后的结果======" + resultStr);
                     } else {
                         Toast.makeText(mContext, "请求URL失败！", Toast.LENGTH_SHORT).show();
                     }
@@ -254,8 +260,8 @@ public class NewSendDynamicActivity extends BaseActivity {
         public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
-                    _ImageUpLoad imageUpLoad = mGson.fromJson(resultStr, _ImageUpLoad.class);
-                    mUpLoadImageUrlList.add(imageUpLoad.getUrl());
+                    _DynamicImageUpload dynamicImageUpload = mGson.fromJson(resultStr, _DynamicImageUpload.class);
+                    mUpLoadImageUrlList.add(dynamicImageUpload.getData().getUrl());
                     if (mUpLoadImageUrlList.size() == mCompressImageUriPath.size()) {
                         pd.dismiss();
                         //检测图片返回

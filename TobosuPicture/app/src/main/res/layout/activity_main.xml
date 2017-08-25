@@ -22,13 +22,15 @@
         android:background="@color/line" />
 
     <RelativeLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
         <RadioGroup
+            android:layout_marginTop="9dp"
             android:id="@+id/main_radioGroup"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="41dp"
             android:layout_alignParentBottom="true"
             android:background="@color/white"
             android:orientation="horizontal">
@@ -75,32 +77,33 @@
         </RadioGroup>
         <!--红点提示依附的控件，因为红点提示直接依附在RadioButton上会引起事件的冲突，所以采用浮层模式-->
         <LinearLayout
+            android:layout_marginTop="6dp"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="41dp"
             android:clickable="false">
 
             <View
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="41dp"
                 android:layout_weight="1"
                 android:clickable="false" />
 
             <View
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="41dp"
                 android:layout_weight="1"
                 android:clickable="false" />
 
             <View
                 android:id="@+id/mian_show_num3"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="41dp"
                 android:layout_weight="1"
                 android:clickable="false" />
 
             <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_height="41dp"
                 android:layout_weight="1">
 
                 <TextView
@@ -108,8 +111,8 @@
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="28dp"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="5dp"
                     android:background="@drawable/shape_dot"
                     android:visibility="gone" />
             </RelativeLayout>

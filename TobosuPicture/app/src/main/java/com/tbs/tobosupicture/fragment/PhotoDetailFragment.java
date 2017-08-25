@@ -78,7 +78,13 @@ public class PhotoDetailFragment extends BaseFragment {
         fragmentRl.addView(mTouchImageView);
         GlideUtils.glideLoader(mContext, mImageDetail.getImage_url(),
                 R.mipmap.loading_img_fail, R.mipmap.loading_img, mTouchImageView);
-        frgmentTextview.setText("" + mImageDetail.getTitle());
+
+        if (mImageDetail.getTitle().length()>=40){
+            //文字截取
+            frgmentTextview.setText(mImageDetail.getTitle().substring(0,40)+"...");
+        }else {
+            frgmentTextview.setText("" + mImageDetail.getTitle());
+        }
     }
 
     @Override

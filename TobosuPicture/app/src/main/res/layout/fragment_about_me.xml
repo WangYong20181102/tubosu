@@ -32,7 +32,7 @@
                 android:layout_height="4dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:background="@color/color_black" />
+                android:background="@drawable/shape_tag" />
         </RelativeLayout>
         <!--我的参与-->
         <RelativeLayout
@@ -57,7 +57,7 @@
                 android:layout_height="4dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:background="@color/color_black" />
+                android:background="@drawable/shape_tag" />
         </RelativeLayout>
         <!--我的图友-->
         <RelativeLayout
@@ -82,7 +82,7 @@
                 android:layout_height="4dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:background="@color/color_black" />
+                android:background="@drawable/shape_tag" />
         </RelativeLayout>
     </LinearLayout>
 

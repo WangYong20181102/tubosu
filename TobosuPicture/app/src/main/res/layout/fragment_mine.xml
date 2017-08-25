@@ -127,16 +127,16 @@
                                 android:textSize="@dimen/text_size_30px" />
 
                             <TextView
-                                android:gravity="center"
                                 android:id="@+id/fm_user_sign"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="8dp"
                                 android:layout_marginTop="8dp"
-                                android:text="未填写"
                                 android:ellipsize="end"
-                                android:singleLine="true"
                                 android:ems="25"
+                                android:gravity="center"
+                                android:singleLine="true"
+                                android:text="未填写"
                                 android:textColor="@color/text_gray"
                                 android:textSize="@dimen/text_size_22px"
                                 android:visibility="gone" />
@@ -201,7 +201,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="6dp"
-                                    android:text="图谜"
+                                    android:text="图迷"
                                     android:textColor="#a6a9ad"
                                     android:textSize="@dimen/text_size_28px" />
 

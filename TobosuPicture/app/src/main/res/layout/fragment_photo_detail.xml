@@ -19,6 +19,8 @@
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:ellipsize="end"
+        android:maxEms="40"
         android:gravity="bottom"
         android:text="文字说明"
         android:textColor="@color/white"
