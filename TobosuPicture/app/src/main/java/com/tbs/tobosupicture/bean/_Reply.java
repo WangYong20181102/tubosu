@@ -58,7 +58,7 @@ public class _Reply {
 
         private String id;
         private String uid;
-        private String user_type;
+        private String is_virtual_user;
         private String content;
         private String praise_count;
         private String add_time;
@@ -94,11 +94,11 @@ public class _Reply {
         }
 
         public String getUser_type() {
-            return user_type;
+            return is_virtual_user;
         }
 
         public void setUser_type(String user_type) {
-            this.user_type = user_type;
+            this.is_virtual_user = user_type;
         }
 
         public String getContent() {

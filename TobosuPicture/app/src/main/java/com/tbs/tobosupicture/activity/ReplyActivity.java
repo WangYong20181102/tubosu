@@ -162,7 +162,7 @@ public class ReplyActivity extends AppCompatActivity {
         HttpGetReplyMoreList(mPage);
     }
 
-    //TODO 网络请求数据  当前传入的是固定的uid=23109 当用户没有登录时要进行用户的登录判断
+    // 网络请求数据 
     private void HttpGetReplyList(final int mPage) {
         isLoading = true;
         replySwipe.setRefreshing(false);
