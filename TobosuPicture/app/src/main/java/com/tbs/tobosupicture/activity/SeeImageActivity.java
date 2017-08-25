@@ -510,11 +510,6 @@ public class SeeImageActivity extends BaseActivity {
             }
         });
 
-//        WindowManager.LayoutParams lp = getWindow().getAttributes();
-//        lp.alpha = 0.5f;
-//        getWindow().setAttributes(lp);
-//        popupWindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 30);
-
         popupWindow.showAtLocation(findViewById(R.id.resdfa), Gravity.BOTTOM, 0, 0);
     }
 
