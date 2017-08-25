@@ -162,7 +162,7 @@ public class ReplyActivity extends AppCompatActivity {
         HttpGetReplyMoreList(mPage);
     }
 
-    // 网络请求数据 
+    // 网络请求数据
     private void HttpGetReplyList(final int mPage) {
         isLoading = true;
         replySwipe.setRefreshing(false);
