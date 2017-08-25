@@ -2,6 +2,7 @@ package com.tbs.tobosupicture.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,7 @@ import com.tbs.tobosupicture.activity.GetPriceActivity;
 import com.tbs.tobosupicture.activity.SeeImageActivity;
 import com.tbs.tobosupicture.bean.SamplePicBeanEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
+import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.RoundAngleImageView;
 
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ import java.util.ArrayList;
  */
 
 public class SamplePictureAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener{
+    private static final String TAG = "SamplePictureAdapter";
     private static final int TYPE_ITEM = 1;
     private View itmeView;
     private static final int TYPE_FOOTER = 2;
@@ -104,6 +107,7 @@ public class SamplePictureAdapter extends RecyclerView.Adapter<RecyclerView.View
             }
             itmeHolder.tv_samplepic_title.setText(dataList.get(position).getTitle());
             itmeHolder.tv_pic_city.setText(dataList.get(position).getCity_name());
+            Utils.setErrorLog(TAG, "你要的面积是--> "+dataList.get(position).getArea_name());
             if(!"".equals(dataList.get(position).getArea_name())){
                 itmeHolder.tv_areah.setText("面积:"+ dataList.get(position).getArea_name());
             }else {
