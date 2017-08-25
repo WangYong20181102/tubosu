@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.ImgToFriendSeachActivity;
 import com.tbs.tobosupicture.activity.NewSendDynamicActivity;
@@ -32,6 +33,7 @@ import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.bean.EC;
 import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.utils.FileUtil;
+import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.SelectPersonalPopupWindow;
 
@@ -199,26 +201,26 @@ public class ImgToFriendFragment extends BaseFragment {
             textZuire.setTextColor(Color.parseColor("#202124"));
             textZuixin.setTextColor(Color.parseColor("#8a8f99"));
             textYouguanyuwo.setTextColor(Color.parseColor("#8a8f99"));
+            Glide.with(mContext).load(R.mipmap.zuire_after).into(imgZuire);
+            Glide.with(mContext).load(R.mipmap.zuixin).into(imgZuixin);
+            Glide.with(mContext).load(R.mipmap.wo).into(imgWo);
 
-            imgZuire.setImageResource(R.mipmap.zuire_after);
-            imgZuixin.setImageResource(R.mipmap.zuixin);
-            imgWo.setImageResource(R.mipmap.wo);
         } else if (position == 1) {
             textZuire.setTextColor(Color.parseColor("#8a8f99"));
             textZuixin.setTextColor(Color.parseColor("#202124"));
             textYouguanyuwo.setTextColor(Color.parseColor("#8a8f99"));
 
-            imgZuire.setImageResource(R.mipmap.zuire);
-            imgZuixin.setImageResource(R.mipmap.zuixin_after);
-            imgWo.setImageResource(R.mipmap.wo);
+            Glide.with(mContext).load(R.mipmap.zuire).into(imgZuire);
+            Glide.with(mContext).load(R.mipmap.zuixin_after).into(imgZuixin);
+            Glide.with(mContext).load(R.mipmap.wo).into(imgWo);
         } else if (position == 2) {
             textZuire.setTextColor(Color.parseColor("#8a8f99"));
             textZuixin.setTextColor(Color.parseColor("#8a8f99"));
             textYouguanyuwo.setTextColor(Color.parseColor("#202124"));
 
-            imgZuire.setImageResource(R.mipmap.zuire);
-            imgZuixin.setImageResource(R.mipmap.zuixin);
-            imgWo.setImageResource(R.mipmap.wo_after);
+            Glide.with(mContext).load(R.mipmap.zuire).into(imgZuire);
+            Glide.with(mContext).load(R.mipmap.zuixin).into(imgZuixin);
+            Glide.with(mContext).load(R.mipmap.wo_after).into(imgWo);
         }
     }
 
@@ -350,7 +352,6 @@ public class ImgToFriendFragment extends BaseFragment {
                 if (resultCode == RESULT_OK) {
                     ArrayList<String> imgPathList = new ArrayList<>();
                     imgPathList = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-//                    Intent intent = new Intent(mContext, SendDynamicActivity.class);
                     Intent intent = new Intent(mContext, NewSendDynamicActivity.class);
                     intent.putStringArrayListExtra("ImageList", imgPathList);
                     startActivity(intent);

@@ -42,9 +42,13 @@ public class UrlConstans {
      */
     public static final String GET_BILL_COUNT_URL = ZXKK_URL + "zapp/index/get_bill_count";
     /**
-     * 上传图片的地址
+     * 上传图片的地址(头像，封面)
      */
     public static final String UPLOAD_IMAGE = ZXKK_URL + "cloud/upload/upload_for_ke?";
+    /**
+     * 上传图片的地址(动态)
+     */
+    public static final String UPLOAD_DYNAMIC_IMAGE = ZXKK_URL + "cloud/upload/app_upload";
     /**
      * 获取我的图谜
      */

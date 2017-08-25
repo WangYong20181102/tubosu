@@ -679,7 +679,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
         lp.alpha = 0.5f;
         mActivity.getWindow().setAttributes(lp);
-        popupWindow.showAtLocation(popView, Gravity.BOTTOM, 0, 30);
+        popupWindow.showAtLocation(popView, Gravity.BOTTOM, 0, 0);
     }
 
     private void initPopWindow() {

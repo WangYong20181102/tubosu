@@ -23,10 +23,11 @@
                 android:layout_gravity="bottom"
                 android:gravity="center|left"
                 android:text="21"
-                android:textColor="@color/text_gray"
+                android:textColor="#FF7F838C"
                 android:textSize="@dimen/text_size_32px" />
 
             <TextView
+                android:textColor="#FFB8BDC7"
                 android:id="@+id/item_php_item_month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,14 +61,14 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:background="@drawable/shape_canjia"
-                    android:paddingBottom="2dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="2dp"
+                    android:paddingBottom="1dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="1dp"
                     android:layout_marginRight="16dp"
                     android:text="参与"
                     android:textColor="@color/text_yellow"
-                    android:textSize="@dimen/text_size_26px" />
+                    android:textSize="@dimen/text_size_22px" />
             </RelativeLayout>
 
 

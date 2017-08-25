@@ -68,10 +68,12 @@
             android:orientation="vertical">
 
             <EditText
+                android:maxLength="20"
                 android:id="@+id/new_send_edit_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
+                android:text=""
                 android:hint="为图配文，说你所想..."
                 android:textColor="@color/text_black"
                 android:textSize="@dimen/text_size_30px" />

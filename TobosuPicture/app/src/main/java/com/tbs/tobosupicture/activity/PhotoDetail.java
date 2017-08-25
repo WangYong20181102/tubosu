@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -186,6 +187,8 @@ public class PhotoDetail extends BaseActivity {
                     if (TextUtils.isEmpty(photoDetailRevert.getText().toString())) {
                         Toast.makeText(mContext, "请输入评论内容", Toast.LENGTH_SHORT).show();
                     } else {
+                        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(photoDetailRevert.getWindowToken(), 0);
                         HttpSendPinglun(photoDetailRevert.getText().toString());
                     }
                 } else {

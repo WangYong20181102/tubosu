@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.DynamicDetailActivity;
 import com.tbs.tobosupicture.activity.HisFansActivity;
@@ -139,7 +140,11 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     R.mipmap.default_icon, R.mipmap.default_icon,
                     ((PhpHeadHolder) holder).item_php_head_icon, 0);
             //背景图
-            GlideUtils.glideLoader(mContext, personHomePage.getUser_info().getCover_url(), R.mipmap.me_bg, R.mipmap.me_bg, ((PhpHeadHolder) holder).item_php_head_bg);
+            if (!TextUtils.isEmpty(personHomePage.getUser_info().getCover_url())) {
+                GlideUtils.glideLoader(mContext, personHomePage.getUser_info().getCover_url(), R.mipmap.me_bg, R.mipmap.me_bg, ((PhpHeadHolder) holder).item_php_head_bg);
+            } else {
+                Glide.with(mContext).load(R.mipmap.me_bg).into(((PhpHeadHolder) holder).item_php_head_bg);
+            }
             //昵称
             ((PhpHeadHolder) holder).item_php_head_nick.setText("" + personHomePage.getUser_info().getNick());
             //性别以及所在地

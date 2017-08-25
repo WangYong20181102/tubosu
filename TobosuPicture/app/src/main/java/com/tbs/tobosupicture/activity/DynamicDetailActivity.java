@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -171,6 +172,8 @@ public class DynamicDetailActivity extends BaseActivity {
                 //发送评论
                 if (Utils.userIsLogin(mContext)) {
                     sendComment();
+                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(dyndRevert.getWindowToken(), 0);
                 } else {
                     Utils.gotoLogin(mContext);
                 }

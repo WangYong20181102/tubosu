@@ -25,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.DecorateCompanyCaseActivity;
@@ -198,7 +199,7 @@ public class MineFragment extends BaseFragment {
             fmTumiNum.setText("0");
             fmTuyouNum.setText("0");
             fmDongtaiNum.setText("0");
-            fmHeadBg.setImageResource(R.mipmap.me_bg);
+            Glide.with(mContext).load(R.mipmap.me_bg).into(fmHeadBg);
         }
     }
 
@@ -270,13 +271,13 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.fm_sousuoguo_anli:
                 //点击展开搜索过的案例
-                if("1".equals(SpUtils.getUserType(mContext))){
+                if ("1".equals(SpUtils.getUserType(mContext))) {
                     // 业主
                     mContext.startActivity(new Intent(mContext, OwnerCaseActivity.class));
-                }else if("3".equals(SpUtils.getUserType(mContext))){
+                } else if ("3".equals(SpUtils.getUserType(mContext))) {
                     // 公司
                     mContext.startActivity(new Intent(mContext, DecorateCompanyCaseActivity.class));
-                }else {
+                } else {
                     startActivity(new Intent(mContext, LoginActivity.class));
                 }
 
@@ -529,7 +530,12 @@ public class MineFragment extends BaseFragment {
     //布局
     private void initView(_HomePage homePage) {
         //封面背景
-        GlideUtils.glideLoader(mContext, homePage.getCover_url(), R.mipmap.me_bg, R.mipmap.me_bg, fmHeadBg);
+        if (!TextUtils.isEmpty(homePage.getCover_url())) {
+            GlideUtils.glideLoader(mContext, homePage.getCover_url(), R.mipmap.me_bg, R.mipmap.me_bg, fmHeadBg);
+        } else {
+            Glide.with(mContext).load(R.mipmap.me_bg).into(fmHeadBg);
+        }
+
         //昵称
         fmUserName.setText(homePage.getNick());//业主
         fmCoName.setText(homePage.getNick());//公司

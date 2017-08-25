@@ -175,13 +175,36 @@ public class SendDynamicActivity extends BaseActivity {
             for (int i = 0; i < mImageUriPath.size(); i++) {
                 mCompressImageUriPath.add(ImgCompressUtils.CompressAndGetPath(mContext, mImageUriPath.get(i)));
             }
-
-            new Thread(uploadImageRunnable).start();
+//            new Thread(uploadImageRunnable).start();
+            //TODO 新的上传方式
+            File file = new File(mCompressImageUriPath.get(0));
+            HttpUploadImage(file);
         } else {
             pd.dismiss();
             Toast.makeText(mContext, "标题或图片不能为空~", Toast.LENGTH_SHORT).show();
         }
     }
+
+    //TODO 重新写的上传图片采用okhttp3
+    private void HttpUploadImage(File file) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Utils.getDateToken());
+        param.put("s_code", "app");
+        param.put("filedata", file);
+        HttpUtils.doPost(UrlConstans.UPLOAD_IMAGE, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "链接失败=====" + e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                Log.e(TAG, "链接成功====" + json);
+            }
+        });
+    }
+
 
     //上传图片的线程
     //上传图片的线程
@@ -226,6 +249,7 @@ public class SendDynamicActivity extends BaseActivity {
                         // 得到网络返回的输入流
                         InputStream is = conn.getInputStream();
                         resultStr = WriteUtil.readString(is);
+                        Log.e(TAG, "上传之后获取的结果=====" + resultStr);
                     } else {
                         Toast.makeText(mContext, "请求URL失败！", Toast.LENGTH_SHORT).show();
                     }

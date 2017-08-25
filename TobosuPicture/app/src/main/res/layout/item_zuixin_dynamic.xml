@@ -39,8 +39,9 @@
                 android:textSize="@dimen/text_size_28px" />
 
             <TextView
+                android:lineSpacingExtra="3dp"
                 android:id="@+id/zuixin_dynamic_title"
-                android:layout_width="250dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="时尚简约软装，细节之美~"
