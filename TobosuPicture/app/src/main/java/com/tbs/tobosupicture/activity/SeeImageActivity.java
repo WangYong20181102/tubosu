@@ -16,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -98,6 +99,9 @@ public class SeeImageActivity extends BaseActivity {
     ImageView ivBigCollect;
     @BindView(R.id.shareProgress)
     ProgressBar shareProgress;
+    @BindView(R.id.bar_framelayout)
+    FrameLayout bar_framelayout;
+
 
     private int currentPosition = 0;
     private ArrayList<ImgEntity> imgEntityList;
@@ -122,6 +126,7 @@ public class SeeImageActivity extends BaseActivity {
     }
 
     private void getIntentData() {
+        bar_framelayout.bringToFront();
         if (getIntent() != null && getIntent().getBundleExtra("img_bundle") != null) {
             imgId = getIntent().getBundleExtra("img_bundle").getString("img_id");
             HashMap<String, Object> hashMap = new HashMap<String, Object>();

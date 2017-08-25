@@ -82,11 +82,9 @@ public class DesignerActivity extends BaseActivity {
     @BindView(R.id.designerSampleLayout)
     LinearLayout designerSampleLayout;
 
-
     private SampleHorizontalListViewAdapter sampleAdapter;
     private CaseHorizontalListViewAdapter caseAdapter;
     private DesignerEntity designerEntity;
-
 
     private String iconUrl = "";
     private String viewNum = "";
@@ -103,7 +101,6 @@ public class DesignerActivity extends BaseActivity {
         setContentView(R.layout.activity_designer);
         ButterKnife.bind(this);
         getDataFromNet();
-
     }
 
     private void getDataFromNet() {

@@ -15,9 +15,11 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
     </FrameLayout>
-    <RelativeLayout
+
+    <FrameLayout
+        android:id="@+id/bar_framelayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <RelativeLayout
             android:id="@+id/img_bar"
             android:layout_width="match_parent"
@@ -42,12 +44,16 @@
                 android:layout_marginRight="14dp"
                 android:background="@mipmap/zhuanfa2"/>
         </RelativeLayout>
+    </FrameLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vpSeeImg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/img_bar">
+            android:layout_above="@+id/numSequeenLayout">
         </android.support.v4.view.ViewPager>
 
         <ImageView
@@ -173,7 +179,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="44dp"
+                        android:layout_height="49dp"
                         android:orientation="horizontal"
                         android:layout_alignParentBottom="true">
                         <RelativeLayout
@@ -187,7 +193,8 @@
                                 android:textColor="@color/white"
                                 android:text="我要此设计"
                                 android:layout_marginLeft="14dp"
-                                android:layout_marginBottom="6dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="10dp"
                                 android:gravity="center"
                                 android:textSize="16sp"
                                 android:background="@drawable/shape_getprice"/>

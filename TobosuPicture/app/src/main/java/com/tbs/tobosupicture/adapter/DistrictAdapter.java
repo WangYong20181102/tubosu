@@ -4,11 +4,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.bean.DistrictEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
+import com.tbs.tobosupicture.view.RoundAngleImageView;
+
 import java.util.ArrayList;
 
 /**
@@ -47,7 +48,7 @@ public class DistrictAdapter extends BaseAdapter {
         if(convertView==null){
             holder = new DistrictViewHolder();
             convertView = inflater.inflate(R.layout.adapter_item_gv_district, null);
-            holder.iv = (ImageView) convertView.findViewById(R.id.ivDistrictIcon);
+            holder.iv = (RoundAngleImageView) convertView.findViewById(R.id.ivDistrictIcon);
             holder.tv = (TextView) convertView.findViewById(R.id.tvDistrictName);
 
             convertView.setTag(holder);
@@ -61,7 +62,7 @@ public class DistrictAdapter extends BaseAdapter {
     }
 
     class DistrictViewHolder{
-        ImageView iv;
+        RoundAngleImageView iv;
         TextView tv;
     }
 

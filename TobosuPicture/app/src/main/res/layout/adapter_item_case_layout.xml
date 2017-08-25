@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="4dp"
     android:background="@color/white"
     android:orientation="vertical">
 
@@ -26,7 +25,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/iv_case_big_sample_pic"
             android:layout_marginRight="40dp"
-            android:layout_marginTop="-22dp">
+            android:layout_marginTop="-32dp">
             <ImageView
                 android:layout_width="49dp"
                 android:layout_height="49dp"
@@ -100,6 +99,5 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="14dp"
-        android:layout_marginBottom="4dp"
         android:background="@color/color_dividing_color"/>
 </LinearLayout>

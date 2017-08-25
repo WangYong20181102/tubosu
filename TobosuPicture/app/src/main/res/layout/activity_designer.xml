@@ -149,7 +149,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="6dp"
-                        android:text="样板图"
+                        android:text="效果图"
                         android:textColor="#1e1e1e"
                         android:textSize="16sp"/>
 
@@ -306,7 +306,7 @@
                     android:textColor="#464646"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="6dp"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     android:text="未填写"/>
 
                 <View
@@ -353,7 +353,7 @@
                     android:textColor="#464646"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="6dp"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     android:text="未填写"/>
 
                 <View
@@ -400,7 +400,7 @@
                     android:textColor="#464646"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="6dp"
-                    android:textSize="16sp"
+                    android:textSize="13sp"
                     android:text="未填写"/>
             </RelativeLayout>
 

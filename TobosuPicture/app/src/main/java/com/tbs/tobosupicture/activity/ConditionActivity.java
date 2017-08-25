@@ -430,11 +430,10 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
             hashMap.put("token", Utils.getDateToken());
             if(isTextSearch){
                 hashMap.put("name", text);
-            }else {
-                hashMap.put("city_id", _ciyt_id);
-                hashMap.put("district_id", _disc_id);
-                Utils.setErrorLog(TAG, "获取花园小区数据 输入的参数 如下    城市id:" + _ciyt_id + "     小区id:" + _disc_id);
             }
+            hashMap.put("city_id", _ciyt_id);
+            hashMap.put("district_id", _disc_id);
+            Utils.setErrorLog(TAG, "获取花园小区数据 == 城市id:" + _ciyt_id + "     小区id:" + _disc_id + "  城市 " + text  + " === " + districtPage);
             hashMap.put("page", districtPage);
             hashMap.put("page_size", districtPageSize);
             HttpUtils.doPost(UrlConstans.DISTRICT_LIST_URL, hashMap, new Callback() {
@@ -528,9 +527,8 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                 }else{
                     tempGardenDataList.clear();
                     districtPage = 1;
-                    Utils.setErrorLog(TAG, "两个id>" + city_id + "<====>" + district_id);
                     // 输入小区名称搜索花园小区
-//                    getData(true, searchText, city_id, district_id, mPullRefreshGridView);
+                    getGardenDistrictData(true, searchText, city_id, district_id, mGridView, ivNoDistrictDatas, relHasData);
                 }
 
             }
