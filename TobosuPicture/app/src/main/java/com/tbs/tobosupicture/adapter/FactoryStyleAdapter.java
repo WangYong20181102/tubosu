@@ -93,7 +93,9 @@ public class FactoryStyleAdapter extends BaseExpandableListAdapter {
         holder.tvBigStyleText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onFactoryStyleItemClickListener.onFactoryStyleParentClickListener(groupDataList.get(groupPosition).getId());
+                String id = groupDataList.get(groupPosition).getId();
+                String text = groupDataList.get(groupPosition).getClass_name();
+                onFactoryStyleItemClickListener.onFactoryStyleParentClickListener(id, text);
             }
         });
 
@@ -121,7 +123,8 @@ public class FactoryStyleAdapter extends BaseExpandableListAdapter {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String style_id = groupDataList.get(groupPosition).getChild_data().get(position).getId();
-                onFactoryStyleItemClickListener.onFactoryStyleItemClickListener(style_id);
+                String text = groupDataList.get(groupPosition).getChild_data().get(position).getClass_name();
+                onFactoryStyleItemClickListener.onFactoryStyleItemClickListener(style_id,text);
             }
         });
 
@@ -145,8 +148,8 @@ public class FactoryStyleAdapter extends BaseExpandableListAdapter {
 
     private OnFactoryStyleItemClickListener onFactoryStyleItemClickListener;
     public interface OnFactoryStyleItemClickListener{
-        void onFactoryStyleItemClickListener(String classID);
-        void onFactoryStyleParentClickListener(String parentId);
+        void onFactoryStyleItemClickListener(String classID, String classText);
+        void onFactoryStyleParentClickListener(String parentId, String parentText);
     }
 
     public OnFactoryStyleItemClickListener getOnFactoryStyleItemClickListener() {

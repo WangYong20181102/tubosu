@@ -2,15 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#efeeee">
+    android:background="@color/white">
 
     <com.tbs.tobosupicture.view.MyGridView
         android:id="@+id/gv_child"
         android:layout_width="match_parent"
         android:numColumns="4"
         android:layout_height="wrap_content"
-        android:horizontalSpacing="3dp"
-        android:verticalSpacing="3dp"
-        android:background="#efeeee">
+        android:background="@color/white">
     </com.tbs.tobosupicture.view.MyGridView>
 </RelativeLayout>

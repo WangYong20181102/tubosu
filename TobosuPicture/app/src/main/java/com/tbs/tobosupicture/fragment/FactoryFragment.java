@@ -120,7 +120,7 @@ public class FactoryFragment extends BaseFragment {
             param = new HashMap<String, Object>();
             param.put("token", Utils.getDateToken());
             param.put("type", "2");
-            param.put("class_id", class_id);
+            param.put("class_id", class_id);// 仅传小类id
             param.put("city_name", city);
             param.put("page", page);
             param.put("page_size", pageSize);
@@ -178,7 +178,6 @@ public class FactoryFragment extends BaseFragment {
             // 无网络时提醒的图片
 
         }
-
 
     }
 
@@ -325,18 +324,24 @@ public class FactoryFragment extends BaseFragment {
     private void initExpandableListView() {
         FactoryStyleAdapter adapter = new FactoryStyleAdapter(getActivity(), factoryStyrlBeenList, new FactoryStyleAdapter.OnFactoryStyleItemClickListener() {
             @Override
-            public void onFactoryStyleItemClickListener(String classID) {
+            public void onFactoryStyleItemClickListener(String classID, String text) {
 //                Utils.setToast(getActivity(), "class_id 是" + classID);
                 class_id = classID;
                 page = 1;
                 getDataFromNet();
+                tvChooseStyle.setText(text);
             }
 
             @Override
-            public void onFactoryStyleParentClickListener(String parentId) {
+            public void onFactoryStyleParentClickListener(String parentId, String text) {
 //                Utils.setToast(getActivity(), "group_ class_id 是" + parentId);
                 class_id = parentId;
                 page = 1;
+                if("全部".equals(text)){
+                    tvChooseStyle.setText("类型");
+                }else {
+                    tvChooseStyle.setText(text);
+                }
                 getDataFromNet();
             }
         });

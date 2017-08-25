@@ -5,17 +5,9 @@
     android:gravity="center_vertical"
     android:background="@color/white">
 
-    <View
-        android:id="@+id/v_group_divide"
-        android:layout_width="match_parent"
-        android:layout_height="14dp"
-        android:background="#F0F0F0"/>
-
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/v_group_divide">
+        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tv_group_style_text"
             android:layout_width="wrap_content"
