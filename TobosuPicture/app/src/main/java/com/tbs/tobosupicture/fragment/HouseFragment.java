@@ -241,6 +241,14 @@ public class HouseFragment extends BaseFragment {
     }
 
 
+    /**
+     *
+     * @param type 大类
+     * @param textList 选中的文字
+     * @param idList 选中的文字的id
+     * @param iconList 选中的文字的图片
+     * @param flag
+     */
     private void initPopupWindow(final int type, final ArrayList<String> textList, final ArrayList<String> idList, ArrayList<Integer> iconList,boolean flag) {
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.popuplayout, null);
         GridView gv = (GridView) contentView.findViewById(R.id.gv_converview);

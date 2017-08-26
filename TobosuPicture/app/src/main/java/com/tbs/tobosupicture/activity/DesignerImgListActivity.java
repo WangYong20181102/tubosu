@@ -101,7 +101,7 @@ public class DesignerImgListActivity extends BaseActivity {
             dataType = b.getInt("type");  // 1 案例，  0 样板
             isCollect = b.getString("isCollect");
             des ="粉丝 "+fansCount + " / 浏览" + viewCount;
-            Utils.setToast(mContext, Utils.getDateToken());
+//            Utils.setToast(mContext, Utils.getDateToken());
 
             if ("1".equals(isCollect)) {
                 tvGetConcern.setTextColor(Color.parseColor("#FA8817"));

@@ -2,6 +2,8 @@ package com.tbs.tobosupicture.bean;
 
 import android.widget.Space;
 
+import com.tbs.tobosupicture.utils.Utils;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
  */
 
 public class DecorateImgStyle {
+    private static String TAG = "DecorateImgStyle";
 
     public DecorateImgStyle(){}
     public DecorateImgStyle(String json){
@@ -61,11 +64,11 @@ public class DecorateImgStyle {
     }
 
     public static class DecorateStyleBeanArray {
-        private ArrayList<SpaceBean> spaceList = new ArrayList<>();
-        private ArrayList<StyleBean> styleList = new ArrayList<>();
-        private ArrayList<PartialBean> partialList = new ArrayList<>();
-        private ArrayList<LayoutBean> layoutList = new ArrayList<>();
-        private ArrayList<ColorBean> colorList = new ArrayList<>();
+        private ArrayList<SpaceBean> spaceList = new ArrayList<SpaceBean>();
+        private ArrayList<StyleBean> styleList = new ArrayList<StyleBean>();
+        private ArrayList<PartialBean> partialList = new ArrayList<PartialBean>();
+        private ArrayList<LayoutBean> layoutList = new ArrayList<LayoutBean>();
+        private ArrayList<ColorBean> colorList = new ArrayList<ColorBean>();
 
         public DecorateStyleBeanArray(){}
 
@@ -83,47 +86,51 @@ public class DecorateImgStyle {
                 }
 
                 JSONArray styleArr = jsonObject.getJSONArray("style");
-                int styleLength = spaceArr.length();
+                int styleLength = styleArr.length();
                 for(int i=0;i<styleLength;i++){
                     String id = styleArr.getJSONObject(i).getString("id");
                     String class_name = styleArr.getJSONObject(i).getString("class_name");
                     StyleBean bean = new StyleBean();
                     bean.setClass_name(class_name);
                     bean.setId(id);
+                    Utils.setErrorLog(TAG, class_name);
                     this.styleList.add(bean);
                 }
 
                 JSONArray partialArr = jsonObject.getJSONArray("partial");
-                int partialLength = spaceArr.length();
+                int partialLength = partialArr.length();
                 for(int i=0;i<partialLength;i++){
                     String id = partialArr.getJSONObject(i).getString("id");
                     String class_name = partialArr.getJSONObject(i).getString("class_name");
                     PartialBean bean = new PartialBean();
                     bean.setClass_name(class_name);
                     bean.setId(id);
+                    Utils.setErrorLog(TAG, class_name);
                     this.partialList.add(bean);
                 }
 
 
                 JSONArray layoutArr = jsonObject.getJSONArray("layout");
-                int layoutLength = spaceArr.length();
+                int layoutLength = layoutArr.length();
                 for(int i=0;i<layoutLength;i++){
                     String id = layoutArr.getJSONObject(i).getString("id");
                     String class_name = layoutArr.getJSONObject(i).getString("class_name");
                     LayoutBean bean = new LayoutBean();
                     bean.setClass_name(class_name);
                     bean.setId(id);
+                    Utils.setErrorLog(TAG, class_name);
                     this.layoutList.add(bean);
                 }
 
                 JSONArray colorArr = jsonObject.getJSONArray("color");
-                int colorLength = spaceArr.length();
+                int colorLength = colorArr.length();
                 for(int i=0;i<colorLength;i++){
                     String id = colorArr.getJSONObject(i).getString("id");
                     String class_name = colorArr.getJSONObject(i).getString("class_name");
                     ColorBean bean = new ColorBean();
                     bean.setClass_name(class_name);
                     bean.setId(id);
+                    Utils.setErrorLog(TAG, class_name);
                     this.colorList.add(bean);
                 }
 

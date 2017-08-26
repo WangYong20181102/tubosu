@@ -1,5 +1,7 @@
 package com.tbs.tobosupicture.adapter;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.CaseDetailActivity;
+import com.tbs.tobosupicture.activity.SeeImageActivity;
 import com.tbs.tobosupicture.bean.AnLiJsonEntity;
 import com.tbs.tobosupicture.bean.XiaoGuoTuJsonEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
@@ -138,13 +142,14 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
                 itemHolder.iv_big_pic.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Intent i = new Intent(mContext, DesignerActivity.class);
-//                        Bundle b = new Bundle();
-//                        b.putString("designer_id", sampleDataList.get(position).getId());
-//                        i.putExtra("designer_bundle", b);
-//                        mContext.startActivity(i);
+                        Intent i = new Intent(mContext, SeeImageActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("img_id", sampleDataList.get(position).getId());
+                        i.putExtra("img_bundle", b);
+                        mContext.startActivity(i);
                     }
                 });
+
                 holder.itemView.setTag(sampleDataList.get(position-1));
 
             }else if(type == 1){
@@ -193,15 +198,18 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
                 itemHolder.iv_big_pic.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        Intent i = new Intent(mContext, DesignerActivity.class);
-//                        Bundle b = new Bundle();
-//                        b.putString("designer_id", sampleDataList.get(position).getId());
-//                        i.putExtra("designer_bundle", b);
-//                        mContext.startActivity(i);
+                        Intent intent = new Intent(mContext, CaseDetailActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("id", caseDataList.get(position).getCaseid());
+                        intent.putExtra("case_bundle", b);
+                        mContext.startActivity(intent);
+
+
                     }
                 });
                 holder.itemView.setTag(caseDataList.get(position-1));
             }
+
         }
 
 

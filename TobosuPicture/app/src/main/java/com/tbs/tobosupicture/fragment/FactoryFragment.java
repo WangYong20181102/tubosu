@@ -101,6 +101,8 @@ public class FactoryFragment extends BaseFragment {
         switch (event.getCode()){
             case EC.EventCode.CHOOSE_CITY_TO_GET_DATA_FROM_NET_FACTORY:
                 city = (String) event.getData();
+                page = 1;
+                samplePicList.clear();
                 getDataFromNet();
                 break;
         }

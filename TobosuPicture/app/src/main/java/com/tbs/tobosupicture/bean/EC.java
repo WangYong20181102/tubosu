@@ -38,12 +38,12 @@ public final class EC {
         public static final int REFRESH_MY_ORGIN = 0x000027;//刷新我的发起数据（用户第一次发动态的时候调用）
 
 
-        public static final int CHOOSE_CITY_CODE = 0x100001;//选择城市
-        //        public static final int GET_DISTRICT_DATA_CODE = 0x100002;//获取小区数据
-//        public static final int GET_DISTRICT_DATA_CODE2 = 0x100003;//获取小区数据
+//        public static final int CHOOSE_CITY_CODE = 0x100001;
         public static final int CHOOSE_CITY_CODE_FOR_PRICE = 0x100002;//报价获取城市名称
         public static final int CHOOSE_CITY_CODE_FOR_FREE_PRICE = 0x100003;//报价获取城市名称
-        public static final int CHOOSE_CITY_TO_GET_DATA_FROM_NET_HOUSE = 0x100004;//报价获取城市名称
-        public static final int CHOOSE_CITY_TO_GET_DATA_FROM_NET_FACTORY = 0x100006;//报价获取城市名称
+        public static final int CHOOSE_CITY_TO_GET_DATA_FROM_NET_HOUSE = 0x100004;
+        public static final int CHOOSE_CITY_TO_GET_DATA_FROM_NET_FACTORY = 0x100006;
+//        public static final int CHOOSE_CITY_FOR_CASE_FRAGMENT = 0x100007;
+        public static final int CHOOSE_CITY_FOR_BOTH_FRAGMENT = 0x100008;
     }
 }

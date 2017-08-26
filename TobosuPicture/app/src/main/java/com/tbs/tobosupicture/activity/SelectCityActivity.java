@@ -391,9 +391,8 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
         if (ci.contains("市") || ci.contains("县")) {
             ci = ci.substring(0, ci.length() - 1);
         }
-        if ("TemplateFragment".equals(whereFrom)) {
-            EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_CODE, ci));
-        }
+
+        SpUtils.setSelectCityCache(mContext, ci);
 
         if (whereFrom.equals("PersonInfoActivity")) {
             EventBusUtil.sendEvent(new Event(EC.EventCode.PERSON_INFO_ACTIVITY_CHANGE_CITY, ci));
@@ -406,6 +405,14 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
         if("GetPriceActivity".equals(whereFrom)){
             EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_CODE_FOR_FREE_PRICE, ci));
         }
+
+        if("CaseFragment".equals(whereFrom)){
+            EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_FOR_BOTH_FRAGMENT, ci));
+        }
+        if ("TemplateFragment".equals(whereFrom)) {
+            EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_FOR_BOTH_FRAGMENT, ci));
+        }
+
         finish();
     }
 

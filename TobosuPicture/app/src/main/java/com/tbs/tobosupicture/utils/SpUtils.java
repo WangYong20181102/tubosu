@@ -238,4 +238,13 @@ public class SpUtils {
         context.getSharedPreferences("TemplateFragmentCity", 0).edit().putString("template_fragment_city", fragment_city).commit();
     }
 
+
+    public static String getSelectCityCache(Context context) {
+        return context.getSharedPreferences("SelectCityCache", 0).getString("CityCache", "");
+    }
+    public static void setSelectCityCache(Context context, String cache) {
+        context.getSharedPreferences("SelectCityCache", 0).edit().putString("CityCache", cache).commit();
+    }
+
+
 }

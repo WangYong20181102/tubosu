@@ -1,7 +1,6 @@
 package com.tbs.tobosupicture.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -14,21 +13,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -36,6 +31,10 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+
+/**
+ * 用黄色的发单页面，此蓝色的发单页面产品说不使用。
+ */
 public class FreeQuoteActivity extends BaseActivity {
     private String TAG = "FreeQuoteActivity";
     private Context mContext;
@@ -589,8 +588,9 @@ public class FreeQuoteActivity extends BaseActivity {
                 param.put("housearea", fdTextMyHomeAreaNum.getText().toString());
                 param.put("city", fdTextCity.getText().toString());
                 param.put("orderprice", (float) (mPrice / 10000));
-//                param.put("urlhistory", Constant.PIPE_CODE);
-//                param.put("comeurl", Constant.PIPE_CODE);
+                param.put("device", "android");
+                param.put("urlhistory", UrlConstans.PIPE_CODE);
+                param.put("comeurl", UrlConstans.PIPE_CODE);
                 param.put("source", "1111");
                 HttpUtils.doPost(UrlConstans.PUB_ORDER_URL, param, new Callback() {
                     @Override

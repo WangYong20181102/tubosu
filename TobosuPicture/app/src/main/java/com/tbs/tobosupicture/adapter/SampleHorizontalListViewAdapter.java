@@ -1,6 +1,8 @@
 package com.tbs.tobosupicture.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tbs.tobosupicture.activity.SeeImageActivity;
 import com.tbs.tobosupicture.bean.DesignerImpressionEntity;
 
 import java.util.ArrayList;
@@ -45,7 +48,7 @@ public class SampleHorizontalListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         SampleViewHolder vh = null;
         if (convertView == null) {
             vh = new SampleViewHolder();
@@ -62,6 +65,17 @@ public class SampleHorizontalListViewAdapter extends BaseAdapter {
         String des = dataList.get(position).getStyle_name() +" " + dataList.get(position).getLayout_name() + " 预算"
                 + dataList.get(position).getPlan_price() + "万";
         vh.tv_sample_desc.setText(des);
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(mContext, SeeImageActivity.class);
+                Bundle b = new Bundle();
+                b.putString("img_id", dataList.get(position).getId());
+                i.putExtra("img_bundle", b);
+                mContext.startActivity(i);
+            }
+        });
         return convertView;
     }
 

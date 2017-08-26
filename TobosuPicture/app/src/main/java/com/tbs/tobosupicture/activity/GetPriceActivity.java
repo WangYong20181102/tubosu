@@ -26,6 +26,7 @@ import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.DensityUtil;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.CustomWaitDialog;
 import com.tbs.tobosupicture.view.ObservableScrollView;
@@ -295,8 +296,10 @@ public class GetPriceActivity extends BaseActivity implements OnClickListener {
                     HashMap<String, Object> hashMap = new HashMap<String, Object>();
                     hashMap.put("token", Utils.getDateToken());
                     hashMap.put("cellphone", etPhone.getText().toString().toString());
-                    hashMap.put("urlhistory", Utils.getChannType(mContext));
-                    hashMap.put("comeurl", Utils.getChannType(mContext));
+                    hashMap.put("urlhistory", UrlConstans.PIPE_CODE);
+                    hashMap.put("device", "android");
+                    hashMap.put("city", SpUtils.getSelectCityCache(mContext));
+                    hashMap.put("comeurl", UrlConstans.PIPE_CODE);
 
                     HttpUtils.doPost(UrlConstans.PUB_ORDER_URL, hashMap, new Callback() {
                         @Override
