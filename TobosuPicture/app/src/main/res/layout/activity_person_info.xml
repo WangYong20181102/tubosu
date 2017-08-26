@@ -288,7 +288,6 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="20dp"
                         android:text=""
-                        android:textColor="@color/text_gray"
                         android:textSize="@dimen/text_size_28px" />
 
                     <ImageView
@@ -330,7 +329,6 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="20dp"
                         android:text=""
-                        android:textColor="@color/text_gray"
                         android:textSize="@dimen/text_size_28px" />
 
                     <ImageView

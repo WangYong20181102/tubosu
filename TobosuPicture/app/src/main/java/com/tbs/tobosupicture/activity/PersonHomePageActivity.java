@@ -219,6 +219,9 @@ public class PersonHomePageActivity extends BaseActivity {
         param.put("token", Utils.getDateToken());
         param.put("uid", homepageUid);
         param.put("is_virtual_user", is_virtual_user);
+        if (Utils.userIsLogin(mContext)) {
+            param.put("login_uid", SpUtils.getUserUid(mContext));
+        }
         param.put("page", mPage);
         param.put("page_size", "10");
         HttpUtils.doPost(UrlConstans.RELATE_DYNAMIC, param, new Callback() {

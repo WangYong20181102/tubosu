@@ -40,6 +40,7 @@ import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.utils.WriteUtil;
+import com.tbs.tobosupicture.view.CustomWaitDialog;
 import com.tbs.tobosupicture.view.SelectPersonalPopupWindow;
 import com.tbs.tobosupicture.view.SetSexPopWindow;
 import com.umeng.socialize.UMAuthListener;
@@ -58,6 +59,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -120,7 +122,7 @@ public class PersonInfoActivity extends BaseActivity {
     private UMShareAPI mShareAPI;
 
     private SelectPersonalPopupWindow menuWindow;
-
+    private CustomWaitDialog customWaitDialog;
     //TODO 调取相机要用的值
     private static final int REQUESTCODE_PICK = 0;
     private static final int REQUESTCODE_TAKE = 1;
@@ -180,6 +182,7 @@ public class PersonInfoActivity extends BaseActivity {
             personInfoSexRl.setVisibility(View.GONE);//隐藏性别
             personInfoCityRl.setVisibility(View.GONE);//隐藏城市
         }
+        customWaitDialog = new CustomWaitDialog(mContext);
     }
 
     @Override
@@ -232,7 +235,12 @@ public class PersonInfoActivity extends BaseActivity {
                 break;
             case R.id.person_info_bind_wx_rl:
                 //点击进行微信绑定
-                bindWeChat();
+                if (personInfoBindWx.getText().toString().equals("已绑定")) {
+                    Toast.makeText(mContext, "您已经绑定了微信~", Toast.LENGTH_SHORT).show();
+                } else {
+                    customWaitDialog.show();
+                    bindWeChat();
+                }
                 break;
             case R.id.person_info_bind_phone_rl:
                 //点击进行手机号码的绑定
@@ -329,6 +337,7 @@ public class PersonInfoActivity extends BaseActivity {
                 String nickname = map.get("name");//微信的昵称
                 String account = map.get("openid");//微信的openid
                 Log.e(TAG, "授权成功==头像==" + icon + "===nickname===" + nickname + "===account===" + account);
+                customWaitDialog.dismiss();
                 HttpBindWeChat(account);
             }
 
@@ -403,14 +412,18 @@ public class PersonInfoActivity extends BaseActivity {
         //设置绑定状态
         if (personInfo.getWechat_check().equals("1")) {
             personInfoBindWx.setText("已绑定");
-        } else {
+            personInfoBindWx.setTextColor(Color.parseColor("#8a8f99"));
+        }
+        if (personInfo.getWechat_check().equals("2")) {
             personInfoBindWx.setTextColor(Color.parseColor("#f57a7a"));
             personInfoBindWx.setText("未绑定");
         }
         //设置手机号码绑定状态
         if (personInfo.getCellphone_check().equals("1")) {
             personInfoBindPhone.setText("已绑定");
-        } else {
+            personInfoBindPhone.setTextColor(Color.parseColor("#8a8f99"));
+        }
+        if (personInfo.getCellphone_check().equals("2")) {
             personInfoBindPhone.setText("未绑定");
             personInfoBindPhone.setTextColor(Color.parseColor("#f57a7a"));
         }
@@ -497,22 +510,34 @@ public class PersonInfoActivity extends BaseActivity {
         HttpUtils.doPost(UrlConstans.BIND_WECHAT, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                Log.e(TAG, "绑定微信链接失败====" + e.toString());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String json = new String(response.body().string());
+                Log.e(TAG, "绑定微信======" + json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.getString("status");
+                    final String msg = jsonObject.getString("msg");
                     if (status.equals("200")) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 Log.e(TAG, "绑定成功！");
+                                Toast.makeText(mContext, "绑定成功！", Toast.LENGTH_SHORT).show();
                             }
                         });
+                        HttpGetPersonInfo();
+                    } else if (status.equals("0")) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, "绑定失败,原因:" + msg, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -172,8 +172,6 @@ public class DynamicDetailActivity extends BaseActivity {
                 //发送评论
                 if (Utils.userIsLogin(mContext)) {
                     sendComment();
-                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow(dyndRevert.getWindowToken(), 0);
                 } else {
                     Utils.gotoLogin(mContext);
                 }
@@ -233,6 +231,8 @@ public class DynamicDetailActivity extends BaseActivity {
                             public void run() {
                                 //评论成功  强刷数据
                                 Toast.makeText(mContext, "评论成功！", Toast.LENGTH_SHORT).show();
+                                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                inputMethodManager.hideSoftInputFromWindow(dyndRevert.getWindowToken(), 0);
                                 dyndRevert.setText("");
                                 reFresh();
                             }

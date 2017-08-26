@@ -50,6 +50,7 @@ import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.utils.WriteUtil;
+import com.tbs.tobosupicture.view.CustomWaitDialog;
 import com.tbs.tobosupicture.view.SelectPersonalPopupWindow;
 
 import org.json.JSONException;

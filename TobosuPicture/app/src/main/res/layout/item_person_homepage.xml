@@ -27,12 +27,12 @@
                 android:textSize="@dimen/text_size_32px" />
 
             <TextView
-                android:textColor="#FFB8BDC7"
                 android:id="@+id/item_php_item_month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:text="11月"
+                android:textColor="#FFB8BDC7"
                 android:textSize="@dimen/text_size_20px" />
         </LinearLayout>
 
@@ -60,12 +60,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:background="@drawable/shape_canjia"
-                    android:paddingBottom="1dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="1dp"
                     android:layout_marginRight="16dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/shape_canjia"
+                    android:paddingBottom="0.7dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:paddingTop="0.7dp"
                     android:text="参与"
                     android:textColor="@color/text_yellow"
                     android:textSize="@dimen/text_size_22px" />
@@ -180,10 +181,10 @@
 
             <RelativeLayout
                 android:layout_width="285dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp">
+                android:layout_height="30dp">
 
                 <TextView
+                    android:layout_alignParentBottom="true"
                     android:id="@+id/item_php_item_add_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -193,6 +194,7 @@
                     android:textSize="@dimen/text_size_24px" />
 
                 <LinearLayout
+                    android:layout_alignParentBottom="true"
                     android:id="@+id/item_dynamic_pinglun"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -216,33 +218,49 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:layout_alignParentBottom="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="50dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/item_php_item_praise_img"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:src="@mipmap/zan2" />
-                    <!--点赞数-->
+                    android:orientation="vertical">
                     <TextView
-                        android:id="@+id/item_php_item_praise_count"
+                        android:id="@+id/item_php_dynamic_zan_add"
+                        android:visibility="invisible"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:text="24"
-                        android:textColor="@color/text_gray"
-                        android:textSize="@dimen/text_size_24px" />
+                        android:text="+1"
+                        android:textColor="@color/text_yellow"
+                        android:textSize="@dimen/text_size_20px" />
+                    <LinearLayout
+                        android:id="@+id/item_dynamic_zan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/item_php_item_praise_img"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:src="@mipmap/zan2" />
+                        <!--点赞数-->
+                        <TextView
+                            android:id="@+id/item_php_item_praise_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:text="24"
+                            android:textColor="@color/text_gray"
+                            android:textSize="@dimen/text_size_24px" />
+                    </LinearLayout>
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
+
     <View
-        android:layout_marginTop="9dp"
-        android:background="@color/bg_gray"
         android:layout_width="match_parent"
-        android:layout_height="5dp"/>
+        android:layout_height="5dp"
+        android:layout_marginTop="9dp"
+        android:background="@color/bg_gray" />
 </LinearLayout>

@@ -206,7 +206,6 @@ public class _PersonHomePage {
          * month : 7月
          * day : 12
          * type : 参与
-         * participate_type : 2
          * image_detail : ["https://opic.tbscache.com/users/zsgs/case/2015/04-02/index/bbf29b55-84b1-e95e-b2f1-c5582fccb25e.jpg","https://opic.tbscache.com/users/zsgs/case/2015/04-02/index/2c6a82c8-a0c8-f3d4-6218-d80c61f81313.jpg","https://opic.tbscache.com/users/zsgs/case/2015/04-03/index/2510a1e0-76de-9983-3327-462076a96563.jpg","https://opic.tbscache.com/users/zsgs/case/2015/04-03/index/2b581c3e-4f95-aa53-81e1-90b098359322.jpg","https://opic.tbscache.com/users/zsgs/case/2015/04-03/index/1d500cae-2a15-3dd0-321b-8b8d7dfe4976.jpg","https://opic.tbscache.com/users/zsgs/case/2015/04-03/index/52aa8ab5-05a1-2a6c-ebee-8908ba5890da.jpg","https://opic.tbscache.com/users/zsgs/case/2015/04-03/index/d86a7984-75d3-b373-0028-16c949c0a471.jpg","https://opic.tbscache.com/users/zsgs/case/2015/04-03/index/1469394e-cd6d-6a8d-d57f-e5967c66eb85.jpg","https://opic.tbscache.com/users/zsgs/case/2015/04-03/index/1469394e-cd6d-6a8d-d57f-e5967c66eb85.jpg"]
          */
 
@@ -220,8 +219,25 @@ public class _PersonHomePage {
         private String month;
         private String day;
         private String type;
-        private String participate_type;
+        private String is_praise;//是否点赞0--否 1--是
+        private String is_comment;//是否评论0--否 1--是
         private List<String> image_detail;
+
+        public String getIs_praise() {
+            return is_praise;
+        }
+
+        public void setIs_praise(String is_praise) {
+            this.is_praise = is_praise;
+        }
+
+        public String getIs_comment() {
+            return is_comment;
+        }
+
+        public void setIs_comment(String is_comment) {
+            this.is_comment = is_comment;
+        }
 
         public String getId() {
             return id;
@@ -301,14 +317,6 @@ public class _PersonHomePage {
 
         public void setType(String type) {
             this.type = type;
-        }
-
-        public String getParticipate_type() {
-            return participate_type;
-        }
-
-        public void setParticipate_type(String participate_type) {
-            this.participate_type = participate_type;
         }
 
         public List<String> getImage_detail() {
