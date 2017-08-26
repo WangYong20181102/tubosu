@@ -84,7 +84,6 @@ public class TemplateFragment extends BaseFragment {
         tempLocation.setText(chosenCity);
         SpUtils.setTemplateFragmentCity(getActivity(), chosenCity);
 
-
         listFragments.add(new HouseFragment());
         listFragments.add(new FactoryFragment());
 
@@ -132,6 +131,7 @@ public class TemplateFragment extends BaseFragment {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String json = response.body().string();
+//                    Utils.setErrorLog(TAG, json);
                     SpUtils.setHouseStyleJson(getActivity(), json);
                 }
             });
@@ -205,7 +205,6 @@ public class TemplateFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.temp_location:
-//                startActivityForResult(new Intent(getActivity(), SelectCityActivity.class), 10);
                 Intent intent=new Intent(getActivity(), SelectCityActivity.class);
                 intent.putExtra("from","TemplateFragment");
                 startActivity(intent);
@@ -258,7 +257,7 @@ public class TemplateFragment extends BaseFragment {
     @Override
     protected void receiveEvent(Event event) {
         switch (event.getCode()){
-            case EC.EventCode.CHOOSE_CITY_CODE:
+            case EC.EventCode.CHOOSE_CITY_FOR_BOTH_FRAGMENT:
                 chosenCity = (String)event.getData();
                 tempLocation.setText((String)event.getData());
                 EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_TO_GET_DATA_FROM_NET_HOUSE, chosenCity));

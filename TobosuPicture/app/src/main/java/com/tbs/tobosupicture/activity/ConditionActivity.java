@@ -264,6 +264,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                 // 历史记录
                 if (seemore) {
                     tempRecordBeenList.addAll(recordBeenList);
+                    tvSeeMoreCaseHistory.setVisibility(View.GONE);
                 } else {
                     if (recordBeenList.size() > 5) {
                         for(int i = 0; i < 5; i++) {
@@ -338,6 +339,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
             case R.id.tvSeeMoreCaseHistory:
                 // 显示20条
                 initSearchRecord(true);
+
                 break;
             case R.id.tvClearCaseHistory:
                 if(Utils.userIsLogin(mContext)){

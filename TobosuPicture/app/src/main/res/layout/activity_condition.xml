@@ -41,53 +41,6 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                android:id="@+id/relSearchCaseLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/tvHistorySearch"
-                    android:layout_width="match_parent"
-                    android:layout_height="49dp"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="14dp"
-                    android:background="#F5F5F5"
-                    android:textColor="#9d9fa4"
-                    android:text="历史搜索"/>
-                <com.tbs.tobosupicture.view.MyListView
-                    android:id="@+id/searchCaseRecord"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvHistorySearch">
-                </com.tbs.tobosupicture.view.MyListView>
-                <LinearLayout
-                    android:id="@+id/historyLinearlayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_below="@+id/searchCaseRecord"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/tvSeeMoreCaseHistory"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="查看更多历史"/>
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="10dp"
-                        android:background="#d9d7d7"/>
-                    <TextView
-                        android:id="@+id/tvClearCaseHistory"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="清除历史"/>
-                </LinearLayout>
-            </RelativeLayout>
-
-            <RelativeLayout
                 android:id="@+id/lp"
                 android:layout_width="match_parent"
                 android:layout_height="47dp"
@@ -240,6 +193,53 @@
                 android:background="@color/white"
                 android:groupIndicator="@null">
             </com.tbs.tobosupicture.view.CustomExpandableListView>
+
+            <RelativeLayout
+                android:id="@+id/relSearchCaseLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/tvHistorySearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="49dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:background="#F5F5F5"
+                    android:textColor="#9d9fa4"
+                    android:text="历史搜索"/>
+                <com.tbs.tobosupicture.view.MyListView
+                    android:id="@+id/searchCaseRecord"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvHistorySearch">
+                </com.tbs.tobosupicture.view.MyListView>
+                <LinearLayout
+                    android:id="@+id/historyLinearlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_below="@+id/searchCaseRecord"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/tvSeeMoreCaseHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="查看更多历史"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:background="#d9d7d7"/>
+                    <TextView
+                        android:id="@+id/tvClearCaseHistory"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="清除历史"/>
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

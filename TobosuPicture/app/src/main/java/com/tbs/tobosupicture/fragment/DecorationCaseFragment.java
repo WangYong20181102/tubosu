@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,11 +16,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.ConditionActivity;
+import com.tbs.tobosupicture.activity.SelectCityActivity;
 import com.tbs.tobosupicture.adapter.CaseAdapter;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.bean.CaseJsonEntity;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,14 +54,13 @@ public class DecorationCaseFragment extends BaseFragment {
     SwipeRefreshLayout caseSwipRefreshLayout;
     @BindView(R.id.caseLocation)
     TextView caseLocation;
-
     @BindView(R.id.ivNoCaseData)
     ImageView ivNoCaseData;
     @BindView(R.id.linearLayoutHasCaseData)
     LinearLayout linearLayoutHasCaseData;
 
 
-
+    private String city;
     private LinearLayoutManager linearLayoutManager;
     private Context mContext;
 
@@ -90,16 +92,20 @@ public class DecorationCaseFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_decoration_case, null);
         mContext = getActivity();
-        getDataFromNet(getCommonHashMap());
+        city = SpUtils.getTemplateFragmentCity(getActivity());
+        getDataFromNet(getCommonHashMap(city));
         unbinder = ButterKnife.bind(this, view);
         initListViewSetting();
+
+        caseLocation.setText(city);
         return view;
     }
 
-    private HashMap<String, Object> getCommonHashMap(){
+    private HashMap<String, Object> getCommonHashMap(String _city){
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
         hashMap.put("token", Utils.getDateToken());
         hashMap.put("page", page);
+        hashMap.put("city_name", _city);
         hashMap.put("pageSize", pageSize);
         return hashMap;
     }
@@ -168,9 +174,34 @@ public class DecorationCaseFragment extends BaseFragment {
 //                    tvSearchTipText.setText("搜索");
                 }
                 break;
-//            case R.id.caseLocation:
-//                startActivityForResult(new Intent(getActivity(), SelectCityActivity.class));
-//                break;
+            case R.id.caseLocation:
+                Intent intent=new Intent(getActivity(), SelectCityActivity.class);
+                intent.putExtra("from","CaseFragment");
+                startActivity(intent);
+                break;
+        }
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()){
+            case EC.EventCode.CHOOSE_CITY_FOR_BOTH_FRAGMENT:
+                city = (String)event.getData();
+                caseLocation.setText(city);
+                caseList.clear();
+                if(isFromCondictionActivity){
+                    page = 1;
+                    getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style,param_city_id,param_district_id,param_vilige_id));
+                }else{
+                    page = 1;
+                    getDataFromNet(getCommonHashMap(city));
+                }
+                break;
         }
     }
 
@@ -208,6 +239,7 @@ public class DecorationCaseFragment extends BaseFragment {
         hashMap.put("page", page);
         hashMap.put("pageSize", pageSize);
         hashMap.put("area", area);
+        hashMap.put("city_name", city);
         hashMap.put("district_id", districtId);
         hashMap.put("layout", layout);
         hashMap.put("city_id", cityId);
@@ -293,7 +325,7 @@ public class DecorationCaseFragment extends BaseFragment {
             if(isFromCondictionActivity){
                 getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style,param_city_id,param_district_id,param_vilige_id));
             }else{
-                getDataFromNet(getCommonHashMap());
+                getDataFromNet(getCommonHashMap(city));
             }
         }
     };
@@ -308,7 +340,7 @@ public class DecorationCaseFragment extends BaseFragment {
         if(isFromCondictionActivity){
             getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style,param_city_id,param_district_id,param_vilige_id));
         }else{
-            getDataFromNet(getCommonHashMap());
+            getDataFromNet(getCommonHashMap(city));
         }
     }
 

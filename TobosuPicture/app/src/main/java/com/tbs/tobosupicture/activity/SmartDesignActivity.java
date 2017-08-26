@@ -448,7 +448,6 @@ public class SmartDesignActivity extends BaseActivity {
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("housearea", fdTextMyHomeAreaNum.getText().toString());//装修面积
             hashMap.put("decorate_price", mPrice);
-            hashMap.put("city", mPrice);
             hashMap.put("device", "android");
             hashMap.put("cellphone", fdEditPhoneNum.getText().toString());//用户的手机号码
             hashMap.put("city", fdTextCity.getText().toString());//用户所选的城市

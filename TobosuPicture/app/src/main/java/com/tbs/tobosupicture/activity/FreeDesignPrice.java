@@ -301,8 +301,10 @@ public class FreeDesignPrice extends Activity {
             hashMap.put("token", Utils.getDateToken());
             hashMap.put("cellphone", fdpPhonenum.getText().toString().trim());
             hashMap.put("orderprice", mPrice);
-            hashMap.put("urlhistory", Utils.getChannType(mContext));
-            hashMap.put("comeurl", Utils.getChannType(mContext));
+            hashMap.put("device", "android");
+            hashMap.put("city", SpUtils.getSelectCityCache(mContext));
+            hashMap.put("urlhistory", UrlConstans.PIPE_CODE);
+            hashMap.put("comeurl", UrlConstans.PIPE_CODE);
 
 
             Utils.setErrorLog(TAG, "token" + Utils.getDateToken() +

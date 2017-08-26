@@ -1,6 +1,8 @@
 package com.tbs.tobosupicture.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.CaseDetailActivity;
+import com.tbs.tobosupicture.activity.DesignerActivity;
+import com.tbs.tobosupicture.activity.SeeImageActivity;
 import com.tbs.tobosupicture.bean.DesignerCaseEntity;
 import com.tbs.tobosupicture.bean.DesignerImpressionEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
@@ -46,7 +51,7 @@ public class CaseHorizontalListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         SampleViewHolder vh = null;
         if (convertView == null) {
             vh = new SampleViewHolder();
@@ -65,6 +70,17 @@ public class CaseHorizontalListViewAdapter extends BaseAdapter {
                 dataList.get(position).getWei()+"卫 " + dataList.get(position).getArea() + "m²  "
                 + dataList.get(position).getPrice() + "万 (" + dataList.get(position).getDesmethod() + ")";
         vh.tv_case_desc.setText(des);
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, CaseDetailActivity.class);
+                Bundle b = new Bundle();
+                b.putString("id", dataList.get(position).getCaseid());
+                intent.putExtra("case_bundle", b);
+                mContext.startActivity(intent);
+            }
+        });
         return convertView;
     }
 

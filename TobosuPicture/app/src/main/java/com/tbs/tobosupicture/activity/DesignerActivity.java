@@ -116,6 +116,7 @@ public class DesignerActivity extends BaseActivity {
             hashMap.put("token", Utils.getDateToken());
             hashMap.put("uid", SpUtils.getUserUid(mContext));
             HttpUtils.doPost(UrlConstans.DESIGNER_URL, hashMap, new Callback() {
+
                 @Override
                 public void onFailure(Call call, IOException e) {
                     runOnUiThread(new Runnable() {
