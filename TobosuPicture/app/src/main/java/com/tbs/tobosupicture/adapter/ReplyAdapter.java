@@ -63,6 +63,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private View popView;
     private ShowZanAdapter showZanAdapter;
     private boolean isLoading = false;
+    private boolean isShowingPop = false;
     private _ZanUser zanUser;
     private RecyclerView pop_show_zan_recycle;
     private TextView pop_show_zan_num;
@@ -173,11 +174,14 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ((HeadViewHolder) holder).reply_head_zan_ll_pop.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mPage = 1;
-                    if (!praiseUserList.isEmpty()) {
-                        praiseUserList.clear();
+                    if (!isShowingPop) {
+                        isShowingPop = true;
+                        mPage = 1;
+                        if (!praiseUserList.isEmpty()) {
+                            praiseUserList.clear();
+                        }
+                        HttpGetUserZanList(mPage);
                     }
-//                    HttpGetUserZanList(mPage);
                 }
             });
             //TODO 当没有人评论是显示没有评论的占位符
@@ -514,11 +518,13 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
                 lp.alpha = 1.0f;
                 mActivity.getWindow().setAttributes(lp);
+                isShowingPop = false;
             }
         });
         pop_show_zan_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isShowingPop = false;
                 popupWindow.dismiss();
             }
         });
@@ -546,14 +552,15 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         isLoading = true;
         final HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
-        param.put("dynamic_id", mReply.getCommented().getId());
+        param.put("comment_id", mReply.getCommented().getId());
         param.put("page", mPage);
         param.put("page_size", "10");
-        HttpUtils.doPost(UrlConstans.DYNAMIC_PRAISE_LIST, param, new Callback() {
+        HttpUtils.doPost(UrlConstans.DYNAMIC_REPLY_PRAISE_LIST, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败===" + e.toString());
                 isLoading = false;
+                isShowingPop = false;
             }
 
             @Override
@@ -592,6 +599,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     }
                 } catch (JSONException e) {
                     isLoading = false;
+                    isShowingPop = false;
                     e.printStackTrace();
                 }
             }
@@ -603,6 +611,6 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
         lp.alpha = 0.5f;
         mActivity.getWindow().setAttributes(lp);
-        popupWindow.showAtLocation(popView, Gravity.BOTTOM, 0, 30);
+        popupWindow.showAtLocation(popView, Gravity.BOTTOM, 0, 0);
     }
 }
