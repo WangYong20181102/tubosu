@@ -177,7 +177,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     if (!praiseUserList.isEmpty()) {
                         praiseUserList.clear();
                     }
-                    HttpGetUserZanList(mPage);
+//                    HttpGetUserZanList(mPage);
                 }
             });
             //TODO 当没有人评论是显示没有评论的占位符

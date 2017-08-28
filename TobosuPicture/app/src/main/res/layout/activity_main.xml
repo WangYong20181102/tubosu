@@ -27,10 +27,10 @@
         android:layout_height="50dp">
 
         <RadioGroup
-            android:layout_marginTop="9dp"
+            android:layout_marginTop="5dp"
             android:id="@+id/main_radioGroup"
             android:layout_width="match_parent"
-            android:layout_height="41dp"
+            android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:background="@color/white"
             android:orientation="horizontal">

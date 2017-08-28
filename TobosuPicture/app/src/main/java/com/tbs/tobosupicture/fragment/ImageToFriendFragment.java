@@ -23,9 +23,11 @@ import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.MyFriendsActivity;
 import com.tbs.tobosupicture.base.BaseFragment;
+import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.ImgCompressUtils;
+import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.TouchImageView;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMAuthListener;
@@ -33,9 +35,13 @@ import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -45,6 +51,11 @@ import me.nereo.multi_image_selector.MultiImageSelector;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static android.app.Activity.RESULT_OK;
@@ -280,6 +291,7 @@ public class ImageToFriendFragment extends BaseFragment {
                     Log.e(TAG, "选择的图片地址=" + path.get(i) + "当前文件的name=" + files.getName() + "当前文件大小=" + files.length() / 1024);
                 }
                 GlideUtils.glideLoader(mContext, path.get(0), 0, 0, photoImg);
+                Log.e(TAG, "获取的拍照之后的图片类型============" + new File(path.get(0)).getName());
                 GlideUtils.glideLoader(mContext, newPath, 0, 0, photoImg2);
                 GlideUtils.glideLoader(mContext, path.get(0), 0, 0, photoImg3);
 //                HttpUtils.doFile(UrlConstans.UPLOAD_IMAGE, path.get(0), file.getName(), new Callback() {
@@ -350,18 +362,50 @@ public class ImageToFriendFragment extends BaseFragment {
     }
 
     private void HttpUpLoadImage() {
-        HttpUtils.doFile("http://www.dev.tobosu.com/cloud/upload/upload_for_ke", newFile.getPath(), newFile.getName(), new Callback() {
+        OkHttpClient client = new OkHttpClient();
+        MediaType IMG_TYPE = MediaType.parse("image/*");
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        builder.addFormDataPart("filedata", newFile.getName(), RequestBody.create(IMG_TYPE, newFile));
+        builder.addFormDataPart("token", Utils.getDateToken());
+        builder.addFormDataPart("s_code", "app");
+        MultipartBody requestBody = builder.build();
+        Request request = new Request.Builder()
+                .url(UrlConstans.UPLOAD_DYNAMIC_IMAGE)
+                .post(requestBody)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "上传失败====" + e.toString());
+                Log.e(TAG, "链接失败=====" + e.toString());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String json = new String(response.body().string());
-                Log.e(TAG, "上传成功=====" + json);
-
+                Log.e(TAG, "链接成功======" + response.body().string());
             }
         });
+    }
+
+    public byte[] ImageToByte(String path) {
+        File file = new File(path);
+        FileInputStream fin = null;
+        try {
+            fin = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            int i = fin.read();
+            while (i != -1) {
+                out.write(i);
+                i = fin.read();
+            }
+            return out.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

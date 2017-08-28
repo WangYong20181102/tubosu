@@ -424,24 +424,29 @@ public class NewSendDynamicActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUESTCODE_TAKE:
-                File temp = new File(Environment.getExternalStorageDirectory() + "/" + IMAGE_FILE_NAME);
                 if (resultCode == Activity.RESULT_CANCELED) {
                     //用户取消操作
                     return;
                 } else {
+                    File temp = new File(Environment.getExternalStorageDirectory() + "/" + IMAGE_FILE_NAME);
                     startPhotoZoom(Uri.fromFile(temp));
                 }
                 break;
             case REQUESTCODE_CUTTING:
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    return;
+                }
                 if (data != null) {
                     getImagePath(data);
                 }
                 break;
             case REQUEST_IMAGE:
                 //图片选择器处理回调
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    return;
+                }
                 if (resultCode == RESULT_OK) {
                     ArrayList<String> imaPathList = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                    //删除重复的照片  策略二  只有策略二行得通
                     if (!mImageUriList.isEmpty()) {
                         mImageUriList.clear();
                     }

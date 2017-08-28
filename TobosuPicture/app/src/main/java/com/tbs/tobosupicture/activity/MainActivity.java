@@ -27,6 +27,7 @@ import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.bean._ReceiveMsg;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.fragment.DecorationCaseFragment;
+import com.tbs.tobosupicture.fragment.ImageToFriendFragment;
 import com.tbs.tobosupicture.fragment.ImgToFriendFragment;
 import com.tbs.tobosupicture.fragment.MineFragment;
 import com.tbs.tobosupicture.fragment.TemplateFragment;

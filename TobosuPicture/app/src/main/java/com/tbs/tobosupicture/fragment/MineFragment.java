@@ -572,6 +572,10 @@ public class MineFragment extends BaseFragment {
                 }
                 break;
             case REQUESTCODE_CUTTING:
+                if(resultCode == Activity.RESULT_CANCELED){
+                    //用户取消操作
+                    return;
+                }
                 if (data != null) {
                     setPicToView(data);
                 }
