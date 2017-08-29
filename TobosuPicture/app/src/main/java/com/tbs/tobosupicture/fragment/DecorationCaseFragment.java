@@ -219,7 +219,13 @@ public class DecorationCaseFragment extends BaseFragment {
                     param_city_id = bundle.getString("param_city_id");
                     param_district_id = bundle.getString("param_district_id");//小区id
                     param_vilige_id = bundle.getString("param_vilige_id"); // 花园小区id
-                    tvSearchTipText.setText(bundle.getString("condition_text"));
+                    if(bundle.getInt("getcity") == 0){
+                        tvSearchTipText.setText(city + " " + bundle.getString("condition_text"));
+                    }else {
+                        // 有城市，不需要拼接
+                        tvSearchTipText.setText(bundle.getString("condition_text"));
+                    }
+
                 }
 
                 caseList.clear();

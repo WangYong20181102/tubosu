@@ -177,7 +177,13 @@ public class DesignerImgListActivity extends BaseActivity {
                         AnLiJsonEntity anLiJsonEntity = gson.fromJson(json, AnLiJsonEntity.class);
                         if(anLiJsonEntity.getStatus() == 200){
                             casePicDataList = anLiJsonEntity.getData();
-                            initAdapter(sourceType);
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    initAdapter(sourceType);
+                                }
+                            });
                         }else {
                             final String msg = anLiJsonEntity.getMsg();
                             runOnUiThread(new Runnable() {

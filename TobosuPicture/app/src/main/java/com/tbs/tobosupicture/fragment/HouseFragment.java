@@ -2,6 +2,7 @@ package com.tbs.tobosupicture.fragment;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -255,7 +256,8 @@ public class HouseFragment extends BaseFragment {
         popupWindow = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setContentView(contentView);
-
+        ColorDrawable cd = new ColorDrawable();
+        popupWindow.setBackgroundDrawable(cd);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
         GvAdapter gvAdapter = new GvAdapter(getActivity(), iconList, textList, flag);
@@ -333,6 +335,14 @@ public class HouseFragment extends BaseFragment {
                             tvHouseColor.setText("颜色");
                             parameter.put("color_id", "0");
                         }
+                        break;
+
+                    default:
+                        tvSpace.setText("空间");
+                        tvPart.setText("局部");
+                        tvStyle.setText("风格");
+                        tvHouseStyle.setText("户型");
+                        tvHouseColor.setText("颜色");
                         break;
                 }
                 page = 1;

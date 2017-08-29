@@ -71,7 +71,6 @@ public class TemplateFragment extends BaseFragment {
         View rootView = inflater.inflate(R.layout.fragment_template, null);
         ButterKnife.bind(this, rootView);
         initView();
-        getDataFromNet();
         return rootView;
     }
 
@@ -113,50 +112,6 @@ public class TemplateFragment extends BaseFragment {
         return true;
     }
 
-    private void getDataFromNet(){
-        if(Utils.isNetAvailable(getActivity())){
-            HashMap<String, Object> param = new HashMap<String, Object>();
-            param.put("token", Utils.getDateToken());
-            HttpUtils.doPost(UrlConstans.GET_HOUSE_DECORATE_STYLE_URL, param, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Utils.setToast(getActivity(),"系统繁忙请稍后再试!");
-                        }
-                    });
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    String json = response.body().string();
-//                    Utils.setErrorLog(TAG, json);
-                    SpUtils.setHouseStyleJson(getActivity(), json);
-                }
-            });
-
-
-            HttpUtils.doPost(UrlConstans.GET_FACTORY_DECORATE_STYLE_SURL, param, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Utils.setToast(getActivity(),"系统繁忙请稍后再试!");
-                        }
-                    });
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    String json = response.body().string();
-                    SpUtils.setFactoryStyleJson(getActivity(), json);
-                    Utils.setErrorLog(TAG, json);
-                }
-            });
-        }
-    }
 
     private void writeJsonToText(String json){
         FileWriter fw = null;//在外面创建，避免里面直接新建后面无法读取fw,fr
