@@ -74,6 +74,7 @@ public class WelcomeActivity extends BaseActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    getDataFromNet();
                     if (!TextUtils.isEmpty(SpUtils.getUserIsFristLogin(mContext))) {
                         startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
                         WelcomeActivity.this.finish();
@@ -262,6 +263,52 @@ public class WelcomeActivity extends BaseActivity {
             };
 
             requestPermissions(permissions, 101);
+        }
+    }
+
+
+    private void getDataFromNet(){
+        if(Utils.isNetAvailable(mContext)){
+            HashMap<String, Object> param = new HashMap<String, Object>();
+            param.put("token", Utils.getDateToken());
+            HttpUtils.doPost(UrlConstans.GET_HOUSE_DECORATE_STYLE_URL, param, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Utils.setToast(mContext,"系统繁忙请稍后再试!");
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String json = response.body().string();
+//                    Utils.setErrorLog(TAG, json);
+                    SpUtils.setHouseStyleJson(mContext, json);
+                }
+            });
+
+
+            HttpUtils.doPost(UrlConstans.GET_FACTORY_DECORATE_STYLE_SURL, param, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Utils.setToast(mContext,"系统繁忙请稍后再试!");
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String json = response.body().string();
+                    SpUtils.setFactoryStyleJson(mContext, json);
+                    Utils.setErrorLog(TAG, json);
+                }
+            });
         }
     }
 

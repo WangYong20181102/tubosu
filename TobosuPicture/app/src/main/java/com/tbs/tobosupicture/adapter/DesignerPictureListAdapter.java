@@ -200,7 +200,7 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext, CaseDetailActivity.class);
                         Bundle b = new Bundle();
-                        b.putString("id", caseDataList.get(position).getCaseid());
+                        b.putString("id", caseDataList.get(position-1).getCaseid());
                         intent.putExtra("case_bundle", b);
                         mContext.startActivity(intent);
 

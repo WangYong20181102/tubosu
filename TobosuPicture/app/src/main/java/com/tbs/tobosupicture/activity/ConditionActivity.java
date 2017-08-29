@@ -237,7 +237,14 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         b.putString("param_city_id", city_id);
         b.putString("param_district_id", district_id);//小区id
         b.putString("param_vilige_id", param_vilige_id);//花园小区id  param_vilige_id
-        b.putString("condition_text", conditionText);
+        if("".equals(cityName)){
+            b.putInt("getcity", 0);// 无选择城市
+        }else {
+            b.putInt("getcity", 1);// 有选择城市
+            conditionText = cityName + " " +conditionText;
+        }
+        b.putString("condition_text", cityName + conditionText);
+
         intent.putExtra("params", b);
 
         Utils.setErrorLog(TAG, param_area + "   " + param_layout + "  " + param_price + "  " + param_style + "  返回城市id " + city_id+  "  返回小区id " + district_id+ "  返回花园小区id " + param_vilige_id);
@@ -292,6 +299,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                         b.putString("param_price", tempRecordBeenList.get(position).getPrice_key());
                         b.putString("param_style", tempRecordBeenList.get(position).getStyle_id());
                         b.putString("param_city_id", tempRecordBeenList.get(position).getCity_id());
+                        b.putInt("getcity", 1);
                         String _condiction = tempRecordBeenList.get(position).getCity_name() + " " +
                                 tempRecordBeenList.get(position).getLayout_value() + " " +
                                 tempRecordBeenList.get(position).getArea_value() + " " +
@@ -399,6 +407,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
     public void onAddressChange(String province, String city, String district) {
         tvChooseCity.setText(province + " " + city + " " + district);
         defaultAddr = province + " " + city + " " + district;
+        cityName = city;
     }
 
 
@@ -467,6 +476,8 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                             }else{
                                 Utils.setToast(mContext, "没有更多小区数据了");
                                 // FIXME: 2017/8/16  占位图
+
+
                             }
                         }
                     });
@@ -481,6 +492,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
     private ArrayList<DistrictEntity> tempGardenDataList = new ArrayList<DistrictEntity>();
     private DistrictAdapter adapter;
     private String defaultAddr = "北京市 北京 东城区";
+    private String cityName = "";
     private void showGardenWindow(boolean isTextSearch, String text, String cityID, String districtID){
         View contentView = LayoutInflater.from(mContext).inflate(R.layout.popuplayout_district, null);
         final ImageView ivNoDistrictDatas = (ImageView) contentView.findViewById(R.id.ivNoDistrictDatas);
