@@ -63,13 +63,13 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginTop="2dp"
                     android:background="@drawable/shape_canjia"
-                    android:paddingBottom="0.7dp"
-                    android:paddingLeft="6dp"
-                    android:paddingRight="6dp"
-                    android:paddingTop="0.7dp"
+                    android:paddingBottom="0.8dp"
+                    android:paddingLeft="7dp"
+                    android:paddingRight="7dp"
+                    android:paddingTop="0.8dp"
                     android:text="参与"
                     android:textColor="@color/text_yellow"
-                    android:textSize="@dimen/text_size_22px" />
+                    android:textSize="@dimen/text_size_20px" />
             </RelativeLayout>
 
 
@@ -184,20 +184,20 @@
                 android:layout_height="30dp">
 
                 <TextView
-                    android:layout_alignParentBottom="true"
                     android:id="@+id/item_php_item_add_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
                     android:text="10秒前"
                     android:textColor="@color/text_gray"
                     android:textSize="@dimen/text_size_24px" />
 
                 <LinearLayout
-                    android:layout_alignParentBottom="true"
                     android:id="@+id/item_dynamic_pinglun"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:orientation="horizontal">
 
@@ -218,20 +218,22 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_alignParentBottom="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="50dp"
                     android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/item_php_dynamic_zan_add"
-                        android:visibility="invisible"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="+1"
                         android:textColor="@color/text_yellow"
-                        android:textSize="@dimen/text_size_20px" />
+                        android:textSize="@dimen/text_size_20px"
+                        android:visibility="invisible" />
+
                     <LinearLayout
                         android:id="@+id/item_dynamic_zan"
                         android:layout_width="wrap_content"

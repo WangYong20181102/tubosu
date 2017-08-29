@@ -63,6 +63,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
     private int adapterState = 1;//子项的状态 1.加载更多 2.正常状态
     private String TAG = "DynamicDetailAdapter";
     private Activity mActivity;
+    private boolean isShowingPop = false;
 
     private View popView;//显示点赞列表
     private ShowZanAdapter showZanAdapter;
@@ -297,11 +298,15 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             ((DynamicDetailHeadHolder) holder).dynamic_zan_ll_pop.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mPage = 1;
-                    if (!praiseUserList.isEmpty()) {
-                        praiseUserList.clear();
+                    if (!isShowingPop) {
+                        //是否在显示pop中  如果是 则不再加载
+                        isShowingPop = true;
+                        mPage = 1;
+                        if (!praiseUserList.isEmpty()) {
+                            praiseUserList.clear();
+                        }
+                        HttpGetUserZanList(mPage);
                     }
-                    HttpGetUserZanList(mPage);
                 }
             });
             //点赞人数为0时隐藏该条框
@@ -705,11 +710,13 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                 WindowManager.LayoutParams lp = mActivity.getWindow().getAttributes();
                 lp.alpha = 1.0f;
                 mActivity.getWindow().setAttributes(lp);
+                isShowingPop = false;
             }
         });
         pop_show_zan_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isShowingPop = false;
                 popupWindow.dismiss();
             }
         });
@@ -744,6 +751,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败===" + e.toString());
                 isLoading = false;
+                isShowingPop = false;
             }
 
             @Override
@@ -782,6 +790,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                     }
                 } catch (JSONException e) {
                     isLoading = false;
+                    isShowingPop = false;
                     e.printStackTrace();
                 }
             }

@@ -228,6 +228,10 @@ public class UrlConstans {
      */
     public static final String DYNAMIC_PRAISE_LIST = ZXKK_URL + "rapp/dynamic/dynamic_praise_list";
     /**
+     * 点赞回复的列表动态详细页
+     */
+    public static final String DYNAMIC_REPLY_PRAISE_LIST = ZXKK_URL + "rapp/comment/comment_praise_list";
+    /**
      * 回复评论列表回复评论列表
      */
     public static final String REPLY_DYNAMIC_COMMENT_LIST = ZXKK_URL + "rapp/dynamic/reply_dynamic_comment_list";

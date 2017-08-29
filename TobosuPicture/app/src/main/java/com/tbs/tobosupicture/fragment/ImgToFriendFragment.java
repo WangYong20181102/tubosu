@@ -1,5 +1,6 @@
 package com.tbs.tobosupicture.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -314,12 +315,19 @@ public class ImgToFriendFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUESTCODE_TAKE:
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    return;
+                }
                 File temp = new File(Environment.getExternalStorageDirectory() + "/" + IMAGE_FILE_NAME);
                 startPhotoZoom(Uri.fromFile(temp));
                 break;
             case REQUESTCODE_CUTTING:
                 //拍照处理之后将图片发给下一个页面
-                if (data != null) {
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    //取消操作
+                    return;
+                }
+                if (data != null && data.getExtras().getParcelable("data") != null) {
                     Bitmap photo = data.getExtras().getParcelable("data");
                     String ImgPath = FileUtil.saveFile(mContext, Utils.getNowTime() + "lin_zxkk.jpg", photo);
                     ArrayList<String> imgPathList = new ArrayList<>();
@@ -332,6 +340,9 @@ public class ImgToFriendFragment extends BaseFragment {
                 break;
             case REQUESTCODE_XIAO_MI_TAKE:
                 //小米专用拍照
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    return;
+                }
                 if (data != null) {
                     if (data.getExtras() != null) {
                         Bundle bundle = data.getExtras();
@@ -349,6 +360,9 @@ public class ImgToFriendFragment extends BaseFragment {
                 }
                 break;
             case REQUEST_IMAGE:
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    return;
+                }
                 if (resultCode == RESULT_OK) {
                     ArrayList<String> imgPathList = new ArrayList<>();
                     imgPathList = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);

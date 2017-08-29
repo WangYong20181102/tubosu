@@ -106,6 +106,7 @@ public class PhotoDetail extends BaseActivity {
     private View popView;//popwindow的载体
     private ShowCommentAdapter showCommentAdapter;
     private boolean isLoading = false;//是否正在加载
+    private boolean isShowingPop = false;//是否真正展示popwindow
     private RecyclerView pop_detail_pinglun_recycle;
     private LinearLayoutManager linearLayoutManager;
     private LinearLayout pop_show_comment_back;
@@ -199,11 +200,14 @@ public class PhotoDetail extends BaseActivity {
                 break;
             case R.id.photo_detail_pinlun:
                 //点击滑出评论的popwindow
-                mPage = 1;
-                if (!commentList.isEmpty()) {
-                    commentList.clear();
+                if (!isShowingPop) {
+                    isShowingPop = true;
+                    mPage = 1;
+                    if (!commentList.isEmpty()) {
+                        commentList.clear();
+                    }
+                    HttpGetCommentList(mPage);
                 }
-                HttpGetCommentList(mPage);
                 break;
             case R.id.photo_detail_shoucang:
                 if (Utils.userIsLogin(mContext)) {
@@ -245,12 +249,14 @@ public class PhotoDetail extends BaseActivity {
                 WindowManager.LayoutParams lp = getWindow().getAttributes();
                 lp.alpha = 1.0f;
                 getWindow().setAttributes(lp);
+                isShowingPop = false;
             }
         });
         pop_show_comment_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popupWindow.dismiss();
+                isShowingPop = false;
             }
         });
     }
@@ -340,6 +346,7 @@ public class PhotoDetail extends BaseActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 isLoading = false;
+                isShowingPop = false;
                 Log.e(TAG, "链接失败===" + e.toString());
             }
 
@@ -374,12 +381,16 @@ public class PhotoDetail extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                if (commentList.isEmpty()) {
+                                    isShowingPop = false;
+                                }
                                 Toast.makeText(mContext, "暂无更多评论数据~", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                 } catch (JSONException e) {
                     isLoading = false;
+                    isShowingPop = false;
                     e.printStackTrace();
                 }
             }
@@ -390,8 +401,8 @@ public class PhotoDetail extends BaseActivity {
     private void HttpShoucan() {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
-        if(Utils.userIsLogin(mContext)){
-            param.put("uid",SpUtils.getUserUid(mContext));
+        if (Utils.userIsLogin(mContext)) {
+            param.put("uid", SpUtils.getUserUid(mContext));
         }
         param.put("dynamic_id", mDynamicId);
         HttpUtils.doPost(UrlConstans.DYNAMIC_COLLECT, param, new Callback() {

@@ -128,6 +128,7 @@ public class SetNewPasswordActivity extends BaseActivity {
                         SpUtils.saveUserType(mContext, user.getUser_type());
                         Log.e(TAG, "获取用户的uid====" + SpUtils.getUserUid(mContext));
                         EventBusUtil.sendEvent(new Event(EC.EventCode.LOGIN_INITDATA));
+                        EventBusUtil.sendEvent(new Event(EC.EventCode.FNISHI_LOGINACTIVITY));
                         finish();
                     } else {
                         //获取数据失败

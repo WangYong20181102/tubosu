@@ -343,7 +343,7 @@ public class PersonInfoActivity extends BaseActivity {
 
             @Override
             public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-
+                Log.e(TAG, "授权失败====" + i + "==原因==" + throwable.toString());
             }
 
             @Override
@@ -396,15 +396,16 @@ public class PersonInfoActivity extends BaseActivity {
         //设置昵称
         personInfoNick.setText(personInfo.getNick());
         //设置性别
-        if (personInfo.getGender().equals("1")) {
-            //男
-            personInfoSex.setText("男");
-        } else if (personInfo.getGender().equals("2")) {
-            personInfoSex.setText("女");
-        } else {
-            personInfoSex.setText("未设置");
+        if(!TextUtils.isEmpty(personInfo.getGender())){
+            if (personInfo.getGender().equals("1")) {
+                //男
+                personInfoSex.setText("男");
+            } else if (personInfo.getGender().equals("2")) {
+                personInfoSex.setText("女");
+            } else {
+                personInfoSex.setText("未设置");
+            }
         }
-
         //设置城市
         personInfoCity.setText(personInfo.getCity_name());
         //设置个性签名
