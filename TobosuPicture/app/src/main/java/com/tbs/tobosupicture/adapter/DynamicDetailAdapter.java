@@ -64,6 +64,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
     private String TAG = "DynamicDetailAdapter";
     private Activity mActivity;
     private boolean isShowingPop = false;
+    private boolean isZaning = false;//是否正在点赞
 
     private View popView;//显示点赞列表
     private ShowZanAdapter showZanAdapter;
@@ -317,12 +318,15 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             ((DynamicDetailHeadHolder) holder).dynamic_detail_ll_praise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (Utils.userIsLogin(mContext)) {
-                        HttpZan(((DynamicDetailHeadHolder) holder).dynamic_detail_praise,
-                                ((DynamicDetailHeadHolder) holder).dynamic_dynamic_zan_add, ((DynamicDetailHeadHolder) holder).DynamicDetailPraiseCount);
-                    } else {
-                        Intent intent = new Intent(mContext, LoginActivity.class);
-                        mContext.startActivity(intent);
+                    if (!isZaning) {
+                        if (Utils.userIsLogin(mContext)) {
+                            isZaning = true;
+                            HttpZan(((DynamicDetailHeadHolder) holder).dynamic_detail_praise,
+                                    ((DynamicDetailHeadHolder) holder).dynamic_dynamic_zan_add, ((DynamicDetailHeadHolder) holder).DynamicDetailPraiseCount);
+                        } else {
+                            Intent intent = new Intent(mContext, LoginActivity.class);
+                            mContext.startActivity(intent);
+                        }
                     }
                 }
             });
@@ -396,17 +400,19 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             ((CommentViewHolder) holder).dynamic_detail_comment_ll_zan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (Utils.userIsLogin(mContext)) {
-                        HttpCommentZan(commentArrayList.get(position - 1).getId(),
-                                commentArrayList.get(position - 1).getUid(),
-                                ((CommentViewHolder) holder).commentZan,
-                                ((CommentViewHolder) holder).dynamic_detail_comment_zan_add,
-                                ((CommentViewHolder) holder).commentZanNum);
-                    } else {
-                        Intent intent = new Intent(mContext, LoginActivity.class);
-                        mContext.startActivity(intent);
+                    if (!isZaning) {
+                        if (Utils.userIsLogin(mContext)) {
+                            isZaning = true;
+                            HttpCommentZan(commentArrayList.get(position - 1).getId(),
+                                    commentArrayList.get(position - 1).getUid(),
+                                    ((CommentViewHolder) holder).commentZan,
+                                    ((CommentViewHolder) holder).dynamic_detail_comment_zan_add,
+                                    ((CommentViewHolder) holder).commentZanNum);
+                        } else {
+                            Intent intent = new Intent(mContext, LoginActivity.class);
+                            mContext.startActivity(intent);
+                        }
                     }
-
                 }
             });
             //用户是否点过赞
@@ -587,6 +593,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败===" + e.toString());
+                isZaning = false;
             }
 
             @Override
@@ -605,6 +612,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                                     zan.setImageResource(R.mipmap.zan_after);
                                     zanAddAnimation(tvAdd, tvShowNum);
                                 } else {
+                                    isZaning = false;
                                     int num = Integer.parseInt(tvShowNum.getText().toString());
                                     int numAddone = num - 1;
                                     tvShowNum.setText("" + numAddone);
@@ -615,6 +623,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    isZaning = false;
                 }
             }
         });
@@ -631,6 +640,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败===" + e.toString());
+                isZaning = false;
             }
 
             @Override
@@ -650,6 +660,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                                     zan.setImageResource(R.mipmap.zan_after);
                                     zanAddAnimation(tvAdd, tvShowNum);
                                 } else {
+                                    isZaning = false;
                                     int num = Integer.parseInt(tvShowNum.getText().toString());
                                     int numAddone = num - 1;
                                     tvShowNum.setText("" + numAddone);
@@ -659,6 +670,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                         });
                     }
                 } catch (JSONException e) {
+                    isZaning = false;
                     e.printStackTrace();
                 }
             }
@@ -675,6 +687,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                 int num = Integer.parseInt(showNum.getText().toString());
                 int numAddone = num + 1;
                 showNum.setText("" + numAddone);
+                isZaning = false;
             }
         }, 1000);
     }

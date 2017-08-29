@@ -46,6 +46,7 @@ public class DynamicBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private List<_DynamicBase> dynamicBaseList;
     private Activity mActivity;
     private int adapterState = 1;//默认加载更多
+    private boolean isZaning = false;//是否正在点赞处理中（防止点赞为负数）
     private String TAG = "DynamicBaseAdapter";
 
     public DynamicBaseAdapter(Context context, Activity activity, List<_DynamicBase> dynamicBaseList) {
@@ -279,12 +280,15 @@ public class DynamicBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ((DynamicBaseHolder) holder).dynamic_base_zan_ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (Utils.userIsLogin(mContext)) {
-                        HttpPraise(SpUtils.getUserUid(mContext), dynamicBaseList.get(position).getId(),
-                                dynamicBaseList.get(position).getUid(), ((DynamicBaseHolder) holder).dynamic_base_praise,
-                                ((DynamicBaseHolder) holder).dynamic_base_zan_add, ((DynamicBaseHolder) holder).dynamic_base_praise_count, position);
-                    } else {
-                        Utils.gotoLogin(mContext);
+                    if (!isZaning) {
+                        if (Utils.userIsLogin(mContext)) {
+                            isZaning = true;
+                            HttpPraise(SpUtils.getUserUid(mContext), dynamicBaseList.get(position).getId(),
+                                    dynamicBaseList.get(position).getUid(), ((DynamicBaseHolder) holder).dynamic_base_praise,
+                                    ((DynamicBaseHolder) holder).dynamic_base_zan_add, ((DynamicBaseHolder) holder).dynamic_base_praise_count, position);
+                        } else {
+                            Utils.gotoLogin(mContext);
+                        }
                     }
                 }
             });
@@ -407,6 +411,7 @@ public class DynamicBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "点赞链接失败===" + e.toString());
+                isZaning = false;
             }
 
             @Override
@@ -430,6 +435,7 @@ public class DynamicBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                                     //修改点赞状态
                                     dynamicBaseList.get(position).setIs_praise("1");
                                 } else {
+                                    isZaning = false;
                                     int num = Integer.parseInt(tvShowNum.getText().toString());
                                     int numAddone = num - 1;
                                     tvShowNum.setText("" + numAddone);
@@ -442,9 +448,11 @@ public class DynamicBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
                     } else if (status.equals("202")) {
                         //点赞失败
+                        isZaning = false;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    isZaning = false;
                 }
             }
         });
@@ -461,6 +469,7 @@ public class DynamicBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 int num = Integer.parseInt(showNum.getText().toString());
                 int numAddone = num + 1;
                 showNum.setText("" + numAddone);
+                isZaning = false;
             }
         }, 1000);
     }

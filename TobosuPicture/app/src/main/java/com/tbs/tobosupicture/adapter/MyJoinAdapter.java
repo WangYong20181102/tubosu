@@ -51,6 +51,7 @@ public class MyJoinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private Activity mActivity;
     private String TAG = "MyJoinAdapter";
     private int adapterLoadState = 1;//子项加载情况
+    private boolean isZaning = false;
 
     public MyJoinAdapter(Context context, Activity activity, List<String> myJoinMsgList, List<_DynamicBase> dynamicBaseList) {
         this.mContext = context;
@@ -335,13 +336,17 @@ public class MyJoinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ((MyJoinItemHolder) holder).dynamic_base_zan_ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (Utils.userIsLogin(mContext)) {
-                        HttpPraise(SpUtils.getUserUid(mContext), dynamicBaseList.get(position - 1).getId(),
-                                dynamicBaseList.get(position - 1).getUid(), ((MyJoinItemHolder) holder).dynamic_base_praise,
-                                ((MyJoinItemHolder) holder).dynamic_base_zan_add, ((MyJoinItemHolder) holder).dynamic_base_praise_count, position - 1);
-                    } else {
-                        Utils.gotoLogin(mContext);
+                    if (!isZaning) {
+                        if (Utils.userIsLogin(mContext)) {
+                            isZaning = true;
+                            HttpPraise(SpUtils.getUserUid(mContext), dynamicBaseList.get(position - 1).getId(),
+                                    dynamicBaseList.get(position - 1).getUid(), ((MyJoinItemHolder) holder).dynamic_base_praise,
+                                    ((MyJoinItemHolder) holder).dynamic_base_zan_add, ((MyJoinItemHolder) holder).dynamic_base_praise_count, position - 1);
+                        } else {
+                            Utils.gotoLogin(mContext);
+                        }
                     }
+
                 }
             });
             //进入评论事件
@@ -476,6 +481,7 @@ public class MyJoinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "点赞链接失败===" + e.toString());
+                isZaning = false;
             }
 
             @Override
@@ -504,6 +510,7 @@ public class MyJoinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                                     tvShowNum.setText("" + numAddone);
                                     zan.setImageResource(R.mipmap.zan2);
                                     dynamicBaseList.get(position).setIs_praise("0");
+                                    isZaning = false;
                                 }
                             }
                         });
@@ -511,9 +518,11 @@ public class MyJoinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                     } else if (status.equals("202")) {
                         //点赞失败
+                        isZaning = false;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    isZaning = false;
                 }
             }
         });
@@ -530,6 +539,7 @@ public class MyJoinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 int num = Integer.parseInt(showNum.getText().toString());
                 int numAddone = num + 1;
                 showNum.setText("" + numAddone);
+                isZaning = false;
             }
         }, 1000);
     }

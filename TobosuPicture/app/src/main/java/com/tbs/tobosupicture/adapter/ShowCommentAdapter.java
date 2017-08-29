@@ -44,6 +44,7 @@ public class ShowCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private List<_DynamicDetail.Comment> commentArrayList;
     private String TAG = "ShowCommentAdapter";
     private String dynamic_id;
+    private boolean isZaning = false;
 
     public ShowCommentAdapter(Context context, Activity activity, String dynamic_id, List<_DynamicDetail.Comment> commentList) {
         this.mContext = context;
@@ -78,17 +79,19 @@ public class ShowCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ((CommentViewHolder) holder).dynamic_detail_comment_ll_zan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (Utils.userIsLogin(mContext)) {
-                        HttpCommentZan(commentArrayList.get(position).getId(),
-                                commentArrayList.get(position).getUid(),
-                                ((CommentViewHolder) holder).commentZan,
-                                ((CommentViewHolder) holder).dynamic_detail_comment_zan_add,
-                                ((CommentViewHolder) holder).commentZanNum);
-                    } else {
-                        Intent intent = new Intent(mContext, LoginActivity.class);
-                        mContext.startActivity(intent);
+                    if (!isZaning) {
+                        if (Utils.userIsLogin(mContext)) {
+                            isZaning = true;
+                            HttpCommentZan(commentArrayList.get(position).getId(),
+                                    commentArrayList.get(position).getUid(),
+                                    ((CommentViewHolder) holder).commentZan,
+                                    ((CommentViewHolder) holder).dynamic_detail_comment_zan_add,
+                                    ((CommentViewHolder) holder).commentZanNum);
+                        } else {
+                            Intent intent = new Intent(mContext, LoginActivity.class);
+                            mContext.startActivity(intent);
+                        }
                     }
-
                 }
             });
             //昵称
@@ -158,6 +161,7 @@ public class ShowCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败===" + e.toString());
+                isZaning = false;
             }
 
             @Override
@@ -181,12 +185,16 @@ public class ShowCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                                     int numAddone = num - 1;
                                     tvShowNum.setText("" + numAddone);
                                     zan.setImageResource(R.mipmap.zan2);
+                                    isZaning = false;
                                 }
                             }
                         });
+                    }else {
+                        isZaning = false;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    isZaning = false;
                 }
             }
         });
@@ -202,6 +210,7 @@ public class ShowCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 int num = Integer.parseInt(showNum.getText().toString());
                 int numAddone = num + 1;
                 showNum.setText("" + numAddone);
+                isZaning = false;
             }
         }, 1000);
     }

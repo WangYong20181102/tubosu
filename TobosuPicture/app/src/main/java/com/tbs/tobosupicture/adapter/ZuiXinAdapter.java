@@ -53,6 +53,7 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private ArrayList<_ZuiXin.Dynamic> dynamicArrayList;
     //子项的状态 1.加载更多  2.恢复正常状态
     private int adapterLoadState = 1;
+    private boolean isZaning = false;
 
     public ZuiXinAdapter(Context context, Activity activity, ArrayList<_ZuiXin.ActiveUser> activeUserArrayList, ArrayList<_ZuiXin.Dynamic> dynamicArrayList) {
         this.mContext = context;
@@ -147,17 +148,21 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ((ZuiXinDynamicHolder) holder).zuiXinDynamicPraise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (Utils.userIsLogin(mContext)) {
-                        //用户已经登录
-                        HttpPraise(SpUtils.getUserUid(mContext), dynamicArrayList.get(position - 1).getId(),
-                                dynamicArrayList.get(position - 1).getUid(),
-                                ((ZuiXinDynamicHolder) holder).zuiXinImgZan,
-                                ((ZuiXinDynamicHolder) holder).zuiXinDynamicZanAdd, ((ZuiXinDynamicHolder) holder).zuiXinDynamicPraiseCount);
+                    if (!isZaning) {
+                        if (Utils.userIsLogin(mContext)) {
+                            isZaning = true;
+                            //用户已经登录
+                            HttpPraise(SpUtils.getUserUid(mContext), dynamicArrayList.get(position - 1).getId(),
+                                    dynamicArrayList.get(position - 1).getUid(),
+                                    ((ZuiXinDynamicHolder) holder).zuiXinImgZan,
+                                    ((ZuiXinDynamicHolder) holder).zuiXinDynamicZanAdd, ((ZuiXinDynamicHolder) holder).zuiXinDynamicPraiseCount);
 
-                    } else {
-                        Intent intent = new Intent(mContext, LoginActivity.class);
-                        mContext.startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(mContext, LoginActivity.class);
+                            mContext.startActivity(intent);
+                        }
                     }
+
                 }
             });
             //回复数
@@ -175,9 +180,9 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             });
             //显示动态图片
             //第一张
-            if (dynamicArrayList.size() >= 1 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url())) {
+            if (dynamicArrayList.get(position - 1).getImage_url().size() >= 1 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url().get(0))) {
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag1.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url(),
+                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url().get(0),
                         R.mipmap.test, R.mipmap.test, ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag1);
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag1.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -192,9 +197,9 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag1.setVisibility(View.GONE);
             }
             //第二张
-            if (dynamicArrayList.size() >= 2 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url2())) {
+            if (dynamicArrayList.get(position - 1).getImage_url().size() >= 2 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url().get(1))) {
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag2.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url2(),
+                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url().get(1),
                         R.mipmap.test, R.mipmap.test, ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag2);
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag2.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -209,9 +214,9 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag2.setVisibility(View.GONE);
             }
             //第三张
-            if (dynamicArrayList.size() >= 3 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url3())) {
+            if (dynamicArrayList.get(position - 1).getImage_url().size() >= 3 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url().get(2))) {
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag3.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url3(),
+                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url().get(2),
                         R.mipmap.test, R.mipmap.test, ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag3);
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag3.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -226,9 +231,9 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag3.setVisibility(View.GONE);
             }
             //第四张
-            if (dynamicArrayList.size() >= 4 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url4())) {
+            if (dynamicArrayList.get(position - 1).getImage_url().size() >= 4 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url().get(3))) {
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag4.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url4(),
+                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url().get(3),
                         R.mipmap.test, R.mipmap.test, ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag4);
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag4.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -243,9 +248,9 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag4.setVisibility(View.GONE);
             }
             //第五张
-            if (dynamicArrayList.size() >= 5 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url5())) {
+            if (dynamicArrayList.get(position - 1).getImage_url().size() >= 5 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url().get(4))) {
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag5.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url5(),
+                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url().get(4),
                         R.mipmap.test, R.mipmap.test, ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag5);
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag5.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -260,9 +265,9 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag5.setVisibility(View.GONE);
             }
             //第六张
-            if (dynamicArrayList.size() >= 6 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url6())) {
+            if (dynamicArrayList.get(position - 1).getImage_url().size() >= 6 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url().get(5))) {
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag6.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url6(),
+                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url().get(5),
                         R.mipmap.test, R.mipmap.test, ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag6);
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag6.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -277,9 +282,9 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag6.setVisibility(View.GONE);
             }
             //第七张
-            if (dynamicArrayList.size() >= 7 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url7())) {
+            if (dynamicArrayList.get(position - 1).getImage_url().size() >= 7 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url().get(6))) {
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag7.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url7(),
+                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url().get(6),
                         R.mipmap.test, R.mipmap.test, ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag7);
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag7.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -294,9 +299,9 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag7.setVisibility(View.GONE);
             }
             //第八张
-            if (dynamicArrayList.size() >= 8 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url8())) {
+            if (dynamicArrayList.get(position - 1).getImage_url().size() >= 8 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url().get(7))) {
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag8.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url8(),
+                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url().get(7),
                         R.mipmap.test, R.mipmap.test, ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag8);
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag8.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -311,9 +316,9 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag8.setVisibility(View.GONE);
             }
             //第九张
-            if (dynamicArrayList.size() >= 9 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url9())) {
+            if (dynamicArrayList.get(position - 1).getImage_url().size() >= 9 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url().get(8))) {
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag9.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url9(),
+                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url().get(8),
                         R.mipmap.test, R.mipmap.test, ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag9);
                 ((ZuiXinDynamicHolder) holder).zuiXinDynamicImag9.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -449,6 +454,7 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "点赞链接失败===" + e.toString());
+                isZaning = false;
             }
 
             @Override
@@ -474,6 +480,7 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                                     int numAddone = num - 1;
                                     tvShowNum.setText("" + numAddone);
                                     zan.setImageResource(R.mipmap.zan2);
+                                    isZaning = false;
                                 }
                             }
                         });
@@ -481,9 +488,11 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                     } else if (status.equals("202")) {
                         //点赞失败
+                        isZaning = false;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    isZaning = false;
                 }
             }
         });
@@ -500,6 +509,7 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 int num = Integer.parseInt(showNum.getText().toString());
                 int numAddone = num + 1;
                 showNum.setText("" + numAddone);
+                isZaning = false;
             }
         }, 1000);
     }

@@ -144,7 +144,7 @@ public class ZuiXinFragment extends BaseFragment {
         if (Utils.userIsLogin(mContext)) {
             param.put("uid", SpUtils.getUserUid(mContext));
         }
-        param.put("type", "1");
+        param.put("type", "2");
         param.put("page", mPage);
         param.put("page_size", "10");
         HttpUtils.doPost(UrlConstans.SOCIAL_NEW_LIST, param, new Callback() {

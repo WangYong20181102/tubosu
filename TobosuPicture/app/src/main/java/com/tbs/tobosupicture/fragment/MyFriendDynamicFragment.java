@@ -45,7 +45,7 @@ import okhttp3.Response;
 
 /**
  * Created by Mr.Lin on 2017/8/3 11:14.
- * 我的图友相关页面
+ * 我的图友的动态相关页面
  */
 
 public class MyFriendDynamicFragment extends BaseFragment {

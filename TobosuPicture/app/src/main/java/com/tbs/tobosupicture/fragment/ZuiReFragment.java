@@ -143,6 +143,7 @@ public class ZuiReFragment extends BaseFragment {
             param.put("uid", SpUtils.getUserUid(mContext));
         }
         param.put("page_size", "10");
+        param.put("type", "2");
         HttpUtils.doPost(UrlConstans.IMAGE_TO_FRIEND_ZUIRE, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
