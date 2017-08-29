@@ -341,7 +341,6 @@ public class MineFragment extends BaseFragment {
                     Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
                     startActivityForResult(takeIntent, REQUESTCODE_TAKE);
-
                     break;
                 case R.id.pickPhotoBtn:
                     //开启图册
@@ -563,16 +562,19 @@ public class MineFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUESTCODE_TAKE:
-                File temp = new File(Environment.getExternalStorageDirectory() + "/" + IMAGE_FILE_NAME);
-                if (resultCode == 0) {
-                    Intent it = new Intent(mContext, PersonInfoActivity.class);
-                    startActivity(it);
-                } else {
-                    startPhotoZoom(Uri.fromFile(temp));
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    return;
                 }
+                File temp = new File(Environment.getExternalStorageDirectory() + "/" + IMAGE_FILE_NAME);
+//                if (resultCode == 0) {
+//                    Intent it = new Intent(mContext, PersonInfoActivity.class);
+//                    startActivity(it);
+//                } else {
+                startPhotoZoom(Uri.fromFile(temp));
+//                }
                 break;
             case REQUESTCODE_CUTTING:
-                if(resultCode == Activity.RESULT_CANCELED){
+                if (resultCode == Activity.RESULT_CANCELED) {
                     //用户取消操作
                     return;
                 }
