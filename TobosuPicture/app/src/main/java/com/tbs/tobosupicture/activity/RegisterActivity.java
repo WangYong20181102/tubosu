@@ -289,6 +289,7 @@ public class RegisterActivity extends BaseActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.getString("status");
+                    final String msg = jsonObject.getString("msg");
                     if (status.equals("200")) {
                         //注册成功 将信息保存 然后跳转到个人信息页
                         String data = jsonObject.getString("data");
@@ -309,7 +310,7 @@ public class RegisterActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(mContext, "注册失败！", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

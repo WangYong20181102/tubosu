@@ -33,7 +33,8 @@ public class _MyDynamic {
     private String month;
     private String day;
     private String type;
-    private String participate_type;
+    private String is_praise;//是否点赞
+    private String is_comment;//是否回复
     private List<String> image_detail;
 
     public String getId() {
@@ -62,6 +63,21 @@ public class _MyDynamic {
 
     public String getTitle() {
         return title;
+    }
+    public String getIs_praise() {
+        return is_praise;
+    }
+
+    public void setIs_praise(String is_praise) {
+        this.is_praise = is_praise;
+    }
+
+    public String getIs_comment() {
+        return is_comment;
+    }
+
+    public void setIs_comment(String is_comment) {
+        this.is_comment = is_comment;
     }
 
     public void setTitle(String title) {
@@ -114,14 +130,6 @@ public class _MyDynamic {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getParticipate_type() {
-        return participate_type;
-    }
-
-    public void setParticipate_type(String participate_type) {
-        this.participate_type = participate_type;
     }
 
     public List<String> getImage_detail() {

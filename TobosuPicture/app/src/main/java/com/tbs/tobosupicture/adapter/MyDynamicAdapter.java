@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,22 @@ import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.DynamicDetailActivity;
 import com.tbs.tobosupicture.activity.PhotoDetail;
 import com.tbs.tobosupicture.bean._MyDynamic;
+import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.GlideUtils;
+import com.tbs.tobosupicture.utils.HttpUtils;
+import com.tbs.tobosupicture.utils.SpUtils;
+import com.tbs.tobosupicture.utils.Utils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by Mr.Lin on 2017/8/7 09:48.
@@ -30,11 +44,13 @@ public class MyDynamicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private List<_MyDynamic> myDynamicList;
     private int adapterLoadState = 1;//适配器的加载状态 默认加载更多
     private String TAG = "MyDynamicAdapter";
+    private boolean isZaning = false;
+    private Activity mActivity;
 
-    public MyDynamicAdapter(Context context, List<_MyDynamic> myDynamicList) {
+    public MyDynamicAdapter(Context context, Activity activity, List<_MyDynamic> myDynamicList) {
         this.mContext = context;
         this.myDynamicList = myDynamicList;
-
+        this.mActivity = activity;
     }
 
     public void changeLoadState(int state) {
@@ -65,7 +81,7 @@ public class MyDynamicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof MyDynamicHolder) {
             //今天的时间
             ((MyDynamicHolder) holder).item_php_item_day.setText("" + myDynamicList.get(position).getDay());
@@ -272,21 +288,49 @@ public class MyDynamicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                     mContext.startActivity(intent);
                 }
             });
+            //点赞事件
+            ((MyDynamicHolder) holder).item_dynamic_zan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!isZaning) {
+                        if (Utils.userIsLogin(mContext)) {
+                            //用户在登录的情况下才可以点赞
+                            isZaning = true;
+                            HttpPraise(SpUtils.getUserUid(mContext),myDynamicList.get(position).getId(),
+                                    myDynamicList.get(position).getUid(),((MyDynamicHolder) holder).item_php_item_praise_img,
+                                    ((MyDynamicHolder) holder).item_php_dynamic_zan_add,((MyDynamicHolder) holder).item_php_item_praise_count,position);
+                        } else {
+                            Utils.gotoLogin(mContext);
+                        }
+                    }
+                }
+            });
             //点赞和回复的状态改变
-            if (myDynamicList.get(position).getParticipate_type().equals("1")) {
-                //参与了评论
-                ((MyDynamicHolder) holder).item_php_item_comment_img.setImageResource(R.mipmap.pinglun_after);
-            } else if (myDynamicList.get(position).getParticipate_type().equals("2")) {
-                //参加了点赞
-                ((MyDynamicHolder) holder).item_php_item_praise_img.setImageResource(R.mipmap.zan_after);
-            } else if (myDynamicList.get(position).getParticipate_type().equals("3")) {
-                //即参与了点赞也参与了评论
-                ((MyDynamicHolder) holder).item_php_item_comment_img.setImageResource(R.mipmap.pinglun_after);
+            if (myDynamicList.get(position).getIs_praise().equals("1")) {
                 ((MyDynamicHolder) holder).item_php_item_praise_img.setImageResource(R.mipmap.zan_after);
             } else {
-                ((MyDynamicHolder) holder).item_php_item_comment_img.setImageResource(R.mipmap.pinglun);
                 ((MyDynamicHolder) holder).item_php_item_praise_img.setImageResource(R.mipmap.zan2);
             }
+            if (myDynamicList.get(position).getIs_comment().equals("1")) {
+                ((MyDynamicHolder) holder).item_php_item_comment_img.setImageResource(R.mipmap.pinglun_after);
+            } else {
+                ((MyDynamicHolder) holder).item_php_item_comment_img.setImageResource(R.mipmap.pinglun);
+            }
+
+//            if (myDynamicList.get(position).getParticipate_type().equals("1")) {
+//                //参与了评论
+//                ((MyDynamicHolder) holder).item_php_item_comment_img.setImageResource(R.mipmap.pinglun_after);
+//            } else if (myDynamicList.get(position).getParticipate_type().equals("2")) {
+//                //参加了点赞
+//                ((MyDynamicHolder) holder).item_php_item_praise_img.setImageResource(R.mipmap.zan_after);
+//            } else if (myDynamicList.get(position).getParticipate_type().equals("3")) {
+//                //即参与了点赞也参与了评论
+//                ((MyDynamicHolder) holder).item_php_item_comment_img.setImageResource(R.mipmap.pinglun_after);
+//                ((MyDynamicHolder) holder).item_php_item_praise_img.setImageResource(R.mipmap.zan_after);
+//            } else {
+//                ((MyDynamicHolder) holder).item_php_item_comment_img.setImageResource(R.mipmap.pinglun);
+//                ((MyDynamicHolder) holder).item_php_item_praise_img.setImageResource(R.mipmap.zan2);
+//            }
         } else if (holder instanceof loadMoreHolder) {
             if (position == 1) {
                 if (position == 1) {
@@ -332,8 +376,10 @@ public class MyDynamicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         private TextView item_php_item_comment_count;//评论数
         private ImageView item_php_item_praise_img;//点赞的图标
         private TextView item_php_item_praise_count;//点赞数
+        private TextView item_php_dynamic_zan_add;//点赞数加一的显示框
         //点击评论按钮
         private LinearLayout item_dynamic_pinglun;
+        private LinearLayout item_dynamic_zan;//点赞区域
 
         public MyDynamicHolder(View itemView) {
             super(itemView);
@@ -353,8 +399,11 @@ public class MyDynamicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             item_php_item_img9 = (ImageView) itemView.findViewById(R.id.item_php_item_img9);
 
             item_php_item_add_time = (TextView) itemView.findViewById(R.id.item_php_item_add_time);
+            item_php_dynamic_zan_add = (TextView) itemView.findViewById(R.id.item_php_dynamic_zan_add);
 
             item_dynamic_pinglun = (LinearLayout) itemView.findViewById(R.id.item_dynamic_pinglun);
+            item_dynamic_zan = (LinearLayout) itemView.findViewById(R.id.item_dynamic_zan);
+
             item_php_item_comment_img = (ImageView) itemView.findViewById(R.id.item_php_item_comment_img);
             item_php_item_comment_count = (TextView) itemView.findViewById(R.id.item_php_item_comment_count);
             item_php_item_praise_count = (TextView) itemView.findViewById(R.id.item_php_item_praise_count);
@@ -371,5 +420,87 @@ public class MyDynamicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             mProgressBar = (ProgressBar) itemView.findViewById(R.id.load_more_bar);
             mTextView = (TextView) itemView.findViewById(R.id.load_more_tv);
         }
+    }
+
+    /**
+     * 用户点赞
+     * uid 用户的id
+     * dynamicId 动态id
+     * praisedUid 被点赞用户的id号
+     * is_praise 点赞前的状态
+     */
+    private void HttpPraise(String uid, String dynamic_id,
+                            String praised_uid, final ImageView zan, final TextView tvAdd, final TextView tvShowNum, final int position) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Utils.getDateToken());
+        param.put("uid", uid);
+        param.put("dynamic_id", dynamic_id);
+        param.put("praised_uid", praised_uid);
+//        Log.e(TAG, "praised_uid====" + praised_uid + "====" + uid + "=====" + dynamic_id);
+        HttpUtils.doPost(UrlConstans.USER_PRAISE, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "点赞链接失败===" + e.toString());
+                isZaning = false;
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                Log.e(TAG, "点赞链接成功===" + json);
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.getString("status");
+                    if (status.equals("200")) {
+                        final String msg = jsonObject.getString("msg");
+                        Log.e(TAG, "======" + msg);
+                        //操作成功
+                        //点赞操作(之前没有点赞过)
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (msg.equals("点赞成功")) {
+                                    zan.setImageResource(R.mipmap.zan_after);
+                                    zanAddAnimation(tvAdd, tvShowNum);
+                                    //修改点赞状态
+                                    myDynamicList.get(position).setIs_praise("1");
+                                } else {
+                                    isZaning = false;
+                                    int num = Integer.parseInt(tvShowNum.getText().toString());
+                                    int numAddone = num - 1;
+                                    tvShowNum.setText("" + numAddone);
+                                    zan.setImageResource(R.mipmap.zan2);
+                                    myDynamicList.get(position).setIs_praise("0");
+                                }
+                            }
+                        });
+
+
+                    } else if (status.equals("202")) {
+                        //点赞失败
+                        isZaning = false;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    isZaning = false;
+                }
+            }
+        });
+
+    }
+
+    //点赞数加一的动画效果
+    private void zanAddAnimation(final TextView tvAdd, final TextView showNum) {
+        tvAdd.setVisibility(View.VISIBLE);
+        tvAdd.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tvAdd.setVisibility(View.GONE);
+                int num = Integer.parseInt(showNum.getText().toString());
+                int numAddone = num + 1;
+                showNum.setText("" + numAddone);
+                isZaning = false;
+            }
+        }, 1000);
     }
 }

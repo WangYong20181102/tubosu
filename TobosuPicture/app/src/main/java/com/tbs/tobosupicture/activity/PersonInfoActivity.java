@@ -392,7 +392,7 @@ public class PersonInfoActivity extends BaseActivity {
 
     private void initPersonInfo(_PersonInfo personInfo) {
         //设置头像
-        GlideUtils.glideLoader(mContext, personInfo.getIcon(), R.mipmap.default_icon,
+        GlideUtils.glideLoader(getApplicationContext(), personInfo.getIcon(), R.mipmap.default_icon,
                 R.mipmap.default_icon, personInfoIcon, 0);
         //设置昵称
         personInfoNick.setText(personInfo.getNick());
