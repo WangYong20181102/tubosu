@@ -58,6 +58,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TimerTask;
 
@@ -349,7 +350,7 @@ public class PersonInfoActivity extends BaseActivity {
 
             @Override
             public void onCancel(SHARE_MEDIA share_media, int i) {
-
+                Toast.makeText(mContext, "取消微信授权绑定！", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -587,7 +588,7 @@ public class PersonInfoActivity extends BaseActivity {
         }
     }
 
-    //上传图片的线程
+    //上传图片的线程 这个可以使用OkHttp上传  在测试的以图会友的界面中可以看到
     Runnable uploadImageRunnable = new Runnable() {
         @Override
         public void run() {
