@@ -1,5 +1,7 @@
 package com.tbs.tobosupicture.bean;
 
+import com.tbs.tobosupicture.utils.Utils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -8,6 +10,18 @@ import org.json.JSONObject;
  */
 
 public class SamplePicBeanEntity {
+
+    private String id;
+    private String img_url;
+    private String designer_id;
+    private String image_count;
+    private String plan_price;
+    //    private String village;
+    private String click_count;
+    private String designer_icon;
+    private String city_name;
+    private String area_name;
+    private String title;
 
     /**
      * id : 6040
@@ -39,22 +53,14 @@ public class SamplePicBeanEntity {
             this.area_name = object.getString("area_name");
             this.title = object.getString("title");
 
+//            Utils.setErrorLog("============>>", this.area_name);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private String id;
-    private String img_url;
-    private String designer_id;
-    private String image_count;
-    private String plan_price;
-//    private String village;
-    private String click_count;
-    private String designer_icon;
-    private String city_name;
-    private String area_name;
-    private String title;
+
 
     public String getId() {
         return id;

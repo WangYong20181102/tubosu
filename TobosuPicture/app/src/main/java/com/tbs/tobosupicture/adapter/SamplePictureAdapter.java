@@ -108,6 +108,7 @@ public class SamplePictureAdapter extends RecyclerView.Adapter<RecyclerView.View
             itmeHolder.tv_samplepic_title.setText(dataList.get(position).getTitle());
             itmeHolder.tv_pic_city.setText(dataList.get(position).getCity_name());
             Utils.setErrorLog(TAG, "你要的面积是--> "+dataList.get(position).getArea_name());
+//            itmeHolder.tv_areah.setText("面积:"+ dataList.get(position).getArea_name());
             if(!"".equals(dataList.get(position).getArea_name())){
                 itmeHolder.tv_areah.setText("面积:"+ dataList.get(position).getArea_name());
             }else {
@@ -117,6 +118,7 @@ public class SamplePictureAdapter extends RecyclerView.Adapter<RecyclerView.View
             itmeHolder.tv_pic_num.setText(dataList.get(position).getImage_count());
             itmeHolder.tv_pic_like_num.setText(dataList.get(position).getClick_count());
             itmeHolder.tv_free_design_pic.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
                     mContext.startActivity(new Intent(mContext, GetPriceActivity.class));

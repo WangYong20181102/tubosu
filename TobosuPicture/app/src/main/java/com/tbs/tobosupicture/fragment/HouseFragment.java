@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -85,7 +86,7 @@ public class HouseFragment extends BaseFragment {
     LinearLayout layoutColor;
     Unbinder unbinder;
     @BindView(R.id.v_anchor)
-    View vAnchor;
+    LinearLayout vAnchor;
     @BindView(R.id.houseRecyclerview)
     RecyclerView houseRecyclerview;
     @BindView(R.id.houseSwipRefreshLayout)
@@ -180,6 +181,9 @@ public class HouseFragment extends BaseFragment {
 
     @OnClick({R.id.layoutSpace, R.id.layoutStyle, R.id.layoutPart, R.id.layoutHouseStyle, R.id.layoutColor})
     public void onViewClickedHouseFragment(View view) {
+        if(popupWindow!=null && popupWindow.isShowing()){
+            return;
+        }
         boolean flag = false;
         textDataList.clear();
         iconDataList.clear();
@@ -256,10 +260,10 @@ public class HouseFragment extends BaseFragment {
         popupWindow = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setContentView(contentView);
-        ColorDrawable cd = new ColorDrawable();
-        popupWindow.setBackgroundDrawable(cd);
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setFocusable(true);
+//        ColorDrawable cd = new ColorDrawable();
+//        popupWindow.setBackgroundDrawable(cd);
+        popupWindow.setOutsideTouchable(false);
+        popupWindow.setFocusable(false);
         GvAdapter gvAdapter = new GvAdapter(getActivity(), iconList, textList, flag);
         gv.setAdapter(gvAdapter);
         switch (type){
@@ -351,6 +355,7 @@ public class HouseFragment extends BaseFragment {
             }
         });
         popupWindow.showAsDropDown(vAnchor);
+//        popupWindow.showAtLocation(vAnchor, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
 
     }
 

@@ -29,6 +29,8 @@ import android.widget.Toast;
 
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.base.BaseActivity;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.bean.ImgEntity;
 import com.tbs.tobosupicture.bean.ImgJsonEntity;
 import com.tbs.tobosupicture.constants.UrlConstans;
@@ -188,8 +190,8 @@ public class SeeImageActivity extends BaseActivity {
 
     }
 
-    private void intiViewPager(final ArrayList<ImgEntity> imgDataList) {
 
+    private void intiViewPager(final ArrayList<ImgEntity> imgDataList) {
         tvImgTotalNum.setText(imgDataList.size() + "");
         ArrayList<TouchImageView> dataList = new ArrayList<TouchImageView>();
         for (int i = 0; i < imgDataList.size(); i++) {
@@ -461,6 +463,8 @@ public class SeeImageActivity extends BaseActivity {
                         hashMap.put("token", Utils.getDateToken());
                         hashMap.put("urlhistory", UrlConstans.PIPE_CODE);
                         hashMap.put("comeurl", UrlConstans.PIPE_CODE);
+                        String city = SpUtils.getSelectCityCache(mContext);
+                        hashMap.put("", city);
                         Utils.setErrorLog(TAG, phone + "****" +Utils.getDateToken() + "****" +UrlConstans.PIPE_CODE);
 
                         HttpUtils.doPost(UrlConstans.FADAN_URL, hashMap, new Callback() {

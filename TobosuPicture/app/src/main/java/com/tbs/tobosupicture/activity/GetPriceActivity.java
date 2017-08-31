@@ -299,7 +299,9 @@ public class GetPriceActivity extends BaseActivity implements OnClickListener {
                     hashMap.put("urlhistory", UrlConstans.PIPE_CODE);
                     hashMap.put("device", "android");
                     hashMap.put("city", SpUtils.getSelectCityCache(mContext));
+                    Utils.setErrorLog(TAG, "=======fadan>>>"+ SpUtils.getSelectCityCache(mContext));
                     hashMap.put("comeurl", UrlConstans.PIPE_CODE);
+//                    hashMap.put("city", "深圳市");
 
                     HttpUtils.doPost(UrlConstans.PUB_ORDER_URL, hashMap, new Callback() {
                         @Override

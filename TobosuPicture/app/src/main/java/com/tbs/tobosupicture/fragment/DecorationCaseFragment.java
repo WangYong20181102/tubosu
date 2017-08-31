@@ -137,11 +137,11 @@ public class DecorationCaseFragment extends BaseFragment {
                                 ivNoCaseData.setVisibility(View.GONE);
                                 initListView();
                             } else {
+                                if(caseAdapter!=null){
+                                    caseAdapter.noMoreData();
+                                    caseAdapter.hideLoadMoreMessage();
+                                }
                                 if(caseList.size()==0){
-                                    if(caseAdapter!=null){
-                                        caseAdapter.noMoreData();
-                                        caseAdapter.hideLoadMoreMessage();
-                                    }
                                     linearLayoutHasCaseData.setVisibility(View.GONE);
                                     ivNoCaseData.setVisibility(View.VISIBLE);
                                 }
