@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -107,6 +108,7 @@ public class MyOrginFragment extends BaseFragment {
         myOrginRecyclerview.setLayoutManager(mLinearLayoutManager);
         myOrginRecyclerview.setOnTouchListener(onTouchListener);
         myOrginRecyclerview.addOnScrollListener(onScrollListener);//上拉加载更多
+        ((SimpleItemAnimator)myOrginRecyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
     }
 
     //下拉刷新
@@ -182,6 +184,7 @@ public class MyOrginFragment extends BaseFragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String json = new String(response.body().string());
+
                 Log.e(TAG, "链接成功====" + json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
@@ -260,7 +263,8 @@ public class MyOrginFragment extends BaseFragment {
             case EC.EventCode.MY_ORGIN_MSG:
                 //获取我的发起消息
                 _ReceiveMsg.MySponsor mySponsor = (_ReceiveMsg.MySponsor) event.getData();
-                Log.e(TAG, "收到了我的发起消息12138=====" + mySponsor.getMsg_count());
+                Log.e(TAG, "收到了我的发起消息====数量=====" + mySponsor.getMsg_count());
+                Log.e(TAG, "收到了我的发起消息====头像=====" + mySponsor.getIcon());
                 if (!myOrginSwipe.isRefreshing() && !isLoading) {
                     if (!mMsgArrayList.isEmpty()) {
                         mMsgArrayList.clear();

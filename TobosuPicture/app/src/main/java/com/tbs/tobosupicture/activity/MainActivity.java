@@ -344,7 +344,13 @@ public class MainActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 //显示数量
-                                mImgToFriendTag.setBadgeCount(Integer.parseInt(receiveMsg.getAll_msg_count()));
+                                int msgNum = Integer.parseInt(receiveMsg.getAll_msg_count());
+                                if(msgNum>=100){
+                                    mImgToFriendTag.setText("99+");
+                                }else {
+                                    mImgToFriendTag.setBadgeCount(msgNum);
+                                }
+
                             }
                         });
                     }

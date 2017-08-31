@@ -168,7 +168,7 @@ public class MyDynamicActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 if (myDynamicAdapter == null) {
-                                    myDynamicAdapter = new MyDynamicAdapter(mContext, myDynamicList);
+                                    myDynamicAdapter = new MyDynamicAdapter(mContext,MyDynamicActivity.this, myDynamicList);
                                     myDynamicRecycler.setAdapter(myDynamicAdapter);
                                     myDynamicAdapter.notifyDataSetChanged();
                                     myDynamicAdapter.changeLoadState(2);

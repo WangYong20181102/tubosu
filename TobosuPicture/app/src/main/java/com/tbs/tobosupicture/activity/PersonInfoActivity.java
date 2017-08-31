@@ -58,6 +58,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TimerTask;
 
@@ -127,6 +128,7 @@ public class PersonInfoActivity extends BaseActivity {
     private static final int REQUESTCODE_PICK = 0;
     private static final int REQUESTCODE_TAKE = 1;
     private static final int REQUESTCODE_CUTTING = 2;
+    private static final int REQUESTCODE_XIAO_MI_TAKE = 4;//小米专用拍照获取码
 
 
     /**
@@ -348,7 +350,7 @@ public class PersonInfoActivity extends BaseActivity {
 
             @Override
             public void onCancel(SHARE_MEDIA share_media, int i) {
-
+                Toast.makeText(mContext, "取消微信授权绑定！", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -391,12 +393,12 @@ public class PersonInfoActivity extends BaseActivity {
 
     private void initPersonInfo(_PersonInfo personInfo) {
         //设置头像
-        GlideUtils.glideLoader(mContext, personInfo.getIcon(), R.mipmap.default_icon,
+        GlideUtils.glideLoader(getApplicationContext(), personInfo.getIcon(), R.mipmap.default_icon,
                 R.mipmap.default_icon, personInfoIcon, 0);
         //设置昵称
         personInfoNick.setText(personInfo.getNick());
         //设置性别
-        if(!TextUtils.isEmpty(personInfo.getGender())){
+        if (!TextUtils.isEmpty(personInfo.getGender())) {
             if (personInfo.getGender().equals("1")) {
                 //男
                 personInfoSex.setText("男");
@@ -450,9 +452,15 @@ public class PersonInfoActivity extends BaseActivity {
                 case R.id.takePhotoBtn:
                     //开启相机
                     menuWindow.dismiss();
-                    Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
-                    startActivityForResult(takeIntent, REQUESTCODE_TAKE);
+                    if (android.os.Build.BRAND.equals("Xiaomi")) {
+                        Log.e(TAG, "进入的了小米专用==========");
+                        Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(takeIntent, REQUESTCODE_XIAO_MI_TAKE);
+                    } else {
+                        Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
+                        startActivityForResult(takeIntent, REQUESTCODE_TAKE);
+                    }
                     break;
                 case R.id.pickPhotoBtn:
                     //开启图册
@@ -580,7 +588,7 @@ public class PersonInfoActivity extends BaseActivity {
         }
     }
 
-    //上传图片的线程
+    //上传图片的线程 这个可以使用OkHttp上传  在测试的以图会友的界面中可以看到
     Runnable uploadImageRunnable = new Runnable() {
         @Override
         public void run() {
@@ -709,25 +717,37 @@ public class PersonInfoActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUESTCODE_TAKE:
-                File temp = new File(Environment.getExternalStorageDirectory() + "/" + IMAGE_FILE_NAME);
                 if (resultCode == Activity.RESULT_CANCELED) {
-                    Intent it = new Intent(mContext, PersonInfoActivity.class);
-                    startActivity(it);
-
-                } else {
-                    startPhotoZoom(Uri.fromFile(temp));
+                    return;
                 }
+                File temp = new File(Environment.getExternalStorageDirectory() + "/" + IMAGE_FILE_NAME);
+                startPhotoZoom(Uri.fromFile(temp));
                 break;
             case REQUESTCODE_CUTTING:
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    return;
+                }
                 if (data != null) {
                     setPicToView(data);
                 }
                 break;
             case REQUESTCODE_PICK:
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    return;
+                }
                 try {
                     startPhotoZoom(data.getData());
                 } catch (NullPointerException e) {
                     e.printStackTrace();
+                }
+                break;
+            case REQUESTCODE_XIAO_MI_TAKE:
+                //小米专用拍照
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    return;
+                }
+                if (data != null) {
+                    setPicToView(data);
                 }
                 break;
         }

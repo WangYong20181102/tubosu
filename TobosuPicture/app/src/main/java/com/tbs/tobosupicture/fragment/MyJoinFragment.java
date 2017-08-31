@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -99,6 +100,7 @@ public class MyJoinFragment extends BaseFragment {
         myJoinRecyclerview.setLayoutManager(mLinearLayoutManager);
         myJoinRecyclerview.setOnTouchListener(onTouchListener);
         myJoinRecyclerview.addOnScrollListener(onScrollListener);//上拉加载更多
+        ((SimpleItemAnimator)myJoinRecyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
     }
 
     //下拉刷新

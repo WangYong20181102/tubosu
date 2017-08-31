@@ -78,16 +78,7 @@ public class _ZuiXin {
          * id : 5183
          * uid : 23109
          * is_virtual_user : 2
-         * title : 承文，就是一个傻逼
-         * image_url : https://pic.tbscache.com/impress_pic/2016-05-11/p_5732a8488f0d5.jpg
-         * image_url2 :
-         * image_url3 :
-         * image_url4 :
-         * image_url5 :
-         * image_url6 :
-         * image_url7 :
-         * image_url8 :
-         * image_url9 :
+         * title :
          * view_count : 0
          * praise_count : 0
          * comment_count : 0
@@ -102,15 +93,17 @@ public class _ZuiXin {
         private String uid;
         private String is_virtual_user;
         private String title;
-        private String image_url;
-        private String image_url2;
-        private String image_url3;
-        private String image_url4;
-        private String image_url5;
-        private String image_url6;
-        private String image_url7;
-        private String image_url8;
-        private String image_url9;
+
+        //        private String image_url;
+//        private String image_url2;
+//        private String image_url3;
+//        private String image_url4;
+//        private String image_url5;
+//        private String image_url6;
+//        private String image_url7;
+//        private String image_url8;
+//        private String image_url9;
+        private List<String> image_url;
         private String view_count;
         private String praise_count;
         private String comment_count;
@@ -144,6 +137,13 @@ public class _ZuiXin {
             this.is_virtual_user = is_virtual_user;
         }
 
+        public List<String> getImage_url() {
+            return image_url;
+        }
+
+        public void setImage_url(List<String> image_url) {
+            this.image_url = image_url;
+        }
         public String getTitle() {
             return title;
         }
@@ -152,77 +152,7 @@ public class _ZuiXin {
             this.title = title;
         }
 
-        public String getImage_url() {
-            return image_url;
-        }
 
-        public void setImage_url(String image_url) {
-            this.image_url = image_url;
-        }
-
-        public String getImage_url2() {
-            return image_url2;
-        }
-
-        public void setImage_url2(String image_url2) {
-            this.image_url2 = image_url2;
-        }
-
-        public String getImage_url3() {
-            return image_url3;
-        }
-
-        public void setImage_url3(String image_url3) {
-            this.image_url3 = image_url3;
-        }
-
-        public String getImage_url4() {
-            return image_url4;
-        }
-
-        public void setImage_url4(String image_url4) {
-            this.image_url4 = image_url4;
-        }
-
-        public String getImage_url5() {
-            return image_url5;
-        }
-
-        public void setImage_url5(String image_url5) {
-            this.image_url5 = image_url5;
-        }
-
-        public String getImage_url6() {
-            return image_url6;
-        }
-
-        public void setImage_url6(String image_url6) {
-            this.image_url6 = image_url6;
-        }
-
-        public String getImage_url7() {
-            return image_url7;
-        }
-
-        public void setImage_url7(String image_url7) {
-            this.image_url7 = image_url7;
-        }
-
-        public String getImage_url8() {
-            return image_url8;
-        }
-
-        public void setImage_url8(String image_url8) {
-            this.image_url8 = image_url8;
-        }
-
-        public String getImage_url9() {
-            return image_url9;
-        }
-
-        public void setImage_url9(String image_url9) {
-            this.image_url9 = image_url9;
-        }
 
         public String getView_count() {
             return view_count;

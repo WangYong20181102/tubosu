@@ -454,6 +454,22 @@ public class NewSendDynamicActivity extends BaseActivity {
                     mNewSendDynamicAdapter.notifyDataSetChanged();
                 }
                 break;
+            case REQUESTCODE_XIAO_MI_TAKE:
+                //小米专用拍照
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    return;
+                }
+                if (data != null) {
+                    if (data.getExtras() != null) {
+                        Bundle bundle = data.getExtras();
+                        Bitmap photo = (Bitmap) bundle.get("data");
+                        if (photo != null) {
+                            String ImgPath = FileUtil.saveFile(mContext, Utils.getNowTime() + "lin_zxkk.jpg", photo);
+                            mImageUriList.add(ImgPath);
+                        }
+                    }
+                }
+                break;
         }
     }
 }

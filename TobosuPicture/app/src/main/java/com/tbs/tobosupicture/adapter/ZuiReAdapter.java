@@ -55,6 +55,7 @@ public class ZuiReAdapter
     private ArrayList<_ZuiRe.Dynamic> dynamicArrayList;
     //子项的状态 1.加载更多  2.恢复正常状态
     private int adapterLoadState = 1;
+    private boolean isZaning = false;
 
     public ZuiReAdapter(Context context, Activity activity, ArrayList<_ZuiRe.ActiveUser> activeUserArrayList, ArrayList<_ZuiRe.Dynamic> dynamicArrayList) {
         this.mContext = context;
@@ -146,17 +147,21 @@ public class ZuiReAdapter
             ((ZuiReDynamicHolder) holder).zuiReDynamicPraise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (Utils.userIsLogin(mContext)) {
-                        //用户已经登录
-                        HttpPraise(SpUtils.getUserUid(mContext), dynamicArrayList.get(position - 1).getId(),
-                                dynamicArrayList.get(position - 1).getUid(),
-                                ((ZuiReDynamicHolder) holder).zuiReImgZan,
-                                ((ZuiReDynamicHolder) holder).zuiReDynamicZanAdd, ((ZuiReDynamicHolder) holder).zuiReDynamicPraiseCount);
+                    if (!isZaning) {
+                        if (Utils.userIsLogin(mContext)) {
+                            //用户已经登录
+                            isZaning = true;
+                            HttpPraise(SpUtils.getUserUid(mContext), dynamicArrayList.get(position - 1).getId(),
+                                    dynamicArrayList.get(position - 1).getUid(),
+                                    ((ZuiReDynamicHolder) holder).zuiReImgZan,
+                                    ((ZuiReDynamicHolder) holder).zuiReDynamicZanAdd, ((ZuiReDynamicHolder) holder).zuiReDynamicPraiseCount);
 
-                    } else {
-                        Intent intent = new Intent(mContext, LoginActivity.class);
-                        mContext.startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(mContext, LoginActivity.class);
+                            mContext.startActivity(intent);
+                        }
                     }
+
                 }
             });
             //回复数
@@ -174,9 +179,9 @@ public class ZuiReAdapter
             });
             //显示动态图片
             //第一张
-            if (dynamicArrayList.size() >= 1 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url())) {
+            if (dynamicArrayList.get(position - 1).getImage_url().size() >= 1 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url().get(0))) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag1.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url(),
+                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url().get(0),
                         R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag1);
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag1.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -191,9 +196,9 @@ public class ZuiReAdapter
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag1.setVisibility(View.GONE);
             }
             //第二张
-            if (dynamicArrayList.size() >= 2 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url2())) {
+            if (dynamicArrayList.get(position - 1).getImage_url().size() >= 2 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url().get(1))) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag2.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url2(),
+                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url().get(1),
                         R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag2);
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag2.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -208,9 +213,9 @@ public class ZuiReAdapter
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag2.setVisibility(View.GONE);
             }
             //第三张
-            if (dynamicArrayList.size() >= 3 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url3())) {
+            if (dynamicArrayList.get(position - 1).getImage_url().size() >= 3 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url().get(2))) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag3.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url3(),
+                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url().get(2),
                         R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag3);
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag3.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -225,9 +230,9 @@ public class ZuiReAdapter
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag3.setVisibility(View.GONE);
             }
             //第四张
-            if (dynamicArrayList.size() >= 4 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url4())) {
+            if (dynamicArrayList.get(position - 1).getImage_url().size() >= 4 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url().get(3))) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag4.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url4(),
+                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url().get(3),
                         R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag4);
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag4.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -242,9 +247,9 @@ public class ZuiReAdapter
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag4.setVisibility(View.GONE);
             }
             //第五张
-            if (dynamicArrayList.size() >= 5 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url5())) {
+            if (dynamicArrayList.get(position - 1).getImage_url().size() >= 5 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url().get(4))) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag5.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url5(),
+                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url().get(4),
                         R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag5);
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag5.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -259,9 +264,9 @@ public class ZuiReAdapter
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag5.setVisibility(View.GONE);
             }
             //第六张
-            if (dynamicArrayList.size() >= 6 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url6())) {
+            if (dynamicArrayList.get(position - 1).getImage_url().size() >= 6 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url().get(5))) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag6.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url6(),
+                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url().get(5),
                         R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag6);
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag6.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -276,9 +281,9 @@ public class ZuiReAdapter
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag6.setVisibility(View.GONE);
             }
             //第七张
-            if (dynamicArrayList.size() >= 7 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url7())) {
+            if (dynamicArrayList.get(position - 1).getImage_url().size() >= 7 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url().get(6))) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag7.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url7(),
+                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url().get(6),
                         R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag7);
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag7.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -293,9 +298,9 @@ public class ZuiReAdapter
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag7.setVisibility(View.GONE);
             }
             //第八张
-            if (dynamicArrayList.size() >= 8 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url8())) {
+            if (dynamicArrayList.get(position - 1).getImage_url().size() >= 8 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url().get(7))) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag8.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url8(),
+                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url().get(7),
                         R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag8);
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag8.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -310,9 +315,9 @@ public class ZuiReAdapter
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag8.setVisibility(View.GONE);
             }
             //第九张
-            if (dynamicArrayList.size() >= 9 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url9())) {
+            if (dynamicArrayList.get(position - 1).getImage_url().size() >= 9 && !TextUtils.isEmpty(dynamicArrayList.get(position - 1).getImage_url().get(8))) {
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag9.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url9(),
+                GlideUtils.glideLoader(mContext, dynamicArrayList.get(position - 1).getImage_url().get(8),
                         R.mipmap.test, R.mipmap.test, ((ZuiReDynamicHolder) holder).zuiReDynamicImag9);
                 ((ZuiReDynamicHolder) holder).zuiReDynamicImag9.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -448,6 +453,7 @@ public class ZuiReAdapter
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "点赞链接失败===" + e.toString());
+                isZaning = false;
             }
 
             @Override
@@ -469,6 +475,7 @@ public class ZuiReAdapter
                                     zan.setImageResource(R.mipmap.zan_after);
                                     zanAddAnimation(tvAdd, tvShowNum);
                                 } else {
+                                    isZaning = false;
                                     int num = Integer.parseInt(tvShowNum.getText().toString());
                                     int numAddone = num - 1;
                                     tvShowNum.setText("" + numAddone);
@@ -480,9 +487,11 @@ public class ZuiReAdapter
 
                     } else if (status.equals("202")) {
                         //点赞失败
+                        isZaning = false;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    isZaning = false;
                 }
             }
         });
@@ -499,6 +508,7 @@ public class ZuiReAdapter
                 int num = Integer.parseInt(showNum.getText().toString());
                 int numAddone = num + 1;
                 showNum.setText("" + numAddone);
+                isZaning = false;
             }
         }, 1000);
     }

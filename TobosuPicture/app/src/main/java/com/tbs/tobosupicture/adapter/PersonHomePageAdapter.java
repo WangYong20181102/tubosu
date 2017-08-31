@@ -55,6 +55,7 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private int adapterLoadState = 1;//适配器的状态 默认加载更多 2--正常状态
     private String TAG = "PersonHomePageAdapter";
     private Activity mActivity;
+    private boolean isZaning = false;
 
     public PersonHomePageAdapter(Context context, Activity activity, _PersonHomePage personHomePage, List<_PersonHomePage.Dynamic> dynamicList) {
         this.mContext = context;
@@ -432,13 +433,16 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             ((PhpItemHolder) holder).item_dynamic_zan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (Utils.userIsLogin(mContext)) {
-                        //用户已经登录可以进行点赞
-                        HttpPraise(SpUtils.getUserUid(mContext),dynamicList.get(position - 1).getId(),
-                                dynamicList.get(position - 1).getUid(),((PhpItemHolder) holder).item_php_item_praise_img,
-                                ((PhpItemHolder) holder).item_php_dynamic_zan_add,((PhpItemHolder) holder).item_php_item_praise_count);
-                    } else {
-                        Utils.gotoLogin(mContext);
+                    if (!isZaning) {
+                        if (Utils.userIsLogin(mContext)) {
+                            isZaning = true;
+                            //用户已经登录可以进行点赞
+                            HttpPraise(SpUtils.getUserUid(mContext), dynamicList.get(position - 1).getId(),
+                                    dynamicList.get(position - 1).getUid(), ((PhpItemHolder) holder).item_php_item_praise_img,
+                                    ((PhpItemHolder) holder).item_php_dynamic_zan_add, ((PhpItemHolder) holder).item_php_item_praise_count);
+                        } else {
+                            Utils.gotoLogin(mContext);
+                        }
                     }
                 }
             });
@@ -670,6 +674,7 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "点赞链接失败===" + e.toString());
+                isZaning = false;
             }
 
             @Override
@@ -691,6 +696,7 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                                     zan.setImageResource(R.mipmap.zan_after);
                                     zanAddAnimation(tvAdd, tvShowNum);
                                 } else {
+                                    isZaning = false;
                                     int num = Integer.parseInt(tvShowNum.getText().toString());
                                     int numAddone = num - 1;
                                     tvShowNum.setText("" + numAddone);
@@ -702,9 +708,11 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
                     } else if (status.equals("202")) {
                         //点赞失败
+                        isZaning = false;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    isZaning = false;
                 }
             }
         });
@@ -721,6 +729,7 @@ public class PersonHomePageAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 int num = Integer.parseInt(showNum.getText().toString());
                 int numAddone = num + 1;
                 showNum.setText("" + numAddone);
+                isZaning = false;
             }
         }, 1000);
     }

@@ -58,6 +58,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Activity mActivity;
     private int adapterState = 1;
     private String dynamic_id;//动态id
+    private boolean isZaning = false;
 
     //pop
     private View popView;
@@ -151,17 +152,19 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ((HeadViewHolder) holder).reply_head_ll_praise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (Utils.userIsLogin(mContext)) {
-                        //调用点赞接口
-                        HttpCommnetZan(mReply.getCommented().getId(), mReply.getCommented().getUid()
-                                , ((HeadViewHolder) holder).reply_head_praise,
-                                ((HeadViewHolder) holder).reply_head_reply_head_zan_add,
-                                ((HeadViewHolder) holder).reply_head_praise_count);
-                    } else {
-                        Intent intent = new Intent(mContext, LoginActivity.class);
-                        mContext.startActivity(intent);
+                    if (!isZaning) {
+                        if (Utils.userIsLogin(mContext)) {
+                            isZaning = true;
+                            //调用点赞接口
+                            HttpCommnetZan(mReply.getCommented().getId(), mReply.getCommented().getUid()
+                                    , ((HeadViewHolder) holder).reply_head_praise,
+                                    ((HeadViewHolder) holder).reply_head_reply_head_zan_add,
+                                    ((HeadViewHolder) holder).reply_head_praise_count);
+                        } else {
+                            Intent intent = new Intent(mContext, LoginActivity.class);
+                            mContext.startActivity(intent);
+                        }
                     }
-
                 }
             });
             //显示总点赞数  按需求当点赞人数为0时隐藏
@@ -291,14 +294,17 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ((ItemViewHolder) holder).item_reply_item_comment_ll_zan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (Utils.userIsLogin(mContext)) {
-                        HttpCommnetZan(commentList.get(position - 1).getId(), commentList.get(position - 1).getUid(),
-                                ((ItemViewHolder) holder).item_reply_item_comment_zan,
-                                ((ItemViewHolder) holder).item_reply_item_comment_zan_add,
-                                ((ItemViewHolder) holder).item_reply_item_comment_zannum);
-                    } else {
-                        Intent intent = new Intent(mContext, LoginActivity.class);
-                        mContext.startActivity(intent);
+                    if (!isZaning) {
+                        if (Utils.userIsLogin(mContext)) {
+                            isZaning = true;
+                            HttpCommnetZan(commentList.get(position - 1).getId(), commentList.get(position - 1).getUid(),
+                                    ((ItemViewHolder) holder).item_reply_item_comment_zan,
+                                    ((ItemViewHolder) holder).item_reply_item_comment_zan_add,
+                                    ((ItemViewHolder) holder).item_reply_item_comment_zannum);
+                        } else {
+                            Intent intent = new Intent(mContext, LoginActivity.class);
+                            mContext.startActivity(intent);
+                        }
                     }
 
                 }
@@ -447,6 +453,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败===" + e.toString());
+                isZaning = false;
             }
 
             @Override
@@ -470,12 +477,14 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                                     int numAddone = num - 1;
                                     tvShowNum.setText("" + numAddone);
                                     zan.setImageResource(R.mipmap.zan2);
+                                    isZaning = false;
                                 }
                             }
                         });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    isZaning = false;
                 }
             }
         });
@@ -491,6 +500,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 int num = Integer.parseInt(showNum.getText().toString());
                 int numAddone = num + 1;
                 showNum.setText("" + numAddone);
+                isZaning = false;
             }
         }, 1000);
     }

@@ -140,6 +140,7 @@ public class MineFragment extends BaseFragment {
     private static final int REQUESTCODE_PICK = 0;
     private static final int REQUESTCODE_TAKE = 1;
     private static final int REQUESTCODE_CUTTING = 2;
+    private static final int REQUESTCODE_XIAO_MI_TAKE = 4;//小米专用拍照获取码
     /**
      * 头像存储的名称
      */
@@ -338,9 +339,15 @@ public class MineFragment extends BaseFragment {
             switch (v.getId()) {
                 case R.id.takePhotoBtn:
                     //开启相机
-                    Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
-                    startActivityForResult(takeIntent, REQUESTCODE_TAKE);
+                    if(android.os.Build.BRAND.equals("Xiaomi")){
+                        Log.e(TAG, "进入的了小米专用==========");
+                        Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(takeIntent, REQUESTCODE_XIAO_MI_TAKE);
+                    }else {
+                        Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
+                        startActivityForResult(takeIntent, REQUESTCODE_TAKE);
+                    }
 
                     break;
                 case R.id.pickPhotoBtn:
@@ -563,16 +570,19 @@ public class MineFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case REQUESTCODE_TAKE:
-                File temp = new File(Environment.getExternalStorageDirectory() + "/" + IMAGE_FILE_NAME);
-                if (resultCode == 0) {
-                    Intent it = new Intent(mContext, PersonInfoActivity.class);
-                    startActivity(it);
-                } else {
-                    startPhotoZoom(Uri.fromFile(temp));
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    return;
                 }
+                File temp = new File(Environment.getExternalStorageDirectory() + "/" + IMAGE_FILE_NAME);
+//                if (resultCode == 0) {
+//                    Intent it = new Intent(mContext, PersonInfoActivity.class);
+//                    startActivity(it);
+//                } else {
+                startPhotoZoom(Uri.fromFile(temp));
+//                }
                 break;
             case REQUESTCODE_CUTTING:
-                if(resultCode == Activity.RESULT_CANCELED){
+                if (resultCode == Activity.RESULT_CANCELED) {
                     //用户取消操作
                     return;
                 }
@@ -585,6 +595,14 @@ public class MineFragment extends BaseFragment {
                     startPhotoZoom(data.getData());
                 } catch (NullPointerException e) {
                     e.printStackTrace();
+                }
+                break;
+            case REQUESTCODE_XIAO_MI_TAKE:
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    return;
+                }
+                if(data!=null){
+                    setPicToView(data);
                 }
                 break;
         }
