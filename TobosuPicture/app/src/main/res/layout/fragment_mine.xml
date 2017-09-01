@@ -110,6 +110,7 @@
                             android:gravity="center"
                             android:orientation="vertical">
                             <LinearLayout
+                                android:id="@+id/fm_user_icon_ll"
                                 android:gravity="center"
                                 android:background="@mipmap/weidenglu"
                                 android:orientation="horizontal"

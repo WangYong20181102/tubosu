@@ -102,6 +102,7 @@ public class MyOrginFragment extends BaseFragment {
         myOrginSwipe.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE);
         myOrginSwipe.setBackgroundColor(Color.WHITE);
         myOrginSwipe.setSize(SwipeRefreshLayout.DEFAULT);
+
         myOrginSwipe.setOnRefreshListener(onRefreshListener);
 
         mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
