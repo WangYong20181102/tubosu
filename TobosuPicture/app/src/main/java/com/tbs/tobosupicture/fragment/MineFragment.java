@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -50,7 +51,6 @@ import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.utils.WriteUtil;
-import com.tbs.tobosupicture.view.CustomWaitDialog;
 import com.tbs.tobosupicture.view.SelectPersonalPopupWindow;
 
 import org.json.JSONException;
@@ -127,6 +127,22 @@ public class MineFragment extends BaseFragment {
     @BindView(R.id.fm_pop_location)
     View fmPopLocation;
     Unbinder unbinder;
+    @BindView(R.id.fm_user_icon_ll)
+    LinearLayout fmUserIconLl;
+    @BindView(R.id.mf_01)
+    ImageView mf01;
+    @BindView(R.id.mf_02)
+    ImageView mf02;
+    @BindView(R.id.mf_03)
+    ImageView mf03;
+    @BindView(R.id.mf_04)
+    ImageView mf04;
+    @BindView(R.id.mf_05)
+    ImageView mf05;
+    @BindView(R.id.mf_06)
+    ImageView mf06;
+    @BindView(R.id.mf_07)
+    ImageView mf07;
 
 
     private Context mContext;
@@ -180,12 +196,14 @@ public class MineFragment extends BaseFragment {
                 fmUserIcon.setVisibility(View.INVISIBLE);
                 fmUserIcon.setClickable(false);
                 fmUserSign.setVisibility(View.GONE);
+                fmUserIconLl.setVisibility(View.INVISIBLE);
             } else {
                 //业主的页面
                 fmCoInfo.setVisibility(View.GONE);
                 fmUserName.setVisibility(View.VISIBLE);
                 fmUserIcon.setVisibility(View.VISIBLE);
                 fmUserSign.setVisibility(View.VISIBLE);
+                fmUserIconLl.setVisibility(View.VISIBLE);
                 fmUserIcon.setClickable(true);
             }
             HttpGetMineInfo();
@@ -194,6 +212,7 @@ public class MineFragment extends BaseFragment {
             fmUserSign.setVisibility(View.GONE);
             fmCoInfo.setVisibility(View.GONE);
             fmUserName.setVisibility(View.VISIBLE);
+            fmUserIconLl.setVisibility(View.VISIBLE);
             fmUserIcon.setVisibility(View.VISIBLE);
             fmUserIcon.setClickable(true);
             fmUserName.setText("未登录");
@@ -339,11 +358,11 @@ public class MineFragment extends BaseFragment {
             switch (v.getId()) {
                 case R.id.takePhotoBtn:
                     //开启相机
-                    if(android.os.Build.BRAND.equals("Xiaomi")){
+                    if (Build.BRAND.equals("Xiaomi")) {
                         Log.e(TAG, "进入的了小米专用==========");
                         Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         startActivityForResult(takeIntent, REQUESTCODE_XIAO_MI_TAKE);
-                    }else {
+                    } else {
                         Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
                         startActivityForResult(takeIntent, REQUESTCODE_TAKE);
@@ -601,7 +620,7 @@ public class MineFragment extends BaseFragment {
                 if (resultCode == Activity.RESULT_CANCELED) {
                     return;
                 }
-                if(data!=null){
+                if (data != null) {
                     setPicToView(data);
                 }
                 break;
