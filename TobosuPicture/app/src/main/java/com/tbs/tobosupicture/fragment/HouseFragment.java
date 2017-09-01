@@ -257,7 +257,8 @@ public class HouseFragment extends BaseFragment {
     private void initPopupWindow(final int type, final ArrayList<String> textList, final ArrayList<String> idList, ArrayList<Integer> iconList,boolean flag) {
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.popuplayout, null);
         GridView gv = (GridView) contentView.findViewById(R.id.gv_converview);
-        popupWindow = new PopupWindow(contentView,
+        popupWindow
+                = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setContentView(contentView);
 //        ColorDrawable cd = new ColorDrawable();

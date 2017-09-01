@@ -1,12 +1,13 @@
 package com.tbs.tobosupicture.activity;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
-
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.CollectSampleImgAdapter;
@@ -84,7 +85,7 @@ public class MySampleListActivity extends BaseActivity {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         String json = response.body().string();
-                        Utils.setErrorLog(TAG, json);
+                        Utils.setErrorLog(TAG, "what-the-fuck ------" + json);
                         Gson gson = new Gson();
                         CollectionSampleJsonEntity entity = gson.fromJson(json, CollectionSampleJsonEntity.class);
                         if(entity.getStatus() == 200){
@@ -123,7 +124,7 @@ public class MySampleListActivity extends BaseActivity {
 
     private void initAdapter() {
         if(samplePicAdapter==null){
-            samplePicAdapter = new CollectSampleImgAdapter(mContext, samplePicList);
+            samplePicAdapter = new CollectSampleImgAdapter(mContext, tempSamplePicList);
             collectionRecyclerView.setAdapter(samplePicAdapter);
         }else {
             samplePicAdapter.notifyDataSetChanged();

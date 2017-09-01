@@ -1,5 +1,4 @@
 package com.tbs.tobosupicture.adapter;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,15 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.DesignerActivity;
 import com.tbs.tobosupicture.activity.GetPriceActivity;
 import com.tbs.tobosupicture.activity.SeeImageActivity;
 import com.tbs.tobosupicture.bean.CollectionSampleJsonEntity;
-import com.tbs.tobosupicture.bean.SamplePicBeanEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
-
 import java.util.ArrayList;
 
 /**
