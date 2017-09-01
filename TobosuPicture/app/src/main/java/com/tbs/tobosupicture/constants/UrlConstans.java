@@ -54,6 +54,9 @@ public class UrlConstans {
      */
     public static final String GET_MY_FANS_URL = ZXKK_URL + "rapp/MyOwner/my_fans";
 
+    /**
+     * 发单接口
+     */
     public static final String FADAN_URL = ZXKK_URL + "rapp/order/pub_order";
 
     /**

@@ -122,30 +122,6 @@ public class CaseSearchStyleAdapter extends BaseExpandableListAdapter {
                 String _id = groupDataList.get(groupPosition).getCaseTypeChildList().get(position).getId();
                 String cc = groupDataList.get(groupPosition).getCaseTypeChildList().get(position).getValue();
                 onSearchCaseStyleItemClickListener.onSearchCaseStyleParentClickListener(groupPosition, _id, position, cc);
-                // 保存点击position
-//                switch (groupPosition){
-//                    case 0: // 面积
-//                        if(SpUtils.getSearchCaseColorAreaNum(context)==position){
-////                            positionList.add(groupPosition, -1);
-//                            adapter.setSelectionPosition(-1);
-//                            SpUtils.setSearchCaseColorAreaNum(context, -1);
-//                        }else {
-//                            SpUtils.setSearchCaseColorAreaNum(context, position);
-//                            adapter.setSelectionPosition(positionList.get(groupPosition));
-////                            positionList.add(groupPosition, position);
-//                        }
-//
-//                        break;
-//                    case 1: // 布局
-//                        SpUtils.setSearchCaseColorLayoutNum(context, position);
-//                        break;
-//                    case 2: // 价格
-//                        SpUtils.setSearchCaseColorPriceNum(context, position);
-//                        break;
-//                    case 3: // 户型
-//                        SpUtils.setSearchCaseColorStyleNum(context, position);
-//                        break;
-//                }
                 positionList.add(groupPosition, position);
                 adapter.setSelectionPosition(positionList.get(groupPosition));
                 adapter.notifyDataSetChanged();

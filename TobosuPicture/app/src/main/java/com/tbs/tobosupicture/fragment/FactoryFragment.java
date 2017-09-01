@@ -79,6 +79,9 @@ public class FactoryFragment extends BaseFragment {
     private ArrayList<SamplePicBeanEntity> samplePicList = new ArrayList<SamplePicBeanEntity>();
     private SamplePictureAdapter samplePicAdapter;
 
+    private boolean closeState = true; // 收起状态
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -126,6 +129,10 @@ public class FactoryFragment extends BaseFragment {
             param.put("city_name", city);
             param.put("page", page);
             param.put("page_size", pageSize);
+
+            Utils.setErrorLog(TAG, "oiy>> 城市-" + city + "  daxiao  class_id  >" +class_id);
+
+
             HttpUtils.doPost(UrlConstans.GET_LIST, param, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -141,13 +148,13 @@ public class FactoryFragment extends BaseFragment {
                 public void onResponse(Call call, Response response) throws IOException {
 
                     String json = response.body().string();
+                    Utils.setErrorLog(TAG, "oiy>>" + json);
                     try {
                         final JSONObject object = new JSONObject(json);
                         if (object.getInt("status") == 200) {
                             JSONArray arr = object.getJSONArray("data");
-                            SamplePicBeanEntity entity = null;
                             for (int i = 0, len = arr.length(); i < len; i++) {
-                                entity = new SamplePicBeanEntity(arr.getJSONObject(i));
+                                SamplePicBeanEntity entity = new SamplePicBeanEntity(arr.getJSONObject(i));
                                 samplePicList.add(entity);
                             }
                         } else if (object.getInt("status") == 201) {
@@ -313,12 +320,24 @@ public class FactoryFragment extends BaseFragment {
     public void onViewClickedFactoryFragment(View view) {
         switch (view.getId()) {
             case R.id.tvChooseStyle:
-                factoryRecyclerView.setVisibility(View.GONE);
-                factorySwipRefreshLayout.setVisibility(View.GONE);
-                expandableListview.setVisibility(View.VISIBLE);
-                iv_factory_no_data.setVisibility(View.GONE);
-                initExpandableListView();
-                samplePicList.clear();
+//                Utils.setToast(getActivity(), closeState? "t": "f");
+
+                if(closeState){
+                    factoryRecyclerView.setVisibility(View.GONE);
+                    factorySwipRefreshLayout.setVisibility(View.GONE);
+                    expandableListview.setVisibility(View.VISIBLE);
+                    iv_factory_no_data.setVisibility(View.GONE);
+                    initExpandableListView();
+//                    samplePicList.clear();
+                }else {
+                    factoryRecyclerView.setVisibility(View.VISIBLE);
+                    factorySwipRefreshLayout.setVisibility(View.VISIBLE);
+                    expandableListview.setVisibility(View.GONE);
+                    iv_factory_no_data.setVisibility(View.GONE);
+//                    samplePicList.clear();
+//                    getDataFromNet();
+                }
+                closeState = !closeState;
                 break;
         }
     }
@@ -332,6 +351,7 @@ public class FactoryFragment extends BaseFragment {
                 page = 1;
                 getDataFromNet();
                 tvChooseStyle.setText(text);
+                closeState = true;
             }
 
             @Override
@@ -344,9 +364,12 @@ public class FactoryFragment extends BaseFragment {
                 }else {
                     tvChooseStyle.setText(text);
                 }
+                closeState = true;
                 getDataFromNet();
             }
         });
+
+
         expandableListview.setAdapter(adapter);
         expandableListview.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override

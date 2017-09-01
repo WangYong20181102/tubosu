@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <LinearLayout
+        android:id="@+id/v_anchor"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal">
@@ -123,11 +124,6 @@
                 android:background="@mipmap/daohang"/>
         </LinearLayout>
     </LinearLayout>
-    <View
-        android:id="@+id/v_anchor"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#dedada"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

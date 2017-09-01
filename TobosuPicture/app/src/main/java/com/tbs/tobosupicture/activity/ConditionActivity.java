@@ -74,6 +74,8 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
     RelativeLayout relSearchBack;
     @BindView(R.id.relSearchCaseLayout)
     RelativeLayout relSearchCaseLayout;
+    @BindView(R.id.v_middle)
+    View v_middle;
     @BindView(R.id.relShowAndHideCity)   // 城市 + 小区 布局
     RelativeLayout relShowAndHideCity;   // 城市 + 小区 布局
     @BindView(R.id.tvChooseCity)          // 选择城市 按钮  
@@ -92,7 +94,6 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
     private String param_layout;
     private String param_price;
     private String param_style;
-    private String conditionText = "";
 
     private ChooseAddressWheel chooseAddressWheel = null;
 
@@ -107,6 +108,16 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         ButterKnife.bind(this);
         getDataFromNet();   // 获取搜索条件
         initCityDisctrictWheelView();  // 初始化省市区滚轮
+    }
+
+    private ArrayList<HashMap<String, String>> conditionTextList = new ArrayList<HashMap<String, String>>();
+    private void initCondition(int size){
+        conditionTextList.clear();
+        for(int i=0; i<size; i++){
+            HashMap<String, String> hashMap = new HashMap<String, String>();
+            hashMap.put("" + i, "");
+            conditionTextList.add(hashMap);
+        }
     }
 
     /**
@@ -172,30 +183,54 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                             if (jsonEntity.getStatus() == 200) {
                                 searchDataEntity = jsonEntity.getSearchDataEntity();
                                 searchCaseConditionEntity = jsonEntity.getSearchCaseConditionEntity();
+                                setDataInView();
                             } else {
                                 Utils.setToast(mContext, jsonEntity.getMsg());
                             }
-                            setDataInView();
+
                         }
                     });
                 }
             });
         }
     }
+    private int listViewCount;
     private ArrayList<SearchRecordBean> recordBeenList;
     private ArrayList<CaseConditionType> caseConditionTypeList;
     private ArrayList<SearchRecordBean> tempRecordBeenList = new ArrayList<SearchRecordBean>();
     private SearchCaseAdapter searchCaseAdapter;
     private void setDataInView() {
-        initSearchRecord(false);
+
+        recordBeenList = searchDataEntity.getSearch_record(); // 一次性获取搜索记录
+        if (recordBeenList.size() == 0) {
+            relSearchCaseLayout.setVisibility(View.GONE);
+        } else {
+            relSearchCaseLayout.setVisibility(View.VISIBLE);
+        }
+
+        if(recordBeenList!=null){
+            initSearchRecord(recordBeenList, false);
+        }
+
         if (searchCaseConditionEntity != null) {
             caseConditionTypeList = searchCaseConditionEntity.getConditionTypeList();
+            listViewCount = caseConditionTypeList.size();
+            initCondition(listViewCount);
             // 初始化expandablelistview
             CaseSearchStyleAdapter caseSearchStyleAdapter = new CaseSearchStyleAdapter(mContext, caseConditionTypeList, new CaseSearchStyleAdapter.OnSearchCaseStyleItemClickListener() {
                 @Override
                 public void onSearchCaseStyleParentClickListener(int group, String id, int position, String condition) {
 //                    Utils.setToast(mContext, group + "<<<<===>>>>" + id);
-                    conditionText += condition;
+
+                    for(int i=0; i<listViewCount; i++){
+
+                        if(group == i){
+                            HashMap<String, String> hashMap = new HashMap<String, String>();
+                            hashMap.put("" + i, condition + " ");
+                            conditionTextList.set(i, hashMap);
+                        }
+                    }
+
                     switch (group) {
                         case 0: // 面积
                             param_area = id;
@@ -228,6 +263,14 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
             Utils.setErrorLog(TAG, "===关闭了城市小区===");
         }
 
+        String conditionText = "";
+        for(int i=0;i<conditionTextList.size();i++){
+            String temp = conditionTextList.get(i).get("" + i);
+            if(temp != null && !"".equals(temp)){
+                conditionText += temp;
+            }
+        }
+
         Intent intent = new Intent();
         Bundle b = new Bundle();
         b.putString("param_area", param_area);
@@ -239,12 +282,12 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         b.putString("param_vilige_id", param_vilige_id);//花园小区id  param_vilige_id
         if("".equals(cityName)){
             b.putInt("getcity", 0);// 无选择城市
+            conditionText = cityName + " " +conditionText;
         }else {
             b.putInt("getcity", 1);// 有选择城市
-            conditionText = cityName + " " +conditionText;
         }
         b.putString("condition_text", cityName + conditionText);
-
+        Utils.setErrorLog(TAG, cityName + conditionText + "%%");
         intent.putExtra("params", b);
 
         Utils.setErrorLog(TAG, param_area + "   " + param_layout + "  " + param_price + "  " + param_style + "  返回城市id " + city_id+  "  返回小区id " + district_id+ "  返回花园小区id " + param_vilige_id);
@@ -257,66 +300,57 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         finish();
     }
 
-    private void initSearchRecord(boolean seemore) {
-        if (searchDataEntity != null) {
-            recordBeenList = searchDataEntity.getSearch_record();
-            if (recordBeenList.size() == 0) {
-                relSearchCaseLayout.setVisibility(View.GONE);
+    private void initSearchRecord(ArrayList<SearchRecordBean> _recordBeenList, boolean seemore) {
+        if (_recordBeenList != null && _recordBeenList.size() > 0) {
+            // 历史记录
+            if (seemore) {
+                tempRecordBeenList.addAll(_recordBeenList);
+                tvSeeMoreCaseHistory.setVisibility(View.GONE);
+                v_middle.setVisibility(View.GONE);
             } else {
-                relSearchCaseLayout.setVisibility(View.VISIBLE);
+                if (_recordBeenList.size() > 5) {
+                    for(int i = 0; i < 5; i++) {
+                        tempRecordBeenList.add(_recordBeenList.get(i));
+                    }
+                } else {
+                    tempRecordBeenList.addAll(_recordBeenList);
+                }
+            }
+            if (searchCaseAdapter == null) {
+                searchCaseAdapter = new SearchCaseAdapter(mContext, tempRecordBeenList);
+                searchCaseRecord.setAdapter(searchCaseAdapter);
+            } else {
+                searchCaseAdapter.notifyDataSetChanged();
             }
 
+            searchCaseRecord.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    // 历史记录的
+                    Intent intent = new Intent();
+                    Bundle b = new Bundle();
+                    b.putString("param_area", tempRecordBeenList.get(position).getArea_key());
+                    b.putString("param_layout", tempRecordBeenList.get(position).getLayout_key());
+                    b.putString("param_price", tempRecordBeenList.get(position).getPrice_key());
+                    b.putString("param_style", tempRecordBeenList.get(position).getStyle_id());
+                    b.putString("param_city_id", tempRecordBeenList.get(position).getCity_id());
+                    b.putInt("getcity", 1);
+                    String _condiction = tempRecordBeenList.get(position).getCity_name() + " " +
+                            tempRecordBeenList.get(position).getLayout_value() + " " +
+                            tempRecordBeenList.get(position).getArea_value() + " " +
+                            tempRecordBeenList.get(position).getPrice_value() + " " +
+                            tempRecordBeenList.get(position).getStyle_name();
+                    b.putString("condition_text", _condiction);
+                    intent.putExtra("params", b);
 
-            if (recordBeenList != null && recordBeenList.size() > 0) {
-                // 历史记录
-                if (seemore) {
-                    tempRecordBeenList.addAll(recordBeenList);
-                    tvSeeMoreCaseHistory.setVisibility(View.GONE);
-                } else {
-                    if (recordBeenList.size() > 5) {
-                        for(int i = 0; i < 5; i++) {
-                            tempRecordBeenList.add(recordBeenList.get(i));
-                        }
-                    } else {
-                        tempRecordBeenList.addAll(recordBeenList);
-                    }
+                    Utils.setErrorLog(TAG, param_area + "   " + param_layout + "  " + param_price + "  " + param_style);
+                    setResult(10101, intent);
+                    finish();
                 }
-                if (searchCaseAdapter == null) {
-                    searchCaseAdapter = new SearchCaseAdapter(mContext, tempRecordBeenList);
-                    searchCaseRecord.setAdapter(searchCaseAdapter);
-                } else {
-                    searchCaseAdapter.notifyDataSetChanged();
-                }
-
-                searchCaseRecord.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        // 历史记录的
-                        Intent intent = new Intent();
-                        Bundle b = new Bundle();
-                        b.putString("param_area", tempRecordBeenList.get(position).getArea_key());
-                        b.putString("param_layout", tempRecordBeenList.get(position).getLayout_key());
-                        b.putString("param_price", tempRecordBeenList.get(position).getPrice_key());
-                        b.putString("param_style", tempRecordBeenList.get(position).getStyle_id());
-                        b.putString("param_city_id", tempRecordBeenList.get(position).getCity_id());
-                        b.putInt("getcity", 1);
-                        String _condiction = tempRecordBeenList.get(position).getCity_name() + " " +
-                                tempRecordBeenList.get(position).getLayout_value() + " " +
-                                tempRecordBeenList.get(position).getArea_value() + " " +
-                                tempRecordBeenList.get(position).getPrice_value() + " " +
-                                tempRecordBeenList.get(position).getStyle_name();
-                        b.putString("condition_text", _condiction);
-                        intent.putExtra("params", b);
-
-                        Utils.setErrorLog(TAG, param_area + "   " + param_layout + "  " + param_price + "  " + param_style);
-                        setResult(10101, intent);
-                        finish();
-                    }
-                });
-            } else {
-                tvHistorySearch.setVisibility(View.GONE);
-                historyLinearlayout.setVisibility(View.GONE);
-            }
+            });
+        } else {
+            tvHistorySearch.setVisibility(View.GONE);
+            historyLinearlayout.setVisibility(View.GONE);
         }
     }
 
@@ -332,7 +366,6 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
             case R.id.tvChooseDisctrict:   // 显示花园小区
                 adapter = null;
                 tempGardenDataList.clear();
-//                Utils.setToast(mContext, "cityid是" + city_id + "   小区id是" + district_id );
                 showGardenWindow(false, null, city_id, district_id);
                 break;
             case R.id.relShowAndHideCity:
@@ -346,14 +379,16 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                 break;
             case R.id.tvSeeMoreCaseHistory:
                 // 显示20条
-                initSearchRecord(true);
+                if(recordBeenList!=null){
+                    initSearchRecord(recordBeenList, true);
+                }
 
                 break;
             case R.id.tvClearCaseHistory:
                 if(Utils.userIsLogin(mContext)){
                     if (Utils.isNetAvailable(mContext)) {
                         HashMap<String, Object> hashMap = new HashMap<String, Object>();
-                        hashMap.put("iud", SpUtils.getUserUid(mContext));
+                        hashMap.put("uid", SpUtils.getUserUid(mContext));
                         hashMap.put("token", Utils.getDateToken());
                         HttpUtils.doPost(UrlConstans.CLEAR_CASE_URL, hashMap, new Callback() {
                             @Override
@@ -444,13 +479,14 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
             }
             hashMap.put("city_id", _ciyt_id);
             hashMap.put("district_id", _disc_id);
-            Utils.setErrorLog(TAG, "获取花园小区数据 == 城市id:" + _ciyt_id + "     小区id:" + _disc_id + "  城市 " + text  + " === " + districtPage);
+//            Utils.setErrorLog(TAG, "获取花园小区数据 == 城市id:" + _ciyt_id + "     小区id:" + _disc_id + "  城市 " + text  + " === " + districtPage);
             hashMap.put("page", districtPage);
             hashMap.put("page_size", districtPageSize);
             HttpUtils.doPost(UrlConstans.DISTRICT_LIST_URL, hashMap, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     Utils.setErrorLog(TAG, "getGardenDistrictData请求花园小区数据失败---"); // FIXME: 2017/8/16
+                    Utils.setToast(mContext, "获取小区数据失败");
                 }
 
                 @Override
