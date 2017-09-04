@@ -7,12 +7,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.bean.CaseDetailJsonEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
+import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.RoundAngleImageView;
 
 import java.util.ArrayList;
 
 /**
+ * 入住场景 适配器
  * Created by Lie on 2017/8/2.
  */
 
@@ -26,6 +29,9 @@ public class CaseDetailStayInAdapter extends BaseAdapter {
         this.context = context;
         this.dataList = dataList;
         this.inflater = LayoutInflater.from(context);
+
+        Utils.setErrorLog(TAG, "入住场景 长度是 " + dataList.size());
+
     }
 
 

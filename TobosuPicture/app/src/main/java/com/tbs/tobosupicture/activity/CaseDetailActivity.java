@@ -15,6 +15,7 @@ import com.tbs.tobosupicture.adapter.CaseDetailImgGVAdapter;
 import com.tbs.tobosupicture.adapter.CaseDetailStayInAdapter;
 import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.bean.CaseDetailEntity;
+import com.tbs.tobosupicture.bean.CaseDetailJsonEntity;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.HttpUtils;
@@ -88,7 +89,8 @@ public class CaseDetailActivity extends BaseActivity {
 
 
     // 数据源
-    private CaseDetailEntity caseDetailEntity;
+//    private CaseDetailEntity caseDetailEntity;
+    private CaseDetailJsonEntity.CaseDetailEntity caseDetailEntity;
     private String id;
     private String des = "";            // 分享 简介
     private String shareUrl = "";       // 分享 链接
@@ -183,6 +185,9 @@ public class CaseDetailActivity extends BaseActivity {
             hashMap.put("case_id", caseid);
             hashMap.put("token", Utils.getDateToken());
             hashMap.put("uid", SpUtils.getUserUid(mContext));
+
+            Utils.setErrorLog(TAG, "长度  caseid = " + caseid);
+
             HttpUtils.doPost(UrlConstans.CASE_DETAIL_URL, hashMap, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -198,30 +203,51 @@ public class CaseDetailActivity extends BaseActivity {
                 public void onResponse(Call call, Response response) throws IOException {
                     String json = response.body().string();
                     Utils.setErrorLog(TAG, json);
-                    try {
-                        JSONObject jsonObject = new JSONObject(json);
-                        if (jsonObject.getInt("status") == 200) {
-                            Gson gson = new Gson();
-                            caseDetailEntity = gson.fromJson(jsonObject.getJSONObject("data").toString(), CaseDetailEntity.class);
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    initDataInView();
-                                }
-                            });
-                        } else {
-                            final String msg = jsonObject.getString("msg");
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Utils.setToast(mContext, msg);
-                                }
-                            });
-                        }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    Gson gson = new Gson();
+                    CaseDetailJsonEntity caseDetailJsonEntity = gson.fromJson(json, CaseDetailJsonEntity.class);
+                    if(caseDetailJsonEntity.getStatus() == 200){
+                        caseDetailEntity = caseDetailJsonEntity.getData();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                initDataInView();
+                            }
+                        });
+                    }else {
+                        final String msg = caseDetailJsonEntity.getMsg();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Utils.setToast(mContext, msg);
+                            }
+                        });
                     }
+
+//                    try {
+//                        JSONObject jsonObject = new JSONObject(json);
+//                        if (jsonObject.getInt("status") == 200) {
+//                            Gson gson = new Gson();
+//                            caseDetailEntity = gson.fromJson(jsonObject.getJSONObject("data").toString(), CaseDetailEntity.class);
+//                            runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    initDataInView();
+//                                }
+//                            });
+//                        } else {
+//                            final String msg = jsonObject.getString("msg");
+//                            runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    Utils.setToast(mContext, msg);
+//                                }
+//                            });
+//                        }
+//
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
                 }
             });
         }
@@ -248,19 +274,25 @@ public class CaseDetailActivity extends BaseActivity {
         GlideUtils.glideLoader(mContext, caseDetailEntity.getCase_data().getDesigner_icon(), R.mipmap.pic, R.mipmap.pic, ivDesinHead, 0);
         GlideUtils.glideLoader(mContext, caseDetailEntity.getCase_data().getLayout_url(),R.mipmap.loading_img_fail, R.mipmap.loading_img,ivBigHuxingTu, 1);
 
+        // 设计图
         CaseDetailImgAdapter imgAdapter = new CaseDetailImgAdapter(mContext, caseDetailEntity.getSuite());
         mylistviewCaseDetial.setAdapter(imgAdapter);
 
+
+        Utils.setErrorLog(TAG, caseDetailEntity.getOnline_diagram().size() == 0 ?  "施工阶段的数据是0" : "施工阶段的数据是 " + caseDetailEntity.getOnline_diagram().size());
+        //  施工阶段
         CaseDetailImgGVAdapter imgGVAdapter = new CaseDetailImgGVAdapter(mContext, caseDetailEntity.getOnline_diagram());
         myStageCaseDetial.setAdapter(imgGVAdapter);
 
-        // 入住场景 // FIXME: 2017/8/17 闪退就是这里有问题
-        if(caseDetailEntity.getStay_real().size()>0){
-            CaseDetailStayInAdapter stayInAdapter = new CaseDetailStayInAdapter(mContext, caseDetailEntity.getStay_real().get(0).getImg_url());
+
+
+        // 入住场景
+        if(caseDetailEntity.getStay_real_bean() != null){
+            CaseDetailStayInAdapter stayInAdapter = new CaseDetailStayInAdapter(mContext, caseDetailEntity.getStay_real_bean().getImg_url());
             mylistviewStayIn.setAdapter(stayInAdapter);
         }else{
             // 无入住场景
-
+            Utils.setErrorLog(TAG, " 长度  入住场景为空");
         }
 
 

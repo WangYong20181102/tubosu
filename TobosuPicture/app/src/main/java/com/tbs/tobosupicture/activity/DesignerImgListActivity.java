@@ -34,7 +34,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
- * 设计师案例 样板图 列表
+ * 设计师 [样板图] [案例] 列表
  * Created by Lie on 2017/7/25.
  */
 
@@ -130,6 +130,9 @@ public class DesignerImgListActivity extends BaseActivity {
             hashMap.put("designer_id", designerId);
             hashMap.put("page", page);
             hashMap.put("page_size", pageSize);
+
+            Utils.setErrorLog(TAG, "当前设计师id是" + designerId);
+
             HttpUtils.doPost(UrlConstans.getListUrl(sourceType), hashMap, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {

@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import com.bumptech.glide.util.Util;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.SamplePictureAdapter;
 import com.tbs.tobosupicture.base.BaseFragment;
@@ -394,6 +396,7 @@ public class HouseFragment extends BaseFragment {
             public void onResponse(Call call, Response response) throws IOException {
 
                 String json = response.body().string();
+                Utils.setErrorLog(TAG, "what_the_house >>" + json);
                 try {
                     JSONObject object = new JSONObject(json);
                     if(object.getInt("status")==200){
