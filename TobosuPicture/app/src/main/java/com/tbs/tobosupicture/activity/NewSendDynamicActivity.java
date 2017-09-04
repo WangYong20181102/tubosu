@@ -272,6 +272,7 @@ public class NewSendDynamicActivity extends BaseActivity {
                         param.put("token", Utils.getDateToken());
                         param.put("uid", SpUtils.getUserUid(mContext));
                         param.put("title", newSendEditText.getText().toString());
+                        Log.e(TAG, "发布的表情================" + newSendEditText.getText().toString());
                         for (int j = 0; j < mUpLoadImageUrlList.size(); j++) {
                             param.put("image_url" + j, mUpLoadImageUrlList.get(j));
                         }

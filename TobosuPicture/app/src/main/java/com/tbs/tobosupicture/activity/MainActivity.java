@@ -238,7 +238,7 @@ public class MainActivity extends BaseActivity {
         public void run() {
             while (isLoop) {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(2345);
                     HttpGetMsg();
                 } catch (InterruptedException e) {
                     e.printStackTrace();

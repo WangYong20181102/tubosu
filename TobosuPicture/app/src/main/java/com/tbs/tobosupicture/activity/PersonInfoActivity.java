@@ -346,11 +346,14 @@ public class PersonInfoActivity extends BaseActivity {
             @Override
             public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
                 Log.e(TAG, "授权失败====" + i + "==原因==" + throwable.toString());
+                customWaitDialog.dismiss();
+                Toast.makeText(mContext, "授权微信失败:" + throwable.toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onCancel(SHARE_MEDIA share_media, int i) {
                 Toast.makeText(mContext, "取消微信授权绑定！", Toast.LENGTH_SHORT).show();
+                customWaitDialog.dismiss();
             }
         });
     }
