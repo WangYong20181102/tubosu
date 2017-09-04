@@ -148,7 +148,7 @@ public class FactoryFragment extends BaseFragment {
                 public void onResponse(Call call, Response response) throws IOException {
 
                     String json = response.body().string();
-                    Utils.setErrorLog(TAG, "oiy>>" + json);
+                    Utils.setErrorLog(TAG, "what_the_factory >>" + json);
                     try {
                         final JSONObject object = new JSONObject(json);
                         if (object.getInt("status") == 200) {
@@ -347,6 +347,7 @@ public class FactoryFragment extends BaseFragment {
             @Override
             public void onFactoryStyleItemClickListener(String classID, String text) {
 //                Utils.setToast(getActivity(), "class_id 是" + classID);
+                samplePicList.clear();
                 class_id = classID;
                 page = 1;
                 getDataFromNet();
@@ -357,6 +358,7 @@ public class FactoryFragment extends BaseFragment {
             @Override
             public void onFactoryStyleParentClickListener(String parentId, String text) {
 //                Utils.setToast(getActivity(), "group_ class_id 是" + parentId);
+                samplePicList.clear();
                 class_id = parentId;
                 page = 1;
                 if("全部".equals(text)){

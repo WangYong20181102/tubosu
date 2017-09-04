@@ -144,7 +144,7 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
                     public void onClick(View v) {
                         Intent i = new Intent(mContext, SeeImageActivity.class);
                         Bundle b = new Bundle();
-                        b.putString("img_id", sampleDataList.get(position).getId());
+                        b.putString("img_id", sampleDataList.get(position-1).getId());
                         i.putExtra("img_bundle", b);
                         mContext.startActivity(i);
                     }

@@ -464,8 +464,8 @@ public class SeeImageActivity extends BaseActivity {
                         hashMap.put("urlhistory", UrlConstans.PIPE_CODE);
                         hashMap.put("comeurl", UrlConstans.PIPE_CODE);
                         String city = SpUtils.getSelectCityCache(mContext);
-                        hashMap.put("", city);
-                        Utils.setErrorLog(TAG, phone + "****" +Utils.getDateToken() + "****" +UrlConstans.PIPE_CODE);
+                        hashMap.put("city", city);
+                        Utils.setErrorLog(TAG, phone + "****city=" +city + "****" +UrlConstans.PIPE_CODE);
 
                         HttpUtils.doPost(UrlConstans.FADAN_URL, hashMap, new Callback() {
                             @Override

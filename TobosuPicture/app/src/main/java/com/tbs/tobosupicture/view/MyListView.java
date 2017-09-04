@@ -24,8 +24,7 @@ public class MyListView extends GridView {
 
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         //核心在此
-        int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2,
-                MeasureSpec.AT_MOST);
+        int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
         super.onMeasure(widthMeasureSpec, expandSpec+50);
     }
 

@@ -13,27 +13,32 @@ import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.SeeImageActivity;
 import com.tbs.tobosupicture.bean.CaseDetailEntity;
+import com.tbs.tobosupicture.bean.CaseDetailJsonEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
+import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.MyGridView;
 import com.tbs.tobosupicture.view.RoundAngleImageView;
 
 import java.util.ArrayList;
 
 /**
+ * 施工阶段 适配器
  * Created by Lie on 2017/8/2.
  */
 
 public class CaseDetailImgGVAdapter extends BaseAdapter {
     private String TAG = "CaseDetailImgGVAdapter";
-    private ArrayList<CaseDetailEntity.OnlineDiagramBean> dataList;
+    private ArrayList<CaseDetailJsonEntity.CaseDetailEntity.OnlineDiagramBean> dataList;
     private Context context;
     private LayoutInflater inflater;
     private String stage[] = {"水电", "泥木", "油漆", "竣工"};   //阶段：1水电；2泥木；3油漆；4竣工
 
-    public CaseDetailImgGVAdapter(Context context, ArrayList<CaseDetailEntity.OnlineDiagramBean> dataList){
+    public CaseDetailImgGVAdapter(Context context, ArrayList<CaseDetailJsonEntity.CaseDetailEntity.OnlineDiagramBean> dataList){
         this.context = context;
         this.dataList = dataList;
         this.inflater = LayoutInflater.from(context);
+
+        Utils.setErrorLog(TAG, "施工阶段 长度是 " + dataList.size());
     }
 
 
@@ -68,6 +73,7 @@ public class CaseDetailImgGVAdapter extends BaseAdapter {
         }
 
         ArrayList<String> imgList = dataList.get(position).getImg_url();
+        Utils.setErrorLog(TAG, "施工阶段 施工图 长度是 " + imgList.size());
         if(imgList.size() % 2 == 0){
             // 偶数
             GvStageAdapter stageAdapter = new GvStageAdapter(context, imgList, dataList.get(position).getId());
