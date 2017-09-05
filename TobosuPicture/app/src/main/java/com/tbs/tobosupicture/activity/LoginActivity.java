@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.tbs.tobosupicture.MyApplication;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.bean.EC;
@@ -26,9 +27,11 @@ import com.tbs.tobosupicture.utils.Md5Utils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.CustomWaitDialog;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.weixin.handler.UmengWXHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -118,6 +121,8 @@ public class LoginActivity extends BaseActivity {
             case R.id.login_weixin_login:
                 //微信登录
                 customWaitDialog.show();
+                //先清除token
+                mShareAPI.deleteOauth(LoginActivity.this, SHARE_MEDIA.WEIXIN, null);
                 weChatLogin();
                 break;
         }
@@ -176,6 +181,8 @@ public class LoginActivity extends BaseActivity {
                         Log.e(TAG, "获取用户的uid====" + SpUtils.getUserUid(mContext));
                         EventBusUtil.sendEvent(new Event(EC.EventCode.LOGIN_INITDATA));
                         EventBusUtil.sendEvent(new Event(EC.EventCode.REFRESH_MY_ORGIN_NUM));
+                        //友盟的账号统计:统计规则  平台+UId
+                        MobclickAgent.onProfileSignIn(Utils.getChannType(MyApplication.getContexts()), SpUtils.getUserUid(mContext));
                         finish();
                     } else if (status.equals("0")) {
                         runOnUiThread(new Runnable() {
@@ -194,7 +201,8 @@ public class LoginActivity extends BaseActivity {
 
     //微信登录
     private void weChatLogin() {
-        mShareAPI.getPlatformInfo(LoginActivity.this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
+        //再次进行授权
+        mShareAPI.doOauthVerify(LoginActivity.this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
             @Override
             public void onStart(SHARE_MEDIA share_media) {
 
@@ -260,6 +268,8 @@ public class LoginActivity extends BaseActivity {
                         Log.e(TAG, "获取用户的uid====" + SpUtils.getUserUid(mContext));
                         EventBusUtil.sendEvent(new Event(EC.EventCode.LOGIN_INITDATA));
                         EventBusUtil.sendEvent(new Event(EC.EventCode.REFRESH_MY_ORGIN_NUM));
+                        //友盟统计微信登录的用户数据
+                        MobclickAgent.onProfileSignIn("weixin", SpUtils.getUserUid(mContext));
                         customWaitDialog.dismiss();
                         finish();
                     }

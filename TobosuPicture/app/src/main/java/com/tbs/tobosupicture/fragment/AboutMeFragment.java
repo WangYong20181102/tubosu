@@ -81,6 +81,11 @@ public class AboutMeFragment extends BaseFragment {
         return true;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+    }
+
     //接收相关通知
     @Override
     protected void receiveEvent(Event event) {

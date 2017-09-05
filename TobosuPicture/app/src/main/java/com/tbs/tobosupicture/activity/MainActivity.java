@@ -35,6 +35,7 @@ import com.tbs.tobosupicture.utils.EventBusUtil;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,6 +89,11 @@ public class MainActivity extends BaseActivity {
         mContext = this;
         initFragment();
         initUserMsg();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
     }
 
     private void initFragment() {
@@ -158,10 +164,12 @@ public class MainActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.rb_first:
                 //点击第一个选项 显示样板图
+                MobclickAgent.onEvent(mContext,"click_xiao_guo_tu_tab");
                 setIndexSelect(0);
                 break;
             case R.id.rb_second:
                 //点击第二个选项 显示案例
+                MobclickAgent.onEvent(mContext,"click_an_li_tu_tab");
                 setIndexSelect(1);
                 break;
             case R.id.rb_third:
@@ -174,10 +182,12 @@ public class MainActivity extends BaseActivity {
 //                    EventBusUtil.sendEvent(new Event(EC.EventCode.CHECK_ABOUTME_MYORG_HAS_MSG));
                     Log.e(TAG, "已发送消息===SHOW_ABOUT_ME===");
                 }
+                MobclickAgent.onEvent(mContext,"click_yi_tu_hui_you_tab");
                 setIndexSelect(2);
                 break;
             case R.id.rb_fourth:
                 //点击第四个选项 显示我的  其中我的界面要分情况考虑
+                MobclickAgent.onEvent(mContext,"click_wo_de_tu_tab");
                 setIndexSelect(3);
                 break;
         }

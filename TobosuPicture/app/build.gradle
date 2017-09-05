@@ -120,6 +120,7 @@ dependencies {
     compile 'com.contrarywind:Android-PickerView:3.2.5'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }
 android.applicationVariants.all { variant ->
     variant.outputs.each { output ->

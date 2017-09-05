@@ -8,6 +8,7 @@ import android.view.Window;
 
 import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.utils.EventBusUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -27,6 +28,23 @@ public class BaseActivity extends AppCompatActivity {
         if (isRegisterEventBus()) {
             EventBusUtil.register(this);
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     /**
