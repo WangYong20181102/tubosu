@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -28,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -52,9 +54,11 @@ public class WelcomeActivity extends BaseActivity {
         setContentView(R.layout.activity_welcome);
         mContext = this;
         //百度地图的相关设置
+        if(TextUtils.isEmpty(SpUtils.getUserIsGetPro(mContext))){
+            needPermissions();
+        }
         mLocationClient = new LocationClient(getApplicationContext());
         myListener = new MyLocationListener();
-        needPermissions();
         mLocationClient.registerLocationListener(myListener);
         initLocation();
         mLocationClient.start();
@@ -229,7 +233,7 @@ public class WelcomeActivity extends BaseActivity {
                 //当获取的城市不为空且和之前的定位城市不相同则修改定位的城市
                 SpUtils.setLocationCity(getApplicationContext(), location.getCity());
                 Log.e(TAG, "定位>>>>" + sb.toString() + "br/具体城市>>>" + location.getCity());
-            }else {
+            } else {
                 Log.e(TAG, "定位>>>> br/具体城市>>>");
             }
             SpUtils.setLocationLat(getApplicationContext(), "" + location.getLatitude());
@@ -244,8 +248,8 @@ public class WelcomeActivity extends BaseActivity {
     }
 
     // 动态获取权限
-    private  void needPermissions(){
-        if(Build.VERSION.SDK_INT >= 23){
+    private void needPermissions() {
+        if (Build.VERSION.SDK_INT >= 23) {
             String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.READ_PHONE_STATE,
@@ -267,8 +271,8 @@ public class WelcomeActivity extends BaseActivity {
     }
 
 
-    private void getDataFromNet(){
-        if(Utils.isNetAvailable(mContext)){
+    private void getDataFromNet() {
+        if (Utils.isNetAvailable(mContext)) {
             HashMap<String, Object> param = new HashMap<String, Object>();
             param.put("token", Utils.getDateToken());
             HttpUtils.doPost(UrlConstans.GET_HOUSE_DECORATE_STYLE_URL, param, new Callback() {
@@ -277,7 +281,7 @@ public class WelcomeActivity extends BaseActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Utils.setToast(mContext,"系统繁忙请稍后再试!");
+                            Utils.setToast(mContext, "系统繁忙请稍后再试!");
                         }
                     });
                 }
@@ -297,7 +301,7 @@ public class WelcomeActivity extends BaseActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Utils.setToast(mContext,"系统繁忙请稍后再试!");
+                            Utils.setToast(mContext, "系统繁忙请稍后再试!");
                         }
                     });
                 }
@@ -312,4 +316,12 @@ public class WelcomeActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 101:
+                SpUtils.setUserIsSetPro(mContext, "true");
+                break;
+        }
+    }
 }
