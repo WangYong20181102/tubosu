@@ -96,6 +96,9 @@ public class OwnerCaseActivity extends BaseActivity {
                                     ownerSearchRecordList.addAll(entity.getData());
                                     OwenerCaseSwipeRefreshLayout.setVisibility(View.VISIBLE);
                                     ivNoOwenerCaseData.setVisibility(View.GONE);
+                                    if(adapter!=null){
+                                        adapter.hideLoadMoreMessage();
+                                    }
                                     initListView();
                                 }else {
                                     if(ownerSearchRecordList.size()==0){
@@ -111,8 +114,6 @@ public class OwnerCaseActivity extends BaseActivity {
                         });
                     }
                 });
-            }else{
-                startActivity(new Intent(mContext, LoginActivity.class));
             }
         }
 
@@ -174,10 +175,7 @@ public class OwnerCaseActivity extends BaseActivity {
         } else {
             adapter.notifyDataSetChanged();
         }
-        if (adapter != null) {
-            adapter.hideLoadMoreMessage();
-        }
-        OwenerCaseSwipeRefreshLayout.setRefreshing(false);
+        adapter.hideLoadMoreMessage();
     }
 
     //下拉刷新监听事件

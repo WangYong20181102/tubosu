@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
@@ -40,6 +41,11 @@ public class MySampleListActivity extends BaseActivity {
     RecyclerView collectionRecyclerView;
     @BindView(R.id.collectSampleSwipeRefreshLayout)
     SwipeRefreshLayout collectSampleSwipeRefreshLayout;
+    @BindView(R.id.no_collect_samplepic)
+    ImageView no_collect_samplepic;
+
+
+
     
     private ArrayList<CollectionSampleJsonEntity.CollectionSampleImg> samplePicList;
     private ArrayList<CollectionSampleJsonEntity.CollectionSampleImg> tempSamplePicList = new ArrayList<CollectionSampleJsonEntity.CollectionSampleImg>();
@@ -95,6 +101,8 @@ public class MySampleListActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     collectSampleSwipeRefreshLayout.setRefreshing(false);
+                                    no_collect_samplepic.setVisibility(View.GONE);
+                                    collectionRecyclerView.setVisibility(View.VISIBLE);
                                     initAdapter();
                                 }
                             });
@@ -108,6 +116,8 @@ public class MySampleListActivity extends BaseActivity {
                                         samplePicAdapter.hideLoadMoreMessage();
                                     }
                                     collectSampleSwipeRefreshLayout.setRefreshing(false);
+                                    no_collect_samplepic.setVisibility(View.VISIBLE);
+                                    collectionRecyclerView.setVisibility(View.GONE);
                                 }
                             });
                         }

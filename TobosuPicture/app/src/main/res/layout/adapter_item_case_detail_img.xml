@@ -8,34 +8,39 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal">
-        <LinearLayout
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
             android:layout_weight="1">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="10dp"
-                android:background="@mipmap/gap_line"/>
+                android:layout_centerVertical="true"
+                android:layout_margin="8dp"
+                android:background="@mipmap/gap_line" />
 
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:background="@mipmap/gap_dot"/>
+                android:background="@mipmap/gap_dot" />
+            <TextView
+                android:id="@+id/tvTitleCaseDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="卧室"/>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvTitleCaseDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:text="卧室"/>
 
         <LinearLayout
             android:layout_width="match_parent"

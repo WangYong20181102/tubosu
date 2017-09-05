@@ -11,10 +11,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.SeeImageActivity;
 import com.tbs.tobosupicture.bean.CaseTypeChild;
 import com.tbs.tobosupicture.utils.GlideUtils;
+import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.RoundAngleImageView;
 
 import java.util.ArrayList;
@@ -25,6 +27,8 @@ import java.util.ArrayList;
  */
 
 public class GvStageAdapter extends BaseAdapter {
+    private String TAG = "GvStageAdapter";
+    private String imgStringUrl = "https:\\/\\/pic.tbscache.com\\/building\\/2017-03-23\\/small\\/p_58d39147d692e.jpg";
 
     private Context context;
     private ArrayList<String> dataList;
@@ -66,7 +70,11 @@ public class GvStageAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        GlideUtils.glideLoader(context, dataList.get(position),R.mipmap.loading_img_fail, R.mipmap.loading_img,holder.iv);
+        String url = dataList.get(position);
+        url = url.replace("\\/\\/", "//").replace("\\/", "/");
+        Utils.setErrorLog(TAG, "适配器 " + url);
+        GlideUtils.glideLoader(context, url,R.mipmap.loading_img_fail, R.mipmap.loading_img,holder.iv);
+
 
         holder.iv.setOnClickListener(new View.OnClickListener() {
             @Override

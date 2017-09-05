@@ -15,6 +15,7 @@ import com.tbs.tobosupicture.bean.GlideRoundTransform;
  */
 
 public class GlideUtils {
+    private static String TAG = "GlideUtils";
     public static final int CIRCLE_IMAGE = 0;//圆形
     public static final int ROUND_IMAGE = 1;//圆角
 
@@ -29,6 +30,8 @@ public class GlideUtils {
      */
     public static void glideLoader(Context context, String imgUrl, int erroImg, int emptyImg, ImageView imageView) {
         Glide.with(context).load(imgUrl).placeholder(emptyImg).error(erroImg).into(imageView);
+//        Glide.with(context).load("https://pic.tbscache.com/building/2017-03-23/small/p_58d39147d692e.jpg").placeholder(emptyImg).error(erroImg).into(imageView);
+//        Glide.with(context).load("https:\\/\\/pic.tbscache.com\\/building\\/2017-03-23\\/small\\/p_58d39147d692e.jpg").placeholder(emptyImg).error(erroImg).into(imageView);
     }
 
     /**

@@ -315,6 +315,7 @@
 
             <!-- 设计图 -->
             <LinearLayout
+                android:id="@+id/layoutDesignChart"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="41dp">
@@ -339,6 +340,7 @@
 
             <!-- 施工阶段 -->
             <LinearLayout
+                android:id="@+id/layoutStage"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="41dp">
@@ -366,6 +368,7 @@
 
             <!-- 入住 -->
             <LinearLayout
+                android:id="@+id/layoutStayInPic"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="41dp">
@@ -388,8 +391,6 @@
                 android:id="@+id/mylistviewStayIn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-
-
 
             <View
                 android:layout_width="match_parent"

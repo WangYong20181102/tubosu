@@ -1,7 +1,12 @@
 package com.tbs.tobosupicture.bean;
 
+import com.tbs.tobosupicture.utils.Utils;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 /**
@@ -10,6 +15,7 @@ import org.json.JSONObject;
 
 public class CaseDetailJsonEntity1 {
 
+    private String TAG = "*CaseDetailJsonEntity1*";
 
     /**
      * status : 200
@@ -21,10 +27,11 @@ public class CaseDetailJsonEntity1 {
     private String msg;
     private JSONObject data;
 
-    private CaseInfoEntity caseInfoEntity;  //  案例详情 之 案例信息
-    private OnlineDiagram onlineDiagram;    //  案例详情 之 在线图
-    private StayRealEntity stayRealEntity;  //  案例详情 之 入住场景
-    private SuiteEntiy suiteEntiy;          //  案例详情 之 套图
+    private CaseInfoEntity caseInfoEntity;                     //  案例详情 之 案例信息
+    private ArrayList<OnlineDiagram> onlineDiagramDataList;    //  案例详情 之 在线图
+//    private ArrayList<StayRealEntity> stayRealEntityDataList;  //  案例详情 之 入住场景
+    private ArrayList<String> stayRealImgList;
+    private ArrayList<SuiteEntiy> suiteEntiyDataList;          //  案例详情 之 套图
 
     public CaseDetailJsonEntity1(String json){
 
@@ -36,8 +43,9 @@ public class CaseDetailJsonEntity1 {
                 this.data = jsonObject.getJSONObject("data");
                 // 案例信息
                 this.caseInfoEntity = new CaseInfoEntity();
-                JSONObject caseDataJsonObject = jsonObject.getJSONObject("case_data");
+                JSONObject caseDataJsonObject = this.data.getJSONObject("case_data");
                 this.caseInfoEntity.setCaseid(caseDataJsonObject.getString("caseid")); // caseid;	//undefined	案例ID号
+                this.caseInfoEntity.setTitle(caseDataJsonObject.getString("title"));
                 this.caseInfoEntity.setShi(caseDataJsonObject.getString("shi")); // shi;	//undefined	室：没有则为空字符串
                 this.caseInfoEntity.setTing(caseDataJsonObject.getString("ting")); // ting;	//undefined	厅：没有则为空字符串
                 this.caseInfoEntity.setWei(caseDataJsonObject.getString("wei")); // wei;	//undefined	卫：没有则为空字符串
@@ -54,11 +62,78 @@ public class CaseDetailJsonEntity1 {
                 this.caseInfoEntity.setDesigner_icon(caseDataJsonObject.getString("designer_icon")); // designer_icon;	//undefined	设计师头像
                 this.caseInfoEntity.setDesigner_position(caseDataJsonObject.getString("designer_position")); // designer_position;	//undefined	设计师职称
                 this.caseInfoEntity.setLayout_url(caseDataJsonObject.getString("layout_url")); // layout_url;
+                this.caseInfoEntity.setIs_collect(caseDataJsonObject.getString("is_collect"));
+                this.caseInfoEntity.setCover_url(caseDataJsonObject.getString("cover_url"));
+                this.caseInfoEntity.setShare_url(caseDataJsonObject.getString("share_url"));
 
 
 
+                // 在线工地
+                JSONArray onlineDiagramArr = this.data.getJSONArray("online_diagram");
+                int onlineArrLen = onlineDiagramArr.length();
+                if(onlineArrLen>0){
+                    onlineDiagramDataList = new ArrayList<OnlineDiagram>();
+                    for(int i=0;i<onlineArrLen;i++){
+                        OnlineDiagram onlineDiagram = new OnlineDiagram();
+                        onlineDiagram.setId(onlineDiagramArr.getJSONObject(i).getString("id"));
+                        onlineDiagram.setDescription(onlineDiagramArr.getJSONObject(i).getString("description"));
+                        onlineDiagram.setImg_count(onlineDiagramArr.getJSONObject(i).getString("img_count"));
+                        onlineDiagram.setStage(onlineDiagramArr.getJSONObject(i).getString("stage"));
+//                        JSONArray imgArr = onlineDiagramArr.getJSONObject(i).getJSONArray("img_url");
+                        String arrString = onlineDiagramArr.getJSONObject(i).getJSONArray("img_url").toString();
+                        Utils.setErrorLog(TAG, "在线工地 原字符串 " + arrString);
+                        arrString = arrString.replace(",", "#").replace("[", "").replace("]", "").replaceAll("\"", "");
+                        ArrayList<String> imgList = new ArrayList<String>();
+                        String[] tempArr = arrString.split("#");
+                        for(int j=0; j<tempArr.length;j++){
+                            String temp = tempArr[i];
+                            if(!"".equals(temp)){
+                                imgList.add(temp);
+                                Utils.setErrorLog("在线工地  分割之后 ", temp);
+                            }else{
+                                Utils.setErrorLog("发生什么事1 >>>>>>", "发生什么事1");
+                            }
+                        }
+                        onlineDiagram.setImg_url(imgList);
+                        onlineDiagramDataList.add(onlineDiagram);
+                    }
+                }
+
+
+                // 入住实景
+                JSONArray stayRealArr = this.data.getJSONArray("stay_real");
+                int stayRealArrLen = stayRealArr.length();
+                if(stayRealArrLen>0){
+//                    stayRealEntityDataList = new ArrayList<StayRealEntity>();
+                    stayRealImgList = new ArrayList<String>();
+                    String arrString = stayRealArr.toString();
+                    Utils.setErrorLog(TAG, "入住实景 原字符串 " + arrString);
+                    arrString = arrString.replace(",", "#").replace("[", "").replace("]", "").replaceAll("\"", "");
+                    ArrayList<String> imgList = new ArrayList<String>();
+                    String[] tempArr = arrString.split("#");
+                    for(int j=0; j<tempArr.length;j++){
+                        String temp = tempArr[j];
+                        if(!"".equals(temp)){
+                            imgList.add(temp);
+                            Utils.setErrorLog("入住实景 分割之后 ", temp);
+                        }else{
+                            Utils.setErrorLog("发生什么事2 >>>>>>", "发生什么事2");
+                        }
+                    }
+                }
+
+                JSONArray suiteArr = this.data.getJSONArray("suite");
+                int suiteArrLen = suiteArr.length();
+                if(suiteArrLen>0){
+                    suiteEntiyDataList = new ArrayList<SuiteEntiy>();
+                    for(int i=0;i<suiteArrLen;i++){
+                        SuiteEntiy entiy = new SuiteEntiy();
+                        entiy.setImg_url(suiteArr.getJSONObject(i).getString("img_url"));
+                        entiy.setSpace_name(suiteArr.getJSONObject(i).getString("space_name"));
+                        suiteEntiyDataList.add(entiy);
+                    }
+                }
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -91,5 +166,43 @@ public class CaseDetailJsonEntity1 {
         this.data = data;
     }
 
+    public JSONObject getData() {
+        return data;
+    }
 
+    public void setData(JSONObject data) {
+        this.data = data;
+    }
+
+    public CaseInfoEntity getCaseInfoEntity() {
+        return caseInfoEntity;
+    }
+
+    public void setCaseInfoEntity(CaseInfoEntity caseInfoEntity) {
+        this.caseInfoEntity = caseInfoEntity;
+    }
+
+    public ArrayList<OnlineDiagram> getOnlineDiagramDataList() {
+        return onlineDiagramDataList;
+    }
+
+    public void setOnlineDiagramDataList(ArrayList<OnlineDiagram> onlineDiagramDataList) {
+        this.onlineDiagramDataList = onlineDiagramDataList;
+    }
+
+    public ArrayList<String> getStayRealImgList() {
+        return stayRealImgList;
+    }
+
+    public void setStayRealImgList(ArrayList<String> stayRealImgList) {
+        this.stayRealImgList = stayRealImgList;
+    }
+
+    public ArrayList<SuiteEntiy> getSuiteEntiyDataList() {
+        return suiteEntiyDataList;
+    }
+
+    public void setSuiteEntiyDataList(ArrayList<SuiteEntiy> suiteEntiyDataList) {
+        this.suiteEntiyDataList = suiteEntiyDataList;
+    }
 }

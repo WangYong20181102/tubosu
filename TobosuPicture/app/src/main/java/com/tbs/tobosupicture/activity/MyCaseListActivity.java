@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
@@ -45,6 +46,9 @@ public class MyCaseListActivity extends BaseActivity {
     RecyclerView collectionCaseRecyclerView;
     @BindView(R.id.CollectCaseSwipeRefreshLayout)
     SwipeRefreshLayout CollectCaseSwipeRefreshLayout;
+    @BindView(R.id.no_collect_casepic)
+    ImageView no_collect_casepic;
+
     private ArrayList<CollectCaseJsonEntity.CollectCaseEntity> casePicList;
     private ArrayList<CollectCaseJsonEntity.CollectCaseEntity> templCasePicList = new ArrayList<CollectCaseJsonEntity.CollectCaseEntity>();
 
@@ -99,6 +103,8 @@ public class MyCaseListActivity extends BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    no_collect_casepic.setVisibility(View.GONE);
+                                    collectionCaseRecyclerView.setVisibility(View.VISIBLE);
                                     initAdapter();
                                 }
                             });
@@ -111,6 +117,8 @@ public class MyCaseListActivity extends BaseActivity {
                                     if(casePicAdapter!=null){
                                         casePicAdapter.hideLoadMoreMessage();
                                     }
+                                    no_collect_casepic.setVisibility(View.VISIBLE);
+                                    collectionCaseRecyclerView.setVisibility(View.GONE);
                                 }
                             });
                         }

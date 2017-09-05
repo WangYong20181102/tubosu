@@ -16,6 +16,7 @@ import com.tbs.tobosupicture.adapter.CaseDetailStayInAdapter;
 import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.bean.CaseDetailEntity;
 import com.tbs.tobosupicture.bean.CaseDetailJsonEntity;
+import com.tbs.tobosupicture.bean.CaseDetailJsonEntity1;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.HttpUtils;
@@ -30,6 +31,7 @@ import com.umeng.socialize.media.UMWeb;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,12 +87,18 @@ public class CaseDetailActivity extends BaseActivity {
     @BindView(R.id.caseDetailScrollView)
     ScrollView caseDetailScrollView;
 
+    @BindView(R.id.layoutStayInPic)
+    LinearLayout layoutStayInPic;
+    @BindView(R.id.layoutStage)
+    LinearLayout layoutStage;
+    @BindView(R.id.layoutDesignChart)
+    LinearLayout layoutDesignChart;
 
+    private CaseDetailJsonEntity1 detaiJsonEntity;
 
-
-    // 数据源
 //    private CaseDetailEntity caseDetailEntity;
-    private CaseDetailJsonEntity.CaseDetailEntity caseDetailEntity;
+//    private CaseDetailJsonEntity.CaseDetailEntity caseDetailEntity;
+
     private String id;
     private String des = "";            // 分享 简介
     private String shareUrl = "";       // 分享 链接
@@ -118,6 +126,9 @@ public class CaseDetailActivity extends BaseActivity {
     }
 
 
+    /**
+     * 点击收藏
+     */
     private void setClick(){
         ivCollect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,6 +190,11 @@ public class CaseDetailActivity extends BaseActivity {
             }
         });
     }
+
+    /**
+     * 请求网络获取本详情数据
+     * @param caseid
+     */
     private void getDataFromNet(String caseid) {
         if (Utils.isNetAvailable(mContext)) {
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
@@ -204,10 +220,28 @@ public class CaseDetailActivity extends BaseActivity {
                     String json = response.body().string();
                     Utils.setErrorLog(TAG, json);
 
-                    Gson gson = new Gson();
-                    CaseDetailJsonEntity caseDetailJsonEntity = gson.fromJson(json, CaseDetailJsonEntity.class);
-                    if(caseDetailJsonEntity.getStatus() == 200){
-                        caseDetailEntity = caseDetailJsonEntity.getData();
+//                    Gson gson = new Gson();
+//                    CaseDetailJsonEntity caseDetailJsonEntity = gson.fromJson(json, CaseDetailJsonEntity.class);
+//                    if(caseDetailJsonEntity.getStatus() == 200){
+//                        caseDetailEntity = caseDetailJsonEntity.getData();
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                initDataInView();
+//                            }
+//                        });
+//                    }else {
+//                        final String msg = caseDetailJsonEntity.getMsg();
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                Utils.setToast(mContext, msg);
+//                            }
+//                        });
+//                    }
+
+                    detaiJsonEntity = new CaseDetailJsonEntity1(json);
+                    if(detaiJsonEntity.getStatus() == 200){
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -215,7 +249,7 @@ public class CaseDetailActivity extends BaseActivity {
                             }
                         });
                     }else {
-                        final String msg = caseDetailJsonEntity.getMsg();
+                        final String msg = detaiJsonEntity.getMsg();
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -224,30 +258,6 @@ public class CaseDetailActivity extends BaseActivity {
                         });
                     }
 
-//                    try {
-//                        JSONObject jsonObject = new JSONObject(json);
-//                        if (jsonObject.getInt("status") == 200) {
-//                            Gson gson = new Gson();
-//                            caseDetailEntity = gson.fromJson(jsonObject.getJSONObject("data").toString(), CaseDetailEntity.class);
-//                            runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    initDataInView();
-//                                }
-//                            });
-//                        } else {
-//                            final String msg = jsonObject.getString("msg");
-//                            runOnUiThread(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    Utils.setToast(mContext, msg);
-//                                }
-//                            });
-//                        }
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
                 }
             });
         }
@@ -255,14 +265,14 @@ public class CaseDetailActivity extends BaseActivity {
 
     private String isCollect = "3"; // 3是无意义的
     private void initDataInView() {
-        des = caseDetailEntity.getCase_data().getDescription();
+        des = detaiJsonEntity.getCaseInfoEntity().getDescription();
         tvCaseDescription.setText(des);
 
-        shareUrl = caseDetailEntity.getCase_data().getShare_url();
-        shareTitle = caseDetailEntity.getCase_data().getTitle();
-        shareImg = caseDetailEntity.getCase_data().getCover_url();
+        shareUrl = detaiJsonEntity.getCaseInfoEntity().getShare_url();
+        shareTitle = detaiJsonEntity.getCaseInfoEntity().getTitle();
+        shareImg = detaiJsonEntity.getCaseInfoEntity().getCover_url();
 
-        isCollect = caseDetailEntity.getCase_data().getIs_collect();
+        isCollect = detaiJsonEntity.getCaseInfoEntity().getIs_collect();
         Utils.setErrorLog(TAG, "当前进入页面时的标识是" + isCollect);
         if("0".equals(isCollect)){
             // 未收藏
@@ -270,42 +280,49 @@ public class CaseDetailActivity extends BaseActivity {
         }else{
             ivCollect.setBackgroundResource(R.mipmap.shoucang4);
         }
-        GlideUtils.glideLoader(mContext, caseDetailEntity.getCase_data().getCover_url(), R.mipmap.loading_img_fail, R.mipmap.loading_img, ivDetailImg);
-        GlideUtils.glideLoader(mContext, caseDetailEntity.getCase_data().getDesigner_icon(), R.mipmap.pic, R.mipmap.pic, ivDesinHead, 0);
-        GlideUtils.glideLoader(mContext, caseDetailEntity.getCase_data().getLayout_url(),R.mipmap.loading_img_fail, R.mipmap.loading_img,ivBigHuxingTu, 1);
+        GlideUtils.glideLoader(mContext, detaiJsonEntity.getCaseInfoEntity().getCover_url(), R.mipmap.loading_img_fail, R.mipmap.loading_img, ivDetailImg);
+        GlideUtils.glideLoader(mContext, detaiJsonEntity.getCaseInfoEntity().getDesigner_icon(), R.mipmap.pic, R.mipmap.pic, ivDesinHead, 0);
+        GlideUtils.glideLoader(mContext, detaiJsonEntity.getCaseInfoEntity().getLayout_url(),R.mipmap.loading_img_fail, R.mipmap.loading_img,ivBigHuxingTu, 1);
 
         // 设计图
-        CaseDetailImgAdapter imgAdapter = new CaseDetailImgAdapter(mContext, caseDetailEntity.getSuite());
-        mylistviewCaseDetial.setAdapter(imgAdapter);
+        if(detaiJsonEntity.getSuiteEntiyDataList()!=null){
+            CaseDetailImgAdapter imgAdapter = new CaseDetailImgAdapter(mContext, detaiJsonEntity.getSuiteEntiyDataList());
+            mylistviewCaseDetial.setAdapter(imgAdapter);
+        }else {
+            // 无设计图
+            layoutDesignChart.setVisibility(View.GONE);
+        }
 
-
-        Utils.setErrorLog(TAG, caseDetailEntity.getOnline_diagram().size() == 0 ?  "施工阶段的数据是0" : "施工阶段的数据是 " + caseDetailEntity.getOnline_diagram().size());
         //  施工阶段
-        CaseDetailImgGVAdapter imgGVAdapter = new CaseDetailImgGVAdapter(mContext, caseDetailEntity.getOnline_diagram());
-        myStageCaseDetial.setAdapter(imgGVAdapter);
-
-
+        if(detaiJsonEntity.getOnlineDiagramDataList()!=null){
+            CaseDetailImgGVAdapter imgGVAdapter = new CaseDetailImgGVAdapter(mContext, detaiJsonEntity.getOnlineDiagramDataList());
+            myStageCaseDetial.setAdapter(imgGVAdapter);
+        }else {
+            // 无施工阶段
+            layoutStage.setVisibility(View.GONE);
+        }
 
         // 入住场景
-        if(caseDetailEntity.getStay_real_bean() != null){
-            CaseDetailStayInAdapter stayInAdapter = new CaseDetailStayInAdapter(mContext, caseDetailEntity.getStay_real_bean().getImg_url());
+        if(detaiJsonEntity.getStayRealImgList() != null && detaiJsonEntity.getStayRealImgList().size()>0){
+            CaseDetailStayInAdapter stayInAdapter = new CaseDetailStayInAdapter(mContext, detaiJsonEntity.getStayRealImgList());
             mylistviewStayIn.setAdapter(stayInAdapter);
         }else{
             // 无入住场景
+            layoutStayInPic.setVisibility(View.GONE);
             Utils.setErrorLog(TAG, " 长度  入住场景为空");
         }
 
 
-        tvCaseText.setText(caseDetailEntity.getCase_data().getCity_name() + " " +
-                            caseDetailEntity.getCase_data().getOwner_name() + " " +
-                            caseDetailEntity.getCase_data().getShi() + "室" +
-                caseDetailEntity.getCase_data().getTing() + "厅" +
-                caseDetailEntity.getCase_data().getWei() + "位");
-        tvDistrict.setText(caseDetailEntity.getCase_data().getDistrict_name());
-        tvBudget.setText(caseDetailEntity.getCase_data().getPrice() + "万 - "+ caseDetailEntity.getCase_data().getDesmethod());
-        tvDestrictStyle.setText(caseDetailEntity.getCase_data().getStyle_name());
-        tvDistrictSquare.setText(caseDetailEntity.getCase_data().getArea() + "m²");
-        tvDesignerName.setText(caseDetailEntity.getCase_data().getDesigner_name());
+        tvCaseText.setText(detaiJsonEntity.getCaseInfoEntity().getCity_name() + " " +
+                detaiJsonEntity.getCaseInfoEntity().getOwner_name() + " " +
+                detaiJsonEntity.getCaseInfoEntity().getShi() + "室" +
+                detaiJsonEntity.getCaseInfoEntity().getTing() + "厅" +
+                detaiJsonEntity.getCaseInfoEntity().getWei() + "卫");
+        tvDistrict.setText(detaiJsonEntity.getCaseInfoEntity().getDistrict_name());
+        tvBudget.setText(detaiJsonEntity.getCaseInfoEntity().getPrice() + "万 - "+ detaiJsonEntity.getCaseInfoEntity().getDesmethod());
+        tvDestrictStyle.setText(detaiJsonEntity.getCaseInfoEntity().getStyle_name());
+        tvDistrictSquare.setText(detaiJsonEntity.getCaseInfoEntity().getArea() + "m²");
+        tvDesignerName.setText(detaiJsonEntity.getCaseInfoEntity().getDesigner_name());
     }
 
     @OnClick({R.id.relCaseDetailBack, R.id.layoutIneedPrice, R.id.layoutGetPriceKnow, R.id.ivShareCase})

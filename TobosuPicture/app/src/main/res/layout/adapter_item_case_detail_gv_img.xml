@@ -21,21 +21,28 @@
                 android:layout_margin="10dp"
                 android:background="@mipmap/gap_line"/>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:background="@mipmap/gap_dot"/>
+            <TextView
+                android:id="@+id/tvTitleCaseDetailGv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:text="水电阶段"/>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvTitleCaseDetailGv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:text="水电阶段"/>
 
         <LinearLayout
             android:layout_width="match_parent"

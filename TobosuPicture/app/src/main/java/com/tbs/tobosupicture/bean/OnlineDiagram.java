@@ -1,5 +1,7 @@
 package com.tbs.tobosupicture.bean;
 
+import java.util.ArrayList;
+
 /**
  * 案例详情 之 在线图库
  * Created by Lie on 2017/8/1.
@@ -7,13 +9,11 @@ package com.tbs.tobosupicture.bean;
 
 public class OnlineDiagram {
 
-    private String id; //	         undefined	在线工地ID号
-    private String stageid; //	     undefined	阶段：1水电；2泥木；3油漆；4竣工
-    private String descriptionid; // undefined	工地阶段描述
-    private String img_urlid; //	 undefined	图片（数组格式）
-    private String img_countid; //
-
-
+    private String id;                    //  undefined	在线工地ID号
+    private String stage;                 //  undefined	阶段：1水电；2泥木；3油漆；4竣工
+    private String description;           //  undefined	工地阶段描述
+    private ArrayList<String> img_url;    //  undefined	图片（数组格式）
+    private String img_count;             //
 
     public String getId() {
         return id;
@@ -23,35 +23,35 @@ public class OnlineDiagram {
         this.id = id;
     }
 
-    public String getStageid() {
-        return stageid;
+    public String getStage() {
+        return stage;
     }
 
-    public void setStageid(String stageid) {
-        this.stageid = stageid;
+    public void setStage(String stage) {
+        this.stage = stage;
     }
 
-    public String getDescriptionid() {
-        return descriptionid;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriptionid(String descriptionid) {
-        this.descriptionid = descriptionid;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getImg_urlid() {
-        return img_urlid;
+    public ArrayList<String> getImg_url() {
+        return img_url;
     }
 
-    public void setImg_urlid(String img_urlid) {
-        this.img_urlid = img_urlid;
+    public void setImg_url(ArrayList<String> img_url) {
+        this.img_url = img_url;
     }
 
-    public String getImg_countid() {
-        return img_countid;
+    public String getImg_count() {
+        return img_count;
     }
 
-    public void setImg_countid(String img_countid) {
-        this.img_countid = img_countid;
+    public void setImg_count(String img_count) {
+        this.img_count = img_count;
     }
 }

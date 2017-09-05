@@ -7,23 +7,27 @@ package com.tbs.tobosupicture.bean;
 
 public class CaseInfoEntity {
 
-    private String caseid;	//undefined	案例ID号
-    private String shi;	//undefined	室：没有则为空字符串
-    private String ting;	//undefined	厅：没有则为空字符串
-    private String wei;	//undefined	卫：没有则为空字符串
-    private String area;	//undefined	面积
-    private String desmethod;	//undefined	装修方式：半包/全包
-    private String designer_id;	//undefined	设计师ID号
-    private String price;	//undefined	价格
-    private String description;	//undefined	案例简介
-    private String owner_name;	//undefined	业主名称
-    private String city_name;	//undefined	城市名称
-    private String district_name;	//undefined	小区名称
-    private String style_name;	//undefined	风格名称
-    private String designer_name;	//undefined	设计师名称
-    private String designer_icon;	//undefined	设计师头像
+    private String caseid;              //undefined	案例ID号
+    private String title;               //
+    private String shi;	                //undefined	室：没有则为空字符串
+    private String ting;                //undefined	厅：没有则为空字符串
+    private String wei;	                //undefined	卫：没有则为空字符串
+    private String area;                //undefined	面积
+    private String desmethod;	        //undefined	装修方式：半包/全包
+    private String designer_id;	        //undefined	设计师ID号
+    private String price;	            //undefined	价格
+    private String description;	        //undefined	案例简介
+    private String owner_name;	        //undefined	业主名称
+    private String city_name;	        //undefined	城市名称
+    private String district_name;	    //undefined	小区名称
+    private String style_name;	        //undefined	风格名称
+    private String designer_name;	    //undefined	设计师名称
+    private String cover_url;           //
+    private String share_url;           //
+    private String designer_icon;	    //undefined	设计师头像
     private String designer_position;	//undefined	设计师职称
     private String layout_url;
+    private String is_collect;
 
 
     public String getCaseid() {
@@ -32,6 +36,14 @@ public class CaseInfoEntity {
 
     public void setCaseid(String caseid) {
         this.caseid = caseid;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getShi() {
@@ -138,6 +150,22 @@ public class CaseInfoEntity {
         this.designer_name = designer_name;
     }
 
+    public String getCover_url() {
+        return cover_url;
+    }
+
+    public void setCover_url(String cover_url) {
+        this.cover_url = cover_url;
+    }
+
+    public String getShare_url() {
+        return share_url;
+    }
+
+    public void setShare_url(String share_url) {
+        this.share_url = share_url;
+    }
+
     public String getDesigner_icon() {
         return designer_icon;
     }
@@ -160,5 +188,13 @@ public class CaseInfoEntity {
 
     public void setLayout_url(String layout_url) {
         this.layout_url = layout_url;
+    }
+
+    public String getIs_collect() {
+        return is_collect;
+    }
+
+    public void setIs_collect(String is_collect) {
+        this.is_collect = is_collect;
     }
 }

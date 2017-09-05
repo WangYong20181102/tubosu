@@ -85,6 +85,15 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
     @BindView(R.id.hideCityLayout)
     LinearLayout hideCityLayout;
 
+    @BindView(R.id.show_cittext)
+    TextView show_cittext;
+
+
+
+
+
+
+
     private boolean isHide = true;
 
     private SearchDataEntity searchDataEntity;
@@ -304,12 +313,15 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         if (_recordBeenList != null && _recordBeenList.size() > 0) {
             // 历史记录
             if (seemore) {
+                // 查看更多
+                tempRecordBeenList.clear();
                 tempRecordBeenList.addAll(_recordBeenList);
                 tvSeeMoreCaseHistory.setVisibility(View.GONE);
                 v_middle.setVisibility(View.GONE);
             } else {
                 if (_recordBeenList.size() > 5) {
                     for(int i = 0; i < 5; i++) {
+                        // 最多5条
                         tempRecordBeenList.add(_recordBeenList.get(i));
                     }
                 } else {
@@ -443,13 +455,15 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         tvChooseCity.setText(province + " " + city + " " + district);
         defaultAddr = province + " " + city + " " + district;
         cityName = city;
+        city_id = city;
+        show_cittext.setText(city);
     }
 
 
     @Override
     public void onAddressChangeId(String provinceId, String cityId, String districtId) {
         province_id = provinceId;
-        city_id = cityId;
+//        city_id = cityId;
         district_id = districtId;
 //        getData(false, null, city_id, district_id,mPullRefreshGridView);
     }

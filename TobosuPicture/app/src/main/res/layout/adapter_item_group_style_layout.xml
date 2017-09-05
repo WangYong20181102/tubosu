@@ -22,9 +22,21 @@
             android:padding="10dp"
             android:textColor="#252424"
             android:text="casd"/>
-        <!--android:background="@drawable/shape_styel_textview_bg"-->
 
-
+        <TextView
+            android:id="@+id/show_group_style_text"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/tv_group_style_text"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="14sp"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:textColor="#252424"/>
 
         <ImageView
             android:id="@+id/iv_group_style_icon"

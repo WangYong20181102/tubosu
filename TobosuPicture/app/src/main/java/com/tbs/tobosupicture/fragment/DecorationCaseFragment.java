@@ -105,6 +105,8 @@ public class DecorationCaseFragment extends BaseFragment {
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
         hashMap.put("token", Utils.getDateToken());
         hashMap.put("page", page);
+        hashMap.put("uid", SpUtils.getUserUid(mContext));
+        Utils.setErrorLog(TAG, "搜索的时候传入 uid " + SpUtils.getUserUid(mContext));
         hashMap.put("city_name", _city);
         hashMap.put("pageSize", pageSize);
         return hashMap;
@@ -242,6 +244,8 @@ public class DecorationCaseFragment extends BaseFragment {
     private HashMap<String, Object> getPareaHashMap(String area, String layout, String price, String style, String cityId, String districtId, String village_id){
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
         hashMap.put("token", Utils.getDateToken());
+        hashMap.put("uid", SpUtils.getUserUid(mContext));
+        Utils.setErrorLog(TAG, "搜索的时候传入 uid " + SpUtils.getUserUid(mContext));
         hashMap.put("page", page);
         hashMap.put("pageSize", pageSize);
         hashMap.put("area", area);

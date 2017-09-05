@@ -27,15 +27,28 @@
             android:layout_height="wrap_content" />
     </RelativeLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/collectDesignerSwipeRefreshLayout"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/collectionDesignerRecyclerView"
+        <ImageView
+            android:id="@+id/no_collect_designer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:background="@mipmap/no_anydata"/>
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/collectDesignerSwipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/collectionDesignerRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </RelativeLayout>
+
+
 
 </LinearLayout>

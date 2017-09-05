@@ -53,6 +53,7 @@ public class OwenerSearchRecordAdapter extends RecyclerView.Adapter<RecyclerView
         if(viewType == viewItemFooter){
             footerView = inflater.inflate(R.layout.item_foot_case_fragment, null);
             footerLayout = (RelativeLayout) footerView.findViewById(R.id.foot_load_more_layout_case);
+            footerLayout.setVisibility(View.GONE);
             tvLoadMore = (TextView) footerView.findViewById(R.id.tv_loadmore_text_case);
             progressBar = (ProgressBar) footerView.findViewById(R.id.progressBar_case);
             return new FootViewHolder(footerView);
@@ -69,8 +70,9 @@ public class OwenerSearchRecordAdapter extends RecyclerView.Adapter<RecyclerView
 
             String newCaseCount = dataList.get(position).getNew_case_count();
             if("0".equals(newCaseCount)){
-
+                ownerHolder.tvCheck.setVisibility(View.GONE);
             }else {
+                ownerHolder.tvCheck.setVisibility(View.VISIBLE);
                 String text = "有" + newCaseCount + "套新的装修案例，点击查看";
                 ownerHolder.tvCheck.setText(text);
                 ownerHolder.tvCheck.setOnClickListener(new View.OnClickListener() {
@@ -85,11 +87,8 @@ public class OwenerSearchRecordAdapter extends RecyclerView.Adapter<RecyclerView
                     }
                 });
             }
+            hideLoadMoreMessage();
         }
-
-//        if(){
-//
-//        }
 
     }
 
@@ -135,6 +134,7 @@ public class OwenerSearchRecordAdapter extends RecyclerView.Adapter<RecyclerView
         }
 
         if(tvLoadMore!=null){
+            tvLoadMore.setVisibility(View.VISIBLE);
             tvLoadMore.setText("加载更多数据...");
         }
         if(progressBar!=null){
@@ -145,6 +145,12 @@ public class OwenerSearchRecordAdapter extends RecyclerView.Adapter<RecyclerView
     public void hideLoadMoreMessage(){
         if(footerLayout!=null){
             footerLayout.setVisibility(View.GONE);
+        }
+        if(tvLoadMore!=null){
+            tvLoadMore.setVisibility(View.GONE);
+        }
+        if(progressBar!=null){
+            progressBar.setVisibility(View.GONE);
         }
     }
 

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.bean.CaseDetailEntity;
 import com.tbs.tobosupicture.bean.CaseDetailJsonEntity;
+import com.tbs.tobosupicture.bean.SuiteEntiy;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.RoundAngleImageView;
@@ -23,16 +24,20 @@ import java.util.ArrayList;
 
 public class CaseDetailImgAdapter extends BaseAdapter {
     private String TAG = "CaseDetailImgAdapter";
-    private ArrayList<CaseDetailJsonEntity.CaseDetailEntity.SuiteBean> dataList;
+    private ArrayList<SuiteEntiy> dataList;
     private Context context;
     private LayoutInflater inflater;
 
-    public CaseDetailImgAdapter(Context context, ArrayList<CaseDetailJsonEntity.CaseDetailEntity.SuiteBean> dataList){
+    public CaseDetailImgAdapter(Context context, ArrayList<SuiteEntiy> dataList){
         this.context = context;
         this.dataList = dataList;
         this.inflater = LayoutInflater.from(context);
 
-        Utils.setErrorLog(TAG, "设计图 长度是 " + dataList.size());
+        int size = dataList.size();
+        for(int i=0;i<size;i++){
+            Utils.setErrorLog(TAG, "设计图 适配器  " + dataList.get(i).getImg_url());
+        }
+
     }
 
 

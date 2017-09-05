@@ -1,5 +1,7 @@
 package com.tbs.tobosupicture.bean;
 
+import java.util.ArrayList;
+
 /**
  * 案例详情 之 入住场景
  * Created by Lie on 2017/8/1.
@@ -7,10 +9,11 @@ package com.tbs.tobosupicture.bean;
 
 public class StayRealEntity {
 
-    private String id; //	undefined	入住场景ID号
-    private String img_url; //	undefined	图片（数组格式）
-    private String description; //	undefined	入住场景描述
-    private String img_count; //
+    private String id;                    //	undefined	入住场景ID号
+    private ArrayList<String> img_url;    //	undefined	图片（数组格式）
+    private String description;           //	undefined	入住场景描述
+    private String img_count;             //
+
 
     public String getId() {
         return id;
@@ -20,11 +23,11 @@ public class StayRealEntity {
         this.id = id;
     }
 
-    public String getImg_url() {
+    public ArrayList<String> getImg_url() {
         return img_url;
     }
 
-    public void setImg_url(String img_url) {
+    public void setImg_url(ArrayList<String> img_url) {
         this.img_url = img_url;
     }
 

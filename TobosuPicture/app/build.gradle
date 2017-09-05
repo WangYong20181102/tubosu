@@ -106,8 +106,6 @@ dependencies {
     compile files('libs/umeng_social_shareview.jar')
     compile files('libs/umeng_social_tool.jar')
     compile files('libs/badgeview.jar')
-
-
     compile 'com.android.support:cardview-v7:26.0.0-alpha1'
     compile 'com.android.support:design:26.0.0-alpha1'
     compile 'com.android.support:appcompat-v7:25.3.1'

@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
@@ -38,6 +39,9 @@ public class MyDesignerListActivity extends BaseActivity {
     RecyclerView collectionDesignerRecyclerView;
     @BindView(R.id.collectDesignerSwipeRefreshLayout)
     SwipeRefreshLayout collectDesignerSwipeRefreshLayout;
+    @BindView(R.id.no_collect_designer)
+    ImageView no_collect_designer;
+
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<DesignerListJsonEntity.MyDesigner> myDesignerList;
 
@@ -97,11 +101,13 @@ public class MyDesignerListActivity extends BaseActivity {
                                     if(myDesignerAdapter!=null){
                                         myDesignerAdapter.hideLoadMoreMessage();
                                     }
+                                    no_collect_designer.setVisibility(View.GONE);
+                                    collectionDesignerRecyclerView.setVisibility(View.VISIBLE);
                                 }
                             });
+
                         } else {
 
-                            // 占位图 FIXME
                             final String msg = entity.getMsg();
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -111,6 +117,9 @@ public class MyDesignerListActivity extends BaseActivity {
                                     if(myDesignerAdapter!=null){
                                         myDesignerAdapter.hideLoadMoreMessage();
                                     }
+
+                                    no_collect_designer.setVisibility(View.VISIBLE);
+                                    collectionDesignerRecyclerView.setVisibility(View.GONE);
                                 }
                             });
                         }

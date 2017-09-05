@@ -30,7 +30,10 @@ public class CaseDetailStayInAdapter extends BaseAdapter {
         this.dataList = dataList;
         this.inflater = LayoutInflater.from(context);
 
-        Utils.setErrorLog(TAG, "入住场景 长度是 " + dataList.size());
+        int size = dataList.size();
+        for(int i=0;i<size;i++){
+            Utils.setErrorLog(TAG, "入住场景 适配器  " + dataList.get(i));
+        }
 
     }
 
@@ -64,7 +67,9 @@ public class CaseDetailStayInAdapter extends BaseAdapter {
         }
 
 
-        GlideUtils.glideLoader(context, dataList.get(position), R.mipmap.loading_img_fail, R.mipmap.loading_img, holder.iv);
+        String url = dataList.get(position);
+        url = url.replace("\\/\\/","//").replace("\\/", "/");
+        GlideUtils.glideLoader(context, url, R.mipmap.loading_img_fail, R.mipmap.loading_img, holder.iv);
 //        holder.tv.setText(dataList.get(position).getSpace_name());
 
         return convertView;

@@ -1,6 +1,8 @@
 package com.tbs.tobosupicture.adapter;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import com.tbs.tobosupicture.view.MyGridView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.StringTokenizer;
 
 /**
  * Created by Lie on 2017/7/17.
@@ -29,6 +32,8 @@ public class CaseSearchStyleAdapter extends BaseExpandableListAdapter {
     private LayoutInflater inflater;
     private ArrayList<CaseConditionType> groupDataList;
     private ArrayList<Integer> positionList = new ArrayList<Integer>();
+    private GroupViewHolder groupHolder;
+    private ChildViewHolder childHolder;
 
     public CaseSearchStyleAdapter(Context context, ArrayList<CaseConditionType> groupDataList, OnSearchCaseStyleItemClickListener onSearchCaseStyleItemClickListener){
         this.context = context;
@@ -78,22 +83,23 @@ public class CaseSearchStyleAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        GroupViewHolder holder;
+
         if(convertView==null){
-            holder = new GroupViewHolder();
+            groupHolder = new GroupViewHolder();
             convertView = inflater.inflate(R.layout.adapter_item_group_style_layout,null);
-            holder.tvBigStyleText = (TextView) convertView.findViewById(R.id.tv_group_style_text);
-            holder.ivBigStyleImg = (ImageView) convertView.findViewById(R.id.iv_group_style_icon);
-            convertView.setTag(holder);
+            groupHolder.tvBigStyleText = (TextView) convertView.findViewById(R.id.tv_group_style_text);
+            groupHolder.ivBigStyleImg = (ImageView) convertView.findViewById(R.id.iv_group_style_icon);
+            groupHolder.show_group_style_text = (TextView) convertView.findViewById(R.id.show_group_style_text);
+            convertView.setTag(groupHolder);
         }else{
-            holder = (GroupViewHolder) convertView.getTag();
+            groupHolder = (GroupViewHolder) convertView.getTag();
         }
 
-        holder.tvBigStyleText.setText(groupDataList.get(groupPosition).getType());
+        groupHolder.tvBigStyleText.setText(groupDataList.get(groupPosition).getType());
         if(isExpanded){
-            holder.ivBigStyleImg.setBackgroundResource(R.mipmap.shangla2);
+            groupHolder.ivBigStyleImg.setBackgroundResource(R.mipmap.shangla2);
         }else{
-            holder.ivBigStyleImg.setBackgroundResource(R.mipmap.xiala);
+            groupHolder.ivBigStyleImg.setBackgroundResource(R.mipmap.xiala);
         }
 
         return convertView;
@@ -101,21 +107,21 @@ public class CaseSearchStyleAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        ChildViewHolder holder;
-        if(convertView==null){
-            holder = new ChildViewHolder();
-            convertView = inflater.inflate(R.layout.adapter_item_case_child_style_layout, null);
-            holder.gvChild = (MyGridView) convertView.findViewById(R.id.gv_case_child);
 
-            convertView.setTag(holder);
+        if(convertView==null){
+            childHolder = new ChildViewHolder();
+            convertView = inflater.inflate(R.layout.adapter_item_case_child_style_layout, null);
+            childHolder.gvChild = (MyGridView) convertView.findViewById(R.id.gv_case_child);
+
+            convertView.setTag(childHolder);
         }else {
-            holder = (ChildViewHolder) convertView.getTag();
+            childHolder = (ChildViewHolder) convertView.getTag();
         }
 
         final GvCaseStyleAdapter adapter = new GvCaseStyleAdapter(context, groupDataList.get(groupPosition).getCaseTypeChildList(), positionList.get(groupPosition));
-        holder.gvChild.setAdapter(adapter);
+        childHolder.gvChild.setAdapter(adapter);
 
-        holder.gvChild.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        childHolder.gvChild.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -137,6 +143,7 @@ public class CaseSearchStyleAdapter extends BaseExpandableListAdapter {
 
     class GroupViewHolder{
         TextView tvBigStyleText;
+        TextView show_group_style_text;
         ImageView ivBigStyleImg;
     }
 
