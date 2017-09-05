@@ -15,6 +15,8 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.tbs.tobosupicture.utils.SpUtils;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 
@@ -41,6 +43,7 @@ public class MyApplication extends Application {
     }
 
     {
+        Config.DEBUG = true;
         //社会化分享所需要的配置 微信 微博 QQ的Appkey
         PlatformConfig.setWeixin("wx0bdd96841e80fac2", "d9794d9011a4344c0e60d643046c6ac6");
         PlatformConfig.setSinaWeibo("1569176936", "14ecd002ce4a3b66e0775741a086b445", "http://sns.whalecloud.com/sina2/callback ");

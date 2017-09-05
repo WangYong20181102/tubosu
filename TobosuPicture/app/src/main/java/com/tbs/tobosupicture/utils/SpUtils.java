@@ -17,7 +17,15 @@ public class SpUtils {
     public static String getUserIsFristLogin(Context context) {
         return context.getSharedPreferences("UserIsLogin", 0).getString("alreadyLogin", "");
     }
+    //存储用户是否获取了敏感权限
+    public static void setUserIsSetPro(Context context, String hasPro) {
+        context.getSharedPreferences("UserPro", 0).edit().putString("hasPro", hasPro).commit();
+    }
 
+    //获取用户是否获取了敏感权限
+    public static String getUserIsGetPro(Context context) {
+        return context.getSharedPreferences("UserPro", 0).getString("hasPro", "");
+    }
     //存储定位信息
     public static void setLocationCity(Context context, String mCity) {
         context.getSharedPreferences("LocationInfo", 0).edit().putString("locationCity", mCity).commit();

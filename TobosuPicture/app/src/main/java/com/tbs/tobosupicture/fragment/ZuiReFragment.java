@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
@@ -22,6 +23,7 @@ import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
+import com.tbs.tobosupicture.view.CustomWaitDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,7 +60,8 @@ public class ZuiReFragment extends BaseFragment {
     private ArrayList<_ZuiRe.ActiveUser> activeUserArrayList = new ArrayList<>();
     //动态列表
     private ArrayList<_ZuiRe.Dynamic> dynamicArrayList = new ArrayList<>();
-
+    //正在加载的动画
+    private CustomWaitDialog customWaitDialog;
 
     @Nullable
     @Override
@@ -67,6 +70,7 @@ public class ZuiReFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, view);
         mContext = getActivity();
         initView();
+        customWaitDialog.show();//初次进来Loading的图案
         HttpGetZuiReList(mPage);
         return view;
     }
@@ -81,6 +85,8 @@ public class ZuiReFragment extends BaseFragment {
         zuireRecycle.setLayoutManager(mLinearLayoutManager);
         zuireRecycle.setOnTouchListener(onTouchListener);
         zuireRecycle.addOnScrollListener(onScrollListener);//上拉加载更多
+
+        customWaitDialog = new CustomWaitDialog(mContext);
     }
 
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
@@ -149,6 +155,13 @@ public class ZuiReFragment extends BaseFragment {
             public void onFailure(Call call, IOException e) {
                 isLoading = false;
                 Log.e(TAG, "链接失败====" + e.toString());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(mContext, "服务器链接失败！", Toast.LENGTH_SHORT).show();
+                        customWaitDialog.dismiss();
+                    }
+                });
             }
 
             @Override
@@ -177,7 +190,7 @@ public class ZuiReFragment extends BaseFragment {
                                 } else {
                                     mZuiReAdapter.notifyDataSetChanged();
                                 }
-
+                                customWaitDialog.dismiss();
                             }
                         });
                         isLoading = false;
@@ -188,6 +201,7 @@ public class ZuiReFragment extends BaseFragment {
                                 if (mZuiReAdapter != null) {
                                     mZuiReAdapter.changLoadState(2);
                                 }
+                                customWaitDialog.dismiss();
                             }
                         });
                         isLoading = false;
@@ -195,7 +209,12 @@ public class ZuiReFragment extends BaseFragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     isLoading = false;
-
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            customWaitDialog.dismiss();
+                        }
+                    });
                 }
             }
         });

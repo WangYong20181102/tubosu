@@ -22,6 +22,7 @@ import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
+import com.tbs.tobosupicture.view.CustomWaitDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,6 +60,8 @@ public class ZuiXinFragment extends BaseFragment {
     private ArrayList<_ZuiXin.ActiveUser> activeUserArrayList = new ArrayList<>();
     //动态列表
     private ArrayList<_ZuiXin.Dynamic> dynamicArrayList = new ArrayList<>();
+    //loading加载图层
+    private CustomWaitDialog customWaitDialog;
 
 
     @Nullable
@@ -68,6 +71,7 @@ public class ZuiXinFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, view);
         mContext = getActivity();
         initView();
+        customWaitDialog.show();//初次进入的时候要进行图层的加载
         HttpGetZuiXinList(mPage);
         return view;
     }
@@ -84,6 +88,7 @@ public class ZuiXinFragment extends BaseFragment {
         zuixinRecycle.setLayoutManager(mLinearLayoutManager);
         zuixinRecycle.setOnTouchListener(onTouchListener);
         zuixinRecycle.addOnScrollListener(onScrollListener);//上拉加载更多
+        customWaitDialog = new CustomWaitDialog(mContext);
     }
 
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
@@ -138,6 +143,7 @@ public class ZuiXinFragment extends BaseFragment {
 
     //TODO 在这个请求中要区分用户的登录状态 已经登录传UID 去识别用户评论过或者点赞过的动态
     private void HttpGetZuiXinList(final int mPage) {
+        customWaitDialog.dismiss();
         isLoading = true;
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());

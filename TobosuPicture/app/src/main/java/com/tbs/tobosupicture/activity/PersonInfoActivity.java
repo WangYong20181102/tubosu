@@ -43,6 +43,7 @@ import com.tbs.tobosupicture.utils.WriteUtil;
 import com.tbs.tobosupicture.view.CustomWaitDialog;
 import com.tbs.tobosupicture.view.SelectPersonalPopupWindow;
 import com.tbs.tobosupicture.view.SetSexPopWindow;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -241,6 +242,8 @@ public class PersonInfoActivity extends BaseActivity {
                     Toast.makeText(mContext, "您已经绑定了微信~", Toast.LENGTH_SHORT).show();
                 } else {
                     customWaitDialog.show();
+                    //清除微信登录的缓存
+                    mShareAPI.deleteOauth(PersonInfoActivity.this, SHARE_MEDIA.WEIXIN, null);
                     bindWeChat();
                 }
                 break;
@@ -262,7 +265,11 @@ public class PersonInfoActivity extends BaseActivity {
                             SpUtils.saveUserPersonalSignature(mContext, "");
                             SpUtils.saveUserType(mContext, "");
                             SpUtils.saveUserUid(mContext, "");
+                            //清除微信登录的缓存
+                            mShareAPI.deleteOauth(PersonInfoActivity.this, SHARE_MEDIA.WEIXIN, null);
                             EventBusUtil.sendEvent(new Event(EC.EventCode.LOGIN_OUT));
+                            //友盟统计用户的登出
+                            MobclickAgent.onProfileSignOff();
                             finish();
                         }
                     }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -340,17 +347,20 @@ public class PersonInfoActivity extends BaseActivity {
                 String account = map.get("openid");//微信的openid
                 Log.e(TAG, "授权成功==头像==" + icon + "===nickname===" + nickname + "===account===" + account);
                 customWaitDialog.dismiss();
-                HttpBindWeChat(account);
+                HttpBindWeChat(account,nickname,icon);
             }
 
             @Override
             public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
                 Log.e(TAG, "授权失败====" + i + "==原因==" + throwable.toString());
+                customWaitDialog.dismiss();
+                Toast.makeText(mContext, "授权微信失败:" + throwable.toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onCancel(SHARE_MEDIA share_media, int i) {
                 Toast.makeText(mContext, "取消微信授权绑定！", Toast.LENGTH_SHORT).show();
+                customWaitDialog.dismiss();
             }
         });
     }
@@ -511,11 +521,13 @@ public class PersonInfoActivity extends BaseActivity {
     }
 
     //请求绑定微信
-    private void HttpBindWeChat(String account) {
+    private void HttpBindWeChat(String account,String nickname,String icon) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("uid", SpUtils.getUserUid(mContext));
         param.put("account", account);
+        param.put("nickname", nickname);
+        param.put("icon", icon);
         HttpUtils.doPost(UrlConstans.BIND_WECHAT, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
