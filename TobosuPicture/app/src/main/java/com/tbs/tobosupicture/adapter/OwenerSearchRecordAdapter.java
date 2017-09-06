@@ -53,7 +53,6 @@ public class OwenerSearchRecordAdapter extends RecyclerView.Adapter<RecyclerView
         if(viewType == viewItemFooter){
             footerView = inflater.inflate(R.layout.item_foot_case_fragment, null);
             footerLayout = (RelativeLayout) footerView.findViewById(R.id.foot_load_more_layout_case);
-            footerLayout.setVisibility(View.GONE);
             tvLoadMore = (TextView) footerView.findViewById(R.id.tv_loadmore_text_case);
             progressBar = (ProgressBar) footerView.findViewById(R.id.progressBar_case);
             return new FootViewHolder(footerView);

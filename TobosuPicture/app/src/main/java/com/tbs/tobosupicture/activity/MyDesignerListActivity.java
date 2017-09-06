@@ -132,7 +132,6 @@ public class MyDesignerListActivity extends BaseActivity {
     }
 
     private void initAdapter() {
-
         if (myDesignerAdapter == null) {
             myDesignerAdapter = new MyDesignerAdapter(mContext, myDesignerList);
             collectionDesignerRecyclerView.setAdapter(myDesignerAdapter);
@@ -140,8 +139,6 @@ public class MyDesignerListActivity extends BaseActivity {
         } else {
             myDesignerAdapter.notifyDataSetChanged();
         }
-
-
         myDesignerAdapter.hideLoadMoreMessage();
     }
 

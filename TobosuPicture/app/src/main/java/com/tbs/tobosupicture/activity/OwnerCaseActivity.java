@@ -1,5 +1,4 @@
 package com.tbs.tobosupicture.activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -49,6 +48,7 @@ public class OwnerCaseActivity extends BaseActivity {
     private List<OwnerSearchRecordJsonEntity.OwnerSearchRecordEntity> ownerSearchRecordList = new ArrayList<OwnerSearchRecordJsonEntity.OwnerSearchRecordEntity>();
     private int page = 1;
     private int pageSize = 10;
+    private boolean isFirstLoad = true;
 
 
     @Override
@@ -60,7 +60,6 @@ public class OwnerCaseActivity extends BaseActivity {
         ButterKnife.bind(this);
         initListViewSetting();
         getDataFromNet();
-        
     }
 
     private void getDataFromNet() {
@@ -79,6 +78,9 @@ public class OwnerCaseActivity extends BaseActivity {
                             public void run() {
                                 Utils.setToast(mContext, "系统繁忙，稍后再试~");
                                 ivNoOwenerCaseData.setVisibility(View.VISIBLE);
+                                if (adapter != null) {
+                                    adapter.hideLoadMoreMessage();
+                                }
                             }
                         });
                     }
@@ -96,9 +98,6 @@ public class OwnerCaseActivity extends BaseActivity {
                                     ownerSearchRecordList.addAll(entity.getData());
                                     OwenerCaseSwipeRefreshLayout.setVisibility(View.VISIBLE);
                                     ivNoOwenerCaseData.setVisibility(View.GONE);
-                                    if(adapter!=null){
-                                        adapter.hideLoadMoreMessage();
-                                    }
                                     initListView();
                                 }else {
                                     if(ownerSearchRecordList.size()==0){
@@ -108,6 +107,7 @@ public class OwnerCaseActivity extends BaseActivity {
                                         }
                                         OwenerCaseSwipeRefreshLayout.setVisibility(View.GONE);
                                         ivNoOwenerCaseData.setVisibility(View.VISIBLE);
+
                                     }
                                 }
                             }
@@ -167,15 +167,20 @@ public class OwnerCaseActivity extends BaseActivity {
         }
     };
 
+
+
     private void initListView() {
         OwenerCaseSwipeRefreshLayout.setRefreshing(false);
         if (adapter == null) {
             adapter = new OwenerSearchRecordAdapter(mContext, ownerSearchRecordList);
             OwenerCaseRecyclerView.setAdapter(adapter);
+            adapter.hideLoadMoreMessage();
         } else {
             adapter.notifyDataSetChanged();
         }
+
         adapter.hideLoadMoreMessage();
+        getData();
     }
 
     //下拉刷新监听事件
@@ -192,6 +197,20 @@ public class OwnerCaseActivity extends BaseActivity {
         }
     };
 
+    private void getData(){
+        if(isFirstLoad){
+            isFirstLoad = !isFirstLoad;
+            //下拉刷新数据 重新初始化各种数据
+            ownerSearchRecordList.clear();
+            page = 1;
+            if (adapter != null) {
+                adapter.hideLoadMoreMessage();
+            }
+            getDataFromNet();
+        }
+
+    }
+
     private void loadMore() {
         page++;
         if (adapter != null) {
@@ -199,6 +218,9 @@ public class OwnerCaseActivity extends BaseActivity {
         }
         OwenerCaseSwipeRefreshLayout.setRefreshing(false);
         getDataFromNet();
+        if (adapter != null) {
+            adapter.hideLoadMoreMessage();
+        }
     }
     
 
