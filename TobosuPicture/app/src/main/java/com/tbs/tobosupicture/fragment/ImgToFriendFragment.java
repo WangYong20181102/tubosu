@@ -37,6 +37,7 @@ import com.tbs.tobosupicture.utils.FileUtil;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.SelectPersonalPopupWindow;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -175,13 +176,17 @@ public class ImgToFriendFragment extends BaseFragment {
                 break;
             case R.id.imgtofriend_zuire:
                 //切换至最热
+                MobclickAgent.onEvent(mContext,"click_zui_re");
                 setIndexSelect(0);
                 clcikChange(0);
+
                 break;
             case R.id.imgtofriend_zuixin:
                 //切换至最新
+                MobclickAgent.onEvent(mContext,"click_zui_xin");
                 setIndexSelect(1);
                 clcikChange(1);
+
                 break;
             case R.id.imgtofriend_youguanyuwo:
                 //切换至有关于我

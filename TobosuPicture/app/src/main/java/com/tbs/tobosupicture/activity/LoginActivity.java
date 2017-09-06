@@ -122,7 +122,7 @@ public class LoginActivity extends BaseActivity {
                 //微信登录
                 customWaitDialog.show();
                 //先清除token
-                mShareAPI.deleteOauth(LoginActivity.this, SHARE_MEDIA.WEIXIN, null);
+//                mShareAPI.deleteOauth(LoginActivity.this, SHARE_MEDIA.WEIXIN, null);
                 weChatLogin();
                 break;
         }
@@ -202,7 +202,7 @@ public class LoginActivity extends BaseActivity {
     //微信登录
     private void weChatLogin() {
         //再次进行授权
-        mShareAPI.doOauthVerify(LoginActivity.this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
+        mShareAPI.getPlatformInfo(LoginActivity.this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
             @Override
             public void onStart(SHARE_MEDIA share_media) {
 
@@ -214,7 +214,7 @@ public class LoginActivity extends BaseActivity {
                 String icon = map.get("iconurl");//微信的头像
                 String nickname = map.get("name");//微信的昵称
                 String account = map.get("openid");//微信的openid
-//                Log.e(TAG, "授权成功==头像==" + icon + "===nickname===" + nickname + "===account===" + account);
+                Log.e(TAG, "授权成功==头像==" + icon + "===nickname===" + nickname + "===account===" + account);
                 HttpWeChatLogin(icon, nickname, account);
             }
 

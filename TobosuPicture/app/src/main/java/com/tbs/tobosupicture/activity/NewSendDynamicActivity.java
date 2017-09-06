@@ -39,6 +39,7 @@ import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.utils.WriteUtil;
 import com.tbs.tobosupicture.view.SelectPersonalPopupWindow;
+import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -166,6 +167,7 @@ public class NewSendDynamicActivity extends BaseActivity {
             case R.id.new_send_dynamic_btn:
                 //发送按钮  获取标题集合
                 if (!TextUtils.isEmpty(newSendEditText.getText().toString()) && !mImageUriList.isEmpty()) {
+                    MobclickAgent.onEvent(mContext,"click_fa_bu_dong_tai");
                     pd = ProgressDialog.show(mContext, null, "正在发布动态，请稍后...");
                     HttpSendDynamic();
                 } else {
