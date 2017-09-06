@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
@@ -158,6 +159,17 @@ public class ZuiXinFragment extends BaseFragment {
             public void onFailure(Call call, IOException e) {
                 isLoading = false;
                 Log.e(TAG, "链接失败====" + e.toString());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        zuixinSwipe.setRefreshing(false);
+                        if (mZuiXinAdapter != null) {
+                            mZuiXinAdapter.changLoadState(2);
+                        }
+                        Toast.makeText(mContext, "链接服务器失败！", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
 
             @Override
