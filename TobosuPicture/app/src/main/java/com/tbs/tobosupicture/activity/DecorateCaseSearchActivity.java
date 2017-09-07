@@ -50,6 +50,7 @@ public class DecorateCaseSearchActivity extends BaseActivity {
     
     private int page = 1;
     private int pageSize = 10;
+    private boolean isFirstSee = true;
     
     private LinearLayoutManager linearLayoutManager;
     private OwenerSearchRecordCaseAdapter caseAdapter;
@@ -175,6 +176,18 @@ public class DecorateCaseSearchActivity extends BaseActivity {
         } else {
             caseAdapter.notifyDataSetChanged();
         }
+
+        if(isFirstSee){
+            isFirstSee= false;
+            freshData();
+        }
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         if (caseAdapter != null) {
             caseAdapter.hideLoadMoreMessage();
         }
@@ -185,14 +198,18 @@ public class DecorateCaseSearchActivity extends BaseActivity {
         @Override
         public void onRefresh() {
             //下拉刷新数据 重新初始化各种数据
-            caseList.clear();
-            page = 1;
-            if (caseAdapter != null) {
-                caseAdapter.hideLoadMoreMessage();
-            }
-            getDataFromNet();
+            freshData();
         }
     };
+
+    private void freshData(){
+        caseList.clear();
+        page = 1;
+        if (caseAdapter != null) {
+            caseAdapter.hideLoadMoreMessage();
+        }
+        getDataFromNet();
+    }
 
     private void loadMore() {
         page++;

@@ -84,20 +84,26 @@ public class FactoryStyleAdapter extends BaseExpandableListAdapter {
         }
 
         holder.tvBigStyleText.setText(groupDataList.get(groupPosition).getClass_name());
-        if(isExpanded){
-            holder.ivBigStyleImg.setBackgroundResource(R.mipmap.shangla2);
-        }else{
-            holder.ivBigStyleImg.setBackgroundResource(R.mipmap.xiala);
+        if(groupPosition!=0){
+            holder.ivBigStyleImg.setVisibility(View.VISIBLE);
+            if(isExpanded){
+                holder.ivBigStyleImg.setBackgroundResource(R.mipmap.shangla2);
+            }else{
+                holder.ivBigStyleImg.setBackgroundResource(R.mipmap.xiala);
+            }
+
+            holder.tvBigStyleText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String id = groupDataList.get(groupPosition).getId();
+                    String text = groupDataList.get(groupPosition).getClass_name();
+                    onFactoryStyleItemClickListener.onFactoryStyleParentClickListener(id, text);
+                }
+            });
+        }else {
+            holder.ivBigStyleImg.setVisibility(View.GONE);
         }
 
-        holder.tvBigStyleText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String id = groupDataList.get(groupPosition).getId();
-                String text = groupDataList.get(groupPosition).getClass_name();
-                onFactoryStyleItemClickListener.onFactoryStyleParentClickListener(id, text);
-            }
-        });
 
         return convertView;
     }

@@ -10,6 +10,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="7dp"
-        android:scaleType="centerInside"/>
+        android:scaleType="centerCrop"/>
 
 </LinearLayout>

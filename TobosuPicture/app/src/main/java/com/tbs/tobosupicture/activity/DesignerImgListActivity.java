@@ -131,7 +131,7 @@ public class DesignerImgListActivity extends BaseActivity {
             hashMap.put("page", page);
             hashMap.put("page_size", pageSize);
 
-            Utils.setErrorLog(TAG, "当前设计师id是" + designerId);
+            Utils.setErrorLog(TAG, "当前设计师id是" + designerId + "当前页数 " + page);
 
             HttpUtils.doPost(UrlConstans.getListUrl(sourceType), hashMap, new Callback() {
                 @Override
@@ -157,7 +157,7 @@ public class DesignerImgListActivity extends BaseActivity {
                     if(sourceType == 0){
                         XiaoGuoTuJsonEntity xiaoGuoTuJsonEntity = gson.fromJson(json, XiaoGuoTuJsonEntity.class);
                         if(xiaoGuoTuJsonEntity.getStatus() == 200){
-                            samplePicDataList = xiaoGuoTuJsonEntity.getData();
+                            samplePicDataList.addAll(xiaoGuoTuJsonEntity.getData());
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -179,7 +179,7 @@ public class DesignerImgListActivity extends BaseActivity {
                     }else{
                         AnLiJsonEntity anLiJsonEntity = gson.fromJson(json, AnLiJsonEntity.class);
                         if(anLiJsonEntity.getStatus() == 200){
-                            casePicDataList = anLiJsonEntity.getData();
+                            casePicDataList.addAll(anLiJsonEntity.getData());
 
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -204,13 +204,21 @@ public class DesignerImgListActivity extends BaseActivity {
 
     private void initAdapter(int type){
         if(type == 0){
-            designerPictureListAdapter = new DesignerPictureListAdapter(mContext, samplePicDataList, null, SAMPLE_TYPE, designerIcon, name, des);
-            designerImgListRecyclerView.setAdapter(designerPictureListAdapter);
-            designerPictureListAdapter.notifyDataSetChanged();
+            if(designerPictureListAdapter == null){
+                designerPictureListAdapter = new DesignerPictureListAdapter(mContext, samplePicDataList, null, SAMPLE_TYPE, designerIcon, name, des);
+                designerImgListRecyclerView.setAdapter(designerPictureListAdapter);
+            }else {
+                designerPictureListAdapter.notifyDataSetChanged();
+            }
+
         }else{
-            designerPictureListAdapter = new DesignerPictureListAdapter(mContext, null, casePicDataList, CASE_TYPE, designerIcon, name, des);
-            designerImgListRecyclerView.setAdapter(designerPictureListAdapter);
-            designerPictureListAdapter.notifyDataSetChanged();
+            if(designerPictureListAdapter==null){
+                designerPictureListAdapter = new DesignerPictureListAdapter(mContext, null, casePicDataList, CASE_TYPE, designerIcon, name, des);
+                designerImgListRecyclerView.setAdapter(designerPictureListAdapter);
+            }else {
+                designerPictureListAdapter.notifyDataSetChanged();
+            }
+
         }
         designerImgListSwipRefreshLayout.setRefreshing(false);
         designerPictureListAdapter.hideLoadMoreMessage();

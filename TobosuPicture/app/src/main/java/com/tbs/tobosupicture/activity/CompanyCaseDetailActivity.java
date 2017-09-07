@@ -22,6 +22,7 @@ import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
+import com.tbs.tobosupicture.utils.Utility;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.MyListView;
 import com.umeng.socialize.ShareAction;
@@ -320,6 +321,7 @@ public class CompanyCaseDetailActivity extends BaseActivity {
 
         // 设计图
         if(detaiJsonEntity.getSuiteEntiyDataList()!=null){
+
             CaseDetailImgAdapter imgAdapter = new CaseDetailImgAdapter(mContext, detaiJsonEntity.getSuiteEntiyDataList());
             mylistviewCaseDetial.setAdapter(imgAdapter);
             mylistviewCaseDetial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -347,6 +349,7 @@ public class CompanyCaseDetailActivity extends BaseActivity {
 
         // 入住场景
         if(detaiJsonEntity.getStayRealImgList() != null && detaiJsonEntity.getStayRealImgList().size()>0){
+
             CaseDetailStayInAdapter stayInAdapter = new CaseDetailStayInAdapter(mContext, detaiJsonEntity.getStayRealImgList());
             mylistviewStayIn.setAdapter(stayInAdapter);
             mylistviewStayIn.setOnItemClickListener(new AdapterView.OnItemClickListener() {

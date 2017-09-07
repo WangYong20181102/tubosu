@@ -3,12 +3,15 @@ package com.tbs.tobosupicture.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.GridView;
+import android.widget.ListView;
+
+import java.util.List;
 
 /**
  * Created by Lie on 2017/7/18.
  */
 
-public class MyListView extends GridView {
+public class MyListView extends ListView {
     public MyListView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }

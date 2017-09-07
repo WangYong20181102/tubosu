@@ -505,6 +505,7 @@
             </LinearLayout>
             <com.tbs.tobosupicture.view.MyListView
                 android:id="@+id/mylistviewCaseDetial"
+                android:divider="#00000000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <!-- 设计图  结束-->
@@ -534,6 +535,7 @@
                 android:id="@+id/myStageCaseDetial"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:divider="#00000000"
                 android:layout_marginBottom="14dp"/>
             <!-- 施工阶段 结束-->
 
@@ -561,6 +563,7 @@
 
             <com.tbs.tobosupicture.view.MyListView
                 android:id="@+id/mylistviewStayIn"
+                android:divider="#00000000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <!-- 入住 结束-->

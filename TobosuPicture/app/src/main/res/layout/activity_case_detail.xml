@@ -5,132 +5,145 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<ScrollView
-    android:id="@+id/caseDetailScrollView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/caseDetailScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <RelativeLayout
+        android:layout_height="match_parent"
+        android:layout_above="@+id/case_linear_price_layout"
+        android:fillViewport="true">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp">
-            <ImageView
-                android:id="@+id/ivDetailImg"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#70000000"/>
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp" >
+                android:layout_height="200dp">
+                <ImageView
+                    android:id="@+id/ivDetailImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"/>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#70000000"/>
                 <RelativeLayout
-                    android:id="@+id/re_deatilsf_case"
                     android:layout_width="match_parent"
-                    android:layout_height="49dp">
-                    <RelativeLayout
-                        android:id="@+id/relCaseDetailBack"
-                        android:layout_width="49dp"
-                        android:layout_height="49dp">
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:background="@mipmap/back_white"/>
-                    </RelativeLayout>
+                    android:layout_height="200dp"
+                    android:layout_marginTop="49dp">
 
-                    <ImageView
-                        android:id="@+id/ivShareCase"
+                    <TextView
+                        android:id="@+id/tvCaseText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="26dp"
-                        android:background="@mipmap/zhuanfa"/>
-
-                    <ImageView
-                        android:id="@+id/ivCollect"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/ivShareCase"
-                        android:layout_marginRight="10dp"
-                        android:background="@mipmap/shoucang21"/>
-
-
-                </RelativeLayout>
-
-
-                <TextView
-                    android:id="@+id/tvCaseText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="深圳 李先生 4室2房2厅"
-                    android:textSize="16sp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_below="@+id/re_deatilsf_case"
-                    android:textColor="@color/white"/>
-
-                <LinearLayout
-                    android:id="@+id/llDestrictLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvCaseText"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginLeft="30dp"
-                    android:orientation="vertical">
+                        android:text="深圳 李先生 4室2房2厅"
+                        android:textSize="16sp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginLeft="30dp"
+                        android:textColor="@color/white"/>
 
                     <LinearLayout
+                        android:id="@+id/llDestrictLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_below="@+id/tvCaseText"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginLeft="30dp"
+                        android:orientation="vertical">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
                             android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/white"
-                                android:textSize="14sp"
-                                android:text="小区:"/>
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:text="小区:"/>
 
-                            <TextView
-                                android:id="@+id/tvDistrict"
-                                android:layout_width="wrap_content"
+                                <TextView
+                                    android:id="@+id/tvDistrict"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:text="金盛紫云庭"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/white"
-                                android:textSize="14sp"
-                                android:text="金盛紫云庭"/>
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:text="造价:"/>
+
+                                <TextView
+                                    android:id="@+id/tvBudget"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:text="10万 - 半包"/>
+                            </LinearLayout>
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_marginTop="10dp"
                             android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/white"
-                                android:textSize="14sp"
-                                android:text="造价:"/>
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:text="风格:"/>
 
-                            <TextView
-                                android:id="@+id/tvBudget"
-                                android:layout_width="wrap_content"
+                                <TextView
+                                    android:id="@+id/tvDestrictStyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:text="欧洲现代"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/white"
-                                android:textSize="14sp"
-                                android:text="10万 - 半包"/>
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:text="面积:"/>
+
+                                <TextView
+                                    android:id="@+id/tvDistrictSquare"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp"
+                                    android:text="146m2"/>
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
 
@@ -138,325 +151,320 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:layout_below="@+id/llDestrictLayout"
                         android:orientation="horizontal">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/white"
-                                android:textSize="14sp"
-                                android:text="风格:"/>
+                        <ImageView
+                            android:id="@+id/ivDesinHead"
+                            android:layout_width="49dp"
+                            android:layout_height="49dp"
+                            android:background="@mipmap/pic"
+                            android:layout_marginLeft="30dp"/>
 
-                            <TextView
-                                android:id="@+id/tvDestrictStyle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/white"
-                                android:textSize="14sp"
-                                android:text="欧洲现代"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/tvDesignerName"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="horizontal">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/white"
-                                android:textSize="14sp"
-                                android:text="面积:"/>
+                            android:text="土拨鼠"
+                            android:layout_marginLeft="16dp"
+                            android:textSize="17sp"
+                            android:textColor="@color/white"
+                            android:layout_gravity="center_vertical"/>
 
-                            <TextView
-                                android:id="@+id/tvDistrictSquare"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/white"
-                                android:textSize="14sp"
-                                android:text="146m2"/>
-                        </LinearLayout>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="14dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@mipmap/shouxi"/>
                     </LinearLayout>
-                </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/llDestrictLayout"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:id="@+id/ivDesinHead"
-                        android:layout_width="49dp"
-                        android:layout_height="49dp"
-                        android:background="@mipmap/pic"
-                        android:layout_marginLeft="30dp"/>
-
-                    <TextView
-                        android:id="@+id/tvDesignerName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="土拨鼠"
-                        android:layout_marginLeft="16dp"
-                        android:textSize="17sp"
-                        android:textColor="@color/white"
-                        android:layout_gravity="center_vertical"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="14dp"
-                        android:layout_gravity="center_vertical"
-                        android:background="@mipmap/shouxi"/>
-                </LinearLayout>
+                </RelativeLayout>
 
             </RelativeLayout>
 
-        </RelativeLayout>
 
-
-        <!--案例简介-->
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="41dp">
-            <TextView
-                android:layout_width="4dp"
-                android:layout_height="match_parent"
-                android:layout_margin="14dp"
-                android:background="#FEB84C"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textSize="16sp"
-                android:textColor="#2C2C2C"
-                android:text="案例简介"/>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvCaseDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textSize="13sp"
-            android:layout_margin="14dp"
-            android:textColor="#a3a0a0"
-            android:text="欧式风格， 业主爱好音乐， 运动阳光型。"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
+            <!--案例简介-->
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_weight="1">
+                android:layout_height="41dp">
+                <TextView
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="14dp"
+                    android:background="#FEB84C"/>
 
-                <ImageView
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_margin="10dp"
-                    android:background="@mipmap/gap_line"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@mipmap/gap_dot"/>
+                    android:textSize="16sp"
+                    android:textColor="#2C2C2C"
+                    android:text="案例简介"/>
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tvCaseDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="13sp"
+                android:layout_margin="14dp"
+                android:textColor="#a3a0a0"
+                android:text="欧式风格， 业主爱好音乐， 运动阳光型。"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="10dp"
+                        android:background="@mipmap/gap_line"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@mipmap/gap_dot"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:text="户型图"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@mipmap/gap_dot"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@mipmap/gap_line"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivBigHuxingTu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:scaleType="centerInside"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="14dp"
+                android:background="#F5F5F5"/>
+
+
+
+            <!-- 设计图  开始-->
+            <LinearLayout
+                android:id="@+id/layoutDesignChart"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="41dp">
+                <TextView
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="14dp"
+                    android:background="#FEB84C"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="#2C2C2C"
+                    android:text="设计图"/>
+            </LinearLayout>
+            <com.tbs.tobosupicture.view.MyListView
+                android:id="@+id/mylistviewCaseDetial"
+                android:divider="#00000000"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <!-- 设计图  结束-->
+
+            <!-- 施工阶段 开始-->
+            <LinearLayout
+                android:id="@+id/layoutStage"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="41dp">
+                <TextView
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="14dp"
+                    android:background="#FEB84C"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="#2C2C2C"
+                    android:text="施工阶段"/>
+            </LinearLayout>
+
+            <com.tbs.tobosupicture.view.MyListView
+                android:id="@+id/myStageCaseDetial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="#00000000"
+                android:layout_marginBottom="1dp"/>
+            <!-- 施工阶段 结束-->
+
+
+            <!-- 入住 开始-->
+            <LinearLayout
+                android:id="@+id/layoutStayInPic"
+                android:layout_marginTop="7dp"
+                android:layout_width="match_parent"
+                android:layout_height="41dp">
+                <TextView
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"
+                    android:layout_margin="14dp"
+                    android:background="#FEB84C"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="16sp"
+                    android:textColor="#2C2C2C"
+                    android:text="入住实景"/>
+            </LinearLayout>
+
+            <com.tbs.tobosupicture.view.MyListView
+                android:id="@+id/mylistviewStayIn"
+                android:divider="#00000000"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <!-- 入住 结束-->
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="13dp"
+                android:background="#dfdfdf"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/case_linear_price_layout"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:id="@+id/layoutGetPriceKnow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@mipmap/zixun"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#3D424C"
+                android:textSize="16sp"
+                android:text="价格咨询"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutIneedPrice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="#3CC7A6"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:background="@mipmap/zhuangxiu"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:text="我要装修"/>
+        </LinearLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/re_deatilsf_case"
+        android:layout_width="match_parent"
+        android:background="#70000000"
+        android:layout_height="49dp">
+        <RelativeLayout
+            android:id="@+id/relCaseDetailBack"
+            android:layout_width="49dp"
+            android:layout_height="49dp">
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_margin="10dp"
-                android:gravity="center"
-                android:text="户型图"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_weight="1">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@mipmap/gap_dot"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@mipmap/gap_line"/>
-            </LinearLayout>
-        </LinearLayout>
+                android:background="@mipmap/back_white"/>
+        </RelativeLayout>
 
         <ImageView
-            android:id="@+id/ivBigHuxingTu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:scaleType="centerInside"/>
+            android:id="@+id/ivShareCase"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="26dp"
+            android:background="@mipmap/zhuanfa"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="14dp"
-            android:background="#F5F5F5"/>
+        <ImageView
+            android:id="@+id/ivCollect"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/ivShareCase"
+            android:layout_marginRight="10dp"
+            android:background="@mipmap/shoucang21"/>
 
-
-
-        <!-- 设计图  开始-->
-        <LinearLayout
-            android:id="@+id/layoutDesignChart"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="41dp">
-            <TextView
-                android:layout_width="4dp"
-                android:layout_height="match_parent"
-                android:layout_margin="14dp"
-                android:background="#FEB84C"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textSize="16sp"
-                android:textColor="#2C2C2C"
-                android:text="设计图"/>
-        </LinearLayout>
-        <com.tbs.tobosupicture.view.MyListView
-            android:id="@+id/mylistviewCaseDetial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <!-- 设计图  结束-->
-
-        <!-- 施工阶段 开始-->
-        <LinearLayout
-            android:id="@+id/layoutStage"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="41dp">
-            <TextView
-                android:layout_width="4dp"
-                android:layout_height="match_parent"
-                android:layout_margin="14dp"
-                android:background="#FEB84C"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textSize="16sp"
-                android:textColor="#2C2C2C"
-                android:text="施工阶段"/>
-        </LinearLayout>
-
-        <com.tbs.tobosupicture.view.MyListView
-            android:id="@+id/myStageCaseDetial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="14dp"/>
-        <!-- 施工阶段 结束-->
+    </RelativeLayout>
 
 
-        <!-- 入住 开始-->
-        <LinearLayout
-            android:id="@+id/layoutStayInPic"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="41dp">
-            <TextView
-                android:layout_width="4dp"
-                android:layout_height="match_parent"
-                android:layout_margin="14dp"
-                android:background="#FEB84C"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textSize="16sp"
-                android:textColor="#2C2C2C"
-                android:text="入住实景"/>
-        </LinearLayout>
-
-        <com.tbs.tobosupicture.view.MyListView
-            android:id="@+id/mylistviewStayIn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <!-- 入住 结束-->
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="13dp"
-            android:background="#dfdfdf"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:id="@+id/layoutGetPriceKnow"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_weight="1">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="10dp"
-                    android:background="@mipmap/zixun"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#3D424C"
-                    android:textSize="16sp"
-                    android:text="价格咨询"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layoutIneedPrice"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:background="#3CC7A6"
-                android:orientation="horizontal"
-                android:layout_weight="1">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="10dp"
-                    android:background="@mipmap/zhuangxiu"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:text="我要装修"/>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-</ScrollView>
-
-<ProgressBar
-    android:id="@+id/shareProgressBar"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:visibility="gone"/>
+    <ProgressBar
+        android:id="@+id/shareProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 </RelativeLayout>

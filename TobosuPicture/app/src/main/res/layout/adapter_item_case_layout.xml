@@ -87,7 +87,7 @@
                     android:paddingLeft="24dp"
                     android:paddingRight="24dp"
                     android:paddingTop="4dp"
-                    android:text="免费设计"
+                    android:text="免费报价"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
             </RelativeLayout>
