@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -24,6 +25,7 @@ import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.bean.EC;
 import com.tbs.tobosupicture.bean.Event;
+import com.tbs.tobosupicture.bean._DSTime;
 import com.tbs.tobosupicture.bean._ReceiveMsg;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.fragment.DecorationCaseFragment;
@@ -88,6 +90,7 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         mContext = this;
         initFragment();
+        HttpGetTime();
         initUserMsg();
     }
 
@@ -140,6 +143,36 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    //获取定时器的时间
+    private void HttpGetTime() {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Utils.getDateToken());
+        HttpUtils.doPost(UrlConstans.GET_TIMERS, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "获取定时时间失败！");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.getString("status");
+                    if (status.equals("200")) {
+                        String data = jsonObject.getString("data");
+                        _DSTime dsTime = mGson.fromJson(data, _DSTime.class);
+                        //存时间
+                        SpUtils.setMsgTime(mContext, dsTime.getDynamic_time());
+                        SpUtils.setAnliTime(mContext, dsTime.getNew_case_time());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     //选择所在页面
     private void setIndexSelect(int index) {
         if (mIndex == index) {
@@ -164,12 +197,12 @@ public class MainActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.rb_first:
                 //点击第一个选项 显示样板图
-                MobclickAgent.onEvent(mContext,"click_xiao_guo_tu_tab");
+                MobclickAgent.onEvent(mContext, "click_xiao_guo_tu_tab");
                 setIndexSelect(0);
                 break;
             case R.id.rb_second:
                 //点击第二个选项 显示案例
-                MobclickAgent.onEvent(mContext,"click_an_li_tu_tab");
+                MobclickAgent.onEvent(mContext, "click_an_li_tu_tab");
                 setIndexSelect(1);
                 break;
             case R.id.rb_third:
@@ -182,12 +215,12 @@ public class MainActivity extends BaseActivity {
 //                    EventBusUtil.sendEvent(new Event(EC.EventCode.CHECK_ABOUTME_MYORG_HAS_MSG));
                     Log.e(TAG, "已发送消息===SHOW_ABOUT_ME===");
                 }
-                MobclickAgent.onEvent(mContext,"click_yi_tu_hui_you_tab");
+                MobclickAgent.onEvent(mContext, "click_yi_tu_hui_you_tab");
                 setIndexSelect(2);
                 break;
             case R.id.rb_fourth:
                 //点击第四个选项 显示我的  其中我的界面要分情况考虑
-                MobclickAgent.onEvent(mContext,"click_wo_de_tu_tab");
+                MobclickAgent.onEvent(mContext, "click_wo_de_tu_tab");
                 setIndexSelect(3);
                 break;
         }
@@ -248,7 +281,12 @@ public class MainActivity extends BaseActivity {
         public void run() {
             while (isLoop) {
                 try {
-                    Thread.sleep(2345);
+                    if (!TextUtils.isEmpty(SpUtils.getMsgTime(mContext))) {
+                        Thread.sleep(Long.parseLong(SpUtils.getMsgTime(mContext)) * 1000);
+                        Log.e(TAG, "网络获取的定时时间=======" + Long.parseLong(SpUtils.getMsgTime(mContext)) * 1000);
+                    } else {
+                        Thread.sleep(2345);
+                    }
                     HttpGetMsg();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -265,7 +303,12 @@ public class MainActivity extends BaseActivity {
             while (isLoop) {
                 try {
                     //5分钟拉取一次
-                    Thread.sleep(300000);
+                    if(!TextUtils.isEmpty(SpUtils.getAnliTime(mContext))){
+                        Thread.sleep(Long.parseLong(SpUtils.getAnliTime(mContext))*1000);
+                        Log.e(TAG, "网络获取的定时时间=======" + Long.parseLong(SpUtils.getAnliTime(mContext))*1000);
+                    }else {
+                        Thread.sleep(300000);
+                    }
                     HttpGetIsHaveNewCast();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -355,9 +398,9 @@ public class MainActivity extends BaseActivity {
                             public void run() {
                                 //显示数量
                                 int msgNum = Integer.parseInt(receiveMsg.getAll_msg_count());
-                                if(msgNum>=100){
+                                if (msgNum >= 100) {
                                     mImgToFriendTag.setText("99+");
-                                }else {
+                                } else {
                                     mImgToFriendTag.setBadgeCount(msgNum);
                                 }
 

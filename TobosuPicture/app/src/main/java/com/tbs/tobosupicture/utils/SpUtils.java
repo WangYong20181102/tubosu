@@ -17,14 +17,24 @@ public class SpUtils {
     public static String getUserIsFristLogin(Context context) {
         return context.getSharedPreferences("UserIsLogin", 0).getString("alreadyLogin", "");
     }
-    //存储用户是否获取了敏感权限
-    public static void setUserIsSetPro(Context context, String hasPro) {
-        context.getSharedPreferences("UserPro", 0).edit().putString("hasPro", hasPro).commit();
+
+    //存储用户拉取消息的时间
+    public static void setMsgTime(Context context, String msgTime) {
+        context.getSharedPreferences("MsgTime", 0).edit().putString("msgTime", msgTime).commit();
     }
 
-    //获取用户是否获取了敏感权限
-    public static String getUserIsGetPro(Context context) {
-        return context.getSharedPreferences("UserPro", 0).getString("hasPro", "");
+    //获取用户拉取消息的时间
+    public static String getMsgTime(Context context) {
+        return context.getSharedPreferences("MsgTime", 0).getString("msgTime", "");
+    }
+    //存储用户拉取案例消息的时间
+    public static void setAnliTime(Context context, String anliTime) {
+        context.getSharedPreferences("AnliTime", 0).edit().putString("anliTime", anliTime).commit();
+    }
+
+    //获取用户拉取案例消息的时间
+    public static String getAnliTime(Context context) {
+        return context.getSharedPreferences("AnliTime", 0).getString("anliTime", "");
     }
     //存储定位信息
     public static void setLocationCity(Context context, String mCity) {

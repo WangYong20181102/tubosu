@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
@@ -37,6 +38,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
+ * creat by lin
  * 我的消息列表页 关于我的/我的参与的消息提示中传来
  */
 public class DynamicMsgActivity extends BaseActivity {
@@ -101,11 +103,17 @@ public class DynamicMsgActivity extends BaseActivity {
         param.put("uid", SpUtils.getUserUid(mContext));
         param.put("type", type);
         param.put("page", mPage);
-        param.put("page_size", "200");
+        param.put("page_size", "300");
         HttpUtils.doPost(UrlConstans.MY_MESSAGE, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败======" + e.toString());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(mContext, "服务器链接失败！", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override

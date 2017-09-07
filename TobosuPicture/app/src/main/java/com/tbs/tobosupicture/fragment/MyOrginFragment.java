@@ -109,7 +109,7 @@ public class MyOrginFragment extends BaseFragment {
         myOrginRecyclerview.setLayoutManager(mLinearLayoutManager);
         myOrginRecyclerview.setOnTouchListener(onTouchListener);
         myOrginRecyclerview.addOnScrollListener(onScrollListener);//上拉加载更多
-        ((SimpleItemAnimator)myOrginRecyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
+        ((SimpleItemAnimator) myOrginRecyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
     }
 
     //下拉刷新
@@ -180,6 +180,16 @@ public class MyOrginFragment extends BaseFragment {
             @Override
             public void onFailure(Call call, IOException e) {
                 isLoading = false;
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        myOrginSwipe.setRefreshing(false);
+                        if (myOrginAdapter != null) {
+                            myOrginAdapter.changeLoadState(2);
+                        }
+                        Toast.makeText(mContext, "服务器链接失败！", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
