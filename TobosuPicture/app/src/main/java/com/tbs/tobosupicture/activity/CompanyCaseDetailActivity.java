@@ -253,7 +253,6 @@ public class CompanyCaseDetailActivity extends BaseActivity {
                             }
                         });
                     }
-
                 }
             });
         }

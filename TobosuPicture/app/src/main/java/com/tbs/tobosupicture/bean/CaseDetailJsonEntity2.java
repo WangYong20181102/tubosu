@@ -44,6 +44,20 @@ public class CaseDetailJsonEntity2 {
             this.msg = jsonObject.getString("msg");
             if(this.status == 200){
                 this.data = jsonObject.getJSONObject("data");
+
+                JSONObject companyObject = this.data.getJSONObject("company");
+                this.companyEntity = new CompanyEntity();
+                this.companyEntity.setAddress(companyObject.getString("address"));
+                this.companyEntity.setCellphone(companyObject.getString("cellphone"));
+                this.companyEntity.setCertification(companyObject.getString("certification"));
+                this.companyEntity.setIcon(companyObject.getString("icon"));
+                this.companyEntity.setIs_position(companyObject.getString("is_position"));
+                this.companyEntity.setLatitude(companyObject.getString("latitude"));
+                this.companyEntity.setLongitude(companyObject.getString("longitude"));
+                this.companyEntity.setName(companyObject.getString("name"));
+                this.companyEntity.setTelephone_number(companyObject.getString("telephone_number"));
+
+
                 // 案例信息
                 this.caseInfoEntity = new CompanyCaseEntity();
                 JSONObject caseDataJsonObject = this.data.getJSONObject("case_data");
