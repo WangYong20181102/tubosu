@@ -343,9 +343,11 @@ public class MainActivity extends BaseActivity {
                                 if (is_exist_case.equals("1")) {
                                     Log.e(TAG, "显示‘我的’红点提示======");
                                     mianAboutReddot.setVisibility(View.VISIBLE);
+                                    EventBusUtil.sendEvent(new Event(EC.EventCode.SHOW_MINE_RED_DOT));//在我的界面中显示红点
                                 } else {
                                     Log.e(TAG, "隐藏‘我的’红点提示======");
                                     mianAboutReddot.setVisibility(View.GONE);
+                                    EventBusUtil.sendEvent(new Event(EC.EventCode.HINT_MINE_RED_DOT));//在我的界面中隐藏红点
                                 }
                             }
                         }

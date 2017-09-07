@@ -42,6 +42,8 @@ import com.tbs.tobosupicture.activity.PersonInfoActivity;
 import com.tbs.tobosupicture.activity.ShareWeixinActivity;
 import com.tbs.tobosupicture.activity.SystemActivity;
 import com.tbs.tobosupicture.base.BaseFragment;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.bean._HomePage;
 import com.tbs.tobosupicture.bean._ImageUpLoad;
 import com.tbs.tobosupicture.constants.UrlConstans;
@@ -143,6 +145,8 @@ public class MineFragment extends BaseFragment {
     ImageView mf06;
     @BindView(R.id.mf_07)
     ImageView mf07;
+    @BindView(R.id.mine_reddot)
+    TextView mineReddot;
 
 
     private Context mContext;
@@ -228,6 +232,25 @@ public class MineFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()){
+            case EC.EventCode.SHOW_MINE_RED_DOT:
+                //显示红点
+                mineReddot.setVisibility(View.VISIBLE);
+                break;
+            case EC.EventCode.HINT_MINE_RED_DOT:
+                //隐藏红点
+                mineReddot.setVisibility(View.GONE);
+                break;
+        }
     }
 
     @OnClick({R.id.fm_head_bg, R.id.fm_user_icon, R.id.fm_dongtai_ll, R.id.fm_tumi_ll,
