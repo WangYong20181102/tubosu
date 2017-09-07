@@ -376,4 +376,8 @@ public class UrlConstans {
     public static final String SAME_CITY_OWENER_CASE_LIST_URL = ZXKK_URL + "rapp/owner/search_list";
     // 获取定时器的时间
     public static final String GET_TIMERS = ZXKK_URL + "rapp/public/get_timers";
+    // 业主新搜索案例记录
+    public static final String GET_USER_SEARCH_RECORD = ZXKK_URL + "rapp/owner/new_case_list";
+    // 公司案例详情
+    public static final String COMPANY_CASE_DETAIL = ZXKK_URL + "rapp/case/company_case_detail";
 }

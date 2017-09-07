@@ -80,6 +80,7 @@ public class OwenerSearchRecordAdapter extends RecyclerView.Adapter<RecyclerView
                     public void onClick(View v) {
                         Intent intent = new Intent(context, DecorateCaseSearchActivity.class);
                         intent.putExtra("case_group_id", dataList.get(position).getId());
+                        Utils.setErrorLog("OwenerSearchRecordAdapter", "需要传的id是" + dataList.get(position).getId());
                         context.startActivity(intent);
                     }
                 });
