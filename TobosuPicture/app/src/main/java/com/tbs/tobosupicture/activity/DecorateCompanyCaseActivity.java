@@ -57,8 +57,6 @@ public class DecorateCompanyCaseActivity extends BaseActivity {
     private List<CompanySearchRecordJsonEntity.CompanySearchRecordEntity> companyDataList = new ArrayList<CompanySearchRecordJsonEntity.CompanySearchRecordEntity>();
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
