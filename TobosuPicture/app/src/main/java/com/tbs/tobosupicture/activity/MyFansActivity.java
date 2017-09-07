@@ -160,6 +160,7 @@ public class MyFansActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                  
                         if (myFansAdapter != null) {
                             myFansAdapter.changLoadState(2);
                         }

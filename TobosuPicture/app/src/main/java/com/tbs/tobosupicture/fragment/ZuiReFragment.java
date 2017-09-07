@@ -160,6 +160,10 @@ public class ZuiReFragment extends BaseFragment {
                     public void run() {
                         Toast.makeText(mContext, "服务器链接失败！", Toast.LENGTH_SHORT).show();
                         customWaitDialog.dismiss();
+                        zuireSwipe.setRefreshing(false);
+                        if(mZuiReAdapter!=null){
+                            mZuiReAdapter.changLoadState(2);
+                        }
                     }
                 });
             }

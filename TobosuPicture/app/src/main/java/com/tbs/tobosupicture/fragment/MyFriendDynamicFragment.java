@@ -166,7 +166,7 @@ public class MyFriendDynamicFragment extends BaseFragment {
     //获取列表
     private void HttpGetDynamicList(int mPage) {
         isLoading = true;
-
+		mfdSwipe.setRefreshing(false);
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("page", mPage);
@@ -177,6 +177,16 @@ public class MyFriendDynamicFragment extends BaseFragment {
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败=====");
                 isLoading = false;
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                       
+                        if(dynamicBaseAdapter!=null){
+                            dynamicBaseAdapter.changeAdapterState(2);
+                        }
+                        Toast.makeText(mContext, "服务器链接失败！", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override

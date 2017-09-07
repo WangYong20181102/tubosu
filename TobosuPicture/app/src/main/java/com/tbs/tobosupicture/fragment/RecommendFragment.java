@@ -147,6 +147,7 @@ public class RecommendFragment extends BaseFragment {
     private void HttpGetRecommendList(int mPage) {
         isLoading = true;
         customWaitDialog.dismiss();
+		 recommendSwipRefresh.setRefreshing(false);
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("token", Utils.getDateToken());
@@ -159,6 +160,16 @@ public class RecommendFragment extends BaseFragment {
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败==" + e.toString());
                 isLoading = false;
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                      
+                        if (recommendAdapter != null) {
+                            recommendAdapter.changLoadState(2);
+                        }
+                        Toast.makeText(mContext, "服务器链接失败！", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
@@ -178,7 +189,7 @@ public class RecommendFragment extends BaseFragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                recommendSwipRefresh.setRefreshing(false);
+                               
                                 if (recommendAdapter == null) {
                                     recommendAdapter = new RecommendAdapter(mContext, getActivity(), recommendFriensArrayList);
                                     recommendRecyclelist.setAdapter(recommendAdapter);

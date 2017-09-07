@@ -265,6 +265,16 @@ public class DynamicDetailActivity extends BaseActivity {
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败==" + e.toString());
                 isLoading = false;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dyndSwipe.setRefreshing(false);
+                        if(dynamicDetailAdapter!=null){
+                            dynamicDetailAdapter.changeAdapterState(2);
+                        }
+                        Toast.makeText(mContext, "服务器链接失败！", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
@@ -323,6 +333,16 @@ public class DynamicDetailActivity extends BaseActivity {
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败==" + e.toString());
                 isLoading = false;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dyndSwipe.setRefreshing(false);
+                        if(dynamicDetailAdapter!=null){
+                            dynamicDetailAdapter.changeAdapterState(2);
+                        }
+                        Toast.makeText(mContext, "服务器链接失败！", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override

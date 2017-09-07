@@ -170,6 +170,16 @@ public class MyJoinFragment extends BaseFragment {
             @Override
             public void onFailure(Call call, IOException e) {
                 isLoading = false;
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        myJoinSwipe.setRefreshing(false);
+                        if(myJoinAdapter!=null){
+                            myJoinAdapter.changeLoadState(2);
+                        }
+                        Toast.makeText(mContext, "服务器链接失败！", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
