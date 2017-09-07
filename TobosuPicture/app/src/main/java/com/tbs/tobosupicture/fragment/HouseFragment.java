@@ -33,6 +33,8 @@ import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
+import com.umeng.analytics.MobclickAgent;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -173,7 +175,6 @@ public class HouseFragment extends BaseFragment {
 
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -298,6 +299,7 @@ public class HouseFragment extends BaseFragment {
                         if(position>0){
                             tvSpace.setText(textList.get(position));
                             parameter.put("space_id", idList.get(position));
+                            setUmengClickCount(type, position);
                         }else{
                             tvSpace.setText("空间");
                             parameter.put("space_id", "0");
@@ -308,6 +310,7 @@ public class HouseFragment extends BaseFragment {
                         if(position>0){
                             tvStyle.setText(textList.get(position));
                             parameter.put("style_id", idList.get(position));
+                            setUmengClickCount(type, position);
                         }else{
                             tvStyle.setText("风格");
                             parameter.put("style_id", "0");
@@ -318,6 +321,7 @@ public class HouseFragment extends BaseFragment {
                         if(position>0){
                             tvPart.setText(textList.get(position));
                             parameter.put("part_id", idList.get(position));
+                            setUmengClickCount(type, position);
                         }else{
                             tvPart.setText("局部");
                             parameter.put("part_id", "0");
@@ -328,6 +332,7 @@ public class HouseFragment extends BaseFragment {
                         if(position>0){
                             tvHouseStyle.setText(textList.get(position));
                             parameter.put("layout_id", idList.get(position));
+                            setUmengClickCount(type, position);
                         }else{
                             tvHouseStyle.setText("户型");
                             parameter.put("layout_id", "0");
@@ -338,6 +343,7 @@ public class HouseFragment extends BaseFragment {
                         if(position>0){
                             tvHouseColor.setText(textList.get(position));
                             parameter.put("color_id", idList.get(position));
+                            setUmengClickCount(type, position);
                         }else{
                             tvHouseColor.setText("颜色");
                             parameter.put("color_id", "0");
@@ -358,7 +364,6 @@ public class HouseFragment extends BaseFragment {
             }
         });
         popupWindow.showAsDropDown(vAnchor);
-//        popupWindow.showAtLocation(vAnchor, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
 
     }
 
@@ -716,4 +721,320 @@ public class HouseFragment extends BaseFragment {
                 break;
         }
     }
+
+    private void setUmengClickCount(int type, int postion){
+        //
+        switch (type){
+            case 0: // 空间
+                switch (postion){
+                    case 1:
+                        MobclickAgent.onEvent(context, "click_ke_ting");
+                        break;
+                    case 2:
+                        MobclickAgent.onEvent(context, "click_wo_shi");
+                        break;
+                    case 3:
+                        MobclickAgent.onEvent(context, "click_chu_fang");
+                        break;
+                    case 4:
+                        MobclickAgent.onEvent(context, "click_can_ting");
+                        break;
+                    case 5:
+                        MobclickAgent.onEvent(context, "click_xuan_guan");
+                        break;
+                    case 6:
+                        MobclickAgent.onEvent(context, "click_wei_sheng_jian");
+                        break;
+                    case 7:
+                        MobclickAgent.onEvent(context, "click_yi_mao_jian");
+                        break;
+                    case 8:
+                        MobclickAgent.onEvent(context, "click_yang_tai");
+                        break;
+                    case 9:
+                        MobclickAgent.onEvent(context, "click_hua_yuan");
+                        break;
+                    case 10:
+                        MobclickAgent.onEvent(context, "click_er_tong_fang");
+                        break;
+                    case 11:
+                        MobclickAgent.onEvent(context, "click_shu_fang");
+                        break;
+                    case 12:
+
+                        break;
+                    case 13:
+
+                        break;
+                }
+                break;
+            case 1: // 风格
+                switch (postion){
+                    case 1:
+                        MobclickAgent.onEvent(context, "click_jian_ou");
+                        break;
+                    case 2:
+                        MobclickAgent.onEvent(context, "click_ou_shi");
+                        break;
+                    case 3:
+                        MobclickAgent.onEvent(context, "click_tian_yuan");
+                        break;
+                    case 4:
+                        MobclickAgent.onEvent(context, "click_jian_yue");
+                        break;
+                    case 5:
+                        MobclickAgent.onEvent(context, "click_zhong_shi");
+                        break;
+                    case 6:
+                        MobclickAgent.onEvent(context, "click_xian_dai_jian_yue");
+                        break;
+                    case 7:
+                        MobclickAgent.onEvent(context, "click_mei_shi");
+                        break;
+                    case 8:
+                        MobclickAgent.onEvent(context, "click_xin_zhong_shi");
+                        break;
+                    case 9:
+                        MobclickAgent.onEvent(context, "click_han_shi");
+                        break;
+                    case 10:
+                        MobclickAgent.onEvent(context, "click_xian_dai");
+                        break;
+                    case 11:
+                        MobclickAgent.onEvent(context, "click_xin_gu_dian");
+                        break;
+                    case 12:
+                        MobclickAgent.onEvent(context, "click_jian_dan");
+                        break;
+                    case 13:
+                        MobclickAgent.onEvent(context, "click_jian_zhong");
+                        break;
+                    case 14:
+                        MobclickAgent.onEvent(context, "click_bei_ou");
+                        break;
+                    case 15:
+                        MobclickAgent.onEvent(context, "click_hun_da");
+                        break;
+                    case 16:
+                        MobclickAgent.onEvent(context, "click_di_zhong_hai");
+                        break;
+                    case 17:
+                        MobclickAgent.onEvent(context, "click_ou_shi_tian_yuan");
+                        break;
+                    case 18:
+                        MobclickAgent.onEvent(context, "click_fa_shi");
+                        break;
+                    case 19:
+                        MobclickAgent.onEvent(context, "click_ri_shi");
+                        break;
+                    case 20:
+                        MobclickAgent.onEvent(context, "click_xian_dai_ou_shi");
+                        break;
+                    case 21:
+                        MobclickAgent.onEvent(context, "click_zhong_shi_gu_dian");
+                        break;
+                    case 22:
+                        MobclickAgent.onEvent(context, "click_jing_dian");
+                        break;
+                    case 23:
+                        MobclickAgent.onEvent(context, "click_gu_dian");
+                        break;
+                    case 24:
+                        MobclickAgent.onEvent(context, "click_xian_dai_zhong_shi");
+                        break;
+                    case 25:
+                        MobclickAgent.onEvent(context, "click_hou_xian_dai");
+                        break;
+                    case 26:
+                        MobclickAgent.onEvent(context, "click_dong_nan_ya");
+                        break;
+                    case 27:
+                        MobclickAgent.onEvent(context, "click_luo_ke_ke");
+                        break;
+                }
+                break;
+            case 2: // 布局
+                switch (postion) {
+                    case 1:
+                        MobclickAgent.onEvent(context, "click_bei_jing_qiang");
+                        break;
+                    case 2:
+                        MobclickAgent.onEvent(context, "click_ta_ta_mi");
+                        break;
+                    case 3:
+                        MobclickAgent.onEvent(context, "click_chuang_lian");
+                        break;
+                    case 4:
+                        MobclickAgent.onEvent(context, "click_zhao_pian_qiang");
+                        break;
+                    case 5:
+                        MobclickAgent.onEvent(context, "click_diao_ding");
+                        break;
+                    case 6:
+                        MobclickAgent.onEvent(context, "click_piao_chuang");
+                        break;
+                    case 7:
+                        MobclickAgent.onEvent(context, "click_lou_ti");
+                        break;
+                    case 8:
+                        MobclickAgent.onEvent(context, "click_tui_la_men");
+                        break;
+                    case 9:
+                        MobclickAgent.onEvent(context, "click_ge_lou");
+                        break;
+                    case 10:
+                        MobclickAgent.onEvent(context, "click_ba_tai");
+                        break;
+                    case 11:
+                        MobclickAgent.onEvent(context, "click_ge_duan");
+                        break;
+                    case 12:
+                        MobclickAgent.onEvent(context, "click_bo_gu_jia");
+                        break;
+                    case 13:
+                        MobclickAgent.onEvent(context, "click_yin_xin_men");
+                        break;
+                    case 14:
+                        MobclickAgent.onEvent(context, "click_zou_lang");
+                        break;
+                    case 15:
+                        MobclickAgent.onEvent(context, "click_chuang_tai");
+                        break;
+                    case 16:
+                        MobclickAgent.onEvent(context, "click_men_ting");
+                        break;
+                    case 17:
+                        break;
+                    case 18:
+                        break;
+                    case 19:
+                        break;
+                    case 20:
+                        break;
+                }
+                break;
+            case 3: // 户型
+                switch (postion){
+                    case 1:
+                        MobclickAgent.onEvent(context, "click_xiao_hu_xing");
+                        break;
+                    case 2:
+                        MobclickAgent.onEvent(context, "click_tao_fang");
+                        break;
+                    case 3:
+                        MobclickAgent.onEvent(context, "click_bie_shu");
+                        break;
+                    case 4:
+                        MobclickAgent.onEvent(context, "click_gong_yu");
+                        break;
+                    case 5:
+                        MobclickAgent.onEvent(context, "click_xiao_mian_ji");
+                        break;
+                    case 6:
+                        MobclickAgent.onEvent(context, "click_xiao_xiao_ping_mi");
+                        break;
+                    case 7:
+                        MobclickAgent.onEvent(context, "click_fu_shi");
+                        break;
+                    case 8:
+                        MobclickAgent.onEvent(context, "click_lou_fang");
+                        break;
+                    case 9:
+                        MobclickAgent.onEvent(context, "click_da_hu_xing");
+                        break;
+                    case 10:
+                        MobclickAgent.onEvent(context, "click_yue_ceng");
+                        break;
+                    case 11:
+                        MobclickAgent.onEvent(context, "click_ting_yuan");
+                        break;
+                    case 12:
+                        MobclickAgent.onEvent(context, "click_cuo_ceng");
+                        break;
+                    case 13:
+                        MobclickAgent.onEvent(context, "click_si_he_yuan");
+                        break;
+                    case 14:
+                        MobclickAgent.onEvent(context, "click_yi_ju_shi");
+                        break;
+                    case 15:
+                        MobclickAgent.onEvent(context, "click_er_ju_shi");
+                        break;
+                    case 16:
+                        MobclickAgent.onEvent(context, "click_san_ju_shi");
+                        break;
+                    case 17:
+                        MobclickAgent.onEvent(context, "click_si_ju_shi");
+                        break;
+                    case 18:
+                        break;
+                    case 19:
+                        break;
+                    case 20:
+                        break;
+                }
+                break;
+            case 4: // 颜色
+                switch (postion){
+                    case 1:
+                        MobclickAgent.onEvent(context, "click_bai_se");
+                        break;
+                    case 2:
+                        MobclickAgent.onEvent(context, "click_mi_se");
+                        break;
+                    case 3:
+                        MobclickAgent.onEvent(context, "click_huang_se");
+                        break;
+                    case 4:
+                        MobclickAgent.onEvent(context, "click_cheng_se");
+                        break;
+                    case 5:
+                        MobclickAgent.onEvent(context, "click_hong_se");
+                        break;
+                    case 6:
+                        MobclickAgent.onEvent(context, "click_fen_se");
+                        break;
+                    case 7:
+                        MobclickAgent.onEvent(context, "click_lv_se");
+                        break;
+                    case 8:
+                        MobclickAgent.onEvent(context, "click_lan_se");
+                        break;
+                    case 9:
+                        MobclickAgent.onEvent(context, "click_zi_se");
+                        break;
+                    case 10:
+                        MobclickAgent.onEvent(context, "click_hei_se");
+                        break;
+                    case 11:
+                        MobclickAgent.onEvent(context, "click_ka_fei_se");
+                        break;
+                    case 12:
+                        MobclickAgent.onEvent(context, "click_hui_se");
+                        break;
+                    case 13:
+                        MobclickAgent.onEvent(context, "click_cai_se");
+                        break;
+                    case 14:
+                        MobclickAgent.onEvent(context, "click_zui_re");
+                        break;
+                    case 15:
+                        MobclickAgent.onEvent(context, "click_zui_xin");
+                        break;
+                    case 16:
+                        MobclickAgent.onEvent(context, "click_fa_bu_dong_tai");
+                        break;
+                    case 17:
+                        break;
+                    case 18:
+                        break;
+                    case 19:
+                        break;
+                    case 20:
+                        break;
+                }
+                break;
+        }
+    }
+
 }

@@ -71,7 +71,7 @@ public class CompanySearchRecordAdapter extends RecyclerView.Adapter<RecyclerVie
             companyViewHolder.tvTopText.setText(topText);
             companyViewHolder.tvBottomText.setText(bottomText);
             String isread = dataList.get(position-1).getIs_read();
-            if("0".equals(isread)){
+            if("1".equals(isread)){
                 companyViewHolder.ivCaseRedFlag.setVisibility(View.GONE);
             }else {
                 companyViewHolder.ivCaseRedFlag.setVisibility(View.VISIBLE);

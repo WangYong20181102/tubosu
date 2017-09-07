@@ -1,6 +1,7 @@
 package com.tbs.tobosupicture.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.SeeBigImgActivity;
 import com.tbs.tobosupicture.bean.CaseDetailEntity;
 import com.tbs.tobosupicture.bean.CaseDetailJsonEntity;
 import com.tbs.tobosupicture.bean.SuiteEntiy;

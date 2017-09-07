@@ -37,7 +37,7 @@ import java.util.Date;
 
 public class Utils {
 
-    private static boolean isPrintLog = false;
+    private static boolean isPrintLog = true;
 
     //TODO App相关处理工具****************************
 

@@ -27,11 +27,20 @@ public class CaseDetailJsonEntity1 {
     private String msg;
     private JSONObject data;
 
-    private CaseInfoEntity caseInfoEntity;                     //  案例详情 之 案例信息
-    private ArrayList<OnlineDiagram> onlineDiagramDataList;    //  案例详情 之 在线图
+    private CaseInfoEntity caseInfoEntity;                       //  案例详情 之 案例信息
+    private ArrayList<OnlineDiagram> onlineDiagramDataList;      //  案例详情 之 在线图
 //    private ArrayList<StayRealEntity> stayRealEntityDataList;  //  案例详情 之 入住场景
     private ArrayList<String> stayRealImgList;
-    private ArrayList<SuiteEntiy> suiteEntiyDataList;          //  案例详情 之 套图
+    private ArrayList<SuiteEntiy> suiteEntiyDataList;            //  案例详情 之 套图
+    private String allImgDataString;
+
+    public String getAllImgDataString() {
+        return allImgDataString;
+    }
+
+    public void setAllImgDataString(String allImgDataString) {
+        this.allImgDataString = allImgDataString;
+    }
 
     public CaseDetailJsonEntity1(String json){
 
@@ -83,10 +92,11 @@ public class CaseDetailJsonEntity1 {
                         String arrString = onlineDiagramArr.getJSONObject(i).getJSONArray("img_url").toString();
                         Utils.setErrorLog(TAG, "在线工地 原字符串 " + arrString);
                         arrString = arrString.replace(",", "#").replace("[", "").replace("]", "").replaceAll("\"", "");
+                        Utils.setErrorLog(TAG, "replace之后" + arrString);
                         ArrayList<String> imgList = new ArrayList<String>();
                         String[] tempArr = arrString.split("#");
                         for(int j=0; j<tempArr.length;j++){
-                            String temp = tempArr[i];
+                            String temp = tempArr[j];
                             if(!"".equals(temp)){
                                 imgList.add(temp);
                                 Utils.setErrorLog("在线工地  分割之后 ", temp);
@@ -109,12 +119,11 @@ public class CaseDetailJsonEntity1 {
                     String arrString = stayRealArr.toString();
                     Utils.setErrorLog(TAG, "入住实景 原字符串 " + arrString);
                     arrString = arrString.replace(",", "#").replace("[", "").replace("]", "").replaceAll("\"", "");
-                    ArrayList<String> imgList = new ArrayList<String>();
                     String[] tempArr = arrString.split("#");
                     for(int j=0; j<tempArr.length;j++){
                         String temp = tempArr[j];
                         if(!"".equals(temp)){
-                            imgList.add(temp);
+                            stayRealImgList.add(temp);
                             Utils.setErrorLog("入住实景 分割之后 ", temp);
                         }else{
                             Utils.setErrorLog("发生什么事2 >>>>>>", "发生什么事2");
@@ -133,6 +142,9 @@ public class CaseDetailJsonEntity1 {
                         suiteEntiyDataList.add(entiy);
                     }
                 }
+
+                JSONArray allImg = this.data.getJSONArray("img_urls");
+                allImgDataString = allImg.toString();
             }
         } catch (JSONException e) {
             e.printStackTrace();

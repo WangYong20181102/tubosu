@@ -734,6 +734,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     }
 
     private  void needPermissions(){
+
         if(Build.VERSION.SDK_INT >= 23){
             String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_FINE_LOCATION,

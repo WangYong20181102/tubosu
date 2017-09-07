@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.CaseDetailActivity;
+import com.tbs.tobosupicture.activity.DecorateCaseSearchActivity;
 import com.tbs.tobosupicture.bean.OwnerSearchRecordJsonEntity;
 import com.tbs.tobosupicture.utils.Utils;
 
@@ -77,11 +78,8 @@ public class OwenerSearchRecordAdapter extends RecyclerView.Adapter<RecyclerView
                 ownerHolder.tvCheck.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Utils.setToast(context, "改变颜色，文字消失，请求网络吗？");
-                        Intent intent = new Intent(context, CaseDetailActivity.class);
-                        Bundle b = new Bundle();
-                        b.putString("id", dataList.get(position).getId());
-                        intent.putExtra("case_bundle", b);
+                        Intent intent = new Intent(context, DecorateCaseSearchActivity.class);
+                        intent.putExtra("case_group_id", dataList.get(position).getId());
                         context.startActivity(intent);
                     }
                 });

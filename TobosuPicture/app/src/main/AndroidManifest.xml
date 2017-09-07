@@ -168,6 +168,8 @@
         <activity android:name=".activity.MyCaseListActivity" />
         <activity android:name=".activity.SystemMessageActivity" />
         <activity android:name=".activity.NewSendDynamicActivity" />
+        <activity android:name=".activity.SeeBigImgActivity" />
+        <activity android:name=".activity.DecorateCaseSearchActivity" />
         <activity android:name=".activity.SendDynamicDetailActivity"></activity>
     </application>
 

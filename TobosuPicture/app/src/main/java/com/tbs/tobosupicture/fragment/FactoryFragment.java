@@ -125,12 +125,13 @@ public class FactoryFragment extends BaseFragment {
             param = new HashMap<String, Object>();
             param.put("token", Utils.getDateToken());
             param.put("type", "2");
-            param.put("class_id", class_id);// 仅传小类id
+            param.put("class_id", class_id);
             param.put("city_name", city);
             param.put("page", page);
             param.put("page_size", pageSize);
 
             Utils.setErrorLog(TAG, "oiy>> 城市-" + city + "  daxiao  class_id  >" +class_id);
+
 
 
             HttpUtils.doPost(UrlConstans.GET_LIST, param, new Callback() {

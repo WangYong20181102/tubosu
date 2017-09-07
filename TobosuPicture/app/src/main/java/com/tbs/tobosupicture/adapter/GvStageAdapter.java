@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.activity.SeeBigImgActivity;
 import com.tbs.tobosupicture.activity.SeeImageActivity;
 import com.tbs.tobosupicture.bean.CaseTypeChild;
 import com.tbs.tobosupicture.utils.GlideUtils;
@@ -76,17 +77,14 @@ public class GvStageAdapter extends BaseAdapter {
         GlideUtils.glideLoader(context, url,R.mipmap.loading_img_fail, R.mipmap.loading_img,holder.iv);
 
 
-        holder.iv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent i = new Intent(context, SeeImageActivity.class);
-                Bundle b = new Bundle();
-                b.putString("img_id", id);
-                i.putExtra("img_bundle", b);
-                context.startActivity(i);
-            }
-        });
+//        holder.iv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent it = new Intent(context, SeeBigImgActivity.class);
+//                it.putExtra("imgStringData", imgString);
+//                context.startActivity(it);
+//            }
+//        });
         return convertView;
     }
 

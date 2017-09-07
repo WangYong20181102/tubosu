@@ -2,6 +2,7 @@ package com.tbs.tobosupicture.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -71,9 +72,9 @@ public class CaseDetailActivity extends BaseActivity {
     @BindView(R.id.tvCaseDescription)
     TextView tvCaseDescription;
     @BindView(R.id.myStageCaseDetial)
-    MyListView myStageCaseDetial;   // 装修阶段
+    MyListView myStageCaseDetial;        // 施工阶段
     @BindView(R.id.mylistviewStayIn)
-    MyListView mylistviewStayIn;  // 入住场景
+    MyListView mylistviewStayIn;         // 入住场景
     @BindView(R.id.layoutIneedPrice)
     LinearLayout layoutIneedPrice;
     @BindView(R.id.layoutGetPriceKnow)
@@ -105,6 +106,8 @@ public class CaseDetailActivity extends BaseActivity {
     private String shareTitle = "";     // 分享 标题
     private String shareImg = "";       // 分享 图片
 
+    private String imgStringData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,7 +125,9 @@ public class CaseDetailActivity extends BaseActivity {
             id = getIntent().getBundleExtra("case_bundle").getString("id");
             getDataFromNet(id);
         }
-        Utils.setErrorLog(TAG, "case——id是什么呢" + id +"  用户id"+ SpUtils.getUserUid(mContext) + " ***  " + Utils.getDateToken());
+
+        Utils.setErrorLog(TAG, "case_id是什么呢" + id +"  用户id"+ SpUtils.getUserUid(mContext) + " ***  " + Utils.getDateToken());
+
     }
 
 
@@ -219,7 +224,6 @@ public class CaseDetailActivity extends BaseActivity {
                 public void onResponse(Call call, Response response) throws IOException {
                     String json = response.body().string();
                     Utils.setErrorLog(TAG, json);
-
 //                    Gson gson = new Gson();
 //                    CaseDetailJsonEntity caseDetailJsonEntity = gson.fromJson(json, CaseDetailJsonEntity.class);
 //                    if(caseDetailJsonEntity.getStatus() == 200){
@@ -245,6 +249,7 @@ public class CaseDetailActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                imgStringData = detaiJsonEntity.getAllImgDataString();
                                 initDataInView();
                             }
                         });
@@ -283,11 +288,28 @@ public class CaseDetailActivity extends BaseActivity {
         GlideUtils.glideLoader(mContext, detaiJsonEntity.getCaseInfoEntity().getCover_url(), R.mipmap.loading_img_fail, R.mipmap.loading_img, ivDetailImg);
         GlideUtils.glideLoader(mContext, detaiJsonEntity.getCaseInfoEntity().getDesigner_icon(), R.mipmap.pic, R.mipmap.pic, ivDesinHead, 0);
         GlideUtils.glideLoader(mContext, detaiJsonEntity.getCaseInfoEntity().getLayout_url(),R.mipmap.loading_img_fail, R.mipmap.loading_img,ivBigHuxingTu, 1);
-
+        ivBigHuxingTu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(mContext, SeeBigImgActivity.class);
+                it.putExtra("imgStringData", imgStringData);
+                it.putExtra("imgurl", detaiJsonEntity.getCaseInfoEntity().getLayout_url());
+                startActivity(it);
+            }
+        });
         // 设计图
         if(detaiJsonEntity.getSuiteEntiyDataList()!=null){
             CaseDetailImgAdapter imgAdapter = new CaseDetailImgAdapter(mContext, detaiJsonEntity.getSuiteEntiyDataList());
             mylistviewCaseDetial.setAdapter(imgAdapter);
+            mylistviewCaseDetial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent it = new Intent(mContext, SeeBigImgActivity.class);
+                    it.putExtra("imgStringData", imgStringData);
+                    it.putExtra("imgurl", detaiJsonEntity.getSuiteEntiyDataList().get(position).getImg_url());
+                    startActivity(it);
+                }
+            });
         }else {
             // 无设计图
             layoutDesignChart.setVisibility(View.GONE);
@@ -295,7 +317,7 @@ public class CaseDetailActivity extends BaseActivity {
 
         //  施工阶段
         if(detaiJsonEntity.getOnlineDiagramDataList()!=null){
-            CaseDetailImgGVAdapter imgGVAdapter = new CaseDetailImgGVAdapter(mContext, detaiJsonEntity.getOnlineDiagramDataList());
+            CaseDetailImgGVAdapter imgGVAdapter = new CaseDetailImgGVAdapter(mContext, detaiJsonEntity.getOnlineDiagramDataList(), imgStringData);
             myStageCaseDetial.setAdapter(imgGVAdapter);
         }else {
             // 无施工阶段
@@ -306,6 +328,15 @@ public class CaseDetailActivity extends BaseActivity {
         if(detaiJsonEntity.getStayRealImgList() != null && detaiJsonEntity.getStayRealImgList().size()>0){
             CaseDetailStayInAdapter stayInAdapter = new CaseDetailStayInAdapter(mContext, detaiJsonEntity.getStayRealImgList());
             mylistviewStayIn.setAdapter(stayInAdapter);
+            mylistviewStayIn.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent it = new Intent(mContext, SeeBigImgActivity.class);
+                    it.putExtra("imgStringData", imgStringData);
+                    it.putExtra("imgurl", detaiJsonEntity.getStayRealImgList().get(position));
+                    startActivity(it);
+                }
+            });
         }else{
             // 无入住场景
             layoutStayInPic.setVisibility(View.GONE);

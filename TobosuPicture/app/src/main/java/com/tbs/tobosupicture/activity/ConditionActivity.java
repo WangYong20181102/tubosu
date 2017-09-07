@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -87,12 +88,6 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
 
     @BindView(R.id.show_cittext)
     TextView show_cittext;
-
-
-
-
-
-
 
     private boolean isHide = true;
 
@@ -228,8 +223,8 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
             // 初始化expandablelistview
             CaseSearchStyleAdapter caseSearchStyleAdapter = new CaseSearchStyleAdapter(mContext, caseConditionTypeList, new CaseSearchStyleAdapter.OnSearchCaseStyleItemClickListener() {
                 @Override
-                public void onSearchCaseStyleParentClickListener(int group, String id, int position, String condition) {
-//                    Utils.setToast(mContext, group + "<<<<===>>>>" + id);
+                public void onSearchCaseStyleParentClickListener(TextView textView, int group, String id, int position, String condition) {
+//                    Utils.setToast(mContext, group + "<<<<group===>>>>" + id);
 
                     for(int i=0; i<listViewCount; i++){
 
@@ -239,6 +234,11 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                             conditionTextList.set(i, hashMap);
                         }
                     }
+
+//                    textView.setText(condition);
+//                    groupTextView.setText(caseConditionTypeList.get(group).getCaseTypeChildList().get(position).getValue());
+//                    Utils.setToast(mContext, ""+groupPosition + "******" + childPosition);
+
 
                     switch (group) {
                         case 0: // 面积
@@ -286,17 +286,17 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         b.putString("param_layout", param_layout);
         b.putString("param_price", param_price);
         b.putString("param_style", param_style);
-        b.putString("param_city_id", city_id);
         b.putString("param_district_id", district_id);//小区id
         b.putString("param_vilige_id", param_vilige_id);//花园小区id  param_vilige_id
         if("".equals(cityName)){
             b.putInt("getcity", 0);// 无选择城市
             conditionText = cityName + " " +conditionText;
+            b.putString("param_city_id", cityName);
         }else {
             b.putInt("getcity", 1);// 有选择城市
+            b.putString("param_city_id", city_id);
         }
         b.putString("condition_text", cityName + conditionText);
-        Utils.setErrorLog(TAG, cityName + conditionText + "%%");
         intent.putExtra("params", b);
 
         Utils.setErrorLog(TAG, param_area + "   " + param_layout + "  " + param_price + "  " + param_style + "  返回城市id " + city_id+  "  返回小区id " + district_id+ "  返回花园小区id " + param_vilige_id);
@@ -415,18 +415,25 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
 
                             @Override
                             public void onResponse(Call call, Response response) throws IOException {
-                                String json = response.body().string();
-                                try {
-                                    JSONObject jsonObject = new JSONObject(json);
-                                    if (jsonObject.getInt("status") == 200) {
-                                        Utils.setToast(mContext, jsonObject.getString("msg"));
-                                        relSearchCaseLayout.setVisibility(View.GONE);
-                                    } else {
-                                        Utils.setToast(mContext, jsonObject.getString("msg"));
+                                final String json = response.body().string();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            JSONObject jsonObject = new JSONObject(json);
+
+                                            if (jsonObject.getInt("status") == 200) {
+                                                Utils.setToast(mContext, jsonObject.getString("msg"));
+                                                relSearchCaseLayout.setVisibility(View.GONE);
+                                            } else {
+                                                Utils.setToast(mContext, jsonObject.getString("msg"));
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                                });
+
                             }
                         });
                     }

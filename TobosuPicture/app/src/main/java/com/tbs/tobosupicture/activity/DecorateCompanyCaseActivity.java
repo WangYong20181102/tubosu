@@ -79,6 +79,7 @@ public class DecorateCompanyCaseActivity extends BaseActivity {
                 hashMap.put("uid", SpUtils.getUserUid(mContext));
                 hashMap.put("page", page);
                 hashMap.put("page_size", pageSize);
+                Utils.setErrorLog(TAG, "用户id " + SpUtils.getUserUid(mContext));
                 HttpUtils.doPost(UrlConstans.SAME_CITY_DECORATE_CASE_LIST_URL, hashMap, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {

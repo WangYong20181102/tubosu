@@ -89,7 +89,7 @@ public class CaseSearchStyleAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.adapter_item_group_style_layout,null);
             groupHolder.tvBigStyleText = (TextView) convertView.findViewById(R.id.tv_group_style_text);
             groupHolder.ivBigStyleImg = (ImageView) convertView.findViewById(R.id.iv_group_style_icon);
-            groupHolder.show_group_style_text = (TextView) convertView.findViewById(R.id.show_group_style_text);
+//            groupHolder.show_group_style_text = (TextView) convertView.findViewById(R.id.show_group_style_text);
             convertView.setTag(groupHolder);
         }else{
             groupHolder = (GroupViewHolder) convertView.getTag();
@@ -127,7 +127,7 @@ public class CaseSearchStyleAdapter extends BaseExpandableListAdapter {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String _id = groupDataList.get(groupPosition).getCaseTypeChildList().get(position).getId();
                 String cc = groupDataList.get(groupPosition).getCaseTypeChildList().get(position).getValue();
-                onSearchCaseStyleItemClickListener.onSearchCaseStyleParentClickListener(groupPosition, _id, position, cc);
+                onSearchCaseStyleItemClickListener.onSearchCaseStyleParentClickListener((TextView) parent.findViewById(R.id.show_group_style_text), groupPosition, _id, position, cc);
                 positionList.add(groupPosition, position);
                 adapter.setSelectionPosition(positionList.get(groupPosition));
                 adapter.notifyDataSetChanged();
@@ -143,7 +143,7 @@ public class CaseSearchStyleAdapter extends BaseExpandableListAdapter {
 
     class GroupViewHolder{
         TextView tvBigStyleText;
-        TextView show_group_style_text;
+//        TextView show_group_style_text;
         ImageView ivBigStyleImg;
     }
 
@@ -154,7 +154,7 @@ public class CaseSearchStyleAdapter extends BaseExpandableListAdapter {
 
     private OnSearchCaseStyleItemClickListener onSearchCaseStyleItemClickListener;
     public interface OnSearchCaseStyleItemClickListener{
-        void onSearchCaseStyleParentClickListener(int group, String id, int position, String condiction);
+        void onSearchCaseStyleParentClickListener(TextView pView, int group, String id, int position, String condiction);
     }
 
     public OnSearchCaseStyleItemClickListener getOnSearchCaseStyleItemClickListener() {

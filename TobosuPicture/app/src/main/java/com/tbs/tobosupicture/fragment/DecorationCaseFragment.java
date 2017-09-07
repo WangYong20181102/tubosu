@@ -221,6 +221,7 @@ public class DecorationCaseFragment extends BaseFragment {
                     param_city_id = bundle.getString("param_city_id");
                     param_district_id = bundle.getString("param_district_id");//小区id
                     param_vilige_id = bundle.getString("param_vilige_id"); // 花园小区id
+                    Utils.setErrorLog(TAG, param_city_id+"%%");
                     if(bundle.getInt("getcity") == 0){
                         tvSearchTipText.setText(city + " " + bundle.getString("condition_text"));
                     }else {
