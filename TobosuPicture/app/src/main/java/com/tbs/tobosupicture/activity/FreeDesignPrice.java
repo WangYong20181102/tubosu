@@ -1,4 +1,5 @@
 package com.tbs.tobosupicture.activity;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
@@ -29,6 +31,7 @@ import com.tbs.tobosupicture.view.TipDialog1;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -169,7 +172,7 @@ public class FreeDesignPrice extends Activity {
     }
 
 
-    private String getCellPhone(){
+    private String getCellPhone() {
         SharedPreferences saveInfo = getSharedPreferences("User_Info_SP", Context.MODE_PRIVATE);
         return saveInfo.getString("cellphone", "");
     }
@@ -182,14 +185,14 @@ public class FreeDesignPrice extends Activity {
                     finish();
                     break;
                 case R.id.fdp_get_code:
-                    if(Utils.isNetAvailable(mContext)){
+                    if (Utils.isNetAvailable(mContext)) {
                         String phone = fdpPhonenum.getText().toString();
-                        if(timeCount == null){
+                        if (timeCount == null) {
                             timeCount = new TimeCount(60000, 1000, fdpGetcode);
                             timeCount.start();
                             HashMap<String, Object> hashMap = new HashMap<String, Object>();
                             hashMap.put("token", Utils.getDateToken());
-                            hashMap.put("cellphone",phone);
+                            hashMap.put("cellphone", phone);
                             HttpUtils.doPost(UrlConstans.GET_MSM_URL, hashMap, new Callback() {
                                 @Override
                                 public void onFailure(Call call, IOException e) {
@@ -211,9 +214,9 @@ public class FreeDesignPrice extends Activity {
 //                                    "msg": "请求成功"
                                             try {
                                                 JSONObject object = new JSONObject(json);
-                                                if(object.getInt("status") == 200){
+                                                if (object.getInt("status") == 200) {
                                                     Utils.setToast(mContext, "请查看手机短信");
-                                                }else {
+                                                } else {
                                                     Utils.setToast(mContext, object.getString("msg"));
                                                 }
                                             } catch (JSONException e) {
@@ -229,26 +232,26 @@ public class FreeDesignPrice extends Activity {
                     break;
                 case R.id.fdp_ok_send:
                     //走接口  快速注册
-                    if (Utils.isNetAvailable(mContext)) {
-                        if (!TextUtils.isEmpty(fdpInputCode.getText().toString().trim())) {
-                            goPopupOrder(fdpInputCode.getText().toString().trim());
-//                            requestFastLogin();
-                        } else {
-                            Toast.makeText(mContext, "验证码不能为空！", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(mContext, "当前无网络连接", Toast.LENGTH_LONG).show();
-                    }
-
+//                    if (Utils.isNetAvailable(mContext)) {
+//                        if (!TextUtils.isEmpty(fdpInputCode.getText().toString().trim())) {
+//                            goPopupOrder(fdpInputCode.getText().toString().trim());
+////                            requestFastLogin();
+//                        } else {
+//                            Toast.makeText(mContext, "验证码不能为空！", Toast.LENGTH_SHORT).show();
+//                        }
+//                    } else {
+//                        Toast.makeText(mContext, "当前无网络连接", Toast.LENGTH_LONG).show();
+//                    }
+                    finish();
                     break;
             }
         }
     };
 
-    private void goPopupOrder(String num){
+    private void goPopupOrder(String num) {
 
 
-        if(Utils.isNetAvailable(mContext)){
+        if (Utils.isNetAvailable(mContext)) {
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("token", Utils.getDateToken());
             hashMap.put("cellphone", fdpPhonenum.getText().toString());
@@ -277,10 +280,10 @@ public class FreeDesignPrice extends Activity {
 //                            }
                             try {
                                 JSONObject jsonObject = new JSONObject(json);
-                                if(jsonObject.getInt("status") == 200){
+                                if (jsonObject.getInt("status") == 200) {
                                     customWaitDialog.show();
                                     sendOrder();
-                                }else {
+                                } else {
                                     Utils.setToast(mContext, "验证码错误，请重新输入");
                                 }
 
@@ -295,8 +298,8 @@ public class FreeDesignPrice extends Activity {
         }
     }
 
-    private void sendOrder(){
-        if(Utils.isNetAvailable(mContext)){
+    private void sendOrder() {
+        if (Utils.isNetAvailable(mContext)) {
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("token", Utils.getDateToken());
             hashMap.put("cellphone", fdpPhonenum.getText().toString().trim());
@@ -308,8 +311,8 @@ public class FreeDesignPrice extends Activity {
 
 
             Utils.setErrorLog(TAG, "token" + Utils.getDateToken() +
-                    "       cellphone" + fdpPhonenum.getText().toString().trim()+
-                    "       orderprice"+mPrice + "           " + Utils.getChannType(mContext)
+                    "       cellphone" + fdpPhonenum.getText().toString().trim() +
+                    "       orderprice" + mPrice + "           " + Utils.getChannType(mContext)
             );
 
             HttpUtils.doPost(UrlConstans.PUB_ORDER_URL, hashMap, new Callback() {
@@ -326,14 +329,14 @@ public class FreeDesignPrice extends Activity {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     final String json = response.body().string();
-                    Utils.setErrorLog(TAG,"曾昭仲json = "+json);
-                            runOnUiThread(new Runnable() {
+                    Utils.setErrorLog(TAG, "曾昭仲json = " + json);
+                    runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             customWaitDialog.dismiss();
                             try {
                                 JSONObject jsonObject = new JSONObject(json);
-                                if(jsonObject.getInt("error_code") == 0){
+                                if (jsonObject.getInt("error_code") == 0) {
                                     TipDialog1.Builder builder = new TipDialog1.Builder(mContext);
                                     builder.setTitle("温馨提醒")
                                             .setPositiveButton("确定",
@@ -347,7 +350,7 @@ public class FreeDesignPrice extends Activity {
                                                         }
                                                     });
                                     builder.create().show();
-                                }else{
+                                } else {
                                     Utils.setToast(mContext, "发单发送失败，请稍后再试~");
                                 }
                             } catch (JSONException e) {
@@ -446,24 +449,24 @@ public class FreeDesignPrice extends Activity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String json = response.body().string();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                JSONObject jsonObject = new JSONObject(json);
-                                if (jsonObject.getInt("error_code") == 0) {
-                                    customWaitDialog.dismiss();
-                                    parseJson(jsonObject);
-                                } else {
-                                    customWaitDialog.dismiss();
-                                    Toast.makeText(mContext,
-                                            jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(json);
+                            if (jsonObject.getInt("error_code") == 0) {
+                                customWaitDialog.dismiss();
+                                parseJson(jsonObject);
+                            } else {
+                                customWaitDialog.dismiss();
+                                Toast.makeText(mContext,
+                                        jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    });
+                    }
+                });
             }
         });
 
@@ -501,7 +504,7 @@ public class FreeDesignPrice extends Activity {
 
         private Button btn_count;
 
-        public TimeCount(long millisInFuture, long countDownInterval,Button btn_count) {
+        public TimeCount(long millisInFuture, long countDownInterval, Button btn_count) {
             super(millisInFuture, countDownInterval);
             this.btn_count = btn_count;
         }

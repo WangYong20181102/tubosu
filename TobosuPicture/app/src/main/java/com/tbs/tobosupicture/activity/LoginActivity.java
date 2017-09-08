@@ -160,6 +160,12 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败===" + e.toString());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(mContext, "链接服务器失败！", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override

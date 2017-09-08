@@ -1,4 +1,5 @@
 package com.tbs.tobosupicture.activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.CaseDetailImgAdapter;
@@ -29,11 +31,14 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -68,7 +73,7 @@ public class CaseDetailActivity extends BaseActivity {
     @BindView(R.id.ivBigHuxingTu)
     ImageView ivBigHuxingTu;
     @BindView(R.id.mylistviewCaseDetial)  // 设计图
-    MyListView mylistviewCaseDetial;
+            MyListView mylistviewCaseDetial;
     @BindView(R.id.tvCaseDescription)
     TextView tvCaseDescription;
     @BindView(R.id.myStageCaseDetial)
@@ -115,7 +120,7 @@ public class CaseDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
         mContext = CaseDetailActivity.this;
         TAG = "CaseDetailActivity";
-        caseDetailScrollView.smoothScrollTo(0,20);
+        caseDetailScrollView.smoothScrollTo(0, 20);
         getIntentData();
         setClick();
     }
@@ -126,7 +131,7 @@ public class CaseDetailActivity extends BaseActivity {
             getDataFromNet(id);
         }
 
-        Utils.setErrorLog(TAG, "case_id是什么呢" + id +"  用户id"+ SpUtils.getUserUid(mContext) + " ***  " + Utils.getDateToken());
+        Utils.setErrorLog(TAG, "case_id是什么呢" + id + "  用户id" + SpUtils.getUserUid(mContext) + " ***  " + Utils.getDateToken());
 
     }
 
@@ -134,18 +139,18 @@ public class CaseDetailActivity extends BaseActivity {
     /**
      * 点击收藏
      */
-    private void setClick(){
+    private void setClick() {
         ivCollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Utils.isNetAvailable(mContext)){
-                    if(Utils.userIsLogin(mContext)){
+                if (Utils.isNetAvailable(mContext)) {
+                    if (Utils.userIsLogin(mContext)) {
                         HashMap<String, Object> hashMap = new HashMap<String, Object>();
                         hashMap.put("case_id", id);
                         hashMap.put("uid", SpUtils.getUserUid(mContext));
                         hashMap.put("token", Utils.getDateToken());
 
-                        Utils.setErrorLog(TAG, "==案例id>>" + id +"     用户id"+ SpUtils.getUserUid(mContext) + "   ==>>>" + Utils.getDateToken());
+                        Utils.setErrorLog(TAG, "==案例id>>" + id + "     用户id" + SpUtils.getUserUid(mContext) + "   ==>>>" + Utils.getDateToken());
 
                         HttpUtils.doPost(UrlConstans.CLICK_CASE_COLLECT_URL, hashMap, new Callback() {
                             @Override
@@ -169,16 +174,16 @@ public class CaseDetailActivity extends BaseActivity {
                                         try {
                                             JSONObject jsonObject = new JSONObject(json);
                                             String ms = jsonObject.getString("msg");
-                                            if(jsonObject.getInt("status") == 200){
-                                                if(ms.contains("取消")){
+                                            if (jsonObject.getInt("status") == 200) {
+                                                if (ms.contains("取消")) {
                                                     // 取消收藏成功
                                                     ivCollect.setBackgroundResource(R.mipmap.shoucang21);
-                                                }else {
+                                                } else {
                                                     // 收藏成功
                                                     ivCollect.setBackgroundResource(R.mipmap.shoucang4);
                                                 }
                                                 Utils.setToast(mContext, ms);
-                                            }else {
+                                            } else {
                                                 Utils.setToast(mContext, "操作失败，稍后再试~");
                                             }
                                         } catch (JSONException e) {
@@ -188,7 +193,7 @@ public class CaseDetailActivity extends BaseActivity {
                                 });
                             }
                         });
-                    }else {
+                    } else {
                         startActivity(new Intent(mContext, LoginActivity.class));
                     }
                 }
@@ -198,6 +203,7 @@ public class CaseDetailActivity extends BaseActivity {
 
     /**
      * 请求网络获取本详情数据
+     *
      * @param caseid
      */
     private void getDataFromNet(String caseid) {
@@ -245,7 +251,7 @@ public class CaseDetailActivity extends BaseActivity {
 //                    }
 
                     detaiJsonEntity = new CaseDetailJsonEntity1(json);
-                    if(detaiJsonEntity.getStatus() == 200){
+                    if (detaiJsonEntity.getStatus() == 200) {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -253,7 +259,7 @@ public class CaseDetailActivity extends BaseActivity {
                                 initDataInView();
                             }
                         });
-                    }else {
+                    } else {
                         final String msg = detaiJsonEntity.getMsg();
                         runOnUiThread(new Runnable() {
                             @Override
@@ -269,6 +275,7 @@ public class CaseDetailActivity extends BaseActivity {
     }
 
     private String isCollect = "3"; // 3是无意义的
+
     private void initDataInView() {
         des = detaiJsonEntity.getCaseInfoEntity().getDescription();
         tvCaseDescription.setText(des);
@@ -279,15 +286,15 @@ public class CaseDetailActivity extends BaseActivity {
 
         isCollect = detaiJsonEntity.getCaseInfoEntity().getIs_collect();
         Utils.setErrorLog(TAG, "当前进入页面时的标识是" + isCollect);
-        if("0".equals(isCollect)){
+        if ("0".equals(isCollect)) {
             // 未收藏
             ivCollect.setBackgroundResource(R.mipmap.shoucang21);
-        }else{
+        } else {
             ivCollect.setBackgroundResource(R.mipmap.shoucang4);
         }
         GlideUtils.glideLoader(mContext, detaiJsonEntity.getCaseInfoEntity().getCover_url(), R.mipmap.loading_img_fail, R.mipmap.loading_img, ivDetailImg);
         GlideUtils.glideLoader(mContext, detaiJsonEntity.getCaseInfoEntity().getDesigner_icon(), R.mipmap.pic, R.mipmap.pic, ivDesinHead, 0);
-        GlideUtils.glideLoader(mContext, detaiJsonEntity.getCaseInfoEntity().getLayout_url(),R.mipmap.loading_img_fail, R.mipmap.loading_img,ivBigHuxingTu, 1);
+        GlideUtils.glideLoader(mContext, detaiJsonEntity.getCaseInfoEntity().getLayout_url(), R.mipmap.loading_img_fail, R.mipmap.loading_img, ivBigHuxingTu, 1);
         ivBigHuxingTu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -298,7 +305,7 @@ public class CaseDetailActivity extends BaseActivity {
             }
         });
         // 设计图
-        if(detaiJsonEntity.getSuiteEntiyDataList()!=null){
+        if (detaiJsonEntity.getSuiteEntiyDataList() != null) {
             CaseDetailImgAdapter imgAdapter = new CaseDetailImgAdapter(mContext, detaiJsonEntity.getSuiteEntiyDataList());
             mylistviewCaseDetial.setAdapter(imgAdapter);
             mylistviewCaseDetial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -310,22 +317,22 @@ public class CaseDetailActivity extends BaseActivity {
                     startActivity(it);
                 }
             });
-        }else {
+        } else {
             // 无设计图
             layoutDesignChart.setVisibility(View.GONE);
         }
 
         //  施工阶段
-        if(detaiJsonEntity.getOnlineDiagramDataList()!=null){
+        if (detaiJsonEntity.getOnlineDiagramDataList() != null) {
             CaseDetailImgGVAdapter imgGVAdapter = new CaseDetailImgGVAdapter(mContext, detaiJsonEntity.getOnlineDiagramDataList(), imgStringData);
             myStageCaseDetial.setAdapter(imgGVAdapter);
-        }else {
+        } else {
             // 无施工阶段
             layoutStage.setVisibility(View.GONE);
         }
 
         // 入住场景
-        if(detaiJsonEntity.getStayRealImgList() != null && detaiJsonEntity.getStayRealImgList().size()>0){
+        if (detaiJsonEntity.getStayRealImgList() != null && detaiJsonEntity.getStayRealImgList().size() > 0) {
             CaseDetailStayInAdapter stayInAdapter = new CaseDetailStayInAdapter(mContext, detaiJsonEntity.getStayRealImgList());
             mylistviewStayIn.setAdapter(stayInAdapter);
             mylistviewStayIn.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -337,7 +344,7 @@ public class CaseDetailActivity extends BaseActivity {
                     startActivity(it);
                 }
             });
-        }else{
+        } else {
             // 无入住场景
             layoutStayInPic.setVisibility(View.GONE);
             Utils.setErrorLog(TAG, " 长度  入住场景为空");
@@ -350,7 +357,7 @@ public class CaseDetailActivity extends BaseActivity {
                 detaiJsonEntity.getCaseInfoEntity().getTing() + "厅" +
                 detaiJsonEntity.getCaseInfoEntity().getWei() + "卫");
         tvDistrict.setText(detaiJsonEntity.getCaseInfoEntity().getDistrict_name());
-        tvBudget.setText(detaiJsonEntity.getCaseInfoEntity().getPrice() + "万 - "+ detaiJsonEntity.getCaseInfoEntity().getDesmethod());
+        tvBudget.setText(detaiJsonEntity.getCaseInfoEntity().getPrice() + "万 - " + detaiJsonEntity.getCaseInfoEntity().getDesmethod());
         tvDestrictStyle.setText(detaiJsonEntity.getCaseInfoEntity().getStyle_name());
         tvDistrictSquare.setText(detaiJsonEntity.getCaseInfoEntity().getArea() + "m²");
         tvDesignerName.setText(detaiJsonEntity.getCaseInfoEntity().getDesigner_name());
@@ -372,7 +379,7 @@ public class CaseDetailActivity extends BaseActivity {
                 UMWeb umWeb = new UMWeb(shareUrl);
                 umWeb.setDescription(des);
                 umWeb.setTitle(shareTitle);
-                umWeb.setThumb(new UMImage(mContext,shareImg));
+                umWeb.setThumb(new UMImage(mContext, shareImg));
                 new ShareAction(CaseDetailActivity.this)
                         .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
                         .withMedia(umWeb)

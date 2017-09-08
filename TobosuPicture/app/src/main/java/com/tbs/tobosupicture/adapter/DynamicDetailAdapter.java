@@ -405,6 +405,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                             isZaning = true;
                             HttpCommentZan(commentArrayList.get(position - 1).getId(),
                                     commentArrayList.get(position - 1).getUid(),
+                                    commentArrayList.get(position-1).getIs_virtual_user(),
                                     ((CommentViewHolder) holder).commentZan,
                                     ((CommentViewHolder) holder).dynamic_detail_comment_zan_add,
                                     ((CommentViewHolder) holder).commentZanNum);
@@ -630,12 +631,13 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     //TODO 对用户得回复进行点赞 当前用户的id暂时固定
-    private void HttpCommentZan(String comment_id, String praised_uid, final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
+    private void HttpCommentZan(String comment_id, String praised_uid,String user_type, final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("uid", SpUtils.getUserUid(mContext));
         param.put("comment_id", comment_id);
         param.put("praised_uid", praised_uid);
+        param.put("user_type", user_type);
         HttpUtils.doPost(UrlConstans.COMMENT_PRAISE, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

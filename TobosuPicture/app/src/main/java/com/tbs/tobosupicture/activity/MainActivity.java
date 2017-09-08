@@ -270,6 +270,8 @@ public class MainActivity extends BaseActivity {
                 isLoop = false;
                 Log.e(TAG, "用户登出成功====处理登出事件===isloop的值===" + isLoop);
                 mImgToFriendTag.setBadgeCount(0);
+                mianAboutReddot.setVisibility(View.GONE);
+                EventBusUtil.sendEvent(new Event(EC.EventCode.HINT_MINE_RED_DOT));
                 break;
         }
     }
@@ -283,7 +285,7 @@ public class MainActivity extends BaseActivity {
                 try {
                     if (!TextUtils.isEmpty(SpUtils.getMsgTime(mContext))) {
                         Thread.sleep(Long.parseLong(SpUtils.getMsgTime(mContext)) * 1000);
-                        Log.e(TAG, "网络获取的定时时间=======" + Long.parseLong(SpUtils.getMsgTime(mContext)) * 1000);
+                        Log.e(TAG, "网络获取消息的定时时间=======" + Long.parseLong(SpUtils.getMsgTime(mContext)) * 1000);
                     } else {
                         Thread.sleep(2345);
                     }
@@ -303,10 +305,10 @@ public class MainActivity extends BaseActivity {
             while (isLoop) {
                 try {
                     //5分钟拉取一次
-                    if(!TextUtils.isEmpty(SpUtils.getAnliTime(mContext))){
-                        Thread.sleep(Long.parseLong(SpUtils.getAnliTime(mContext))*1000);
-                        Log.e(TAG, "网络获取的定时时间=======" + Long.parseLong(SpUtils.getAnliTime(mContext))*1000);
-                    }else {
+                    if (!TextUtils.isEmpty(SpUtils.getAnliTime(mContext))) {
+                        Thread.sleep(Long.parseLong(SpUtils.getAnliTime(mContext)) * 1000);
+                        Log.e(TAG, "网络获取案例的定时时间=======" + Long.parseLong(SpUtils.getAnliTime(mContext)) * 1000);
+                    } else {
                         Thread.sleep(300000);
                     }
                     HttpGetIsHaveNewCast();
