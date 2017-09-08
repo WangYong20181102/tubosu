@@ -11,8 +11,9 @@
         <ImageView
             android:id="@+id/iv_sample_img"
             android:layout_width="170dp"
-            android:background="@mipmap/case_loading_img_fail"
-            android:layout_height="100dp"/>
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:background="@mipmap/case_loading_img_fail"/>
 
         <TextView
             android:id="@+id/tv_sample_num"

@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.CaseAdapter;
+import com.tbs.tobosupicture.adapter.OwenerSearchRecordCaseAdapter;
 import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.bean.CaseJsonEntity;
 import com.tbs.tobosupicture.constants.UrlConstans;
@@ -49,10 +50,11 @@ public class DecorateCaseSearchActivity extends BaseActivity {
     
     private int page = 1;
     private int pageSize = 10;
+    private boolean isFirstSee = true;
     
     private LinearLayoutManager linearLayoutManager;
-    private CaseAdapter caseAdapter;
-    private ArrayList<CaseJsonEntity.CaseEntity> caseList;
+    private OwenerSearchRecordCaseAdapter caseAdapter;
+    private ArrayList<CaseJsonEntity.CaseEntity> caseList = new ArrayList<CaseJsonEntity.CaseEntity>();
     private CaseJsonEntity caseJsonEntity;
 
     @Override
@@ -71,12 +73,13 @@ public class DecorateCaseSearchActivity extends BaseActivity {
         Intent it = getIntent();
         if(it!=null && it.getStringExtra("case_group_id")!=null){
             text = it.getStringExtra("case_group_id");
+            Utils.setErrorLog(TAG, "接收需要传的id是" + text);
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("token", Utils.getDateToken());
             hashMap.put("id", text);
             hashMap.put("page", page);
             hashMap.put("page_size", pageSize);
-            HttpUtils.doPost(UrlConstans.CONCERN_URL, hashMap, new Callback() {
+            HttpUtils.doPost(UrlConstans.GET_USER_SEARCH_RECORD, hashMap, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     runOnUiThread(new Runnable() {
@@ -168,11 +171,23 @@ public class DecorateCaseSearchActivity extends BaseActivity {
     private void initListView() {
         newCaseSwipRefreshLayout.setRefreshing(false);
         if (caseAdapter == null) {
-            caseAdapter = new CaseAdapter(mContext, caseList);
+            caseAdapter = new OwenerSearchRecordCaseAdapter(mContext, caseList);
             newCaseRecyclerView.setAdapter(caseAdapter);
         } else {
             caseAdapter.notifyDataSetChanged();
         }
+
+        if(isFirstSee){
+            isFirstSee= false;
+            freshData();
+        }
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         if (caseAdapter != null) {
             caseAdapter.hideLoadMoreMessage();
         }
@@ -183,14 +198,18 @@ public class DecorateCaseSearchActivity extends BaseActivity {
         @Override
         public void onRefresh() {
             //下拉刷新数据 重新初始化各种数据
-            caseList.clear();
-            page = 1;
-            if (caseAdapter != null) {
-                caseAdapter.hideLoadMoreMessage();
-            }
-            getDataFromNet();
+            freshData();
         }
     };
+
+    private void freshData(){
+        caseList.clear();
+        page = 1;
+        if (caseAdapter != null) {
+            caseAdapter.hideLoadMoreMessage();
+        }
+        getDataFromNet();
+    }
 
     private void loadMore() {
         page++;
@@ -211,7 +230,7 @@ public class DecorateCaseSearchActivity extends BaseActivity {
     @OnClick(R.id.recordBack)
     public void onViewClickedDecorateCaseSearchActivity(View view) {
         switch (view.getId()) {
-            case R.id.relCaseSeeImgBack:
+            case R.id.recordBack:
                 finish();
                 break;
         }

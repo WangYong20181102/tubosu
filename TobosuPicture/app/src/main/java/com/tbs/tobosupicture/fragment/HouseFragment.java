@@ -1,5 +1,4 @@
 package com.tbs.tobosupicture.fragment;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -8,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,8 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
-import com.bumptech.glide.util.Util;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.SamplePictureAdapter;
 import com.tbs.tobosupicture.base.BaseFragment;
@@ -34,7 +30,6 @@ import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.umeng.analytics.MobclickAgent;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,9 +50,9 @@ import okhttp3.Response;
  */
 
 public class HouseFragment extends BaseFragment {
+
     private static final String TAG = "HouseFragment";
     private static Context context;
-
     @BindView(R.id.tvSpace)
     TextView tvSpace;
     @BindView(R.id.ivSpaceIcon)
@@ -264,10 +259,10 @@ public class HouseFragment extends BaseFragment {
                 = new PopupWindow(contentView,
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setContentView(contentView);
-//        ColorDrawable cd = new ColorDrawable();
-//        popupWindow.setBackgroundDrawable(cd);
-        popupWindow.setOutsideTouchable(false);
-        popupWindow.setFocusable(false);
+        ColorDrawable cd = new ColorDrawable();
+        popupWindow.setBackgroundDrawable(cd);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setFocusable(true);
         GvAdapter gvAdapter = new GvAdapter(getActivity(), iconList, textList, flag);
         gv.setAdapter(gvAdapter);
         switch (type){
@@ -358,9 +353,16 @@ public class HouseFragment extends BaseFragment {
                         tvHouseColor.setText("颜色");
                         break;
                 }
+
                 page = 1;
                 pageSize = 10;
                 getDataFromNet(parameter, page, pageSize, city, false);
+            }
+        });
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                backPlace();
             }
         });
         popupWindow.showAsDropDown(vAnchor);
@@ -701,6 +703,18 @@ public class HouseFragment extends BaseFragment {
                 ivHouseStyleIcon.setBackgroundResource(R.mipmap.daohang);
                 tvHouseColor.setTextColor(Color.parseColor("#FFA64F"));
                 ivColorIcon.setBackgroundResource(R.mipmap.daohang2);
+                break;
+            case 44: // 恢复
+                tvSpace.setTextColor(Color.parseColor("#202124"));
+                ivSpaceIcon.setBackgroundResource(R.mipmap.daohang);
+                tvStyle.setTextColor(Color.parseColor("#202124"));
+                ivStyleIcon.setBackgroundResource(R.mipmap.daohang);
+                tvPart.setTextColor(Color.parseColor("#202124"));
+                ivPartIcon.setBackgroundResource(R.mipmap.daohang);
+                tvHouseStyle.setTextColor(Color.parseColor("#202124"));
+                ivHouseStyleIcon.setBackgroundResource(R.mipmap.daohang);
+                tvHouseColor.setTextColor(Color.parseColor("#FFA64F"));
+                ivColorIcon.setBackgroundResource(R.mipmap.daohang);
                 break;
         }
     }

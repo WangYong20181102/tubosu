@@ -329,12 +329,14 @@ public class FactoryFragment extends BaseFragment {
                     expandableListview.setVisibility(View.VISIBLE);
                     iv_factory_no_data.setVisibility(View.GONE);
                     initExpandableListView();
+                    ivFactoryChooseStyle.setBackgroundResource(R.mipmap.choose_style_up);
 //                    samplePicList.clear();
                 }else {
                     factoryRecyclerView.setVisibility(View.VISIBLE);
                     factorySwipRefreshLayout.setVisibility(View.VISIBLE);
                     expandableListview.setVisibility(View.GONE);
                     iv_factory_no_data.setVisibility(View.GONE);
+                    ivFactoryChooseStyle.setBackgroundResource(R.mipmap.choose_style_down);
 //                    samplePicList.clear();
 //                    getDataFromNet();
                 }
@@ -354,6 +356,7 @@ public class FactoryFragment extends BaseFragment {
                 getDataFromNet();
                 tvChooseStyle.setText(text);
                 closeState = true;
+                ivFactoryChooseStyle.setBackgroundResource(R.mipmap.choose_style_down);
             }
 
             @Override
@@ -369,6 +372,7 @@ public class FactoryFragment extends BaseFragment {
                 }
                 closeState = true;
                 getDataFromNet();
+                ivFactoryChooseStyle.setBackgroundResource(R.mipmap.choose_style_down);
             }
         });
 

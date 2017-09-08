@@ -28,7 +28,7 @@
                 android:id="@+id/ivSpaceIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
+                android:layout_marginLeft="6dp"
                 android:layout_gravity="center_vertical"
                 android:background="@mipmap/daohang"/>
         </LinearLayout>
@@ -51,7 +51,7 @@
                 android:id="@+id/ivStyleIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
+                android:layout_marginLeft="6dp"
                 android:layout_gravity="center_vertical"
                 android:background="@mipmap/daohang"/>
         </LinearLayout>
@@ -74,7 +74,7 @@
                 android:id="@+id/ivPartIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
+                android:layout_marginLeft="6dp"
                 android:layout_gravity="center_vertical"
                 android:background="@mipmap/daohang"/>
         </LinearLayout>
@@ -97,7 +97,7 @@
                 android:id="@+id/ivHouseStyleIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
+                android:layout_marginLeft="6dp"
                 android:layout_gravity="center_vertical"
                 android:background="@mipmap/daohang"/>
         </LinearLayout>
@@ -120,7 +120,7 @@
                 android:id="@+id/ivColorIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
+                android:layout_marginLeft="6dp"
                 android:layout_gravity="center_vertical"
                 android:background="@mipmap/daohang"/>
         </LinearLayout>

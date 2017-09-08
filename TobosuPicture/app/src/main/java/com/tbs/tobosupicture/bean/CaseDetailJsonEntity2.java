@@ -1,5 +1,6 @@
 package com.tbs.tobosupicture.bean;
 
+import com.tbs.tobosupicture.adapter.CompanySearchRecordAdapter;
 import com.tbs.tobosupicture.utils.Utils;
 
 import org.json.JSONArray;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  * Created by Lie on 2017/8/1.
  */
 
-public class CaseDetailJsonEntity1 {
+public class CaseDetailJsonEntity2 {
 
     private String TAG = "*CaseDetailJsonEntity1*";
 
@@ -27,21 +28,15 @@ public class CaseDetailJsonEntity1 {
     private String msg;
     private JSONObject data;
 
-    private CaseInfoEntity caseInfoEntity;                       //  案例详情 之 案例信息
-    private ArrayList<OnlineDiagram> onlineDiagramDataList;      //  案例详情 之 在线图
-    private ArrayList<String> stayRealImgList;                   //  案例详情 之 入住场景
-    private ArrayList<SuiteEntiy> suiteEntiyDataList;            //  案例详情 之 套图
-    private String allImgDataString;                             //  案例详情 之 入住场景
+    private CompanyEntity companyEntity;                            //  案例详情 之 公司类
+    private CompanyCaseEntity caseInfoEntity;                       //  案例详情 之 公司案例信息
+    private ArrayList<OnlineDiagram> onlineDiagramDataList;         //  案例详情 之 在线图
+    private ArrayList<String> stayRealImgList;                      //  案例详情 之 入住场景
+    private ArrayList<SuiteEntiy> suiteEntiyDataList;               //  案例详情 之 套图
+    private String allImgDataString;
 
-    public String getAllImgDataString() {
-        return allImgDataString;
-    }
 
-    public void setAllImgDataString(String allImgDataString) {
-        this.allImgDataString = allImgDataString;
-    }
-
-    public CaseDetailJsonEntity1(String json){
+    public CaseDetailJsonEntity2(String json){
 
         try {
             JSONObject jsonObject = new JSONObject(json);
@@ -49,8 +44,22 @@ public class CaseDetailJsonEntity1 {
             this.msg = jsonObject.getString("msg");
             if(this.status == 200){
                 this.data = jsonObject.getJSONObject("data");
+
+                JSONObject companyObject = this.data.getJSONObject("company");
+                this.companyEntity = new CompanyEntity();
+                this.companyEntity.setAddress(companyObject.getString("address"));
+                this.companyEntity.setCellphone(companyObject.getString("cellphone"));
+                this.companyEntity.setCertification(companyObject.getString("certification"));
+                this.companyEntity.setIcon(companyObject.getString("icon"));
+                this.companyEntity.setIs_position(companyObject.getString("is_position"));
+                this.companyEntity.setLatitude(companyObject.getString("latitude"));
+                this.companyEntity.setLongitude(companyObject.getString("longitude"));
+                this.companyEntity.setName(companyObject.getString("name"));
+                this.companyEntity.setTelephone_number(companyObject.getString("telephone_number"));
+
+
                 // 案例信息
-                this.caseInfoEntity = new CaseInfoEntity();
+                this.caseInfoEntity = new CompanyCaseEntity();
                 JSONObject caseDataJsonObject = this.data.getJSONObject("case_data");
                 this.caseInfoEntity.setCaseid(caseDataJsonObject.getString("caseid")); // caseid;	//undefined	案例ID号
                 this.caseInfoEntity.setTitle(caseDataJsonObject.getString("title"));
@@ -73,8 +82,6 @@ public class CaseDetailJsonEntity1 {
                 this.caseInfoEntity.setIs_collect(caseDataJsonObject.getString("is_collect"));
                 this.caseInfoEntity.setCover_url(caseDataJsonObject.getString("cover_url"));
                 this.caseInfoEntity.setShare_url(caseDataJsonObject.getString("share_url"));
-
-
 
                 // 在线工地
                 JSONArray onlineDiagramArr = this.data.getJSONArray("online_diagram");
@@ -148,8 +155,6 @@ public class CaseDetailJsonEntity1 {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
     }
 
 
@@ -169,14 +174,6 @@ public class CaseDetailJsonEntity1 {
         this.msg = msg;
     }
 
-    public JSONObject getJSONObject() {
-        return data;
-    }
-
-    public void setJSONObject(JSONObject data) {
-        this.data = data;
-    }
-
     public JSONObject getData() {
         return data;
     }
@@ -185,11 +182,19 @@ public class CaseDetailJsonEntity1 {
         this.data = data;
     }
 
-    public CaseInfoEntity getCaseInfoEntity() {
+    public CompanyEntity getCompanyEntity() {
+        return companyEntity;
+    }
+
+    public void setCompanyEntity(CompanyEntity companyEntity) {
+        this.companyEntity = companyEntity;
+    }
+
+    public CompanyCaseEntity getCaseInfoEntity() {
         return caseInfoEntity;
     }
 
-    public void setCaseInfoEntity(CaseInfoEntity caseInfoEntity) {
+    public void setCaseInfoEntity(CompanyCaseEntity caseInfoEntity) {
         this.caseInfoEntity = caseInfoEntity;
     }
 
@@ -215,5 +220,13 @@ public class CaseDetailJsonEntity1 {
 
     public void setSuiteEntiyDataList(ArrayList<SuiteEntiy> suiteEntiyDataList) {
         this.suiteEntiyDataList = suiteEntiyDataList;
+    }
+
+    public String getAllImgDataString() {
+        return allImgDataString;
+    }
+
+    public void setAllImgDataString(String allImgDataString) {
+        this.allImgDataString = allImgDataString;
     }
 }

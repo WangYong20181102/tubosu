@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/tvChooseStyle"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
             android:background="@mipmap/choose_style_down"/>
     </RelativeLayout>
     <View
