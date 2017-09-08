@@ -72,6 +72,7 @@ public class MySampleListActivity extends BaseActivity {
     private void getData() {
         if(Utils.isNetAvailable(mContext)){
             if(Utils.userIsLogin(mContext)){
+                collectSampleSwipeRefreshLayout.setRefreshing(false);
                 HashMap<String, Object> hashMap = new HashMap<String, Object>();
                 hashMap.put("token", Utils.getDateToken());
                 hashMap.put("uid", SpUtils.getUserUid(mContext));
@@ -116,8 +117,10 @@ public class MySampleListActivity extends BaseActivity {
                                         samplePicAdapter.hideLoadMoreMessage();
                                     }
                                     collectSampleSwipeRefreshLayout.setRefreshing(false);
-                                    no_collect_samplepic.setVisibility(View.VISIBLE);
-                                    collectionRecyclerView.setVisibility(View.GONE);
+                                    if(tempSamplePicList!=null && tempSamplePicList.size()==0){
+                                        no_collect_samplepic.setVisibility(View.VISIBLE);
+                                        collectionRecyclerView.setVisibility(View.GONE);
+                                    }
                                 }
                             });
                         }

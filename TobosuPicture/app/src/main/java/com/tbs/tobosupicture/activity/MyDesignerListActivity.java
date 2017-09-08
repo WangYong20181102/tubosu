@@ -118,8 +118,11 @@ public class MyDesignerListActivity extends BaseActivity {
                                         myDesignerAdapter.hideLoadMoreMessage();
                                     }
 
-                                    no_collect_designer.setVisibility(View.VISIBLE);
-                                    collectionDesignerRecyclerView.setVisibility(View.GONE);
+                                    if(myDesignerList!=null && myDesignerList.size() == 0){
+                                        no_collect_designer.setVisibility(View.VISIBLE);
+                                        collectionDesignerRecyclerView.setVisibility(View.GONE);
+                                    }
+
                                 }
                             });
                         }

@@ -75,6 +75,7 @@ public class MyCaseListActivity extends BaseActivity {
     private void getData() {
         if (Utils.isNetAvailable(mContext)) {
             if (Utils.userIsLogin(mContext)) {
+                CollectCaseSwipeRefreshLayout.setRefreshing(false);
                 HashMap<String, Object> hashMap = new HashMap<String, Object>();
                 hashMap.put("token", Utils.getDateToken());
                 hashMap.put("uid", SpUtils.getUserUid(mContext));
@@ -117,8 +118,11 @@ public class MyCaseListActivity extends BaseActivity {
                                     if(casePicAdapter!=null){
                                         casePicAdapter.hideLoadMoreMessage();
                                     }
-                                    no_collect_casepic.setVisibility(View.VISIBLE);
-                                    collectionCaseRecyclerView.setVisibility(View.GONE);
+                                    if(templCasePicList!=null && templCasePicList.size()==0){
+                                        no_collect_casepic.setVisibility(View.VISIBLE);
+                                        collectionCaseRecyclerView.setVisibility(View.GONE);
+                                    }
+
                                 }
                             });
                         }

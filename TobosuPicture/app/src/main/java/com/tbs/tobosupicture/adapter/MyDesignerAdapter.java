@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
@@ -123,7 +124,7 @@ public class MyDesignerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             });
 
 
-            itmeHolder.iv_designer_pic.setOnClickListener(new View.OnClickListener() {
+            itmeHolder.design_rellayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(mContext, DesignerActivity.class);
@@ -166,12 +167,14 @@ public class MyDesignerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public class DesignerViewHolder extends RecyclerView.ViewHolder{
+        private RelativeLayout design_rellayout;
         private TextView tv_desinger_caokun_text;
         private TextView  tv_desinger_name;
         private ImageView  iv_designer_pic;
 
         public DesignerViewHolder(View itemView) {
             super(itemView);
+            design_rellayout = (RelativeLayout) itemView.findViewById(R.id.design_rellayout);
             iv_designer_pic = (ImageView) itemView.findViewById(R.id.iv_designer1_pic);
             tv_desinger_name = (TextView) itemView.findViewById(R.id.tv_desinger1_name);
             tv_desinger_caokun_text = (TextView) itemView.findViewById(R.id.tv_desinger_caokun_text);

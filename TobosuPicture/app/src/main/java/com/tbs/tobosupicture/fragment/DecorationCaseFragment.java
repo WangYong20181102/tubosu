@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.ConditionActivity;
@@ -54,8 +55,12 @@ public class DecorationCaseFragment extends BaseFragment {
     SwipeRefreshLayout caseSwipRefreshLayout;
     @BindView(R.id.caseLocation)
     TextView caseLocation;
+    @BindView(R.id.relNoCaseData)
+    RelativeLayout relNoCaseData;
     @BindView(R.id.ivNoCaseData)
     ImageView ivNoCaseData;
+    @BindView(R.id.tvClearCondition)
+    TextView tvClearCondition;
     @BindView(R.id.linearLayoutHasCaseData)
     LinearLayout linearLayoutHasCaseData;
 
@@ -136,7 +141,7 @@ public class DecorationCaseFragment extends BaseFragment {
                             if (caseJsonEntity.getStatus() == 200) {
                                 caseList.addAll(caseJsonEntity.getDataList());
                                 linearLayoutHasCaseData.setVisibility(View.VISIBLE);
-                                ivNoCaseData.setVisibility(View.GONE);
+                                relNoCaseData.setVisibility(View.GONE);
                                 initListView();
                             } else {
                                 if(caseAdapter!=null){
@@ -145,7 +150,7 @@ public class DecorationCaseFragment extends BaseFragment {
                                 }
                                 if(caseList.size()==0){
                                     linearLayoutHasCaseData.setVisibility(View.GONE);
-                                    ivNoCaseData.setVisibility(View.VISIBLE);
+                                    relNoCaseData.setVisibility(View.VISIBLE);
                                 }
                             }
                         }
@@ -163,7 +168,7 @@ public class DecorationCaseFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.tvSearchCase, R.id.caseLocation})
+    @OnClick({R.id.tvSearchCase, R.id.caseLocation, R.id.tvClearCondition})
     public void onViewClickedDecorateCaseFragment(View view) {
         switch (view.getId()) {
             case R.id.tvSearchCase:
@@ -181,6 +186,19 @@ public class DecorationCaseFragment extends BaseFragment {
                 intent.putExtra("from","CaseFragment");
                 startActivity(intent);
                 break;
+            case R.id.tvClearCondition:
+                page = 1;
+//                getDataFromNet(getCommonHashMap(city));
+                param_area = "";
+                param_layout = "";
+                param_price = "";
+                param_style = "";
+                param_city_id = city;
+                param_district_id = "";
+                param_vilige_id = "";
+                getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style,param_city_id,param_district_id,param_vilige_id));
+                tvSearchTipText.setText("搜索");
+                break;
         }
     }
 
@@ -195,6 +213,7 @@ public class DecorationCaseFragment extends BaseFragment {
             case EC.EventCode.CHOOSE_CITY_FOR_BOTH_FRAGMENT:
                 city = (String)event.getData();
                 caseLocation.setText(city);
+                tvSearchTipText.setText(city);
                 caseList.clear();
                 if(isFromCondictionActivity){
                     page = 1;
@@ -214,28 +233,37 @@ public class DecorationCaseFragment extends BaseFragment {
                 if(data!=null && data.getBundleExtra("params")!=null){
                     isFromCondictionActivity = true;
                     Bundle bundle = data.getBundleExtra("params");
+                    int isFromHistory = bundle.getInt("param_history_record");
                     param_area = bundle.getString("param_area");
                     param_layout = bundle.getString("param_layout");
                     param_price = bundle.getString("param_price");
                     param_style = bundle.getString("param_style");
                     param_city_id = bundle.getString("param_city_id");
-                    param_district_id = bundle.getString("param_district_id");//小区id
+                    if(isFromHistory == 1){
+                        param_district_id = bundle.getString("param_discturds_id"); // 历史记录中的小区id
+                        Utils.setErrorLog(TAG, "区id是来自搜索历史记录");
+                    }else {
+                        param_district_id = bundle.getString("param_district_id");//小区id
+                        Utils.setErrorLog(TAG, "区id是来自选择器");
+                    }
                     param_vilige_id = bundle.getString("param_vilige_id"); // 花园小区id
                     Utils.setErrorLog(TAG, param_city_id+"%%");
                     if(bundle.getInt("getcity") == 0){
                         tvSearchTipText.setText(city + " " + bundle.getString("condition_text"));
+                        param_city_id = city;
+//                        Utils.setToast(getActivity(), "9999");
                     }else {
                         // 有城市，不需要拼接
                         tvSearchTipText.setText(bundle.getString("condition_text"));
+//                        Utils.setToast(getActivity(), "8888=" + param_city_id);
                     }
-
                 }
 
                 caseList.clear();
                 if(caseAdapter!=null){
                     caseAdapter.notifyDataSetChanged();
                 }
-                Utils.setErrorLog(TAG, "返回请求参数" + param_area + " ----  "+ param_layout + " --- "  + param_price + " --- " +param_style + " --- " + param_city_id + " --  "  + param_district_id+ "--- " +param_vilige_id);
+                Utils.setErrorLog(TAG, "返回请求参数" + param_area + " ----  "+ param_layout + " --- "  + param_price + " --- " +param_style + " --- 城市id：" + param_city_id + " --  宝安区id:"  + param_district_id+ "--- 小区id:" +param_vilige_id);
                 page = 1;
                 getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style, param_city_id, param_district_id,param_vilige_id));
                 break;
@@ -250,7 +278,7 @@ public class DecorationCaseFragment extends BaseFragment {
         hashMap.put("page", page);
         hashMap.put("pageSize", pageSize);
         hashMap.put("area", area);
-        hashMap.put("city_name", city);
+//        hashMap.put("city_name", city);
         hashMap.put("district_id", districtId);
         hashMap.put("layout", layout);
         hashMap.put("city_id", cityId);

@@ -196,6 +196,7 @@ public class SeeImageActivity extends BaseActivity {
         ArrayList<TouchImageView> dataList = new ArrayList<TouchImageView>();
         for (int i = 0; i < imgDataList.size(); i++) {
             TouchImageView iv = new TouchImageView(mContext);
+            iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
             GlideUtils.glideLoader(mContext, imgDataList.get(i).getImg_url(), R.mipmap.loading_img_fail, R.mipmap.loading_img, iv);
             dataList.add(iv);
         }
@@ -373,9 +374,11 @@ public class SeeImageActivity extends BaseActivity {
                 if(isShow){
                     goDown(seeImgBottom, relLayout);
                     goingUp(numSequeenLayout, ivShowAndHide);
+                    ivShowAndHide.setBackgroundResource(R.mipmap.shangla);
                 }else{
                     goUp(seeImgBottom, relLayout);
                     goingDown(numSequeenLayout, ivShowAndHide);
+                    ivShowAndHide.setBackgroundResource(R.mipmap.shouqi2);
                 }
                 isShow = !isShow;
                 break;
@@ -463,6 +466,7 @@ public class SeeImageActivity extends BaseActivity {
                         hashMap.put("token", Utils.getDateToken());
                         hashMap.put("urlhistory", UrlConstans.PIPE_CODE);
                         hashMap.put("comeurl", UrlConstans.PIPE_CODE);
+                        hashMap.put("source", "1200");
                         String city = SpUtils.getSelectCityCache(mContext);
                         hashMap.put("city", city);
                         Utils.setErrorLog(TAG, phone + "****city=" +city + "****" +UrlConstans.PIPE_CODE);

@@ -30,6 +30,9 @@ public class SearchRecordBean {
     private String style_id;
     private String style_name;
 
+    private String district_id;     //: "1",
+    private String district_name;   //": "东城区"
+
     public String getCity_id() {
         return city_id;
     }
@@ -108,5 +111,21 @@ public class SearchRecordBean {
 
     public void setStyle_name(String style_name) {
         this.style_name = style_name;
+    }
+
+    public String getDistrict_id() {
+        return district_id;
+    }
+
+    public void setDistrict_id(String district_id) {
+        this.district_id = district_id;
+    }
+
+    public String getDistrict_name() {
+        return district_name;
+    }
+
+    public void setDistrict_name(String district_name) {
+        this.district_name = district_name;
     }
 }

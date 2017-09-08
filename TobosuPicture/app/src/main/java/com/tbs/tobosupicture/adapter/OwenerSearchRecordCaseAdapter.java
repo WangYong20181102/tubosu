@@ -19,12 +19,13 @@ import com.tbs.tobosupicture.activity.DesignerActivity;
 import com.tbs.tobosupicture.activity.GetPriceActivity;
 import com.tbs.tobosupicture.bean.CaseJsonEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
+import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.RoundAngleImageView;
 
 import java.util.ArrayList;
 
 /**
- *  业主查看搜索案例里诶包适配器
+ *  业主查看搜索案例  适配器
  * Created by Lie on 2017/8/31.
  */
 
@@ -39,9 +40,9 @@ public class OwenerSearchRecordCaseAdapter extends RecyclerView.Adapter<Recycler
     private int viewItemType = 1;
     private int viewItemFooter = 0;
 
-    private RelativeLayout footerLayout;
-    private TextView tvLoadMore;
-    private ProgressBar progressBar;
+//    private RelativeLayout footerLayout;
+//    private TextView tvLoadMore;
+//    private ProgressBar progressBar;
 
 
     public OwenerSearchRecordCaseAdapter(Context context, ArrayList<CaseJsonEntity.CaseEntity> dataList){
@@ -61,9 +62,6 @@ public class OwenerSearchRecordCaseAdapter extends RecyclerView.Adapter<Recycler
 
         if(viewType == viewItemFooter){
             footerView = inflater.inflate(R.layout.item_foot_case_fragment, null);
-            footerLayout = (RelativeLayout) footerView.findViewById(R.id.foot_load_more_layout_case);
-            tvLoadMore = (TextView) footerView.findViewById(R.id.tv_loadmore_text_case);
-            progressBar = (ProgressBar) footerView.findViewById(R.id.progressBar_case);
             return new FootViewHolder(footerView);
         }
         return null;
@@ -173,8 +171,39 @@ public class OwenerSearchRecordCaseAdapter extends RecyclerView.Adapter<Recycler
             });
             caseViewHolder.itemView.setTag(dataList.get(position));
         }
+
+        if(holder instanceof FootViewHolder){
+            FootViewHolder footViewHolder = (FootViewHolder) holder;
+            if(hide){
+                footViewHolder.footerLayout.setVisibility(View.VISIBLE);
+                if(noMore){
+                    footViewHolder.tvLoadMore.setText("别扯啦，到底啦");
+                }else {
+                    footViewHolder.tvLoadMore.setText("加载更多数据...");
+                }
+            }else {
+                footViewHolder.footerLayout.setVisibility(View.GONE);
+            }
+        }
     }
 
+    public void showLoadMoreMessage(){
+        hide = true;
+    }
+
+    public void hideLoadMoreMessage(){
+        hide = false;
+        noMore = false;
+    }
+
+    public void noMoreData(){
+        hide = true;
+        noMore = true;
+    }
+
+
+    private boolean hide = true;
+    private boolean noMore = true;
 
     @Override
     public int getItemViewType(int position) {
@@ -210,41 +239,15 @@ public class OwenerSearchRecordCaseAdapter extends RecyclerView.Adapter<Recycler
     }
 
     public class FootViewHolder extends RecyclerView.ViewHolder{
+        RelativeLayout footerLayout;
+        TextView tvLoadMore;
+        ProgressBar progressBar;
         public FootViewHolder(View itemView) {
             super(itemView);
+            footerLayout = (RelativeLayout) footerView.findViewById(R.id.foot_load_more_layout_case);
+            tvLoadMore = (TextView) footerView.findViewById(R.id.tv_loadmore_text_case);
+            progressBar = (ProgressBar) footerView.findViewById(R.id.progressBar_case);
         }
     }
 
-
-    public void showLoadMoreMessage(){
-        if(footerLayout!=null){
-            footerLayout.setVisibility(View.VISIBLE);
-        }
-
-        if(tvLoadMore!=null){
-            tvLoadMore.setText("加载更多数据...");
-        }
-        if(progressBar!=null){
-            progressBar.setVisibility(View.VISIBLE);
-        }
-    }
-
-    public void hideLoadMoreMessage(){
-        if(footerLayout!=null){
-            footerLayout.setVisibility(View.GONE);
-        }
-    }
-
-    public void noMoreData(){
-        if(footerLayout!=null){
-            footerLayout.setVisibility(View.VISIBLE);
-        }
-        if(tvLoadMore!=null){
-            tvLoadMore.setText("别扯了，到底了！");
-        }
-        if(progressBar!=null){
-            progressBar.setVisibility(View.GONE);
-        }
-
-    }
 }

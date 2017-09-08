@@ -34,6 +34,7 @@ public class CaseDetailImgGVAdapter extends BaseAdapter {
         this.dataList = dataList;
         this.imgString = imgString;
         this.inflater = LayoutInflater.from(context);
+        Utils.setErrorLog(TAG, "===装修阶段的大小是==>>>" + dataList.size());
     }
 
     @Override
@@ -43,7 +44,7 @@ public class CaseDetailImgGVAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return dataList.get(position);
+        return dataList.get(position) == null ? null :dataList.get(position);
     }
 
     @Override
@@ -66,50 +67,56 @@ public class CaseDetailImgGVAdapter extends BaseAdapter {
             holder = (ImgViewHolder) convertView.getTag();
         }
 
+
         final ArrayList<String> imgList = dataList.get(position).getImg_url();
         int totalItem = imgList.size();
-        if(totalItem % 2 == 0){
-            // 偶数
-            GvStageAdapter stageAdapter = new GvStageAdapter(context, imgList, dataList.get(position).getId());
-            holder.gv.setAdapter(stageAdapter);
-            holder.iv.setVisibility(View.GONE);
-            holder.gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        if(totalItem==1){
+            // 仅仅一条
+            holder.iv.setVisibility(View.VISIBLE);
+            holder.gv.setVisibility(View.GONE);
+            String lastUrl = imgList.get(0);
+            final String lastOneUrl = lastUrl.replace("\\/\\/", "//").replace("\\/", "/");
+//            Utils.setErrorLog(TAG, "施工阶段 1个 适配器  " + lastUrl + "   $$$$$  " + lastOneUrl);
+            GlideUtils.glideLoader(context, lastOneUrl, R.mipmap.loading_img_fail, R.mipmap.loading_img, holder.iv);
+            holder.iv.setOnClickListener(new View.OnClickListener() {
 
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                public void onClick(View v) {
                     Intent it = new Intent(context, SeeBigImgActivity.class);
                     it.putExtra("imgStringData", imgString);
-                    it.putExtra("imgurl", imgList.get(position));
+                    it.putExtra("imgurl", lastOneUrl);
                     context.startActivity(it);
                 }
             });
         }else {
-            // 奇数
-            if(totalItem==1){
-                // 仅仅有一个
-                String lastUrl = imgList.get(0);
-                final String lastOneUrl = lastUrl.replace("\\/\\/", "//").replace("\\/", "/");
-//                Utils.setErrorLog(TAG, "施工阶段 1个 适配器  " + lastUrl);
-                GlideUtils.glideLoader(context, lastOneUrl, R.mipmap.loading_img_fail, R.mipmap.loading_img, holder.iv);
-                holder.iv.setOnClickListener(new View.OnClickListener() {
+            // 大于1条
+            holder.gv.setVisibility(View.VISIBLE);
+            if(totalItem % 2 == 0){
+                // 偶数
+                holder.iv.setVisibility(View.GONE);
+                GvStageAdapter stageAdapter = new GvStageAdapter(context, imgList, dataList.get(position).getId());
+                holder.gv.setAdapter(stageAdapter);
+                holder.iv.setVisibility(View.GONE);
+                holder.gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                     @Override
-                    public void onClick(View v) {
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent it = new Intent(context, SeeBigImgActivity.class);
                         it.putExtra("imgStringData", imgString);
-                        it.putExtra("imgurl", lastOneUrl);
+                        it.putExtra("imgurl", imgList.get(position));
                         context.startActivity(it);
                     }
                 });
-            }else if(totalItem>1){
-                // 3 5 7 9 11 ...
+            }else {
+                // 奇数   3 5 7 9 11 ...
                 holder.iv.setVisibility(View.VISIBLE);
-                String last_Url = imgList.get(imgList.size()-1);
+                String last_Url = imgList.get(imgList.size()-1);  // 获取最后一条
+                final String last_One_Url = last_Url.replace("\\/\\/", "//").replace("\\/", "/");  // 处理反斜杠
                 ArrayList<String> tempImgList = new ArrayList<String>();
                 for(int i=0;i<imgList.size()-1;i++){
-                    tempImgList.add(imgList.get(i));
+                    tempImgList.add(imgList.get(i));  // 获取一个新结合， 除掉最后一条
                 }
-                final String last_One_Url = last_Url.replace("\\/\\/", "//").replace("\\/", "/");
 
                 GvStageAdapter stageAdapter = new GvStageAdapter(context, tempImgList, dataList.get(position).getId());
                 holder.gv.setAdapter(stageAdapter);
@@ -137,7 +144,9 @@ public class CaseDetailImgGVAdapter extends BaseAdapter {
                     }
                 });
             }
+
         }
+
 
         if("1".equals(dataList.get(position).getStage())){
             holder.tv.setText(stage[0]);

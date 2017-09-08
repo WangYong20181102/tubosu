@@ -270,7 +270,14 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
             district_id = "";
             param_vilige_id = "";
             Utils.setErrorLog(TAG, "===关闭了城市小区===");
+        }else {
+            if("".equals(param_vilige_id)){
+                city_id = "";
+                district_id = "";
+                param_vilige_id = "";
+            }
         }
+
 
         String conditionText = "";
         for(int i=0;i<conditionTextList.size();i++){
@@ -282,10 +289,13 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
 
         Intent intent = new Intent();
         Bundle b = new Bundle();
+        b.putInt("param_history_record", 0);
         b.putString("param_area", param_area);
         b.putString("param_layout", param_layout);
         b.putString("param_price", param_price);
         b.putString("param_style", param_style);
+//        b.putString("pass_param_city_id", cityName);
+        city_id = cityName;
         b.putString("param_district_id", district_id);//小区id
         b.putString("param_vilige_id", param_vilige_id);//花园小区id  param_vilige_id
         if("".equals(cityName)){
@@ -341,11 +351,13 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                     // 历史记录的
                     Intent intent = new Intent();
                     Bundle b = new Bundle();
+                    b.putInt("param_history_record", 1);
                     b.putString("param_area", tempRecordBeenList.get(position).getArea_key());
                     b.putString("param_layout", tempRecordBeenList.get(position).getLayout_key());
                     b.putString("param_price", tempRecordBeenList.get(position).getPrice_key());
                     b.putString("param_style", tempRecordBeenList.get(position).getStyle_id());
                     b.putString("param_city_id", tempRecordBeenList.get(position).getCity_id());
+                    b.putString("param_discturds_id", tempRecordBeenList.get(position).getDistrict_id());
                     b.putInt("getcity", 1);
                     String _condiction = tempRecordBeenList.get(position).getCity_name() + " " +
                             tempRecordBeenList.get(position).getLayout_value() + " " +
@@ -355,7 +367,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                     b.putString("condition_text", _condiction);
                     intent.putExtra("params", b);
 
-                    Utils.setErrorLog(TAG, param_area + "   " + param_layout + "  " + param_price + "  " + param_style);
+                    Utils.setErrorLog(TAG, param_area + "   " + param_layout + "  " + param_price + "  " + param_style + "  新增>>> " + tempRecordBeenList.get(position).getDistrict_id());
                     setResult(10101, intent);
                     finish();
                 }
@@ -479,7 +491,6 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
     private String city_id = "1";         //  默认为 北京 北京 东城区
     private String district_id = "1";     //  默认为 北京 北京 东城区
     private String param_vilige_id = "";
-    private String villigeName = "";
     private int districtPage = 1;
     private int districtPageSize = 12;
 

@@ -151,11 +151,13 @@ public class DesignerActivity extends BaseActivity {
     private void initView() {
         if ("1".equals(designerEntity.getDesignerInfoEntity().getIs_follow())) {
             tvConcern.setTextColor(Color.parseColor("#FA8817"));
+            tvConcern.setText("取消关注");
             Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu);
             leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
             tvConcern.setCompoundDrawables(leftDrawable, null, null, null);
         } else {
             tvConcern.setTextColor(Color.parseColor("#858585"));
+            tvConcern.setText("关注");
             Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu2);
             leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
             tvConcern.setCompoundDrawables(leftDrawable, null, null, null);
@@ -258,11 +260,13 @@ public class DesignerActivity extends BaseActivity {
                                         JSONObject object = new JSONObject(json);
                                         if (object.getInt("status") == 200) {
                                             if (object.getString("msg").contains("取消")) {
+                                                tvConcern.setText("关注");
                                                 tvConcern.setTextColor(Color.parseColor("#858585"));
                                                 Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu2);
                                                 leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
                                                 tvConcern.setCompoundDrawables(leftDrawable, null, null, null);
                                             } else {
+                                                tvConcern.setText("取消关注");
                                                 tvConcern.setTextColor(Color.parseColor("#FA8817"));
                                                 Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu);
                                                 leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());

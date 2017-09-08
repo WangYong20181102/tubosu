@@ -12,10 +12,10 @@
             android:layout_width="49dp"
             android:layout_height="49dp">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_centerInParent="true"
-                android:background="@mipmap/back_white"/>
+                android:src="@mipmap/back_white"/>
         </RelativeLayout>
         <TextView
             android:text="收藏的效果图"

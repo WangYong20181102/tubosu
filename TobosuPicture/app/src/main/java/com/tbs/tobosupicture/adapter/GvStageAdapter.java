@@ -72,8 +72,9 @@ public class GvStageAdapter extends BaseAdapter {
         }
 
         String url = dataList.get(position);
+        Utils.setErrorLog(TAG, "4444适配器前 " + url);
         url = url.replace("\\/\\/", "//").replace("\\/", "/");
-        Utils.setErrorLog(TAG, "适配器 " + url);
+        Utils.setErrorLog(TAG, "4444适配器后 " + url);
         GlideUtils.glideLoader(context, url,R.mipmap.loading_img_fail, R.mipmap.loading_img,holder.iv);
 
 

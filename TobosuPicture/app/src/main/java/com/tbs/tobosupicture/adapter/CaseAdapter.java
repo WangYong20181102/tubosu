@@ -18,6 +18,7 @@ import com.tbs.tobosupicture.activity.CaseDetailActivity;
 import com.tbs.tobosupicture.activity.DesignerActivity;
 import com.tbs.tobosupicture.activity.GetPriceActivity;
 import com.tbs.tobosupicture.activity.SeeImageActivity;
+import com.tbs.tobosupicture.activity.SmartDesignActivity;
 import com.tbs.tobosupicture.bean.CaseJsonEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.view.RoundAngleImageView;
@@ -158,7 +159,7 @@ public class CaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             caseViewHolder.tv_case_design.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    context.startActivity(new Intent(context, GetPriceActivity.class));
+                    context.startActivity(new Intent(context, SmartDesignActivity.class));
                 }
             });
             caseViewHolder.iv_case_big_sample_pic.setOnClickListener(new View.OnClickListener() {

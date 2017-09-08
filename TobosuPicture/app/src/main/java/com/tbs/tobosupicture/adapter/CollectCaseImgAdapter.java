@@ -18,6 +18,7 @@ import com.tbs.tobosupicture.activity.CaseDetailActivity;
 import com.tbs.tobosupicture.activity.DesignerActivity;
 import com.tbs.tobosupicture.activity.GetPriceActivity;
 import com.tbs.tobosupicture.activity.SeeImageActivity;
+import com.tbs.tobosupicture.activity.SmartDesignActivity;
 import com.tbs.tobosupicture.bean.CollectCaseJsonEntity;
 import com.tbs.tobosupicture.bean.CollectionSampleJsonEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
@@ -179,7 +180,7 @@ public class CollectCaseImgAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             itmeHolder.tv_case_design.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mContext.startActivity(new Intent(mContext, GetPriceActivity.class));
+                    mContext.startActivity(new Intent(mContext, SmartDesignActivity.class));
                 }
             });
             itmeHolder.iv_case_big_sample_pic.setOnClickListener(new View.OnClickListener() {

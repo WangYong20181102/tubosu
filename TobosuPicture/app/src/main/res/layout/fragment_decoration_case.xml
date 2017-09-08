@@ -66,13 +66,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <ImageView
-            android:id="@+id/ivNoCaseData"
-            android:layout_centerInParent="true"
-            android:background="@mipmap/no_case"
+        <RelativeLayout
+            android:id="@+id/relNoCaseData"
             android:layout_width="wrap_content"
-            android:visibility="gone"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+            <ImageView
+                android:id="@+id/ivNoCaseData"
+                android:background="@mipmap/no_case"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvClearCondition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_below="@+id/ivNoCaseData"
+                android:textColor="@color/white"
+                android:background="@drawable/shape_refresh_data"
+                android:gravity="center"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:paddingRight="14dp"
+                android:paddingLeft="14dp"
+                android:layout_centerHorizontal="true"
+                android:text="再看看"/>
+        </RelativeLayout>
+
 
         <LinearLayout
             android:id="@+id/linearLayoutHasCaseData"

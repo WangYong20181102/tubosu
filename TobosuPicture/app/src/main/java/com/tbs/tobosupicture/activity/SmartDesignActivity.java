@@ -453,7 +453,7 @@ public class SmartDesignActivity extends BaseActivity {
             hashMap.put("city", fdTextCity.getText().toString());//用户所选的城市
             hashMap.put("urlhistory", UrlConstans.PIPE_CODE);
             hashMap.put("comeurl", UrlConstans.PIPE_CODE);
-            hashMap.put("source", "1111");//渠道Id  不知道这个是多少
+            hashMap.put("source", "1201");//渠道Id  不知道这个是多少
 
             if (!TextUtils.isEmpty(userid)) {
                 hashMap.put("userid", userid);
