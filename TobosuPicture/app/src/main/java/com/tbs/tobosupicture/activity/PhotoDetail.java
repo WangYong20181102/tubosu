@@ -236,8 +236,7 @@ public class PhotoDetail extends BaseActivity {
         linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         pop_detail_pinglun_recycle.setLayoutManager(linearLayoutManager);
         pop_detail_pinglun_recycle.addOnScrollListener(onScrollListener);
-        int height = getResources().getDisplayMetrics().heightPixels * 6 / 8;
-        ;
+        int height = getResources().getDisplayMetrics().heightPixels * 9 / 11;
         popupWindow = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, height);
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#f5f3f2")));
         popupWindow.setFocusable(true);
@@ -266,7 +265,7 @@ public class PhotoDetail extends BaseActivity {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = 0.5f;
         getWindow().setAttributes(lp);
-        popupWindow.showAtLocation(popView, Gravity.BOTTOM, 0, 30);
+        popupWindow.showAtLocation(popView, Gravity.BOTTOM, 0,0);
     }
 
     private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {

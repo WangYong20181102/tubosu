@@ -156,8 +156,10 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         if (Utils.userIsLogin(mContext)) {
                             isZaning = true;
                             //调用点赞接口
-                            HttpCommnetZan(mReply.getCommented().getId(), mReply.getCommented().getUid()
-                                    , ((HeadViewHolder) holder).reply_head_praise,
+                            HttpCommnetZan(mReply.getCommented().getId(),
+                                    mReply.getCommented().getUid(),
+                                    mReply.getCommented().getUser_type(),
+                                    ((HeadViewHolder) holder).reply_head_praise,
                                     ((HeadViewHolder) holder).reply_head_reply_head_zan_add,
                                     ((HeadViewHolder) holder).reply_head_praise_count);
                         } else {
@@ -297,7 +299,9 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     if (!isZaning) {
                         if (Utils.userIsLogin(mContext)) {
                             isZaning = true;
-                            HttpCommnetZan(commentList.get(position - 1).getId(), commentList.get(position - 1).getUid(),
+                            HttpCommnetZan(commentList.get(position - 1).getId(),
+                                    commentList.get(position - 1).getUid(),
+                                    commentList.get(position-1).getUser_type(),
                                     ((ItemViewHolder) holder).item_reply_item_comment_zan,
                                     ((ItemViewHolder) holder).item_reply_item_comment_zan_add,
                                     ((ItemViewHolder) holder).item_reply_item_comment_zannum);
@@ -443,12 +447,13 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
      * @param tvAdd       显示加一的字段tv
      * @param tvShowNum   显示点赞数值的tv
      */
-    private void HttpCommnetZan(String comment_id, String praised_uid, final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
+    private void HttpCommnetZan(String comment_id, String praised_uid,String user_type, final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("uid", SpUtils.getUserUid(mContext));
         param.put("comment_id", comment_id);
         param.put("praised_uid", praised_uid);
+        param.put("user_type", user_type);
         HttpUtils.doPost(UrlConstans.COMMENT_PRAISE, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
