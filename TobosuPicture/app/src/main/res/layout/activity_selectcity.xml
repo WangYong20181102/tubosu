@@ -18,12 +18,11 @@
 	
 	        <ImageView
 	            android:id="@+id/city_title_back"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignParentLeft="true"
+	            android:layout_width="18dp"
+	            android:layout_height="18dp"
 	            android:layout_centerVertical="true"
 				android:layout_marginLeft="14dp"
-	            android:background="@mipmap/activity_back" />
+	            android:src="@mipmap/back_white" />
 	
 	        <TextView
 	            android:id="@+id/city_title_name"

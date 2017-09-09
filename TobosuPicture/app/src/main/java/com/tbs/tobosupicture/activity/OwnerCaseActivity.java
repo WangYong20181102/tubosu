@@ -12,7 +12,6 @@ import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.OwenerSearchRecordAdapter;
 import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.bean.BackOwnerSearchEntity;
-import com.tbs.tobosupicture.bean.CaseJsonEntity;
 import com.tbs.tobosupicture.bean.EC;
 import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.bean.OwnerSearchRecordEntity;
@@ -21,10 +20,6 @@ import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;

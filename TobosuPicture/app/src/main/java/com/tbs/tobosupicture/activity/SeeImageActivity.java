@@ -467,7 +467,7 @@ public class SeeImageActivity extends BaseActivity {
                         hashMap.put("urlhistory", UrlConstans.PIPE_CODE);
                         hashMap.put("comeurl", UrlConstans.PIPE_CODE);
                         hashMap.put("source", "1200");
-                        String city = SpUtils.getSelectCityCache(mContext);
+                        String city = SpUtils.getBaiduLocationCity(mContext);
                         hashMap.put("city", city);
                         Utils.setErrorLog(TAG, phone + "****city=" +city + "****" +UrlConstans.PIPE_CODE);
 
