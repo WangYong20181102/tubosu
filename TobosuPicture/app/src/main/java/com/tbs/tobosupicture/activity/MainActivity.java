@@ -428,6 +428,11 @@ public class MainActivity extends BaseActivity {
             builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    SpUtils.setHouseSpaceNum(mContext, 0);
+                    SpUtils.setHouseStyleNum(mContext, 0);
+                    SpUtils.setHousePartNum(mContext, 0);
+                    SpUtils.setHouseHuxingNum(mContext, 0);
+                    SpUtils.setHouseColorNum(mContext, 0);
                     MainActivity.this.finish();
                 }
             }).setNegativeButton("再看看", new DialogInterface.OnClickListener() {
