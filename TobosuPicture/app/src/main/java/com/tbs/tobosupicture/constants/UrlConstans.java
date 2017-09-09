@@ -14,12 +14,12 @@ public class UrlConstans {
     /**
      * 正式环境的URl
      */
-//    public static final String ZXKK_URL = "http://www.tobosu.com/";
+    public static final String ZXKK_URL = "http://www.tobosu.com/";
 
     /**
      * 测试环境的URl
      */
-    public static final String ZXKK_URL = "http://www.dev.tobosu.com/";
+//    public static final String ZXKK_URL = "http://www.dev.tobosu.com/";
     /**
      * 图片存储的位置
      */
