@@ -71,7 +71,11 @@ public class RoundAngleImageView extends ImageView {
         drawRightUp(canvas2);
         drawRightDown(canvas2);
         canvas.drawBitmap(bitmap, 0, 0, paint2);
-        bitmap.recycle();
+        if(bitmap != null && !bitmap.isRecycled()){
+            bitmap.recycle();
+            bitmap = null;
+        }
+        System.gc();
     }
 
     private void drawLiftUp(Canvas canvas) {
