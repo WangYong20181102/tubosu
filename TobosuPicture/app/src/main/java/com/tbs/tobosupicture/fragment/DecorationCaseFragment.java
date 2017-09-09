@@ -173,12 +173,10 @@ public class DecorationCaseFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.tvSearchCase:
                 if (Utils.isNetAvailable(mContext)){
-                    startActivityForResult(new Intent(getActivity(), ConditionActivity.class), 0);
+                    Intent it = new Intent(getActivity(), ConditionActivity.class);
+                    it.putExtra("default_city", city);
+                    startActivityForResult(it, 0);
                     isFromCondictionActivity = false;
-//                    param_city_id = "";
-//                    param_district_id = "";
-//                    param_vilige_id = "";
-//                    tvSearchTipText.setText("搜索");
                 }
                 break;
             case R.id.caseLocation:
@@ -281,7 +279,7 @@ public class DecorationCaseFragment extends BaseFragment {
 //        hashMap.put("city_name", city);
         hashMap.put("district_id", districtId);
         hashMap.put("layout", layout);
-        hashMap.put("city_id", cityId);
+        hashMap.put("city_name", cityId);
 
         hashMap.put("district_id", districtId); // 区域id
         hashMap.put("village_id", village_id); // 小区id

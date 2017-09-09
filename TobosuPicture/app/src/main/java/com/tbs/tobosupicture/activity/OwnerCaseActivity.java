@@ -11,11 +11,20 @@ import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.OwenerSearchRecordAdapter;
 import com.tbs.tobosupicture.base.BaseActivity;
+import com.tbs.tobosupicture.bean.BackOwnerSearchEntity;
+import com.tbs.tobosupicture.bean.CaseJsonEntity;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
+import com.tbs.tobosupicture.bean.OwnerSearchRecordEntity;
 import com.tbs.tobosupicture.bean.OwnerSearchRecordJsonEntity;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,11 +54,17 @@ public class OwnerCaseActivity extends BaseActivity {
     SwipeRefreshLayout OwenerCaseSwipeRefreshLayout;
     private LinearLayoutManager linearLayoutManager;
     private OwenerSearchRecordAdapter adapter;
-    private List<OwnerSearchRecordJsonEntity.OwnerSearchRecordEntity> ownerSearchRecordList = new ArrayList<OwnerSearchRecordJsonEntity.OwnerSearchRecordEntity>();
+    private List<OwnerSearchRecordEntity> ownerSearchRecordList = new ArrayList<OwnerSearchRecordEntity>();
     private int page = 1;
     private int pageSize = 10;
     private boolean isFirstLoad = true;
+    private int clickPosition = -1;
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +77,49 @@ public class OwnerCaseActivity extends BaseActivity {
         getDataFromNet();
     }
 
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()){
+            // 下一级返回键点击返回的请求
+            case EC.EventCode.UPDATE_OWNER_SEARCH_CASE:
+                if(Utils.isNetAvailable(mContext)){
+//                    Utils.setToast(mContext, "返回接收到 = " + event.getData());
+                    if(Utils.userIsLogin(mContext)){
+                        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+                        hashMap.put("token", Utils.getDateToken());
+                        hashMap.put("id", event.getData());
+                        HttpUtils.doPost(UrlConstans.UPDATE_OWER_SEARCH_CASE_STATUS, hashMap, new Callback() {
+                            @Override
+                            public void onFailure(Call call, IOException e) {
+//                                Utils.setErrorLog(TAG, e.getMessage());
+                            }
+                            @Override
+                            public void onResponse(Call call, Response response) throws IOException {
+//                                Utils.setErrorLog(·TAG, response.body().string());
+                            }
+                        });
+                    }
+                }
+            break;
+            // 下一页有数据后，就改变黄色状态状态
+            case EC.EventCode.UPDATE_OWNER_SEARCH_CASE_STATUS:
+                if(adapter!=null){
+                    BackOwnerSearchEntity entity = (BackOwnerSearchEntity)event.getData();
+                    clickPosition = entity.getPosition();
+//                    Utils.setToast(mContext, "这是点击第" + clickPosition + "条");
+                    ownerSearchRecordList.add(clickPosition, entity.getEntity());
+                    adapter.notifyDataSetChanged();
+                }
+                break;
+        }
+    }
+
+
     private void getDataFromNet() {
         if(Utils.isNetAvailable(mContext)){
             if(Utils.userIsLogin(mContext)){
@@ -70,7 +128,9 @@ public class OwnerCaseActivity extends BaseActivity {
                 hashMap.put("uid", SpUtils.getUserUid(mContext));
                 hashMap.put("page", page);
                 hashMap.put("page_size", pageSize);
+
                 HttpUtils.doPost(UrlConstans.SAME_CITY_OWENER_CASE_LIST_URL, hashMap, new Callback() {
+
                     @Override
                     public void onFailure(Call call, IOException e) {
                         runOnUiThread(new Runnable() {
@@ -100,6 +160,7 @@ public class OwnerCaseActivity extends BaseActivity {
                                     ivNoOwenerCaseData.setVisibility(View.GONE);
                                     initListView();
                                 }else {
+                                    final String msg = entity.getMsg();
                                     if(ownerSearchRecordList.size()==0){
                                         if(adapter!=null){
                                             adapter.noMoreData();
@@ -109,6 +170,7 @@ public class OwnerCaseActivity extends BaseActivity {
                                         ivNoOwenerCaseData.setVisibility(View.VISIBLE);
 
                                     }
+                                    Utils.setToast(mContext, msg);
                                 }
                             }
                         });
@@ -178,10 +240,17 @@ public class OwnerCaseActivity extends BaseActivity {
         } else {
             adapter.notifyDataSetChanged();
         }
-
+//        adapter.setmOnRvItemClick(new OwenerSearchRecordAdapter.OnRecyclerViewItemClick() {
+//            @Override
+//            public void onItemClick(View v, OwnerSearchRecordJsonEntity.OwnerSearchRecordEntity entity) {
+//                clickData = entity;
+//                Utils.setToast(mContext, "开始点击啦");
+//            }
+//        });
         adapter.hideLoadMoreMessage();
         getData();
     }
+
 
     //下拉刷新监听事件
     private SwipeRefreshLayout.OnRefreshListener swipeLister = new SwipeRefreshLayout.OnRefreshListener() {

@@ -380,4 +380,7 @@ public class UrlConstans {
     public static final String GET_USER_SEARCH_RECORD = ZXKK_URL + "rapp/owner/new_case_list";
     // 公司案例详情
     public static final String COMPANY_CASE_DETAIL = ZXKK_URL + "rapp/case/company_case_detail";
+
+    // 修改业搜过的装修案例 （业主）
+    public static final String UPDATE_OWER_SEARCH_CASE_STATUS = ZXKK_URL + "rapp/owner/case_read";
 }

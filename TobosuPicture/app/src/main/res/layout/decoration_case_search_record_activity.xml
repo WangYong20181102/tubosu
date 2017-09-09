@@ -14,10 +14,10 @@
             android:layout_height="49dp"
             android:gravity="center">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_gravity="center"
-                android:background="@mipmap/back_white"/>
+                android:src="@mipmap/back_white"/>
         </LinearLayout>
         <TextView
             android:text="查看新装修案例记录"

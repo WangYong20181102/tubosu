@@ -201,7 +201,7 @@ public class SeeImageActivity extends BaseActivity {
             dataList.add(iv);
         }
         tvImgDesc.setText(imgDataList.get(0).getTitle() + " " + imgDataList.get(0).getSpace_name() + " " + imgDataList.get(0).getPart_name());
-        tvImgDesc2.setText(imgDataList.get(0).getDesign_concept() + "  预算:" + imgDataList.get(0).getPlan_price() + "万");
+        tvImgDesc2.setText(imgDataList.get(0).getDesign_concept()  + "预算:" + imgDataList.get(0).getPlan_price() + "万");
 
         ImgViewpagerAdapter adapter = new ImgViewpagerAdapter(dataList);
         vpSeeImg.setAdapter(adapter);
@@ -216,7 +216,7 @@ public class SeeImageActivity extends BaseActivity {
                 currentPosition = position;
                 tvChangeNum.setText((position + 1) + "");
                 tvImgDesc.setText(imgDataList.get(position).getTitle() + " " + imgDataList.get(position).getSpace_name() + " " + imgDataList.get(position).getPart_name());
-                tvImgDesc2.setText(imgDataList.get(position).getDesign_concept() + "  预算:" + imgDataList.get(position).getPlan_price() + "万");
+                tvImgDesc2.setText(imgDataList.get(position).getDesign_concept() + "预算:" + imgDataList.get(position).getPlan_price() + "万");
             }
 
             @Override

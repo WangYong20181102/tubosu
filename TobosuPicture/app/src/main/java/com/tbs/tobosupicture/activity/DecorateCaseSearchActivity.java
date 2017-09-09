@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,7 +16,10 @@ import com.tbs.tobosupicture.adapter.CaseAdapter;
 import com.tbs.tobosupicture.adapter.OwenerSearchRecordCaseAdapter;
 import com.tbs.tobosupicture.base.BaseActivity;
 import com.tbs.tobosupicture.bean.CaseJsonEntity;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.constants.UrlConstans;
+import com.tbs.tobosupicture.utils.EventBusUtil;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 
@@ -56,6 +60,8 @@ public class DecorateCaseSearchActivity extends BaseActivity {
     private ArrayList<CaseJsonEntity.CaseEntity> caseList = new ArrayList<CaseJsonEntity.CaseEntity>();
     private CaseJsonEntity caseJsonEntity;
 
+    private String text; // 接收的id
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +74,6 @@ public class DecorateCaseSearchActivity extends BaseActivity {
     }
 
     private void getDataFromNet() {
-        String text;
         Intent it = getIntent();
         if(it!=null && it.getStringExtra("case_group_id")!=null){
             text = it.getStringExtra("case_group_id");
@@ -118,6 +123,21 @@ public class DecorateCaseSearchActivity extends BaseActivity {
                 }
             });
         }
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            EventBusUtil.sendEvent(new Event(EC.EventCode.UPDATE_OWNER_SEARCH_CASE, text));
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void initListViewSetting() {
@@ -178,6 +198,7 @@ public class DecorateCaseSearchActivity extends BaseActivity {
             caseAdapter.hideLoadMoreMessage();
         }
 
+        EventBusUtil.sendEvent(new Event(EC.EventCode.UPDATE_OWNER_SEARCH_CASE_STATUS, caseList));
     }
 
     //下拉刷新监听事件
@@ -213,6 +234,7 @@ public class DecorateCaseSearchActivity extends BaseActivity {
     public void onViewClickedDecorateCaseSearchActivity(View view) {
         switch (view.getId()) {
             case R.id.recordBack:
+                EventBusUtil.sendEvent(new Event(EC.EventCode.UPDATE_OWNER_SEARCH_CASE, text));
                 finish();
                 break;
         }

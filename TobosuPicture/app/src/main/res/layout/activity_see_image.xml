@@ -30,10 +30,10 @@
                 android:layout_width="49dp"
                 android:layout_height="49dp">
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_centerInParent="true"
-                    android:background="@mipmap/back_white"/>
+                    android:src="@mipmap/back_white"/>
             </RelativeLayout>
             <ImageView
                 android:id="@+id/ivImgShare"
@@ -125,7 +125,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:background="@mipmap/shangla"/>
+                        android:background="@mipmap/shouqi2"/>
 
                     <TextView
                         android:layout_width="match_parent"

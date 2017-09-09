@@ -455,6 +455,12 @@ public class SmartDesignActivity extends BaseActivity {
             hashMap.put("comeurl", UrlConstans.PIPE_CODE);
             hashMap.put("source", "1201");//渠道Id  不知道这个是多少
 
+            hashMap.put("s", fdTextMyHomeRoomNum.getText().toString().trim());
+            hashMap.put("w", fdTextMyHomeWei.getText().toString().trim());
+            hashMap.put("t", fdTextMyHomeTing.getText().toString().trim());
+            hashMap.put("yt", fdTextMyHomeYangTai.getText().toString().trim());
+
+
             if (!TextUtils.isEmpty(userid)) {
                 hashMap.put("userid", userid);
             } else {

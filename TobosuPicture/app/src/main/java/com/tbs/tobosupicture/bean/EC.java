@@ -40,12 +40,12 @@ public final class EC {
         public static final int HINT_MINE_RED_DOT = 0x000029;//隐藏我的界面中的搜索装修案例的红点提示
 
 
-//        public static final int CHOOSE_CITY_CODE = 0x100001;
+        public static final int UPDATE_OWNER_SEARCH_CASE_STATUS = 0x100001; // 改变状态
         public static final int CHOOSE_CITY_CODE_FOR_PRICE = 0x100002;//报价获取城市名称
         public static final int CHOOSE_CITY_CODE_FOR_FREE_PRICE = 0x100003;//报价获取城市名称
         public static final int CHOOSE_CITY_TO_GET_DATA_FROM_NET_HOUSE = 0x100004;
         public static final int CHOOSE_CITY_TO_GET_DATA_FROM_NET_FACTORY = 0x100006;
-//        public static final int CHOOSE_CITY_FOR_CASE_FRAGMENT = 0x100007;
+        public static final int UPDATE_OWNER_SEARCH_CASE = 0x100007; // 重新请求
         public static final int CHOOSE_CITY_FOR_BOTH_FRAGMENT = 0x100008;
     }
 }

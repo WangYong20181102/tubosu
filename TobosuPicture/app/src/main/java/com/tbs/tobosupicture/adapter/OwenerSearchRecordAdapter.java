@@ -13,7 +13,13 @@ import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.CaseDetailActivity;
 import com.tbs.tobosupicture.activity.DecorateCaseSearchActivity;
+import com.tbs.tobosupicture.activity.OwnerCaseActivity;
+import com.tbs.tobosupicture.bean.BackOwnerSearchEntity;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
+import com.tbs.tobosupicture.bean.OwnerSearchRecordEntity;
 import com.tbs.tobosupicture.bean.OwnerSearchRecordJsonEntity;
+import com.tbs.tobosupicture.utils.EventBusUtil;
 import com.tbs.tobosupicture.utils.Utils;
 
 import java.util.List;
@@ -22,10 +28,10 @@ import java.util.List;
  * Created by Lie on 2017/8/13.
  */
 
-public class OwenerSearchRecordAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class OwenerSearchRecordAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
     private Context context;
     private LayoutInflater inflater;
-    private List<OwnerSearchRecordJsonEntity.OwnerSearchRecordEntity> dataList;
+    private List<OwnerSearchRecordEntity> dataList;
 
     private View itemtView;
     private View footerView;
@@ -37,7 +43,7 @@ public class OwenerSearchRecordAdapter extends RecyclerView.Adapter<RecyclerView
     private TextView tvLoadMore;
     private ProgressBar progressBar;
 
-    public OwenerSearchRecordAdapter(Context context, List<OwnerSearchRecordJsonEntity.OwnerSearchRecordEntity> dataList){
+    public OwenerSearchRecordAdapter(Context context, List<OwnerSearchRecordEntity> dataList){
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.dataList = dataList;
@@ -81,6 +87,12 @@ public class OwenerSearchRecordAdapter extends RecyclerView.Adapter<RecyclerView
                         Intent intent = new Intent(context, DecorateCaseSearchActivity.class);
                         intent.putExtra("case_group_id", dataList.get(position).getId());
                         Utils.setErrorLog("OwenerSearchRecordAdapter", "需要传的id是" + dataList.get(position).getId());
+                        BackOwnerSearchEntity backEntity = new BackOwnerSearchEntity();
+                        OwnerSearchRecordEntity entity = dataList.get(position);
+                        entity.setNew_case_count("0");
+                        backEntity.setEntity(entity);
+                        backEntity.setPosition(position);
+                        EventBusUtil.sendEvent(new Event(EC.EventCode.UPDATE_OWNER_SEARCH_CASE_STATUS, backEntity));
                         context.startActivity(intent);
                     }
                 });
@@ -88,6 +100,26 @@ public class OwenerSearchRecordAdapter extends RecyclerView.Adapter<RecyclerView
             hideLoadMoreMessage();
         }
 
+    }
+    @Override
+    public void onClick(View view) {
+        if (mOnRvItemClick != null) {
+            //注意这里使用getTag方法获取数据
+            mOnRvItemClick.onItemClick(view, (OwnerSearchRecordEntity) view.getTag());
+        }
+    }
+
+    public OnRecyclerViewItemClick mOnRvItemClick;
+    public interface OnRecyclerViewItemClick {
+        void onItemClick(View v, OwnerSearchRecordEntity entity);
+    }
+
+    public OnRecyclerViewItemClick getmOnRvItemClick() {
+        return mOnRvItemClick;
+    }
+
+    public void setmOnRvItemClick(OnRecyclerViewItemClick mOnRvItemClick) {
+        this.mOnRvItemClick = mOnRvItemClick;
     }
 
     @Override
@@ -116,6 +148,7 @@ public class OwenerSearchRecordAdapter extends RecyclerView.Adapter<RecyclerView
             tvDesc = (TextView) itemView.findViewById(R.id.tvOwnerCaseDesc);
             tvCheck = (TextView) itemView.findViewById(R.id.tvOwnerCaseCheck);
         }
+
     }
 
 

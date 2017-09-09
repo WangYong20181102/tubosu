@@ -25,11 +25,11 @@
 
                 <ImageView
                     android:id="@+id/fd_back"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginLeft="14dp"
                     android:layout_centerVertical="true"
-                    android:padding="5dp"
-                    android:src="@mipmap/back_up" />
+                    android:src="@mipmap/back_white" />
 
                 <TextView
                     android:layout_width="wrap_content"

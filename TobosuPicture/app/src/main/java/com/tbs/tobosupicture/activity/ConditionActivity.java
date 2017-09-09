@@ -108,10 +108,19 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         TAG = "ConditionActivity";
         mContext = ConditionActivity.this;
         setContentView(R.layout.activity_condition);
-
         ButterKnife.bind(this);
-        getDataFromNet();   // 获取搜索条件
-        initCityDisctrictWheelView();  // 初始化省市区滚轮
+        Intent intent = getIntent();
+        if(intent!=null){
+            if(intent.getStringExtra("default_city")!=null){
+                cityName = intent.getStringExtra("default_city");
+            }else {
+                cityName = "深圳";
+            }
+            getDataFromNet();   // 获取搜索条件
+            initCityDisctrictWheelView();  // 初始化省市区滚轮
+        }else {
+            Utils.setErrorLog(TAG, "intent是空");
+        }
     }
 
     private ArrayList<HashMap<String, String>> conditionTextList = new ArrayList<HashMap<String, String>>();
@@ -265,18 +274,18 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
 
 
     private Intent setIntent(){
-        if(isHide){
-            city_id = "";
-            district_id = "";
-            param_vilige_id = "";
-            Utils.setErrorLog(TAG, "===关闭了城市小区===");
-        }else {
-            if("".equals(param_vilige_id)){
-                city_id = "";
-                district_id = "";
-                param_vilige_id = "";
-            }
-        }
+//        if(isHide){
+//            city_id = "";
+//            district_id = "";
+//            param_vilige_id = "";
+//            Utils.setErrorLog(TAG, "===关闭了城市小区===");
+//        }else {
+//            if("".equals(param_vilige_id)){
+//                city_id = "";
+//                district_id = "";
+//                param_vilige_id = "";
+//            }
+//        }
 
 
         String conditionText = "";
@@ -297,7 +306,8 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
 //        b.putString("pass_param_city_id", cityName);
         city_id = cityName;
         b.putString("param_district_id", district_id);//小区id
-        b.putString("param_vilige_id", param_vilige_id);//花园小区id  param_vilige_id
+        Utils.setErrorLog(TAG, param_area + "   返回小区id  " + district_id);
+                b.putString("param_vilige_id", param_vilige_id);//花园小区id  param_vilige_id
         if("".equals(cityName)){
             b.putInt("getcity", 0);// 无选择城市
             conditionText = cityName + " " +conditionText;
@@ -309,7 +319,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         b.putString("condition_text", cityName + conditionText);
         intent.putExtra("params", b);
 
-        Utils.setErrorLog(TAG, param_area + "   " + param_layout + "  " + param_price + "  " + param_style + "  返回城市id " + city_id+  "  返回小区id " + district_id+ "  返回花园小区id " + param_vilige_id);
+        Utils.setErrorLog(TAG, "[" +param_area + "]   [" + param_layout + "]  [" + param_price + "]  [" + param_style + "]  返回城市id[" + city_id+  "]  返回小区id[" + district_id+ "]  返回花园小区id[" + param_vilige_id+"]");
         return intent;
     }
 
@@ -385,7 +395,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
             case R.id.tvChooseCity:  //  选择城市
                 Utils.hideKeyBoard(this);
                 // 显示小区
-                chooseAddressWheel.show(view);
+                chooseAddressWheel.show(findViewById(R.id.tvChooseCity));
                 break;
             case R.id.tvChooseDisctrict:   // 显示花园小区
                 adapter = null;
@@ -476,6 +486,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         cityName = city;
         city_id = city;
         show_cittext.setText(city);
+//        Utils.setToast(mContext, cityName + " -1- " + city_id);
     }
 
 
@@ -484,12 +495,12 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         province_id = provinceId;
 //        city_id = cityId;
         district_id = districtId;
-//        getData(false, null, city_id, district_id,mPullRefreshGridView);
+        Utils.setToast(mContext, province_id + " - 2 - " + district_id);
     }
 
     private String province_id = "";      //  默认为 北京 北京 东城区
-    private String city_id = "1";         //  默认为 北京 北京 东城区
-    private String district_id = "1";     //  默认为 北京 北京 东城区
+    private String city_id = "";         //  默认为 北京 北京 东城区
+    private String district_id = "";     //  默认为 北京 北京 东城区
     private String param_vilige_id = "";
     private int districtPage = 1;
     private int districtPageSize = 12;
