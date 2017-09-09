@@ -209,17 +209,21 @@ public class DecorationCaseFragment extends BaseFragment {
     protected void receiveEvent(Event event) {
         switch (event.getCode()){
             case EC.EventCode.CHOOSE_CITY_FOR_BOTH_FRAGMENT:
-                city = (String)event.getData();
-                caseLocation.setText(city);
-                tvSearchTipText.setText(city);
-                caseList.clear();
-                if(isFromCondictionActivity){
-                    page = 1;
-                    getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style,param_city_id,param_district_id,param_vilige_id));
-                }else{
-                    page = 1;
-                    getDataFromNet(getCommonHashMap(city));
+                if(Utils.isNetAvailable(getActivity())){
+                    city = (String)event.getData();
+                    caseLocation.setText(city);
+                    SpUtils.setHomeCity(getActivity(), city);
+                    tvSearchTipText.setText(city);
+                    caseList.clear();
+                    if(isFromCondictionActivity){
+                        page = 1;
+                        getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style,param_city_id,param_district_id,param_vilige_id));
+                    }else{
+                        page = 1;
+                        getDataFromNet(getCommonHashMap(city));
+                    }
                 }
+
                 break;
         }
     }

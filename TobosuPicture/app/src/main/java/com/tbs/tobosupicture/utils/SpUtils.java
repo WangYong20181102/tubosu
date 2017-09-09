@@ -265,4 +265,11 @@ public class SpUtils {
     }
 
 
+    public static String getHomeCity(Context context) {
+        return context.getSharedPreferences("HomeCity", 0).getString("Home_City", "");
+    }
+    public static void setHomeCity(Context context, String cache) {
+        context.getSharedPreferences("HomeCity", 0).edit().putString("Home_City", cache).commit();
+    }
+
 }

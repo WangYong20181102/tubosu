@@ -225,7 +225,8 @@ public class DesignerActivity extends BaseActivity {
         }
 
         if (!"".equals(designerEntity.getDesignerInfoEntity().getIntro())) {
-            tvDesignerDesc.setText(designerEntity.getDesignerInfoEntity().getIntro());
+            String text = designerEntity.getDesignerInfoEntity().getIntro().replace("\"", "&quot;");
+            tvDesignerDesc.setText(text);
         }
 
     }
