@@ -30,8 +30,6 @@ public class GlideUtils {
      */
     public static void glideLoader(Context context, String imgUrl, int erroImg, int emptyImg, ImageView imageView) {
         Glide.with(context).load(imgUrl).placeholder(emptyImg).error(erroImg).into(imageView);
-//        Glide.with(context).load("https://pic.tbscache.com/building/2017-03-23/small/p_58d39147d692e.jpg").placeholder(emptyImg).error(erroImg).into(imageView);
-//        Glide.with(context).load("https:\\/\\/pic.tbscache.com\\/building\\/2017-03-23\\/small\\/p_58d39147d692e.jpg").placeholder(emptyImg).error(erroImg).into(imageView);
     }
 
     /**
