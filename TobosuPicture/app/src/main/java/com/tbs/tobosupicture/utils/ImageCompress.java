@@ -42,9 +42,9 @@ public class ImageCompress {
         public CompressFormat imgFormat = CompressFormat.JPEG;
 
         /**
-         * 图片压缩比例 默认为30
+         * 图片压缩比例 默认为30 可以修改压缩质量比
          */
-        public int quality = 30;
+        public int quality = 50;
 
         public Uri uri;
     }
