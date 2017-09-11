@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -92,6 +93,8 @@ public class WelcomeActivity extends BaseActivity {
             }, 3000);
         } else {
             //网络未连接的时候弹出相关的提示 进行网络的设置
+            Toast.makeText(mContext, "当前网络未连接，请开启网络连接~", Toast.LENGTH_SHORT).show();
+            intoMainActivity();
         }
     }
 
@@ -252,8 +255,8 @@ public class WelcomeActivity extends BaseActivity {
     private void needPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
             List<String> permission = getPermissionList(mContext);
-            if(permission.size()>0){
-                requestPermissions(permission.toArray(new String[permission.size()]),101);
+            if (permission.size() > 0) {
+                requestPermissions(permission.toArray(new String[permission.size()]), 101);
             }
         }
     }
