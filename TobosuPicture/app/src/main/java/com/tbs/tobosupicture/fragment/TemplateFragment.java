@@ -214,6 +214,7 @@ public class TemplateFragment extends BaseFragment {
         switch (event.getCode()){
             case EC.EventCode.CHOOSE_CITY_FOR_BOTH_FRAGMENT:
                 chosenCity = (String)event.getData();
+                SpUtils.setHomeCity(getActivity(), chosenCity);
                 tempLocation.setText((String)event.getData());
                 EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_TO_GET_DATA_FROM_NET_HOUSE, chosenCity));
                 EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_TO_GET_DATA_FROM_NET_FACTORY, chosenCity));

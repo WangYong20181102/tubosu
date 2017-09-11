@@ -731,6 +731,7 @@ public class HouseFragment extends BaseFragment {
                 city = (String)event.getData();
                 page = 1;
                 pageSize = 10;
+                SpUtils.setHomeCity(getActivity(),city);
                 getDataFromNet(parameter, page, pageSize, city, false);
                 break;
         }
