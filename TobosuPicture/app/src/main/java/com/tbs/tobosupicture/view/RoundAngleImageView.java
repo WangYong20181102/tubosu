@@ -62,7 +62,7 @@ public class RoundAngleImageView extends ImageView {
 
     @Override
     public void draw(Canvas canvas) {
-        Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Config.ARGB_4444); //FIXME: 2017/9/8 内存溢出
+        Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Config.ARGB_4444);
         Canvas canvas2 = new Canvas(bitmap);
         super.draw(canvas2);
         drawLiftUp(canvas2);
@@ -76,7 +76,6 @@ public class RoundAngleImageView extends ImageView {
         }
         System.gc();
     }
-
 
     private void drawLiftUp(Canvas canvas) {
         Path path = new Path();
