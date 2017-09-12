@@ -40,7 +40,6 @@ public class RoundAngleImageView extends ImageView {
     }
 
     private void init(Context context, AttributeSet attrs) {
-
         if (attrs != null) {
             TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RoundAngleImageView);
             roundWidth = a.getDimensionPixelSize(R.styleable.RoundAngleImageView_roundWidth, roundWidth);

@@ -4,10 +4,12 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:background="@color/bg_banner_black">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="49dp"
@@ -27,6 +29,7 @@
                 android:layout_gravity="center_vertical"
                 android:background="@mipmap/chengshi"/>
         </LinearLayout>
+
         <TextView
             android:text="装修案例"
             android:padding="8dp"
