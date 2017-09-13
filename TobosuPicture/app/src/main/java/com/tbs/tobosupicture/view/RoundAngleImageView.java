@@ -1,5 +1,4 @@
 package com.tbs.tobosupicture.view;
-import android.graphics.BitmapFactory;
 import android.widget.ImageView;
 import android.content.Context;
 import android.content.res.TypedArray;
