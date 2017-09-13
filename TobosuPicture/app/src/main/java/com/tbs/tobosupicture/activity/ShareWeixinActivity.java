@@ -2,6 +2,7 @@ package com.tbs.tobosupicture.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -70,11 +71,12 @@ public class ShareWeixinActivity extends BaseActivity {
     private UMShareListener umShareListener = new UMShareListener() {
         @Override
         public void onStart(SHARE_MEDIA share_media) {
-            customWaitDialog.show();
+//            customWaitDialog.show();
         }
 
         @Override
         public void onResult(SHARE_MEDIA share_media) {
+            Log.e(TAG, "回调平台=======" + share_media);
             customWaitDialog.dismiss();
             Toast.makeText(mContext, "分享成功！", Toast.LENGTH_SHORT).show();
         }
@@ -87,8 +89,9 @@ public class ShareWeixinActivity extends BaseActivity {
         @Override
         public void onCancel(SHARE_MEDIA share_media) {
             customWaitDialog.dismiss();
+            Log.e(TAG, "回调平台=======" + share_media);
             Toast.makeText(mContext, "取消分享！", Toast.LENGTH_SHORT).show();
-
         }
     };
+
 }
