@@ -64,7 +64,6 @@ public class DecorationCaseFragment extends BaseFragment {
     @BindView(R.id.linearLayoutHasCaseData)
     LinearLayout linearLayoutHasCaseData;
 
-
     private String city;
     private LinearLayoutManager linearLayoutManager;
     private Context mContext;

@@ -1,15 +1,11 @@
 package com.tbs.tobosupicture.base;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-
 import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.utils.EventBusUtil;
-
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 /**
  * Created by Mr.Lin on 2017/6/29 17:37.
  * Fragment的基类 用于设置全局的Fragment相关事务

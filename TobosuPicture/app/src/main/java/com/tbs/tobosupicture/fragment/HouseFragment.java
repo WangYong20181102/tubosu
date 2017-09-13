@@ -152,7 +152,9 @@ public class HouseFragment extends BaseFragment {
     private void initStyleData() {
         // 未选择类型时， 未选择城市时  显示数据
         city = SpUtils.getTemplateFragmentCity(getActivity());
-        getDataFromNet(null, page, pageSize, city, false);
+        if(Utils.isNetAvailable(getActivity())){
+            getDataFromNet(null, page, pageSize, city, false);
+        }
 
         String json = SpUtils.getHouseStyleJson(context);
         Utils.setErrorLog(TAG, json);
@@ -356,7 +358,10 @@ public class HouseFragment extends BaseFragment {
 
                 page = 1;
                 pageSize = 10;
-                getDataFromNet(parameter, page, pageSize, city, false);
+                if(Utils.isNetAvailable(getActivity())){
+                    getDataFromNet(parameter, page, pageSize, city, false);
+                }
+
             }
         });
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
@@ -395,6 +400,7 @@ public class HouseFragment extends BaseFragment {
                     @Override
                     public void run() {
                         Utils.setToast(getActivity(), "系统繁忙，稍后再试!");
+                        houseSwipRefreshLayout.setRefreshing(false);
                     }
                 });
             }
@@ -520,7 +526,10 @@ public class HouseFragment extends BaseFragment {
             if(samplePicAdapter!=null){
                 samplePicAdapter.hideLoadMoreMessage();
             }
-            getDataFromNet(parameter,page,10, city, false);
+            if(Utils.isNetAvailable(getActivity())){
+                getDataFromNet(parameter,page,10, city, false);
+            }
+
 
         }
     };
@@ -532,8 +541,11 @@ public class HouseFragment extends BaseFragment {
         }
 
         houseSwipRefreshLayout.setRefreshing(false);
-        getDataFromNet(parameter,page,10, city, true);
-        System.out.println("-----**-onScrolled load more completed------");
+        if(Utils.isNetAvailable(getActivity())){
+            getDataFromNet(parameter,page,10, city, true);
+            System.out.println("-----**-onScrolled load more completed------");
+        }
+
     }
 
 
@@ -732,7 +744,10 @@ public class HouseFragment extends BaseFragment {
                 page = 1;
                 pageSize = 10;
                 SpUtils.setHomeCity(getActivity(),city);
-                getDataFromNet(parameter, page, pageSize, city, false);
+                if(Utils.isNetAvailable(getActivity())){
+                    getDataFromNet(parameter, page, pageSize, city, false);
+                }
+
                 break;
         }
     }
