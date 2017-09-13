@@ -1,5 +1,4 @@
 package com.tbs.tobosutype.fragment;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -23,7 +22,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
@@ -42,11 +40,9 @@ import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener
 import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
 import com.umeng.socialize.exception.SocializeException;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
-
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -101,6 +97,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
     /*-------------手机登录相关------------*/
 
 
+
     /*-------------微信登陆相关------------*/
     private LoadingWindow wechatWindow;
     private UMSocialService mController = UMServiceFactory.getUMSocialService(Constant.DESCRIPTOR);
@@ -120,8 +117,6 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
     private RequestParams weixinLoginParams;
 
 	/*-------------微信登陆相关------------*/
-
-
     public static ReceiveBroadCast receiveBroadCast;
     private IntentFilter filter;
     private Activity activity;

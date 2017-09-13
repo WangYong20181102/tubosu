@@ -1,12 +1,9 @@
 package com.tbs.tobosupicture.activity;
-
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,27 +11,20 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.base.BaseActivity;
-import com.tbs.tobosupicture.bean.EC;
-import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.bean.ImgEntity;
 import com.tbs.tobosupicture.bean.ImgJsonEntity;
 import com.tbs.tobosupicture.constants.UrlConstans;
-import com.tbs.tobosupicture.fragment.HouseFragment;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
@@ -45,15 +35,12 @@ import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -281,7 +268,6 @@ public class SeeImageActivity extends BaseActivity {
         }
     };
 
-
     @OnClick({R.id.relSeeImgBack, R.id.ivImgShare, R.id.tvNeedGetPrice, R.id.ivCollectImg, R.id.ivDownImg, R.id.ivShowAndHide})
     public void onViewClickedSeeImageActivity(View view) {
         switch (view.getId()) {
@@ -472,6 +458,7 @@ public class SeeImageActivity extends BaseActivity {
                         Utils.setErrorLog(TAG, phone + "****city=" +city + "****" +UrlConstans.PIPE_CODE);
 
                         HttpUtils.doPost(UrlConstans.FADAN_URL, hashMap, new Callback() {
+
                             @Override
                             public void onFailure(Call call, IOException e) {
                                 runOnUiThread(new Runnable() {
@@ -537,6 +524,7 @@ public class SeeImageActivity extends BaseActivity {
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.out_down_to_up);
         animation.setFillAfter(true);
         animation.setAnimationListener(new Animation.AnimationListener() {
+
             @Override
             public void onAnimationStart(Animation animation) {
 
