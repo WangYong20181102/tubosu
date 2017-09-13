@@ -138,8 +138,8 @@ public class MainActivity extends BaseActivity {
     private void initUserMsg() {
         if (Utils.userIsLogin(mContext)) {
             isLoop = true;
-            new Thread(new MyThread()).start();
-            new Thread(new MyThread2()).start();
+//            new Thread(new MyThread()).start();
+//            new Thread(new MyThread2()).start();
         }
     }
 
