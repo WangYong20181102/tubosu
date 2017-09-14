@@ -56,7 +56,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 android:textSize="20sp"
-                                android:text="冯瑶"/>
+                                android:text="- -"/>
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                             android:textColor="@color/white"
                             android:textSize="16sp"
                             android:layout_gravity="bottom"
-                            android:text="粉丝3232  /  浏览36487"/>
+                            android:text="粉丝----  /  浏览----"/>
                     </RelativeLayout>
                 </RelativeLayout>
             </RelativeLayout>
@@ -94,7 +94,7 @@
                         android:drawableLeft="@mipmap/jiaguanzhu2"
                         android:layout_centerInParent="true"
                         android:gravity="center"
-                        android:text="关注"/>
+                        android:text=" - -"/>
                 </RelativeLayout>
                 <View
                     android:layout_width="1dp"
@@ -115,7 +115,7 @@
                         android:layout_centerInParent="true"
                         android:gravity="center"
                         android:textColor="#25C5A0"
-                        android:text="设计"/>
+                        android:text="为我设计"/>
                 </RelativeLayout>
             </LinearLayout>
             <View
@@ -160,7 +160,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="6dp"
-                        android:text="(17)"
+                        android:text="(0)"
                         android:textColor="#999797"
                         android:textSize="16sp"/>
 
@@ -234,7 +234,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="6dp"
-                        android:text="(18)"
+                        android:text="(0)"
                         android:textColor="#999797"
                         android:textSize="16sp"/>
 

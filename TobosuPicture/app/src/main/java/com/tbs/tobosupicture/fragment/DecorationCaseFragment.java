@@ -264,7 +264,8 @@ public class DecorationCaseFragment extends BaseFragment {
                 if(caseAdapter!=null){
                     caseAdapter.notifyDataSetChanged();
                 }
-                Utils.setErrorLog(TAG, "返回请求参数" + param_area + " ----  "+ param_layout + " --- "  + param_price + " --- " +param_style + " --- 城市id：" + param_city_id + " --  宝安区id:"  + param_district_id+ "--- 小区id:" +param_vilige_id);
+                Utils.setErrorLog(TAG, "DecorationCaseFragment  返回请求参数   【面积：" + param_area + "】 ----  【布局: "+ param_layout + "】 --- 【报价:"  + param_price + "】 --- " +
+                        "【类型:" +param_style + "】 --- 【城市id：" + param_city_id + "】 --  【市区id:"  + param_district_id+ "】--- 【小区id: " +param_vilige_id+"】");
                 page = 1;
                 getDataFromNet(getPareaHashMap(param_area,param_layout,param_price,param_style, param_city_id, param_district_id,param_vilige_id));
                 break;

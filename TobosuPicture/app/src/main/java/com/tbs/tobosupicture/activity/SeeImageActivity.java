@@ -373,17 +373,18 @@ public class SeeImageActivity extends BaseActivity {
 
     //TODO 下载图片
     private void httpDownLoadImg(String downloadUrl) {
+
         //创建文件夹
         File dirFile = new File(UrlConstans.IMG_PATH);
         if (!dirFile.exists()) {
             dirFile.mkdir();
         }
         String fileName = System.currentTimeMillis() + ".jpg";
-        HttpUtils.downFile(downloadUrl, dirFile.getPath(), fileName);
         if (Utils.isNetAvailable(mContext)) {
+            HttpUtils.downFile(downloadUrl, dirFile.getPath(), fileName);
             Toast.makeText(mContext, "图片下载成功!", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(mContext, "图片下载失败！", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, "图片下载失败！", Toast.LENGTH_SHORT).show();
         }
     }
 
