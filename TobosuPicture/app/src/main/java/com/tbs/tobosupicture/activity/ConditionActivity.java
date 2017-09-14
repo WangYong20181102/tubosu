@@ -407,7 +407,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                 }else {
                     adapter = null;
                     tempGardenDataList.clear();
-                    Utils.setErrorLog(TAG, "返回：【传入 city_id" + city_id+ "】    【传入 district_id：" + district_id + "】");
+                    Utils.setErrorLog(TAG, "返回：【传入 city_id:" + city_id+ "】    【传入 district_id：" + district_id + "】");
                     showGardenWindow(false, null, city_id, district_id);
                 }
 
