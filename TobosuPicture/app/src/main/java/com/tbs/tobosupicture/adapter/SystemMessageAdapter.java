@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
@@ -56,6 +57,14 @@ public class SystemMessageAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 }
             });
+            ((SysmItemHolder) holder).item_ll_sysmsg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, WebViewActivity.class);
+                    intent.putExtra("web_url", systemMessageList.get(position).getUrl());
+                    mContext.startActivity(intent);
+                }
+            });
         }
     }
 
@@ -70,6 +79,7 @@ public class SystemMessageAdapter extends RecyclerView.Adapter<RecyclerView.View
         private TextView tv_content;//消息内容
         private ImageView iv_isread;//是否已读的红点提示
         private ImageView iv_read;//点击查看按钮
+        private LinearLayout item_ll_sysmsg;//整个可点击的区域
 
         public SysmItemHolder(View itemView) {
             super(itemView);
@@ -78,6 +88,7 @@ public class SystemMessageAdapter extends RecyclerView.Adapter<RecyclerView.View
             tv_content = (TextView) itemView.findViewById(R.id.tv_content);
             iv_isread = (ImageView) itemView.findViewById(R.id.iv_isread);
             iv_read = (ImageView) itemView.findViewById(R.id.iv_read);
+            item_ll_sysmsg = (LinearLayout) itemView.findViewById(R.id.item_ll_sysmsg);
         }
     }
 }

@@ -469,20 +469,31 @@ public class PhotoDetail extends BaseActivity {
                             public void run() {
                                 //正式场景使用的数据集
                                 mImageDetailList.addAll(mPhotoDetail.getImage_detail());
+                                if(mImageDetailList.size()==1){
+                                    //只有一张图不做循环
+                                    for (int i = 0; i < mImageDetailList.size(); i++) {
+                                        fragmentList.add(PhotoDetailFragment.newInstance(mImageDetailList.get(i)));
+                                    }
+                                    mPhotoFragmentPagerAdapter = new PhotoFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
 
-                                //*************** 制作伪循环  将数据集变大100倍  仅作为显示使用  ↓↓
-                                for (int j = 0; j < 100; j++) {
-                                    tempImageDetailList.addAll(mPhotoDetail.getImage_detail());
-                                }
-                                for (int i = 0; i < tempImageDetailList.size(); i++) {
-                                    fragmentList.add(PhotoDetailFragment.newInstance(tempImageDetailList.get(i)));
-                                }
-                                mPhotoFragmentPagerAdapter = new PhotoFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
+                                    photoDetailViewpager.setAdapter(mPhotoFragmentPagerAdapter);
+                                    photoDetailViewpager.setCurrentItem(mImagePosition);
+                                }else {
+                                    //多图循环
+                                    //*************** 制作伪循环  将数据集变大100倍  仅作为显示使用  ↓↓
+                                    for (int j = 0; j < 100; j++) {
+                                        tempImageDetailList.addAll(mPhotoDetail.getImage_detail());
+                                    }
+                                    for (int i = 0; i < tempImageDetailList.size(); i++) {
+                                        fragmentList.add(PhotoDetailFragment.newInstance(tempImageDetailList.get(i)));
+                                    }
+                                    mPhotoFragmentPagerAdapter = new PhotoFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
 
-                                photoDetailViewpager.setAdapter(mPhotoFragmentPagerAdapter);
-                                //设置显示的位置  从列表的正中间开始显示
-                                photoDetailViewpager.setCurrentItem((50 * mImageDetailList.size() + mImagePosition));
-                                //*************** 制作伪循环  将数据集变大100倍  仅作为显示使用  ↑ ↑
+                                    photoDetailViewpager.setAdapter(mPhotoFragmentPagerAdapter);
+                                    //设置显示的位置  从列表的正中间开始显示
+                                    photoDetailViewpager.setCurrentItem((50 * mImageDetailList.size() + mImagePosition));
+                                    //*************** 制作伪循环  将数据集变大100倍  仅作为显示使用  ↑ ↑
+                                }
 
                                 //设置评论数
                                 photoDetailPinlunNum.setText("" + mPhotoDetail.getComment_count());
@@ -537,7 +548,6 @@ public class PhotoDetail extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
                 view.clearAnimation();
                 view.setVisibility(View.GONE);
             }
