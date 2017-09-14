@@ -241,6 +241,7 @@ public class LoginActivity extends BaseActivity {
                         Log.e(TAG, "获取用户的uid====" + SpUtils.getUserUid(mContext));
                         EventBusUtil.sendEvent(new Event(EC.EventCode.LOGIN_INITDATA));
                         EventBusUtil.sendEvent(new Event(EC.EventCode.REFRESH_MY_ORGIN_NUM));
+                        EventBusUtil.sendEvent(new Event(EC.EventCode.USER_LOGIN_TYPE, user.getUser_type()));
                         //友盟的账号统计:统计规则  平台+UId
                         MobclickAgent.onProfileSignIn(Utils.getChannType(MyApplication.getContexts()), SpUtils.getUserUid(mContext));
                         finish();

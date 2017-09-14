@@ -47,7 +47,13 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
     @Override
     public void onBindViewHolder(AuthorViewHolder holder, final int position) {
 
-        holder.item_author_name.setText(dataList.get(position).getNick().substring(0, 4) + "...");
+        String nickname = dataList.get(position).getNick();
+        if(nickname.length() < 4){
+            holder.item_author_name.setText(dataList.get(position).getNick());
+        }else {
+            holder.item_author_name.setText(dataList.get(position).getNick().substring(0, 4) + "...");
+        }
+
         holder.item_wenzhang.setText(dataList.get(position).getArticle_count());
         holder.item_liulang.setText(dataList.get(position).getView_count());
 
