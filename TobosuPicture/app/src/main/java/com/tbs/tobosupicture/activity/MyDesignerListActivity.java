@@ -119,6 +119,8 @@ public class MyDesignerListActivity extends BaseActivity {
                                     }
 
                                     if(myDesignerList!=null && myDesignerList.size() == 0){
+
+                                    }else if(myDesignerList==null){
                                         no_collect_designer.setVisibility(View.VISIBLE);
                                         collectionDesignerRecyclerView.setVisibility(View.GONE);
                                     }

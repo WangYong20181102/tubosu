@@ -148,7 +148,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
             if (data == null) {
                 return;
             }else {
-//                tvChooseCity.setText(data.Province + " " + data.City + " " + data.Area);
+                tvChooseCity.setText("未选择  未选择  未选择");
                 if (data.ProvinceItems != null && data.ProvinceItems.Province != null) {
                     chooseAddressWheel.setProvince(data.ProvinceItems.Province);
                     chooseAddressWheel.defaultValue(data.Province, data.City, data.Area);
@@ -312,10 +312,13 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
             b.putInt("getcity", 0);// 无选择城市
             conditionText = cityName + " " +conditionText;
             b.putString("param_city_id", cityName);
+            Utils.setErrorLog(TAG,"返回 无选择城市：" + city_id);
         }else {
             b.putInt("getcity", 1);// 有选择城市
             b.putString("param_city_id", city_id);
+            Utils.setErrorLog(TAG,"返回 有选择城市：" + city_id);
         }
+
         b.putString("condition_text", cityName + conditionText);
         intent.putExtra("params", b);
 
@@ -398,9 +401,16 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                 chooseAddressWheel.show(findViewById(R.id.tvChooseCity));
                 break;
             case R.id.tvChooseDisctrict:   // 显示花园小区
-                adapter = null;
-                tempGardenDataList.clear();
-                showGardenWindow(false, null, city_id, district_id);
+                if("0".equals(province_id)){
+                    Utils.setToast(mContext, "请选择省市区");
+                    return;
+                }else {
+                    adapter = null;
+                    tempGardenDataList.clear();
+                    Utils.setErrorLog(TAG, "返回：【传入 city_id" + city_id+ "】    【传入 district_id：" + district_id + "】");
+                    showGardenWindow(false, null, city_id, district_id);
+                }
+
                 break;
             case R.id.relShowAndHideCity:
                 //  城市 + 小区 布局
@@ -495,12 +505,12 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         province_id = provinceId;
 //        city_id = cityId;
         district_id = districtId;
-        Utils.setToast(mContext, province_id + " - 2 - " + district_id);
+//        Utils.setToast(mContext, province_id + " - "+cityId+" - " + district_id);
     }
 
-    private String province_id = "";      //  默认为 北京 北京 东城区
-    private String city_id = "";         //  默认为 北京 北京 东城区
-    private String district_id = "";     //  默认为 北京 北京 东城区
+    private String province_id = "0";      //  默认为 北京 北京 东城区
+    private String city_id = "0";         //  默认为 北京 北京 东城区
+    private String district_id = "0";     //  默认为 北京 北京 东城区
     private String param_vilige_id = "";
     private int districtPage = 1;
     private int districtPageSize = 12;
@@ -570,7 +580,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
     private ArrayList<DistrictEntity> districtDataList;
     private ArrayList<DistrictEntity> tempGardenDataList = new ArrayList<DistrictEntity>();
     private DistrictAdapter adapter;
-    private String defaultAddr = "北京市 北京 东城区";
+    private String defaultAddr = "未选择  未选择 未选择";
     private String cityName = "";
     private void showGardenWindow(boolean isTextSearch, String text, String cityID, String districtID){
         View contentView = LayoutInflater.from(mContext).inflate(R.layout.popuplayout_district, null);
