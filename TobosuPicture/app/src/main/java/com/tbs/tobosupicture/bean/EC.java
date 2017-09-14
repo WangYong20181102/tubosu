@@ -47,5 +47,6 @@ public final class EC {
         public static final int CHOOSE_CITY_TO_GET_DATA_FROM_NET_FACTORY = 0x100006;
         public static final int UPDATE_OWNER_SEARCH_CASE = 0x100007; // 重新请求
         public static final int CHOOSE_CITY_FOR_BOTH_FRAGMENT = 0x100008;
+        public static final int USER_LOGIN_TYPE = 0x100009; // 用户登录的身份
     }
 }

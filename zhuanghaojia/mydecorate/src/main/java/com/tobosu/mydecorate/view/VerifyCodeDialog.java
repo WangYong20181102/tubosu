@@ -82,7 +82,7 @@ public class VerifyCodeDialog extends Dialog {
             timeCount = new TimeCount(60000, 1000, timeNmu);
 
             View mView = inflater.inflate(R.layout.popupwindow_get_verification, null);
-            LinearLayout windowLayout = (LinearLayout) mView.findViewById(R.id.windowLayout);
+            LinearLayout windowLayout = (LinearLayout) mView.findViewById(R.id.pop_linearlayout);
             windowLayout.setBackgroundResource(R.drawable.custom_dialog_bg);
             iv_imageverif = (ImageView) mView.findViewById(R.id.iv_imageverif);
             TextView tv_another = (TextView) mView.findViewById(R.id.tv_another);

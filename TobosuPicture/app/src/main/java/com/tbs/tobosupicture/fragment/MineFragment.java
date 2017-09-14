@@ -115,7 +115,8 @@ public class MineFragment extends BaseFragment {
     RelativeLayout fmKefuDianhua;
     @BindView(R.id.fm_shezhi)
     RelativeLayout fmShezhi;
-
+    @BindView(R.id.text3)
+    TextView text3;  // 搜索过的历史记录
     @BindView(R.id.fm_co_icon)
     ImageView fmCoIcon;//公司图标
     @BindView(R.id.fm_co_name)
@@ -249,6 +250,17 @@ public class MineFragment extends BaseFragment {
             case EC.EventCode.HINT_MINE_RED_DOT:
                 //隐藏红点
                 mineReddot.setVisibility(View.GONE);
+                break;
+
+            case EC.EventCode.USER_LOGIN_TYPE:
+                String type = (String) event.getData();
+                if("1".equals(type)){
+                    // 业主
+                    text3.setText("搜索过的装修案例");
+                }else if("3".equals(type)) {
+                    // 公司
+                    text3.setText("同城用户搜索的案例");
+                }
                 break;
         }
     }

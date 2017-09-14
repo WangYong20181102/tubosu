@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -20,16 +18,10 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
-import com.android.volley.toolbox.Volley;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.HttpClientHelper;
 import com.tobosu.mydecorate.util.HintInput;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,7 +54,7 @@ public class GetVerificationPopupwindow extends PopupWindow {
         mContext = context;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mView = inflater.inflate(R.layout.popupwindow_get_verification, null);
-        windowLayout = (LinearLayout) mView.findViewById(R.id.windowLayout);
+        windowLayout = (LinearLayout) mView.findViewById(R.id.pop_linearlayout);
         windowLayout.setBackgroundResource(R.drawable.custom_dialog_bg);
         iv_imageverif = (ImageView) mView.findViewById(R.id.iv_imageverif);
         tv_another = (TextView) mView.findViewById(R.id.tv_another);
