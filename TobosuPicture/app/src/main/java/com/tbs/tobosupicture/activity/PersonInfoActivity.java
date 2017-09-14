@@ -225,6 +225,7 @@ public class PersonInfoActivity extends BaseActivity {
             case R.id.person_info_sex_rl:
                 //点击更换性别
                 setSexPopWindow = new SetSexPopWindow(mContext, popClickLister);
+                setSexPopWindow.setOutsideTouchable(true);
                 setSexPopWindow.showAtLocation(PersonInfoActivity.this.findViewById(R.id.pop_window_showing),
                         Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
@@ -347,7 +348,7 @@ public class PersonInfoActivity extends BaseActivity {
                 String account = map.get("openid");//微信的openid
                 Log.e(TAG, "授权成功==头像==" + icon + "===nickname===" + nickname + "===account===" + account);
                 customWaitDialog.dismiss();
-                HttpBindWeChat(account,nickname,icon);
+                HttpBindWeChat(account, nickname, icon);
             }
 
             @Override
@@ -448,12 +449,14 @@ public class PersonInfoActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.pop_set_man:
+                case R.id.pop_set_man_ll:
                     //设置性别男性
                     HttpSetSex(1);
                     personInfoSex.setText("男");
                     setSexPopWindow.dismiss();
                     break;
                 case R.id.pop_set_women:
+                case R.id.pop_set_women_ll:
                     //设置性别女性
                     HttpSetSex(2);
                     personInfoSex.setText("女");
@@ -481,6 +484,10 @@ public class PersonInfoActivity extends BaseActivity {
                     break;
                 case R.id.cancelBtn:
                     menuWindow.dismiss();
+                    break;
+                case R.id.pop_dismiss:
+                case R.id.pop_dismiss_ll:
+                    setSexPopWindow.dismiss();
                     break;
             }
         }
@@ -521,7 +528,7 @@ public class PersonInfoActivity extends BaseActivity {
     }
 
     //请求绑定微信
-    private void HttpBindWeChat(String account,String nickname,String icon) {
+    private void HttpBindWeChat(String account, String nickname, String icon) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("uid", SpUtils.getUserUid(mContext));
