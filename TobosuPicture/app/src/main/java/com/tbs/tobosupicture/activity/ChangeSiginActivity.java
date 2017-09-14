@@ -1,6 +1,7 @@
 package com.tbs.tobosupicture.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -44,6 +45,8 @@ public class ChangeSiginActivity extends BaseActivity {
 
     private Context mContext;
     private String TAG = "ChangeSiginActivity";
+    private Intent mIntent;
+    private String mSigin = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,9 @@ public class ChangeSiginActivity extends BaseActivity {
         setContentView(R.layout.activity_change_sigin);
         ButterKnife.bind(this);
         mContext = this;
+        mIntent = getIntent();
+        mSigin = mIntent.getStringExtra("sigin");
+        changeSiginInput.setText("" + mSigin);
     }
 
     @Override

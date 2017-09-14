@@ -264,7 +264,7 @@
                             android:background="@drawable/shape_et_feedback_bg"
                             android:inputType="text"
                             android:paddingLeft="10dip"
-                            android:textColor="#CCCCCC"
+                            android:textColor="@color/text_black"
                             android:textSize="14sp" />
                     </RelativeLayout>
                 </LinearLayout>

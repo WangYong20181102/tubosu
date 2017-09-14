@@ -317,7 +317,9 @@ public class PersonInfoActivity extends BaseActivity {
 
     //修改个性签名
     private void changeSigin() {
+        String mSigin = personInfoSign.getText().toString();
         Intent intent = new Intent(mContext, ChangeSiginActivity.class);
+        intent.putExtra("sigin", mSigin);
         mContext.startActivity(intent);
     }
 
@@ -423,6 +425,7 @@ public class PersonInfoActivity extends BaseActivity {
         personInfoCity.setText(personInfo.getCity_name());
         //设置个性签名
         personInfoSign.setText(personInfo.getPersonal_signature());
+        Log.e(TAG, "显示的个性签名==========" + personInfo.getPersonal_signature());
         //设置绑定状态
         if (personInfo.getWechat_check().equals("1")) {
             personInfoBindWx.setText("已绑定");

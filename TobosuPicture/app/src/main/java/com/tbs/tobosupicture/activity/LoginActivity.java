@@ -3,12 +3,14 @@ package com.tbs.tobosupicture.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +33,6 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.weixin.handler.UmengWXHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,6 +63,10 @@ public class LoginActivity extends BaseActivity {
     TextView loginLogin;
     @BindView(R.id.login_weixin_login)
     LinearLayout loginWeixinLogin;
+    @BindView(R.id.login_clean_phone_num)
+    ImageView loginCleanPhoneNum;
+    @BindView(R.id.login_clean_pw)
+    ImageView loginCleanPw;
 
 
     private Context mContext;
@@ -84,6 +89,46 @@ public class LoginActivity extends BaseActivity {
         mGson = new Gson();
         mShareAPI = UMShareAPI.get(mContext);
         customWaitDialog = new CustomWaitDialog(mContext);
+        loginCount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (count > 0) {
+                    loginCleanPhoneNum.setVisibility(View.VISIBLE);
+                }else {
+                    loginCleanPhoneNum.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        loginPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (count > 0) {
+                    loginCleanPw.setVisibility(View.VISIBLE);
+                }else {
+                    loginCleanPw.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -100,7 +145,8 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.login_close, R.id.login_forgot_password, R.id.login_regist, R.id.login_login, R.id.login_weixin_login})
+    @OnClick({R.id.login_close, R.id.login_forgot_password, R.id.login_regist,
+            R.id.login_login, R.id.login_weixin_login, R.id.login_clean_pw, R.id.login_clean_phone_num})
     public void onViewClickedInLoginActivity(View view) {
         switch (view.getId()) {
             case R.id.login_close:
@@ -124,6 +170,14 @@ public class LoginActivity extends BaseActivity {
                 //先清除token
 //                mShareAPI.deleteOauth(LoginActivity.this, SHARE_MEDIA.WEIXIN, null);
                 weChatLogin();
+                break;
+            case R.id.login_clean_phone_num:
+                //清除手机号码
+                loginCount.setText("");
+                break;
+            case R.id.login_clean_pw:
+                //清除密码
+                loginPassword.setText("");
                 break;
         }
     }
