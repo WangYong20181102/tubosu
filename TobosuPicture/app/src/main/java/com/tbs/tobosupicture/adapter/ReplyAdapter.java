@@ -316,6 +316,7 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             //该条回复的点赞数量
             ((ItemViewHolder) holder).item_reply_item_comment_zannum.setText("" + commentList.get(position - 1).getPraise_count());
             //TODO 回复按钮 循环跳转这个页面
+            ((ItemViewHolder) holder).item_reply_item_comment_revert.setText(commentList.get(position-1).getComment_count()+"条回复");
             ((ItemViewHolder) holder).item_reply_item_comment_revert.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

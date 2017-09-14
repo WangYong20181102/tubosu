@@ -11,18 +11,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"></RelativeLayout>
 
-    <TextView
-        android:id="@+id/frgment_textview"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:ellipsize="end"
-        android:maxEms="40"
-        android:gravity="bottom"
-        android:text="文字说明"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_28px" />
+        android:scrollbars="none">
+
+        <TextView
+            android:id="@+id/frgment_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="文字说明"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_28px" />
+    </ScrollView>
+
 </RelativeLayout>
