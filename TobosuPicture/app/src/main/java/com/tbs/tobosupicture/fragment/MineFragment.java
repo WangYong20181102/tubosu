@@ -248,7 +248,6 @@ public class MineFragment extends BaseFragment {
                 //隐藏红点
                 mineReddot.setVisibility(View.GONE);
                 break;
-
             case EC.EventCode.USER_LOGIN_TYPE:
                 String type = (String) event.getData();
                 if("1".equals(type)){
