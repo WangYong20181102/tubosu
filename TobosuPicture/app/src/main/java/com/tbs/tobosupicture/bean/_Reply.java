@@ -218,14 +218,14 @@ public class _Reply {
         private String icon;
         private String is_praise;
         private String praise_count;
-        private String comment_count;
+        private String reply_count;
 
         public String getComment_count() {
-            return comment_count;
+            return reply_count;
         }
 
         public void setComment_count(String comment_count) {
-            this.comment_count = comment_count;
+            this.reply_count = comment_count;
         }
 
         public String getId() {

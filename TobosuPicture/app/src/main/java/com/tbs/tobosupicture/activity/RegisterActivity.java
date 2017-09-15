@@ -304,6 +304,12 @@ public class RegisterActivity extends BaseActivity {
                         mContext.startActivity(intent);
                         EventBusUtil.sendEvent(new Event(EC.EventCode.FNISHI_LOGINACTIVITY));
                         EventBusUtil.sendEvent(new Event(EC.EventCode.LOGIN_INITDATA));
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, "注册成功！", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                         finish();
                     } else {
                         //获取数据失败

@@ -35,7 +35,7 @@
                 android:layout_marginLeft="10dp"
                 android:background="@null"
                 android:hint="搜你想搜..."
-                android:textColor="@color/text_gray"
+                android:textColor="@color/text_black"
                 android:textColorHint="@color/text_gray"
                 android:textSize="@dimen/text_size_24px" />
         </LinearLayout>

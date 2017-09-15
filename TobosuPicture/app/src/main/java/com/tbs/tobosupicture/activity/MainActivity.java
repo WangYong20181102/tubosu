@@ -138,8 +138,8 @@ public class MainActivity extends BaseActivity {
     private void initUserMsg() {
         if (Utils.userIsLogin(mContext)) {
             isLoop = true;
-//            new Thread(new MyThread()).start();
-//            new Thread(new MyThread2()).start();
+            new Thread(new MyThread()).start();
+            new Thread(new MyThread2()).start();
         }
     }
 
@@ -261,8 +261,8 @@ public class MainActivity extends BaseActivity {
             case EC.EventCode.LOGIN_INITDATA:
                 //用户登录的事件通知 这里开始循环请求
                 isLoop = true;
-                new Thread(new MyThread()).start();
-                new Thread(new MyThread2()).start();
+//                new Thread(new MyThread()).start();
+//                new Thread(new MyThread2()).start();
                 Log.e(TAG, "用户登录成功====处理登录事件isloop的值===" + isLoop);
                 break;
             case EC.EventCode.LOGIN_OUT:
