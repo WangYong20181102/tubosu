@@ -1,5 +1,4 @@
 package com.tbs.tobosupicture.fragment;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -25,7 +24,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
@@ -54,10 +52,8 @@ import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.utils.WriteUtil;
 import com.tbs.tobosupicture.view.SelectPersonalPopupWindow;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -67,7 +63,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -149,7 +144,6 @@ public class MineFragment extends BaseFragment {
     @BindView(R.id.mine_reddot)
     TextView mineReddot;
 
-
     private Context mContext;
     private String TAG = "MineFragment";
     private Gson mGson;
@@ -202,6 +196,7 @@ public class MineFragment extends BaseFragment {
                 fmUserIcon.setClickable(false);
                 fmUserSign.setVisibility(View.GONE);
                 fmUserIconLl.setVisibility(View.INVISIBLE);
+                text3.setText("同城用户搜索的案例");
             } else {
                 //业主的页面
                 fmCoInfo.setVisibility(View.GONE);
@@ -210,6 +205,7 @@ public class MineFragment extends BaseFragment {
                 fmUserSign.setVisibility(View.VISIBLE);
                 fmUserIconLl.setVisibility(View.VISIBLE);
                 fmUserIcon.setClickable(true);
+                text3.setText("搜索过的装修案例");
             }
             HttpGetMineInfo();
         } else {
@@ -225,6 +221,7 @@ public class MineFragment extends BaseFragment {
             fmTumiNum.setText("0");
             fmTuyouNum.setText("0");
             fmDongtaiNum.setText("0");
+            text3.setText("搜索过的装修案例");
             Glide.with(mContext).load(R.mipmap.me_bg).into(fmHeadBg);
         }
     }
@@ -251,7 +248,6 @@ public class MineFragment extends BaseFragment {
                 //隐藏红点
                 mineReddot.setVisibility(View.GONE);
                 break;
-
             case EC.EventCode.USER_LOGIN_TYPE:
                 String type = (String) event.getData();
                 if("1".equals(type)){
