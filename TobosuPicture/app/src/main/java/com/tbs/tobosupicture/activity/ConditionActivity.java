@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -359,6 +358,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
             }
 
             searchCaseRecord.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     // 历史记录的
@@ -508,9 +508,9 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
 //        Utils.setToast(mContext, province_id + " - "+cityId+" - " + district_id);
     }
 
-    private String province_id = "0";      //  默认为 北京 北京 东城区
-    private String city_id = "0";         //  默认为 北京 北京 东城区
-    private String district_id = "0";     //  默认为 北京 北京 东城区
+    private String province_id = "0";      //  默认为 未选择 未选择 未选择
+    private String city_id = "0";          //  默认为 未选择 未选择 未选择
+    private String district_id = "0";      //  默认为 未选择 未选择 未选择
     private String param_vilige_id = "";
     private int districtPage = 1;
     private int districtPageSize = 12;
@@ -548,6 +548,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                     Utils.setErrorLog(TAG, "json ====1==>>> "+json);
                     final SearchDistrictJsonEntity jsonEntity = new SearchDistrictJsonEntity(json);
                     runOnUiThread(new Runnable() {
+
                         @Override
                         public void run() {
                             if (jsonEntity.getStatus() == 200) {
@@ -603,7 +604,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                     mPullRefreshGridView.onRefreshComplete();
                 } else if (mode == com.tbs.tobosupicture.view.PullToRefreshGridView.MODE_PULL_UP_TO_REFRESH) {
                     // 加载更多
-                    Utils.setToast(mContext, "上拉加载更多");
+//                    Utils.setToast(mContext, "上拉加载更多");
                     districtPage++;
                     getGardenDistrictData(false, null, city_id, district_id,mGridView, ivNoDistrictDatas, relHasData);
                     mPullRefreshGridView.onRefreshComplete();
@@ -645,6 +646,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
         });
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 param_vilige_id = tempGardenDataList.get(position).getId();

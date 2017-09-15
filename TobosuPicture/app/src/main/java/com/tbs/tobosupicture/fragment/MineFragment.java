@@ -556,6 +556,7 @@ public class MineFragment extends BaseFragment {
         param.put("token", Utils.getDateToken());
         param.put("uid", SpUtils.getUserUid(mContext));
         HttpUtils.doPost(UrlConstans.MINE_HOME_PAGE, param, new Callback() {
+
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败===" + e.toString());
