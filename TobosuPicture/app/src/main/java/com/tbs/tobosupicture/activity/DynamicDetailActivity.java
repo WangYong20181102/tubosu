@@ -238,8 +238,13 @@ public class DynamicDetailActivity extends BaseActivity {
                             }
                         });
                     } else {
-                        Toast.makeText(mContext, "评论失败！", Toast.LENGTH_SHORT).show();
-                        dyndRevert.setText("");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, "评论失败！", Toast.LENGTH_SHORT).show();
+                                dyndRevert.setText("");
+                            }
+                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

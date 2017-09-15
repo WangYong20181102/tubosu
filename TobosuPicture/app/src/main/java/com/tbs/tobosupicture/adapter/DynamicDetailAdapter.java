@@ -437,7 +437,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
 //                ((CommentViewHolder) holder).commentRevert.setVisibility(View.VISIBLE);
 //            }
             //回复数量
-            ((CommentViewHolder) holder).commentRevert.setText("" + commentArrayList.get(position - 1).getReply_count() + "回复");
+            ((CommentViewHolder) holder).commentRevert.setText("" + commentArrayList.get(position - 1).getReply_count() + "条回复");
             //回复的点击事件
             ((CommentViewHolder) holder).commentRevert.setOnClickListener(new View.OnClickListener() {
                 @Override
