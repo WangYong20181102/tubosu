@@ -322,7 +322,9 @@ public class ImgToFriendSeachActivity extends BaseActivity {
                                     dynamicBaseAdapter = new DynamicBaseAdapter(mContext, ImgToFriendSeachActivity.this, dynamicBaseList);
                                     imgToFriendShowSearch.setAdapter(dynamicBaseAdapter);
                                     dynamicBaseAdapter.notifyDataSetChanged();
+                                    dynamicBaseAdapter.changeAdapterState(2);
                                 } else {
+                                    dynamicBaseAdapter.changeAdapterState(2);
                                     dynamicBaseAdapter.notifyDataSetChanged();
                                 }
                                 customWaitDialog.dismiss();
