@@ -38,6 +38,9 @@ public final class EC {
         public static final int REFRESH_MY_ORGIN = 0x000027;//刷新我的发起数据（用户第一次发动态的时候调用）
         public static final int SHOW_MINE_RED_DOT = 0x000028;//显示我的界面中的搜索装修案例的红点提示
         public static final int HINT_MINE_RED_DOT = 0x000029;//隐藏我的界面中的搜索装修案例的红点提示
+        public static final int ABOUT_ME_GET_MSG_NUM = 0x000030;//有关于我的界面获取消息
+        public static final int MY_ORGIN_FRAGMENT_GET_MSG = 0x000031;//我的发起界面获取消息
+        public static final int MY_JOIN_FRAGMENT_GET_MSG = 0x000032;//我的参与界面获取消息
 
 
         public static final int UPDATE_OWNER_SEARCH_CASE_STATUS = 0x100001; // 改变状态

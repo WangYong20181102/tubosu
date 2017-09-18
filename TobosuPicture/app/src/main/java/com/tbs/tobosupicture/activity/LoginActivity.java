@@ -97,10 +97,10 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (count > 0) {
-                    loginCleanPhoneNum.setVisibility(View.VISIBLE);
-                }else {
+                if (s.length() == 0) {
                     loginCleanPhoneNum.setVisibility(View.GONE);
+                } else {
+                    loginCleanPhoneNum.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -119,7 +119,7 @@ public class LoginActivity extends BaseActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (count > 0) {
                     loginCleanPw.setVisibility(View.VISIBLE);
-                }else {
+                } else if (count == 0) {
                     loginCleanPw.setVisibility(View.GONE);
                 }
             }

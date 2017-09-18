@@ -151,10 +151,12 @@ public class ZuiReAdapter
                         if (Utils.userIsLogin(mContext)) {
                             //用户已经登录
                             isZaning = true;
-                            HttpPraise(SpUtils.getUserUid(mContext), dynamicArrayList.get(position - 1).getId(),
+                            HttpPraise(SpUtils.getUserUid(mContext),
+                                    dynamicArrayList.get(position - 1).getId(),
                                     dynamicArrayList.get(position - 1).getUid(),
                                     ((ZuiReDynamicHolder) holder).zuiReImgZan,
-                                    ((ZuiReDynamicHolder) holder).zuiReDynamicZanAdd, ((ZuiReDynamicHolder) holder).zuiReDynamicPraiseCount);
+                                    ((ZuiReDynamicHolder) holder).zuiReDynamicZanAdd,
+                                    ((ZuiReDynamicHolder) holder).zuiReDynamicPraiseCount);
 
                         } else {
                             Intent intent = new Intent(mContext, LoginActivity.class);

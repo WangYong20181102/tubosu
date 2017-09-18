@@ -96,6 +96,9 @@ public class MyOrginFragment extends BaseFragment {
         return true;
     }
 
+    private void getMyOrginMsg() {
+        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_FRAGMENT_GET_MSG));
+    }
 
     private void initViewEvent() {
         mGson = new Gson();
@@ -222,6 +225,7 @@ public class MyOrginFragment extends BaseFragment {
                                 }
                                 myOrginSwipe.setRefreshing(false);
                                 myOrginNullData.setVisibility(View.GONE);
+                                getMyOrginMsg();
                             }
                         });
                     } else if (status.equals("201")) {
@@ -264,12 +268,6 @@ public class MyOrginFragment extends BaseFragment {
     protected void receiveEvent(Event event) {
         switch (event.getCode()) {
             case EC.EventCode.REFRESH_MY_ORGIN_NUM:
-                break;
-            //获取我的发起头像地址
-            case EC.EventCode.MY_ORGIN_ICON:
-                break;
-            //获取我的发起的数量
-            case EC.EventCode.MY_ORGIN_NUM:
                 break;
             case EC.EventCode.MY_ORGIN_MSG:
                 //获取我的发起消息

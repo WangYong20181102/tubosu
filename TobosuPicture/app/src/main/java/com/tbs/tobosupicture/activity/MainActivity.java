@@ -33,6 +33,7 @@ import com.tbs.tobosupicture.fragment.ImageToFriendFragment;
 import com.tbs.tobosupicture.fragment.ImgToFriendFragment;
 import com.tbs.tobosupicture.fragment.MineFragment;
 import com.tbs.tobosupicture.fragment.TemplateFragment;
+import com.tbs.tobosupicture.utils.Base64Util;
 import com.tbs.tobosupicture.utils.EventBusUtil;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
@@ -43,11 +44,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -75,13 +80,15 @@ public class MainActivity extends BaseActivity {
     private String TAG = "MainActivity";
     private Context mContext;
     private BadgeView mImgToFriendTag;//以图会友提示
-    private boolean isLoop = false;//是否需要循环
     private Gson mGson;
     private int mMyOrginNum = 0;//我的发起的数量
     private String mMyOrginIconUrl = "";//我的发起用户头像发
     private int mMyJoinNum = 0;//我的参与的数量
     private String mMyJoinIconUrl = "";//我的参与用户头像
     private String is_exist_case = "";
+    private Socket mSocket;
+    private boolean isSocketConnect = false;
+    private _ReceiveMsg receiveMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +97,7 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         mContext = this;
         initFragment();
-        HttpGetTime();
+//        HttpGetTime();
         initUserMsg();
     }
 
@@ -137,40 +144,123 @@ public class MainActivity extends BaseActivity {
     //初始化用户的消息提示模块
     private void initUserMsg() {
         if (Utils.userIsLogin(mContext)) {
-            isLoop = true;
-            new Thread(new MyThread()).start();
-            new Thread(new MyThread2()).start();
+            //建立通并监听
+            LinkSocket();
+            //监听Socket是否链接成功
+            CheckSocketConnectLister();
         }
     }
 
-    //获取定时器的时间
-    private void HttpGetTime() {
+    //监听链接状态
+    private void CheckSocketConnectLister() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!isSocketConnect) {
+                    try {
+                        Log.e(TAG, "检测Socket链接状态=======" + mSocket.connected());
+                        if (mSocket.connected()) {
+                            isSocketConnect = true;
+                            mSocket.on("new_msg", onNewMsg);
+                            Log.e(TAG, "检测Socket链接状态====成功====" + mSocket.connected());
+                            //发送事件
+                            SendLoginEvent(SpUtils.getUserUid(mContext));
+                            //通知后台登录成功
+                            Thread.sleep(2000);
+                            HttpIsConnect(SpUtils.getUserUid(mContext));
+                        }
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+
+    //建立通信的方法
+    private void LinkSocket() {
+        //初始化
+        try {
+            mSocket = IO.socket(UrlConstans.SOCKET_URL);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        mSocket.connect();
+    }
+
+    //通知服务器建立连接
+    private void HttpIsConnect(String uid) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
-        HttpUtils.doPost(UrlConstans.GET_TIMERS, param, new Callback() {
+        param.put("uid", uid);
+        HttpUtils.doPost(UrlConstans.SOCKET_IS_CONNECT, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "获取定时时间失败！");
+                Log.e(TAG, "socket链接失败=======" + e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String json = new String(response.body().string());
+                String json = response.body().string();
+                Log.e(TAG, "请求连接成功之后返回的msg==========" + json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.getString("status");
                     if (status.equals("200")) {
-                        String data = jsonObject.getString("data");
-                        _DSTime dsTime = mGson.fromJson(data, _DSTime.class);
-                        //存时间
-                        SpUtils.setMsgTime(mContext, dsTime.getDynamic_time());
-                        SpUtils.setAnliTime(mContext, dsTime.getNew_case_time());
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                Log.e(TAG, "通知用户链接成功=====" + json);
             }
         });
+    }
+
+    // 发送登录事件
+    private void SendLoginEvent(String uid) {
+        if (!TextUtils.isEmpty(uid)) {
+            Log.e(TAG, "发送Socket登录事件==============");
+            mSocket.emit("login", uid);
+        }
+    }
+
+    //监听消息
+    private Emitter.Listener onNewMsg = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Log.e(TAG, "接收到服务器的推送消息===没有处理前===" + args[0].toString());
+            //base64解密
+            String json = Base64Util.getFromBase64(args[0].toString());
+            if (!TextUtils.isEmpty(json)) {
+                Log.e(TAG, "解密之后的数据=======" + json);
+                receiveMsg = mGson.fromJson(json, _ReceiveMsg.class);
+                //我的发起的消息 包含消息的数量消息的头像
+                EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_MSG, receiveMsg.getMy_participation()));//我的参与
+                EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_MSG, receiveMsg.getMy_sponsor()));//我的发起
+                //将数值布局
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //显示数量
+                        int msgNum = Integer.parseInt(receiveMsg.getAll_msg_count());
+                        if (msgNum >= 100) {
+                            mImgToFriendTag.setText("99+");
+                        } else {
+                            mImgToFriendTag.setBadgeCount(msgNum);
+                        }
+
+                    }
+                });
+            }
+        }
+    };
+
+    //断开socket的链接
+    private void disConnectSocket() {
+        mSocket.disconnect();
+        mSocket.off("new_msg", onNewMsg);
+        isSocketConnect = false;
     }
 
     //选择所在页面
@@ -204,6 +294,7 @@ public class MainActivity extends BaseActivity {
                 //点击第二个选项 显示案例
                 MobclickAgent.onEvent(mContext, "click_an_li_tu_tab");
                 setIndexSelect(1);
+                Log.e(TAG, "socket链接状态=======" + mSocket.connected());
                 break;
             case R.id.rb_third:
                 //点击第三个选项 显示以图会友
@@ -212,11 +303,11 @@ public class MainActivity extends BaseActivity {
                 } else {
                     //TODO 图标上有数据
                     EventBusUtil.sendEvent(new Event(EC.EventCode.SHOW_ABOUT_ME));
-//                    EventBusUtil.sendEvent(new Event(EC.EventCode.CHECK_ABOUTME_MYORG_HAS_MSG));
                     Log.e(TAG, "已发送消息===SHOW_ABOUT_ME===");
                 }
                 MobclickAgent.onEvent(mContext, "click_yi_tu_hui_you_tab");
                 setIndexSelect(2);
+                Log.e(TAG, "socket链接状态=======" + mSocket.connected());
                 break;
             case R.id.rb_fourth:
                 //点击第四个选项 显示我的  其中我的界面要分情况考虑
@@ -237,87 +328,80 @@ public class MainActivity extends BaseActivity {
     protected void receiveEvent(Event event) {
         switch (event.getCode()) {
             case EC.EventCode.SHOW_TEMPLATE_FRAGMENT:
-                //样板图
-//                rbFirst.performClick();
-//                setIndexSelect(0);
                 break;
             case EC.EventCode.SHOW_DECORATIONCASE_FRAGMENT:
-                //装修案例
-                Log.e(TAG, "收到案例相关消息");
-//                rbSecond.performClick();
-//                setIndexSelect(1);
                 break;
             case EC.EventCode.SHOW_IMAGETOFRIEND_FRAGMENT:
-                Log.e(TAG, "收到点击以图会友相关消息");
-                //以图会友
-//                rbThird.performClick();
-//                setIndexSelect(2);
                 break;
             case EC.EventCode.SHOW_MINE_FRAGMENT:
-                //显示我的
-//                rbFourth.performClick();
-//                setIndexSelect(3);
                 break;
             case EC.EventCode.LOGIN_INITDATA:
-                //用户登录的事件通知 这里开始循环请求
-                isLoop = true;
-//                new Thread(new MyThread()).start();
-//                new Thread(new MyThread2()).start();
-                Log.e(TAG, "用户登录成功====处理登录事件isloop的值===" + isLoop);
+                //用户登录的事件通知
+                initUserMsg();
                 break;
             case EC.EventCode.LOGIN_OUT:
                 //用户登出事件通知
-                isLoop = false;
-                Log.e(TAG, "用户登出成功====处理登出事件===isloop的值===" + isLoop);
+                disConnectSocket();
                 mImgToFriendTag.setBadgeCount(0);
                 mianAboutReddot.setVisibility(View.GONE);
                 EventBusUtil.sendEvent(new Event(EC.EventCode.HINT_MINE_RED_DOT));
+                break;
+            case EC.EventCode.ABOUT_ME_GET_MSG_NUM:
+                //有关于我的界面获取消息的数量
+                EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_MSG, receiveMsg.getMy_participation()));//我的参与
+                EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_MSG, receiveMsg.getMy_sponsor()));//我的发起
+                break;
+            case EC.EventCode.MY_ORGIN_FRAGMENT_GET_MSG:
+                EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_MSG, receiveMsg.getMy_sponsor()));//我的发起
+                break;
+            case EC.EventCode.MY_JOIN_FRAGMENT_GET_MSG:
+                EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_MSG, receiveMsg.getMy_participation()));//我的参与
                 break;
         }
     }
 
     //循环拉取消息 的定时任务
-    class MyThread implements Runnable {
-
-        @Override
-        public void run() {
-            while (isLoop) {
-                try {
-                    if (!TextUtils.isEmpty(SpUtils.getMsgTime(mContext))) {
-                        Thread.sleep(Long.parseLong(SpUtils.getMsgTime(mContext)) * 1000);
-                        Log.e(TAG, "网络获取消息的定时时间=======" + Long.parseLong(SpUtils.getMsgTime(mContext)) * 1000);
-                    } else {
-                        Thread.sleep(2345);
-                    }
-                    HttpGetMsg();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    //循环拉取用户搜索案例的红点
-    class MyThread2 implements Runnable {
-
-        @Override
-        public void run() {
-            while (isLoop) {
-                try {
-                    //5分钟拉取一次
-                    if (!TextUtils.isEmpty(SpUtils.getAnliTime(mContext))) {
-                        Thread.sleep(Long.parseLong(SpUtils.getAnliTime(mContext)) * 1000);
-                        Log.e(TAG, "网络获取案例的定时时间=======" + Long.parseLong(SpUtils.getAnliTime(mContext)) * 1000);
-                    } else {
-                        Thread.sleep(300000);
-                    }
-                    HttpGetIsHaveNewCast();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+//    class MyThread implements Runnable {
+//
+//        @Override
+//        public void run() {
+//            while (isLoop) {
+//                try {
+//                    if (!TextUtils.isEmpty(SpUtils.getMsgTime(mContext))) {
+//                        Thread.sleep(Long.parseLong(SpUtils.getMsgTime(mContext)) * 1000);
+//                        Log.e(TAG, "网络获取消息的定时时间=======" + Long.parseLong(SpUtils.getMsgTime(mContext)) * 1000);
+//                    } else {
+//                        Thread.sleep(2345);
+//                    }
+//                    HttpGetMsg();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    }
+//
+//    //循环拉取用户搜索案例的红点
+//    class MyThread2 implements Runnable {
+//
+//        @Override
+//        public void run() {
+//            while (isLoop) {
+//                try {
+//                    //5分钟拉取一次
+//                    if (!TextUtils.isEmpty(SpUtils.getAnliTime(mContext))) {
+//                        Thread.sleep(Long.parseLong(SpUtils.getAnliTime(mContext)) * 1000);
+//                        Log.e(TAG, "网络获取案例的定时时间=======" + Long.parseLong(SpUtils.getAnliTime(mContext)) * 1000);
+//                    } else {
+//                        Thread.sleep(300000);
+//                    }
+//                    HttpGetIsHaveNewCast();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    }
 
     //网络拉取我的动态相关
     private void HttpGetIsHaveNewCast() {
@@ -382,34 +466,34 @@ public class MainActivity extends BaseActivity {
                     if (status.equals("200")) {
                         String data = jsonObject.getString("data");
                         final _ReceiveMsg receiveMsg = mGson.fromJson(data, _ReceiveMsg.class);
-                        mMyOrginNum = Integer.parseInt(receiveMsg.getMy_sponsor().getMsg_count());//发起的数量
-                        mMyOrginIconUrl = receiveMsg.getMy_sponsor().getIcon();//发起的数量
-                        mMyJoinNum = Integer.parseInt(receiveMsg.getMy_participation().getMsg_count());//参与的数量
-                        mMyJoinIconUrl = receiveMsg.getMy_participation().getIcon();//参与的数量
-
-                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_NUM, mMyJoinNum));
-                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_ICON, mMyJoinIconUrl));
-                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_NUM, mMyOrginNum));
-                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_ICON, mMyOrginIconUrl));
-                        //我的发起的消息 包含消息的数量消息的头像
-                        _ReceiveMsg.MySponsor mySponsor = new _ReceiveMsg.MySponsor(receiveMsg.getMy_sponsor().getMsg_count(), mMyOrginIconUrl);
-                        _ReceiveMsg.MyParticipation myParticipation = new _ReceiveMsg.MyParticipation(receiveMsg.getMy_participation().getMsg_count(), mMyJoinIconUrl);
-                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_MSG, myParticipation));
-                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_MSG, mySponsor));
-                        //将数值布局
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //显示数量
-                                int msgNum = Integer.parseInt(receiveMsg.getAll_msg_count());
-                                if (msgNum >= 100) {
-                                    mImgToFriendTag.setText("99+");
-                                } else {
-                                    mImgToFriendTag.setBadgeCount(msgNum);
-                                }
-
-                            }
-                        });
+//                        mMyOrginNum = Integer.parseInt(receiveMsg.getMy_sponsor().getMsg_count());//发起的数量
+//                        mMyOrginIconUrl = receiveMsg.getMy_sponsor().getIcon();//发起的数量
+//                        mMyJoinNum = Integer.parseInt(receiveMsg.getMy_participation().getMsg_count());//参与的数量
+//                        mMyJoinIconUrl = receiveMsg.getMy_participation().getIcon();//参与的数量
+//
+//                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_NUM, mMyJoinNum));
+//                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_ICON, mMyJoinIconUrl));
+//                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_NUM, mMyOrginNum));
+//                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_ICON, mMyOrginIconUrl));
+//                        //我的发起的消息 包含消息的数量消息的头像
+//                        _ReceiveMsg.MySponsor mySponsor = new _ReceiveMsg.MySponsor(receiveMsg.getMy_sponsor().getMsg_count(), mMyOrginIconUrl);
+//                        _ReceiveMsg.MyParticipation myParticipation = new _ReceiveMsg.MyParticipation(receiveMsg.getMy_participation().getMsg_count(), mMyJoinIconUrl);
+//                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_MSG, myParticipation));
+//                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_MSG, mySponsor));
+//                        //将数值布局
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                //显示数量
+//                                int msgNum = Integer.parseInt(receiveMsg.getAll_msg_count());
+//                                if (msgNum >= 100) {
+//                                    mImgToFriendTag.setText("99+");
+//                                } else {
+//                                    mImgToFriendTag.setBadgeCount(msgNum);
+//                                }
+//
+//                            }
+//                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -433,6 +517,7 @@ public class MainActivity extends BaseActivity {
                     SpUtils.setHousePartNum(mContext, 0);
                     SpUtils.setHouseHuxingNum(mContext, 0);
                     SpUtils.setHouseColorNum(mContext, 0);
+                    disConnectSocket();
                     MainActivity.this.finish();
                 }
             }).setNegativeButton("再看看", new DialogInterface.OnClickListener() {
@@ -450,6 +535,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        disConnectSocket();
         ButterKnife.bind(this).unbind();
     }
 

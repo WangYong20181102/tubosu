@@ -83,6 +83,10 @@ public class MyJoinFragment extends BaseFragment {
         return view;
     }
 
+    private void getMyJoinMsg() {
+        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_FRAGMENT_GET_MSG));
+    }
+
     @Override
     protected boolean isRegisterEventBus() {
         return true;
@@ -100,7 +104,7 @@ public class MyJoinFragment extends BaseFragment {
         myJoinRecyclerview.setLayoutManager(mLinearLayoutManager);
         myJoinRecyclerview.setOnTouchListener(onTouchListener);
         myJoinRecyclerview.addOnScrollListener(onScrollListener);//上拉加载更多
-        ((SimpleItemAnimator)myJoinRecyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
+        ((SimpleItemAnimator) myJoinRecyclerview.getItemAnimator()).setSupportsChangeAnimations(false);
     }
 
     //下拉刷新
@@ -174,7 +178,7 @@ public class MyJoinFragment extends BaseFragment {
                     @Override
                     public void run() {
                         myJoinSwipe.setRefreshing(false);
-                        if(myJoinAdapter!=null){
+                        if (myJoinAdapter != null) {
                             myJoinAdapter.changeLoadState(2);
                         }
                         Toast.makeText(mContext, "服务器链接失败！", Toast.LENGTH_SHORT).show();
@@ -211,6 +215,7 @@ public class MyJoinFragment extends BaseFragment {
                                 }
                                 myJoinSwipe.setRefreshing(false);
                                 myJoinNullData.setVisibility(View.GONE);
+                                getMyJoinMsg();
                             }
                         });
                     } else if (status.equals("201")) {

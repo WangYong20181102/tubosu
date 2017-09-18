@@ -20,6 +20,7 @@ import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.base.BaseFragment;
 import com.tbs.tobosupicture.bean.EC;
 import com.tbs.tobosupicture.bean.Event;
+import com.tbs.tobosupicture.bean._ReceiveMsg;
 import com.tbs.tobosupicture.utils.EventBusUtil;
 
 import java.util.ArrayList;
@@ -72,6 +73,7 @@ public class AboutMeFragment extends BaseFragment {
         mContext = getActivity();
         initFragment();
         InitShowDot();
+        getAllMsg();//被实例化之后获取消息数量
         return view;
     }
 
@@ -90,31 +92,26 @@ public class AboutMeFragment extends BaseFragment {
     @Override
     protected void receiveEvent(Event event) {
         switch (event.getCode()) {
-//            case EC.EventCode.LOGIN_INITDATA:
-//                Log.e(TAG, "重置数据=========");
-//                initFragment();
-//                break;
-            case EC.EventCode.MY_JOIN_NUM:
+            case EC.EventCode.MY_JOIN_MSG:
+                _ReceiveMsg.MyParticipation myParticipation = (_ReceiveMsg.MyParticipation) event.getData();
                 //我参与的数量
-                if ((int) event.getData() >= 100) {
+                if (Integer.parseInt(myParticipation.getMsg_count()) >= 100) {
                     mMyJoinTag.setText("99+");
                 } else {
-                    mMyJoinTag.setBadgeCount((int) event.getData());
+                    mMyJoinTag.setBadgeCount(Integer.parseInt(myParticipation.getMsg_count()));
                 }
                 break;
-            case EC.EventCode.MY_ORGIN_NUM:
+            case EC.EventCode.MY_ORGIN_MSG:
                 //我发起的数量
-                if ((int) event.getData() >= 100) {
+                _ReceiveMsg.MySponsor mySponsor = (_ReceiveMsg.MySponsor) event.getData();
+                if (Integer.parseInt(mySponsor.getMsg_count()) >= 100) {
                     mMyOrginTag.setText("99+");
                 } else {
-                    mMyOrginTag.setBadgeCount((int) event.getData());
+                    mMyOrginTag.setBadgeCount(Integer.parseInt(mySponsor.getMsg_count()));
                 }
                 break;
             case EC.EventCode.CHECK_ABOUTME_MYORG_HAS_MSG:
                 //监测是否有消息
-//                if (!mMyOrginTag.getBadgeCount().equals("0")) {
-//                    EventBusUtil.sendEvent(new Event(EC.EventCode.REFRESH_MY_ORGIN_NUM));
-//                }
                 break;
         }
     }
@@ -159,6 +156,11 @@ public class AboutMeFragment extends BaseFragment {
         mMyJoinTag.setTargetView(aboutMeMyJoin);
         mMyJoinTag.setBadgeGravity(Gravity.RIGHT | Gravity.TOP);
         mMyJoinTag.setBadgeMargin(0, 7, 13, 0);
+    }
+
+    //通知首页获取消息
+    private void getAllMsg() {
+        EventBusUtil.sendEvent(new Event(EC.EventCode.ABOUT_ME_GET_MSG_NUM));
     }
 
     //切换选择
