@@ -16,7 +16,14 @@ public class _ReceiveMsg {
     private MySponsor my_sponsor;//我的发起
     private MyParticipation my_participation;//我的参与
     private String all_msg_count;//消息总数
+    private String type;//消息类型
+    public String getType() {
+        return type;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
     public MySponsor getMy_sponsor() {
         return my_sponsor;
     }
