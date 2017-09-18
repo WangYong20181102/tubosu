@@ -76,12 +76,12 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
     RelativeLayout relSearchCaseLayout;
     @BindView(R.id.v_middle)
     View v_middle;
-    @BindView(R.id.relShowAndHideCity)    // 城市 + 小区 布局
-    RelativeLayout relShowAndHideCity;    // 城市 + 小区 布局
-    @BindView(R.id.tvChooseCity)          // 选择城市 按钮  
-    TextView tvChooseCity;                // 选择城市 按钮  
-    @BindView(R.id.tvChooseDisctrict)     // 选择小区 按钮
-    TextView tvChooseDisctrict;           // 选择小区 按钮
+    @BindView(R.id.relShowAndHideCity)                // 城市 + 小区 布局
+    RelativeLayout relShowAndHideCity;                // 城市 + 小区 布局
+    @BindView(R.id.tvChooseCity)                      // 选择城市 按钮
+    TextView tvChooseCity;                            // 选择城市 按钮
+    @BindView(R.id.tvChooseDisctrict)                 // 选择小区 按钮
+    TextView tvChooseDisctrict;                       // 选择小区 按钮
     @BindView(R.id.hideCityLayout)
     LinearLayout hideCityLayout;
     @BindView(R.id.show_cittext)
@@ -204,6 +204,8 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
             });
         }
     }
+
+
     private int listViewCount;
     private ArrayList<SearchRecordBean> recordBeenList;
     private ArrayList<CaseConditionType> caseConditionTypeList;
