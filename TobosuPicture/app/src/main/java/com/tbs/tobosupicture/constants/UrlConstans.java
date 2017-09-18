@@ -19,7 +19,11 @@ public class UrlConstans {
     /**
      * 测试环境的URl
      */
-    public static final String ZXKK_URL = "http://www.dev.tobosu.com/";
+//    public static final String ZXKK_URL = "http://www.dev.tobosu.com/";
+    /**
+     * test分支
+     */
+    public static final String ZXKK_URL = "http://www.test.tobosu.com/";
     /**
      * 图片存储的位置
      */

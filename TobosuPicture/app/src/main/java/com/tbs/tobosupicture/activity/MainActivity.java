@@ -157,12 +157,11 @@ public class MainActivity extends BaseActivity {
                         Log.e(TAG, "检测Socket链接状态=======" + mSocket.connected());
                         if (mSocket.connected()) {
                             isSocketConnect = true;
-                            mSocket.on("new_msg", onNewMsg);
                             Log.e(TAG, "检测Socket链接状态====成功====" + mSocket.connected());
                             //发送事件
                             SendLoginEvent(SpUtils.getUserUid(mContext));
                             //通知后台登录成功
-                            Thread.sleep(2000);
+                            Thread.sleep(1000);
                             HttpIsConnect(SpUtils.getUserUid(mContext));
                         }
                         Thread.sleep(500);
@@ -179,14 +178,24 @@ public class MainActivity extends BaseActivity {
         //初始化
         try {
             mSocket = IO.socket(UrlConstans.SOCKET_URL);
+            mSocket.on("new_msg", onNewMsg);
+            mSocket.on("login", loginMsg);
+            mSocket.connect();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        mSocket.connect();
     }
 
+    //socket登录监听
+    private Emitter.Listener loginMsg = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Log.e(TAG, "监听登录事件==========" + args[0].toString());
+        }
+    };
+
     //通知服务器建立连接
-    private void HttpIsConnect(String uid) {
+    private void  HttpIsConnect(String uid) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("uid", uid);
@@ -208,7 +217,6 @@ public class MainActivity extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Log.e(TAG, "通知用户链接成功=====" + json);
             }
         });
     }
@@ -290,7 +298,7 @@ public class MainActivity extends BaseActivity {
                 //点击第二个选项 显示案例
                 MobclickAgent.onEvent(mContext, "click_an_li_tu_tab");
                 setIndexSelect(1);
-                if(mSocket!=null){
+                if (mSocket != null) {
                     Log.e(TAG, "socket链接状态=======" + mSocket.connected());
                 }
                 break;
@@ -305,7 +313,7 @@ public class MainActivity extends BaseActivity {
                 }
                 MobclickAgent.onEvent(mContext, "click_yi_tu_hui_you_tab");
                 setIndexSelect(2);
-                if(mSocket!=null){
+                if (mSocket != null) {
                     Log.e(TAG, "socket链接状态=======" + mSocket.connected());
                 }
                 break;
