@@ -24,7 +24,10 @@ public class UrlConstans {
      * 图片存储的位置
      */
     public static final String IMG_PATH = Environment.getExternalStorageDirectory() + "/zxkk/";
-    ;
+    /**
+     * 通信地址
+     */
+    public static final String SOCKET_URL = "http://10.10.1.120:2120";
     /**
      * 手机号码 用于验证手机号码是否合法
      */
@@ -383,4 +386,7 @@ public class UrlConstans {
 
     // 修改业搜过的装修案例 （业主）
     public static final String UPDATE_OWER_SEARCH_CASE_STATUS = ZXKK_URL + "rapp/owner/case_read";
+    //通知服务器建立连接成功
+    public static final String SOCKET_IS_CONNECT = ZXKK_URL + "rapp/public/is_connect";
+
 }
