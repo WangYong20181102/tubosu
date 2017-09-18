@@ -117,9 +117,9 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (count > 0) {
+                if (s.length() > 0) {
                     loginCleanPw.setVisibility(View.VISIBLE);
-                } else if (count == 0) {
+                } else if (s.length() == 0) {
                     loginCleanPw.setVisibility(View.GONE);
                 }
             }

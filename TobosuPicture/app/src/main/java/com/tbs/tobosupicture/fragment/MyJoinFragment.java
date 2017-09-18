@@ -259,7 +259,7 @@ public class MyJoinFragment extends BaseFragment {
         switch (event.getCode()) {
             case EC.EventCode.REFRESH_MY_JOIN_NUM:
                 //收到刷新通知
-//                initGetMsg();
+                initGetMsg();
                 break;
             case EC.EventCode.MY_JOIN_MSG:
                 _ReceiveMsg.MyParticipation myParticipation = (_ReceiveMsg.MyParticipation) event.getData();
