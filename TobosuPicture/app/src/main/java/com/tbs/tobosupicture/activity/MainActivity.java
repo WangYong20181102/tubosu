@@ -81,10 +81,6 @@ public class MainActivity extends BaseActivity {
     private Context mContext;
     private BadgeView mImgToFriendTag;//以图会友提示
     private Gson mGson;
-    private int mMyOrginNum = 0;//我的发起的数量
-    private String mMyOrginIconUrl = "";//我的发起用户头像发
-    private int mMyJoinNum = 0;//我的参与的数量
-    private String mMyJoinIconUrl = "";//我的参与用户头像
     private String is_exist_case = "";
     private Socket mSocket;
     private boolean isSocketConnect = false;
@@ -294,7 +290,9 @@ public class MainActivity extends BaseActivity {
                 //点击第二个选项 显示案例
                 MobclickAgent.onEvent(mContext, "click_an_li_tu_tab");
                 setIndexSelect(1);
-                Log.e(TAG, "socket链接状态=======" + mSocket.connected());
+                if(mSocket!=null){
+                    Log.e(TAG, "socket链接状态=======" + mSocket.connected());
+                }
                 break;
             case R.id.rb_third:
                 //点击第三个选项 显示以图会友
@@ -307,7 +305,9 @@ public class MainActivity extends BaseActivity {
                 }
                 MobclickAgent.onEvent(mContext, "click_yi_tu_hui_you_tab");
                 setIndexSelect(2);
-                Log.e(TAG, "socket链接状态=======" + mSocket.connected());
+                if(mSocket!=null){
+                    Log.e(TAG, "socket链接状态=======" + mSocket.connected());
+                }
                 break;
             case R.id.rb_fourth:
                 //点击第四个选项 显示我的  其中我的界面要分情况考虑
