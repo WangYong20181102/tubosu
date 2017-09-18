@@ -76,8 +76,8 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
     RelativeLayout relSearchCaseLayout;
     @BindView(R.id.v_middle)
     View v_middle;
-    @BindView(R.id.relShowAndHideCity)   // 城市 + 小区 布局
-    RelativeLayout relShowAndHideCity;   // 城市 + 小区 布局
+    @BindView(R.id.relShowAndHideCity)    // 城市 + 小区 布局
+    RelativeLayout relShowAndHideCity;    // 城市 + 小区 布局
     @BindView(R.id.tvChooseCity)          // 选择城市 按钮  
     TextView tvChooseCity;                // 选择城市 按钮  
     @BindView(R.id.tvChooseDisctrict)     // 选择小区 按钮
@@ -199,7 +199,6 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                             } else {
                                 Utils.setToast(mContext, jsonEntity.getMsg());
                             }
-
                         }
                     });
                 }
@@ -285,7 +284,6 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
 //                param_vilige_id = "";
 //            }
 //        }
-
 
         String conditionText = "";
         for(int i=0;i<conditionTextList.size();i++){
