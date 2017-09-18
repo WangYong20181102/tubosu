@@ -12,6 +12,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "aisi"]//多渠道打包标识 默认爱思 到时候可以修改
     }
+
     productFlavors {
         aisi {}
         ali {}
@@ -55,9 +56,11 @@ android {
         zhuanghaojia {}
         tbspc {}
     }
+
     productFlavors.all { flavor ->
         flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
     }
+
     buildTypes {
         release {
             minifyEnabled false
