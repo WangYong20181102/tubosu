@@ -84,7 +84,6 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
     TextView tvChooseDisctrict;           // 选择小区 按钮
     @BindView(R.id.hideCityLayout)
     LinearLayout hideCityLayout;
-
     @BindView(R.id.show_cittext)
     TextView show_cittext;
 
