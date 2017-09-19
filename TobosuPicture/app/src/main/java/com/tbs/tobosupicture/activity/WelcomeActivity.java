@@ -63,7 +63,8 @@ public class WelcomeActivity extends BaseActivity {
         needPermissions();
         checkNetConnect();
     }
-    private void welcomeInit(){
+
+    private void welcomeInit() {
         mLocationClient = new LocationClient(getApplicationContext());
         myListener = new MyLocationListener();
         mLocationClient.registerLocationListener(myListener);
@@ -73,13 +74,15 @@ public class WelcomeActivity extends BaseActivity {
         EventBusUtil.sendStickyEvent(new Event(EC.EventCode.WELCOMETOMAIN));
         intoMainActivity();
     }
-    private void checkNetConnect(){
-        if(Utils.isNetAvailable(mContext)){
+
+    private void checkNetConnect() {
+        if (Utils.isNetAvailable(mContext)) {
             welcomeInit();
-        }else {
+        } else {
             showNoNetDialog();
         }
     }
+
     @Override
     protected boolean isRegisterEventBus() {
         return true;
@@ -116,7 +119,6 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (android.os.Build.VERSION.SDK_INT > 10) {
-                    //3.0以上打开设置界面，也可以直接用ACTION_WIRELESS_SETTINGS打开到wifi界面
                     mContext.startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS));
                 } else {
                     mContext.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
@@ -127,7 +129,7 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-               checkNetConnect();
+                checkNetConnect();
             }
         });
         AlertDialog dialog = builder.create();
