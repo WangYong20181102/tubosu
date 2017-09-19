@@ -279,9 +279,11 @@ public class MainActivity extends BaseActivity {
 
     //断开socket的链接
     private void disConnectSocket() {
-        mSocket.disconnect();
-        mSocket.off("new_msg", onNewMsg);
-        isSocketConnect = false;
+        if(mSocket!=null){
+            mSocket.disconnect();
+            mSocket.off("new_msg", onNewMsg);
+            isSocketConnect = false;
+        }
     }
 
     //选择所在页面
@@ -384,7 +386,7 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
-    
+
     //重新返回按钮
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
