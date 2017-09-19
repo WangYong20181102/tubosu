@@ -157,7 +157,13 @@ public class DecorationCaseFragment extends BaseFragment {
                 }
             });
         }else {
-
+            if(caseSwipRefreshLayout!=null && caseSwipRefreshLayout.isRefreshing()){
+                caseSwipRefreshLayout.setRefreshing(false);
+            }
+            if(caseAdapter!=null){
+                caseAdapter.notifyDataSetChanged();
+                caseAdapter.hideLoadMoreMessage();
+            }
         }
     }
 
