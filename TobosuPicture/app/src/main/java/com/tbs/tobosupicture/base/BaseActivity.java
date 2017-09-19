@@ -6,8 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 
+import com.tbs.tobosupicture.BroadcastReceiver.NetBroadcastReceiver;
 import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.utils.EventBusUtil;
+import com.tbs.tobosupicture.utils.NetUtil;
 import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -18,9 +20,14 @@ import org.greenrobot.eventbus.ThreadMode;
  * Activity的基类 添加相关的事件 以及对App应用升级解耦应用
  */
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements NetBroadcastReceiver.NetEvevt {
     protected static String TAG = BaseActivity.class.getSimpleName();
     protected Context mContext;
+    public static NetBroadcastReceiver.NetEvevt evevt;
+    /**
+     * 网络类型
+     */
+    private int netMobile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +35,43 @@ public class BaseActivity extends AppCompatActivity {
         if (isRegisterEventBus()) {
             EventBusUtil.register(this);
         }
+        //网络事件
+        evevt = this;
+        inspectNet();
+    }
+
+    //初始化判断网络状态
+    public boolean inspectNet() {
+        this.netMobile = NetUtil.getNetWorkState(BaseActivity.this);
+        return isNetConnect();
+    }
+
+    /**
+     * 网络变化之后的类型
+     */
+    @Override
+    public void onNetChange(int netMobile) {
+        // TODO Auto-generated method stub
+        this.netMobile = netMobile;
+        isNetConnect();
+
+    }
+
+    /**
+     * 判断有无网络 。
+     *
+     * @return true 有网, false 没有网络.
+     */
+    public boolean isNetConnect() {
+        if (netMobile == 1) {
+            return true;
+        } else if (netMobile == 0) {
+            return true;
+        } else if (netMobile == -1) {
+            return false;
+
+        }
+        return false;
     }
 
     @Override
@@ -95,4 +139,5 @@ public class BaseActivity extends AppCompatActivity {
             EventBusUtil.unregister(this);
         }
     }
+
 }
