@@ -141,6 +141,7 @@ public class FactoryFragment extends BaseFragment {
                         @Override
                         public void run() {
                             Utils.setToast(getActivity(), "系统繁忙，稍后再试!");
+                            factorySwipRefreshLayout.setRefreshing(false);
                         }
                     });
                 }
@@ -186,7 +187,13 @@ public class FactoryFragment extends BaseFragment {
             });
         }else{
             // 无网络时提醒的图片
-
+            if(factorySwipRefreshLayout!=null && factorySwipRefreshLayout.isRefreshing()){
+                factorySwipRefreshLayout.setRefreshing(false);
+            }
+            if(samplePicAdapter!=null){
+                samplePicAdapter.notifyDataSetChanged();
+                samplePicAdapter.hideLoadMoreMessage();
+            }
         }
 
     }

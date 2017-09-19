@@ -167,6 +167,13 @@ public class HouseFragment extends BaseFragment {
             }
         } else {
             // 没数据填充其他图， 或者继续请求数据
+            if(houseSwipRefreshLayout!=null && houseSwipRefreshLayout.isRefreshing()){
+                houseSwipRefreshLayout.setRefreshing(false);
+            }
+            if(samplePicAdapter!=null){
+                samplePicAdapter.notifyDataSetChanged();
+                samplePicAdapter.hideLoadMoreMessage();
+            }
         }
 
 
@@ -381,6 +388,7 @@ public class HouseFragment extends BaseFragment {
      * @param _pageSize
      */
     private void getDataFromNet(HashMap<String, Object> param, int _page, int _pageSize, String city,  final boolean addMore) {
+
         if(!addMore){
             samplePicList.clear();
         }
@@ -407,7 +415,7 @@ public class HouseFragment extends BaseFragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-
+                houseSwipRefreshLayout.setRefreshing(false);
                 String json = response.body().string();
                 Utils.setErrorLog(TAG, "what_the_house >>" + json);
                 try {
@@ -520,6 +528,7 @@ public class HouseFragment extends BaseFragment {
     private SwipeRefreshLayout.OnRefreshListener swipeLister = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
+            houseSwipRefreshLayout.setRefreshing(false);
             //下拉刷新数据 重新初始化各种数据
             samplePicList.clear();
             page = 1;
@@ -527,7 +536,7 @@ public class HouseFragment extends BaseFragment {
                 samplePicAdapter.hideLoadMoreMessage();
             }
             if(Utils.isNetAvailable(getActivity())){
-                getDataFromNet(parameter,page,10, city, false);
+                getDataFromNet(parameter, page, 10, city, false);
             }
 
 
@@ -542,7 +551,7 @@ public class HouseFragment extends BaseFragment {
 
         houseSwipRefreshLayout.setRefreshing(false);
         if(Utils.isNetAvailable(getActivity())){
-            getDataFromNet(parameter,page,10, city, true);
+            getDataFromNet(parameter, page, 10, city, true);
             System.out.println("-----**-onScrolled load more completed------");
         }
 
