@@ -18,7 +18,6 @@ import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.jauker.widget.BadgeView;
@@ -385,7 +384,7 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
-
+    
     //重新返回按钮
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -420,24 +419,6 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
         disConnectSocket();
         ButterKnife.bind(this).unbind();
-    }
-
-    @Override
-    public void onNetChange(int netMobile) {
-        switch (netMobile){
-            case -1:
-                //没有网络
-                Toast.makeText(mContext,"当前无网络链接====",Toast.LENGTH_SHORT).show();
-                break;
-            case 0:
-                //移动网络
-                Toast.makeText(mContext,"当前移动网络链接====",Toast.LENGTH_SHORT).show();
-                break;
-            case 1:
-                //wifi
-                Toast.makeText(mContext,"当前Wifi链接====",Toast.LENGTH_SHORT).show();
-                break;
-        }
     }
 
     /**
