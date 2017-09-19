@@ -179,23 +179,14 @@ public class MainActivity extends BaseActivity {
         try {
             mSocket = IO.socket(UrlConstans.SOCKET_URL);
             mSocket.on("new_msg", onNewMsg);
-            mSocket.on("login", loginMsg);
             mSocket.connect();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
     }
 
-    //socket登录监听
-    private Emitter.Listener loginMsg = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            Log.e(TAG, "监听登录事件==========" + args[0].toString());
-        }
-    };
-
     //通知服务器建立连接
-    private void  HttpIsConnect(String uid) {
+    private void HttpIsConnect(String uid) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("uid", uid);
@@ -238,24 +229,50 @@ public class MainActivity extends BaseActivity {
             String json = Base64Util.getFromBase64(args[0].toString());
             if (!TextUtils.isEmpty(json)) {
                 Log.e(TAG, "解密之后的数据=======" + json);
-                receiveMsg = mGson.fromJson(json, _ReceiveMsg.class);
-                //我的发起的消息 包含消息的数量消息的头像
-                EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_MSG, receiveMsg.getMy_participation()));//我的参与
-                EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_MSG, receiveMsg.getMy_sponsor()));//我的发起
-                //将数值布局
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //显示数量
-                        int msgNum = Integer.parseInt(receiveMsg.getAll_msg_count());
-                        if (msgNum >= 100) {
-                            mImgToFriendTag.setText("99+");
-                        } else {
-                            mImgToFriendTag.setBadgeCount(msgNum);
-                        }
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String type = jsonObject.getString("type");
+                    if (type.equals("1")) {
+                        //动态消息
+                        receiveMsg = mGson.fromJson(json, _ReceiveMsg.class);
+                        //我的发起的消息 包含消息的数量消息的头像
+                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_MSG, receiveMsg.getMy_participation()));//我的参与
+                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_MSG, receiveMsg.getMy_sponsor()));//我的发起
+                        //将数值布局
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //显示数量
+                                int msgNum = Integer.parseInt(receiveMsg.getAll_msg_count());
+                                if (msgNum >= 100) {
+                                    mImgToFriendTag.setText("99+");
+                                } else {
+                                    mImgToFriendTag.setBadgeCount(msgNum);
+                                }
+
+                            }
+                        });
+                    }else if(type.equals("2")){
+                        //新案例消息
+                        is_exist_case=jsonObject.getString("is_exist_case");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(is_exist_case.equals("1")){
+                                    mianAboutReddot.setVisibility(View.VISIBLE);
+                                    EventBusUtil.sendEvent(new Event(EC.EventCode.SHOW_MINE_RED_DOT));//在我的界面中显示红点
+                                }else {
+                                    Log.e(TAG, "隐藏‘我的’红点提示======");
+                                    mianAboutReddot.setVisibility(View.GONE);
+                                    EventBusUtil.sendEvent(new Event(EC.EventCode.HINT_MINE_RED_DOT));//在我的界面中隐藏红点
+                                }
+                            }
+                        });
 
                     }
-                });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
     };
