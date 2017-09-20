@@ -1,6 +1,7 @@
 package com.tbs.tobosupicture.activity;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -29,6 +30,7 @@ import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
+import com.tbs.tobosupicture.view.TipDialog1;
 import com.tbs.tobosupicture.view.TouchImageView;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
@@ -435,15 +437,19 @@ public class SeeImageActivity extends BaseActivity {
         popupWindow.setFocusable(true);
 
         getThisPrice.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 String phone = etInputPhone.getText().toString();
                 if("".equals(phone)){
-                    Utils.setToast(mContext, "你还没输入电话号码");
+                    Utils.setToast(mContext, Utils.inputPhoneNumTip());
                     return;
                 }else{
-                    if(!phone.matches(UrlConstans.PHONE_NUM)) {
-                        Utils.setToast(mContext, "电话号码不正确，重新输入");
+                    if(!phone.startsWith("1")){
+                        Utils.setToast(mContext, Utils.inputCorrectPhoneNumTip());
+                        return;
+                    }else if(phone.length() != 11){
+                        Utils.setToast(mContext, Utils.inputCorrectPhoneNumTip());
                         return;
                     }
 
@@ -465,7 +471,7 @@ public class SeeImageActivity extends BaseActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Utils.setToast(mContext, "系统繁忙， 稍后再试~");
+                                        Utils.setToast(mContext, "请求失败， 稍后再试~");
                                     }
                                 });
                             }
@@ -486,8 +492,20 @@ public class SeeImageActivity extends BaseActivity {
                                             String msg = jsonObject.getString("msg");
 
                                             if(jsonObject.getInt("status") == 200){
-                                                Utils.setToast(mContext, msg);
-                                                popupWindow.dismiss();
+//                                                Utils.setToast(mContext, msg);
+//                                                popupWindow.dismiss();
+                                                TipDialog1.Builder builder = new TipDialog1.Builder(mContext);
+                                                builder.setTitle("温馨提醒")
+                                                        .setPositiveButton("好的", new DialogInterface.OnClickListener() {
+
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int id) {
+                                                                dialog.cancel();
+                                                                //退出当前账户
+                                                                finish();
+                                                            }
+                                                        });
+                                                builder.create().show();
                                             }else{
                                                 Utils.setToast(mContext, msg);
                                             }

@@ -36,6 +36,7 @@ public class UrlConstans {
      * 手机号码 用于验证手机号码是否合法
      */
     public static final String PHONE_NUM = "^1(3[0-9]|5[0-35-9]|7[0136-8]|8[0-9])\\d{8}$";
+
     /**
      * 发单所要用到的标识码
      */

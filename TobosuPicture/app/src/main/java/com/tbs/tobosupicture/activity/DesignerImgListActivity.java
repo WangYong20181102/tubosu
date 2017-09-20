@@ -105,11 +105,13 @@ public class DesignerImgListActivity extends BaseActivity {
 
             if ("1".equals(isCollect)) {
                 tvGetConcern.setTextColor(Color.parseColor("#FA8817"));
+                tvGetConcern.setText("取消关注");
                 Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu);
                 leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
                 tvGetConcern.setCompoundDrawables(leftDrawable, null, null, null);
             } else {
                 tvGetConcern.setTextColor(Color.parseColor("#858585"));
+                tvGetConcern.setText("关注");
                 Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu2);
                 leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
                 tvGetConcern.setCompoundDrawables(leftDrawable, null, null, null);
@@ -255,11 +257,13 @@ public class DesignerImgListActivity extends BaseActivity {
                                         if (object.getInt("status") == 200) {
                                             if (object.getString("msg").contains("取消")) {
                                                 tvGetConcern.setTextColor(Color.parseColor("#858585"));
+                                                tvGetConcern.setText("关注");
                                                 Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu2);
                                                 leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
                                                 tvGetConcern.setCompoundDrawables(leftDrawable, null, null, null);
                                             } else {
                                                 tvGetConcern.setTextColor(Color.parseColor("#FA8817"));
+                                                tvGetConcern.setText("取消关注");
                                                 Drawable leftDrawable = getResources().getDrawable(R.drawable.jiaguanzhu);
                                                 leftDrawable.setBounds(0, 0, leftDrawable.getMinimumWidth(), leftDrawable.getMinimumHeight());
                                                 tvGetConcern.setCompoundDrawables(leftDrawable, null, null, null);

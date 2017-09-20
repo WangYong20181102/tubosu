@@ -122,16 +122,16 @@ public class HouseFragment extends BaseFragment {
     private int page = 1;
     private int pageSize = 3;
 
-    private int[] iconPic = new int[]{R.mipmap.fenlei01,R.mipmap.fenlei02,R.mipmap.fenlei03,R.mipmap.fenlei04,R.mipmap.fenlei05,
-            R.mipmap.fenlei06,R.mipmap.fenlei07,R.mipmap.fenlei08,R.mipmap.fenlei09,R.mipmap.fenlei010,R.mipmap.fenlei011,R.mipmap.fenlei012,
-            R.mipmap.fenlei01,R.mipmap.fenlei02,R.mipmap.fenlei03,R.mipmap.fenlei04,R.mipmap.fenlei05,
+    private int[] iconPic = new int[]{R.mipmap.color_all,R.mipmap.fenlei01,R.mipmap.fenlei02,R.mipmap.fenlei03,R.mipmap.fenlei04,
+            R.mipmap.fenlei05, R.mipmap.fenlei06,R.mipmap.fenlei07,R.mipmap.fenlei08,R.mipmap.fenlei09,R.mipmap.fenlei010,R.mipmap.fenlei011,
+            R.mipmap.fenlei012, R.mipmap.fenlei01,R.mipmap.fenlei02,R.mipmap.fenlei03,R.mipmap.fenlei04,R.mipmap.fenlei05,
             R.mipmap.fenlei06,R.mipmap.fenlei07,R.mipmap.fenlei08,R.mipmap.fenlei09,R.mipmap.fenlei010,R.mipmap.fenlei011,R.mipmap.fenlei012,
             R.mipmap.fenlei01,R.mipmap.fenlei02,R.mipmap.fenlei03,R.mipmap.fenlei04,R.mipmap.fenlei05,
             R.mipmap.fenlei06,R.mipmap.fenlei07,R.mipmap.fenlei08,R.mipmap.fenlei09,R.mipmap.fenlei010,R.mipmap.fenlei011,R.mipmap.fenlei012};
 
-    private int[] iconColor = new int[]{R.mipmap.color_all,R.mipmap.color_white,R.mipmap.color_mi,R.mipmap.color_yellow,R.mipmap.color_orange,
-            R.mipmap.color_red,R.mipmap.color_pink,R.mipmap.color_green,R.mipmap.color_blue,R.mipmap.color_puer,R.mipmap.color_black,
-            R.mipmap.color_coffe,R.mipmap.color_gray,R.mipmap.color_colorful};
+    private int[] iconColor = new int[]{R.mipmap.color_all, R.mipmap.color_white, R.mipmap.color_mi,R.mipmap.color_yellow,R.mipmap.color_orange,
+            R.mipmap.color_red, R.mipmap.color_pink, R.mipmap.color_green,R.mipmap.color_blue, R.mipmap.color_puer, R.mipmap.color_black,
+            R.mipmap.color_coffe, R.mipmap.color_gray,R.mipmap.color_colorful};
 
     @Nullable
     @Override
@@ -175,8 +175,6 @@ public class HouseFragment extends BaseFragment {
                 samplePicAdapter.hideLoadMoreMessage();
             }
         }
-
-
     }
 
     @Override
@@ -205,6 +203,7 @@ public class HouseFragment extends BaseFragment {
                     textDataList.add(space.get(i).getClass_name());
                     iconDataList.add(iconPic[i]);
                 }
+                flag = false;
                 type = 0;
                 break;
             case R.id.layoutStyle:
@@ -215,6 +214,7 @@ public class HouseFragment extends BaseFragment {
                     textDataList.add(style.get(i).getClass_name());
                     iconDataList.add(iconPic[i]);
                 }
+                flag = false;
                 type = 1;
                 break;
             case R.id.layoutPart:
@@ -223,8 +223,9 @@ public class HouseFragment extends BaseFragment {
                 for (int i = 0, size = partial.size(); i < size; i++) {
                     idDataList.add(partial.get(i).getId());
                     textDataList.add(partial.get(i).getClass_name());
-                    iconDataList.add(iconPic[i]);
+                    iconDataList.add(R.mipmap.circle_normal);
                 }
+                flag = true;
                 type = 2;
                 break;
             case R.id.layoutHouseStyle:
@@ -234,8 +235,8 @@ public class HouseFragment extends BaseFragment {
                     idDataList.add(layout.get(i).getId());
                     textDataList.add(layout.get(i).getClass_name());
                     iconDataList.add(R.mipmap.circle_normal);
-                    flag = true;
                 }
+                flag = true;
                 type = 3;
                 break;
             case R.id.layoutColor:
@@ -246,6 +247,7 @@ public class HouseFragment extends BaseFragment {
                     textDataList.add(color.get(i).getClass_name());
                     iconDataList.add(iconColor[i]);
                 }
+                flag = false;
                 type = 4;
                 break;
         }
@@ -264,9 +266,7 @@ public class HouseFragment extends BaseFragment {
     private void initPopupWindow(final int type, final ArrayList<String> textList, final ArrayList<String> idList, ArrayList<Integer> iconList,boolean flag) {
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.popuplayout, null);
         GridView gv = (GridView) contentView.findViewById(R.id.gv_converview);
-        popupWindow
-                = new PopupWindow(contentView,
-                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setContentView(contentView);
         ColorDrawable cd = new ColorDrawable();
         popupWindow.setBackgroundDrawable(cd);
@@ -276,18 +276,23 @@ public class HouseFragment extends BaseFragment {
         gv.setAdapter(gvAdapter);
         switch (type){
             case 0:
+                gv.setNumColumns(3);
                 gvAdapter.setSelectedPosition(SpUtils.getHouseSpaceNum(getActivity()));
                 break;
             case 1:
+                gv.setNumColumns(3);
                 gvAdapter.setSelectedPosition(SpUtils.getHouseStyleNum(getActivity()));
                 break;
             case 2:
+                gv.setNumColumns(4);
                 gvAdapter.setSelectedPosition(SpUtils.getHousePartNum(getActivity()));
                 break;
             case 3:
+                gv.setNumColumns(4);
                 gvAdapter.setSelectedPosition(SpUtils.getHouseHuxingNum(getActivity()));
                 break;
             case 4:
+                gv.setNumColumns(4);
                 gvAdapter.setSelectedPosition(SpUtils.getHouseColorNum(getActivity()));
                 break;
         }
@@ -615,7 +620,6 @@ public class HouseFragment extends BaseFragment {
                     holder.iv = (ImageView) convertView.findViewById(R.id.ivSmallStyleIcon);
                     holder.tv = (TextView) convertView.findViewById(R.id.tvItemStyle);
                 }
-
 
                 convertView.setTag(holder);
             } else {
