@@ -154,6 +154,7 @@ public class ZuiReAdapter
                             HttpPraise(SpUtils.getUserUid(mContext),
                                     dynamicArrayList.get(position - 1).getId(),
                                     dynamicArrayList.get(position - 1).getUid(),
+                                    dynamicArrayList.get(position-1).getIs_virtual_user(),
                                     ((ZuiReDynamicHolder) holder).zuiReImgZan,
                                     ((ZuiReDynamicHolder) holder).zuiReDynamicZanAdd,
                                     ((ZuiReDynamicHolder) holder).zuiReDynamicPraiseCount);
@@ -443,13 +444,14 @@ public class ZuiReAdapter
      * praisedUid 被点赞用户的id号
      * is_praise 点赞前的状态
      */
-    private void HttpPraise(String uid, String dynamic_id,
+    private void HttpPraise(String uid, String dynamic_id,String is_virtual_user,
                             String praised_uid, final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("uid", uid);
         param.put("dynamic_id", dynamic_id);
         param.put("praised_uid", praised_uid);
+        param.put("is_virtual_user", is_virtual_user);
 //        Log.e(TAG, "praised_uid====" + praised_uid + "====" + uid + "=====" + dynamic_id);
         HttpUtils.doPost(UrlConstans.USER_PRAISE, param, new Callback() {
             @Override

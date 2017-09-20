@@ -296,7 +296,7 @@ public class MyDynamicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                         if (Utils.userIsLogin(mContext)) {
                             //用户在登录的情况下才可以点赞
                             isZaning = true;
-                            HttpPraise(SpUtils.getUserUid(mContext),myDynamicList.get(position).getId(),
+                            HttpPraise(SpUtils.getUserUid(mContext),myDynamicList.get(position).getId(),myDynamicList.get(position).getIs_virtual_user(),
                                     myDynamicList.get(position).getUid(),((MyDynamicHolder) holder).item_php_item_praise_img,
                                     ((MyDynamicHolder) holder).item_php_dynamic_zan_add,((MyDynamicHolder) holder).item_php_item_praise_count,position);
                         } else {
@@ -429,13 +429,14 @@ public class MyDynamicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
      * praisedUid 被点赞用户的id号
      * is_praise 点赞前的状态
      */
-    private void HttpPraise(String uid, String dynamic_id,
+    private void HttpPraise(String uid, String dynamic_id,String is_virtual_user,
                             String praised_uid, final ImageView zan, final TextView tvAdd, final TextView tvShowNum, final int position) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("uid", uid);
         param.put("dynamic_id", dynamic_id);
         param.put("praised_uid", praised_uid);
+        param.put("is_virtual_user", is_virtual_user);
 //        Log.e(TAG, "praised_uid====" + praised_uid + "====" + uid + "=====" + dynamic_id);
         HttpUtils.doPost(UrlConstans.USER_PRAISE, param, new Callback() {
             @Override

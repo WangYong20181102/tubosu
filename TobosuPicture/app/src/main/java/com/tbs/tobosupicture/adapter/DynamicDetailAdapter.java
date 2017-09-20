@@ -590,6 +590,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         param.put("uid", SpUtils.getUserUid(mContext));
         param.put("dynamic_id", dynamicDetail.getDynamic().getId());
         param.put("praised_uid", dynamicDetail.getDynamic().getUid());
+        param.put("is_virtual_user", dynamicDetail.getDynamic().getIs_virtual_user());
         HttpUtils.doPost(UrlConstans.USER_PRAISE, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

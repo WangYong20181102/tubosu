@@ -204,6 +204,7 @@ public class LoginActivity extends BaseActivity {
             Toast.makeText(mContext, "请输入密码~", Toast.LENGTH_SHORT).show();
             return;
         }
+        Log.e(TAG, "进入登录中.......");
         final String md5PassWord = Md5Utils.md5(password);
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
@@ -225,6 +226,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String json = new String(response.body().string());
+                Log.e(TAG, "登录页面返回的json============" + json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.getString("status");
@@ -252,6 +254,8 @@ public class LoginActivity extends BaseActivity {
                                 Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
                             }
                         });
+                    } else {
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
