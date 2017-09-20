@@ -2,6 +2,7 @@ package com.tbs.tobosupicture.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -9,6 +10,7 @@ import android.os.Handler;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -59,6 +61,10 @@ public class WelcomeActivity extends BaseActivity {
         mContext = this;
         //百度地图的相关设置
         needPermissions();
+        checkNetConnect();
+    }
+
+    private void welcomeInit() {
         mLocationClient = new LocationClient(getApplicationContext());
         myListener = new MyLocationListener();
         mLocationClient.registerLocationListener(myListener);
@@ -67,6 +73,14 @@ public class WelcomeActivity extends BaseActivity {
         //去主界面
         EventBusUtil.sendStickyEvent(new Event(EC.EventCode.WELCOMETOMAIN));
         intoMainActivity();
+    }
+
+    private void checkNetConnect() {
+        if (Utils.isNetAvailable(mContext)) {
+            welcomeInit();
+        } else {
+            showNoNetDialog();
+        }
     }
 
     @Override
@@ -90,7 +104,7 @@ public class WelcomeActivity extends BaseActivity {
                         WelcomeActivity.this.finish();
                     }
                 }
-            }, 3000);
+            }, 2000);
         } else {
             //网络未连接的时候弹出相关的提示 进行网络的设置
             Toast.makeText(mContext, "当前网络未连接，请开启网络连接~", Toast.LENGTH_SHORT).show();
@@ -98,6 +112,29 @@ public class WelcomeActivity extends BaseActivity {
         }
     }
 
+    private void showNoNetDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setMessage("当前网络未连接，需要去设置吗？");
+        builder.setPositiveButton("去设置", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (android.os.Build.VERSION.SDK_INT > 10) {
+                    mContext.startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS));
+                } else {
+                    mContext.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+                }
+                showNoNetDialog();
+            }
+        }).setNegativeButton("设置好了", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                checkNetConnect();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 
     //初始化百度定位
     //关于百度定位的一些设置

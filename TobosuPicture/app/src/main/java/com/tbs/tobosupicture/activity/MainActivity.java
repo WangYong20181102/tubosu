@@ -279,9 +279,11 @@ public class MainActivity extends BaseActivity {
 
     //断开socket的链接
     private void disConnectSocket() {
-        mSocket.disconnect();
-        mSocket.off("new_msg", onNewMsg);
-        isSocketConnect = false;
+        if(mSocket!=null){
+            mSocket.disconnect();
+            mSocket.off("new_msg", onNewMsg);
+            isSocketConnect = false;
+        }
     }
 
     //选择所在页面
@@ -384,149 +386,6 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
-
-    //循环拉取消息 的定时任务
-//    class MyThread implements Runnable {
-//
-//        @Override
-//        public void run() {
-//            while (isLoop) {
-//                try {
-//                    if (!TextUtils.isEmpty(SpUtils.getMsgTime(mContext))) {
-//                        Thread.sleep(Long.parseLong(SpUtils.getMsgTime(mContext)) * 1000);
-//                        Log.e(TAG, "网络获取消息的定时时间=======" + Long.parseLong(SpUtils.getMsgTime(mContext)) * 1000);
-//                    } else {
-//                        Thread.sleep(2345);
-//                    }
-//                    HttpGetMsg();
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//    }
-//
-//    //循环拉取用户搜索案例的红点
-//    class MyThread2 implements Runnable {
-//
-//        @Override
-//        public void run() {
-//            while (isLoop) {
-//                try {
-//                    //5分钟拉取一次
-//                    if (!TextUtils.isEmpty(SpUtils.getAnliTime(mContext))) {
-//                        Thread.sleep(Long.parseLong(SpUtils.getAnliTime(mContext)) * 1000);
-//                        Log.e(TAG, "网络获取案例的定时时间=======" + Long.parseLong(SpUtils.getAnliTime(mContext)) * 1000);
-//                    } else {
-//                        Thread.sleep(300000);
-//                    }
-//                    HttpGetIsHaveNewCast();
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//    }
-
-    //网络拉取我的动态相关
-    private void HttpGetIsHaveNewCast() {
-        HashMap<String, Object> param = new HashMap<>();
-        param.put("token", Utils.getDateToken());
-        param.put("uid", SpUtils.getUserUid(mContext));
-        HttpUtils.doPost(UrlConstans.OWNER_GET_MSG, param, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "链接失败=========" + e.toString());
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String json = new String(response.body().string());
-                Log.e(TAG, "链接成功====" + json);
-                try {
-                    JSONObject jsonObject = new JSONObject(json);
-                    JSONObject data = jsonObject.getJSONObject("data");
-                    is_exist_case = data.getString("is_exist_case");
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mianAboutReddot != null) {
-                                if (is_exist_case.equals("1")) {
-                                    Log.e(TAG, "显示‘我的’红点提示======");
-                                    mianAboutReddot.setVisibility(View.VISIBLE);
-                                    EventBusUtil.sendEvent(new Event(EC.EventCode.SHOW_MINE_RED_DOT));//在我的界面中显示红点
-                                } else {
-                                    Log.e(TAG, "隐藏‘我的’红点提示======");
-                                    mianAboutReddot.setVisibility(View.GONE);
-                                    EventBusUtil.sendEvent(new Event(EC.EventCode.HINT_MINE_RED_DOT));//在我的界面中隐藏红点
-                                }
-                            }
-                        }
-                    });
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    //网络请求消息
-    private void HttpGetMsg() {
-        HashMap<String, Object> param = new HashMap<>();
-        param.put("token", Utils.getDateToken());
-        param.put("uid", SpUtils.getUserUid(mContext));
-        param.put("is_icon", "1");
-        HttpUtils.doPost(UrlConstans.RECEIVE_INFORMATION, param, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "链接失败=====" + e.toString());
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String json = new String(response.body().string());
-                try {
-                    JSONObject jsonObject = new JSONObject(json);
-                    String status = jsonObject.getString("status");
-                    if (status.equals("200")) {
-                        String data = jsonObject.getString("data");
-                        final _ReceiveMsg receiveMsg = mGson.fromJson(data, _ReceiveMsg.class);
-//                        mMyOrginNum = Integer.parseInt(receiveMsg.getMy_sponsor().getMsg_count());//发起的数量
-//                        mMyOrginIconUrl = receiveMsg.getMy_sponsor().getIcon();//发起的数量
-//                        mMyJoinNum = Integer.parseInt(receiveMsg.getMy_participation().getMsg_count());//参与的数量
-//                        mMyJoinIconUrl = receiveMsg.getMy_participation().getIcon();//参与的数量
-//
-//                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_NUM, mMyJoinNum));
-//                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_ICON, mMyJoinIconUrl));
-//                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_NUM, mMyOrginNum));
-//                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_ICON, mMyOrginIconUrl));
-//                        //我的发起的消息 包含消息的数量消息的头像
-//                        _ReceiveMsg.MySponsor mySponsor = new _ReceiveMsg.MySponsor(receiveMsg.getMy_sponsor().getMsg_count(), mMyOrginIconUrl);
-//                        _ReceiveMsg.MyParticipation myParticipation = new _ReceiveMsg.MyParticipation(receiveMsg.getMy_participation().getMsg_count(), mMyJoinIconUrl);
-//                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_MSG, myParticipation));
-//                        EventBusUtil.sendEvent(new Event(EC.EventCode.MY_ORGIN_MSG, mySponsor));
-//                        //将数值布局
-//                        runOnUiThread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                //显示数量
-//                                int msgNum = Integer.parseInt(receiveMsg.getAll_msg_count());
-//                                if (msgNum >= 100) {
-//                                    mImgToFriendTag.setText("99+");
-//                                } else {
-//                                    mImgToFriendTag.setBadgeCount(msgNum);
-//                                }
-//
-//                            }
-//                        });
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
 
     //重新返回按钮
     @Override
