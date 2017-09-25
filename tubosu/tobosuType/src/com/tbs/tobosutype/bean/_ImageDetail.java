@@ -212,6 +212,9 @@ public class _ImageDetail {
         private String logoSmall;
 
         public comInfo() {
+            this.comId = "";
+            this.logoSmall = "";
+            this.comSimpName = "";
         }
 
         public comInfo(JSONObject jsonObject) {

@@ -224,7 +224,7 @@ public class MainActivity extends BaseActivity {
     private Emitter.Listener onNewMsg = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            Log.e(TAG, "接收到服务器的推送消息===没有处理前===" + args[0].toString());
+            Log.e(TAG, "接收到服务器的推送消息 ===没有处理前===" + args[0].toString());
             //base64解密
             String json = Base64Util.getFromBase64(args[0].toString());
             if (!TextUtils.isEmpty(json)) {

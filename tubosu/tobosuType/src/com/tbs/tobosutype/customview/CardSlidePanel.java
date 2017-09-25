@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean._CardDataItem;
@@ -543,11 +544,16 @@ public class CardSlidePanel extends ViewGroup {
         this.dataList = dataList;
 
         int num = viewList.size();
-        for (int i = 0; i < num; i++) {
-            CardItemView itemView = viewList.get(i);
-            itemView.fillData(dataList.get(i));
-            itemView.setVisibility(View.VISIBLE);
+        if(num==0){
+
+        }else {
+            for (int i = 0; i < num; i++) {
+                CardItemView itemView = viewList.get(i);
+                itemView.fillData(dataList.get(i));
+                itemView.setVisibility(View.VISIBLE);
+            }
         }
+
 
         if (null != cardSwitchListener) {
             cardSwitchListener.onShow(0);

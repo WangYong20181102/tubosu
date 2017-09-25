@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,17 +13,21 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
@@ -45,7 +50,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ImageNewActivity extends Activity {
+public class ImageNewActivity extends BaseActivity {
     /**
      * 逛图库中显示当地装修公司列表的接口
      */
@@ -99,6 +104,9 @@ public class ImageNewActivity extends Activity {
     private MyGridViewAdapter myGridViewAdapterFg;//网格布局的适配器
     private MyGridViewAdapter myGridViewAdapterHx;//网格布局的适配器
     private MyGridViewAdapter myGridViewAdapterMj;//网格布局的适配器
+    //显示咨询的popwindows
+    private PopupWindow zixunPopupWindow;
+    private View zixunPopView;
     //pop风格窗口按钮数据
     private List<_Style> popBtnListFg = new ArrayList<_Style>();
     //pop户型窗口按钮数据
@@ -115,6 +123,17 @@ public class ImageNewActivity extends Activity {
     private List<_ImageItem> tempList = new ArrayList<_ImageItem>();//临时装载容器 用于多次装载
     private List<_ImageItem> imageItemsList = new ArrayList<_ImageItem>();//装载数据的容器
     private ImageNewActivityAdapter imageNewActivityAdapter;//列表适配器
+
+    private TextView img_new_design;//免费设计的按钮
+    private ImageView img_new_zixun;//咨询按钮
+    private ImageView img_new_design_gif;//免费设计gif图
+    private RelativeLayout img_new_banner;
+    private LinearLayout img_new_zixun_ll;
+
+    private ImageView huxing_down;
+    private ImageView fengge_down;
+    private ImageView mianji_down;
+    private RelativeLayout img_not_found_rl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +179,20 @@ public class ImageNewActivity extends Activity {
         //获取泡泡布局
         popView = ImageNewActivity.this.getLayoutInflater().inflate(R.layout.pop_window_layout, null);
         mGridView = (GridView) popView.findViewById(R.id.pop_window_show);
+
+        //免费设计
+        img_new_design = (TextView) findViewById(R.id.img_new_design);
+        //咨询
+        img_new_zixun = (ImageView) findViewById(R.id.img_new_zixun);
+        img_new_design_gif = (ImageView) findViewById(R.id.img_new_design_gif);
+        img_new_banner = (RelativeLayout) findViewById(R.id.img_new_banner);
+        img_new_zixun_ll = (LinearLayout) findViewById(R.id.img_new_zixun_ll);
+
+        huxing_down = (ImageView) findViewById(R.id.huxing_down);
+        mianji_down = (ImageView) findViewById(R.id.mianji_down);
+        fengge_down = (ImageView) findViewById(R.id.fengge_down);
+
+        img_not_found_rl = (RelativeLayout) findViewById(R.id.img_not_found_rl);
     }
 
     //初始化布局
@@ -170,6 +203,13 @@ public class ImageNewActivity extends Activity {
         HuxingTv.setOnClickListener(occl);
         FenggeTv.setOnClickListener(occl);
         MianjiTv.setOnClickListener(occl);
+        //免费设计
+        img_new_design.setOnClickListener(occl);
+        img_new_zixun.setOnClickListener(occl);
+        img_new_zixun_ll.setOnClickListener(occl);
+        img_new_design_gif.setOnClickListener(occl);
+        Glide.with(mContext).load(R.drawable.img_new_design_gif).asGif().into(img_new_design_gif);
+
         /**
          * 下拉控件进行修饰 以及添加下拉事件
          */
@@ -187,7 +227,8 @@ public class ImageNewActivity extends Activity {
 //        imgNewRecycleView.setLayoutManager(mStaggeredGridLayoutManager);
         imgNewRecycleView.setOnScrollListener(scrollListener);//添加上拉加载
         imgNewRecycleView.setOnTouchListener(onTouchLis);
-        imgNewReLL.setBackgroundColor(Color.parseColor("#ff882e"));
+        imgNewRecycleView.getItemAnimator().setChangeDuration(0);
+        img_new_banner.setBackgroundColor(Color.parseColor("#ff882e"));
     }
 
     //初始化图库的公共参数
@@ -209,21 +250,24 @@ public class ImageNewActivity extends Activity {
     }
 
     private void initCache() {
-        if (TextUtils.isEmpty(AppInfoUtil.getStyleFgCache(mContext))
-                || TextUtils.isEmpty(AppInfoUtil.getStyleHxCache(mContext))
-                || TextUtils.isEmpty(AppInfoUtil.getStyleMjCache(mContext))) {
-//            当App中的缓存为空时进行数据的请求
-            Log.e(TAG, "当前本地无缓存===" + AppInfoUtil.getStyleHxCache(mContext));
-            HttpRequestGetStyleList("7");
-            HttpRequestGetStyleList("9");
-            HttpRequestGetStyleList("12");
-        } else {
-            //本地有缓存数据
-            Log.e(TAG, "当前本地有缓存===" + AppInfoUtil.getStyleHxCache(mContext));
-            setAdapterListDatas(7);
-            setAdapterListDatas(9);
-            setAdapterListDatas(12);
-        }
+//        if (TextUtils.isEmpty(AppInfoUtil.getStyleFgCache(mContext))
+//                || TextUtils.isEmpty(AppInfoUtil.getStyleHxCache(mContext))
+//                || TextUtils.isEmpty(AppInfoUtil.getStyleMjCache(mContext))) {
+////            当App中的缓存为空时进行数据的请求
+//            Log.e(TAG, "当前本地无缓存===" + AppInfoUtil.getStyleHxCache(mContext));
+//            HttpRequestGetStyleList("7");
+//            HttpRequestGetStyleList("9");
+//            HttpRequestGetStyleList("12");
+//        } else {
+        //本地有缓存数据
+        HttpRequestGetStyleList("7");
+        HttpRequestGetStyleList("9");
+        HttpRequestGetStyleList("12");
+        Log.e(TAG, "当前本地有缓存===" + AppInfoUtil.getStyleHxCache(mContext));
+        setAdapterListDatas(7);
+        setAdapterListDatas(9);
+        setAdapterListDatas(12);
+//        }
     }
 
     /**
@@ -346,6 +390,7 @@ public class ImageNewActivity extends Activity {
      */
     private void HttpRequestGetImgItemList(final RequestParams params) {
         Log.e(TAG, "进入网络请求数据中。。。。");
+        img_not_found_rl.setVisibility(View.GONE);
         //判断当前的网络连接情况
         if (Constant.checkNetwork(mContext)) {
             //请求
@@ -392,6 +437,10 @@ public class ImageNewActivity extends Activity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    if (imageItemsList.isEmpty()) {
+                                        img_not_found_rl.setVisibility(View.VISIBLE);
+                                    }
+                                    Log.e(TAG,"没有更多数据===数据的集合的长度==="+imageItemsList.size());
                                     imageNewActivityAdapter.changeState(2);
                                     imageNewActivityAdapter.notifyDataSetChanged();
                                     Toast.makeText(mContext, "当前没有更多数据！", Toast.LENGTH_LONG).show();
@@ -465,22 +514,115 @@ public class ImageNewActivity extends Activity {
             switch (v.getId()) {
                 case R.id.imgNewHuxing:
                     //显示泡泡window
+                    HuxingTv.setTextColor(Color.parseColor("#ff882e"));
                     showPopwindow(9);
                     break;
                 case R.id.imgNewFengge:
+                    FenggeTv.setTextColor(Color.parseColor("#ff882e"));
                     showPopwindow(7);
                     break;
                 case R.id.imgNewMianji:
+                    MianjiTv.setTextColor(Color.parseColor("#ff882e"));
                     showPopwindow(12);
                     break;
+                case R.id.img_new_design:
+                case R.id.img_new_design_gif:
+                    startActivity(new Intent(mContext, GetPriceActivity.class));
+                    break;
+                case R.id.img_new_zixun:
+                case R.id.img_new_zixun_ll:
+                    //弹窗显示免费咨询
+                    showZixunPopwindow();
+                    break;
+
             }
         }
     };
 
+    //显示联系的popwindow
+    private void showZixunPopwindow() {
+        zixunPopView = View.inflate(mContext, R.layout.popwindow_zixun, null);
+        TextView qq_lianxi = (TextView) zixunPopView.findViewById(R.id.qq_lianxi);
+        TextView dianhua_lianxi = (TextView) zixunPopView.findViewById(R.id.dianhua_lianxi);
+        RelativeLayout pop_zixun_rl = (RelativeLayout) zixunPopView.findViewById(R.id.pop_zixun_rl);
+        zixunPopupWindow = new PopupWindow(zixunPopView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        zixunPopupWindow.setFocusable(true);
+        zixunPopupWindow.setOutsideTouchable(true);
+        zixunPopupWindow.update();
+        //打开QQ
+        qq_lianxi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //弹窗  尝试打开QQ
+                String url = "http://wpa.b.qq.com/cgi/wpa.php?ln=2&uin=4006062221";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                zixunPopupWindow.dismiss();
+            }
+        });
+        //打开电话联系
+        dianhua_lianxi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //弹出窗口电话联系
+                showOpenPhone();
+                zixunPopupWindow.dismiss();
+            }
+        });
+        //界面消失
+        pop_zixun_rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                zixunPopupWindow.dismiss();
+            }
+        });
+        //窗口显示的位置
+        zixunPopupWindow.showAtLocation(zixunPopView, Gravity.CENTER, 0, 0);
+    }
+
+
+    //显示开启打电话的弹窗
+    private void showOpenPhone() {
+        View popview = View.inflate(mContext, R.layout.popwindow_qqzixun, null);
+        TextView quxiao_phone = (TextView) popview.findViewById(R.id.quxiao_phone);
+        TextView open_phone = (TextView) popview.findViewById(R.id.open_phone);
+        RelativeLayout pop_phone_zixun = (RelativeLayout) popview.findViewById(R.id.pop_phone_zixun);
+        final PopupWindow popupWindow = new PopupWindow(popview, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.update();
+        //打电话
+        open_phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //打电话
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "4006062221"));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                popupWindow.dismiss();
+            }
+        });
+        //取消
+        quxiao_phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        pop_phone_zixun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        popupWindow.showAtLocation(popview, Gravity.CENTER, 0, 0);
+    }
+
+    //显示条件的下拉框
     private void showPopwindow(int whichBtn) {
         switch (whichBtn) {
             case 7:
                 //选择风格按钮
+                Glide.with(mContext).load(R.drawable.img_san_up).into(fengge_down);
                 imgNewFengge_jt.setVisibility(View.VISIBLE);
                 imgNewHuxing_jt.setVisibility(View.GONE);
                 imgNewMianji_jt.setVisibility(View.GONE);
@@ -491,16 +633,23 @@ public class ImageNewActivity extends Activity {
                     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                         Log.e(TAG, "风格列表子项点击事件====getClass_name" + position + "====" + popBtnListFg.get(position).getClass_name());
                         Log.e(TAG, "风格列表子项点击事件====getParent_id" + position + "====" + popBtnListFg.get(position).getParent_id());
-                        if (!imageItemsList.isEmpty()) {
-                            Log.e(TAG, "点击的户型下拉窗数据列表长度====" + imageItemsList.size());
-                            page = 1;
-                            imageItemsList.clear();
-                            ClearParam();
-                            LoadMoreParam.clear();
-                            LoadMoreParam.put("style_id", popBtnListFg.get(position).getId());
-                            getImgItemListParams.put("style_id", popBtnListFg.get(position).getId());
-                            HttpRequestGetImgItemList(getImgItemListParams);
+                        if (popBtnListFg.get(position).getId().equals("0")) {
+                            FenggeTv.setText("风格");
+                        } else {
+                            FenggeTv.setText("" + popBtnListFg.get(position).getClass_name());
                         }
+//                        if (!imageItemsList.isEmpty()) {
+                        Log.e(TAG, "点击的户型下拉窗数据列表长度====" + imageItemsList.size());
+                        page = 1;
+                        imageItemsList.clear();
+//                            ClearParam();
+//                            LoadMoreParam.clear();
+                        LoadMoreParam.put("style_id", popBtnListFg.get(position).getId());
+                        Log.e(TAG, "存储的数据===style_id===" + LoadMoreParam.get("style_id"));
+//                            getImgItemListParams.put("style_id", popBtnListFg.get(position).getId());
+//                            HttpRequestGetImgItemList(getImgItemListParams);
+                        loadDataByCondition();
+//                        }
                         popupWindow.dismiss();
                         customWaitDialog.show();
                     }
@@ -508,6 +657,7 @@ public class ImageNewActivity extends Activity {
                 break;
             case 9:
                 //选择户型按钮
+                Glide.with(mContext).load(R.drawable.img_san_up).into(huxing_down);
                 imgNewHuxing_jt.setVisibility(View.VISIBLE);
                 imgNewMianji_jt.setVisibility(View.GONE);
                 imgNewFengge_jt.setVisibility(View.GONE);
@@ -517,16 +667,23 @@ public class ImageNewActivity extends Activity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                         Log.e(TAG, "户型子项点击事件====" + position + "==" + popBtnListHx.get(position).getClass_name());
-                        if (!imageItemsList.isEmpty()) {
-                            Log.e(TAG, "点击的户型下拉窗数据列表长度====" + imageItemsList.size());
-                            imageItemsList.clear();
-                            page = 1;
-                            ClearParam();
-                            LoadMoreParam.clear();
-                            LoadMoreParam.put("layout_id", popBtnListHx.get(position).getId());
-                            getImgItemListParams.put("layout_id", popBtnListHx.get(position).getId());
-                            HttpRequestGetImgItemList(getImgItemListParams);
+                        if (popBtnListHx.get(position).getId().equals("0")) {
+                            HuxingTv.setText("户型");
+                        } else {
+                            HuxingTv.setText("" + popBtnListHx.get(position).getClass_name());
                         }
+//                        if (!imageItemsList.isEmpty()) {
+                        Log.e(TAG, "点击的户型下拉窗数据列表长度====" + imageItemsList.size());
+                        imageItemsList.clear();
+                        page = 1;
+//                            ClearParam();
+//                            LoadMoreParam.clear();
+                        LoadMoreParam.put("layout_id", popBtnListHx.get(position).getId());
+                        Log.e(TAG, "存储的数据===layout_id===" + LoadMoreParam.get("layout_id"));
+//                            getImgItemListParams.put("layout_id", popBtnListHx.get(position).getId());
+//                            HttpRequestGetImgItemList(getImgItemListParams);
+                        loadDataByCondition();
+//                        }
                         popupWindow.dismiss();
                         customWaitDialog.show();
                     }
@@ -534,6 +691,7 @@ public class ImageNewActivity extends Activity {
                 break;
             case 12:
                 //选择面积按钮
+                Glide.with(mContext).load(R.drawable.img_san_up).into(mianji_down);
                 imgNewMianji_jt.setVisibility(View.VISIBLE);
                 imgNewHuxing_jt.setVisibility(View.GONE);
                 imgNewFengge_jt.setVisibility(View.GONE);
@@ -543,15 +701,22 @@ public class ImageNewActivity extends Activity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                         Log.e(TAG, "面积子项点击事件====" + position + "==" + popBtnListMj.get(position).getClass_name() + "==" + popBtnListMj.get(position).getId());
-                        if (!imageItemsList.isEmpty()) {
-                            imageItemsList.clear();
-                            page = 1;
-                            ClearParam();
-                            LoadMoreParam.clear();
-                            LoadMoreParam.put("area_id", popBtnListMj.get(position).getId());
-                            getImgItemListParams.put("area_id", popBtnListMj.get(position).getId());
-                            HttpRequestGetImgItemList(getImgItemListParams);
+                        if (popBtnListMj.get(position).getId().equals("0")) {
+                            MianjiTv.setText("面积");
+                        }else {
+                            MianjiTv.setText("" + popBtnListMj.get(position).getClass_name());
                         }
+//                        if (!imageItemsList.isEmpty()) {
+                        imageItemsList.clear();
+                        page = 1;
+//                            ClearParam();
+//                            LoadMoreParam.clear();
+                        LoadMoreParam.put("area_id", popBtnListMj.get(position).getId());
+                        Log.e(TAG, "存储的数据===area_id===" + LoadMoreParam.get("area_id"));
+//                            getImgItemListParams.put("area_id", popBtnListMj.get(position).getId());
+//                            HttpRequestGetImgItemList(getImgItemListParams);
+                        loadDataByCondition();
+//                        }
                         popupWindow.dismiss();
                         customWaitDialog.show();
                     }
@@ -571,8 +736,31 @@ public class ImageNewActivity extends Activity {
                 imgNewHuxing_jt.setVisibility(View.GONE);
                 imgNewMianji_jt.setVisibility(View.GONE);
                 imgNewFengge_jt.setVisibility(View.GONE);
+                Glide.with(mContext).load(R.drawable.img_san_down).into(huxing_down);
+                Glide.with(mContext).load(R.drawable.img_san_down).into(mianji_down);
+                Glide.with(mContext).load(R.drawable.img_san_down).into(fengge_down);
+                FenggeTv.setTextColor(Color.parseColor("#666666"));
+                HuxingTv.setTextColor(Color.parseColor("#666666"));
+                MianjiTv.setTextColor(Color.parseColor("#666666"));
             }
         });
+    }
+
+    //根据用户选择的条件请求数据
+    private void loadDataByCondition() {
+        if (!TextUtils.isEmpty(LoadMoreParam.get("area_id"))) {
+            getImgItemListParams.remove("area_id");
+            getImgItemListParams.put("area_id", LoadMoreParam.get("area_id"));
+        }
+        if (!TextUtils.isEmpty(LoadMoreParam.get("layout_id"))) {
+            getImgItemListParams.remove("layout_id");
+            getImgItemListParams.put("layout_id", LoadMoreParam.get("layout_id"));
+        }
+        if (!TextUtils.isEmpty(LoadMoreParam.get("style_id"))) {
+            getImgItemListParams.remove("style_id");
+            getImgItemListParams.put("style_id", LoadMoreParam.get("style_id"));
+        }
+        HttpRequestGetImgItemList(getImgItemListParams);
     }
 
     /**
@@ -591,27 +779,28 @@ public class ImageNewActivity extends Activity {
             //没有选择条件的加载更多
             HttpRequestGetImgItemList(getImgItemListParams);
         } else {
-            if (!TextUtils.isEmpty(LoadMoreParam.get("style_id"))) {
-                //加载更多风格图库
-                getImgItemListParams.put("style_id", LoadMoreParam.get("style_id"));
-                HttpRequestGetImgItemList(getImgItemListParams);
-            } else if (!TextUtils.isEmpty(LoadMoreParam.get("layout_id"))) {
-                //加载更多户型图库
-                getImgItemListParams.put("layout_id", LoadMoreParam.get("layout_id"));
-                HttpRequestGetImgItemList(getImgItemListParams);
-            } else if (!TextUtils.isEmpty(LoadMoreParam.get("area_id"))) {
-                //加载更多的面积图库
-                getImgItemListParams.put("area_id", LoadMoreParam.get("area_id"));
-                HttpRequestGetImgItemList(getImgItemListParams);
-            }
+//            if (!TextUtils.isEmpty(LoadMoreParam.get("style_id"))) {
+//                //加载更多风格图库
+//                getImgItemListParams.put("style_id", LoadMoreParam.get("style_id"));
+//                HttpRequestGetImgItemList(getImgItemListParams);
+//            } else if (!TextUtils.isEmpty(LoadMoreParam.get("layout_id"))) {
+//                //加载更多户型图库
+//                getImgItemListParams.put("layout_id", LoadMoreParam.get("layout_id"));
+//                HttpRequestGetImgItemList(getImgItemListParams);
+//            } else if (!TextUtils.isEmpty(LoadMoreParam.get("area_id"))) {
+//                //加载更多的面积图库
+//                getImgItemListParams.put("area_id", LoadMoreParam.get("area_id"));
+//                HttpRequestGetImgItemList(getImgItemListParams);
+//            }
+            loadDataByCondition();
         }
     }
 
     //清除参数 清除集合
     private void ClearParam() {
-        getImgItemListParams.remove("layout_id");
-        getImgItemListParams.remove("style_id");
-        getImgItemListParams.remove("area_id");
+//        getImgItemListParams.remove("layout_id");
+//        getImgItemListParams.remove("style_id");
+//        getImgItemListParams.remove("area_id");
         getImgItemListParams.remove("page");
     }
 

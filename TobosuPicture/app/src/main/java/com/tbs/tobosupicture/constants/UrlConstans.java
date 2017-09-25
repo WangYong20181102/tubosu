@@ -14,7 +14,7 @@ public class UrlConstans {
     /**
      * 正式环境的URl
      */
-//    public static final String ZXKK_URL = "http://www.tobosu.com/";
+    public static final String ZXKK_URL = "https://www.tobosu.com/";
 
     /**
      * 测试环境的URl
@@ -23,15 +23,16 @@ public class UrlConstans {
     /**
      * test分支
      */
-    public static final String ZXKK_URL = "http://www.test.tobosu.com/";
-    /**
-     * 图片存储的位置
-     */
-    public static final String IMG_PATH = Environment.getExternalStorageDirectory() + "/zxkk/";
+//    public static final String ZXKK_URL = "https://www.test.tobosu.com/";
     /**
      * 通信地址
      */
     public static final String SOCKET_URL = "http://10.10.1.120:2120";
+    /**
+     * 图片存储的位置
+     */
+    public static final String IMG_PATH = Environment.getExternalStorageDirectory() + "/zxkk/";
+
     /**
      * 手机号码 用于验证手机号码是否合法
      */

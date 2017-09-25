@@ -12,7 +12,6 @@ public class HttpClient {
 	public static void setIMEI(String imei){
 		httpClient.addHeader("IMEI", imei);
 	}
-	
 	public static void get(String url, RequestParams params, ResponseHandlerInterface responseHandler){
 		httpClient.get(url, params, responseHandler);
 	}

@@ -11,7 +11,8 @@
         android:id="@+id/imgNewLoading"
         layout="@layout/layout_loading_data"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="visible" />
 
     <include
         android:id="@+id/imgNetout"
@@ -21,43 +22,112 @@
         android:visibility="gone" />
 
     <RelativeLayout
+        android:id="@+id/img_new_banner"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/bg_fd_title">
+
+        <LinearLayout
+            android:id="@+id/img_new_zixun_ll"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true">
+
+            <ImageView
+                android:id="@+id/img_new_zixun"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="18dp"
+                android:src="@drawable/kefu" />
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="逛图库"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/img_new_design"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="14dp" />
+
+        <ImageView
+            android:id="@+id/img_new_design_gif"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="12dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/imgNewReLL"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/bg_fd_title">
+        android:layout_height="44dp"
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/imgNewHuxing_jt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_alignLeft="@+id/imgNewHuxing"
             android:layout_alignParentBottom="true"
             android:layout_alignStart="@+id/imgNewHuxing"
             android:layout_marginLeft="11dp"
             android:layout_marginStart="11dp"
             android:src="@drawable/newimg_jt"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/imgNewHuxing"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="68dp"
+            android:layout_marginLeft="48dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="户型"
-            android:textColor="@color/white"
+            android:textColor="#666666"
             android:textSize="16sp" />
 
         <ImageView
+            android:id="@+id/huxing_down"
+            android:layout_width="9dp"
+            android:layout_height="9dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/imgNewHuxing"
+            android:src="@drawable/img_san_down" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="40dp"
+            android:layout_toRightOf="@+id/imgNewHuxing"
+            android:background="#cacaca" />
+
+        <ImageView
             android:id="@+id/imgNewFengge_jt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:src="@drawable/newimg_jt"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/imgNewFengge"
@@ -68,20 +138,48 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="风格"
-            android:textColor="@color/white"
+            android:textColor="#666666"
             android:textSize="16sp" />
 
         <ImageView
+            android:id="@+id/fengge_down"
+            android:layout_width="9dp"
+            android:layout_height="9dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/imgNewFengge"
+            android:src="@drawable/img_san_down" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="40dp"
+            android:layout_toRightOf="@+id/imgNewFengge"
+            android:background="#cacaca" />
+
+        <ImageView
             android:id="@+id/imgNewMianji_jt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_alignLeft="@+id/imgNewMianji"
             android:layout_alignParentBottom="true"
             android:layout_alignStart="@+id/imgNewMianji"
             android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp"
             android:src="@drawable/newimg_jt"
-            android:visibility="gone" />
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/mianji_down"
+            android:layout_width="9dp"
+            android:layout_height="9dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="26dp"
+            android:layout_marginRight="26dp"
+            android:src="@drawable/img_san_down" />
 
         <TextView
             android:id="@+id/imgNewMianji"
@@ -90,13 +188,55 @@
             android:layout_alignBottom="@+id/imgNewFengge"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="68dp"
+            android:layout_marginRight="40dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="面积"
-            android:textColor="@color/white"
+            android:textColor="#666666"
             android:textSize="16sp" />
     </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider" />
+
+    <RelativeLayout
+        android:id="@+id/img_not_found_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_not_found"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:src="@drawable/img_not_found" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/img_not_found"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="19dp"
+                android:gravity="center"
+                android:text="暂时没有找到符合的图片哦\n请修改条件后重新筛选"
+                android:textColor="#888888"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/imgNewSwipLayout"
