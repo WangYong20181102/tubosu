@@ -1,5 +1,4 @@
 package com.tbs.tobosutype.activity;
-
 import android.Manifest;
 import android.app.ActionBar.LayoutParams;
 import android.content.BroadcastReceiver;
@@ -34,8 +33,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.AreaAdapter;
 import com.tbs.tobosutype.adapter.DecorateListAdapter;
@@ -68,7 +65,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 找装修页面
@@ -614,37 +613,40 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
     private void requestDecoratePost(HashMap<String, String> params) {
         if (Util.isNetAvailable(mContext)) {
 
-            OKHttpUtil okHttpUtil = new OKHttpUtil();
-            okHttpUtil.post(Constant.FIND_DECORATE_COMPANY_URL, params, new OKHttpUtil.BaseCallBack() {
+            OKHttpUtil.post(Constant.FIND_DECORATE_COMPANY_URL, params, new Callback() {
                 @Override
-                public void onSuccess(Response response, String json) {
-                    Log.e(TAG, "数据请求=====" + json);
-//                    String result = new String(responseBody);
-                    Util.setLog(TAG, "requestDecoratePost 请求网络返回成功 -->>> " + json);
-                    try {
-                        JSONObject obj = new JSONObject(json);
-                        if (obj.getInt("error_code") == 0) {
-                            // 缓存请求的结果
-                            getSharedPreferences("CompanyCache", 0).edit().putString("jsonResult", json).commit();
-                            operDecorationCompany(json);
-                        } else {
+                public void onFailure(Call call, IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
                             handler.sendEmptyMessage(201);
-                            Util.setLog(TAG, "201请求网络返回有问题 ===>>>>" + response.message());
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    });
                 }
 
                 @Override
-                public void onFail(Request request, IOException e) {
-                    Util.setLog(TAG, "onFail请求网络返回有问题 ===>>>>" + request.toString() + "<<<======>>>>" + AppInfoUtil.getLat(mContext) + "<<<======>>>>" + AppInfoUtil.getLng(mContext) + "<<<<===");
-                    handler.sendEmptyMessage(201);
-                }
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String json = response.body().string();
+                    Log.e(TAG, "数据请求=====" + json);
+                    Util.setLog(TAG, "requestDecoratePost 请求网络返回成功 -->>> " + json);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject obj = new JSONObject(json);
+                                if (obj.getInt("error_code") == 0) {
+                                    // 缓存请求的结果
+                                    getSharedPreferences("CompanyCache", 0).edit().putString("jsonResult", json).commit();
+                                    operDecorationCompany(json);
+                                } else {
+                                    handler.sendEmptyMessage(201);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
 
-                @Override
-                public void onError(Response response, int code) {
-                    Util.setLog(TAG, "onError请求网络返回有问题 ===>>>>" + response.message() + "<<<======>>>>" + AppInfoUtil.getLat(mContext) + "<<<<======>>>>" + AppInfoUtil.getLng(mContext) + "<<<<===");
                 }
             });
         }

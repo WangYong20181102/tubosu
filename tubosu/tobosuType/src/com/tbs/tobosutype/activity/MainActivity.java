@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
@@ -38,6 +40,7 @@ import org.json.JSONObject;
 
 @SuppressWarnings("deprecation")
 public class MainActivity extends TabActivity implements View.OnClickListener {
+
     private static final String TAG = MainActivity.class.getSimpleName();
     /**
      * 网络好时
@@ -121,10 +124,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     rl_checkNet.setVisibility(View.VISIBLE);
                     break;
             }
-
         }
-
-        ;
     };
 
 
@@ -543,6 +543,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
             });
         }
     }
+
+
 
     @Override
     protected void onDestroy() {

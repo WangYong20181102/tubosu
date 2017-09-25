@@ -14,7 +14,7 @@
 	    <RelativeLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="50dp"
-	        android:background="@color/text_yellow" >
+	        android:background="@color/color_black" >
 	
 	        <ImageView
 	            android:id="@+id/city_title_back"

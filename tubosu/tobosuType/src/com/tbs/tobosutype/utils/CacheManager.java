@@ -432,4 +432,44 @@ public class CacheManager {
         }
     }
 
+
+
+    private static final String APP_ENTRY_ORDER_PRE = "app_entry_order_pre";
+    private static final String APP_ENTRY_ORDER = "app_entry_order";
+    public static String getAppEntryOrderPre(Context context){
+        return context.getSharedPreferences(APP_ENTRY_ORDER_PRE, Context.MODE_PRIVATE).getString(APP_ENTRY_ORDER, "");
+    }
+    public static void setAppEntryOrderPre(Context context, String order){
+        context.getSharedPreferences(APP_ENTRY_ORDER_PRE, Context.MODE_PRIVATE).edit().putString(APP_ENTRY_ORDER, order).commit();
+    }
+
+    private static final String APP_LOADING_AD_PRE = "app_loading_ad_pre";
+    private static final String APP_LOADING_AD = "app_loading_ad";
+    public static String getLoadingAdId(Context context){
+        return context.getSharedPreferences(APP_LOADING_AD_PRE, Context.MODE_PRIVATE).getString(APP_LOADING_AD, "");
+    }
+    public static void setLoadingAdId(Context context, String id){
+        context.getSharedPreferences(APP_LOADING_AD_PRE, Context.MODE_PRIVATE).edit().putString(APP_LOADING_AD, id).commit();
+    }
+
+    private static final String APP_LOADING_ADPIC_PATH = "app_loading_adpic_path";
+    private static final String APP_LOADING_ADPIC = "app_loading_adpic";
+    public static String getLoadingAdPath(Context context){
+        return context.getSharedPreferences(APP_LOADING_ADPIC_PATH, Context.MODE_PRIVATE).getString(APP_LOADING_ADPIC, "");
+    }
+    public static void setLoadingAdPath(Context context, String path){
+        context.getSharedPreferences(APP_LOADING_ADPIC_PATH, Context.MODE_PRIVATE).edit().putString(APP_LOADING_ADPIC, path).commit();
+    }
+
+
+
+    private static final String APP_LOADING_HUODONG_PRE = "app_loading_huodong_pre";
+    private static final String APP_LOADING_HUODONG = "app_loading_huodong";
+    public static String getLoadingHUODONG(Context context){
+        return context.getSharedPreferences(APP_LOADING_HUODONG_PRE, Context.MODE_PRIVATE).getString(APP_LOADING_HUODONG, "");
+    }
+    public static void setLoadingHUODONG(Context context, String date){
+        context.getSharedPreferences(APP_LOADING_HUODONG_PRE, Context.MODE_PRIVATE).edit().putString(APP_LOADING_HUODONG, date).commit();
+    }
+
 }

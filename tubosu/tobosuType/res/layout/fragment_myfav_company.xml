@@ -8,7 +8,7 @@
         android:id="@+id/myfav_listView_decoratestore"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="@null"
+        android:scrollbars="none"
         android:background="@android:color/white" >
     </ListView>
 

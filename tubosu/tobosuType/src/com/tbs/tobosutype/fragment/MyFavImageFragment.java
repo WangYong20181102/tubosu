@@ -1,5 +1,6 @@
 package com.tbs.tobosutype.fragment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,16 +33,24 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.ImageDetailActivity;
 import com.tbs.tobosutype.activity.MyFavActivity;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
-	/**
+import com.tbs.tobosutype.utils.Util;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+/**
 	 * 收藏页面 之 图册收藏页面
 	 * @author dec
 	 *
@@ -74,7 +83,8 @@ public class MyFavImageFragment extends Fragment {
 	 * */
 	private String fav_type = "showpic";
 	
-	private RequestParams params;
+//	private RequestParams params;
+	private HashMap<String, String> params;
 	private RequestParams delParams;
 	private SharedPreferences settings;
 	private String token;
@@ -139,11 +149,12 @@ public class MyFavImageFragment extends Fragment {
 		token = settings.getString("token", "");
 		
 		if (!TextUtils.isEmpty(token)) {
-			params = AppInfoUtil.getPublicParams(getActivity().getApplicationContext());
+//			params = AppInfoUtil.getPublicParams(getActivity().getApplicationContext());
+			params = new HashMap<String, String>();
 			params.put("token", token);
 			params.put("fav_type", fav_type);
-			params.put("page", page);
-			params.put("pageSize", pageSize);
+			params.put("page", page + "");
+			params.put("pageSize", pageSize + "");
 			requestImageStorePost();
 		}
 
@@ -218,7 +229,8 @@ public class MyFavImageFragment extends Fragment {
 				imgHolder = (ImageViewHolder) convertView.getTag();
 			}
 			
-			ImageLoaderUtil.loadImage(getActivity(), imgHolder.deleteImage, list.get(position).get("img_url").toString());
+//			ImageLoaderUtil.loadImage(getActivity(), imgHolder.deleteImage, list.get(position).get("img_url").toString());
+			Glide.with(getActivity()).load(list.get(position).get("img_url").toString()).placeholder(R.drawable.icon_tobosu_default).into(imgHolder.deleteImage);
 			imgHolder.deleteBox.setOnCheckedChangeListener(null); 
 			if(showF==false){
 				// 隐藏勾选
@@ -383,7 +395,6 @@ public class MyFavImageFragment extends Fragment {
 	public void showImagesSelectedView(){
 		if(favImageAdapter!=null){
 			favImageAdapter.setSelectedShow();
-//			Toast.makeText(getActivity(), "99显示  路径", Toast.LENGTH_SHORT).show();
 		}
 	}
 	
@@ -392,17 +403,20 @@ public class MyFavImageFragment extends Fragment {
 	 * 收藏接口请求
 	 */
 	private void requestImageStorePost() {
-		
-		HttpServer.getInstance().requestPOST(urlstore, params, new AsyncHttpResponseHandler() {
-			
-					@Override
-					public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-						dataList.clear();
-					}
+		OKHttpUtil.post(urlstore, params, new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+//				dataList.clear();
+				Util.setErrorLog(TAG, "收藏图片onFailure：==  " + e.getMessage());
+			}
 
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				final String result = response.body().string();
+				Util.setErrorLog(TAG, "收藏图片： " + result);
+				getActivity().runOnUiThread(new Runnable() {
 					@Override
-					public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-						String result = new String(responseBody);
+					public void run() {
 						List<HashMap<String, Object>> temDataList = new ArrayList<HashMap<String, Object>>();
 						temDataList = (List<HashMap<String, Object>>) parseImageStoreListJSON(result);
 						if (temDataList != null) {
@@ -424,7 +438,10 @@ public class MyFavImageFragment extends Fragment {
 						}
 					}
 				});
-	};
+
+			}
+		});
+	}
 
 	
 	/****

@@ -3,12 +3,13 @@ package com.tbs.tobosutype.global;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Environment;
 import android.widget.Toast;
-
 import com.tbs.tobosutype.utils.AppInfoUtil;
 
 
 public class Constant {
+    public static int LOADING_PIC = 0;
     public static final String DESCRIPTOR = "com.umeng.login";
     public static final String DESCRIPTOR_SHARE = "com.umeng.share";
 
@@ -56,6 +57,12 @@ public class Constant {
     public static final String ACTION_GOTO_EDIT_FRAGMENT = "action_goto_edit_fragment";
 
     /**
+     * 广告页面
+     */
+    public static final String IMG_PATH = Environment.getExternalStorageDirectory() + "/tbs_adpic/";
+
+
+    /**
      * 获取数据
      */
     public static final String ACTION_GET_FRAGMENT_DATA = "action_get_fragment_data";
@@ -83,14 +90,24 @@ public class Constant {
     /**
      * 测试环境
      */
-//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+//    public static final String TOBOSU_URL = "https://www.dev.tobosu.com/";
 
     /**
      * 正式环境
      */
-    public static final String TOBOSU_URL = "http://www.tobosu.com/";
+    public static final String TOBOSU_URL = "https://www.tobosu.com/";
 
     public static final String SUMMIT_BUDGET_URL = TOBOSU_URL + "mapp/RenovateExpense/expense_bookkeep";
+
+    /**
+     * 活动url
+     */
+    public static final String ACTIVITY_URL = TOBOSU_URL + "tapp/Activity/get_activity";
+
+    /**
+     * loading页
+     */
+    public static final String GET_LOADING_AD_URL = TOBOSU_URL + "tapp/Advert/get_advert";
 
     /**
      * 编辑装修开支

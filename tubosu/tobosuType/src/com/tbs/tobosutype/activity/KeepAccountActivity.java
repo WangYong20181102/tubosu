@@ -1,5 +1,4 @@
 package com.tbs.tobosutype.activity;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,20 +9,19 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.Util;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.HashMap;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by Lie on 2017/5/31.
@@ -87,28 +85,28 @@ public class KeepAccountActivity extends Activity{
 
     private void summitBudget(String budget) {
         float f = Float.parseFloat(budget) * 10000;
-
-        OKHttpUtil okHttpUtil = new OKHttpUtil();
         HashMap<String, String> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         param.put("uid", AppInfoUtil.getUserid(mContext));
         param.put("expected_cost", f + "");
 
-        okHttpUtil.post(Constant.SUMMIT_BUDGET_URL, param, new OKHttpUtil.BaseCallBack() {
+        OKHttpUtil.post(Constant.SUMMIT_BUDGET_URL, param, new Callback() {
 
             @Override
-            public void onSuccess(Response response, String json) {
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String json = response.body().string();
                 Log.e(TAG, "上传预算=====" + json);
-                parseJson(json);
-            }
-
-            @Override
-            public void onFail(Request request, IOException e) {
-
-            }
-
-            @Override
-            public void onError(Response response, int code) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        parseJson(json);
+                    }
+                });
 
             }
         });

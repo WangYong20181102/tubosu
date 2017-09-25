@@ -19,21 +19,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
-
-//import com.android.volley.AuthFailureError;
-//import com.android.volley.Request;
-//import com.android.volley.RequestQueue;
-//import com.android.volley.Response;
-//import com.android.volley.VolleyError;
-//import com.android.volley.toolbox.StringRequest;
-//import com.android.volley.toolbox.Volley;
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -48,16 +33,18 @@ import com.tbs.tobosutype.activity.PopOrderActivity;
 import com.tbs.tobosutype.activity.WebViewActivity;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.MD5Util;
+import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
-
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,6 +55,10 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 首页顶部广告
@@ -91,7 +82,7 @@ public class HomeTopFrameLayout extends FrameLayout {
      */
     private String containFreeUrl = "http://m.tobosu.com/app/pub?";
 //									 http://m.tobosu.com/app/pub?
-//	                               http://m.tobosu.com/app/pub?channel=sem&subchannel=android&chcode=product
+//	                                 http://m.tobosu.com/app/pub?channel=sem&subchannel=android&chcode=product
 
     /**
      * 根据不同城市而呈现不同的图片
@@ -138,11 +129,12 @@ public class HomeTopFrameLayout extends FrameLayout {
 
         initImageLoader(context);
 
-        SharedPreferences citys = context.getSharedPreferences("cityInfo", 0);
         cityName = context.getSharedPreferences("Save_City_Info", Context.MODE_PRIVATE).getString("save_city_now", cityName);
-
+        if(cityName==null || "".equals(cityName)){
+            cityName = "深圳";
+        }
         initUI(context);
-        initData();
+        getBanner();
         countParams = new RequestParams();
         if (isAutoPlay) {
             startPlay();
@@ -155,82 +147,30 @@ public class HomeTopFrameLayout extends FrameLayout {
         scheduledExecutorService.scheduleAtFixedRate(new SlideShowTask(), 1, 4, TimeUnit.SECONDS);
     }
 
-    private void initData() {
-
-//		String result = context.getSharedPreferences("NavigationCache", 0).getString("result", "");
-//		if (!TextUtils.isEmpty(result)) {
-//			showImages(result);
-////			Log.d(TAG, "--缓存--result" + result);
-//		}
-
-//		urlString = urlString + cityName + "&version=" + AppInfoUtil.getAppVersionName(context) + "&device=android";
-//		Log.d(TAG, "新的urlString是"+urlString);
-//		new GetListTask().execute(urlString);
-        getBanner();
-        Log.d(TAG, "现在是" + cityName + "的轮播图片");
-    }
-
-
-    private StringRequest bannerStringRequest;
-    private RequestQueue bannerRequestQueue;
 
     private void getBanner() {
-        bannerRequestQueue = Volley.newRequestQueue(context);
-        bannerStringRequest = new StringRequest(Request.Method.POST, urlString, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String result) {
-                System.out.println("---banner结果-->>" + result);
-                context.getSharedPreferences("NavigationCache", 0).edit().putString("result", result).commit();
-                showImages(result);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
+        Util.setErrorLog(TAG, "现在是" + cityName + "的轮播图片");
+        if(Util.isNetAvailable(context)){
+            HashMap<String, String> param = new HashMap<String, String>();
+            param.put("city", cityName);
+            param.put("device", "android");
+            param.put("version", AppInfoUtil.getAppVersionName(context));
+            Util.setErrorLog(TAG, "---version-->>" + AppInfoUtil.getAppVersionName(context));
+            OKHttpUtil.post(urlString, param, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Util.setErrorLog(TAG, "---onFailure-->>getBanner--");
+                }
 
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> param = new HashMap<String, String>();
-                param.put("city", cityName);
-                param.put("device", "android");
-                param.put("version", AppInfoUtil.getAppVersionName(context));
-                System.out.println("---version-->>" + AppInfoUtil.getAppVersionName(context));
-                return param;
-            }
-        };
-
-        bannerStringRequest.setTag("banner_string_request");
-        bannerRequestQueue.add(bannerStringRequest);
-
-//		OKHttpUtil okhttp = new OKHttpUtil();
-//		HashMap<String, String> param = new HashMap<String, String>();
-//		param.put("city", cityName);
-//		param.put("device", "android");
-//		param.put("version", AppInfoUtil.getAppVersionName(context));
-//
-//		okhttp.post(urlString, param, new OKHttpUtil.BaseCallBack() {
-//
-//			@Override
-//			public void onSuccess(Response response, String result) {
-//				System.out.println("---banner结果-->>" + result);
-//				context.getSharedPreferences("NavigationCache", 0).edit().putString("result", result).commit();
-//				showImages(result);
-//
-//			}
-//
-//			@Override
-//			public void onFail(Request request, IOException e) {
-//
-//			}
-//
-//			@Override
-//			public void onError(Response response, int code) {
-//
-//			}
-//		});
-
-
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String result = response.body().string();
+                    Util.setErrorLog(TAG, "---banner结果-->>" + result);
+                    context.getSharedPreferences("NavigationCache", 0).edit().putString("result", result).commit();
+                    showImages(result);
+                }
+            });
+        }
     }
 
     private void initUI(Context context) {
@@ -290,6 +230,8 @@ public class HomeTopFrameLayout extends FrameLayout {
                     .resetViewBeforeLoading(true).build();
 
             imageLoader.displayImage(imageView.getTag() + "", imageView, options);
+            
+            
             ((ViewPager) container).addView(imageViewsList.get(position));
 
             imageViewsList.get(position).setOnClickListener(new OnClickListener() {
@@ -299,7 +241,7 @@ public class HomeTopFrameLayout extends FrameLayout {
                     String get_content_url = (String) slideShowList.get(position).get("content_url");
                     String get_banner_id = (String) slideShowList.get(position).get("id");
                     //在此处加载点击统计事件 设置定时任务
-                    Log.e(TAG, "--请检查--发单接口【" + get_content_url + "】");
+                    Util.setErrorLog(TAG, "--请检查--发单接口【" + get_content_url + "】");
                     countParams.put("banner_id", get_banner_id);
                     countParams.put("type", "3");
                     countParams.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
@@ -311,15 +253,13 @@ public class HomeTopFrameLayout extends FrameLayout {
                     String mTime = format.format(date);
                     String _token = MD5Util.md5(MD5Util.md5(get_banner_id + "3" + AppInfoUtil.getChannType(MyApplication.getContext())) + mTime);
                     countParams.put("_token", _token);
-                    Log.e(TAG, "=banner_id=" + get_banner_id + "=chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "=version=" + AppInfoUtil.getAppVersionName(MyApplication.getContext()) + "=mac_code=" + AppInfoUtil.getMacAddress(MyApplication.getContext()) + "=time=" + mTime);
+                    Util.setErrorLog(TAG, "=banner_id=" + get_banner_id + "=chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "=version=" + AppInfoUtil.getAppVersionName(MyApplication.getContext()) + "=mac_code=" + AppInfoUtil.getMacAddress(MyApplication.getContext()) + "=time=" + mTime);
                     HttpCountClick(countParams);
 
 
                     //
                     if (!get_content_url.contains(containFreeUrl)) {
-                        Log.e(TAG, "--请检查--发单接口 走WebViewActivity原生【" + get_content_url + "】 【WebViewActivity走的不是安卓发单入口】");
-
-
+                        Util.setErrorLog(TAG, "--请检查--发单接口 走WebViewActivity原生【" + get_content_url + "】 【WebViewActivity走的不是安卓发单入口】");
 
                         /*----------------------------------走发单PopOrderActivity 2017-07-06 邝俊要求--------------------------------------*/
 
@@ -338,7 +278,7 @@ public class HomeTopFrameLayout extends FrameLayout {
 
                     }else {
                         MobclickAgent.onEvent(context, "click_find_decoration_activite");
-                        Log.e(TAG, "--请检查--发单接口 走FreeActivity【注意FreeActivity是绝对走android发单入口的】");
+                        Util.setErrorLog(TAG, "--请检查--发单接口 走FreeActivity【注意FreeActivity是绝对走android发单入口的】");
                         Intent intent = new Intent(context, FreeActivity.class);
                         context.startActivity(intent);
                     }
@@ -379,23 +319,16 @@ public class HomeTopFrameLayout extends FrameLayout {
     }
 
     private void HttpCountClick(RequestParams params) {
-        //定时任务
-//        while (mTime > 0) {
-//            SystemClock.sleep(1000);
-//            mTime--;
-//            Log.e(TAG, "当前时间==》》" + mTime);
-//        }
-
 
         HttpServer.getInstance().requestPOST(urlCount, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int i, Header[] headers, byte[] bytes) {
-//                Log.e(TAG, "点击统计成功===" + new String(bytes));
+//                Util.setErrorLog(TAG, "点击统计成功===" + new String(bytes));
             }
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-//                Log.e(TAG, "点击统计失败");
+//                Util.setErrorLog(TAG, "点击统计失败");
             }
         });
     }
@@ -457,58 +390,6 @@ public class HomeTopFrameLayout extends FrameLayout {
 
     }
 
-//	/**
-//	 * 异步任务请求网络,获取图片数据
-//	 *
-//	 */
-//	class GetListTask extends AsyncTask<String, Integer, Boolean> {
-//
-//		@Override
-//		protected Boolean doInBackground(String... params) {
-//			try {
-//				// 这里一般调用服务端接口获取一组轮播图片，下面是从百度找的几个图片
-//				try {
-//					URL url = new URL(params[0]);
-//					HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-//					httpConn.setDoInput(true);
-//					httpConn.setDoOutput(false);
-//					httpConn.connect();
-//					ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//					if (httpConn.getResponseCode() == 200) {
-//						BufferedInputStream bis = new BufferedInputStream(httpConn.getInputStream());
-//						byte[] buffer = new byte[1024 * 8];
-//						int c = 0;
-//						while ((c = bis.read(buffer)) != -1) {
-//							baos.write(buffer, 0, c);
-//							baos.flush();
-//						}
-//						byte[] data = baos.toByteArray();
-//						String result = new String(data);
-//						context.getSharedPreferences("NavigationCache", 0).edit().putString("result", result).commit();
-////						showImages(result);
-////						Log.d(TAG, "转换了城市========【"+result+"】的轮播图片");
-//					}
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				} finally {
-//
-//				}
-//				return true;
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//				return false;
-//			}
-//		}
-//
-//		@Override
-//		protected void onPostExecute(Boolean result) {
-//			super.onPostExecute(result);
-//			if (result) {
-//				initUI(context);
-//			}
-//		}
-//	}
-
     /***
      *  显示顶部轮播图
      * @param result
@@ -519,7 +400,7 @@ public class HomeTopFrameLayout extends FrameLayout {
             imageUrls = new String[slideShowList.size()];
             for (int i = 0; i < slideShowList.size(); i++) {
                 imageUrls[i] = (String) slideShowList.get(i).get("img_url");
-                Log.d(TAG, "顶部录播图片中第" + i + "个图片-->>" + imageUrls[i]);
+                Util.setLog(TAG, "顶部录播图片中第" + i + "个图片-->>" + imageUrls[i]);
             }
             initUI(context);
         }
@@ -563,10 +444,4 @@ public class HomeTopFrameLayout extends FrameLayout {
         return null;
     }
 
-
-    public void stopRequestQueue() {
-        if (bannerRequestQueue != null) {
-            bannerRequestQueue.cancelAll("banner_string_request");
-        }
-    }
 }

@@ -12,9 +12,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.fragment.FurnitureFragment;
 import com.tbs.tobosutype.fragment.KitchenFragment;
@@ -26,12 +23,14 @@ import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.Util;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.HashMap;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by Lie on 2017/5/31.
@@ -282,35 +281,41 @@ public class EditAccountAcitivity extends FragmentActivity{
                             hashMap.put("id", recordId);
                         }
 
-                        okHttpUtil.post(url, hashMap, new OKHttpUtil.BaseCallBack() {
-
+                        okHttpUtil.post(url, hashMap, new Callback() {
                             @Override
-                            public void onSuccess(Response response, String json) {
-                                Util.setErrorLog(TAG, json);
-                                try {
-                                    JSONObject obj = new JSONObject(json);
-                                    if(obj.getInt("status")==200){
-                                        Util.setToast(context, getToastMesssage(saveData)+"添加成功");
-//                                        setResultCode(Constant.FINISH_SAVE_EDIT_OUTCOME);
-                                        finish();
-                                    }else if(obj.getInt("status")==0){
+                            public void onFailure(Call call, IOException e) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
                                         Util.setToast(context, getToastMesssage(saveData)+"添加失败,请修改再试!");
-                                    }else {
-                                        Util.setToast(context, "请修改再试!");
                                     }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                                });
                             }
 
                             @Override
-                            public void onFail(Request request, IOException e) {
-                                Util.setToast(context, getToastMesssage(saveData)+"添加失败,请修改再试!");
-                            }
+                            public void onResponse(Call call, Response response) throws IOException {
+                                final String json = response.body().string();
 
-                            @Override
-                            public void onError(Response response, int code) {
-                                Util.setToast(context, getToastMesssage(saveData)+"添加失败,请修改再试!");
+                                Util.setErrorLog(TAG, json);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            JSONObject obj = new JSONObject(json);
+                                            if(obj.getInt("status")==200){
+                                                Util.setToast(context, getToastMesssage(saveData)+"添加成功");
+//                                        setResultCode(Constant.FINISH_SAVE_EDIT_OUTCOME);
+                                                finish();
+                                            }else if(obj.getInt("status")==0){
+                                                Util.setToast(context, getToastMesssage(saveData)+"添加失败,请修改再试!");
+                                            }else {
+                                                Util.setToast(context, "请修改再试!");
+                                            }
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
                             }
                         });
                     }

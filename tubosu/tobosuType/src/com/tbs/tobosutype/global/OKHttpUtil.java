@@ -1,53 +1,66 @@
 package com.tbs.tobosutype.global;
+import android.content.Context;
+import android.util.Log;
 
-import android.os.Handler;
-import android.os.Looper;
+import com.tbs.tobosutype.utils.CacheManager;
 
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by dec on 2016/10/19.
  */
 
 public class OKHttpUtil {
-
     private static final String TAG = OKHttpUtil.class.getSimpleName();
-
-    private OkHttpClient client;
-    private Handler mHandler;
-
+    private static OkHttpClient client;
     public OKHttpUtil() {
-        client = new OkHttpClient();
-        //设置连接超时时间,在网络正常的时候有效
-        client.setConnectTimeout(5000, TimeUnit.SECONDS);
-        //设置读取数据的超时时间
-        client.setReadTimeout(5000, TimeUnit.SECONDS);
-        //设置写入数据的超时时间
-        client.setWriteTimeout(5000, TimeUnit.SECONDS);
-
-        //Looper.getMainLooper()  获取主线程的消息队列
-        mHandler = new Handler(Looper.getMainLooper());
     }
+
+    public static OkHttpClient getInstance() {
+        if (client == null) {
+            synchronized (OKHttpUtil.class) {
+                if (client == null) {
+                    client = new OkHttpClient();/*.Builder()
+                    .sslSocketFactory(createSSLSocketFactory())
+                    .hostnameVerifier(new TrustAllHostnameVerifier())
+                    .build();*/
+                }
+            }
+        }
+        return client;
+    }
+
 
     /**
      * get请求
      * @param url
-     * @param baseCallBack
+     * @param callBack
      */
-    public void get(String url, BaseCallBack baseCallBack) {
-        Request request = buildRequest(url, null, HttpMethodType.GET);
-        sendRequest(request, baseCallBack);
+    public static void get(String url, Callback callBack) {
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        Call call = getInstance().newCall(request);
+        call.enqueue(callBack);
     }
 
 
@@ -55,130 +68,127 @@ public class OKHttpUtil {
      * post请求
      * @param url
      * @param params
-     * @param baseCallBack
+     * @param callback
      */
-    public void post(String url, HashMap<String, String> params, BaseCallBack baseCallBack) {
-        Request request = buildRequest(url, params, HttpMethodType.POST);
-        sendRequest(request, baseCallBack);
+    public static void post(String url, HashMap<String, String> params, Callback callback) {
+        FormBody.Builder builder = new FormBody.Builder();
+        for (String key : params.keySet()) {
+            builder.add(key, String.valueOf(params.get(key)));
+        }
+        Request request = new Request.Builder()
+                .url(url)
+                .post(builder.build())
+                .build();
+        Call call = getInstance().newCall(request);
+        call.enqueue(callback);
 
     }
 
-    /**
-     * 1）获取Request对象
-     *
-     * @param url
-     * @param params
-     * @param httpMethodType 请求方式不同，Request对象中的内容不一样
-     * @return Request 必须要返回Request对象， 因为发送请求的时候要用到此参数
-     */
-    private Request buildRequest(String url, HashMap<String, String> params, HttpMethodType httpMethodType) {
-        //获取辅助类对象
-        Request.Builder builder = new Request.Builder();
-        builder.url(url);
+//    /**
+//     * 1）获取Request对象
+//     *
+//     * @param url
+//     * @param params
+//     * @param httpMethodType 请求方式不同，Request对象中的内容不一样
+//     * @return Request 必须要返回Request对象， 因为发送请求的时候要用到此参数
+//     */
+//    private Request buildRequest(String url, HashMap<String, String> params, HttpMethodType httpMethodType) {
+//
+//        //获取辅助类对象
+//        Request.Builder builder = new Request.Builder();
+//        builder.url(url);
+//
+//        //如果是get请求
+//        if (httpMethodType == HttpMethodType.GET) {
+//            builder.get();
+//        } else {
+//            RequestBody body = buildFormData(params);
+//            builder.post(body);
+//        }
+//
+//        //返回请求对象
+//        return builder.build();
+//    }
 
-        //如果是get请求
-        if (httpMethodType == HttpMethodType.GET) {
-            builder.get();
-        } else {
-            RequestBody body = buildFormData(params);
-            builder.post(body);
+
+    private static SSLSocketFactory createSSLSocketFactory() {
+        SSLSocketFactory ssfFactory = null;
+
+        try {
+            SSLContext sc = SSLContext.getInstance("TLS");
+            sc.init(null,  new TrustManager[] { new TrustAllCerts() }, new SecureRandom());
+
+            ssfFactory = sc.getSocketFactory();
+        } catch (Exception e) {
         }
 
-        //返回请求对象
-        return builder.build();
+        return ssfFactory;
+    }
+
+    private static class TrustAllCerts implements X509TrustManager {
+        @Override
+        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {}
+
+        @Override
+        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {}
+
+        @Override
+        public X509Certificate[] getAcceptedIssuers() {return new X509Certificate[0];}
+    }
+
+    private static class TrustAllHostnameVerifier implements HostnameVerifier {
+        @Override
+        public boolean verify(String hostname, SSLSession session) {
+            return true;
+        }
     }
 
     /**
-     * 2)发送网络请求
-     *
-     * @param request
-     * @param baseCallBack
+     * 下载文件
+     *@param  context
+     * @param url      请求的地址 可以是图片的url或者是apk的下载地址
+     * @param fileDir  保存文件的路径名
+     * @param fileName 保存文件的文件名
      */
-    private void sendRequest(Request request, final BaseCallBack baseCallBack) {
-        client.newCall(request).enqueue(new Callback() {
+    public static void downFile(final Context context, String url, final String fileDir, final String fileName) {
+        Request request = new Request.Builder().url(url).build();
+        Call call = getInstance().newCall(request);
+        call.enqueue(new Callback() {
             @Override
-            public void onFailure(Request request, IOException e) {
-                callBackFail(baseCallBack,request, e);
+            public void onFailure(Call call, IOException e) {
+
             }
 
             @Override
-            public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String json = response.body().string();
-                    //此时请求结果在子线程里面，如何把结果回调到主线程里？
-                    callBackSuccess(baseCallBack,response, json);
-                } else {
-                    callBackError(baseCallBack,response, response.code());
+            public void onResponse(Call call, Response response) throws IOException {
+                InputStream is = null;
+                byte[] buf = new byte[2048];
+                int len = 0;
+                FileOutputStream fos = null;
+                try {
+                    is = response.body().byteStream();
+                    File dirFile = new File(fileDir);
+                    if (!dirFile.exists()) {
+                        //没有该文件夹的时候创建该文件夹
+                        dirFile.mkdir();
+                    }
+                    //创建图片文件
+                    File file = new File(fileDir, fileName);
+                    fos = new FileOutputStream(file);
+                    while ((len = is.read(buf)) != -1) {
+                        fos.write(buf, 0, len);
+                    }
+                    fos.flush();
+                    //保存下载文件路径
+                    CacheManager.setLoadingAdPath(context, fileDir + "/" + fileName);
+                    Log.e("HttpUtils", "下载文件成功！===" + file.getPath());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e("HttpUtils", "下载出错===" + e.toString());
+                } finally {
+                    if (is != null) is.close();
+                    if (fos != null) fos.close();
                 }
-            }
-        });
-    }
-
-
-    /**
-     * 主要用于构建请求参数
-     *
-     * @param param
-     * @return ResponseBody
-     */
-    private RequestBody buildFormData(HashMap<String, String> param) {
-
-        FormEncodingBuilder builder = new FormEncodingBuilder();
-        //遍历HashMap集合
-        if (param != null && !param.isEmpty()) {
-            Set<Map.Entry<String, String>> entries = param.entrySet();
-            for (Map.Entry<String, String> entity : entries) {
-                String key = entity.getKey();
-                String value = entity.getValue();
-                builder.add(key, value);
-            }
-        }
-        return builder.build();
-    }
-
-    //请求类型定义
-    private enum HttpMethodType {
-        GET,
-        POST
-    }
-
-    //定义回调接口
-    public interface BaseCallBack {
-        void onSuccess(Response response, String json);
-
-        void onFail(Request request, IOException e);
-
-        void onError(Response response, int code);
-    }
-
-
-
-    //主要用于子线程和主线程进行通讯
-    private void callBackSuccess(final BaseCallBack baseCallBack, final Response response, final String json){
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                baseCallBack.onSuccess(response,json);
-            }
-        });
-    }
-
-
-    private void callBackError(final BaseCallBack baseCallBack, final Response response, final int code){
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                baseCallBack.onError(response,code);
-            }
-        });
-    }
-
-    private void callBackFail(final BaseCallBack baseCallBack, final Request request, final IOException e){
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                //相当于此run方法是在主线程执行的，可以进行更新UI的操作
-                baseCallBack.onFail(request,e);
             }
         });
     }
