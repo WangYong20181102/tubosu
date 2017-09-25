@@ -170,25 +170,32 @@ public class ImageDetailFragment extends Fragment {
             _ImageDetail imageDetail = new _ImageDetail(data);
             singleMap.addAll(imageDetail.getSingleMap());
             Log.e(TAG, "当前的图册集合长度=====" + singleMap.size());
-            for (int i = 0; i < singleMap.size(); i++) {
-                Log.e(TAG, "当前的图册集合包含内容=====" + singleMap.get(i));
-            }
+//            for (int i = 0; i < singleMap.size(); i++) {
+//                Log.e(TAG, "当前的图册集合包含内容=====" + singleMap.get(i));
+//            }
             //设置图层
-            prepareDataList();
-            slidePanel.fillData(dataList);
+            if (!singleMap.isEmpty()) {
+                prepareDataList();
+                slidePanel.fillData(dataList);
+            }
             //设置小区
             if (TextUtils.isEmpty(imageDetail.getVillage())) {
                 imgVillage.setText("未知小区");
             } else {
                 imgVillage.setText("" + imageDetail.getVillage());
             }
-            //设置小头像
-            ImageLoaderUtil.loadImage(mContext, imgDetailIcon, imageDetail.getComInfo().getLogoSmall());
-            //设置公司名称
-            if (!TextUtils.isEmpty(imageDetail.getComInfo().getComSimpName()) || imageDetail.getComInfo().getComSimpName() == null) {
-                imgDetailConsName.setText("" + imageDetail.getComInfo().getComSimpName());
-            } else {
-                imgDetailConsName.setText("未知公司名称");
+
+            if (imageDetail.getComInfo() != null) {
+                //设置公司小头像
+                if (!TextUtils.isEmpty(imageDetail.getComInfo().getLogoSmall()) || imageDetail.getComInfo().getLogoSmall() != null) {
+                    ImageLoaderUtil.loadImage(mContext, imgDetailIcon, imageDetail.getComInfo().getLogoSmall());
+                }
+                //设置公司名称
+                if (!TextUtils.isEmpty(imageDetail.getComInfo().getComSimpName()) || imageDetail.getComInfo().getComSimpName() == null) {
+                    imgDetailConsName.setText("" + imageDetail.getComInfo().getComSimpName());
+                } else {
+                    imgDetailConsName.setText("未知公司名称");
+                }
             }
 
             //设置设计师名称
@@ -238,17 +245,22 @@ public class ImageDetailFragment extends Fragment {
 
             @Override
             public void onItemClick(View cardView, int index) {
-                Log.e("CardFragment", "卡片点击-" + index + "卡片的地址==" + dataList.get(index).imagePath);
-                Intent intent = new Intent(mContext, ImageDetailsFullScreenActivity.class);
-                intent.putExtra("fav_conid", fav_conid);
-                intent.putExtra("url", url);
-                int num = (int) Math.sqrt(dataList.size() / 100);
-                if (index > num || index == num) {
-                    intent.putExtra("index", index % num);
+//                Log.e("CardFragment", "卡片点击-" + index + "卡片的地址==" + dataList.get(index).imagePath);
+                if (dataList.isEmpty()) {
+                    Toast.makeText(mContext, "当前装修公司未上传图册！", Toast.LENGTH_SHORT).show();
                 } else {
-                    intent.putExtra("index", index);
+                    Intent intent = new Intent(mContext, ImageDetailsFullScreenActivity.class);
+                    intent.putExtra("fav_conid", fav_conid);
+                    intent.putExtra("url", url);
+                    int num = (int) Math.sqrt(dataList.size() / 100);
+                    if (index > num || index == num) {
+                        intent.putExtra("index", index % num);
+                    } else {
+                        intent.putExtra("index", index);
+                    }
+                    startActivity(intent);
                 }
-                startActivity(intent);
+
             }
         };
         slidePanel.setCardSwitchListener(cardSwitchListener);
@@ -256,15 +268,19 @@ public class ImageDetailFragment extends Fragment {
 
     private void prepareDataList() {
         int num = singleMap.size();
+        if (num == 0) {
 
-        for (int j = 0; j < num * 100; j++) {
-            //外部循环尽可能多的处理图片的重复次数
-            for (int i = 0; i < num; i++) {
-                _CardDataItem dataItem = new _CardDataItem();
-                dataItem.imagePath = singleMap.get(i);
-                dataList.add(dataItem);
+        } else {
+            for (int j = 0; j < num * 100; j++) {
+                //外部循环尽可能多的处理图片的重复次数
+                for (int i = 0; i < num; i++) {
+                    _CardDataItem dataItem = new _CardDataItem();
+                    dataItem.imagePath = singleMap.get(i);
+                    dataList.add(dataItem);
+                }
             }
         }
+
     }
 
     private View.OnClickListener occl = new View.OnClickListener() {

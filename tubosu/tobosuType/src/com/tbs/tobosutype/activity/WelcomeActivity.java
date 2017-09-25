@@ -4,11 +4,13 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -26,10 +28,12 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import okhttp3.Call;
 import okhttp3.Callback;
+import java.util.List;
 
 /**
  * 欢迎 页
@@ -362,19 +366,36 @@ public class WelcomeActivity extends Activity {
 //    }
 
     private  void needPermissions(){
-        if(Build.VERSION.SDK_INT >= 23){
-            String[] permissions = new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_WIFI_STATE,
-                    Manifest.permission.ACCESS_NETWORK_STATE,
-
-            };
-
-            requestPermissions(permissions, 101);
+        if (Build.VERSION.SDK_INT >= 23) {
+            List<String> permission = getPermissionList(mContext);
+            if (permission.size() > 0) {
+                requestPermissions(permission.toArray(new String[permission.size()]), 101);
+            }
         }
+    }
+
+    public List<String> getPermissionList(Context activity) {
+        List<String> permission = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.READ_PHONE_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_WIFI_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_WIFI_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_NETWORK_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.INTERNET);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CHANGE_WIFI_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.CHANGE_WIFI_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        return permission;
     }
 }

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
@@ -19,6 +20,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -92,7 +94,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
      */
     private static final String FIRST_INSTALL = "5";
 
-    private Context context;
+    private Context mContext;
     private View mSearchContainer;
 
     private PinnedHeaderListView mCityListView;
@@ -196,7 +198,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
 
     private void getSetting() {
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        MAC_CODE = getMacAddress(context);
+        MAC_CODE = getMacAddress(mContext);
         _TOKEN = MD5Util.md5(MD5Util.md5(MAC_CODE + 1) + date);
     }
 
@@ -204,7 +206,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = SelectCtiyActivity.this;
+        mContext = SelectCtiyActivity.this;
 
         initBaidu();
 
@@ -333,7 +335,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
 
         initNetMessage();
 
-        selectCitySP = context.getSharedPreferences("First_Select_City", MODE_PRIVATE);
+        selectCitySP = mContext.getSharedPreferences("First_Select_City", MODE_PRIVATE);
         isFirstSelectCity = selectCitySP.getBoolean("first_select_city", true);
         if (isFirstSelectCity) {
             Editor editor = selectCitySP.edit();
@@ -574,10 +576,10 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             // 首次安装
             if (FIRST_INSTALL.equals(getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).getString("go_poporder_string", "0"))) {
                 countDownloadNum();
-                startActivity(new Intent(context, PopOrderActivity.class));
+                startActivity(new Intent(mContext, PopOrderActivity.class));
             } else {
                 // 进入选择装修类型和面积发单入口
-                startActivity(new Intent(context, MainActivity.class));
+                startActivity(new Intent(mContext, MainActivity.class));
                 Log.d(TAG, "--直接进入 MainActivity 页面--");
             }
             finish();
@@ -651,10 +653,10 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     private void operEdit() {
 
         if (FIRST_INSTALL.equals(getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).getString("go_poporder_string", "0"))) {
-            startActivity(new Intent(context, PopOrderActivity.class));
+            startActivity(new Intent(mContext, PopOrderActivity.class));
         } else {
             // 进入选择装修类型和面积发单入口
-            startActivity(new Intent(context, MainActivity.class));
+            startActivity(new Intent(mContext, MainActivity.class));
             Log.d(TAG, "--直接进入 MainActivity 页面--");
         }
         finish();
@@ -726,26 +728,37 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     }
 
     private  void needPermissions(){
-
-        if(Build.VERSION.SDK_INT >= 23){
-            String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.READ_PHONE_STATE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_WIFI_STATE,
-
-                    Manifest.permission.ACCESS_NETWORK_STATE
-//                    Manifest.permission.READ_EXTERNAL_STORAGE,
-//                    Manifest.permission.ACCESS_COARSE_LOCATION,
-//                    Manifest.permission.ACCESS_WIFI_STATE
-
-            };
-
-            requestPermissions(permissions, 101);
+        if (Build.VERSION.SDK_INT >= 23) {
+            List<String> permission = getPermissionList(mContext);
+            if (permission.size() > 0) {
+                requestPermissions(permission.toArray(new String[permission.size()]), 101);
+            }
         }
+    }
+
+    public List<String> getPermissionList(Context activity) {
+        List<String> permission = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.READ_PHONE_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_WIFI_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_WIFI_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_NETWORK_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.INTERNET);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CHANGE_WIFI_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.CHANGE_WIFI_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        return permission;
     }
 
 
@@ -786,16 +799,16 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             sb.append(location.getLocType());
             sb.append("\nlatitude : ");
             sb.append(location.getLatitude());
-            AppInfoUtil.setLat(context, location.getLatitude()+"");
+            AppInfoUtil.setLat(mContext, location.getLatitude()+"");
             sb.append("\nlontitude : ");
             sb.append(location.getLongitude());
-            AppInfoUtil.setLng(context, location.getLongitude()+"");
+            AppInfoUtil.setLng(mContext, location.getLongitude()+"");
             sb.append("\nradius : ");
             realLocationCity = location.getCity();
             if(realLocationCity!=null){
 //                realLocationCity= realLocationCity.replaceAll("[^\u4E00-\u9FA5]", "");
 //                System.out.println("=============有没有city>>>" + locationCity +"<<<");
-                CacheManager.setCity(context, realLocationCity);
+                CacheManager.setCity(mContext, realLocationCity);
                 select_positioning.setText(realLocationCity);
             }else{
                 select_positioning.setText("定位中...");
@@ -913,10 +926,10 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             return true;
         }
 
-        if (keyCode == KeyEvent.KEYCODE_BACK && "welcome".equals(CacheManager.getPageFlag(context))) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && "welcome".equals(CacheManager.getPageFlag(mContext))) {
             // 来自welcome
-            CacheManager.setPageFlag(context, "not_welcome");
-            startActivity(new Intent(context, PopOrderActivity.class));
+            CacheManager.setPageFlag(mContext, "not_welcome");
+            startActivity(new Intent(mContext, PopOrderActivity.class));
             //现在无法获取，则标记为 1 ，即在首再次显示让用户获取
             getSharedPreferences("Cancel_Get_Design", Context.MODE_PRIVATE).edit().putInt("cancel_String", 1).commit();
             finish();
@@ -924,16 +937,16 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
         } else if (keyCode == KeyEvent.KEYCODE_BACK && FIRST_INSTALL.equals(getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).getString("go_poporder_string", "0"))) {
             // 首次安装app
             Intent intent = new Intent();
-            intent.setClass(context, MainActivity.class);
+            intent.setClass(mContext, MainActivity.class);
             Bundle b = new Bundle();
             b.putString("first_install_string", "10");
             intent.putExtra("first_install_bundle", b);
             startActivity(intent);
             finish();
             return true;
-        } else if (keyCode == KeyEvent.KEYCODE_BACK && "pop_order".equals(CacheManager.getPageFlag(context))) {
+        } else if (keyCode == KeyEvent.KEYCODE_BACK && "pop_order".equals(CacheManager.getPageFlag(mContext))) {
             // 来自发单页面的选择城市
-            if (16 == CacheManager.getPopFlag(context)) {
+            if (16 == CacheManager.getPopFlag(mContext)) {
                 // 已经发过单
             } else {
                 // 默认==19 未发过单
@@ -980,7 +993,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
                         @Override
                         public void onClick(View v) {
                             if (!checkNetState()) {
-                                Toast.makeText(context, "请检查网络", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "请检查网络", Toast.LENGTH_SHORT).show();
                                 return;
                             } else {
                                 initData();
