@@ -217,23 +217,24 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1">
                                 <ImageView
-                                    android:id="@+id/ivCollectImg"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerInParent="true"
-                                    android:background="@mipmap/shoucang21"/>
-                            </RelativeLayout>
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_weight="1">
-                                <ImageView
                                     android:id="@+id/ivDownImg"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerInParent="true"
                                     android:background="@mipmap/xiazai"/>
                             </RelativeLayout>
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+                                <ImageView
+                                    android:id="@+id/ivCollectImg"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:background="@mipmap/shoucang21"/>
+                            </RelativeLayout>
+
                         </LinearLayout>
                     </LinearLayout>
 

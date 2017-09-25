@@ -281,13 +281,35 @@ public class GetPriceActivity extends BaseActivity implements OnClickListener {
             case R.id.getprice_submit:
                 String name = etName.getText().toString().trim();
                 String phone = etPhone.getText().toString().trim();
+                String c = tvCity.getText().toString().trim();
                 if (TextUtils.isEmpty(name)) {
-                    Utils.setToast(mContext, "请输入姓名");
+                    Utils.setToast(mContext, "请输入您的称呼");
                     return;
                 }
 
                 if (TextUtils.isEmpty(phone)) {
-                    Utils.setToast(mContext, "请输入手机号码");
+                    Utils.setToast(mContext, "请输入您的联系电话");
+                    return;
+                }
+
+//                if(!phone.matches(UrlConstans.PHONE_NUM)){
+//                    Utils.setToast(mContext, "请输入合法手机号码！");
+//                    return;
+//                }
+
+                if(TextUtils.isEmpty(phone)){
+                    Utils.setToast(mContext, Utils.inputPhoneNumTip());
+                    return;
+                }else if(!phone.startsWith("1")){
+                    Utils.setToast(mContext, Utils.inputCorrectPhoneNumTip());
+                    return;
+                }else if(phone.length() != 11){
+                    Utils.setToast(mContext, Utils.inputCorrectPhoneNumTip());
+                    return;
+                }
+
+                if(TextUtils.isEmpty(c)){
+                    Utils.setToast(mContext, "请选择城市");
                     return;
                 }
 
@@ -318,6 +340,7 @@ public class GetPriceActivity extends BaseActivity implements OnClickListener {
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
                             final String json = response.body().string();
+                            Utils.setErrorLog(TAG, json);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -327,8 +350,7 @@ public class GetPriceActivity extends BaseActivity implements OnClickListener {
 
                                             TipDialog1.Builder builder = new TipDialog1.Builder(mContext);
                                             builder.setTitle("温馨提醒")
-                                                    .setPositiveButton("确定",
-                                                            new DialogInterface.OnClickListener() {
+                                                    .setPositiveButton("好的", new DialogInterface.OnClickListener() {
 
                                                                 @Override
                                                                 public void onClick(DialogInterface dialog, int id) {
@@ -339,7 +361,7 @@ public class GetPriceActivity extends BaseActivity implements OnClickListener {
                                                             });
                                             builder.create().show();
                                         }else {
-                                            Utils.setToast(mContext, "系统繁忙，稍后再试~");
+                                            Utils.setToast(mContext, jsonObject.getString("msg"));
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();

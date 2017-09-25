@@ -37,7 +37,7 @@ import java.util.Date;
 
 public class Utils {
 
-    private static boolean isPrintLog = false;
+    private static boolean isPrintLog = true;
 
     //TODO App相关处理工具****************************
 
@@ -339,4 +339,12 @@ public class Utils {
         String time=format.format(date);
         return time;
     }
+
+    public static String inputCorrectPhoneNumTip(){
+        return "请输入正确的联系电话";
+    }
+    public static String inputPhoneNumTip(){
+        return "请输入您的联系电话";
+    }
+
 }
