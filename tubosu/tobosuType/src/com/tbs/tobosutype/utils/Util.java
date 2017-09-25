@@ -95,7 +95,7 @@ public class Util {
                 }
             }
         }
-        Toast.makeText(context, "网络断开了~", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "网络断开了,请设置~", Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -236,12 +236,18 @@ public class Util {
     }
 
 
+    private static boolean printLog = true;
     public static void setLog(String tag, String log){
-        System.out.println("---当前页面是" + tag + "-->>>" + "--打印信息>>>" + log + "<<");
+        if(printLog){
+            Log.e("---当前页面是" + tag + "-->>>", "--打印信息>>>" + log + "<<");
+        }
+
     }
 
     public static void setErrorLog(String tag, String log){
-        Log.e("---当前页面是" + tag + "-->>>", "--打印信息>>>" + log + "<<");
+        if(printLog){
+            Log.e("---当前页面是" + tag + "-->>>", "--打印信息>>>" + log + "<<");
+        }
     }
 
 

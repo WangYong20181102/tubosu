@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:adjustViewBounds="true"
-            android:background="@drawable/ic_launcher"
+            android:background="@drawable/icon_tobosu_default"
             android:scaleType="fitXY" />
 
         <LinearLayout

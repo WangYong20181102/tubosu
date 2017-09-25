@@ -1,5 +1,4 @@
 package com.tbs.tobosutype.activity;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,27 +10,22 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.MyProjectViewPagerLayout;
 import com.tbs.tobosutype.fragment.ProjectListFragment;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-
+import com.tbs.tobosutype.utils.Util;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /***
  *  从首页的精选图片的【更多】处跳转而来
@@ -131,58 +125,49 @@ public class ProjectPictActivity extends FragmentActivity {
     }
 
 
-    private RequestQueue requestQueue;
-    private StringRequest stringRequest;
 
     private void getTitleTextList() {
-        requestQueue = Volley.newRequestQueue(mContext);
-        stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                try {
-                    JSONObject object = new JSONObject(s);
-                    if (object.getInt("error_code") == 0) {
-                        JSONObject data = object.getJSONObject("data");
-                        JSONArray array = data.getJSONArray("rangeList");
-                        for (int i = 0; i < array.length(); i++) {
-                            titleList.add(array.getJSONObject(i).getString("range_name"));
-                        }
+        if(Util.isNetAvailable(mContext)){
+            HashMap<String, String> hashMap = new HashMap<String, String>();
+            hashMap.put("page", "1");
+            hashMap.put("pageSize", "1");
+            hashMap.put("range_name", "");
+            hashMap.put("version", AppInfoUtil.getAppVersionName(mContext));
+            OKHttpUtil.post(url, hashMap, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
 
-                        if (titleList != null && titleList.size() > 0) {
-                            initPager(titleList);
-                        }
-                    } else {
-                        System.out.println(" --ProjectPictActivity-- 请求出错--");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
 
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("page", "1");
-                hashMap.put("pageSize", "1");
-                hashMap.put("range_name", "");
-                hashMap.put("version", AppInfoUtil.getAppVersionName(mContext));
-                return hashMap;
-            }
-        };
-        stringRequest.setTag("title");
-        requestQueue.add(stringRequest);
-    }
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String s = response.body().string();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject object = new JSONObject(s);
+                                if (object.getInt("error_code") == 0) {
+                                    JSONObject data = object.getJSONObject("data");
+                                    JSONArray array = data.getJSONArray("rangeList");
+                                    for (int i = 0; i < array.length(); i++) {
+                                        titleList.add(array.getJSONObject(i).getString("range_name"));
+                                    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (requestQueue != null) {
-            requestQueue.cancelAll("title");
+                                    if (titleList != null && titleList.size() > 0) {
+                                        initPager(titleList);
+                                    }
+                                } else {
+                                    System.out.println(" --ProjectPictActivity-- 请求出错--");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            });
         }
     }
+
 }

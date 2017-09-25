@@ -36,7 +36,6 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -48,7 +47,6 @@ import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.model.LatLng;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.squareup.okhttp.Request;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.CityAdapter;
 import com.tbs.tobosutype.customview.BladeView;
@@ -68,12 +66,10 @@ import com.tbs.tobosutype.utils.MD5Util;
 import com.tbs.tobosutype.utils.NetUtil;
 import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
-
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -81,6 +77,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 选择城市 页
@@ -592,26 +591,19 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
      * 首次安装调用
      */
     private void countDownloadNum() {
-        OKHttpUtil client = new OKHttpUtil();
         HashMap<String, String> map = new HashMap<String, String>();
         map.put("mac_code", MAC_CODE);
         map.put("type", "1");
         map.put("_token", _TOKEN);
-        client.post(DOWNLOAD_COUNT_URL, map, new OKHttpUtil.BaseCallBack() {
+        OKHttpUtil.post(DOWNLOAD_COUNT_URL, map, new Callback() {
             @Override
-            public void onSuccess(com.squareup.okhttp.Response response, String json) {
-                Util.setLog(TAG, "songchengcai >>>" + json);
+            public void onFailure(Call call, IOException e) {
+                Util.setLog(TAG, e.getMessage());
             }
 
             @Override
-            public void onFail(Request request, IOException e) {
-                e.printStackTrace();
-                Util.setLog(TAG, "songchengcai >>>onFail");
-            }
-
-            @Override
-            public void onError(com.squareup.okhttp.Response response, int code) {
-                Util.setLog(TAG, code + "<<<<songchengcai <<<<");
+            public void onResponse(Call call, Response response) throws IOException {
+                Util.setLog(TAG, response.body().string());
             }
         });
     }

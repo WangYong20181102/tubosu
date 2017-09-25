@@ -1,5 +1,4 @@
 package com.tbs.tobosutype.fragment;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,38 +13,34 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.SelectedImageDetailActivity;
 import com.tbs.tobosutype.customview.RoundAngleImageView;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.tbs.tobosutype.xlistview.XListView;
 import com.tbs.tobosutype.xlistview.XListView.IXListViewListener;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 精选详情页面的fragment
  */
 public class ProjectListFragment extends Fragment implements IXListViewListener {
-
+	private String TAG = "ProjectListFragment";
 	public static final String BUNDLE_TITLE = "title";
 	private String range_name;
 	private View view;
@@ -94,64 +89,62 @@ public class ProjectListFragment extends Fragment implements IXListViewListener 
 		xlistView_projectlist.setAdapter(projectListAdapter);
 	}
 
-	private RequestQueue requestQueue;
-	private StringRequest stringRequest;
 	private void getDataFromNet(){
 		projectListAdapter = new ProjectListAdapter();
 		projectListAdapter.notifyDataSetChanged();
-		requestQueue = Volley.newRequestQueue(getActivity());
-		stringRequest = new StringRequest(Request.Method.POST, getListUrl, new Response.Listener<String>() {
-			@Override
-			public void onResponse(String s) {
-				System.out.println(" --ProjectListFragment 数据 --" + s + "--");
-				try {
-					JSONObject jsonObject = new JSONObject(s);
+		if(Util.isNetAvailable(getActivity())){
+			OKHttpUtil.post(getListUrl, getListParams(), new Callback() {
+				@Override
+				public void onFailure(Call call, IOException e) {
 
-//					projectListDatas.clear();
-					if (jsonObject.getInt("error_code") == 0) {
-						requestProjectListDatas = new ArrayList<HashMap<String, String>>();
-						JSONObject dataObject = jsonObject.getJSONObject("data");
-						JSONArray jsonArray = dataObject.getJSONArray("specialList");
-						for (int i = 0; i < jsonArray.length(); i++) {
-							HashMap<String, String> map = new HashMap<String, String>();
-							JSONObject jsonObject2 = jsonArray.getJSONObject(i);
-							map.put("id", jsonObject2.getString("id"));
-							map.put("banner_title", jsonObject2.getString("banner_title"));
-							map.put("thumb_img_url", jsonObject2.getString("thumb_img_url"));
-							map.put("banner_description", jsonObject2.getString("banner_description"));
-							requestProjectListDatas.add(map);
-						}
-						projectListDatas.addAll(requestProjectListDatas);
-						onLoad();
-						ll_not_data.setVisibility(View.GONE);
-
-					} else if (jsonObject.getInt("error_code") == 70101) {
-						ll_not_data.setVisibility(View.VISIBLE);
-					} else if (jsonObject.getInt("error_code") == 70102) {
-						xlistView_projectlist.stopLoadMore();
-						Util.setToast(getActivity(), "没有加载更多的数据了！");
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
 				}
-			}
-		}, new Response.ErrorListener() {
-			@Override
-			public void onErrorResponse(VolleyError volleyError) {
 
-			}
-		}){
-			@Override
-			protected Map<String, String> getParams() throws AuthFailureError {
-				return getListParams();
-			}
-		};
-		stringRequest.setTag("title");
-		requestQueue.add(stringRequest);
+				@Override
+				public void onResponse(Call call, Response response) throws IOException {
+					final String s = response.body().string();
+					getActivity().runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							System.out.println(" --ProjectListFragment 数据 --" + s + "--");
+							try {
+								JSONObject jsonObject = new JSONObject(s);
+
+//								projectListDatas.clear();
+								if (jsonObject.getInt("error_code") == 0) {
+									requestProjectListDatas = new ArrayList<HashMap<String, String>>();
+									JSONObject dataObject = jsonObject.getJSONObject("data");
+									JSONArray jsonArray = dataObject.getJSONArray("specialList");
+									for (int i = 0; i < jsonArray.length(); i++) {
+										HashMap<String, String> map = new HashMap<String, String>();
+										JSONObject jsonObject2 = jsonArray.getJSONObject(i);
+										map.put("id", jsonObject2.getString("id"));
+										map.put("banner_title", jsonObject2.getString("banner_title"));
+										map.put("thumb_img_url", jsonObject2.getString("thumb_img_url"));
+										map.put("banner_description", jsonObject2.getString("banner_description"));
+										requestProjectListDatas.add(map);
+									}
+									projectListDatas.addAll(requestProjectListDatas);
+									onLoad();
+									ll_not_data.setVisibility(View.GONE);
+
+								} else if (jsonObject.getInt("error_code") == 70101) {
+									ll_not_data.setVisibility(View.VISIBLE);
+								} else if (jsonObject.getInt("error_code") == 70102) {
+									xlistView_projectlist.stopLoadMore();
+									Util.setToast(getActivity(), "没有加载更多的数据了！");
+								}
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+						}
+					});
+				}
+			});
+		}
 	}
 
 	private HashMap<String, String> hashMap = new HashMap<String, String>();
-	private Map<String, String> getListParams(){
+	private HashMap<String, String> getListParams(){
 		hashMap.put("page", page+"");
 		hashMap.put("pageSize", pageSize+"");
 		hashMap.put("range_name", range_name);
@@ -226,6 +219,9 @@ public class ProjectListFragment extends Fragment implements IXListViewListener 
 			viewHodler.title.setText(projectListDatas.get(position).get("banner_title"));
 			viewHodler.tvDescr.setText(projectListDatas.get(position).get("banner_description"));
 			ImageLoaderUtil.loadImage(getActivity(), viewHodler.roundAngleImageView, projectListDatas.get(position).get("thumb_img_url"));
+
+			Util.setErrorLog(TAG, projectListDatas.get(position).get("thumb_img_url"));
+
 
 			convertView.setOnClickListener(new View.OnClickListener() {
 				@Override

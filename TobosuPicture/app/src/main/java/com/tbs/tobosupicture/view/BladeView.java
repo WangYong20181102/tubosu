@@ -16,9 +16,9 @@ import android.widget.TextView;
 
 public class BladeView extends View {
 	private OnItemClickListener mOnItemClickListener;
-	private String[] letterArray = { "", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
+	private String[] letterArray = {"定位","热门", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
 			"L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X",
-			"Y", "Z", "" };
+			"Y", "Z"};
 	private int choose = -1;
 	private Paint paint = new Paint();
 	boolean showBkg = false;

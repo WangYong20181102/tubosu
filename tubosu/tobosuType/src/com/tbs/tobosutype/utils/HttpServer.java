@@ -1,13 +1,17 @@
 package com.tbs.tobosutype.utils;
 
+import android.content.Context;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.tbs.tobosutype.http.HttpClientHelper;
 
 public class HttpServer {
 	private static HttpServer instance;
 
 	private HttpServer() {
+
 	}
 
 	public static HttpServer getInstance() {
@@ -20,8 +24,16 @@ public class HttpServer {
 		return instance;
 	}
 
-	public void requestUserLogin(String url, String city, String lng, String lat, String recommend,
-			AsyncHttpResponseHandler httpResponseHandler) {
+	/**
+	 * 没有使用
+	 * @param url
+	 * @param city
+	 * @param lng
+	 * @param lat
+	 * @param recommend
+	 * @param httpResponseHandler
+	 */
+	public void requestUserLogin( String url, String city, String lng, String lat, String recommend, AsyncHttpResponseHandler httpResponseHandler) {
 		RequestParams params = new RequestParams();
 		params.put("city", city);
 		params.put("lng", lng);

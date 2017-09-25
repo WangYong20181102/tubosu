@@ -15,9 +15,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.SwipeAdapter;
 import com.tbs.tobosutype.bean._DecorationExpent;
@@ -29,14 +26,15 @@ import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.Util;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by Lie on 2017/5/31.
@@ -108,27 +106,26 @@ public class DecorateAccountActivity extends Activity {
         if (!floatList.isEmpty()) {
             floatList.clear();
         }
-        OKHttpUtil okHttpUtil = new OKHttpUtil();
         HashMap<String, String> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         Log.e(TAG, "用户的uid=====" + AppInfoUtil.getUserid(mContext));
         param.put("uid", AppInfoUtil.getUserid(mContext));
-        okHttpUtil.post(Constant.OUTCOME_HOMEPAGE_URL, param, new OKHttpUtil.BaseCallBack() {
+        OKHttpUtil.post(Constant.OUTCOME_HOMEPAGE_URL, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
 
             @Override
-            public void onSuccess(Response response, String json) {
+            public void onResponse(Call call, Response response) throws IOException {
+                final String json = response.body().string();
                 Log.e(TAG, "数据请求=====" + json);
-                parseJson(json);
-            }
-
-            @Override
-            public void onFail(Request request, IOException e) {
-
-            }
-
-            @Override
-            public void onError(Response response, int code) {
-
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        parseJson(json);
+                    }
+                });
             }
         });
     }
@@ -368,39 +365,38 @@ public class DecorateAccountActivity extends Activity {
 
 
     private void httpDeleteData(String deleteId) {
-        OKHttpUtil okHttpUtil = new OKHttpUtil();
         HashMap<String, String> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         param.put("id", deleteId);
-        okHttpUtil.post(Constant.DELETE_DECORATE_RECORD, param, new OKHttpUtil.BaseCallBack() {
+        OKHttpUtil.post(Constant.DELETE_DECORATE_RECORD, param, new Callback() {
             @Override
-            public void onSuccess(Response response, String json) {
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String json = response.body().string();
                 Log.e(TAG, "数据请求=====" + json);
-                try {
-                    JSONObject obj = new JSONObject(json);
-                    if (obj.getInt("status") == 200) {
-                        Util.setToast(mContext, "删除开支记录成功");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject obj = new JSONObject(json);
+                            if (obj.getInt("status") == 200) {
+                                Util.setToast(mContext, "删除开支记录成功");
 
-                        HttpGetData();
-                    } else if (obj.getInt("status") == 0) {
-                        Util.setToast(mContext, obj.getString("msg"));
-                    } else {
-                        Util.setToast(mContext, "删除开支记录失败");
+                                HttpGetData();
+                            } else if (obj.getInt("status") == 0) {
+                                Util.setToast(mContext, obj.getString("msg"));
+                            } else {
+                                Util.setToast(mContext, "删除开支记录失败");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFail(Request request, IOException e) {
-
-            }
-
-            @Override
-            public void onError(Response response, int code) {
-
+                });
             }
         });
     }

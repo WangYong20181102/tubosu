@@ -1,5 +1,4 @@
 package com.tbs.tobosutype.activity;
-
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.app.Activity;
@@ -22,14 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tbs.tobosutype.R;
@@ -37,19 +28,21 @@ import com.tbs.tobosutype.adapter.PopAdapter;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.customview.TextSeekBar;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 import static com.tbs.tobosutype.utils.CacheManager.getOngoingStyle;
 
@@ -452,14 +445,6 @@ public class PopOrderActivity extends Activity {
 
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (poporderQueue != null) {
-            poporderQueue.cancelAll("poporder");
-        }
-    }
 
     private int gopoporder_code = -1;
     private void initNetData() {
@@ -1370,77 +1355,80 @@ public class PopOrderActivity extends Activity {
         }
     }
 
-    private RequestQueue poporderQueue;
-    private StringRequest poporderRequest;
 
     private void popOrder(final String cellphone, final String housearea, final String orderprice, final String style) {
         showLoadingView();
-
-        poporderQueue = Volley.newRequestQueue(mContext);
-        poporderRequest = new StringRequest(Request.Method.POST, popOrderUrl, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                try {
-                    JSONObject orderObject = new JSONObject(s);
-                    if (orderObject.getInt("error_code") == 0) {
-                        hideLoadingView();
-                        Util.setToast(mContext, "领取成功 我们会尽快以0574开头座机联系您");
-
-
-                        if("5".equals(getSharedPreferences("Go_ChooseActivity_SP", Context.MODE_PRIVATE).getString("go_chooseStyle_string", "0"))){
-                            Intent intent = new Intent();
-                            intent.setClass(mContext, MainActivity.class);
-                            Bundle b = new Bundle();
-                            b.putString("first_install_string", "11");
-                            intent.putExtra("first_install_bundle", b);
-                            startActivity(intent);
+        if(Util.isNetAvailable(mContext)){
+            HashMap<String, String> hashMap = new HashMap<String, String>();
+            hashMap.put("cellphone", cellphone); // 电话号码
+            hashMap.put("housearea", housearea); // 面积
+            hashMap.put("orderprice", orderprice); // 预算
+            hashMap.put("style", style); // 风格
+            hashMap.put("device", "android");
+            hashMap.put("source", "942");
+            hashMap.put("city", CacheManager.getCity(mContext));
+            hashMap.put("version", AppInfoUtil.getAppVersionName(mContext));
+            hashMap.put("urlhistory", Constant.PIPE); // 渠道代码
+            hashMap.put("comeurl", Constant.PIPE); //订单发布页面
+            OKHttpUtil.post(popOrderUrl, hashMap, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Util.setToast(mContext, "领取失败 请稍后再试");
+                            hideLoadingView();
+                            notNow();
                         }
-                        //现在获取了，则标记为 0 ，即在首不再显示让用户获取
-                        getSharedPreferences("Cancel_Get_Design", Context.MODE_PRIVATE).edit().putInt("cancel_String", 0).commit();
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String s = response.body().string();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject orderObject = new JSONObject(s);
+                                if (orderObject.getInt("error_code") == 0) {
+                                    hideLoadingView();
+                                    Util.setToast(mContext, "领取成功 我们会尽快以0574开头座机联系您");
+
+
+                                    if("5".equals(getSharedPreferences("Go_ChooseActivity_SP", Context.MODE_PRIVATE).getString("go_chooseStyle_string", "0"))){
+                                        Intent intent = new Intent();
+                                        intent.setClass(mContext, MainActivity.class);
+                                        Bundle b = new Bundle();
+                                        b.putString("first_install_string", "11");
+                                        intent.putExtra("first_install_bundle", b);
+                                        startActivity(intent);
+                                    }
+                                    //现在获取了，则标记为 0 ，即在首不再显示让用户获取
+                                    getSharedPreferences("Cancel_Get_Design", Context.MODE_PRIVATE).edit().putInt("cancel_String", 0).commit();
 
 
                         /*这里标记是为了控制 是否执行过下面这句
                           getSharedPreferences("Cancel_Get_Design", Context.MODE_PRIVATE).edit().putInt("cancel_String", 1).commit();
                         */
-                        CacheManager.setPopFlag(mContext, 16);
-                        startActivity(new Intent(mContext, MainActivity.class));
-                        finish();
-                    } else if (orderObject.getInt("error_code") == 250) {
-                        hideLoadingView();
-                        notNow();
-                        Util.setToast(mContext, "您操作太频繁 请稍后再试!");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                                    CacheManager.setPopFlag(mContext, 16);
+                                    startActivity(new Intent(mContext, MainActivity.class));
+                                    finish();
+                                } else if (orderObject.getInt("error_code") == 250) {
+                                    hideLoadingView();
+                                    notNow();
+                                    Util.setToast(mContext, "您操作太频繁 请稍后再试!");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Util.setToast(mContext, "领取失败 请稍后再试");
-                hideLoadingView();
-                notNow();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("cellphone", cellphone); // 电话号码
-                hashMap.put("housearea", housearea); // 面积
-                hashMap.put("orderprice", orderprice); // 预算
-                hashMap.put("style", style); // 风格
-                hashMap.put("device", "android");
-                hashMap.put("source", "942");
-                hashMap.put("city", CacheManager.getCity(mContext));
-                hashMap.put("version", AppInfoUtil.getAppVersionName(mContext));
-                hashMap.put("urlhistory", Constant.PIPE); // 渠道代码
-                hashMap.put("comeurl", Constant.PIPE); //订单发布页面
-                return hashMap;
-            }
-        };
-        poporderRequest.setTag("poporder");
-        poporderQueue.add(poporderRequest);
+
+                }
+            });
+        }
     }
 
 
@@ -1449,36 +1437,11 @@ public class PopOrderActivity extends Activity {
         if("left_mid".equals(flag)){
             right.setAlpha(0);
             tv_message.setVisibility(View.INVISIBLE);
-//            tv_message.setAlpha(0.0f);
             rel_dont_care.setVisibility(View.VISIBLE);
             tv_xgg.setVisibility(View.INVISIBLE);
             leftToMid(left);
             right.setVisibility(View.GONE);
             right.setAlpha(0.0f);
-//            Animation animation = AnimationUtils.loadAnimation(this, R.anim.left_to_mid);
-//            animation.setFillEnabled(true);
-//            animation.setFillAfter(true);
-//            animation.setAnimationListener(new Animation.AnimationListener() {
-//
-//                @Override
-//                public void onAnimationStart(Animation animation) {
-//                    right.setVisibility(View.GONE);
-//                    // Glide.with(mContext).load(R.drawable.juse0225).asGif().dontTransform().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(gif_left);
-//                }
-//
-//                @Override
-//                public void onAnimationEnd(Animation animation) {
-////                    gif_left.setBackgroundResource(R.drawable.juse022);
-////                    Glide.with(mContext).load(R.drawable.juse0225).asGif().dontTransform().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(gif_left);
-//                }
-//
-//                @Override
-//                public void onAnimationRepeat(Animation animation) {
-//
-//                }
-//            });
-//            left.startAnimation(animation);
-
             tv_question_title.setVisibility(View.INVISIBLE);
             left.setClickable(false);
             initDecorateStyle(1);
@@ -1493,29 +1456,6 @@ public class PopOrderActivity extends Activity {
             rightToMid(right);
             left.setVisibility(View.GONE);
             left.setAlpha(0.0f);
-//            Animation animation = AnimationUtils.loadAnimation(this, R.anim.right_to_mid);
-//            animation.setFillEnabled(true);
-//            animation.setFillAfter(true);
-//            animation.setAnimationListener(new Animation.AnimationListener() {
-//
-//                @Override
-//                public void onAnimationStart(Animation animation) {
-//                    left.setVisibility(View.GONE);
-//                }
-//
-//                @Override
-//                public void onAnimationEnd(Animation animation) {
-//                    left.setVisibility(View.GONE);
-////                    gif_right.setBackgroundResource(R.drawable.lanse022);
-//                }
-//
-//                @Override
-//                public void onAnimationRepeat(Animation animation) {
-//                }
-//            });
-//            right.startAnimation(animation);
-
-//            tv_ongoing_title.setText(setTextColor(0));
             tv_question_title.setVisibility(View.INVISIBLE);
             right.setClickable(false);
             initOngoingStage(-1);
@@ -1530,33 +1470,6 @@ public class PopOrderActivity extends Activity {
             right.setAlpha(1.0f);
             left.setClickable(true);
             tv_question_title.setVisibility(View.VISIBLE);
-//            Animation animation = AnimationUtils.loadAnimation(this, R.anim.mid_to_left);
-//            animation.setFillAfter(true);
-//            animation.setAnimationListener(new Animation.AnimationListener() {
-//                @Override
-//                public void onAnimationStart(Animation animation) {
-////                    Glide.with(mContext).load(R.drawable.juse0225).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(gif_left);
-//                }
-//
-//                @Override
-//                public void onAnimationEnd(Animation animation) {
-//                    tv_question_title.setVisibility(View.VISIBLE);
-//
-//                    rel_gif_layout.setVisibility(View.VISIBLE);
-//                    gif_left.setVisibility(View.VISIBLE);
-//                    gif_right.setVisibility(View.VISIBLE);
-//                    left.setClickable(true);
-//                    right.setClickable(true);
-//                    right.setVisibility(View.VISIBLE);
-//                    right.setAlpha(1.0f);
-//                }
-//
-//                @Override
-//                public void onAnimationRepeat(Animation animation) {
-//
-//                }
-//            });
-//            left.startAnimation(animation);
 
 
         }else if("right_back".equals(flag)){
@@ -1569,37 +1482,6 @@ public class PopOrderActivity extends Activity {
             left.setAlpha(1.0f);
             right.setClickable(true);
             tv_question_title.setVisibility(View.VISIBLE);
-//            Animation animation = AnimationUtils.loadAnimation(this, R.anim.mid_to_right);
-//            animation.setFillAfter(true);
-//            animation.setAnimationListener(new Animation.AnimationListener() {
-//                @Override
-//                public void onAnimationStart(Animation animation) {
-////                    Glide.with(mContext).load(R.drawable.lanse0225).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(gif_right);
-////                    gif_right.setBackgroundResource(R.drawable.lanse022);
-//                }
-//
-//                @Override
-//                public void onAnimationEnd(Animation animation) {
-//
-//                    rel_gif_layout.setVisibility(View.VISIBLE);
-//                    gif_left.setVisibility(View.VISIBLE);
-//                    gif_right.setVisibility(View.VISIBLE);
-//
-//                    left.setClickable(true);
-//                    right.setClickable(true);
-//                    left.setVisibility(View.VISIBLE);
-//                    left.setAlpha(1.0f);
-//                    tv_question_title.setVisibility(View.VISIBLE);
-//
-//                }
-//
-//                @Override
-//                public void onAnimationRepeat(Animation animation) {
-//
-//                }
-//            });
-//            right.startAnimation(animation);
-//            rel_dont_care.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -1622,8 +1504,6 @@ public class PopOrderActivity extends Activity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 view.clearAnimation();
-//                Glide.with(mContext).load(R.drawable.juse0225).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(gif_left);
-//                gif_left.setBackgroundResource(R.drawable.juse022);
             }
         });
         view.startAnimation(animation);

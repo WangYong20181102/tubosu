@@ -1,14 +1,11 @@
 package com.tbs.tobosutype.fragment;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -30,25 +27,20 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request.Method;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.DecorateCompanyDetailActivity;
 import com.tbs.tobosutype.activity.MyFavActivity;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
-	/**
+import com.tbs.tobosutype.utils.Util;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+/**
 	 * 收藏页面 之 装修公司收藏
 	 * @author dec
 	 *
@@ -87,8 +79,8 @@ public class MyFavCompanyFragment extends Fragment {
 	private StringBuilder delId;
 	
 	
-	private RequestParams delParams;
-	
+//	private RequestParams delParams;
+	private HashMap delParams;
 	private List<Boolean> isEditDel = new ArrayList<Boolean>();
 
 	/**
@@ -98,13 +90,7 @@ public class MyFavCompanyFragment extends Fragment {
 	 */
 	private boolean showF = false;
 	
-	/*-------------- volley请求 -------------*/
-	private RequestQueue  mRequestQueue;
-	
-	private StringRequest mStringRequest;
-	/*-------------- volley请求 -------------*/
-	
-	
+
 	private Handler myCompanyHandler = new Handler(){
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
@@ -127,36 +113,37 @@ public class MyFavCompanyFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View decorateView = inflater.inflate(R.layout.fragment_myfav_company, null);
-		
 		myfav_listView = (ListView) decorateView.findViewById(R.id.myfav_listView_decoratestore);
 		iv_myfav_empty_data_decorateempty = (ImageView) decorateView.findViewById(R.id.iv_myfav_empty_data_decorateempty);
-		
-//		initParams();
-//		requestDecorateStorePost();
-		
-		volley_post();
-//		initCompanyAdapter();
-		
+		getDataFromNet();
 		return decorateView;
 	}
 	
 	
 	
-	private void volley_post() {
-		
-        mRequestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        
-        
+	private void getDataFromNet() {
 		token = AppInfoUtil.getToekn(getActivity().getApplicationContext());
-        
-        mStringRequest = new StringRequest(Method.POST, urlDecorateStore, new Response.Listener<String>() {
-                    
-        			@Override
-                    public void onResponse(String response) {
-        				
-                      System.out.println("请求结果:" + response);
-        				List<HashMap<String, String>> temDataList = new ArrayList<HashMap<String, String>>();
-						temDataList = (List<HashMap<String, String>>) parseDecorateStoreListJSON(response);
+
+		HashMap<String, String> hashMap = new HashMap<String, String>();
+		hashMap.put("token", token);
+		hashMap.put("fav_type", fav_type);
+		hashMap.put("page", page+"");
+		hashMap.put("pageSize", pageSize+"");
+		OKHttpUtil.post(urlDecorateStore, hashMap, new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Call call, okhttp3.Response response) throws IOException {
+				final String json = response.body().string();
+				Util.setErrorLog(TAG, "收藏公司： " + json);
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						List<HashMap<String, String>> temDataList = new ArrayList<HashMap<String, String>>();
+						temDataList = (List<HashMap<String, String>>) parseDecorateStoreListJSON(json);
 						if (temDataList != null) {
 							if (temDataList.size() == 0) {
 								iv_myfav_empty_data_decorateempty.setVisibility(View.VISIBLE);
@@ -174,44 +161,17 @@ public class MyFavCompanyFragment extends Fragment {
 									myFavDecorateAdapter.notifyDataSetChanged();
 									iv_myfav_empty_data_decorateempty.setVisibility(View.VISIBLE);
 								}
-								
+
 //								if(myFavDecorateAdapter!=null){
 //									myFavDecorateAdapter.notifyDataSetChanged();
 //								}
 							}
 //							onLoad();
 						}
-                        
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-//                        System.out.println("请求错误:" + error.toString());
-                    }
-                }) {
-		            // 携带参数
-		            @Override
-		            protected HashMap<String, String> getParams() throws AuthFailureError {
-		                HashMap<String, String> hashMap = new HashMap<String, String>();
-		                hashMap.put("token", token);
-		                hashMap.put("fav_type", fav_type);
-		                hashMap.put("page", page+"");
-		                hashMap.put("pageSize", pageSize+"");
-		                return hashMap;
-            }
-
-            // Volley请求类提供了一个 getHeaders()的方法，重载这个方法可以自定义HTTP 的头信息。（也可不实现）
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                HashMap<String, String> headers = new HashMap<String, String>();
-//                headers.put("Accept", "application/json");
-//                headers.put("Content-Type", "application/json; charset=UTF-8");
-//                return headers;
-//            }
-
-        };
-
-        mRequestQueue.add(mStringRequest);
-
+					}
+				});
+			}
+		});
     }
 	
 
@@ -432,7 +392,6 @@ public class MyFavCompanyFragment extends Fragment {
 	public void hideCompanySelectedView(){
 		if(myFavDecorateAdapter!=null){
 			myFavDecorateAdapter.setSeletedDismiss();
-//			Toast.makeText(getActivity(), "888隐藏 路径", Toast.LENGTH_SHORT).show();
 		}
 	}
 	
@@ -454,7 +413,8 @@ public class MyFavCompanyFragment extends Fragment {
 	 */
 	public void deleteFavCompanies() {
 		
-		delParams = AppInfoUtil.getPublicParams(getActivity());
+//		delParams = AppInfoUtil.getPublicParams(getActivity());
+		delParams = new HashMap<String, String>();
 		delParams.put("token", token);
 		delParams.put("oper_type", "0");
 		delParams.put("fav_type", fav_type);
@@ -474,80 +434,56 @@ public class MyFavCompanyFragment extends Fragment {
 //		delParams.put("comid", delId + "");
 		delParams.put("id", delId + "");
 		Log.d(TAG, "打印delParams"+delParams.toString());
-		HttpServer.getInstance().requestPOST(delUrl, delParams, new AsyncHttpResponseHandler() {
 
-				@Override
-				public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-					
-					try {
-						JSONObject jsonObject = new JSONObject(new String(responseBody));
-						int error_code = jsonObject.getInt("error_code");
-						if(error_code==0){
-							Toast.makeText(getActivity(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
-						}
-						showF = false;
-						for (int i = 0; i < isEditDel.size(); i++) {
-							if (isEditDel.get(i)) {
-								isEditDel.remove(i);
-								dataList.remove(i);
-								i--;
-								delNum = 0;
-							}
-						}
-						Message message = new Message();
-						message.what=0x000000000015;
-						myCompanyHandler.sendMessage(message);
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-				
-				@Override
-				public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-					Toast.makeText(getActivity(), "删除装修公司失败，请稍后再试~", Toast.LENGTH_SHORT).show();
-				}
-			});
-		
+		deleteCompany();
 	}
 	
-	
-	
-//
-//	/***
-//	 * 获取收藏数据接口请求
-//	 */
-//	private void requestDecorateStorePost() {
-//		
-//		HttpServer.getInstance().requestPOST(urlDecorateStore, decorateParams, new AsyncHttpResponseHandler() {
-//			
-//					@Override
-//					public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-//						
-//					}
-//
-//					@Override
-//					public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-//						String result = new String(responseBody);
-//						List<HashMap<String, String>> temDataList = new ArrayList<HashMap<String, String>>();
-//						temDataList = (List<HashMap<String, String>>) parseDecorateStoreListJSON(result);
-//						if (temDataList != null) {
-//							if (temDataList.size() == 0) {
-//							} else {
-//								if (page == 1) {
-//									dataList.clear();
-//								}
-//								for (int i = 0; i < temDataList.size(); i++) {
-//									dataList.add(temDataList.get(i));
-//								}
-//								myFavDecorateAdapter.notifyDataSetChanged();
-//							}
-////							onLoad();
-//						}
-//						
-//					}
-//				});
-//	};
 
+	private void deleteCompany(){
+		OKHttpUtil.post(delUrl, delParams, new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Util.setToast(getActivity(), "删除装修公司失败，请稍后再试~");
+					}
+				});
+			}
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				final String json = response.body().string();
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							JSONObject jsonObject = new JSONObject(json);
+							int error_code = jsonObject.getInt("error_code");
+							if(error_code==0){
+								Util.setToast(getActivity(),jsonObject.getString("msg"));
+							}
+							showF = false;
+							for (int i = 0; i < isEditDel.size(); i++) {
+								if (isEditDel.get(i)) {
+									isEditDel.remove(i);
+									dataList.remove(i);
+									i--;
+									delNum = 0;
+								}
+							}
+							Message message = new Message();
+							message.what=0x000000000015;
+							myCompanyHandler.sendMessage(message);
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+
+	}
 	
 	/**
 	 * 解析json
@@ -583,35 +519,6 @@ public class MyFavCompanyFragment extends Fragment {
 		}
 		return null;
 	}
-
-//	@Override
-//	public void onRefresh() {
-//		page = 1;
-//		initParams();
-//		requestDecorateStorePost();
-//	}
-//
-//	@Override
-//	public void onLoadMore() {
-//		page++;
-//		initParams();
-//		requestDecorateStorePost();
-//	}
-//
-//	private void onLoad() {
-//		myFavDecorateAdapter.notifyDataSetChanged();
-//		if(myFavDecorateAdapter!=null){
-//			myFavDecorateAdapter.notifyDataSetChanged();
-//			if(myFavDecorateAdapter.getCount()==0){
-//				iv_myfav_empty_data_decorateempty.setVisibility(View.VISIBLE);
-//			}else {
-//				iv_myfav_empty_data_decorateempty.setVisibility(View.GONE);
-//			}
-//		}
-//		myfav_listView.stopRefresh();
-//		myfav_listView.stopLoadMore();
-//		myfav_listView.setRefreshTime();
-//	}
 
 	@Override
 	public void onResume() {

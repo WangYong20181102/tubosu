@@ -286,7 +286,7 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 			String name = etName.getText().toString().trim();
 			String phone = etPhone.getText().toString().trim();
 			if (TextUtils.isEmpty(name)) {
-				Util.setToast(mContext, "请输入姓名");
+				Util.setToast(mContext, "请输入您的称呼");
 				return;
 			}
 

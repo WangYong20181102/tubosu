@@ -1,6 +1,6 @@
 package com.tbs.tobosutype.activity;
 import android.Manifest;
-import android.content.Context;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -13,9 +13,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.FrameLayout;
@@ -29,6 +31,7 @@ import android.widget.Toast;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
+import com.bumptech.glide.Glide;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
@@ -41,17 +44,28 @@ import com.tbs.tobosutype.customview.ScrollViewExtend;
 import com.tbs.tobosutype.customview.ScrollViewExtend.OnScrollChangedListener;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.DensityUtil;
 import com.tbs.tobosutype.utils.HttpServer;
+import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
 import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 首页
@@ -61,7 +75,6 @@ import java.util.List;
 public class HomeActivity extends BaseActivity implements OnClickListener {
     private static final String TAG = HomeActivity.class.getSimpleName();
 
-    private Context context;
     /**
      * 顶部标题栏布局
      */
@@ -264,7 +277,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        context = HomeActivity.this;
+        mContext = HomeActivity.this;
 
 
         needPermissions();
@@ -282,10 +295,12 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 //		requestLocalDiscountData(); // 要求删除
 //		//精选图
 //		operGetSpecial();
-        Log.e(TAG + "获取的版本信息", "======" + AppInfoUtil.getAppVersionName(context));
+        Log.e(TAG + "获取的版本信息", "======" + AppInfoUtil.getAppVersionName(mContext));
         Log.e(TAG + "获取的PIPE信息", "======" + Constant.PIPE);
 //        Log.e("获取Java代码中的渠道信息", "======" + Constant.CHANNEL_TYPE);
-//        Log.e("获取Manifest文件中的渠道信息", "======" + AppInfoUtil.getChannType(context));
+//        Log.e("获取Manifest文件中的渠道信息", "======" + AppInfoUtil.getChannType(mContext));
+
+        getHuoDongPicture();
     }
 
     private RequestParams initLocalDiscountParam(String cityName) {
@@ -398,7 +413,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 //					@Override
 //					public void onSuccess(int arg0, Header[] arg1, byte[] body) {
 //						String result = new String(body);
-////						Toast.makeText(context, !"".equals(result)? "再次请求成功":"再次请求失败", Toast.LENGTH_SHORT).show();
+////						Toast.makeText(mContext, !"".equals(result)? "再次请求成功":"再次请求失败", Toast.LENGTH_SHORT).show();
 //						try {
 //							JSONObject jsonObject = new JSONObject(result);
 //							if (jsonObject.getInt("error_code") == 0) {
@@ -463,9 +478,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     private void initLocalDiscountData() {
 
         view_bg = new ArrayList<Drawable>();
-        view_bg.add(context.getResources().getDrawable(R.drawable.icon_discount_coupon1));
-        view_bg.add(context.getResources().getDrawable(R.drawable.icon_discount_coupon2));
-        view_bg.add(context.getResources().getDrawable(R.drawable.icon_discount_coupon3));
+        view_bg.add(mContext.getResources().getDrawable(R.drawable.icon_discount_coupon1));
+        view_bg.add(mContext.getResources().getDrawable(R.drawable.icon_discount_coupon2));
+        view_bg.add(mContext.getResources().getDrawable(R.drawable.icon_discount_coupon3));
 
         for (int i = 0; i < localDiscountList.size(); i++) {
             View view = LayoutInflater.from(HomeActivity.this).inflate(R.layout.item_local_discount_gridview_item, liearlayout_local_discount, false);
@@ -534,7 +549,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
         @Override
         public void onClick(View v) {
-            MobclickAgent.onEvent(context, "click_index_local_discount_id");
+            MobclickAgent.onEvent(mContext, "click_index_local_discount_id");
             Intent intent = new Intent(HomeActivity.this, LocalDiscountDetailActivity.class);
             intent.putExtra("activityid", string);
             startActivity(intent);
@@ -577,12 +592,12 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (decorationClassDatas.size() == 0) {
-                    Toast.makeText(context, "刷新数据中,请稍等...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "刷新数据中,请稍等...", Toast.LENGTH_SHORT).show();
                 } else {
-                    MobclickAgent.onEvent(context, "click_index_decoration_class");
-                    System.out.println(TAG + "====-前 中 后，选材，设计，风水 传过去的 拼接前 :" + decorationClassDatas.get(position));
+                    MobclickAgent.onEvent(mContext, "click_index_decoration_class");
+                    Util.setErrorLog(TAG,TAG + "====-前 中 后，选材，设计，风水 传过去的 拼接前 :" + decorationClassDatas.get(position));
                     String content_url = decorationClassDatas.get(position) + Constant.M_POP_PARAM + Constant.WANGJIANLIN;
-                    System.out.println(TAG + "====-前 中 后，选材，设计，风水 传过去的 拼接后 content_url :" + content_url);
+                    Util.setErrorLog(TAG,TAG + "====-前 中 后，选材，设计，风水 传过去的 拼接后 content_url :" + content_url);
                     // Log.d(TAG, "下面加载h5页面");
                     Intent detailIntent = new Intent(HomeActivity.this, WebViewActivity.class);
                     Bundle bundle = new Bundle();
@@ -606,7 +621,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
                     intent.putExtra("id", id);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(context, "数据还没有加载完!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "数据还没有加载完!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -614,7 +629,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
     @Override
     protected void onResume() {
-        home_city.setText(AppInfoUtil.getCityName(context));
+        home_city.setText(AppInfoUtil.getCityName(mContext));
 
         if (checkNetState()) {
 //			Log.d(TAG, "现在有网络了..");
@@ -663,52 +678,55 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         initJingXuanView();
 
         chooseStyle = (int) (Math.random() * 10);//产生0-10的整数随机数
-        // 需要保留在本地 且请求接口。
+//        // 需要保留在本地 且请求接口。
+//        // AB测试状态。0不做任何处理、1选择A、2选择B
+//        if ("1".equals(getSharedPreferences("AB_TEST", mContext.MODE_PRIVATE).getString("status", "0"))) {
+//            // 1 是 A
+//            MobclickAgent.onEvent(mContext, "you_choose_a_test");
+//            layout_a_style.setVisibility(View.VISIBLE);
+//            layout_b_style.setVisibility(View.GONE);
+//        } else if ("2".equals(getSharedPreferences("AB_TEST", mContext.MODE_PRIVATE).getString("status", "0"))) {
+//            // 2 是 B
+//            MobclickAgent.onEvent(mContext, "you_choose_b_test");
+//            layout_a_style.setVisibility(View.GONE);
+//            layout_b_style.setVisibility(View.VISIBLE);
+//        } else {
+//            if ("".equals(getSharedPreferences("PRE_AB_TEST", mContext.MODE_PRIVATE).getString("pre_test", ""))) {
+//                if (chooseStyle % 2 == 0) {
+//                    // 双数 选择b
+//                    MobclickAgent.onEvent(mContext, "you_choose_b_test");
+//                    layout_a_style.setVisibility(View.GONE);
+//                    layout_b_style.setVisibility(View.VISIBLE);
+//                    getSharedPreferences("PRE_AB_TEST", mContext.MODE_PRIVATE).edit().putString("pre_test", "b").commit();
+//                    Util.setErrorLog(TAG,"----测试 期间 你选择的是b测------");
+//                } else {
+//                    // 单数 选择a
+//                    MobclickAgent.onEvent(mContext, "you_choose_a_test");
+//                    layout_a_style.setVisibility(View.VISIBLE);
+//                    layout_b_style.setVisibility(View.GONE);
+//                    getSharedPreferences("PRE_AB_TEST", mContext.MODE_PRIVATE).edit().putString("pre_test", "a").commit();
+//                    Util.setErrorLog(TAG,"----测试 期间 你选择的是a测------");
+//                }
+//            } else {
+//                if ("b".equals(getSharedPreferences("PRE_AB_TEST", mContext.MODE_PRIVATE).getString("pre_test", ""))) {
+//                    // 双数 选择b
+//                    MobclickAgent.onEvent(mContext, "you_choose_b_test");
+//                    layout_a_style.setVisibility(View.GONE);
+//                    layout_b_style.setVisibility(View.VISIBLE);
+//                    Util.setErrorLog(TAG,"----启动后 已选定了 -->>> b 测<<<------");
+//                } else if ("a".equals(getSharedPreferences("PRE_AB_TEST", mContext.MODE_PRIVATE).getString("pre_test", ""))) {
+//                    // 单数 选择a
+//                    MobclickAgent.onEvent(mContext, "you_choose_a_test");
+//                    layout_a_style.setVisibility(View.VISIBLE);
+//                    layout_b_style.setVisibility(View.GONE);
+//                    Util.setErrorLog(TAG,"----启动后 已选定了 -->>> a 测<<<------");
+//                }
+//            }
+//        }
 
-        // AB测试状态。0不做任何处理、1选择A、2选择B
-        if ("1".equals(getSharedPreferences("AB_TEST", Context.MODE_PRIVATE).getString("status", "0"))) {
-            // 1 是 A
-            MobclickAgent.onEvent(context, "you_choose_a_test");
-            layout_a_style.setVisibility(View.VISIBLE);
-            layout_b_style.setVisibility(View.GONE);
-        } else if ("2".equals(getSharedPreferences("AB_TEST", Context.MODE_PRIVATE).getString("status", "0"))) {
-            // 2 是 B
-            MobclickAgent.onEvent(context, "you_choose_b_test");
-            layout_a_style.setVisibility(View.GONE);
-            layout_b_style.setVisibility(View.VISIBLE);
-        } else {
-            if ("".equals(getSharedPreferences("PRE_AB_TEST", Context.MODE_PRIVATE).getString("pre_test", ""))) {
-                if (chooseStyle % 2 == 0) {
-                    // 双数 选择b
-                    MobclickAgent.onEvent(context, "you_choose_b_test");
-                    layout_a_style.setVisibility(View.GONE);
-                    layout_b_style.setVisibility(View.VISIBLE);
-                    getSharedPreferences("PRE_AB_TEST", Context.MODE_PRIVATE).edit().putString("pre_test", "b").commit();
-                    System.out.println("----测试 期间 你选择的是b测------");
-                } else {
-                    // 单数 选择a
-                    MobclickAgent.onEvent(context, "you_choose_a_test");
-                    layout_a_style.setVisibility(View.VISIBLE);
-                    layout_b_style.setVisibility(View.GONE);
-                    getSharedPreferences("PRE_AB_TEST", Context.MODE_PRIVATE).edit().putString("pre_test", "a").commit();
-                    System.out.println("----测试 期间 你选择的是a测------");
-                }
-            } else {
-                if ("b".equals(getSharedPreferences("PRE_AB_TEST", Context.MODE_PRIVATE).getString("pre_test", ""))) {
-                    // 双数 选择b
-                    MobclickAgent.onEvent(context, "you_choose_b_test");
-                    layout_a_style.setVisibility(View.GONE);
-                    layout_b_style.setVisibility(View.VISIBLE);
-                    System.out.println("----启动后 已选定了 -->>> b 测<<<------");
-                } else if ("a".equals(getSharedPreferences("PRE_AB_TEST", Context.MODE_PRIVATE).getString("pre_test", ""))) {
-                    // 单数 选择a
-                    MobclickAgent.onEvent(context, "you_choose_a_test");
-                    layout_a_style.setVisibility(View.VISIBLE);
-                    layout_b_style.setVisibility(View.GONE);
-                    System.out.println("----启动后 已选定了 -->>> a 测<<<------");
-                }
-            }
-        }
+        MobclickAgent.onEvent(mContext, "you_choose_b_test");
+        layout_a_style.setVisibility(View.GONE);
+        layout_b_style.setVisibility(View.VISIBLE);
     }
 
     private void initJingXuanView() {
@@ -792,7 +810,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     }
 
     private void goProjectPictActivity(String type) {
-        Intent it = new Intent(context, ProjectPictActivity.class);
+        Intent it = new Intent(mContext, ProjectPictActivity.class);
         Bundle b = new Bundle();
         if ("local".equals(type)) {
             b.putString("type", type);
@@ -925,23 +943,23 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
                 break;
             case R.id.layout_price:
                 //走智能报价   走安卓发单接口
-                MobclickAgent.onEvent(context, "click_index_book_decoration");
-                Intent intent = new Intent(context, FreeDesign.class);
-//			Intent intent = new Intent(context, FreeYuyueActivity.class);
+                MobclickAgent.onEvent(mContext, "click_index_book_decoration");
+                Intent intent = new Intent(mContext, FreeDesign.class);
+//			Intent intent = new Intent(mContext, FreeYuyueActivity.class);
                 startActivity(intent);
                 break;
             case R.id.layout_calculater:
                 // 计算器
-                MobclickAgent.onEvent(context, "click_index_decoration_com");
+                MobclickAgent.onEvent(mContext, "click_index_decoration_com");
                 startActivity(new Intent(HomeActivity.this, CalculaterActivity.class));
                 break;
             case R.id.layout_homeactivity_yuyue_decoration:
                 // 走设计与报价 走安卓发单接口
 
                 //MobclickAgent 友盟统计
-                MobclickAgent.onEvent(context, "click_index_design_quote");
-//                Intent freeIntent = new Intent(context, FreeActivity.class);
-                Intent freeIntent = new Intent(context, GetPriceActivity.class);
+                MobclickAgent.onEvent(mContext, "click_index_design_quote");
+//                Intent freeIntent = new Intent(mContext, FreeActivity.class);
+                Intent freeIntent = new Intent(mContext, GetPriceActivity.class);
                 startActivity(freeIntent);
 
                 break;
@@ -951,8 +969,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
                 startActivity(new Intent(HomeActivity.this, ZhuangActivity.class));
                 break;
             case R.id.home_decorate_class_all:
-                MobclickAgent.onEvent(context, "click_index_decoration_com_total");
-                Intent detailIntent = new Intent(context, WebViewActivity.class);
+                MobclickAgent.onEvent(mContext, "click_index_decoration_com_total");
+                Intent detailIntent = new Intent(mContext, WebViewActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("link", Constant.POP_URL + Constant.M_POP_PARAM + Constant.WANGJIANLIN);
                 detailIntent.putExtras(bundle);
@@ -960,19 +978,19 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
                 break;
             case R.id.tv_home_choose_city:
             case R.id.iv_home_select_city:
-                Intent selectCityIntent = new Intent(context, SelectCtiyActivity.class);
+                Intent selectCityIntent = new Intent(mContext, SelectCtiyActivity.class);
                 Bundle cityBundle = new Bundle();
                 cityBundle.putString("fromHomeActivity", "101");
                 selectCityIntent.putExtra("HomeActivitySelectcityBundle", cityBundle);
                 startActivityForResult(selectCityIntent, 3);
 
-//                Intent selectCityIntent = new Intent(context, SelectCtiyActivity.class);
+//                Intent selectCityIntent = new Intent(mContext, SelectCtiyActivity.class);
 //                selectCityIntent.putExtra("isSelectCity", true);
 //                startActivityForResult(selectCityIntent, 3);
                 break;
             case R.id.tv_home_project_more:
                 //点击 精选图册 更多 按钮
-                Intent it = new Intent(context, ProjectPictActivity.class);
+                Intent it = new Intent(mContext, ProjectPictActivity.class);
                 Bundle b = new Bundle();
                 b.putString("type", "all");
                 it.putExtra("JingXuanBundle", b);
@@ -1034,7 +1052,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
                 Editor editor = saveCitySharePre.edit();
                 editor.putString("save_city_now", cityName);
                 editor.commit();
-                AppInfoUtil.setCityName(context, cityName);
+                AppInfoUtil.setCityName(mContext, cityName);
             }
             home_city.setText(cityName);
 
@@ -1074,11 +1092,114 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     }
 
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (homeTopBanner != null) {
-            homeTopBanner.stopRequestQueue();
+
+    private String activityId;
+    private String activityImg_url;
+    private String activityH5_url;
+    private String activityType;
+    private String activityName;
+
+    /**
+     * 获取活动信息
+     */
+    private void getHuoDongPicture(){
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        final String date = sdf.format(new Date());
+
+        if(!"".equals(CacheManager.getLoadingHUODONG(mContext)) && date.equals(CacheManager.getLoadingHUODONG(mContext))){
+            // 已经保存过当天日期
+
+        }else {
+            // 这是当天第一次
+            if(Util.isNetAvailable(HomeActivity.this)){
+                HashMap<String, String> hashMap = new HashMap<String, String>();
+                OKHttpUtil.post(Constant.ACTIVITY_URL, hashMap, new Callback() {
+
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        final String json = response.body().string();
+                        Util.setErrorLog(TAG, json);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(json);
+                                    if(jsonObject.getInt("error_code") == 0){
+                                        JSONObject data = jsonObject.getJSONObject("data");
+                                        activityId = data.getString("id");
+                                        activityImg_url = data.getString("img_url");
+                                        activityH5_url = data.getString("h5_url");
+                                        activityType = data.getString("type");
+                                        activityName = data.getString("name");
+//                                    String picUrl = activityImg_url.replace("\\/\\/", "\\");
+                                        CacheManager.setLoadingHUODONG(mContext, date);
+                                        showTap(activityImg_url, activityH5_url);
+
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    }
+
+    /**
+     * 显示蒙层
+     * @param adUrl 是否显示蒙层
+     */
+    private void showTap(String adUrl, final String h5Url){
+        if(!"".equals(adUrl)){
+            final Dialog dialog = new Dialog(HomeActivity.this, R.style.popupDialog);
+            View view = LayoutInflater.from(HomeActivity.this).inflate(R.layout.layout_home_tab_layout, null);
+
+            Display display = this.getWindowManager().getDefaultDisplay();
+            int width = display.getWidth();
+            int height = display.getHeight();
+            //设置dialog的宽高为屏幕的宽高
+            ViewGroup.LayoutParams layoutParams = new  ViewGroup.LayoutParams(width, height);
+            dialog.setContentView(view, layoutParams);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setCancelable(false);
+            ImageView adIv = (ImageView) dialog.findViewById(R.id.iv_main_ad);
+            ImageView adIvClose = (ImageView) dialog.findViewById(R.id.iv_main_ad_close);
+            Glide.with(HomeActivity.this).load(adUrl).into(adIv);
+            Util.setErrorLog(TAG, adUrl);
+            adIvClose.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(dialog!=null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            });
+
+            adIv.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent it = new Intent(mContext, WebViewActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("link", h5Url);
+                    it.putExtras(b);
+                    startActivity(it);
+                    dialog.dismiss();
+                }
+            });
+
+            if(dialog!=null && !dialog.isShowing()) {
+                dialog.show();
+            }
+        }else {
+
         }
     }
 }
