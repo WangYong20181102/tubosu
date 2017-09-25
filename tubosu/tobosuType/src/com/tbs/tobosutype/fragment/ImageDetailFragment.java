@@ -157,7 +157,7 @@ public class ImageDetailFragment extends Fragment {
 
             @Override
             public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-                Log.e(TAG, "请求失败=====" + arg1.toString());
+                Log.e(TAG, "请求失败=====" +arg3.toString());
             }
         });
     }

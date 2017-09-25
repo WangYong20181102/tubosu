@@ -5,6 +5,7 @@ import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.ResponseHandlerInterface;
 
 public class HttpClient {
+//	private static final AsyncHttpClient httpClient = new AsyncHttpClient(true,80,443);
 	private static final AsyncHttpClient httpClient = new AsyncHttpClient();
 	public static AsyncHttpClient getAsyncHttpClient(){
 		return httpClient;
