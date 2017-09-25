@@ -17,8 +17,8 @@ import java.security.cert.CertificateException;
 
 public class HttpClient {
 
-//	private static final AsyncHttpClient httpClient = new AsyncHttpClient();
-	private static final AsyncHttpClient httpClient =  new AsyncHttpClient(true, 80, 443);//请求https的方式
+	private static final AsyncHttpClient httpClient = new AsyncHttpClient();
+//	private static final AsyncHttpClient httpClient =  new AsyncHttpClient(true, 80, 443);//请求https的方式
 
 	public static AsyncHttpClient getAsyncHttpClient(){
 		return httpClient;

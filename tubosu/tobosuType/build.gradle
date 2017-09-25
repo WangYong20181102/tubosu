@@ -25,7 +25,6 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile files('libs/org.apache.http.legacy.jar')
     compile 'com.android.support:support-v4:26.0.0-alpha1'
-
 }
 
 
