@@ -1167,7 +1167,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     }
 
     /**
-     * 显示蒙层
+     * 显示蒙层wel
      * @param adUrl 是否显示蒙层
      */
     private void showTap(final Dialog dialog, String adUrl, final String h5Url){

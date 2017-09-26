@@ -200,7 +200,7 @@ public class WelcomeActivity extends Activity {
         @Override
         public void run() {
             if(Util.isNetAvailable(mContext)){
-                Util.setErrorLog(TAG, "----1----有网络--------");
+                Util.setErrorLog(TAG, "----11----有网络--------");
                 HashMap<String, String> hashMap = new HashMap<String, String>();
                 WindowManager wm = getWindowManager();
                 int width = wm.getDefaultDisplay().getWidth();
@@ -211,8 +211,8 @@ public class WelcomeActivity extends Activity {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         // 没有拿到图片地址
-                        Util.setErrorLog(TAG, "----2----有网络--请求失败------");
-                        goLoadingActivity(-1);
+                        Util.setErrorLog(TAG, "----22----有网络--请求失败------");
+                        goLoadingActivity("", -1);
                     }
 
                     @Override
@@ -225,21 +225,21 @@ public class WelcomeActivity extends Activity {
                                 // 拿到了图片地址
                                 JSONObject data = jsonObject.getJSONObject("data");
                                 String url = data.getString("img_url");
-                                String adId = data.getString("id");
-                                if(CacheManager.getLoadingAdId(mContext).equals(adId)){
-                                    // id相等 则不需要重新下载广告图片
-                                }else {
-                                    // 重新下载广告图片 重新设置广告id
-                                    httpDownLoadImg(url);
-                                    CacheManager.setLoadingAdId(mContext, adId);
-                                }
+//                                String adId = data.getString("id");
+//                                if(CacheManager.getLoadingAdId(mContext).equals(adId)){
+//                                    // id相等 则不需要重新下载广告图片
+//                                }else {
+//                                    // 重新下载广告图片 重新设置广告id
+//                                    httpDownLoadImg(url);
+//                                    CacheManager.setLoadingAdId(mContext, adId);
+//                                }
                                 String time = data.getString("stay_time");
-                                Util.setErrorLog(TAG, "----3---有网络 有地址------");
-                                goLoadingActivity(Integer.parseInt(time));
+                                Util.setErrorLog(TAG, "----33---有网络 有地址------");
+                                goLoadingActivity(url,Integer.parseInt(time));
                             }else {
                                 // 没有拿到图片地址
-                                Util.setErrorLog(TAG, "---4----有网络 无地址------");
-                                goLoadingActivity(-1);
+                                Util.setErrorLog(TAG, "---44----有网络 无地址------");
+                                goLoadingActivity("", -1);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -249,7 +249,7 @@ public class WelcomeActivity extends Activity {
             }else {
                 // 没有拿到图片地址
                 Util.setErrorLog(TAG, "-----5---无网络--------");
-                goLoadingActivity(-1);
+                goLoadingActivity("", -1);
             }
         }
     }
@@ -272,8 +272,8 @@ public class WelcomeActivity extends Activity {
      * 跳转
      * @param time 广告停留时间
      */
-    private void goLoadingActivity(int time){
-        Util.setErrorLog(TAG, "-----6---"+time+"--------");
+    private void goLoadingActivity(String imgUrl, int time){
+        Util.setErrorLog(TAG, "-----66---"+time+"s--------");
         Intent intent = null;
         if(time == -1){
             // 没有图片下载
@@ -285,11 +285,11 @@ public class WelcomeActivity extends Activity {
             }
         }else {
             // 有图片下载
-            if(!"".equals(CacheManager.getLoadingAdPath(mContext))){
+            if(!"".equals(imgUrl/*CacheManager.getLoadingAdPath(mContext)*/)){
                 // 已经下载好了
                 intent = new Intent(mContext, LoadingActivity.class);
                 // 传递url
-//            intent.putExtra("loading_img_url", imgUrl);
+                intent.putExtra("loading_img_url", imgUrl);
                 intent.putExtra("staytime", time);
             }else {
                 // 图片正在下载中，还没有下载好
@@ -301,7 +301,6 @@ public class WelcomeActivity extends Activity {
                 }
             }
         }
-
         startActivity(intent);
         finish();
         System.gc();

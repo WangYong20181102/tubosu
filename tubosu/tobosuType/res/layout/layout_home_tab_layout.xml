@@ -5,13 +5,15 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_gravity="center">
         <ImageView
             android:id="@+id/iv_main_ad_close"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_above="@+id/iv_main_ad"
+            android:layout_marginBottom="-10dp"
             android:layout_alignRight="@+id/iv_main_ad"
             android:background="@drawable/home_close"/>
 

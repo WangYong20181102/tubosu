@@ -180,7 +180,7 @@ public class GetVerificationPopupwindow extends PopupWindow {
                 }
                 handler.sendMessage(msg);
             } else {
-                Util.setLog("*********", "**+null*");
+                Util.setLog("GetVerificationPopupwindow", "header = null*");
             }
         }
     }
