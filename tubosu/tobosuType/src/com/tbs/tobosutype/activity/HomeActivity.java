@@ -1,6 +1,7 @@
 package com.tbs.tobosutype.activity;
 import android.Manifest;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -11,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
@@ -55,14 +57,12 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -627,6 +627,15 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         });
     }
 
+//    private void showHomeAd(){
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
+//    }
+
     @Override
     protected void onResume() {
         home_city.setText(AppInfoUtil.getCityName(mContext));
@@ -634,6 +643,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         if (checkNetState()) {
 //			Log.d(TAG, "现在有网络了..");
             initData();
+//            showHomeAd();
             new HomeTopFrameLayout(HomeActivity.this);
             //装修课堂
             initDecorateCalss();
@@ -1064,7 +1074,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
             getSharedPreferences("city", 0).edit().putString("cityName", cityName).commit();
             reSelectCityForLocalDiscount(cityName);
-            homeTopBanner = new HomeTopFrameLayout(HomeActivity.this);
+//            showHomeAd();
+            new HomeTopFrameLayout(HomeActivity.this);
 //			if (!TextUtils.isEmpty(cityName)) {
 //				getSharedPreferences("city", 0).edit().putString("cityName", cityName).commit();
 //				requestLocalDiscountData();
@@ -1072,7 +1083,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         }
     }
 
-    private HomeTopFrameLayout homeTopBanner;
+
+    private Handler handler = new Handler();
 
     /***
      * 重新选择城市获取本地优惠
@@ -1113,12 +1125,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         }else {
             // 这是当天第一次
             if(Util.isNetAvailable(HomeActivity.this)){
+                final Dialog dialog = new Dialog(HomeActivity.this, R.style.popupDialog);
                 HashMap<String, String> hashMap = new HashMap<String, String>();
                 OKHttpUtil.post(Constant.ACTIVITY_URL, hashMap, new Callback() {
 
                     @Override
                     public void onFailure(Call call, IOException e) {
-
+                        showTap(null, "", "");
                     }
 
                     @Override
@@ -1139,7 +1152,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
                                         activityName = data.getString("name");
 //                                    String picUrl = activityImg_url.replace("\\/\\/", "\\");
                                         CacheManager.setLoadingHUODONG(mContext, date);
-                                        showTap(activityImg_url, activityH5_url);
+                                        showTap(dialog, activityImg_url, activityH5_url);
 
                                     }
                                 } catch (JSONException e) {
@@ -1157,23 +1170,33 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
      * 显示蒙层
      * @param adUrl 是否显示蒙层
      */
-    private void showTap(String adUrl, final String h5Url){
+    private void showTap(final Dialog dialog, String adUrl, final String h5Url){
+        if(dialog == null){
+            return;
+        }
         if(!"".equals(adUrl)){
-            final Dialog dialog = new Dialog(HomeActivity.this, R.style.popupDialog);
             View view = LayoutInflater.from(HomeActivity.this).inflate(R.layout.layout_home_tab_layout, null);
-
             Display display = this.getWindowManager().getDefaultDisplay();
             int width = display.getWidth();
             int height = display.getHeight();
             //设置dialog的宽高为屏幕的宽高
             ViewGroup.LayoutParams layoutParams = new  ViewGroup.LayoutParams(width, height);
             dialog.setContentView(view, layoutParams);
-            dialog.setCanceledOnTouchOutside(false);
-            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(true);
+            dialog.setCancelable(true);
+            FrameLayout layout = (FrameLayout) dialog.findViewById(R.id.fr_dialog_layout);
             ImageView adIv = (ImageView) dialog.findViewById(R.id.iv_main_ad);
             ImageView adIvClose = (ImageView) dialog.findViewById(R.id.iv_main_ad_close);
             Glide.with(HomeActivity.this).load(adUrl).into(adIv);
             Util.setErrorLog(TAG, adUrl);
+            layout.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(dialog!=null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            });
             adIvClose.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -1186,18 +1209,31 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
             adIv.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent it = new Intent(mContext, WebViewActivity.class);
-                    Bundle b = new Bundle();
-                    b.putString("link", h5Url);
-                    it.putExtras(b);
+                    Intent it = null;
+                    if(!"".equals(h5Url)){
+                        Bundle b = new Bundle();
+                        b.putString("link", h5Url);
+                        it.putExtras(b);
+                        it = new Intent(mContext, WebViewActivity.class);
+                    }else {
+                        it = new Intent(mContext, GetPriceActivity.class);
+                    }
+
                     startActivity(it);
                     dialog.dismiss();
                 }
             });
 
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    dialog.dismiss();
+                }
+            });
             if(dialog!=null && !dialog.isShowing()) {
                 dialog.show();
             }
+
         }else {
 
         }

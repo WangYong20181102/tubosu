@@ -2,7 +2,6 @@ package com.tbs.tobosutype.customview;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,7 +11,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -109,10 +107,21 @@ public class HomeTopFrameLayout extends FrameLayout {
 
         @Override
         public void handleMessage(Message msg) {
-            super.handleMessage(msg);
             viewPager.setCurrentItem(currentItem);
         }
 
+    };
+
+    private Handler myHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 44:
+                    String result = (String) msg.getData().get("result");
+                    showImages(result);
+                    break;
+            }
+        }
     };
 
     public HomeTopFrameLayout(Context context) {
@@ -133,7 +142,7 @@ public class HomeTopFrameLayout extends FrameLayout {
         if(cityName==null || "".equals(cityName)){
             cityName = "深圳";
         }
-        initUI(context);
+
         getBanner();
         countParams = new RequestParams();
         if (isAutoPlay) {
@@ -167,15 +176,19 @@ public class HomeTopFrameLayout extends FrameLayout {
                     String result = response.body().string();
                     Util.setErrorLog(TAG, "---banner结果-->>" + result);
                     context.getSharedPreferences("NavigationCache", 0).edit().putString("result", result).commit();
-                    showImages(result);
+                    Message msg = new Message();
+                    msg.what = 44;
+                    Bundle b = new Bundle();
+                    b.putString("result", result);
+                    msg.setData(b);
+                    myHandler.sendMessage(msg);
                 }
             });
         }
     }
 
-    private void initUI(Context context) {
+    public void initUI(Context context) {
         LayoutInflater.from(context).inflate(R.layout.layout_home_top_ad_view, this, true);
-
         LinearLayout dotLayout = (LinearLayout) findViewById(R.id.dotLayout);
         dotLayout.removeAllViews();
         imageViewsList = new ArrayList<ImageView>();

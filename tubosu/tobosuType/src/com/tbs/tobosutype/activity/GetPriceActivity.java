@@ -178,6 +178,8 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 		String city = getCitySharePre.getString("save_city_now", "");
 		if(!"".equals(city)){
 			tvCity.setText(city);
+		}else{
+			tvCity.setText("深圳");
 		}
 	}
 
