@@ -161,8 +161,8 @@ public class HttpClientHelper {
 
 
 	public static HashMap<String,Object> loadTextFromURL(String url) {
-//		HttpClient httpClient = new DefaultHttpClient();
-		HttpClient httpClient = HttpClientHelper.getHttpClient();
+		HttpClient httpClient = new DefaultHttpClient();
+//		HttpClient httpClient = HttpClientHelper.getHttpClient();
 		BasicHttpParams headerParams = new BasicHttpParams();
 		headerParams.setParameter(CoreProtocolPNames.USER_AGENT, "Mozilla/5.0 (X11; U; Linux i686; zh-CN; rv:1.9.1.2) Gecko/20090803");
 		HttpGet requestGet = new HttpGet(url);
@@ -191,8 +191,8 @@ public class HttpClientHelper {
 
 
 	public static String doPostSubmit(String url, Map<String, String> params,String header) {
-//		HttpClient httpClient = new DefaultHttpClient();
-		HttpClient httpClient = HttpClientHelper.getHttpClient();
+		HttpClient httpClient = new DefaultHttpClient();
+//		HttpClient httpClient = HttpClientHelper.getHttpClient();
 		BasicHttpParams headerParams = new BasicHttpParams();
 		headerParams.setParameter(CoreProtocolPNames.USER_AGENT, "Mozilla/5.0 (X11; U; Linux i686; zh-CN; rv:1.9.1.2) Gecko/20090803");
 		HttpPost requestPost = new HttpPost(url);

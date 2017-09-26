@@ -42,10 +42,13 @@ public class LoadingActivity extends BaseActivity {
     private void getIntentData() {
 
         Intent intent = getIntent();
-        if(intent!=null/* && intent.getStringExtra("loading_img_url")!=null*/){
-            stayTime = intent.getIntExtra("staytime", 4);
-            tvCountDownText.setText(stayTime + " 点击跳过");
-            Glide.with(mContext).load(CacheManager.getLoadingAdPath(mContext)).into(ivImg);
+        if(intent!=null){
+            String url = intent.getStringExtra("loading_img_url");
+            if(url!=null && !"".equals(url)){
+                stayTime = intent.getIntExtra("staytime", 4);
+                tvCountDownText.setText(stayTime + " 点击跳过");
+                Glide.with(mContext).load(url).into(ivImg);
+            }
         }
 
         tvCountDownText.setOnClickListener(new View.OnClickListener() {
