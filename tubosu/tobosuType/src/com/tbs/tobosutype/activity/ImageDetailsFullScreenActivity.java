@@ -544,7 +544,11 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
                 } else {
 //                    Toast.makeText(mContext, "Image error!", Toast.LENGTH_SHORT).show();
                 }
-                mBitmap = BitmapFactory.decodeStream(getImageStream(filePath));
+
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.RGB_565;
+                mBitmap = BitmapFactory.decodeStream(getImageStream(filePath), null, options);
                 connectHanlder.sendEmptyMessage(0);
             } catch (Exception e) {
                 e.printStackTrace();

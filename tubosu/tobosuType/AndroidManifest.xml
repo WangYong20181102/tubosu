@@ -18,6 +18,7 @@
 
     <!--<uses-permission android:name="android.permission.WRITE_APN_SETTINGS"></uses-permission>-->
 
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
 
     <!-- 这个权限用于进行网络定位-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>

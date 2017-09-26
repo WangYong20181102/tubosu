@@ -1,5 +1,6 @@
 package com.tbs.tobosutype.fragment;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -102,42 +103,43 @@ public class ProjectListFragment extends Fragment implements IXListViewListener 
 				@Override
 				public void onResponse(Call call, Response response) throws IOException {
 					final String s = response.body().string();
-					getActivity().runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							System.out.println(" --ProjectListFragment 数据 --" + s + "--");
-							try {
-								JSONObject jsonObject = new JSONObject(s);
+					if(getActivity()!=null){
+						getActivity().runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								System.out.println(" --ProjectListFragment 数据 --" + s + "--");
+								try {
+									JSONObject jsonObject = new JSONObject(s);
+									if (jsonObject.getInt("error_code") == 0) {
+										requestProjectListDatas = new ArrayList<HashMap<String, String>>();
+										JSONObject dataObject = jsonObject.getJSONObject("data");
+										JSONArray jsonArray = dataObject.getJSONArray("specialList");
+										for (int i = 0; i < jsonArray.length(); i++) {
+											HashMap<String, String> map = new HashMap<String, String>();
+											JSONObject jsonObject2 = jsonArray.getJSONObject(i);
+											map.put("id", jsonObject2.getString("id"));
+											map.put("banner_title", jsonObject2.getString("banner_title"));
+											map.put("thumb_img_url", jsonObject2.getString("thumb_img_url"));
+											map.put("banner_description", jsonObject2.getString("banner_description"));
+											requestProjectListDatas.add(map);
+										}
+										projectListDatas.addAll(requestProjectListDatas);
+										onLoad();
+										ll_not_data.setVisibility(View.GONE);
 
-//								projectListDatas.clear();
-								if (jsonObject.getInt("error_code") == 0) {
-									requestProjectListDatas = new ArrayList<HashMap<String, String>>();
-									JSONObject dataObject = jsonObject.getJSONObject("data");
-									JSONArray jsonArray = dataObject.getJSONArray("specialList");
-									for (int i = 0; i < jsonArray.length(); i++) {
-										HashMap<String, String> map = new HashMap<String, String>();
-										JSONObject jsonObject2 = jsonArray.getJSONObject(i);
-										map.put("id", jsonObject2.getString("id"));
-										map.put("banner_title", jsonObject2.getString("banner_title"));
-										map.put("thumb_img_url", jsonObject2.getString("thumb_img_url"));
-										map.put("banner_description", jsonObject2.getString("banner_description"));
-										requestProjectListDatas.add(map);
+									} else if (jsonObject.getInt("error_code") == 70101) {
+										ll_not_data.setVisibility(View.VISIBLE);
+									} else if (jsonObject.getInt("error_code") == 70102) {
+										xlistView_projectlist.stopLoadMore();
+										Util.setToast(getActivity(), "没有加载更多的数据了！");
 									}
-									projectListDatas.addAll(requestProjectListDatas);
-									onLoad();
-									ll_not_data.setVisibility(View.GONE);
-
-								} else if (jsonObject.getInt("error_code") == 70101) {
-									ll_not_data.setVisibility(View.VISIBLE);
-								} else if (jsonObject.getInt("error_code") == 70102) {
-									xlistView_projectlist.stopLoadMore();
-									Util.setToast(getActivity(), "没有加载更多的数据了！");
+								} catch (JSONException e) {
+									e.printStackTrace();
 								}
-							} catch (JSONException e) {
-								e.printStackTrace();
 							}
-						}
-					});
+						});
+					}
+
 				}
 			});
 		}

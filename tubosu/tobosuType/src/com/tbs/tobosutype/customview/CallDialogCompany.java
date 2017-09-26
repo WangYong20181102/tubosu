@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,7 +22,7 @@ public class CallDialogCompany extends Dialog {
 	private Context mContext;
 	private ImageView lineImage;
 
-	public CallDialogCompany(Context context, int theme, String contactNumber, String tel) {
+	public CallDialogCompany(Context context, int theme, String contactNumber, final String tel) {
 		super(context, theme);
 
 		this.setContentView(R.layout.call_dialog_company);
@@ -40,11 +39,17 @@ public class CallDialogCompany extends Dialog {
 
 			@Override
 			public void onClick(View v) {
+
 				MobclickAgent.onEvent(mContext,"click_find_com_com_detail_phone_call(phone_call_succeed)");
-				Uri uri = Uri.parse("tel:" + CallDialogCompany.this.tel);
-				Intent i = new Intent(Intent.ACTION_DIAL, uri);
-				mContext.startActivity(i);
-				CallDialogCompany.this.dismiss();
+				try{
+					Uri uri = Uri.parse("tel:" + tel);
+					Intent i = new Intent(Intent.ACTION_DIAL, uri);
+					mContext.startActivity(i);
+					CallDialogCompany.this.dismiss();
+				}catch (Exception e){
+					e.printStackTrace();
+				}
+
 			}
 		});
 
@@ -60,9 +65,13 @@ public class CallDialogCompany extends Dialog {
 					number = CallDialogCompany.this.contactNumber;
 				}
 
-				Uri uri = Uri.parse("tel:" + number);
-				Intent i = new Intent(Intent.ACTION_DIAL, uri);
-				mContext.startActivity(i);
+				try{
+					Uri uri = Uri.parse("tel:" + number);
+					Intent i = new Intent(Intent.ACTION_DIAL, uri);
+					mContext.startActivity(i);
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 				CallDialogCompany.this.dismiss();
 			}
 		});
@@ -91,7 +100,7 @@ public class CallDialogCompany extends Dialog {
 			callButton.setVisibility(View.GONE);
 			lineImage.setVisibility(View.GONE);
 		}
-		Window window = this.getWindow();
+//		Window window = this.getWindow();
 		// 设置显示动画
 //		window.setWindowAnimations(R.style.calldialog_animstyle);
 		this.setCanceledOnTouchOutside(true);
