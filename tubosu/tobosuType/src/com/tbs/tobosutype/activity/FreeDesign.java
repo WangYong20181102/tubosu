@@ -246,9 +246,14 @@ public class FreeDesign extends Activity {
                         //计算半包价格
                         if (!TextUtils.isEmpty(fdTextCity.getText().toString().trim())) {
                             //城市选择不为空 判断手机号码是否是业主绑定的手机号码 将计算出的半包价格传入下一个页面
-                            customWaitDialog.show();
-                            setParams();//设置请求接口参数
-                            HttpRequestPubOrder(pubOrderParams);
+                            if (fdTextCity.getText().toString().trim().equals("未定位")) {
+                                Toast.makeText(mContext, "当前城市未定位，请选择城市~", Toast.LENGTH_SHORT).show();
+                            } else {
+                                customWaitDialog.show();
+                                setParams();//设置请求接口参数
+                                HttpRequestPubOrder(pubOrderParams);
+                            }
+
                         } else {
                             Toast.makeText(mContext, "当前定位的城市为空，请选择城市", Toast.LENGTH_LONG).show();
                         }
@@ -336,6 +341,7 @@ public class FreeDesign extends Activity {
                 if (s.toString().equals("") || TextUtils.isEmpty(s.toString())) {
                     roomNum = 0;
                 } else {
+                    Log.e(TAG, "键入的数据=========" + s.toString());
                     roomNum = Integer.valueOf(s.toString()).intValue();
                 }
                 if (roomNum == 0) {
