@@ -27,6 +27,7 @@ import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
+import com.tbs.tobosutype.utils.Util;
 import com.tencent.android.tpush.XGPushManager;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -99,6 +100,8 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
      * 5
      */
     private static final int FIELD_HEAD_PICTURE = 5;
+
+
 
     private Context mContext;
 
@@ -391,6 +394,8 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
 
             @Override
             public void onClick(DialogInterface dialog, int id) {
+                mController.deleteOauth(MyOwnerAccountManagerActivity.this, SHARE_MEDIA.WEIXIN, null);
+                Util.setErrorLog(TAG, "你确定删除了微信缓存了吧");
                 getSharedPreferences("userInfo", 0).edit().clear().commit();
                 AppInfoUtil.ISJUSTLOGIN = true;
                 getSharedPreferences("userInfo", 0).edit().clear().commit();

@@ -335,6 +335,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
                 } else {
                     Toast.makeText(getActivity(), "登陆失败...", Toast.LENGTH_LONG).show();
                 }
+
             }
 
             @Override
@@ -342,6 +343,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
                 Toast.makeText(getActivity(), "登陆取消", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     /***
