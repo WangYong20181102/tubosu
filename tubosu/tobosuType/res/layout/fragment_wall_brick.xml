@@ -287,7 +287,7 @@
                     android:layout_marginTop="13dp"
                     android:layout_toRightOf="@+id/door_num_left"
                     android:background="#FFFFFF"
-                    android:digits=".0123456789"
+                    android:digits="0123456789"
                     android:maxLength="5"
                     android:textColor="#000000"
                     android:textSize="18sp" />
@@ -435,7 +435,7 @@
                     android:layout_marginTop="13dp"
                     android:layout_toRightOf="@+id/window_num_left"
                     android:background="#FFFFFF"
-                    android:digits=".0123456789"
+                    android:digits="0123456789"
                     android:maxLength="5"
                     android:textColor="#000000"
                     android:textSize="18sp" />

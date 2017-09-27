@@ -397,6 +397,7 @@ public class PaintFragment extends Fragment {
 			@Override
 			public void afterTextChanged(Editable editable) {
 				doorNum = etPainDoorNum.getText().toString().trim();
+
 //				doorNum = CalculaterActivity.clearDot(doorNum);
 				if(doorNum.length()>0){
 					ivClearDoorNum.setVisibility(View.VISIBLE);
@@ -533,6 +534,7 @@ public class PaintFragment extends Fragment {
 			@Override
 			public void afterTextChanged(Editable editable) {
 				windowNum = etPaintWindowNum.getText().toString().trim();
+
 //				windowNum = CalculaterActivity.clearDot(windowNum);
 				if(windowNum.length()>0){
 					ivClearWindowNum.setVisibility(View.VISIBLE);
@@ -642,6 +644,10 @@ public class PaintFragment extends Fragment {
 
 	}
 
+	/**
+	 *
+	 * @param et
+	 */
 	private void doCalculate(final EditText et){
 		llCalculaterPaintLayout.setVisibility(View.VISIBLE);
 		relCalculaterPaintResult.setVisibility(View.GONE);
@@ -975,6 +981,19 @@ public class PaintFragment extends Fragment {
 					return;
 				}
 
+
+				if(windowNum.contains("0.")){
+					windowNum = "0";
+				}else if(windowNum.contains(".")){
+					windowNum = windowNum.substring(0, windowNum.indexOf("."));
+				}
+
+
+				if(doorNum.contains("0.")){
+					doorNum = "0";
+				}else if(doorNum.contains(".")){
+					doorNum = doorNum.substring(0, doorNum.indexOf("."));
+				}
 
 //				涂料数量＝［（房长＋房宽）＊2*房高＋房长＊房宽－窗高＊窗宽＊窗扇－门高＊门宽＊门扇］/8.6
 //				涂料价格=涂料数量*单价

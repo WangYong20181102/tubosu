@@ -325,6 +325,7 @@ public class WallBrickFragment extends Fragment {
 			@Override
 			public void afterTextChanged(Editable editable) {
 				doorNum = etWallDoorNum.getText().toString().trim();
+
 //				doorNum = CalculaterActivity.clearDot(doorNum);
 				if(doorNum.length()>0 && etWallDoorNum.hasFocus()){
 					ivClearDoorNum.setVisibility(View.VISIBLE);
@@ -460,6 +461,7 @@ public class WallBrickFragment extends Fragment {
 			@Override
 			public void afterTextChanged(Editable editable) {
 				windowNum = etWallWindowNum.getText().toString().trim();
+
 //				windowNum = CalculaterActivity.clearDot(windowNum);
 				if(windowNum.length()>0&&etWallWindowNum.hasFocus()){
 					ivClearWindowNum.setVisibility(View.VISIBLE);
@@ -1279,6 +1281,19 @@ public class WallBrickFragment extends Fragment {
 
 				double doorWid_brickWid = 1000*Double.parseDouble(doorWid) / (wallBrickLW.get(1));
 
+
+				if(windowNum.contains("0.")){
+					windowNum = "0";
+				}else if(windowNum.contains(".")){
+					windowNum = windowNum.substring(0, windowNum.indexOf("."));
+				}
+
+
+				if(doorNum.contains("0.")){
+					doorNum = "0";
+				}else if(doorNum.contains(".")){
+					doorNum = doorNum.substring(0, doorNum.indexOf("."));
+				}
 
 				double totalBrickNum = 1.05*(roomLen_brickLen*roomHei_brickWid*2 +
 						roomWid_brickLen*roomHei_brickWid*2 - windowHei_brickLen*windowWid_brickWid*Integer.parseInt(windowNum)
