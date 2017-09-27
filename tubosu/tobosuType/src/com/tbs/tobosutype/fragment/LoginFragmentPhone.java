@@ -156,6 +156,15 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
 
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        activity.registerReceiver(receiveBroadCast, filter);
+        if(activity!=null && receiveBroadCast!=null){
+            activity.unregisterReceiver(receiveBroadCast);
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_get_verifycode: // 验证码
