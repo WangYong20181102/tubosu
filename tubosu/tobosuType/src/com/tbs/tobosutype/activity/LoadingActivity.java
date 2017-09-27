@@ -44,6 +44,7 @@ public class LoadingActivity extends BaseActivity {
         Intent intent = getIntent();
         if(intent!=null){
             String url = intent.getStringExtra("loading_img_url");
+            url = url.replace("\\/", "/");
             if(url!=null && !"".equals(url)){
                 stayTime = intent.getIntExtra("staytime", 4);
                 tvCountDownText.setText(stayTime + " 点击跳过");
