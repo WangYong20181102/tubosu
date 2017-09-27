@@ -103,7 +103,6 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
 	/*-------------微信登陆相关------------*/
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login_account, null);
@@ -243,13 +242,13 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
                         wechatWindow = null;
                     }
                 } else {
-                    Toast.makeText(getActivity(), "登陆失败...", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MyApplication.getContext(), "登陆失败...", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onCancel(SHARE_MEDIA platform) {
-                Toast.makeText(getActivity(), "登陆取消", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getContext(), "登陆取消", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -365,7 +364,7 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
         }
 
         Intent favIntent = getActivity().getIntent();
-        if(favIntent!=null){
+        if (favIntent != null) {
             if (favIntent.getBooleanExtra("isFav", false)) {
                 favIntent.putExtra("token", token);
                 getActivity().setResult(0, favIntent);
@@ -396,7 +395,7 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
 
     private void hideEdittext() {
         InputMethodManager im = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if(getActivity()!=null && getActivity().getCurrentFocus()!=null){
+        if (getActivity() != null && getActivity().getCurrentFocus() != null) {
             im.hideSoftInputFromWindow(getActivity().getCurrentFocus().getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
 
