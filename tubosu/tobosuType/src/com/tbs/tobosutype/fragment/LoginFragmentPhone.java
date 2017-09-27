@@ -535,4 +535,12 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
             activity.unregisterReceiver(receiveBroadCast);
         }
     }
+
+//    @Override
+//    public void onDestroyView() {
+//        super.onDestroyView();
+//        if(receiveBroadCast!=null){
+//            MyApplication.getContext().unregisterReceiver(receiveBroadCast);
+//        }
+//    }
 }
