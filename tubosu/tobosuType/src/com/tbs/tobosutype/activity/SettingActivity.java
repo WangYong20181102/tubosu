@@ -279,10 +279,16 @@ public class SettingActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				//FIXME 给我们好评
-				String mAddress = "market://details?id=" + getPackageName();   
-				Intent marketIntent = new Intent("android.intent.action.VIEW");    
-				marketIntent.setData(Uri.parse(mAddress ));    
-				startActivity(marketIntent);  
+				try {
+					String mAddress = "market://details?id=" + getPackageName();
+					Intent marketIntent = new Intent("android.intent.action.VIEW");
+					marketIntent.setData(Uri.parse(mAddress ));
+					startActivity(marketIntent);
+				} catch (Exception e) {
+					Toast.makeText(SettingActivity.this, "您的手机没有安装Android应用市场", Toast.LENGTH_SHORT).show();
+					e.printStackTrace();
+					e.printStackTrace();
+				}
 			}
 		});
 		
