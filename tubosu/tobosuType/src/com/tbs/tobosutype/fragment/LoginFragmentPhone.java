@@ -155,14 +155,6 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
     }
 
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        activity.registerReceiver(receiveBroadCast, filter);
-        if(activity!=null && receiveBroadCast!=null){
-            activity.unregisterReceiver(receiveBroadCast);
-        }
-    }
 
     @Override
     public void onClick(View v) {
@@ -538,9 +530,9 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(receiveBroadCast!=null){
-            getActivity().unregisterReceiver(receiveBroadCast);
 
+        if(activity!=null && receiveBroadCast!=null){
+            activity.unregisterReceiver(receiveBroadCast);
         }
     }
 }
