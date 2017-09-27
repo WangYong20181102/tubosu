@@ -196,7 +196,7 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
 
             @Override
             public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                Log.e("错误日志", "----->>获取的错误码i" + i + "====headers" + headers.toString() + "======bytes" + new String(bytes) + "=====throwable" + throwable.toString());
+                Log.e("错误日志", "----->>获取的错误码i" + throwable.getMessage());
             }
 
 
