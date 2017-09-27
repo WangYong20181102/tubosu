@@ -116,7 +116,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
      */
     private RequestParams weixinLoginParams;
 
-	/*-------------微信登陆相关------------*/
+    /*-------------微信登陆相关------------*/
     public static ReceiveBroadCast receiveBroadCast;
     private IntentFilter filter;
     private Activity activity;
