@@ -230,6 +230,7 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
 //                    UMWXHandler wxHandler = new UMWXHandler(getApplicationContext(), "wx20c4f4560dcd397a", "9b06e848d40bcb04205d75335df6b814");
 //                    wxHandler.addToSocialSDK();
 //                    bindThirdParty(SHARE_MEDIA.WEIXIN);
+                    //新的微信绑定
                 }
                 break;
             case R.id.tv_btn_exit:
