@@ -316,6 +316,7 @@ public class MainActivity extends BaseActivity {
             case R.id.rb_second:
                 //点击第二个选项 显示案例
                 MobclickAgent.onEvent(mContext, "click_an_li_tu_tab");
+
                 setIndexSelect(1);
                 if (mSocket != null) {
                     Log.e(TAG, "socket链接状态=======" + mSocket.connected());

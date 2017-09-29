@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -39,8 +40,6 @@ import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 import com.tbs.tobosutype.utils.ShareUtil;
 import com.tbs.tobosutype.utils.Util;
-import com.tencent.connect.auth.QQAuth;
-import com.tencent.wpa.WPA;
 import com.umeng.analytics.MobclickAgent;
 
 import org.apache.http.Header;
@@ -776,12 +775,8 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 			break;
 		case R.id.tv_qq:
 			MobclickAgent.onEvent(mContext, "click_find_com_com_detail_phone_qq(qq_succeed)");
-			QQAuth mqqAuth = QQAuth.createInstance("1104922493", DecorateCompanyDetailActivity.this);
-			WPA mWPA = new WPA(this, mqqAuth.getQQToken());
-			int ret = mWPA.startWPAConversation(qq, "");
-			if (ret != 0) {
-				Util.setToast(mContext,"抱歉，联系客服出现了错误!");
-			}
+			String url = "mqqwpa://im/chat?chat_type=wpa&uin="+qq;
+			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
 			break;
 
 		case R.id.ll_image_laylout:

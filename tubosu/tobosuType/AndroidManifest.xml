@@ -358,37 +358,33 @@
             android:value="${UMENG_CHANNEL_VALUE}" />
 
         <!-- 友盟下载更新 -->
-        <service
-            android:name="com.umeng.common.net.DownloadingService"
-            android:process=":DownloadingService" />
+        <!--<service-->
+            <!--android:name="com.umeng.common.net.DownloadingService"-->
+            <!--android:process=":DownloadingService" />-->
 
-        <activity
-            android:name="com.umeng.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--<activity-->
+            <!--android:name="com.umeng.update.UpdateDialogActivity"-->
+            <!--android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
 
         <!-- 腾讯SSO授权的Activity注册 -->
         <activity
-            android:name="com.tencent.tauth.AuthActivity"
-            android:noHistory="true">
+            android:name="com.umeng.qq.tencent.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="tencent1104922493" />
+                <data android:scheme="tencent100424468" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name="com.tencent.connect.common.AssistActivity"
+            android:name="com.umeng.qq.tencent.AssistActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <!-- 必须注册在微博授权，分享微博时候用到 -->
-        <activity
-            android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
-            android:configChanges="keyboardHidden|orientation"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
 
         <!-- 微信回调activity -->
         <activity

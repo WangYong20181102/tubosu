@@ -38,7 +38,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:paddingTop="5dip"
-        android:text="@string/pull_to_refresh_tap_label"
+        android:text="点击刷新"
         android:textStyle="bold" />
 
     <TextView

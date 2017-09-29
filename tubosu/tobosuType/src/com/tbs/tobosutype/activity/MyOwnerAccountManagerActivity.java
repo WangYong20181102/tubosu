@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,15 +30,11 @@ import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.Util;
 import com.tencent.android.tpush.XGPushManager;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.bean.SocializeEntity;
-import com.umeng.socialize.controller.UMServiceFactory;
-import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.controller.listener.SocializeListeners;
-import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
-import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
-import com.umeng.socialize.exception.SocializeException;
-import com.umeng.socialize.weixin.controller.UMWXHandler;
+
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -104,7 +101,6 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
     private static final int FIELD_HEAD_PICTURE = 5;
 
 
-
     private Context mContext;
 
     private String nickname;
@@ -139,8 +135,7 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
     private RequestParams bindThirdPartyParams;
 
     private Intent intent;
-
-    private UMSocialService mController = UMServiceFactory.getUMSocialService(Constant.DESCRIPTOR);
+    private UMShareAPI umShareAPI;
     private String weiXinUserName;
     private String weiXinImageUrl;
     private String weiXinUserId;
@@ -151,7 +146,7 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
         AppInfoUtil.setTranslucentStatus(this);
         setContentView(R.layout.activity_myowner_account_manager);
         mContext = MyOwnerAccountManagerActivity.this;
-
+        umShareAPI = UMShareAPI.get(mContext);
         initView();
         initData();
         initEvent();
@@ -237,9 +232,35 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
                 if (wechatCheck.equals("1")) {
                     Toast.makeText(mContext, "您已经绑定过了！", Toast.LENGTH_SHORT).show();
                 } else {
-                    UMWXHandler wxHandler = new UMWXHandler(getApplicationContext(), "wx20c4f4560dcd397a", "9b06e848d40bcb04205d75335df6b814");
-                    wxHandler.addToSocialSDK();
-                    bindThirdParty(SHARE_MEDIA.WEIXIN);
+//                    UMWXHandler wxHandler = new UMWXHandler(getApplicationContext(), "wx20c4f4560dcd397a", "9b06e848d40bcb04205d75335df6b814");
+//                    wxHandler.addToSocialSDK();
+//                    bindThirdParty(SHARE_MEDIA.WEIXIN);
+                    //新的微信绑定
+                    umShareAPI.getPlatformInfo(MyOwnerAccountManagerActivity.this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
+                        @Override
+                        public void onStart(SHARE_MEDIA share_media) {
+
+                        }
+
+                        @Override
+                        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                            weiXinImageUrl = map.get("iconurl");//微信的头像
+                            weiXinUserName = map.get("name");//微信的昵称
+                            weiXinUserId = map.get("openid");//微信的openid
+                            operBindThirdParty();
+                        }
+
+                        @Override
+                        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+                            Log.e(TAG, "微信绑定出错====" + throwable.getMessage());
+                            Toast.makeText(mContext, "绑定出错~", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onCancel(SHARE_MEDIA share_media, int i) {
+                            Toast.makeText(mContext, "取消绑定~", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
                 break;
             case R.id.tv_btn_exit:
@@ -396,24 +417,27 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
 
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                mController.deleteOauth(MyOwnerAccountManagerActivity.this, SHARE_MEDIA.WEIXIN, new SocializeListeners.SocializeClientListener() {
-                    @Override
-                    public void onStart() {
-
-                    }
-
-                    @Override
-                    public void onComplete(int i, SocializeEntity socializeEntity) {
-                        Util.setToast(mContext, "退出成功");
-                    }
-                });
-                Util.setErrorLog(TAG, "你确定删除了微信缓存了吧");
+//                mController.deleteOauth(MyOwnerAccountManagerActivity.this, SHARE_MEDIA.WEIXIN, new SocializeListeners.SocializeClientListener() {
+//                    @Override
+//                    public void onStart() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete(int i, SocializeEntity socializeEntity) {
+//                        Util.setToast(mContext, "退出成功");
+//                    }
+//                });
+//                Util.setErrorLog(TAG, "你确定删除了微信缓存了吧");
                 getSharedPreferences("userInfo", 0).edit().clear().commit();
                 AppInfoUtil.ISJUSTLOGIN = true;
                 getSharedPreferences("userInfo", 0).edit().clear().commit();
                 XGPushManager.unregisterPush(getApplicationContext());
                 dialog.cancel();
-//                Intent i = new Intent();
+                //清除微信的缓存
+                umShareAPI.deleteOauth(MyOwnerAccountManagerActivity.this, SHARE_MEDIA.WEIXIN, null);
+                MobclickAgent.onProfileSignOff();
+// Intent i = new Intent();
 //                i.setAction(Constant.LOGOUT_ACTION);
 //                sendBroadcast(i);
                 finish();
@@ -431,71 +455,71 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
 
     }
 
-    /**
-     * 授权。如果授权成功，则获取用户信息 ---第三方登录
-     *
-     * @param platform
-     */
-    private void bindThirdParty(final SHARE_MEDIA platform) {
-
-        mController.doOauthVerify(mContext, platform, new UMAuthListener() {
-
-            @Override
-            public void onStart(SHARE_MEDIA platform) {
-                Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(SocializeException e, SHARE_MEDIA platform) {
-                Toast.makeText(mContext, "授权失败", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onComplete(Bundle value, SHARE_MEDIA platform) {
-                // 获取uid
-                String uid = value.getString("uid");
-                if (!TextUtils.isEmpty(uid)) {
-                    getUserInfo(platform);
-                } else {
-                    Toast.makeText(mContext, "绑定失败...", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onCancel(SHARE_MEDIA platform) {
-                Toast.makeText(mContext, "绑定取消", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    /**
-     * 获取用户信息
-     *
-     * @param platform
-     */
-    private void getUserInfo(final SHARE_MEDIA platform) {
-        mController.getPlatformInfo(mContext, platform, new UMDataListener() {
-
-            @Override
-            public void onStart() {
-                Toast.makeText(mContext, "获取平台数据开始...", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onComplete(int status, Map<String, Object> info) {
-                if (status == 200 && info != null) {
-                    weiXinUserName = (String) info.get("nickname");
-                    weiXinImageUrl = (String) info.get("headimgurl");
-                    weiXinUserId = (String) info.get("unionid");
-                    operBindThirdParty();
-                } else {
-                    Toast.makeText(mContext, "获取用户信息失败！", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-
-        });
-    }
+//    /**
+//     * 授权。如果授权成功，则获取用户信息 ---第三方登录
+//     *
+//     * @param platform
+//     */
+//    private void bindThirdParty(final SHARE_MEDIA platform) {
+//
+//        mController.doOauthVerify(mContext, platform, new UMAuthListener() {
+//
+//            @Override
+//            public void onStart(SHARE_MEDIA platform) {
+//                Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onError(SocializeException e, SHARE_MEDIA platform) {
+//                Toast.makeText(mContext, "授权失败", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onComplete(Bundle value, SHARE_MEDIA platform) {
+//                // 获取uid
+//                String uid = value.getString("uid");
+//                if (!TextUtils.isEmpty(uid)) {
+//                    getUserInfo(platform);
+//                } else {
+//                    Toast.makeText(mContext, "绑定失败...", Toast.LENGTH_LONG).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancel(SHARE_MEDIA platform) {
+//                Toast.makeText(mContext, "绑定取消", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+//
+//    /**
+//     * 获取用户信息
+//     *
+//     * @param platform
+//     */
+//    private void getUserInfo(final SHARE_MEDIA platform) {
+//        mController.getPlatformInfo(mContext, platform, new UMDataListener() {
+//
+//            @Override
+//            public void onStart() {
+//                Toast.makeText(mContext, "获取平台数据开始...", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onComplete(int status, Map<String, Object> info) {
+//                if (status == 200 && info != null) {
+//                    weiXinUserName = (String) info.get("nickname");
+//                    weiXinImageUrl = (String) info.get("headimgurl");
+//                    weiXinUserId = (String) info.get("unionid");
+//                    operBindThirdParty();
+//                } else {
+//                    Toast.makeText(mContext, "获取用户信息失败！", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//            }
+//
+//        });
+//    }
 
     private void operBindThirdParty() {
         bindThirdPartyParams = AppInfoUtil.getPublicParams(getApplicationContext());

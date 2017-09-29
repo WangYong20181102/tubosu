@@ -21,7 +21,6 @@ import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.MD5Util;
 import com.tbs.tobosutype.utils.Util;
-import com.umeng.analytics.MobclickAgent;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,11 +55,6 @@ public class WelcomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         AppInfoUtil.setTranslucentStatus(this);
         setContentView(R.layout.activity_welcome_bg);
-
-        MobclickAgent.UMAnalyticsConfig config = new MobclickAgent.UMAnalyticsConfig(this, Constant.UMENG_KEY, AppInfoUtil.getChannType(this));
-
-        MobclickAgent.startWithConfigure(config);
-
         mContext = WelcomeActivity.this;
         startapp_time = new Date().getTime();
         needPermissions();

@@ -28,6 +28,8 @@ import com.tbs.tobosutype.model.City;
 import com.tbs.tobosutype.utils.CityData;
 import com.tbs.tobosutype.utils.NetUtil;
 import com.tbs.tobosutype.utils.SharePreferenceUtil;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 
 public class MyApplication extends android.app.Application {
     public static String iconUrl;
@@ -76,6 +78,8 @@ public class MyApplication extends android.app.Application {
     public void onCreate() {
         super.onCreate();
         SDKInitializer.initialize(this);
+        //初始化友盟
+        UMShareAPI.get(this);
         mLocationClient = new LocationClient(this.getApplicationContext());
         mMyLocationListener = new MyLocationListener();
         context = getApplicationContext();
@@ -103,7 +107,11 @@ public class MyApplication extends android.app.Application {
                 .cacheInMemory().cacheOnDisc().build();
 
     }
-
+    //平台信息配置
+    {
+        PlatformConfig.setWeixin("wx20c4f4560dcd397a", "9b06e848d40bcb04205d75335df6b814");
+        PlatformConfig.setQQZone("1104958391", "M0L4G2G3SEgFNP35");
+    }
     public static Context getContext() {
         return context;
     }

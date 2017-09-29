@@ -125,10 +125,10 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 		mRefreshViewHeight = mRefreshHeaderView.getMeasuredHeight(); // 得到视图的高度
 	}
 
-	@Override
-	protected void onAttachedToWindow() {
-		setSelection(1); // 设置当前选中的项
-	}
+//	@Override
+//	protected void onAttachedToWindow() {
+//		setSelection(1); // 设置当前选中的项
+//	}
 
 	@Override
 	public void setAdapter(ListAdapter adapter) {
@@ -285,7 +285,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 			resetHeaderPadding();
 
 			// Set refresh view text to the pull label
-			mRefreshViewText.setText(R.string.pull_to_refresh_tap_label);
+			mRefreshViewText.setText("点击刷新");
 			// Replace refresh drawable with arrow drawable
 			mRefreshViewImage.setImageResource(R.drawable.xlistview_arrow);
 			// Clear the full rotation animation
@@ -344,13 +344,13 @@ public class PullToRefreshListView extends ListView implements OnScrollListener 
 				/** 如果头部视图相对与父容器的位置大于其自身高度+20或者头部视图的顶部位置>0,并且要在刷新状态不等于"释放以刷新" **/
 				if ((mRefreshHeaderView.getBottom() > mRefreshViewHeight + 20 || mRefreshHeaderView
 						.getTop() >= 0) && mRefreshState != RELEASE_TO_REFRESH) {
-					mRefreshViewText.setText(R.string.pull_to_refresh_release_label);// 设置刷新文本为"Release to refresh..."
+					mRefreshViewText.setText("松开可以刷新");// 设置刷新文本为"Release to refresh..."
 					mRefreshViewImage.clearAnimation(); // 清除动画
 					mRefreshViewImage.startAnimation(mFlipAnimation); // 启动动画
 					mRefreshState = RELEASE_TO_REFRESH; // 更改刷新状态为“释放以刷新"
 				} else if (mRefreshHeaderView.getBottom() < mRefreshViewHeight + 20
 						&& mRefreshState != PULL_TO_REFRESH) {
-					mRefreshViewText.setText(R.string.pull_to_refresh_pull_label);// 设置刷新文本为"Pull to refresh..."
+					mRefreshViewText.setText("向下拉动可刷新");// 设置刷新文本为"Pull to refresh..."
 					if (mRefreshState != TAP_TO_REFRESH) {
 						mRefreshViewImage.clearAnimation();
 						mRefreshViewImage.startAnimation(mReverseFlipAnimation);

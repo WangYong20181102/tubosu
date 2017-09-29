@@ -34,7 +34,6 @@ import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 import com.tbs.tobosutype.utils.ShareUtil;
 import com.umeng.analytics.MobclickAgent;
-
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -387,6 +386,7 @@ public class ImageDetailFragment extends Fragment {
                         Toast.makeText(mContext, "联系电话不能为空！", Toast.LENGTH_SHORT).show();
                         return;
                     }
+
                     MobclickAgent.onEvent(mContext, "click_find_decoration_array_design_3.0");
                     pubOrderParams.put("cellphone", phone);
                     pubOrderParams.put("comeurl", Constant.PIPE);
