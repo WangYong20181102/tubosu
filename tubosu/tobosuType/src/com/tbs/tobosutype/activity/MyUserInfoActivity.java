@@ -3,10 +3,12 @@ package com.tbs.tobosutype.activity;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,21 +19,24 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tencent.android.tpush.XGPushManager;
+import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
  * 业主的个人信息页
- * @author dec
  *
+ * @author dec
  */
 public class MyUserInfoActivity extends Activity implements OnClickListener {
     private String nickname;
@@ -47,7 +52,9 @@ public class MyUserInfoActivity extends Activity implements OnClickListener {
     private ImageView myuser_iv_back;
     private RelativeLayout rl_exit;
 
-    /**第三方绑定接口*/
+    /**
+     * 第三方绑定接口
+     */
     private String bindThirdPartyUrl = Constant.TOBOSU_URL + "tapp/passport/bindThirdParty";
 
     private HashMap<String, String> bindThirdPartyParams;
@@ -55,10 +62,14 @@ public class MyUserInfoActivity extends Activity implements OnClickListener {
     private String weiXinUserName;
     private String weiXinImageUrl;
     private String weiXinUserId;
+    private Context mContext;
+    private UMShareAPI umShareAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
+        umShareAPI = UMShareAPI.get(mContext);
         initView();
         initData();
         initEvent();
@@ -125,6 +136,8 @@ public class MyUserInfoActivity extends Activity implements OnClickListener {
 //                    UMWXHandler wxHandler = new UMWXHandler(MyUserInfoActivity.this, "wx20c4f4560dcd397a", "9b06e848d40bcb04205d75335df6b814");
 //                    wxHandler.addToSocialSDK();
 //                    bindThirdParty(SHARE_MEDIA.WEIXIN);
+                    //新的微信绑定
+//                    umShareAPI.getPlatformInfo(MyUserInfoActivity.this,SHARE_MEDIA.WEIXIN,new U);
                 }
                 break;
             case R.id.rl_exit:
@@ -287,7 +300,7 @@ public class MyUserInfoActivity extends Activity implements OnClickListener {
                                 tv_weixin.setTextColor(getResources().getColor(
                                         R.color.color_neutralgrey));
                                 tv_weixin.setText("已绑定");
-                            }else{
+                            } else {
                                 Toast.makeText(getApplicationContext(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
