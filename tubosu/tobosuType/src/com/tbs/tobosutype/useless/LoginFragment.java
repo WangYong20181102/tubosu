@@ -1,11 +1,9 @@
 package com.tbs.tobosutype.useless;
 
 import java.util.Map;
-
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -28,7 +26,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
@@ -51,57 +48,57 @@ import com.umeng.socialize.weixin.controller.UMWXHandler;
 /**
  * 不再使用 2016-09-02
  */
-public class LoginFragment extends Fragment implements OnClickListener, OnKeyListener {
+public class LoginFragment{ /*extends Fragment implements OnClickListener, OnKeyListener {
 
     public static final String BUNDLE_TITLE = "title";
     private String title;
     private View view;
 
-    /**
+    *//**
      * 账户登录时--填写账号布局
-     */
+     *//*
     private LinearLayout ll_account_login;
 
-    /**
+    *//**
      * 手机快捷登陆时--填写手机号码和验证码布局
-     */
+     *//*
     private LinearLayout ll_phone_login;
 
     private TextView tv_input_username;
 
-    /**
+    *//**
      * 微信快捷登录布局
-     */
+     *//*
     private LinearLayout ll_obtain_weixin;
 
-    /**
+    *//**
      * 登录按钮
-     */
+     *//*
     private Button bt_obtain_enter_login;
 
-    /**
+    *//**
      * 验证码按钮
-     */
+     *//*
     private Button bt_obtain_verif_login;
 
-    /**
+    *//**
      * 输入用户名
-     */
+     *//*
     private EditText et_input_username;
 
-    /**
+    *//**
      * 输入密码
-     */
+     *//*
     private EditText et_input_password_login;
 
-    /**
+    *//**
      * 输入电话号码
-     */
+     *//*
     private EditText et_input_phone;
 
-    /**
+    *//**
      * 输入验证码
-     */
+     *//*
     private EditText et_input_verification_login;
 
     private UMSocialService mController = UMServiceFactory.getUMSocialService(Constant.DESCRIPTOR);
@@ -110,21 +107,21 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
     private String weiXinImageUrl;
     private String weiXinUserId;
 
-    /**
+    *//**
      * 微信第三方登录接口
-     */
+     *//*
     private String weixinLoginUrl = Constant.TOBOSU_URL + "tapp/passport/login_third_party";
     private RequestParams weixinLoginParams;
 
-    /**
+    *//**
      * 登录接口
-     */
+     *//*
     private String userLoginUrl = Constant.TOBOSU_URL + "tapp/passport/app_login";
     private RequestParams userLoginParams;
 
-    /**
+    *//**
      * 注册接口
-     */
+     *//*
     private String fastLoginUrl = Constant.TOBOSU_URL + "tapp/passport/fast_register";
 
     private RequestParams fastLoginParams;
@@ -143,12 +140,12 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
         return initView(inflater);
     }
 
-    /***
+    *//***
      * 初始化fragment界面
      *
      * @param inflater
      * @return
-     */
+     *//*
     private View initView(LayoutInflater inflater) {
         view = inflater.inflate(R.layout.fragment_login, null);
         Bundle arguments = getArguments();
@@ -219,9 +216,9 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
         }
     }
 
-    /***
+    *//***
      * 获取验证码
-     */
+     *//*
     private void getVerificationCode() {
         if ("重新获取".equals(bt_obtain_verif_login.getText().toString()) || "获取验证码".equals(bt_obtain_verif_login.getText().toString())) {
             phone = et_input_phone.getText().toString().trim();
@@ -244,11 +241,11 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
         timer = new CountTime(60000, 1000).start();
     }
 
-    /***
+    *//***
      * 广播接收器 -- 处理验证码按钮上的提示信息
      *
      * @author dec
-     */
+     *//*
     class ReceiveBroadCast extends BroadcastReceiver {
 
         @Override
@@ -274,11 +271,11 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
         super.onDestroyView();
     }
 
-    /***
+    *//***
      * 验证码填写倒计时
      *
      * @author dec
-     */
+     *//*
     class CountTime extends CountDownTimer {
         public CountTime(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);
@@ -304,9 +301,9 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
         }
     }
 
-    /***
+    *//***
      * 用户注册 登录
-     */
+     *//*
     private void userLogin() {
         if ("账户登录".equals(title)) {
             // 账户登录页面
@@ -338,9 +335,9 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
         }
     }
 
-    /***
+    *//***
      * 用户登录接口请求
-     */
+     *//*
     private void requestUserLogin() {
         if (!Constant.checkNetwork(getActivity())) {
             Constant.toastNetOut(getActivity());
@@ -371,9 +368,9 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
         });
     }
 
-    /**
+    *//**
      * 用户快速注册 登录接口请求
-     */
+     *//*
     private void requestFastLogin() {
         if (!Constant.checkNetwork(getActivity())) {
             Constant.toastNetOut(getActivity());
@@ -403,9 +400,9 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
         });
     }
 
-    /***
+    *//***
      * 微信登录接口请求
-     */
+     *//*
     private void loginWeixin() {
         //FIXME
         wechatWindow = new LoadingWindow(getActivity());
@@ -414,11 +411,11 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
         weixinThirdParty(SHARE_MEDIA.WEIXIN);
     }
 
-    /***
+    *//***
      * 微信第三方登录
      *
      * @param platform
-     */
+     *//*
     private void weixinThirdParty(final SHARE_MEDIA platform) {
         mController.doOauthVerify(getActivity(), platform, new UMAuthListener() {
 
@@ -454,11 +451,11 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
         });
     }
 
-    /***
+    *//***
      * 获取微信用户的信息
      *
      * @param platform
-     */
+     *//*
     private void getUserInfo(final SHARE_MEDIA platform) {
         mController.getPlatformInfo(getActivity(), platform, new UMDataListener() {
 
@@ -483,9 +480,9 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
         });
     }
 
-    /***
+    *//***
      * 微信用户登录接口请求
-     */
+     *//*
     private void requestWeixinLogin() {
         weixinLoginParams = AppInfoUtil.getPublicParams(getActivity());
         weixinLoginParams.put("kind", "weixin");
@@ -516,12 +513,12 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
         });
     }
 
-    /***
+    *//***
      * 将json解析为用户信息
      *
      * @param jsonObject
      * @throws JSONException
-     */
+     *//*
     private void parseJson(JSONObject jsonObject) throws JSONException {
         String mark = "";
         String token = "";
@@ -583,5 +580,5 @@ public class LoginFragment extends Fragment implements OnClickListener, OnKeyLis
             }
         }
         return false;
-    }
+    }*/
 }

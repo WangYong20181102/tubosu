@@ -25,6 +25,7 @@ import com.tbs.tobosutype.bean._ImageItem;
 import com.tbs.tobosutype.customview.RoundImageView;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
@@ -38,9 +39,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /***
  * 逛图库页面
@@ -91,10 +97,10 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
      */
     private String searchCommunityUrl = Constant.TOBOSU_URL + "tapp/impression/searchCommunity";
 
-    private RequestParams getListParams;
-    private RequestParams adsenseParams;
-    private RequestParams getLastMonthCompanyListParams;
-    private RequestParams searchCommunityParams;
+    private HashMap<String, String> getListParams;
+    private HashMap<String, String> adsenseParams;
+    private HashMap<String, String> getLastMonthCompanyListParams;
+    private HashMap<String, String> searchCommunityParams;
 
     private int page = 1;
 
@@ -274,7 +280,7 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
 //		}
 
         requestGetLastMonthCompanyList();
-        adsenseParams = AppInfoUtil.getPublicParams(this);
+        adsenseParams = AppInfoUtil.getPublicHashMapParams(this);
         requestAdsense();
         initParams();
     }
@@ -284,29 +290,34 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
      * 广告位接口请求
      */
     private void requestAdsense() {
-        adsenseParams.add("position", "3"); // 后面参数3是指逛图库的数字标记码
-        HttpServer.getInstance().requestPOST(adsenseUrl, adsenseParams, new AsyncHttpResponseHandler() {
-
+        adsenseParams.put("position", "3"); // 后面参数3是指逛图库的数字标记码
+        OKHttpUtil.post(adsenseUrl, adsenseParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                try {
-                    JSONObject jsonObject = new JSONObject(new String(body));
-                    if (jsonObject.getInt("error_code") == 0) {
-                        iv_adse.setVisibility(View.VISIBLE);
-                        JSONArray array = jsonObject.getJSONArray("data");
-                        ImageLoaderUtil.loadImage(mContext, iv_adse, array.getJSONObject(0).getString("img_url"));
-                        content_url = array.getJSONObject(0).getString("content_url");
-                    } else {
-                        iv_adse.setVisibility(View.GONE);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onFailure(Call call, IOException e) {
+
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
+            public void onResponse(Call call, Response response) throws IOException {
+                final String json = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(json);
+                            if (jsonObject.getInt("error_code") == 0) {
+                                iv_adse.setVisibility(View.VISIBLE);
+                                JSONArray array = jsonObject.getJSONArray("data");
+                                ImageLoaderUtil.loadImage(mContext, iv_adse, array.getJSONObject(0).getString("img_url"));
+                                content_url = array.getJSONObject(0).getString("content_url");
+                            } else {
+                                iv_adse.setVisibility(View.GONE);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }
@@ -316,13 +327,20 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
      * 活跃榜上的冠亚季军的三家公司请求接口
      */
     private void requestGetLastMonthCompanyList() {
-        getLastMonthCompanyListParams = AppInfoUtil.getPublicParams(this);
-        HttpServer.getInstance().requestPOST(getLastMonthCompanyListUrl,
-                getLastMonthCompanyListParams, new AsyncHttpResponseHandler() {
+        getLastMonthCompanyListParams = AppInfoUtil.getPublicHashMapParams(this);
 
+        OKHttpUtil.post(getLastMonthCompanyListUrl, getLastMonthCompanyListParams, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                runOnUiThread(new Runnable() {
                     @Override
-                    public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                        String result = new String(body);
+                    public void run() {
                         try {
                             JSONObject jsonObject = new JSONObject(result);
                             if (jsonObject.getInt("error_code") == 0) {
@@ -337,12 +355,9 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
                             e.printStackTrace();
                         }
                     }
-
-                    @Override
-                    public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
-                    }
                 });
+            }
+        });
     }
 
     /***
@@ -386,7 +401,7 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
      * 初始化参数以备请求网络使用
      */
     private void initParams() {
-        getListParams = AppInfoUtil.getPublicParams(this);
+        getListParams = AppInfoUtil.getPublicHashMapParams(this);
         getListParams.put("page", page + "");
         getListParams.put("token", AppInfoUtil.getToekn(this));
         getListParams.put("layout_id", layout_id);
@@ -399,47 +414,52 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
      *  逛图库中显示当地装修公司列表的接口请求
      */
     private void requestGetList() {
-        HttpServer.getInstance().requestPOST(getListUrl, getListParams, new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(getListUrl, getListParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                getSharedPreferences("IsImageCache", 0).edit().putString("result", new String(body)).commit();
-                //**********************************************************************测试
-                try {
-                    JSONObject jsonObject = new JSONObject(new String(body));
-                    JSONArray dataArray = jsonObject.getJSONArray("data");
-//                    Log.e(TAG, "获取的JSON数据集合" + dataArray.toString());
-                    //将获取的数组转换成集合
-                    List<_ImageItem> imageItemsList = new ArrayList<_ImageItem>();
-                    for (int i = 0; i < dataArray.length(); i++) {
-                        Log.e(TAG, "====查看数组到底是啥玩意====" + dataArray.get(i));
-                        _ImageItem item = new _ImageItem(dataArray.get(i).toString());
+            public void onFailure(Call call, IOException e) {
 
-                        imageItemsList.add(item);
-                        Log.e(TAG, "获取集合中的数据" + imageItemsList.get(i).getComInfo().getComSimpName());
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                //**********************************************************************测试
-                List<HashMap<String, String>> temDataList = PrseImageJsonUtil.parsingJson(new String(body), mContext, null, "ImageActivity");
-                if (temDataList.size() == 0 && imageDatas.size() != 0) {
-                    Toast.makeText(mContext, "没有更多图库！", Toast.LENGTH_SHORT).show();
-                }
-                if (temDataList.size() != 0) {
-                    if (page == 1) {
-                        imageDatas.clear();
-                    }
-                    for (int i = 0; i < temDataList.size(); i++) {
-                        imageDatas.add(temDataList.get(i));
-                    }
-                }
-                onLoad();
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+            public void onResponse(Call call, Response response) throws IOException {
+                final String json = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getSharedPreferences("IsImageCache", 0).edit().putString("result", json).commit();
+                        //**********************************************************************测试
+                        try {
+                            JSONObject jsonObject = new JSONObject(json);
+                            JSONArray dataArray = jsonObject.getJSONArray("data");
+//                    Log.e(TAG, "获取的JSON数据集合" + dataArray.toString());
+                            //将获取的数组转换成集合
+                            List<_ImageItem> imageItemsList = new ArrayList<_ImageItem>();
+                            for (int i = 0; i < dataArray.length(); i++) {
+                                Log.e(TAG, "====查看数组到底是啥玩意====" + dataArray.get(i));
+                                _ImageItem item = new _ImageItem(dataArray.get(i).toString());
 
+                                imageItemsList.add(item);
+                                Log.e(TAG, "获取集合中的数据" + imageItemsList.get(i).getComInfo().getComSimpName());
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        //**********************************************************************测试
+                        List<HashMap<String, String>> temDataList = PrseImageJsonUtil.parsingJson(json, mContext, null, "ImageActivity");
+                        if (temDataList.size() == 0 && imageDatas.size() != 0) {
+                            Toast.makeText(mContext, "没有更多图库！", Toast.LENGTH_SHORT).show();
+                        }
+                        if (temDataList.size() != 0) {
+                            if (page == 1) {
+                                imageDatas.clear();
+                            }
+                            for (int i = 0; i < temDataList.size(); i++) {
+                                imageDatas.add(temDataList.get(i));
+                            }
+                        }
+                        onLoad();
+                    }
+                });
             }
         });
     }
@@ -602,10 +622,10 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
      * 初始化搜索接口的请求参数
      */
     private void initSearchParams() {
-        searchCommunityParams = AppInfoUtil.getPublicParams(getApplicationContext());
+        searchCommunityParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         page = 1;
-        searchCommunityParams.add("page", page + "");
-        searchCommunityParams.add("communityName", communityName);
+        searchCommunityParams.put("page", page + "");
+        searchCommunityParams.put("communityName", communityName);
         requestSearch();
     }
 
@@ -613,37 +633,42 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
      * 搜索请求
      */
     private void requestSearch() {
-        HttpServer.getInstance().requestPOST(searchCommunityUrl, searchCommunityParams, new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(searchCommunityUrl, searchCommunityParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                try {
-                    JSONObject jsonObject = new JSONObject(new String(body));
-                    if (jsonObject.getInt("error_code") != 0) {
-                        Toast.makeText(mContext, "没有搜索到图库！", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onFailure(Call call, IOException e) {
 
-                List<HashMap<String, String>> temDataList = PrseImageJsonUtil.parsingJson(new String(body), mContext, null, "ImageActivity");
-                if (temDataList.size() == 0 && imageDatas.size() != 0) {
-                    Toast.makeText(mContext, "没有搜索到更多的图库！", Toast.LENGTH_SHORT).show();
-                } else if (temDataList.size() != 0) {
-                    if (page == 1) {
-                        imageDatas.clear();
-                    }
-                    for (int i = 0; i < temDataList.size(); i++) {
-                        imageDatas.add(temDataList.get(i));
-                    }
-                }
-                onLoad();
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+            public void onResponse(Call call, Response response) throws IOException {
+                final String json = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(json);
+                            if (jsonObject.getInt("error_code") != 0) {
+                                Toast.makeText(mContext, "没有搜索到图库！", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
+                        List<HashMap<String, String>> temDataList = PrseImageJsonUtil.parsingJson(json, mContext, null, "ImageActivity");
+                        if (temDataList.size() == 0 && imageDatas.size() != 0) {
+                            Toast.makeText(mContext, "没有搜索到更多的图库！", Toast.LENGTH_SHORT).show();
+                        } else if (temDataList.size() != 0) {
+                            if (page == 1) {
+                                imageDatas.clear();
+                            }
+                            for (int i = 0; i < temDataList.size(); i++) {
+                                imageDatas.add(temDataList.get(i));
+                            }
+                        }
+                        onLoad();
+                    }
+                });
             }
         });
     }

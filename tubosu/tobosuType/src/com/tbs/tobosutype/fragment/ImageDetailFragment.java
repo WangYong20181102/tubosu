@@ -16,9 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.ApplyforSuccessActivity;
 import com.tbs.tobosutype.activity.ImageDetailsFullScreenActivity;
@@ -29,18 +26,20 @@ import com.tbs.tobosutype.customview.CardSlidePanel;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.customview.DesignFreePopupWindow;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 import com.tbs.tobosutype.utils.ShareUtil;
 import com.umeng.analytics.MobclickAgent;
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 @SuppressLint({"HandlerLeak", "NewApi", "InflateParams"})
 public class ImageDetailFragment extends Fragment {
@@ -58,8 +57,8 @@ public class ImageDetailFragment extends Fragment {
     private String token;//用户唯一标识
     private String phone;//用户填写的手机号
     private String userid;//用户id
-    private RequestParams imgDetailParams;
-    private RequestParams pubOrderParams;//发单参数
+    private HashMap<String, String> imgDetailParams;
+    private HashMap<String, String> pubOrderParams;//发单参数
     private DesignFreePopupWindow designPopupWindow;//底部弹窗按钮
 
     /***效果图详情接口*/
@@ -131,8 +130,8 @@ public class ImageDetailFragment extends Fragment {
         id = mBundle.getString("id");
         url = mBundle.getString("url");
         fav_conid = mBundle.getString("fav_conid");
-        pubOrderParams = new RequestParams();
-        imgDetailParams = AppInfoUtil.getPublicParams(mContext);
+        pubOrderParams = new HashMap<String, String>();
+        imgDetailParams = AppInfoUtil.getPublicHashMapParams(mContext);
         imgDetailParams.put("token", AppInfoUtil.getToekn(mContext));
         imgDetailParams.put("id", id);
         imgDetailParams.put("url", url);
@@ -147,17 +146,23 @@ public class ImageDetailFragment extends Fragment {
             Constant.toastNetOut(mContext);
             return;
         }
-        HttpServer.getInstance().requestPOST(imgDetailUrl, imgDetailParams, new AsyncHttpResponseHandler() {
 
+        OKHttpUtil.post(imgDetailUrl, imgDetailParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                Log.e(TAG, "请求成功=====" + new String(body));
-                disposeJson(new String(body));
+            public void onFailure(Call call, IOException e) {
+
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-                Log.e(TAG, "请求失败=====" +arg3.toString());
+            public void onResponse(Call call, Response response) throws IOException {
+                final String json = response.body().string();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e(TAG, "请求成功=====" + json);
+                        disposeJson(json);
+                    }
+                });
             }
         });
     }
@@ -323,7 +328,7 @@ public class ImageDetailFragment extends Fragment {
         }
 
         //开始操作  --请注意下面这个if else语句总的fav_id以及它们相应的key value值--
-        RequestParams favParams = AppInfoUtil.getPublicParams(mContext);
+        HashMap<String, String> favParams = AppInfoUtil.getPublicHashMapParams(mContext);
         favParams.put("fav_type", "showpic");
         favParams.put("token", token);
 
@@ -345,31 +350,36 @@ public class ImageDetailFragment extends Fragment {
         }
 
         // 接口请求
-        HttpServer.getInstance().requestPOST(favUrl, favParams, new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(favUrl, favParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                String result = new String(body);
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String msg = jsonObject.getString("msg");
-                    if (msg.equals("操作成功")) {
-                        if (oper_type.equals("0")) {
-                            Toast.makeText(mContext, "收藏成功!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(mContext, "取消收藏成功!", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onFailure(Call call, IOException e) {
+
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 
+                        try {
+                            JSONObject jsonObject = new JSONObject(result);
+                            String msg = jsonObject.getString("msg");
+                            if (msg.equals("操作成功")) {
+                                if (oper_type.equals("0")) {
+                                    Toast.makeText(mContext, "收藏成功!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(mContext, "取消收藏成功!", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }
@@ -411,35 +421,42 @@ public class ImageDetailFragment extends Fragment {
          */
         private void HttpRequestPubOrder() {
             customWaitDialog.show();
-            HttpServer.getInstance().requestPOST(Constant.PUB_ORDERS, pubOrderParams, new AsyncHttpResponseHandler() {
-
+            OKHttpUtil.post(Constant.PUB_ORDERS, pubOrderParams, new Callback() {
                 @Override
-                public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                    String result = new String(body);
-                    try {
-                        JSONObject jsonObject = new JSONObject(result);
-                        if (jsonObject.getInt("error_code") == 0) {
+                public void onFailure(Call call, IOException e) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
                             customWaitDialog.dismiss();
-                            MobclickAgent.onEvent(mContext, "click_find_decoration_array_design_for_me_conform_reservation_3.0");
-                            Intent intent = new Intent(mContext, ApplyforSuccessActivity.class);
-                            intent.putExtra("phone", phone);
-                            startActivity(intent);
-                        } else {
-                            customWaitDialog.dismiss();
-                            Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    });
                 }
 
                 @Override
-                public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-                    customWaitDialog.dismiss();
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String result = response.body().string();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject jsonObject = new JSONObject(result);
+                                if (jsonObject.getInt("error_code") == 0) {
+                                    customWaitDialog.dismiss();
+                                    MobclickAgent.onEvent(mContext, "click_find_decoration_array_design_for_me_conform_reservation_3.0");
+                                    Intent intent = new Intent(mContext, ApplyforSuccessActivity.class);
+                                    intent.putExtra("phone", phone);
+                                    startActivity(intent);
+                                } else {
+                                    customWaitDialog.dismiss();
+                                    Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 }
             });
         }
-
-        ;
     };
 }

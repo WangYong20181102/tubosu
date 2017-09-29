@@ -1,6 +1,5 @@
 package com.tbs.tobosutype.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,7 +16,6 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -26,10 +24,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.ImageNewActivityAdapter;
 import com.tbs.tobosutype.adapter.MyGridViewAdapter;
@@ -37,18 +32,19 @@ import com.tbs.tobosutype.bean._ImageItem;
 import com.tbs.tobosutype.bean._Style;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
-
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class ImageNewActivity extends BaseActivity {
     /**
@@ -81,8 +77,8 @@ public class ImageNewActivity extends BaseActivity {
     private int page = 1;//获取数据时所要用的页面数
 
     private boolean isUpRefresh;//是否处于上拉状态
-    private RequestParams getImgItemListParams;//获取图库列表的参数
-    private RequestParams getStyleListParams;//获取条件筛选的参数
+    private HashMap<String, String> getImgItemListParams;//获取图库列表的参数
+    private HashMap<String, String> getStyleListParams;//获取条件筛选的参数
 
     private View viewLoading;//loading图
     private View viewNetOut;//网络断开图
@@ -140,8 +136,8 @@ public class ImageNewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_new);
         mContext = ImageNewActivity.this;
-        getStyleListParams = new RequestParams();
-        getImgItemListParams = AppInfoUtil.getPublicParams(mContext);
+        getStyleListParams = new HashMap<String, String>();
+        getImgItemListParams = AppInfoUtil.getPublicHashMapParams(mContext);
         customWaitDialog = new CustomWaitDialog(mContext);
         initCache();
         bindView();
@@ -234,7 +230,7 @@ public class ImageNewActivity extends BaseActivity {
     //初始化图库的公共参数
     private void initImageListParams() {
         getImgItemListParams.put("token", AppInfoUtil.getToekn(this));
-        getImgItemListParams.put("page", page);
+        getImgItemListParams.put("page", page + "");
         getImgItemListParams.put("pageSize", "20");
     }
 
@@ -279,32 +275,44 @@ public class ImageNewActivity extends BaseActivity {
                 if (!popBtnListFg.isEmpty()) {
                     popBtnListFg.clear();
                 }
-                JSONObject jsonObjectFg = new JSONObject(AppInfoUtil.getStyleFgCache(mContext));
-                JSONArray dataArrayFg = jsonObjectFg.getJSONArray("data");
-                for (int i = 0; i < dataArrayFg.length(); i++) {
-                    _Style styleFg = new _Style(dataArrayFg.get(i).toString());
-                    popBtnListFg.add(styleFg);
+                String json = AppInfoUtil.getStyleFgCache(mContext);
+                if(!"".equals(json)){
+                    JSONObject jsonObjectFg = new JSONObject(json);
+                    JSONArray dataArrayFg = jsonObjectFg.getJSONArray("data");
+                    for (int i = 0; i < dataArrayFg.length(); i++) {
+                        _Style styleFg = new _Style(dataArrayFg.get(i).toString());
+                        popBtnListFg.add(styleFg);
+                    }
                 }
+
             } else if (setType == 9) {
                 if (!popBtnListHx.isEmpty()) {
                     popBtnListHx.clear();
                 }
-                JSONObject jsonObjectHx = new JSONObject(AppInfoUtil.getStyleHxCache(mContext));
-                JSONArray dataArrayHx = jsonObjectHx.getJSONArray("data");
-                for (int i = 0; i < dataArrayHx.length(); i++) {
-                    _Style styleHx = new _Style(dataArrayHx.get(i).toString());
-                    popBtnListHx.add(styleHx);
+                String mJson = AppInfoUtil.getStyleHxCache(mContext);
+                if(!"".equals(mJson)){
+                    JSONObject jsonObjectHx = new JSONObject(mJson);
+                    JSONArray dataArrayHx = jsonObjectHx.getJSONArray("data");
+                    for (int i = 0; i < dataArrayHx.length(); i++) {
+                        _Style styleHx = new _Style(dataArrayHx.get(i).toString());
+                        popBtnListHx.add(styleHx);
+                    }
                 }
+
             } else if (setType == 12) {
                 if (!popBtnListMj.isEmpty()) {
                     popBtnListMj.clear();
                 }
-                JSONObject jsonObjectMj = new JSONObject(AppInfoUtil.getStyleMjCache(mContext));
-                JSONArray dataArrayMj = jsonObjectMj.getJSONArray("data");
-                for (int i = 0; i < dataArrayMj.length(); i++) {
-                    _Style styleMj = new _Style(dataArrayMj.get(i).toString());
-                    popBtnListMj.add(styleMj);
+                String jsonm = AppInfoUtil.getStyleMjCache(mContext);
+                if(!"".equals(jsonm)){
+                    JSONObject jsonObjectMj = new JSONObject(jsonm);
+                    JSONArray dataArrayMj = jsonObjectMj.getJSONArray("data");
+                    for (int i = 0; i < dataArrayMj.length(); i++) {
+                        _Style styleMj = new _Style(dataArrayMj.get(i).toString());
+                        popBtnListMj.add(styleMj);
+                    }
                 }
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -388,87 +396,110 @@ public class ImageNewActivity extends BaseActivity {
      * 逛图库中显示当地装修公司列表的接口请求
      * 传入的参数
      */
-    private void HttpRequestGetImgItemList(final RequestParams params) {
+    private void HttpRequestGetImgItemList(final HashMap<String, String> params) {
         Log.e(TAG, "进入网络请求数据中。。。。");
         img_not_found_rl.setVisibility(View.GONE);
         //判断当前的网络连接情况
         if (Constant.checkNetwork(mContext)) {
             //请求
-            HttpServer.getInstance().requestPOST(getListUrl, params, new AsyncHttpResponseHandler() {
+            OKHttpUtil.post(getListUrl, params, new Callback() {
                 @Override
-                public void onSuccess(int arg0, Header[] headers, byte[] body) {
-                    /**
-                     *数据请求成功之后 将请求的json缓存
-                     * 并且将之前的加载缓存页面隐藏
-                     * 缓存的目的在断网的时候能预览 不至于一片空白
-                     */
-                    viewLoading.setVisibility(View.GONE);//隐藏加载图层
-                    viewNetOut.setVisibility(View.GONE);//隐藏断网图层
-                    imgNewSwipLayout.setRefreshing(false);//获取数据成功停止刷新
-                    customWaitDialog.dismiss();
-                    Log.e(TAG, "进入网络请求数据中。。。。请求成功！！" + new String(body));
-                    //获取接口数据成功将数据添加到list中
-                    try {
-                        JSONObject jsonObject = new JSONObject(new String(body));
-                        Log.e(TAG, "请求数据成功===" + new String(body));
-                        if (jsonObject.getString("error_code").equals("0")) {
-                            JSONArray dataArray = jsonObject.getJSONArray("data");
-                            isUpRefresh = false;
-                            for (int i = 0; i < dataArray.length(); i++) {
-                                _ImageItem item = new _ImageItem(dataArray.get(i).toString());
-                                //临时的容器 装载当前请求的数据
-                                tempList.add(item);
-                            }
+                public void onFailure(Call call, IOException e) {
 
-                            imageItemsList.addAll(tempList);
-                            tempList.clear();
-                            if (imageNewActivityAdapter == null) {
-                                imageNewActivityAdapter = new ImageNewActivityAdapter(mContext, imageItemsList);
-                                imageNewActivityAdapter.setOnImageNewItemClickLister(onImageNewItemClickLister);
-                                imgNewRecycleView.setAdapter(imageNewActivityAdapter);
-                            } else {
-                                imageNewActivityAdapter.changeState(2);
-                                imageNewActivityAdapter.notifyDataSetChanged();
-                            }
-                            Log.e(TAG, "当前的集合长度=====" + imageItemsList.size());
-
-                        } else if (jsonObject.getString("error_code").equals("250")) {
-                            //没有更多数据的处理情况
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (imageItemsList.isEmpty()) {
-                                        img_not_found_rl.setVisibility(View.VISIBLE);
-                                    }
-                                    Log.e(TAG,"没有更多数据===数据的集合的长度==="+imageItemsList.size());
-                                    imageNewActivityAdapter.changeState(2);
-                                    imageNewActivityAdapter.notifyDataSetChanged();
-                                    Toast.makeText(mContext, "当前没有更多数据！", Toast.LENGTH_LONG).show();
-                                }
-                            });
-
-                        } else {
-                            Toast.makeText(mContext, "服务器错误", Toast.LENGTH_LONG).show();
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
                 }
 
                 @Override
-                public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-                    viewLoading.setVisibility(View.GONE);
-                    viewNetOut.setVisibility(View.VISIBLE);
-                    imgNewSwipLayout.setRefreshing(false);
-                    if (imageNewActivityAdapter == null) {
-                        imageNewActivityAdapter = new ImageNewActivityAdapter(mContext, imageItemsList);
-                    }
-                    imageNewActivityAdapter.changeState(2);
-                    isUpRefresh = false;
-                    customWaitDialog.dismiss();
-                    Log.e(TAG, "请求失败原因===" + arg3.toString());
-                    Toast.makeText(mContext, "请求超时，数据获取失败。", Toast.LENGTH_LONG).show();
+                public void onResponse(Call call, Response response) throws IOException {
+
+                }
+            });
+
+            OKHttpUtil.post(getListUrl, params, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            viewLoading.setVisibility(View.GONE);
+                            viewNetOut.setVisibility(View.VISIBLE);
+                            imgNewSwipLayout.setRefreshing(false);
+                            if (imageNewActivityAdapter == null) {
+                                imageNewActivityAdapter = new ImageNewActivityAdapter(mContext, imageItemsList);
+                            }
+                            imageNewActivityAdapter.changeState(2);
+                            isUpRefresh = false;
+                            customWaitDialog.dismiss();
+                            Toast.makeText(mContext, "请求超时，数据获取失败", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+
+                    final String json = response.body().string();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            /**
+                             *数据请求成功之后 将请求的json缓存
+                             * 并且将之前的加载缓存页面隐藏
+                             * 缓存的目的在断网的时候能预览 不至于一片空白
+                             */
+                            viewLoading.setVisibility(View.GONE);//隐藏加载图层
+                            viewNetOut.setVisibility(View.GONE);//隐藏断网图层
+                            imgNewSwipLayout.setRefreshing(false);//获取数据成功停止刷新
+                            customWaitDialog.dismiss();
+                            Log.e(TAG, "进入网络请求数据中。。。。请求成功！！" + json);
+                            //获取接口数据成功将数据添加到list中
+                            try {
+                                JSONObject jsonObject = new JSONObject(json);
+                                Log.e(TAG, "请求数据成功===" + json);
+                                if (jsonObject.getString("error_code").equals("0")) {
+                                    JSONArray dataArray = jsonObject.getJSONArray("data");
+                                    isUpRefresh = false;
+                                    for (int i = 0; i < dataArray.length(); i++) {
+                                        _ImageItem item = new _ImageItem(dataArray.get(i).toString());
+                                        //临时的容器 装载当前请求的数据
+                                        tempList.add(item);
+                                    }
+
+                                    imageItemsList.addAll(tempList);
+                                    tempList.clear();
+                                    if (imageNewActivityAdapter == null) {
+                                        imageNewActivityAdapter = new ImageNewActivityAdapter(mContext, imageItemsList);
+                                        imageNewActivityAdapter.setOnImageNewItemClickLister(onImageNewItemClickLister);
+                                        imgNewRecycleView.setAdapter(imageNewActivityAdapter);
+                                    } else {
+                                        imageNewActivityAdapter.changeState(2);
+                                        imageNewActivityAdapter.notifyDataSetChanged();
+                                    }
+                                    Log.e(TAG, "当前的集合长度=====" + imageItemsList.size());
+
+                                } else if (jsonObject.getString("error_code").equals("250")) {
+                                    //没有更多数据的处理情况
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (imageItemsList.isEmpty()) {
+                                                img_not_found_rl.setVisibility(View.VISIBLE);
+                                            }
+                                            Log.e(TAG,"没有更多数据===数据的集合的长度==="+imageItemsList.size());
+                                            imageNewActivityAdapter.changeState(2);
+                                            imageNewActivityAdapter.notifyDataSetChanged();
+                                            Toast.makeText(mContext, "当前没有更多数据！", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+
+                                } else {
+                                    Toast.makeText(mContext, "服务器错误", Toast.LENGTH_LONG).show();
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 }
             });
         } else {
@@ -774,7 +805,7 @@ public class ImageNewActivity extends BaseActivity {
         page++;
         Log.e(TAG, "加载更多page===》" + page);
         ClearParam();
-        getImgItemListParams.put("page", page);
+        getImgItemListParams.put("page", page + "");
         if (LoadMoreParam.isEmpty()) {
             //没有选择条件的加载更多
             HttpRequestGetImgItemList(getImgItemListParams);
@@ -806,54 +837,60 @@ public class ImageNewActivity extends BaseActivity {
 
     private void HttpRequestGetStyleList(final String classid) {
         getStyleListParams.put("classid", classid);
-        HttpServer.getInstance().requestPOST(getStytleUrl, getStyleListParams, new AsyncHttpResponseHandler() {
+        OKHttpUtil.post(getStytleUrl, getStyleListParams, new Callback() {
             @Override
-            public void onSuccess(int ag, Header[] headers, byte[] body) {
-                try {
-                    JSONObject jsonObject = new JSONObject(new String(body));
-                    if (jsonObject.getString("error_code").equals("0")) {
-                        //将数据缓存到本地
-                        if (classid.equals("7")) {
-                            //缓存风格json 缓存的数据后台进行更新了则重新添加缓存
-                            if (!(AppInfoUtil.getStyleFgCache(mContext).equals(new String(body)))) {
-                                getSharedPreferences("StyleFgCache", 0).edit().clear();
-                                getSharedPreferences("StyleFgCache", 0).edit().putString("resultJson", new String(body)).commit();
-                            } else {
-                                Log.e(TAG, "当前缓存与服务器上的一致不需要再缓存===" + AppInfoUtil.getStyleFgCache(mContext));
-                            }
-                            setAdapterListDatas(7);
-                        } else if (classid.equals("9")) {
-                            //缓存户型json 缓存的数据后台进行了更新则需要重新添加缓存
-                            if (!(AppInfoUtil.getStyleHxCache(mContext).equals(new String(body)))) {
-                                getSharedPreferences("StyleHxCache", 0).edit().clear();
-                                getSharedPreferences("StyleHxCache", 0).edit().putString("resultJson", new String(body)).commit();
-                            } else {
-                                Log.e(TAG, "当前缓存与服务器上的一致不需要再缓存===" + AppInfoUtil.getStyleHxCache(mContext));
-                            }
-                            setAdapterListDatas(9);
-                        } else if (classid.equals("12")) {
+            public void onFailure(Call call, IOException e) {
 
-                            //缓存面积Json
-                            if (!(AppInfoUtil.getStyleMjCache(mContext).equals(new String(body)))) {
-                                getSharedPreferences("StyleMjCache", 0).edit().clear();
-                                getSharedPreferences("StyleMjCache", 0).edit().putString("resultJson", new String(body)).commit();
-                            } else {
-                                Log.e(TAG, "当前缓存与服务器上的一致不需要再缓存===" + AppInfoUtil.getStyleMjCache(mContext));
-                            }
-                            setAdapterListDatas(12);
-                        }
-                    } else {
-                        Toast.makeText(mContext, "服务器错误！", Toast.LENGTH_LONG).show();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }
 
             @Override
-            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(result);
+                            if (jsonObject.getString("error_code").equals("0")) {
+                                //将数据缓存到本地
+                                if (classid.equals("7")) {
+                                    //缓存风格json 缓存的数据后台进行更新了则重新添加缓存
+                                    if (!(AppInfoUtil.getStyleFgCache(mContext).equals(result))) {
+                                        getSharedPreferences("StyleFgCache", 0).edit().clear();
+                                        getSharedPreferences("StyleFgCache", 0).edit().putString("resultJson", result).commit();
+                                    } else {
+                                        Log.e(TAG, "当前缓存与服务器上的一致不需要再缓存===" + AppInfoUtil.getStyleFgCache(mContext));
+                                    }
+                                    setAdapterListDatas(7);
+                                } else if (classid.equals("9")) {
+                                    //缓存户型json 缓存的数据后台进行了更新则需要重新添加缓存
+                                    if (!(AppInfoUtil.getStyleHxCache(mContext).equals(result))) {
+                                        getSharedPreferences("StyleHxCache", 0).edit().clear();
+                                        getSharedPreferences("StyleHxCache", 0).edit().putString("resultJson", result).commit();
+                                    } else {
+                                        Log.e(TAG, "当前缓存与服务器上的一致不需要再缓存===" + AppInfoUtil.getStyleHxCache(mContext));
+                                    }
+                                    setAdapterListDatas(9);
+                                } else if (classid.equals("12")) {
 
+                                    //缓存面积Json
+                                    if (!(AppInfoUtil.getStyleMjCache(mContext).equals(result))) {
+                                        getSharedPreferences("StyleMjCache", 0).edit().clear();
+                                        getSharedPreferences("StyleMjCache", 0).edit().putString("resultJson", result).commit();
+                                    } else {
+                                        Log.e(TAG, "当前缓存与服务器上的一致不需要再缓存===" + AppInfoUtil.getStyleMjCache(mContext));
+                                    }
+                                    setAdapterListDatas(12);
+                                }
+                            } else {
+                                Toast.makeText(mContext, "服务器错误！", Toast.LENGTH_LONG).show();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }

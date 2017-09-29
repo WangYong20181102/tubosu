@@ -30,36 +30,34 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.customview.SelectPersonalPopupWindow;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.DensityUtil;
 import com.tbs.tobosutype.utils.FileUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.Util;
 import com.tbs.tobosutype.utils.WriteUtil;
 import com.tencent.android.tpush.XGCustomPushNotificationBuilder;
 import com.tencent.android.tpush.XGPushManager;
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 我的页面【业主】
@@ -168,9 +166,9 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 
     private String resultStr = "";
 
-    private RequestParams userChageInfoParams;
-    private RequestParams userMyParams;
-    private RequestParams retrieveOrderParams;
+    private HashMap<String, String> userChageInfoParams;
+    private HashMap<String, String> userMyParams;
+    private HashMap<String, String> retrieveOrderParams;
 
     private String gender;
     private String icommunity;
@@ -300,72 +298,75 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
      * 我的业主接口请求
      */
     private void requestUserMy() {
-        userMyParams = AppInfoUtil.getPublicParams(getApplicationContext());
+        userMyParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         userMyParams.put("token", token);
 
-        HttpServer.getInstance().requestPOST(userMyUrl, userMyParams, new AsyncHttpResponseHandler() {
+        OKHttpUtil.post(userMyUrl, userMyParams, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
 
-            private String sysmesscount;
+            }
 
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                String result = new String(body);
-                System.out.println("MyOwnerActivity -- 请求结果" + result);
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    if (jsonObject.getInt("error_code") == 0) {
-                        JSONObject data = jsonObject.getJSONObject("data");
-                        icon = data.getString("icon");
-                        nickname = data.getString("name");
-                        gender = data.getString("gender");
-                        icommunity = data.getString("icommunity");
-                        province = data.getString("province");
-                        cityname = data.getString("cityname");
-                        sysmesscount = data.getString("sysmesscount");
-                        //存电话号码
-                        getSharedPreferences("userInfo", 0).edit().putString("cellphone", data.getString("cellphone")).commit();
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("MyOwnerActivity -- 请求结果" + result);
+                        String sysmesscount;
+                        try {
+                            JSONObject jsonObject = new JSONObject(result);
+                            if (jsonObject.getInt("error_code") == 0) {
+                                JSONObject data = jsonObject.getJSONObject("data");
+                                icon = data.getString("icon");
+                                nickname = data.getString("name");
+                                gender = data.getString("gender");
+                                icommunity = data.getString("icommunity");
+                                province = data.getString("province");
+                                cityname = data.getString("cityname");
+                                sysmesscount = data.getString("sysmesscount");
+                                //存电话号码
+                                getSharedPreferences("userInfo", 0).edit().putString("cellphone", data.getString("cellphone")).commit();
 
-                        if (Integer.parseInt(sysmesscount) > 0) {
-                            tv_not_see_sysmsg.setVisibility(View.VISIBLE);
-                            if (Integer.parseInt(sysmesscount) > 9) {
-                                tv_not_see_sysmsg.setText("9+");
-                            } else {
-                                tv_not_see_sysmsg.setText(sysmesscount);
-                            }
-                        } else {
-                            tv_not_see_sysmsg.setVisibility(View.GONE);
-                        }
-                        cellphone = data.getString("cellphone");
-                        wechat_check = data.getString("wechat_check");
-                        lastOrderFlag = data.getString("lastOrderFlag");
-                        if (lastOrderFlag.equals("1")) {
-                            JSONObject object = data.getJSONObject("lastOrderInfo");
-                            orderid = object.getString("orderid");
-                            addtime = object.getString("addtime");
-                            delstatus = object.getString("delstatus");
-                            delstatusDes = object.getString("delstatusDes");
-                            housename = object.getString("housename");
-                            viewcount = object.getString("viewcount");
-                            position = object.getString("position");
-                            clickOrNot = object.getString("clickOrNot");
+                                if (Integer.parseInt(sysmesscount) > 0) {
+                                    tv_not_see_sysmsg.setVisibility(View.VISIBLE);
+                                    if (Integer.parseInt(sysmesscount) > 9) {
+                                        tv_not_see_sysmsg.setText("9+");
+                                    } else {
+                                        tv_not_see_sysmsg.setText(sysmesscount);
+                                    }
+                                } else {
+                                    tv_not_see_sysmsg.setVisibility(View.GONE);
+                                }
+                                cellphone = data.getString("cellphone");
+                                wechat_check = data.getString("wechat_check");
+                                lastOrderFlag = data.getString("lastOrderFlag");
+                                if (lastOrderFlag.equals("1")) {
+                                    JSONObject object = data.getJSONObject("lastOrderInfo");
+                                    orderid = object.getString("orderid");
+                                    addtime = object.getString("addtime");
+                                    delstatus = object.getString("delstatus");
+                                    delstatusDes = object.getString("delstatusDes");
+                                    housename = object.getString("housename");
+                                    viewcount = object.getString("viewcount");
+                                    position = object.getString("position");
+                                    clickOrNot = object.getString("clickOrNot");
 //									if(clickOrNot.equals("1")) {
 //										// 可点
-                            orderDetailUrl = object.getString("orderDetailUrl");
+                                    orderDetailUrl = object.getString("orderDetailUrl");
 //									}else if(clickOrNot.equals("0")){
 //										//不可点
 //										orderDetailUrl = "";
 //									}
+                                }
+                            }
+                            operView();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
                     }
-                    operView();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
+                });
             }
         });
     }
@@ -642,30 +643,35 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
      * @param dialog
      */
     private void requestFindOrder(final DialogInterface dialog) {
-        retrieveOrderParams = AppInfoUtil.getPublicParams(getApplicationContext());
+        retrieveOrderParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         retrieveOrderParams.put("token", token);
 
-        HttpServer.getInstance().requestPOST(retrieveOrderUrl, retrieveOrderParams, new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(retrieveOrderUrl, retrieveOrderParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                try {
-                    JSONObject jsonObject = new JSONObject(new String(body));
-                    if (jsonObject.getInt("error_code") == 0) {
-                        Toast.makeText(mContext, "订单已成功关联！", Toast.LENGTH_SHORT).show();
-                        requestUserMy();
-                    } else {
-                        Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
-                    }
-                    dialog.cancel();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onFailure(Call call, IOException e) {
+
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(result);
+                            if (jsonObject.getInt("error_code") == 0) {
+                                Toast.makeText(mContext, "订单已成功关联！", Toast.LENGTH_SHORT).show();
+                                requestUserMy();
+                            } else {
+                                Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                            }
+                            dialog.cancel();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }
@@ -771,23 +777,24 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
                             BitmapFactory.Options option = new BitmapFactory.Options();
                             option.inSampleSize = 1;
                             String imageUrl = jsonObject.optString("url");
-                            userChageInfoParams = AppInfoUtil.getPublicParams(getApplicationContext());
+                            userChageInfoParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
                             userChageInfoParams.put("field", "5");
                             userChageInfoParams.put("new", imageUrl);
                             userChageInfoParams.put("token", token);
                             MyApplication.imageLoader.displayImage(imageUrl, my_owner_pic, MyApplication.options);
 
-                            HttpServer.getInstance().requestPOST(userChageInfoUrl, userChageInfoParams, new AsyncHttpResponseHandler() {
-
+                            OKHttpUtil.post(userChageInfoUrl, userChageInfoParams, new Callback() {
                                 @Override
-                                public void onSuccess(int arg0, Header[] arg1, byte[] body) {
+                                public void onFailure(Call call, IOException e) {
+
                                 }
 
                                 @Override
-                                public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+                                public void onResponse(Call call, Response response) throws IOException {
 
                                 }
                             });
+
                         } else {
                             Toast.makeText(getApplicationContext(), jsonObject.optString("url"), Toast.LENGTH_SHORT).show();
                         }

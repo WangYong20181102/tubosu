@@ -1,12 +1,11 @@
 package com.tbs.tobosutype.fragment;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -25,17 +24,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.ChooseActivity;
 import com.tbs.tobosutype.activity.MainActivity;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.umeng.analytics.MobclickAgent;
-	/**
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+/**
 	 * 获取设计和报价fragment
 	 * @author dec
 	 *
@@ -52,7 +52,7 @@ public class ChooseDecorateDesignFragment extends Fragment{
 	
 	private TextView tv_giveup;
 	
-	private RequestParams pubOrderParams;
+	private HashMap<String, String> pubOrderParams;
 	
 	private String userid = "";
 	
@@ -184,7 +184,7 @@ public class ChooseDecorateDesignFragment extends Fragment{
 
 	
 	private void initParams(){
-		pubOrderParams = AppInfoUtil.getPublicParams(getActivity().getApplicationContext());
+		pubOrderParams = AppInfoUtil.getPublicHashMapParams(getActivity().getApplicationContext());
 		String city = getActivity().getSharedPreferences("Save_City_Info", Context.MODE_PRIVATE).getString("save_city_now", "");
 		pubOrderParams.put("style",ChooseActivity.chooseString.get(0)); // 类型
 		pubOrderParams.put("housearea", ChooseActivity.chooseString.get(1));
@@ -210,12 +210,19 @@ public class ChooseDecorateDesignFragment extends Fragment{
 	 * 发单接口请求
 	 */
 	private void requestPubOrder() {
-		
-		HttpServer.getInstance().requestPOST(Constant.PUB_ORDERS, pubOrderParams, new AsyncHttpResponseHandler() {
 
+		OKHttpUtil.post(Constant.PUB_ORDERS, pubOrderParams, new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				final String result = response.body().string();
+				getActivity().runOnUiThread(new Runnable() {
 					@Override
-					public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-						String result = new String(body);
+					public void run() {
 						try {
 							JSONObject jsonObject = new JSONObject(result);
 							if (jsonObject.getInt("error_code") == 0) {
@@ -238,7 +245,7 @@ public class ChooseDecorateDesignFragment extends Fragment{
 								Toast.makeText(getActivity(), "提交失败 可在首页重新申请", Toast.LENGTH_SHORT).show();
 								Log.d(TAG, "--提交失败--");
 							}
-							
+
 							if(pd!=null&&pd.isShowing()){
 								pd.dismiss();
 								pd = null;
@@ -247,13 +254,9 @@ public class ChooseDecorateDesignFragment extends Fragment{
 							e.printStackTrace();
 						}
 					}
-
-					@Override
-					public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
-					}
 				});
-		
+			}
+		});
 	}
 	
 	/***

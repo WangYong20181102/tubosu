@@ -34,7 +34,6 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
 import com.bumptech.glide.Glide;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.HomeDecorateClassAdapter;
@@ -50,10 +49,8 @@ import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.DensityUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -254,7 +251,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 //	/** 精选图册接口 */
 //	private String getSpecialUrl = Constant.TOBOSU_URL + "tapp/util/get_special";
 
-    private RequestParams decorationClassParams;
+    private HashMap<String, String> decorationClassParams;
     private RequestParams localDiscountParams;
 
 
@@ -905,31 +902,36 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
      * 装修课堂接口
      */
     private void requestDecorationClass() {
-        decorationClassParams = AppInfoUtil.getPublicParams(this);
-        HttpServer.getInstance().requestPOST(decorationClassUrl, decorationClassParams, new AsyncHttpResponseHandler() {
-
+        decorationClassParams = AppInfoUtil.getPublicHashMapParams(this);
+        OKHttpUtil.post(decorationClassUrl, decorationClassParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                String result = new String(body);
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    if (jsonObject.getInt("error_code") == 0) {
-                        JSONObject data = jsonObject.getJSONObject("data");
-                        decorationClassDatas.add(data.getString("qianqi"));
-                        decorationClassDatas.add(data.getString("zhongqi"));
-                        decorationClassDatas.add(data.getString("houqi"));
-                        decorationClassDatas.add(data.getString("xuancai"));
-                        decorationClassDatas.add(data.getString("sheji"));
-                        decorationClassDatas.add(data.getString("fengshui"));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onFailure(Call call, IOException e) {
+
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 
+                        try {
+                            JSONObject jsonObject = new JSONObject(result);
+                            if (jsonObject.getInt("error_code") == 0) {
+                                JSONObject data = jsonObject.getJSONObject("data");
+                                decorationClassDatas.add(data.getString("qianqi"));
+                                decorationClassDatas.add(data.getString("zhongqi"));
+                                decorationClassDatas.add(data.getString("houqi"));
+                                decorationClassDatas.add(data.getString("xuancai"));
+                                decorationClassDatas.add(data.getString("sheji"));
+                                decorationClassDatas.add(data.getString("fengshui"));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }

@@ -20,31 +20,32 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.DesignFreePopupWindow;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 import com.tbs.tobosutype.utils.ShareUtil;
 import com.tbs.tobosutype.xlistview.XListView;
 import com.tbs.tobosutype.xlistview.XListView.IXListViewListener;
 import com.umeng.socialize.utils.Log;
-
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 /**
  * 效果精选 详情
  * @author dec
@@ -87,7 +88,7 @@ public class SelectedImageDetailActivity extends Activity implements IXListViewL
 	
 	/**为我设计window*/
 	private DesignFreePopupWindow designPopupWindow;
-	private com.loopj.android.http.RequestParams pubOrderParams;
+	private HashMap<String, String> pubOrderParams;
 	
 	private String userid;
 	
@@ -424,7 +425,7 @@ public class SelectedImageDetailActivity extends Activity implements IXListViewL
 		public void onClick(View v) {
 
 			designPopupWindow.dismiss();
-			pubOrderParams = new com.loopj.android.http.RequestParams();
+			pubOrderParams = new HashMap<String,String>();
 			userid = getSharedPreferences("userInfo", 0).getString("userid", "");
 			
 			switch (v.getId()) {
@@ -462,11 +463,19 @@ public class SelectedImageDetailActivity extends Activity implements IXListViewL
 	 * 输入电话号码发单接口请求
 	 */
 	private void requestPubOrder() {
-		HttpServer.getInstance().requestPOST(pubOrderUrl, pubOrderParams, new AsyncHttpResponseHandler() {
+		OKHttpUtil.post(pubOrderUrl, pubOrderParams, new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
 
+			}
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				final String result = response.body().string();
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-						String result = new String(body);
+					public void run() {
+
 						try {
 							JSONObject jsonObject = new JSONObject(result);
 							if (jsonObject.getInt("error_code") == 0) {
@@ -480,13 +489,11 @@ public class SelectedImageDetailActivity extends Activity implements IXListViewL
 							e.printStackTrace();
 						}
 					}
-
-					@Override
-					public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
-					}
 				});
-	};
+			}
+		});
+	}
+
 	@Override
 	public void onRefresh() {
 		direction = "1";

@@ -1,8 +1,8 @@
 package com.tbs.tobosutype.activity;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,14 +17,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tencent.android.tpush.XGPushManager;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -33,6 +30,10 @@ import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener
 import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
 import com.umeng.socialize.exception.SocializeException;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 /**
  * 业主的个人信息页
  * @author dec
@@ -55,7 +56,7 @@ public class MyUserInfoActivity extends Activity implements OnClickListener {
 	/**第三方绑定接口*/
 	private String bindThirdPartyUrl = Constant.TOBOSU_URL + "tapp/passport/bindThirdParty";
 	
-	private RequestParams bindThirdPartyParams;
+	private HashMap<String, String> bindThirdPartyParams;
 	
 	private UMSocialService mController = UMServiceFactory.getUMSocialService(Constant.DESCRIPTOR);
 	private String weiXinUserName;
@@ -263,42 +264,44 @@ public class MyUserInfoActivity extends Activity implements OnClickListener {
 
 	/***
 	 * 第三方绑定接口的请求方法
-	 * @param platform
 	 */
 	private void operBindThirdParty() {
-		bindThirdPartyParams = AppInfoUtil.getPublicParams(getApplicationContext());
+		bindThirdPartyParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
 		bindThirdPartyParams.put("token", token);
 		bindThirdPartyParams.put("kind", "weixin");
 		bindThirdPartyParams.put("icon", weiXinImageUrl);
 		bindThirdPartyParams.put("nickname", weiXinUserName);
 		bindThirdPartyParams.put("account", weiXinUserId);
-		HttpServer.getInstance().requestPOST(bindThirdPartyUrl,
-				bindThirdPartyParams, new AsyncHttpResponseHandler() {
-
+		OKHttpUtil.post(bindThirdPartyUrl, bindThirdPartyParams, new Callback() {
 					@Override
-					public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-						try {
-							JSONObject jsonObject = new JSONObject(new String(
-									body));
-							Toast.makeText(getApplicationContext(),
-									jsonObject.getString("msg"),
-									Toast.LENGTH_SHORT).show();
-							if (jsonObject.getInt("error_code") == 0) {
-								tv_weixin.setTextColor(getResources().getColor(
-										R.color.color_neutralgrey));
-								tv_weixin.setText("已绑定");
-							}else{
-								Toast.makeText(getApplicationContext(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
-							}
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
+					public void onFailure(Call call, IOException e) {
+
 					}
 
 					@Override
-					public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-							Throwable arg3) {
+					public void onResponse(Call call, Response response) throws IOException {
 
+						final String json = response.body().string();
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								try {
+									JSONObject jsonObject = new JSONObject(json);
+									Toast.makeText(getApplicationContext(),
+											jsonObject.getString("msg"),
+											Toast.LENGTH_SHORT).show();
+									if (jsonObject.getInt("error_code") == 0) {
+										tv_weixin.setTextColor(getResources().getColor(
+												R.color.color_neutralgrey));
+										tv_weixin.setText("已绑定");
+									}else{
+										Toast.makeText(getApplicationContext(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+									}
+								} catch (JSONException e) {
+									e.printStackTrace();
+								}
+							}
+						});
 					}
 				});
 	}

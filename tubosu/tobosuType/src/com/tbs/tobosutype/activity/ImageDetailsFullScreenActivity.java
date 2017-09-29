@@ -10,13 +10,11 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -39,18 +37,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.DesignFreePopupWindow;
 import com.tbs.tobosutype.customview.TouchImageView;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 import com.tbs.tobosutype.utils.Util;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 逛图库 全浏览页
@@ -105,7 +103,7 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
     private String androidUrl = "http://m.tobosu.com/?channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());;
 
 
-    private RequestParams imageDetaiParams;
+    private HashMap<String,String> imageDetaiParams;
     private List<String> imageUrls;
 
     private ViewPagerAdapter adapter;
@@ -183,7 +181,7 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
         id = getIntent().getExtras().getString("id");
         imageUrl = getIntent().getExtras().getString("url");
         token = AppInfoUtil.getToekn(getApplicationContext());
-        imageDetaiParams = AppInfoUtil.getPublicParams(getApplicationContext());
+        imageDetaiParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         imageDetaiParams.put("token", token);
 
 //        imageDetaiParams.put("id", id);
@@ -233,7 +231,7 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
                     startActivityForResult(intent, 0);
                     return;
                 }
-                RequestParams favParams = AppInfoUtil.getPublicParams(getApplicationContext());
+                HashMap<String, String> favParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
                 favParams.put("fav_conid", fav_conid);
                 if (oper_type.equals("1") && !TextUtils.isEmpty(oper_type)) {
                     favParams.put("token", token);
@@ -253,31 +251,36 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
                     oper_type = "1";
                 }
                 // 添加和取消收藏接口方法
-                HttpServer.getInstance().requestPOST(favUrl, favParams, new AsyncHttpResponseHandler() {
-
+                OKHttpUtil.post(favUrl, favParams, new Callback() {
                     @Override
-                    public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                        String result = new String(body);
-                        try {
-                            JSONObject jsonObject = new JSONObject(result);
-                            String msg = jsonObject.getString("msg");
-                            if (msg.equals("操作成功")) {
-                                if (oper_type.equals("0")) {
-                                    Toast.makeText(mContext, "收藏成功!", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(mContext, "取消收藏成功!", Toast.LENGTH_SHORT).show();
-                                }
-                            } else {
-                                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    public void onFailure(Call call, IOException e) {
+
                     }
 
                     @Override
-                    public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+                    public void onResponse(Call call, Response response) throws IOException {
+                        final String result = response.body().string();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
 
+                                try {
+                                    JSONObject jsonObject = new JSONObject(result);
+                                    String msg = jsonObject.getString("msg");
+                                    if (msg.equals("操作成功")) {
+                                        if (oper_type.equals("0")) {
+                                            Toast.makeText(mContext, "收藏成功!", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(mContext, "取消收藏成功!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
                     }
                 });
             }
@@ -295,58 +298,63 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
      */
     private void requestImages() {
 
-        HttpServer.getInstance().requestPOST(imageDetaiUrl, imageDetaiParams, new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(imageDetaiUrl, imageDetaiParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                String result = new String(body);
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    if (jsonObject.getInt("error_code") == 0) {
-                        JSONObject jsonObject2 = jsonObject.getJSONObject("data");
-                        id_next = jsonObject2.getString("id_next");
-                        id_prev = jsonObject2.getString("id_prev");
-                        layout_id = jsonObject2.getString("layout_id");
-                        area_id = jsonObject2.getString("area_id");
-                        hav_fav = jsonObject2.getString("hav_fav");
-                        if (hav_fav.equals("1")) {
-                            iv_store.setImageResource(R.drawable.image_love_sel);
-                            oper_type = "0";
-                        } else {
-                            iv_store.setImageResource(R.drawable.image_love_nor);
-                            oper_type = "1";
-                        }
+            public void onFailure(Call call, IOException e) {
 
-                        plan_price = jsonObject2.getString("plan_price");
-
-                        JSONArray jsonArray = jsonObject2.getJSONArray("single_map");
-                        imageUrls.clear();
-                        imageUrls.add("");
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            imageUrls.add(jsonArray.getString(i));
-                        }
-                        imageUrls.add("");
-                        adapter.notifyDataSetChanged();
-                        tv_image_name.setText(layout_id + " - " + area_id + " - " + plan_price + "万");
-                        if (flag) {
-                            full_screen_view_pager.setCurrentItem(index + 1);
-                            flag = false;
-                        } else {
-                            if (showImageLastOne) {
-                                full_screen_view_pager.setCurrentItem(imageUrls.size() - 2);
-                            } else {
-                                full_screen_view_pager.setCurrentItem(1);
-                            }
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 
+                        try {
+                            JSONObject jsonObject = new JSONObject(result);
+                            if (jsonObject.getInt("error_code") == 0) {
+                                JSONObject jsonObject2 = jsonObject.getJSONObject("data");
+                                id_next = jsonObject2.getString("id_next");
+                                id_prev = jsonObject2.getString("id_prev");
+                                layout_id = jsonObject2.getString("layout_id");
+                                area_id = jsonObject2.getString("area_id");
+                                hav_fav = jsonObject2.getString("hav_fav");
+                                if (hav_fav.equals("1")) {
+                                    iv_store.setImageResource(R.drawable.image_love_sel);
+                                    oper_type = "0";
+                                } else {
+                                    iv_store.setImageResource(R.drawable.image_love_nor);
+                                    oper_type = "1";
+                                }
+
+                                plan_price = jsonObject2.getString("plan_price");
+
+                                JSONArray jsonArray = jsonObject2.getJSONArray("single_map");
+                                imageUrls.clear();
+                                imageUrls.add("");
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    imageUrls.add(jsonArray.getString(i));
+                                }
+                                imageUrls.add("");
+                                adapter.notifyDataSetChanged();
+                                tv_image_name.setText(layout_id + " - " + area_id + " - " + plan_price + "万");
+                                if (flag) {
+                                    full_screen_view_pager.setCurrentItem(index + 1);
+                                    flag = false;
+                                } else {
+                                    if (showImageLastOne) {
+                                        full_screen_view_pager.setCurrentItem(imageUrls.size() - 2);
+                                    } else {
+                                        full_screen_view_pager.setCurrentItem(1);
+                                    }
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }
@@ -406,7 +414,7 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
         currentPage = postion;
         if (postion == 0) {
             Toast.makeText(mContext, "即将进入上一套图！", Toast.LENGTH_SHORT).show();
-            imageDetaiParams = AppInfoUtil.getPublicParams(getApplicationContext());
+            imageDetaiParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
             imageDetaiParams.put("id", id_prev);
             showImageLastOne = true;
             id = id_prev;
@@ -414,7 +422,7 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
 
         } else if (postion == imageUrls.size() - 1) {
             Toast.makeText(mContext, "即将进入下一套图！", Toast.LENGTH_SHORT).show();
-            imageDetaiParams = AppInfoUtil.getPublicParams(getApplicationContext());
+            imageDetaiParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
             imageDetaiParams.put("id", id_next);
             showImageLastOne = false;
             id = id_next;
@@ -580,7 +588,7 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
                         Toast.makeText(mContext, "手机号码必须是11位数字！", Toast.LENGTH_SHORT).show();
                         return;
                     } else {
-                        RequestParams params = AppInfoUtil.getPublicParams(getApplicationContext());
+                        HashMap<String, String> params = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
                         params.put("cellphone", phone);
                         params.put("city", cityid);
                         params.put("urlhistory", Constant.PIPE); // 渠道代码
@@ -605,38 +613,40 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
          * 发单接口请求
          * @param params
          */
-        private void requestPubOrder(RequestParams params) {
-            HttpServer.getInstance().requestPOST(pubOrderUrl, params, new AsyncHttpResponseHandler() {
-
+        private void requestPubOrder(HashMap<String, String> params) {
+            OKHttpUtil.post(pubOrderUrl, params, new Callback() {
                 @Override
-                public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                    String result = new String(body);
-                    try {
-                        JSONObject jsonObject = new JSONObject(result);
-                        if (jsonObject.getInt("error_code") == 0) {
-                            Intent intent = new Intent(mContext, ApplyforSuccessActivity.class);
-                            intent.putExtra("phone", phone);
-                            //跳转申请成功的页面
-                            startActivity(intent);
-                            designPopupWindow.dismiss();
-                        } else {
-                            Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                public void onFailure(Call call, IOException e) {
 
-                    System.out.println("--全屏页没有发单？ --");
                 }
 
                 @Override
-                public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String result = response.body().string();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject jsonObject = new JSONObject(result);
+                                if (jsonObject.getInt("error_code") == 0) {
+                                    Intent intent = new Intent(mContext, ApplyforSuccessActivity.class);
+                                    intent.putExtra("phone", phone);
+                                    //跳转申请成功的页面
+                                    startActivity(intent);
+                                    designPopupWindow.dismiss();
+                                } else {
+                                    Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
+                            System.out.println("--全屏页没有发单？ --");
+                        }
+                    });
                 }
             });
         }
-
-        ;
     };
     private String imageUrl;
 

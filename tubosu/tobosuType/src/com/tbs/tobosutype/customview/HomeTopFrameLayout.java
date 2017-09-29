@@ -73,7 +73,7 @@ public class HomeTopFrameLayout extends FrameLayout {
     private String[] imageUrls;
     private List<ImageView> imageViewsList;
     private List<View> dotViewsList;
-    private RequestParams countParams;
+    private HashMap<String, String> countParams;
 
     /**
      * 包含h5发单url
@@ -144,7 +144,7 @@ public class HomeTopFrameLayout extends FrameLayout {
         }
 
         getBanner();
-        countParams = new RequestParams();
+        countParams = new HashMap<String, String>();
         if (isAutoPlay) {
             startPlay();
         }
@@ -331,19 +331,19 @@ public class HomeTopFrameLayout extends FrameLayout {
         }
     }
 
-    private void HttpCountClick(RequestParams params) {
-
-        HttpServer.getInstance().requestPOST(urlCount, params, new AsyncHttpResponseHandler() {
+    private void HttpCountClick(HashMap params) {
+        OKHttpUtil.post(urlCount, params, new Callback() {
             @Override
-            public void onSuccess(int i, Header[] headers, byte[] bytes) {
-//                Util.setErrorLog(TAG, "点击统计成功===" + new String(bytes));
+            public void onFailure(Call call, IOException e) {
+
             }
 
             @Override
-            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-//                Util.setErrorLog(TAG, "点击统计失败");
+            public void onResponse(Call call, Response response) throws IOException {
+
             }
         });
+
     }
 
     private class MyPageChangeListener implements OnPageChangeListener {

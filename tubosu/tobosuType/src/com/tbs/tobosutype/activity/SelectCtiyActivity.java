@@ -46,7 +46,6 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.model.LatLng;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.CityAdapter;
 import com.tbs.tobosutype.customview.BladeView;
@@ -60,13 +59,11 @@ import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.model.City;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.LogUtil;
 import com.tbs.tobosutype.utils.MD5Util;
 import com.tbs.tobosutype.utils.NetUtil;
 import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -389,25 +386,29 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
      * 请求所有城市的接口
      */
     private void requestSelectCity() {
-        HttpServer.getInstance().requestPOST(cityUrl, null, new AsyncHttpResponseHandler() {
-
+        HashMap<String, String> hashMap = new HashMap<String, String>();
+        OKHttpUtil.post(cityUrl, hashMap, new Callback() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers,
-                                  byte[] responseBody) {
+            public void onFailure(Call call, IOException e) {
 
-                String result = new String(responseBody);
-//						Log.d("--SelectCityActivity--", "获取的城市列表数据【"+result+"】");
-                LogUtil.printDugLog("--SelectCityActivity--", result);
-                //缓存至本地
-                getSharedPreferences("selectCityCache", 0).edit().putString("result", result).commit();
-                prseSelectDataJson(result);
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+//						Log.d("--SelectCityActivity--", "获取的城市列表数据【"+result+"】");
+                        LogUtil.printDugLog("--SelectCityActivity--", result);
+                        //缓存至本地
+                        getSharedPreferences("selectCityCache", 0).edit().putString("result", result).commit();
+                        prseSelectDataJson(result);
+                    }
+                });
             }
         });
+
     }
 
     /***

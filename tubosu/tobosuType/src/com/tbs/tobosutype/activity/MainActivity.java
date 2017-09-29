@@ -17,31 +17,28 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.Util;
 import com.tencent.android.tpush.XGPushManager;
 import com.umeng.analytics.MobclickAgent;
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 @SuppressWarnings("deprecation")
 public class MainActivity extends TabActivity implements View.OnClickListener {
@@ -104,7 +101,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
      */
     private String requsetUrl = Constant.TOBOSU_URL + "tapp/user/my";
 
-    private RequestParams requestParams;
+    private HashMap<String,String> requestParams;
 
     /**
      * 存储 用户信息
@@ -492,7 +489,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
      * 检测网络状况 ；若登陆 则获取订单数目
      */
     private void initNet() {
-        requestParams = AppInfoUtil.getPublicParams(mContext);
+        requestParams = AppInfoUtil.getPublicHashMapParams(mContext);
         if (mark.equals("0")) {
             not_see_orders_count.setVisibility(View.GONE);
             Log.d(TAG, "--MainActivity没有登陆--");
@@ -500,50 +497,59 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
             Log.d(TAG, "--MainActivity已经登陆--");
             requestParams.put("token", token);
 
-            HttpServer.getInstance().requestPOST(requsetUrl, requestParams, new AsyncHttpResponseHandler() {
-
+            OKHttpUtil.post(requsetUrl, requestParams, new Callback() {
                 @Override
-                public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                    String result = new String(body);
-                    Log.d(TAG, result);
-                    try {
-                        JSONObject object = new JSONObject(result);
-                        if (object.getInt("error_code") == 0) {
-                            JSONObject jsonObject = object.getJSONObject("data");
-                            // 系统消息只显示红点，订单数据要显示数目 两者共存的话，显示订单数目就是了
-                            int num = 0; //订单数目
-                            int sys_message_flag = 0;
-                            if (mark.equals("3")) {
-                                num = Integer.parseInt(jsonObject.getString("not_see_orders_count"));
-                                sys_message_flag = jsonObject.getInt("sysmesscount");
-                                Log.d(TAG, "--订单数目是[" + num + "]--");
-                                if (num > 0 && sys_message_flag >= 0) { // 订单有数目 有系统消息
-                                    not_see_orders_count.setText(num + "");
-                                    not_see_orders_count.setVisibility(View.VISIBLE);
-                                } else if (num <= 0 && sys_message_flag > 0) {
-                                    not_see_orders_count.setText("");
-                                    not_see_orders_count.setVisibility(View.VISIBLE);
-                                } else {
-                                    not_see_orders_count.setVisibility(View.GONE);
-                                }
-                            } else if (mark.equals("1")) {
-                                sys_message_flag = jsonObject.getInt("sysmesscount");
-                                if (sys_message_flag > 0) {
-                                    not_see_orders_count.setVisibility(View.VISIBLE);
-                                } else {
-                                    not_see_orders_count.setVisibility(View.GONE);
-                                }
-                            }
-
+                public void onFailure(Call call, IOException e) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Util.setToast(mContext, "请求错误，请稍后再试~");
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    });
                 }
 
                 @Override
-                public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-                    Util.setToast(mContext, "请求错误，请稍后再试~");
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String result = response.body().string();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d(TAG, result);
+                            try {
+                                JSONObject object = new JSONObject(result);
+                                if (object.getInt("error_code") == 0) {
+                                    JSONObject jsonObject = object.getJSONObject("data");
+                                    // 系统消息只显示红点，订单数据要显示数目 两者共存的话，显示订单数目就是了
+                                    int num = 0; //订单数目
+                                    int sys_message_flag = 0;
+                                    if (mark.equals("3")) {
+                                        num = Integer.parseInt(jsonObject.getString("not_see_orders_count"));
+                                        sys_message_flag = jsonObject.getInt("sysmesscount");
+                                        Log.d(TAG, "--订单数目是[" + num + "]--");
+                                        if (num > 0 && sys_message_flag >= 0) { // 订单有数目 有系统消息
+                                            not_see_orders_count.setText(num + "");
+                                            not_see_orders_count.setVisibility(View.VISIBLE);
+                                        } else if (num <= 0 && sys_message_flag > 0) {
+                                            not_see_orders_count.setText("");
+                                            not_see_orders_count.setVisibility(View.VISIBLE);
+                                        } else {
+                                            not_see_orders_count.setVisibility(View.GONE);
+                                        }
+                                    } else if (mark.equals("1")) {
+                                        sys_message_flag = jsonObject.getInt("sysmesscount");
+                                        if (sys_message_flag > 0) {
+                                            not_see_orders_count.setVisibility(View.VISIBLE);
+                                        } else {
+                                            not_see_orders_count.setVisibility(View.GONE);
+                                        }
+                                    }
+
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 }
             });
         }

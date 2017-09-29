@@ -19,24 +19,23 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
 import com.tbs.tobosutype.customview.MyChatView;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 
 public class FreeDesignPrice extends Activity {
@@ -44,7 +43,7 @@ public class FreeDesignPrice extends Activity {
     private Intent intent;
     private Context mContext;
     private int count = 60;//倒计时时间
-    private RequestParams fastLoginParams;//快速注册参数
+    private HashMap<String, String> fastLoginParams;//快速注册参数
     private String fastLoginUrl = Constant.TOBOSU_URL + "tapp/passport/fast_register";//快速注册接口
     private CustomWaitDialog customWaitDialog;
     private MyChatView myChatView;
@@ -200,7 +199,7 @@ public class FreeDesignPrice extends Activity {
                     if (Constant.checkNetwork(mContext)) {
                         if (!TextUtils.isEmpty(fdpInputCode.getText().toString().trim())) {
                             customWaitDialog.show();
-                            fastLoginParams = AppInfoUtil.getPublicParams(mContext);
+                            fastLoginParams = AppInfoUtil.getPublicHashMapParams(mContext);
                             fastLoginParams.put("mobile", mPhoneNum);
                             fastLoginParams.put("platform_type", "1");
                             fastLoginParams.put("system_type", "1");
@@ -283,33 +282,41 @@ public class FreeDesignPrice extends Activity {
      * 快速注册用户接口请求
      */
     private void requestFastLogin() {
-        HttpServer.getInstance().requestPOST(fastLoginUrl, fastLoginParams,
-                new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(fastLoginUrl, fastLoginParams, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
                     @Override
-                    public void onSuccess(int arg0, Header[] arg1, byte[] body) {
+                    public void run() {
+                        Log.e(TAG, "请求失败！");
+                        customWaitDialog.dismiss();
+                        Toast.makeText(mContext, "服务端请求失败！", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String json = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
                         try {
-                            JSONObject jsonObject = new JSONObject(new String(body));
+                            JSONObject jsonObject = new JSONObject(json);
                             if (jsonObject.getInt("error_code") == 0) {
                                 customWaitDialog.dismiss();
                                 parseJson(jsonObject);
                             } else {
                                 customWaitDialog.dismiss();
-                                Toast.makeText(mContext,
-                                        jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
-
-                    @Override
-                    public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-                        Log.e("请求失败！", "=====" + arg3.toString());
-                        customWaitDialog.dismiss();
-                        Toast.makeText(mContext, "服务端请求失败！", Toast.LENGTH_LONG).show();
-                    }
                 });
+            }
+        });
     }
 
     //解析json

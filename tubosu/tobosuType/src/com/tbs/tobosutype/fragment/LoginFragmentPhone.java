@@ -30,6 +30,7 @@ import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
 import com.tbs.tobosutype.customview.LoadingWindow;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.HttpServer;
@@ -43,9 +44,16 @@ import com.umeng.socialize.weixin.controller.UMWXHandler;
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 手机登录
@@ -88,7 +96,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
 
 
     /*-------------手机登录相关------------*/
-    private RequestParams fastLoginParams;
+    private HashMap<String, String> fastLoginParams;
 
     /**
      * 快速登录接口 和 注册接口
@@ -114,7 +122,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
     /**
      * 微信参数对象
      */
-    private RequestParams weixinLoginParams;
+    private HashMap<String,String> weixinLoginParams;
 
     /*-------------微信登陆相关------------*/
     public static ReceiveBroadCast receiveBroadCast;
@@ -201,7 +209,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
             return;
         }
 
-        fastLoginParams = AppInfoUtil.getPublicParams(getActivity());
+        fastLoginParams = AppInfoUtil.getPublicHashMapParams(getActivity());
         fastLoginParams.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
         fastLoginParams.put("mobile", et_login_userphone.getText().toString().trim());
         fastLoginParams.put("msg_code", et_login_userphone_verify_code.getText().toString().trim());
@@ -223,30 +231,33 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
             return;
         }
 
-        HttpServer.getInstance().requestPOST(fastLoginUrl, fastLoginParams, new AsyncHttpResponseHandler() {
+        OKHttpUtil.post(fastLoginUrl, fastLoginParams, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
 
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                try {
-                    JSONObject jsonObject = new JSONObject(new String(body));
-                    Log.e("登录日志", "====>>>" + jsonObject.toString() + "<<<<-");
-                    if (jsonObject.getInt("error_code") == 0) {
+            public void onResponse(Call call, Response response) throws IOException {
+                final String json = response.body().string();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(json);
+                            Log.e("登录日志", "====>>>" + jsonObject.toString() + "<<<<-");
+                            if (jsonObject.getInt("error_code") == 0) {
 
-                        parseJson(jsonObject);
-                    } else {
-                        Toast.makeText(getActivity(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                                parseJson(jsonObject);
+                            } else {
+                                Toast.makeText(getActivity(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                });
             }
-
-            @Override
-            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                Log.e("错误日志", "----->>获取的错误码i" + i + "====headers" + headers.toString() + "======bytes" + new String(bytes) + "=====throwable" + throwable.toString());
-            }
-
-
         });
     }
 
@@ -380,32 +391,38 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
      * 微信用户登录接口请求
      */
     private void requestWeixinLogin() {
-        weixinLoginParams = AppInfoUtil.getPublicParams(getActivity());
+        weixinLoginParams = AppInfoUtil.getPublicHashMapParams(getActivity());
         weixinLoginParams.put("kind", "weixin");
         weixinLoginParams.put("icon", weiXinImageUrl);
         weixinLoginParams.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
         weixinLoginParams.put("nickname", weiXinUserName);
         weixinLoginParams.put("account", weiXinUserId);
 
-        HttpServer.getInstance().requestPOST(weixinLoginUrl, weixinLoginParams, new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(weixinLoginUrl, weixinLoginParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                try {
-                    JSONObject jsonObject = new JSONObject(new String(body));
-                    if (jsonObject.getInt("error_code") == 0) {
-                        parseJson(jsonObject);
-                    } else {
-                        Toast.makeText(getActivity(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onFailure(Call call, IOException e) {
+
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+            public void onResponse(Call call, Response response) throws IOException {
+                final String json = response.body().string();
 
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(json);
+                            if (jsonObject.getInt("error_code") == 0) {
+                                parseJson(jsonObject);
+                            } else {
+                                Toast.makeText(getActivity(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }

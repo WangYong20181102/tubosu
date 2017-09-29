@@ -16,17 +16,14 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.MainActivity;
 import com.tbs.tobosutype.customview.LoadingWindow;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.MD5Util;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -35,13 +32,15 @@ import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener
 import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
 import com.umeng.socialize.exception.SocializeException;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 账号登陆
@@ -77,7 +76,7 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
      * 登录接口
      */
     private String userLoginUrl = Constant.TOBOSU_URL + "tapp/passport/app_login";
-    private RequestParams userLoginParams;
+    private HashMap<String, String> userLoginParams;
     /*-------------账号登陆相关------------*/
 
 
@@ -97,7 +96,7 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
     /**
      * 微信参数对象
      */
-    private RequestParams weixinLoginParams;
+    private HashMap<String, String> weixinLoginParams;
 
 	
 	/*-------------微信登陆相关------------*/
@@ -159,7 +158,7 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
             Toast.makeText(getActivity(), "密码不能为空！", Toast.LENGTH_SHORT).show();
             return;
         }
-        userLoginParams = AppInfoUtil.getPublicParams(getActivity());
+        userLoginParams = AppInfoUtil.getPublicHashMapParams(getActivity());
         userLoginParams.put("mobile", userName);
         userLoginParams.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
         userLoginParams.put("pass", encode_pass);
@@ -176,30 +175,34 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
             return;
         }
 
-        HttpServer.getInstance().requestPOST(userLoginUrl, userLoginParams, new AsyncHttpResponseHandler() {
+        OKHttpUtil.post(userLoginUrl, userLoginParams, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
 
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                Log.e("账号登录", "====" + new String(body));
-                try {
-                    JSONObject jsonObject = new JSONObject(new String(body));
-                    if (jsonObject.getInt("error_code") == 0) {
-                        Log.e("登录日志", "====" + jsonObject);
-                        parseJson(jsonObject);
-                    } else {
-                        Toast.makeText(getActivity(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                Log.e("账号登录", "====" + result);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(result);
+                            if (jsonObject.getInt("error_code") == 0) {
+                                Log.e("登录日志", "====" + jsonObject);
+                                parseJson(jsonObject);
+                            } else {
+                                Toast.makeText(getActivity(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                });
             }
-
-            @Override
-            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                Log.e("错误日志", "----->>获取的错误码i" + throwable.getMessage());
-            }
-
-
         });
     }
 
@@ -286,32 +289,38 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
      * 微信用户登录接口请求
      */
     private void requestWeixinLogin() {
-        weixinLoginParams = AppInfoUtil.getPublicParams(getActivity());
+        weixinLoginParams = AppInfoUtil.getPublicHashMapParams(getActivity());
         weixinLoginParams.put("kind", "weixin");
         weixinLoginParams.put("icon", weiXinImageUrl);
         weixinLoginParams.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
         weixinLoginParams.put("nickname", weiXinUserName);
         weixinLoginParams.put("account", weiXinUserId);
 
-        HttpServer.getInstance().requestPOST(weixinLoginUrl, weixinLoginParams, new AsyncHttpResponseHandler() {
 
+        OKHttpUtil.post(weixinLoginUrl, weixinLoginParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                try {
-                    JSONObject jsonObject = new JSONObject(new String(body));
-                    if (jsonObject.getInt("error_code") == 0) {
-                        parseJson(jsonObject);
-                    } else {
-                        Toast.makeText(getActivity(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onFailure(Call call, IOException e) {
+
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(result);
+                            if (jsonObject.getInt("error_code") == 0) {
+                                parseJson(jsonObject);
+                            } else {
+                                Toast.makeText(getActivity(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }

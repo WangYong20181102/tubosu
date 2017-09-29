@@ -15,29 +15,28 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.DesignFreePopupWindow;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.http.HttpPost;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 import com.tbs.tobosutype.utils.ShareUtil;
 import com.tbs.tobosutype.utils.ToastUtil;
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 /**
  * 首页本地优惠装修公司详情页面
  * @author dec
@@ -77,7 +76,7 @@ public class LocalDiscountDetailActivity extends Activity implements OnClickList
 	/***装修公司优惠接口*/
 	private String activityUrl = Constant.TOBOSU_URL + "tapp/company/discount";
 	
-	private RequestParams activityParams;
+	private HashMap<String, String> activityParams;
 	private ImageView iv_cover;
 	private ImageView iv_company_logo;
 	
@@ -131,7 +130,7 @@ public class LocalDiscountDetailActivity extends Activity implements OnClickList
 
 	private void initData() {
 		activityid = getIntent().getStringExtra("activityid");
-		activityParams = AppInfoUtil.getPublicParams(getApplicationContext());
+		activityParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
 		activityParams.put("activityid", activityid);
 		System.out.println(TAG + "---activityid是-->>> "+ activityid+" <<<----");
 		requestActivity();
@@ -142,25 +141,27 @@ public class LocalDiscountDetailActivity extends Activity implements OnClickList
 	 * 获取优惠装修公司接口请求
 	 */
 	private void requestActivity() {
-		HttpServer.getInstance().requestPOST(activityUrl, activityParams, new AsyncHttpResponseHandler() {
+		OKHttpUtil.post(activityUrl, activityParams, new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
 
+			}
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				final String result = response.body().string();
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-						String result = new String(body);
-						
+					public void run() {
 						try {
 							operAcitivity(result);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
-
-					@Override
-					public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-							Throwable arg3) {
-
-					}
 				});
+			}
+		});
 	}
 
 	/**
