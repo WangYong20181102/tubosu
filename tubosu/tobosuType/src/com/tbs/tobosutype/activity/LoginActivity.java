@@ -51,7 +51,6 @@ public class LoginActivity extends FragmentActivity {
 //	private TextView login_frogetPwd;
 //	private List<String> mDatas = Arrays.asList("手机快速登录", "账户登录");
 //	private ViewPagerIndicator mIndicator;
-//	private LoginFragment fragment;
 
     private LoginFragmentAccount accountFragment;
     private LoginFragmentPhone phoneFragment;

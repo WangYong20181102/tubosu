@@ -834,9 +834,13 @@
 
 	<!-- 底部 联系方式 end -->
 	<include
+		android:visibility="gone"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		layout="@layout/layout_loading_data"/>
+		layout="@layout/layout_loading_data"
+		android:layout_alignParentTop="true"
+		android:layout_toRightOf="@+id/decorate_detail_bottom"
+		android:layout_toEndOf="@+id/decorate_detail_bottom" />
 
 
 

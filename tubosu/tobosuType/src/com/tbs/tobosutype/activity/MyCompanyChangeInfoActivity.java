@@ -6,6 +6,7 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,12 +30,7 @@ import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tencent.android.tpush.XGPushManager;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.controller.UMServiceFactory;
-import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
-import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
-import com.umeng.socialize.exception.SocializeException;
-import com.umeng.socialize.weixin.controller.UMWXHandler;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -79,7 +75,7 @@ public class MyCompanyChangeInfoActivity extends Activity implements OnClickList
 	private HashMap<String, String> chageInfoParams;
 	private HashMap<String, String> bindThirdPartyParams;
 	private Intent intent;
-	private UMSocialService mController = UMServiceFactory.getUMSocialService(Constant.DESCRIPTOR);
+	private Context mContext;
 	private String weiXinUserName;
 	private String weiXinImageUrl;
 	private String weiXinUserId;
@@ -94,9 +90,9 @@ public class MyCompanyChangeInfoActivity extends Activity implements OnClickList
 
 	private void initView() {
 		AppInfoUtil.setTranslucentStatus(this);
-		setContentView(R.layout.activity_personaldata);
+//		setContentView(R.layout.activity_personaldata);
 		tv_nickname = (TextView) findViewById(R.id.tv_nickname);
-		tv_gender = (TextView) findViewById(R.id.tv_gender);
+//		tv_gender = (TextView) findViewById(R.id.tv_gender);
 		tv_place = (TextView) findViewById(R.id.tv_place);
 		tv_icommunity = (TextView) findViewById(R.id.tv_icommunity);
 		tv_cellphone = (TextView) findViewById(R.id.tv_cellphone);
@@ -173,11 +169,11 @@ public class MyCompanyChangeInfoActivity extends Activity implements OnClickList
 				Toast.makeText(getApplicationContext(), "您已经绑定过了！",
 						Toast.LENGTH_SHORT).show();
 			} else {
-				UMWXHandler wxHandler = new UMWXHandler(
-						MyCompanyChangeInfoActivity.this, "wx20c4f4560dcd397a",
-						"9b06e848d40bcb04205d75335df6b814");
-				wxHandler.addToSocialSDK();
-				bindThirdParty(SHARE_MEDIA.WEIXIN);
+//				UMWXHandler wxHandler = new UMWXHandler(
+//						MyCompanyChangeInfoActivity.this, "wx20c4f4560dcd397a",
+//						"9b06e848d40bcb04205d75335df6b814");
+//				wxHandler.addToSocialSDK();
+//				bindThirdParty(SHARE_MEDIA.WEIXIN);
 			}
 			break;
 		case R.id.rl_exit:
@@ -332,80 +328,80 @@ public class MyCompanyChangeInfoActivity extends Activity implements OnClickList
 
 	}
 
-	/**
-	 * 授权。如果授权成功，则获取用户信息 ---第三方登录
-	 * 
-	 * @param platform
-	 */
-	private void bindThirdParty(final SHARE_MEDIA platform) {
-		mController.doOauthVerify(MyCompanyChangeInfoActivity.this, platform,
-				new UMAuthListener() {
-
-					@Override
-					public void onStart(SHARE_MEDIA platform) {
-						Toast.makeText(MyCompanyChangeInfoActivity.this, "授权开始",
-								Toast.LENGTH_SHORT).show();
-					}
-
-					@Override
-					public void onError(SocializeException e,
-							SHARE_MEDIA platform) {
-						Toast.makeText(MyCompanyChangeInfoActivity.this, "授权失败",
-								Toast.LENGTH_SHORT).show();
-					}
-
-					@Override
-					public void onComplete(Bundle value, SHARE_MEDIA platform) {
-						// 获取uid
-						String uid = value.getString("uid");
-						if (!TextUtils.isEmpty(uid)) {
-							getUserInfo(platform);
-
-						} else {
-							Toast.makeText(MyCompanyChangeInfoActivity.this,
-									"绑定失败...", Toast.LENGTH_LONG).show();
-						}
-					}
-
-					@Override
-					public void onCancel(SHARE_MEDIA platform) {
-						Toast.makeText(MyCompanyChangeInfoActivity.this, "绑定取消",
-								Toast.LENGTH_SHORT).show();
-					}
-				});
-	}
-
-	/**
-	 * 获取用户信息
-	 * 
-	 * @param platform
-	 */
-	private void getUserInfo(final SHARE_MEDIA platform) {
-		mController.getPlatformInfo(MyCompanyChangeInfoActivity.this, platform,
-				new UMDataListener() {
-
-					@Override
-					public void onStart() {
-						Toast.makeText(getApplicationContext(), "获取平台数据开始...",
-								Toast.LENGTH_SHORT).show();
-					}
-
-					@Override
-					public void onComplete(int status, Map<String, Object> info) {
-						if (status == 200 && info != null) {
-							weiXinUserName = (String) info.get("nickname");
-							weiXinImageUrl = (String) info.get("headimgurl");
-							weiXinUserId = (String) info.get("unionid");
-							operBindThirdParty();
-						} else {
-							Toast.makeText(getApplicationContext(),
-									"获取用户信息失败！", Toast.LENGTH_SHORT).show();
-							return;
-						}
-					}
-
-				});
-	}
+//	/**
+//	 * 授权。如果授权成功，则获取用户信息 ---第三方登录
+//	 *
+//	 * @param platform
+//	 */
+//	private void bindThirdParty(final SHARE_MEDIA platform) {
+//		mController.doOauthVerify(MyCompanyChangeInfoActivity.this, platform,
+//				new UMAuthListener() {
+//
+//					@Override
+//					public void onStart(SHARE_MEDIA platform) {
+//						Toast.makeText(MyCompanyChangeInfoActivity.this, "授权开始",
+//								Toast.LENGTH_SHORT).show();
+//					}
+//
+//					@Override
+//					public void onError(SocializeException e,
+//							SHARE_MEDIA platform) {
+//						Toast.makeText(MyCompanyChangeInfoActivity.this, "授权失败",
+//								Toast.LENGTH_SHORT).show();
+//					}
+//
+//					@Override
+//					public void onComplete(Bundle value, SHARE_MEDIA platform) {
+//						// 获取uid
+//						String uid = value.getString("uid");
+//						if (!TextUtils.isEmpty(uid)) {
+//							getUserInfo(platform);
+//
+//						} else {
+//							Toast.makeText(MyCompanyChangeInfoActivity.this,
+//									"绑定失败...", Toast.LENGTH_LONG).show();
+//						}
+//					}
+//
+//					@Override
+//					public void onCancel(SHARE_MEDIA platform) {
+//						Toast.makeText(MyCompanyChangeInfoActivity.this, "绑定取消",
+//								Toast.LENGTH_SHORT).show();
+//					}
+//				});
+//	}
+//
+//	/**
+//	 * 获取用户信息
+//	 *
+//	 * @param platform
+//	 */
+//	private void getUserInfo(final SHARE_MEDIA platform) {
+//		mController.getPlatformInfo(MyCompanyChangeInfoActivity.this, platform,
+//				new UMDataListener() {
+//
+//					@Override
+//					public void onStart() {
+//						Toast.makeText(getApplicationContext(), "获取平台数据开始...",
+//								Toast.LENGTH_SHORT).show();
+//					}
+//
+//					@Override
+//					public void onComplete(int status, Map<String, Object> info) {
+//						if (status == 200 && info != null) {
+//							weiXinUserName = (String) info.get("nickname");
+//							weiXinImageUrl = (String) info.get("headimgurl");
+//							weiXinUserId = (String) info.get("unionid");
+//							operBindThirdParty();
+//						} else {
+//							Toast.makeText(getApplicationContext(),
+//									"获取用户信息失败！", Toast.LENGTH_SHORT).show();
+//							return;
+//						}
+//					}
+//
+//				});
+//	}
 
 	private void operBindThirdParty() {
 		bindThirdPartyParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());

@@ -35,12 +35,7 @@ import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.controller.UMServiceFactory;
-import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
-import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
-import com.umeng.socialize.exception.SocializeException;
-import com.umeng.socialize.weixin.controller.UMWXHandler;
+
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -108,7 +103,6 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
 
     /*-------------微信登陆相关------------*/
     private LoadingWindow wechatWindow;
-    private UMSocialService mController = UMServiceFactory.getUMSocialService(Constant.DESCRIPTOR);
 
     private String weiXinUserName;
     private String weiXinImageUrl;
@@ -175,7 +169,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
                 hideEdittext();
                 break;
             case R.id.ll_obtain_weixin_login2: // 微信登录
-                loginWeixin();
+//                loginWeixin();
 //			hideEdittext();
                 break;
             case R.id.rel_has_account: // 去账号登录界面
@@ -305,87 +299,87 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
         }
     }
 
-    /***
-     * 微信登录接口请求
-     */
-    private void loginWeixin() {
-        //FIXME
-        wechatWindow = new LoadingWindow(getActivity());
-        UMWXHandler wxHandler = new UMWXHandler(getActivity(), "wx20c4f4560dcd397a", "9b06e848d40bcb04205d75335df6b814");
-        wxHandler.addToSocialSDK();
-        weixinThirdParty(SHARE_MEDIA.WEIXIN);
-    }
-
-    /***
-     * 微信第三方登录
-     *
-     * @param platform
-     */
-    private void weixinThirdParty(final SHARE_MEDIA platform) {
-        mController.doOauthVerify(getActivity(), platform, new UMAuthListener() {
-
-            @Override
-            public void onStart(SHARE_MEDIA platform) {
-
-            }
-
-            @Override
-            public void onError(SocializeException e, SHARE_MEDIA platform) {
-            }
-
-            //微信第三方授权完成调用  create note by lin
-            @Override
-            public void onComplete(Bundle value, SHARE_MEDIA platform) {
-                // 获取uid
-                if (!TextUtils.isEmpty(value.getString("uid"))) {
-                    getUserInfo(platform);
-                    //FIXME
-                    if (wechatWindow != null && wechatWindow.isShowing()) {
-                        wechatWindow.dismiss();
-                        wechatWindow = null;
-                    }
-                } else {
-                    Toast.makeText(getActivity(), "登陆失败...", Toast.LENGTH_LONG).show();
-                }
-
-            }
-
-            @Override
-            public void onCancel(SHARE_MEDIA platform) {
-                Toast.makeText(getActivity(), "登陆取消", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-
-    /***
-     * 获取微信用户的信息
-     *
-     * @param platform
-     */
-    private void getUserInfo(final SHARE_MEDIA platform) {
-        mController.getPlatformInfo(getActivity(), platform, new UMDataListener() {
-
-            @Override
-            public void onStart() {
-                Toast.makeText(getActivity(), "获取平台数据开始...", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onComplete(int status, Map<String, Object> info) {
-                if (status == 200 && info != null) {
-                    weiXinUserName = (String) info.get("nickname");
-                    weiXinImageUrl = (String) info.get("headimgurl");
-                    weiXinUserId = (String) info.get("unionid");
-                    requestWeixinLogin();
-                } else {
-                    Toast.makeText(getActivity(), "获取用户信息失败！", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-
-        });
-    }
+//    /***
+//     * 微信登录接口请求
+//     */
+//    private void loginWeixin() {
+//        //FIXME
+//        wechatWindow = new LoadingWindow(getActivity());
+//        UMWXHandler wxHandler = new UMWXHandler(getActivity(), "wx20c4f4560dcd397a", "9b06e848d40bcb04205d75335df6b814");
+//        wxHandler.addToSocialSDK();
+//        weixinThirdParty(SHARE_MEDIA.WEIXIN);
+//    }
+//
+//    /***
+//     * 微信第三方登录
+//     *
+//     * @param platform
+//     */
+//    private void weixinThirdParty(final SHARE_MEDIA platform) {
+//        mController.doOauthVerify(getActivity(), platform, new UMAuthListener() {
+//
+//            @Override
+//            public void onStart(SHARE_MEDIA platform) {
+//
+//            }
+//
+//            @Override
+//            public void onError(SocializeException e, SHARE_MEDIA platform) {
+//            }
+//
+//            //微信第三方授权完成调用  create note by lin
+//            @Override
+//            public void onComplete(Bundle value, SHARE_MEDIA platform) {
+//                // 获取uid
+//                if (!TextUtils.isEmpty(value.getString("uid"))) {
+//                    getUserInfo(platform);
+//                    //FIXME
+//                    if (wechatWindow != null && wechatWindow.isShowing()) {
+//                        wechatWindow.dismiss();
+//                        wechatWindow = null;
+//                    }
+//                } else {
+//                    Toast.makeText(getActivity(), "登陆失败...", Toast.LENGTH_LONG).show();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancel(SHARE_MEDIA platform) {
+//                Toast.makeText(getActivity(), "登陆取消", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//    }
+//
+//    /***
+//     * 获取微信用户的信息
+//     *
+//     * @param platform
+//     */
+//    private void getUserInfo(final SHARE_MEDIA platform) {
+//        mController.getPlatformInfo(getActivity(), platform, new UMDataListener() {
+//
+//            @Override
+//            public void onStart() {
+//                Toast.makeText(getActivity(), "获取平台数据开始...", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onComplete(int status, Map<String, Object> info) {
+//                if (status == 200 && info != null) {
+//                    weiXinUserName = (String) info.get("nickname");
+//                    weiXinImageUrl = (String) info.get("headimgurl");
+//                    weiXinUserId = (String) info.get("unionid");
+//                    requestWeixinLogin();
+//                } else {
+//                    Toast.makeText(getActivity(), "获取用户信息失败！", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//            }
+//
+//        });
+//    }
 
     /***
      * 微信用户登录接口请求

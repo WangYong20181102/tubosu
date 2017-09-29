@@ -38,12 +38,6 @@ import com.tbs.tobosutype.utils.HintInput;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.MD5Util;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.controller.UMServiceFactory;
-import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
-import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
-import com.umeng.socialize.exception.SocializeException;
-import com.umeng.socialize.weixin.controller.UMWXHandler;
 
 /**
  * 不再使用 2016-09-02
