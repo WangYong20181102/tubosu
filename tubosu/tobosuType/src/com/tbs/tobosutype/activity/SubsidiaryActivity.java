@@ -1,13 +1,11 @@
 package com.tbs.tobosutype.activity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -21,13 +19,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 /**
  * 没使用
  * @author dec
@@ -37,7 +37,7 @@ public class SubsidiaryActivity extends Activity {
 	private ImageView subsidiary_back;
 	private String requestUrl = Constant.TOBOSU_URL
 			+ "/tapp/company/fund_manage";
-	private RequestParams params;
+	private HashMap<String, String> params;
 	private int page = 1;
 	private ListView listView;
 	private static SubsidiaryAdapter adapter;
@@ -68,8 +68,8 @@ public class SubsidiaryActivity extends Activity {
 	}
 
 	private void initData() {
-		params = AppInfoUtil.getPublicParams(getApplicationContext());
-		params.put("page", page);
+		params = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
+		params.put("page", page + "");
 		params.put("token", token);
 		requestSubsidiaryPost();
 	}
@@ -83,18 +83,18 @@ public class SubsidiaryActivity extends Activity {
 		});
 	}
 	private void requestSubsidiaryPost() {
-		HttpServer.getInstance().requestPOST(requestUrl, params,
-				new AsyncHttpResponseHandler() {
+		OKHttpUtil.post(requestUrl, params, new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
 
-					@Override
-					public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-							Throwable arg3) {
-					}
+			}
 
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				final String result = response.body().string();
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onSuccess(int statusCode, Header[] headers,
-							byte[] responseBody) {
-						String result = new String(responseBody);
+					public void run() {
 						List<HashMap<String, Object>> subsidiaryListDatas = new ArrayList<HashMap<String, Object>>();
 						subsidiaryListDatas = parseJSON(result);
 						tv_subsidiary_amount_available.setText(menony);
@@ -105,6 +105,8 @@ public class SubsidiaryActivity extends Activity {
 						subsidiary_loading.setVisibility(View.GONE);
 					}
 				});
+			}
+		});
 	}
 
 	private List<HashMap<String, Object>> parseJSON(String result) {

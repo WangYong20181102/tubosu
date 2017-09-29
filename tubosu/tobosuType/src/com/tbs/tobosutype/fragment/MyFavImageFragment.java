@@ -4,12 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,20 +29,14 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.ImageDetailActivity;
 import com.tbs.tobosutype.activity.MyFavActivity;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
-import com.tbs.tobosutype.utils.ImageLoaderUtil;
 import com.tbs.tobosutype.utils.Util;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -83,9 +74,8 @@ public class MyFavImageFragment extends Fragment {
 	 * */
 	private String fav_type = "showpic";
 	
-//	private RequestParams params;
 	private HashMap<String, String> params;
-	private RequestParams delParams;
+	private HashMap<String, String> delParams;
 	private SharedPreferences settings;
 	private String token;
 	
@@ -324,7 +314,7 @@ public class MyFavImageFragment extends Fragment {
 	 */
 	public void deleteFavImages() {
 		
-		delParams = AppInfoUtil.getPublicParams(getActivity());
+		delParams = AppInfoUtil.getPublicHashMapParams(getActivity());
 		delParams.put("oper_type", "0");
 		delParams.put("token", token);
 		delId = new StringBuilder();
@@ -342,41 +332,51 @@ public class MyFavImageFragment extends Fragment {
 		
 		delParams.put("fav_type", "showpic");
 		delParams.put("id", delId + "");
-		
-		HttpServer.getInstance().requestPOST(delUrl, delParams, new AsyncHttpResponseHandler() {
 
-				@Override
-				public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-					try {
-						JSONObject jsonObject = new JSONObject(new String(responseBody));
-						int error_code = jsonObject.getInt("error_code");
-						if(error_code==0){
-							Toast.makeText(getActivity(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
-						}
-						showF = false;
-						for (int i = 0; i < isEditDel.size(); i++) {
-							if (isEditDel.get(i)) {
-								dataList.remove(i);
-								isEditDel.remove(i);
-								i--;
-							}
-						}
-						delNum = 0;
-						Message message = new Message();
-						message.what=0x000000000012;
-						myHandler.sendMessage(message);
-						
-					} catch (JSONException e) {
-						e.printStackTrace();
+		OKHttpUtil.post(delUrl, delParams, new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Util.setToast(getActivity(), "删除图册失败，请稍后再试~");
 					}
-				}
-				
-				@Override
-				public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-					Toast.makeText(getActivity(), "删除图册失败，请稍后再试~", Toast.LENGTH_SHORT).show();
-				}
-			});
-		
+				});
+			}
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				final String json = response.body().string();
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							JSONObject jsonObject = new JSONObject(json);
+							int error_code = jsonObject.getInt("error_code");
+							if(error_code==0){
+								Toast.makeText(getActivity(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+							}
+							showF = false;
+							for (int i = 0; i < isEditDel.size(); i++) {
+								if (isEditDel.get(i)) {
+									dataList.remove(i);
+									isEditDel.remove(i);
+									i--;
+								}
+							}
+							delNum = 0;
+							Message message = new Message();
+							message.what=0x000000000012;
+							myHandler.sendMessage(message);
+
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+
 	}
 
 	/**

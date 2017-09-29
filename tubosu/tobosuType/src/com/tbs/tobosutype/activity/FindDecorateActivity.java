@@ -31,8 +31,6 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.AreaAdapter;
 import com.tbs.tobosutype.adapter.DecorateListAdapter;
@@ -48,14 +46,12 @@ import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 import com.tbs.tobosutype.utils.PrseJsonUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.tbs.tobosutype.xlistview.XListView;
 import com.tbs.tobosutype.xlistview.XListView.IXListViewListener;
 import com.umeng.analytics.MobclickAgent;
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -267,12 +263,12 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
     /**
      * 品牌logo的参数对象
      */
-    private RequestParams getAdsParams;
+    private HashMap<String, String> getAdsParams;
 
     /**
      * 广告的参数对象
      */
-    private RequestParams adsenseParams;
+    private HashMap<String, String> adsenseParams;
 
     /**
      * 装修公司列表接口
@@ -676,7 +672,7 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
      * 广告接口请求
      */
     private void initGetAdsenseParamsRequset() {
-        adsenseParams = AppInfoUtil.getPublicParams(getApplicationContext());
+        adsenseParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         adsenseParams.put("position", "4");
         requestAdsense();
     }
@@ -685,7 +681,7 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
      * 品牌logo接口请求
      */
     private void initGetAdsParamsRequest() {
-        getAdsParams = AppInfoUtil.getPublicParams(getApplicationContext());
+        getAdsParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         requestGetAds();
     }
 
@@ -694,28 +690,33 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
      * 请求的是广告位接口
      */
     private void requestAdsense() {
-        HttpServer.getInstance().requestPOST(adsenseUrl, adsenseParams, new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(adsenseUrl, adsenseParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] result) {
-                try {
-                    JSONObject jsonString = new JSONObject(new String(result));
-                    if (jsonString.getInt("error_code") == 0) {
-                        JSONArray jsonArray = jsonString.getJSONArray("data");
-                        ImageLoaderUtil.loadImage(mContext, iv_advertising_banner_decoration, jsonArray.getJSONObject(0).getString("img_url"));
-                        content_url = jsonArray.getJSONObject(0).getString("content_url");
-                        iv_advertising_banner_decoration.setVisibility(View.VISIBLE);
-                    } else {
-                        iv_advertising_banner_decoration.setVisibility(View.GONE);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onFailure(Call call, IOException e) {
+
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
+            public void onResponse(Call call, Response response) throws IOException {
+                final String json = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonString = new JSONObject(json);
+                            if (jsonString.getInt("error_code") == 0) {
+                                JSONArray jsonArray = jsonString.getJSONArray("data");
+                                ImageLoaderUtil.loadImage(mContext, iv_advertising_banner_decoration, jsonArray.getJSONObject(0).getString("img_url"));
+                                content_url = jsonArray.getJSONObject(0).getString("content_url");
+                                iv_advertising_banner_decoration.setVisibility(View.VISIBLE);
+                            } else {
+                                iv_advertising_banner_decoration.setVisibility(View.GONE);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }
@@ -724,49 +725,53 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
      * 请求的是品牌logo接口
      */
     private void requestGetAds() {
-        HttpServer.getInstance().requestPOST(getAdsUrl, getAdsParams, new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(getAdsUrl, getAdsParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                String result = new String(body);
-//                System.out.println("---------装修公司--getAdsUrl-->>>" + result + "<<<");
-                try {
-                    JSONObject jsonString = new JSONObject(result);
-                    recommandBrandListData = new ArrayList<HashMap<String, String>>();
-                    if (jsonString.getInt("error_code") == 0) {
-                        JSONArray jsonArray = jsonString.getJSONArray("data");
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            Map<String, String> map = new HashMap<String, String>();
-                            map.put("comid", jsonArray.getJSONObject(i).getString("comid"));
-                            map.put("img", jsonArray.getJSONObject(i).getString("logosmall"));
-                            map.put("comsimpname", jsonArray.getJSONObject(i).getString("comsimpname"));
-                            recommandBrandListData.add((HashMap<String, String>) map);
-                        }
+            public void onFailure(Call call, IOException e) {
 
-                        // 取控件textView当前的布局参数
-                        FrameLayout.LayoutParams frameParams = (android.widget.FrameLayout.LayoutParams) ll_recommandBrand.getLayoutParams();
-                        frameParams.height = DensityUtil.dip2px(mContext, 100);// 控件的高强制设成90dp
-                        frameParams.width = DensityUtil.dip2px(mContext, 110) * recommandBrandListData.size() + 1;// 控件的宽强制设成110dp*数据的个数
-                        ll_recommandBrand.setLayoutParams(frameParams); // 使设置好的布局参数应用到控件
-                        recommandBrandAdapter = new RecommandBrandAdapter(mContext, recommandBrandListData);
-
-                        if (recommandBrandListData.size() > 0) {
-                            LL_recommand_basic.setVisibility(View.VISIBLE);
-                        } else {
-                            LL_recommand_basic.setVisibility(View.GONE);
-                        }
-                        //设置数据显示的列数
-                        recomandBrandGridView.setNumColumns(recommandBrandListData.size());
-                        recomandBrandGridView.setAdapter(recommandBrandAdapter);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+//                System.out.println("---------装修公司--getAdsUrl-->>>" + result + "<<<");
+                        try {
+                            JSONObject jsonString = new JSONObject(result);
+                            recommandBrandListData = new ArrayList<HashMap<String, String>>();
+                            if (jsonString.getInt("error_code") == 0) {
+                                JSONArray jsonArray = jsonString.getJSONArray("data");
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    Map<String, String> map = new HashMap<String, String>();
+                                    map.put("comid", jsonArray.getJSONObject(i).getString("comid"));
+                                    map.put("img", jsonArray.getJSONObject(i).getString("logosmall"));
+                                    map.put("comsimpname", jsonArray.getJSONObject(i).getString("comsimpname"));
+                                    recommandBrandListData.add((HashMap<String, String>) map);
+                                }
 
+                                // 取控件textView当前的布局参数
+                                FrameLayout.LayoutParams frameParams = (android.widget.FrameLayout.LayoutParams) ll_recommandBrand.getLayoutParams();
+                                frameParams.height = DensityUtil.dip2px(mContext, 100);// 控件的高强制设成90dp
+                                frameParams.width = DensityUtil.dip2px(mContext, 110) * recommandBrandListData.size() + 1;// 控件的宽强制设成110dp*数据的个数
+                                ll_recommandBrand.setLayoutParams(frameParams); // 使设置好的布局参数应用到控件
+                                recommandBrandAdapter = new RecommandBrandAdapter(mContext, recommandBrandListData);
+
+                                if (recommandBrandListData.size() > 0) {
+                                    LL_recommand_basic.setVisibility(View.VISIBLE);
+                                } else {
+                                    LL_recommand_basic.setVisibility(View.GONE);
+                                }
+                                //设置数据显示的列数
+                                recomandBrandGridView.setNumColumns(recommandBrandListData.size());
+                                recomandBrandGridView.setAdapter(recommandBrandAdapter);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }

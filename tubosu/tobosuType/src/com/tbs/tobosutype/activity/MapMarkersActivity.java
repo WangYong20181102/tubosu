@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -40,20 +39,21 @@ import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
- /**
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+/**
   * 地图标记页面
   * @author dec
   *
@@ -74,7 +74,7 @@ public class MapMarkersActivity extends Activity implements OnClickListener {
 	/**修改坐标的接口*/
 	private String mapMarkersUrl = Constant.TOBOSU_URL + "/tapp/company/set_coor";
 	
-	private RequestParams mapMarkersParams;
+	private HashMap<String, String> mapMarkersParams;
 	
 	private LocationClient mLocationClient = null;
 	private MyBDLocationListner mListner = null;
@@ -138,7 +138,7 @@ public class MapMarkersActivity extends Activity implements OnClickListener {
 	}
 
 	private void initData() {
-		mapMarkersParams = AppInfoUtil.getPublicParams(getApplicationContext());
+		mapMarkersParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
 		mLongtitude = Double.parseDouble(getIntent().getExtras().getString("lng"));
 		mLantitude = Double.parseDouble(getIntent().getExtras().getString("lat"));
 		token = AppInfoUtil.getToekn(getApplicationContext());
@@ -346,15 +346,29 @@ public class MapMarkersActivity extends Activity implements OnClickListener {
 	private void requestMarkers() {
 		mapMarkersParams.put("token", getSharedPreferences("userInfo", 0)
 				.getString("token", ""));
-		mapMarkersParams.put("lat", mLantitude);
-		mapMarkersParams.put("lng", mLongtitude);
-		
-		HttpServer.getInstance().requestPOST(mapMarkersUrl, mapMarkersParams,  new AsyncHttpResponseHandler() {
+		mapMarkersParams.put("lat", mLantitude + "");
+		mapMarkersParams.put("lng", mLongtitude + "");
 
+		OKHttpUtil.post(mapMarkersUrl, mapMarkersParams, new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onSuccess(int arg0, Header[] arg1, byte[] result) {
+					public void run() {
+						Toast.makeText(mContext, "标记失败！", Toast.LENGTH_SHORT).show();
+					}
+				});
+			}
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				final String json = response.body().string();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
 						try {
-							JSONObject jsonObject = new JSONObject(new String(result));
+							JSONObject jsonObject = new JSONObject(json);
 							if (jsonObject.getInt("error_code") == 0) {
 								Toast.makeText(mContext, "标记成功", Toast.LENGTH_SHORT).show();
 								finish();
@@ -365,12 +379,10 @@ public class MapMarkersActivity extends Activity implements OnClickListener {
 							e.printStackTrace();
 						}
 					}
-
-					@Override
-					public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-						Toast.makeText(mContext, "标记失败！", Toast.LENGTH_SHORT).show();
-					}
 				});
+			}
+		});
+		
 	}
 
 	@Override

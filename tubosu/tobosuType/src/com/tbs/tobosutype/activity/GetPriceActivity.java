@@ -18,23 +18,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.customview.ObservableScrollView;
 import com.tbs.tobosutype.customview.PmTextView;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.Util;
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
+import java.util.HashMap;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 
 /**
@@ -69,7 +68,7 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 	/**获取保存本地的城市参数*/
 	private SharedPreferences getCitySharePre;
 	
-	private RequestParams pubOrderParams;
+	private HashMap<String, String> pubOrderParams;
 	private String phone;
 	private String cityid;
 	private String userid;
@@ -173,7 +172,7 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 	private void initData() {
 //		tvCheatTextView.setText(cheatText);
 
-		pubOrderParams = AppInfoUtil.getPublicParams(getApplicationContext());
+		pubOrderParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
 		getCitySharePre = this.getSharedPreferences("Save_City_Info", MODE_PRIVATE);
 		String city = getCitySharePre.getString("save_city_now", "");
 		if(!"".equals(city)){
@@ -324,11 +323,24 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 	 */
 	private void requestPubOrder() {
 		showLoadingView();
-		HttpServer.getInstance().requestPOST(Constant.PUB_ORDERS, pubOrderParams, new AsyncHttpResponseHandler() {
-
+		OKHttpUtil.post(Constant.PUB_ORDERS, pubOrderParams, new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-						String result = new String(body);
+					public void run() {
+						Util.setToast(mContext, "请稍后再试~");
+						hideLoadingView();
+					}
+				});
+			}
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				final String result = response.body().string();
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
 						try {
 							JSONObject jsonObject = new JSONObject(result);
 							if (jsonObject.getInt("error_code") == 0) {
@@ -337,7 +349,7 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 								startActivity(intent);
 								finish();
 							} else {
-                                Util.setToast(mContext, jsonObject.getString("msg"));
+								Util.setToast(mContext, jsonObject.getString("msg"));
 							}
 
 							hideLoadingView();
@@ -345,13 +357,9 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 							e.printStackTrace();
 						}
 					}
-
-					@Override
-					public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-                        Util.setToast(mContext, "请稍后再试~");
-                        hideLoadingView();
-					}
 				});
+			}
+		});
 	}
 
 

@@ -1,16 +1,14 @@
 package com.tbs.tobosutype.activity;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -29,15 +27,16 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 /**
  * 订单反馈页 -- 类似即时聊天页面
  * @author dec
@@ -69,8 +68,8 @@ public class OrderFeedBackActivity extends Activity {
 	/***保存反馈信息接口*/
 	private String saveFeedBackUrl = Constant.TOBOSU_URL + "/tapp/order/save_fangkiui";
 	
-	private RequestParams feedBackParams;
-	private RequestParams saveFeedBackParams;
+	private HashMap<String, String> feedBackParams;
+	private HashMap<String, String> saveFeedBackParams;
 	
 	/**反馈内容集合*/
 	private ArrayList<HashMap<String, String>> feedBackList;
@@ -160,18 +159,14 @@ public class OrderFeedBackActivity extends Activity {
 				saveFeedBackParams.put("content_class_id", content_class_id);
 				
 				// 保存反馈信息接口请求
-				HttpServer.getInstance().requestPOST(saveFeedBackUrl,
-						saveFeedBackParams, new AsyncHttpResponseHandler() {
-
+				OKHttpUtil.post(saveFeedBackUrl, saveFeedBackParams, new Callback() {
 							@Override
-							public void onSuccess(int arg0, Header[] arg1,
-									byte[] arg2) {
+							public void onFailure(Call call, IOException e) {
 
 							}
 
 							@Override
-							public void onFailure(int arg0, Header[] arg1,
-									byte[] arg2, Throwable arg3) {
+							public void onResponse(Call call, Response response) throws IOException {
 
 							}
 						});
@@ -183,32 +178,33 @@ public class OrderFeedBackActivity extends Activity {
 	private void initData() {
 		Intent intent = getIntent();
 		feedBackList = new ArrayList<HashMap<String, String>>();
-		feedBackParams = AppInfoUtil.getPublicParams(getApplicationContext());
-		saveFeedBackParams = AppInfoUtil.getPublicParams(getApplicationContext());
+		feedBackParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
+		saveFeedBackParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
 		feedBackParams.put("token", intent.getStringExtra("token"));
 		feedBackParams.put("id", intent.getStringExtra("order_id"));
 		
 		// 订单反馈追踪接口请求
-		HttpServer.getInstance().requestPOST(orderFeedBackUrl, feedBackParams,
-				new AsyncHttpResponseHandler() {
+		OKHttpUtil.post(orderFeedBackUrl, feedBackParams, new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
 
+			}
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				final String result = response.body().string();
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onSuccess(int statusCode, Header[] headers,
-							byte[] responseBody) {
-						String result = new String(responseBody);
+					public void run() {
 						feedBackList = jsonToFeedBackList(result);
 						orderFeedBackAdapter.notifyDataSetChanged();
-					}
-
-					@Override
-					public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-							Throwable arg3) {
-
+						orderFeedBackAdapter = new OrderFeedBackAdapter();
+						order_feedback_listview.setAdapter(orderFeedBackAdapter);
+						order_feedback_listview.setSelection(order_feedback_listview.getCount() - 1);
 					}
 				});
-		orderFeedBackAdapter = new OrderFeedBackAdapter();
-		order_feedback_listview.setAdapter(orderFeedBackAdapter);
-		order_feedback_listview.setSelection(order_feedback_listview.getCount() - 1);
+			}
+		});
 	}
 
 	/***

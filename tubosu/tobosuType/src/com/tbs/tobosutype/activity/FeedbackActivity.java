@@ -18,12 +18,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -62,17 +59,17 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.SelectPersonalPopupWindow;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.MiPictureHelper;
 import com.tbs.tobosutype.utils.WriteUtil;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class FeedbackActivity extends Activity {
     private static final String TAG = FeedbackActivity.class.getSimpleName();
@@ -103,7 +100,7 @@ public class FeedbackActivity extends Activity {
      */
     private String feedBackUrl = Constant.TOBOSU_URL + "tapp/util/feedback";
 
-    private RequestParams feedbackParams;
+    private HashMap<String, String> feedbackParams;
     private String mode;
     private String mode_version;
     private String client_version;
@@ -203,7 +200,7 @@ public class FeedbackActivity extends Activity {
         mode = android.os.Build.MODEL;
         client_version = AppInfoUtil.getAppVersionName(getApplicationContext());
         mode_version = android.os.Build.VERSION.RELEASE;
-        feedbackParams = AppInfoUtil.getPublicParams(getApplicationContext());
+        feedbackParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         token = AppInfoUtil.getToekn(getApplicationContext());
 
         // 获取用户存储信息
@@ -341,46 +338,51 @@ public class FeedbackActivity extends Activity {
     private void send(String thumbpath) {
 
         //手机型号
-        feedbackParams.add("mode", mode);
+        feedbackParams.put("mode", mode);
         // 安卓系统版本
-        feedbackParams.add("mode_version", mode_version);
+        feedbackParams.put("mode_version", mode_version);
         // app版本
-        feedbackParams.add("client_version", client_version);
+        feedbackParams.put("client_version", client_version);
 
         if (contactType.equals("email")) {
-            feedbackParams.add("email", et_contact.getText() + "");
+            feedbackParams.put("email", et_contact.getText() + "");
         } else {
-            feedbackParams.add("mobile", et_contact.getText() + "");
+            feedbackParams.put("mobile", et_contact.getText() + "");
         }
         //电话号码  邮箱地址  照片地址
 
-        feedbackParams.add("thumbpath", thumbpath);
-        feedbackParams.add("content", "【用户:" + AppInfoUtil.getUserid(mContext) + "】【反馈内容:" + et_content.getText().toString() + "】");
+        feedbackParams.put("thumbpath", thumbpath);
+        feedbackParams.put("content", "【用户:" + AppInfoUtil.getUserid(mContext) + "】【反馈内容:" + et_content.getText().toString() + "】");
         if (token.length() != 0) {
-            feedbackParams.add("token", token);
+            feedbackParams.put("token", token);
         }
 
-        HttpServer.getInstance().requestPOST(feedBackUrl, feedbackParams, new AsyncHttpResponseHandler() {
 
+        OKHttpUtil.post(feedBackUrl, feedbackParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                String result = new String(body);
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    if (jsonObject.getInt("error_code") == 0) {
-                        Toast.makeText(mContext, "反馈成功，感谢您的的宝贵意见！", Toast.LENGTH_SHORT).show();
-                        finish();
-                    } else {
-                        Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onFailure(Call call, IOException e) {
+
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(result);
+                            if (jsonObject.getInt("error_code") == 0) {
+                                Toast.makeText(mContext, "反馈成功，感谢您的的宝贵意见！", Toast.LENGTH_SHORT).show();
+                                finish();
+                            } else {
+                                Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }

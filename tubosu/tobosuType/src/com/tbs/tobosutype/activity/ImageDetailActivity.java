@@ -1,13 +1,12 @@
 package com.tbs.tobosutype.activity;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -27,19 +26,19 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.DesignFreePopupWindow;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 import com.tbs.tobosutype.utils.ShareUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.utils.Log;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 逛图库详情 或 效果图精选详情的image跳转过来的  页面
@@ -66,7 +65,7 @@ public class ImageDetailActivity extends Activity implements OnClickListener, On
     private String cid;
     private String id;
     private String token;
-    private RequestParams imgDetailParams;
+    private HashMap<String,String> imgDetailParams;
 
     private ArrayList<String> imageUrlMapStringList;
     private ViewPager vp_singleMap;
@@ -130,7 +129,7 @@ public class ImageDetailActivity extends Activity implements OnClickListener, On
     private String comid;
 
     private DesignFreePopupWindow designPopupWindow;
-    private com.loopj.android.http.RequestParams pubOrderParams;
+    private HashMap<String, String> pubOrderParams;
     private String phone;
     private String userid;
 
@@ -180,14 +179,14 @@ public class ImageDetailActivity extends Activity implements OnClickListener, On
         id = getIntent().getExtras().getString("companyId"); // 公司id
         imageUrl = getIntent().getExtras().getString("url");
         token = AppInfoUtil.getToekn(getApplicationContext());
-        imgDetailParams = AppInfoUtil.getPublicParams(getApplicationContext());
+        imgDetailParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
 
         imgDetailParams.put("url", imageUrl);
 //        imgDetailParams.put("id", id);
 
         imageUrlMapStringList = new ArrayList<String>();
 
-        pubOrderParams = new com.loopj.android.http.RequestParams();
+        pubOrderParams = new HashMap<String, String>();
         userid = getSharedPreferences("userInfo", 0).getString("userid", "");
 
 
@@ -211,34 +210,38 @@ public class ImageDetailActivity extends Activity implements OnClickListener, On
             return;
         }
 
-        HttpServer.getInstance().requestPOST(imgDetailUrl, imgDetailParams, new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(imgDetailUrl, imgDetailParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                try {
-                    praseJson(body);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onFailure(Call call, IOException e) {
+
             }
 
             @Override
-            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-
+            public void onResponse(Call call, Response response) throws IOException {
+                final String json = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            praseJson(json);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
-
         });
     }
 
     /***
      * 解析json
-     * @param body
+     * @param json
      * @throws JSONException
      */
-    private void praseJson(byte[] body) throws JSONException {
-        Util.setLog(TAG, "songchengcai 详情 的请求结果返回来 【"+new String(body) + "】");
+    private void praseJson(String json)throws JSONException {
+        Util.setLog(TAG, "songchengcai 详情 的请求结果返回来 【"+ json + "】");
 
-        JSONObject jsonObject = new JSONObject(new String(body));
+        JSONObject jsonObject = new JSONObject(json);
         if (jsonObject.getInt("error_code") == 0) {
             JSONObject dataObject = jsonObject.getJSONObject("data");
             favConid = dataObject.getString("id");
@@ -307,7 +310,7 @@ public class ImageDetailActivity extends Activity implements OnClickListener, On
             tv_village_desc.setText(layout_id + "-" + area_id + "-" + plan_price + "万元");
             ll_loading.setVisibility(View.GONE);
         }else{
-            Util.setLog(TAG, "songchengcai 详情 的请求结果返回来 没有公司id 【"+new String(body) + "】");
+            Util.setLog(TAG, "songchengcai 详情 的请求结果返回来 没有公司id 【"+ json + "】");
         }
     }
 
@@ -566,35 +569,37 @@ public class ImageDetailActivity extends Activity implements OnClickListener, On
          * 输入电话号码发单接口请求
          */
         private void requestPubOrder() {
-            HttpServer.getInstance().requestPOST(Constant.PUB_ORDERS, pubOrderParams, new AsyncHttpResponseHandler() {
-
+            OKHttpUtil.post(Constant.PUB_ORDERS, pubOrderParams, new Callback() {
                 @Override
-                public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                    String result = new String(body);
-                    try {
-                        JSONObject jsonObject = new JSONObject(result);
-                        if (jsonObject.getInt("error_code") == 0) {
-                            MobclickAgent.onEvent(mContext, "click_find_decoration_array_design_for_me_conform_reservation");
-                            Intent intent = new Intent(mContext, ApplyforSuccessActivity.class);
-                            intent.putExtra("phone", phone);
-                            startActivity(intent);
-                            Log.d(TAG, "--相关图册页面底部免费设计--【" + phone + "】-");
-                        } else {
-                            Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                public void onFailure(Call call, IOException e) {
+
                 }
 
                 @Override
-                public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String result = response.body().string();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject jsonObject = new JSONObject(result);
+                                if (jsonObject.getInt("error_code") == 0) {
+                                    MobclickAgent.onEvent(mContext, "click_find_decoration_array_design_for_me_conform_reservation");
+                                    Intent intent = new Intent(mContext, ApplyforSuccessActivity.class);
+                                    intent.putExtra("phone", phone);
+                                    startActivity(intent);
+                                    Log.d(TAG, "--相关图册页面底部免费设计--【" + phone + "】-");
+                                } else {
+                                    Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 }
             });
         }
-
-        ;
     };
 
     /***
@@ -611,7 +616,7 @@ public class ImageDetailActivity extends Activity implements OnClickListener, On
         }
 
         //开始操作  --请注意下面这个if else语句总的fav_id以及它们相应的key value值--
-        RequestParams favParams = AppInfoUtil.getPublicParams(getApplicationContext());
+        HashMap<String, String> favParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         favParams.put("fav_type", "showpic");
         favParams.put("token", token);
         favParams.put("fav_conid", favConid);
@@ -632,34 +637,39 @@ public class ImageDetailActivity extends Activity implements OnClickListener, On
         }
 
         // 接口请求
-        HttpServer.getInstance().requestPOST(favUrl, favParams, new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(favUrl, favParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                String result = new String(body);
-                Util.setLog(TAG, result);
+            public void onFailure(Call call, IOException e) {
 
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    String msg = jsonObject.getString("msg");
-                    if (msg.equals("操作成功")) {
-                        if (oper_type.equals("0")) {
-                            Toast.makeText(mContext, "收藏成功!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(mContext, "取消收藏成功!", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
-                        Util.setLog(TAG, msg);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 
+                        Util.setLog(TAG, result);
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(result);
+                            String msg = jsonObject.getString("msg");
+                            if (msg.equals("操作成功")) {
+                                if (oper_type.equals("0")) {
+                                    Toast.makeText(mContext, "收藏成功!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(mContext, "取消收藏成功!", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+                                Util.setLog(TAG, msg);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
 

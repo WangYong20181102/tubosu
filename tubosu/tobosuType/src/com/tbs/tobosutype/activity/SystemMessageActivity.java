@@ -1,13 +1,11 @@
 package com.tbs.tobosutype.activity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,15 +21,16 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
+import com.tbs.tobosutype.utils.Util;
 import com.tbs.tobosutype.xlistview.XListView;
 import com.tbs.tobosutype.xlistview.XListView.IXListViewListener;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 系统消息页面
@@ -72,8 +71,8 @@ public class SystemMessageActivity extends Activity implements IXListViewListene
      */
     private String userMsgOne = Constant.TOBOSU_URL + "tapp/msg/user_msg_one";
 
-    private RequestParams userMsgParams;
-    private RequestParams userMsgOneParams;
+    private HashMap<String, String> userMsgParams;
+    private HashMap<String, String> userMsgOneParams;
     //banner
     private RelativeLayout rel_system_msg_bar;
     private int page = 1;
@@ -106,13 +105,13 @@ public class SystemMessageActivity extends Activity implements IXListViewListene
     }
 
     private void initData() {
-        userMsgParams = AppInfoUtil.getPublicParams(getApplicationContext());
+        userMsgParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         userMsgParams.put("token", AppInfoUtil.getToekn(getApplicationContext()));
         userMsgParams.put("page", page + "");
         msgsDataList = new ArrayList<HashMap<String, String>>();
 
         requestUserSystemMEssage();
-        userMsgOneParams = AppInfoUtil.getPublicParams(getApplicationContext());
+        userMsgOneParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
 
         msgAdapter = new MsgAdapter(mContext, msgsDataList);
         xlv_sysmessage.setAdapter(msgAdapter);
@@ -122,47 +121,52 @@ public class SystemMessageActivity extends Activity implements IXListViewListene
      * 用户的消息列表接口
      */
     private void requestUserSystemMEssage() {
-        HttpServer.getInstance().requestPOST(userSystemMessageUrl, userMsgParams, new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(userSystemMessageUrl, userMsgParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                Log.d(TAG, "来到这里了 -->>" + new String(body));
-                try {
-                    JSONObject jsonObject = new JSONObject(new String(body));
-                    if (page == 1) {
-                        msgsDataList.clear();
-                    }
-                    if (jsonObject.getInt("error_code") == 0) {
-                        JSONArray data = jsonObject.getJSONArray("data");
+            public void onFailure(Call call, IOException e) {
 
-                        for (int i = 0; i < data.length(); i++) {
-                            HashMap<String, String> map = new HashMap<String, String>();
-                            map.put("title", data.getJSONObject(i).getString("title"));
-                            map.put("id", data.getJSONObject(i).getString("id"));
-                            map.put("content", data.getJSONObject(i).getString("content"));
-                            map.put("time", data.getJSONObject(i).getString("time"));
-                            map.put("url", data.getJSONObject(i).getString("url"));
-                            map.put("urlType", data.getJSONObject(i).getString("urlType"));
-                            map.put("read", data.getJSONObject(i).getString("read"));
-                            msgsDataList.add(map);
-                        }
-                    }
-                    if (msgsDataList.size() != 0 && jsonObject.getInt("error_code") != 0) {
-                        Toast.makeText(mContext, "没有更多的系统消息!", Toast.LENGTH_SHORT).show();
-                    }
-                    if (msgsDataList.size() == 0) {
-                        Toast.makeText(mContext, "暂时还没有系统系息!", Toast.LENGTH_SHORT).show();
-                        iv_sys_msg_empty_data.setVisibility(View.VISIBLE);
-                    }
-                    onLoad();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+            public void onResponse(Call call, Response response) throws IOException {
+                final String json = response.body().string();
+                Util.setErrorLog(TAG, json);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(json);
+                            if (page == 1) {
+                                msgsDataList.clear();
+                            }
+                            if (jsonObject.getInt("error_code") == 0) {
+                                JSONArray data = jsonObject.getJSONArray("data");
 
+                                for (int i = 0; i < data.length(); i++) {
+                                    HashMap<String, String> map = new HashMap<String, String>();
+                                    map.put("title", data.getJSONObject(i).getString("title"));
+                                    map.put("id", data.getJSONObject(i).getString("id"));
+                                    map.put("content", data.getJSONObject(i).getString("content"));
+                                    map.put("time", data.getJSONObject(i).getString("time"));
+                                    map.put("url", data.getJSONObject(i).getString("url"));
+                                    map.put("urlType", data.getJSONObject(i).getString("urlType"));
+                                    map.put("read", data.getJSONObject(i).getString("read"));
+                                    msgsDataList.add(map);
+                                }
+                            }
+                            if (msgsDataList.size() != 0 && jsonObject.getInt("error_code") != 0) {
+                                Toast.makeText(mContext, "没有更多的系统消息!", Toast.LENGTH_SHORT).show();
+                            }
+                            if (msgsDataList.size() == 0) {
+                                Toast.makeText(mContext, "暂时还没有系统系息!", Toast.LENGTH_SHORT).show();
+                                iv_sys_msg_empty_data.setVisibility(View.VISIBLE);
+                            }
+                            onLoad();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }
@@ -267,17 +271,15 @@ public class SystemMessageActivity extends Activity implements IXListViewListene
         userMsgOneParams.put("token", AppInfoUtil.getToekn(getApplicationContext()));
         userMsgOneParams.put("id", id);
 
-        HttpServer.getInstance().requestPOST(userMsgOne, userMsgOneParams, new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(userMsgOne, userMsgOneParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
-                Log.d(TAG, arg0 + "已读取成功");
-
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "已读取失败");
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-                Log.d(TAG, arg0 + "已读取失败");
+            public void onResponse(Call call, Response response) throws IOException {
+                Log.d(TAG, "已读取成功");
             }
         });
     }

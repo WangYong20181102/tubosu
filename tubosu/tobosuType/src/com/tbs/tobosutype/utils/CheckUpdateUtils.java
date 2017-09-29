@@ -9,20 +9,21 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.customview.CustomProgressDialog;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.model.DownLoadManager;
-
-import org.apache.http.Header;
 import org.json.JSONObject;
-
 import java.io.File;
- /**
+import java.io.IOException;
+import java.util.HashMap;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+/**
   * 检测版本更新工具
   * @author dec
   *
@@ -40,17 +41,19 @@ public class CheckUpdateUtils {
 	 * 检测是否有新版本
 	 */
 	public void cheackUpdate() {
-		RequestParams qequestParams = new RequestParams();
-		qequestParams.add("vname", getVersionName());
-		
-		HttpServer.getInstance().requestPOST(checkUpdateUrl, qequestParams, new AsyncHttpResponseHandler() {
-			
-			public void onFailure(int paramInt, Header[] paramArrayOfHeader, byte[] paramArrayOfByte, Throwable paramThrowable) {
-				
+		HashMap<String, String> qequestParams = new HashMap<String, String>();
+		qequestParams.put("vname", getVersionName());
+
+
+		OKHttpUtil.post(checkUpdateUrl, qequestParams, new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+
 			}
 
-			public void onSuccess(int paramInt, Header[] paramArrayOfHeader, byte[] paramArrayOfByte) {
-				String result = new String(paramArrayOfByte);
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				String result = response.body().string();
 
 				if(result.contains("data")){
 					System.out.println("--升级信息-->>" + result + "<<<<");

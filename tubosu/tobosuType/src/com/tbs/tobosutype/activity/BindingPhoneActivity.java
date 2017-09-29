@@ -1,12 +1,11 @@
 package com.tbs.tobosutype.activity;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -22,15 +21,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HintInput;
-import com.tbs.tobosutype.utils.HttpServer;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 绑定手机号页面
@@ -48,7 +47,7 @@ public class BindingPhoneActivity extends Activity implements OnClickListener {
     int count = 60;
 
     private String bangdingCellphoneUrl = Constant.TOBOSU_URL + "tapp/passport/app_bangding_cellphone";
-    RequestParams bangdingCellphoneParms;
+    private HashMap<String, String > bangdingCellphoneParms;
     private String verfication;
     private String token;
     private RelativeLayout rl_banner;
@@ -78,7 +77,7 @@ public class BindingPhoneActivity extends Activity implements OnClickListener {
     }
 
     private void initData() {
-        bangdingCellphoneParms = AppInfoUtil.getPublicParams(getApplicationContext());
+        bangdingCellphoneParms = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         token = getIntent().getStringExtra("token");
     }
 
@@ -117,32 +116,37 @@ public class BindingPhoneActivity extends Activity implements OnClickListener {
                     Toast.makeText(mContext, "验证码不能为空!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                bangdingCellphoneParms.add("mobile", phone);
-                bangdingCellphoneParms.add("msg_code", verfication);
-                bangdingCellphoneParms.add("token", token);
-                HttpServer.getInstance().requestPOST(bangdingCellphoneUrl, bangdingCellphoneParms, new AsyncHttpResponseHandler() {
-
+                bangdingCellphoneParms.put("mobile", phone);
+                bangdingCellphoneParms.put("msg_code", verfication);
+                bangdingCellphoneParms.put("token", token);
+                OKHttpUtil.post(bangdingCellphoneUrl, bangdingCellphoneParms, new Callback() {
                     @Override
-                    public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(new String(body));
-                            if (jsonObject.getInt("error_code") == 0) {
-                                Toast.makeText(mContext, "修改绑定成功!", Toast.LENGTH_SHORT).show();
-                                Intent intent = getIntent();
-                                intent.putExtra("result", phone);
-                                BindingPhoneActivity.this.setResult(0, intent);
-                                finish();
-                            } else {
-                                Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    public void onFailure(Call call, IOException e) {
+
                     }
 
                     @Override
-                    public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
+                    public void onResponse(Call call, Response response) throws IOException {
+                        final String json = response.body().string();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(json);
+                                    if (jsonObject.getInt("error_code") == 0) {
+                                        Toast.makeText(mContext, "修改绑定成功!", Toast.LENGTH_SHORT).show();
+                                        Intent intent = getIntent();
+                                        intent.putExtra("result", phone);
+                                        BindingPhoneActivity.this.setResult(0, intent);
+                                        finish();
+                                    } else {
+                                        Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
                     }
                 });
                 break;

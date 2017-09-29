@@ -16,19 +16,19 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HintInput;
-import com.tbs.tobosutype.utils.HttpServer;
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.io.IOException;
+import java.util.HashMap;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 预约申请页面
@@ -54,7 +54,7 @@ public class ApplyforSuccessActivity extends Activity implements OnClickListener
      * 倒计时60s
      */
     private int count = 60;
-    private RequestParams fastLoginParams;
+    private HashMap<String, String> fastLoginParams;
 
     /**
      * 快速注册用户接口
@@ -110,7 +110,7 @@ public class ApplyforSuccessActivity extends Activity implements OnClickListener
                     Toast.makeText(this, "验证码不能为空！", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    fastLoginParams = AppInfoUtil.getPublicParams(this);
+                    fastLoginParams = AppInfoUtil.getPublicHashMapParams(this);
                     fastLoginParams.put("mobile", phone);
                     fastLoginParams.put("msg_code", et_security_code.getText().toString().trim());
                     requestFastLogin();
@@ -168,13 +168,20 @@ public class ApplyforSuccessActivity extends Activity implements OnClickListener
      * 快速注册用户接口请求
      */
     private void requestFastLogin() {
-        HttpServer.getInstance().requestPOST(fastLoginUrl, fastLoginParams,
-                new AsyncHttpResponseHandler() {
+        OKHttpUtil.post(fastLoginUrl, fastLoginParams, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
 
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String json = response.body().string();
+                runOnUiThread(new Runnable() {
                     @Override
-                    public void onSuccess(int arg0, Header[] arg1, byte[] body) {
+                    public void run() {
                         try {
-                            JSONObject jsonObject = new JSONObject(new String(body));
+                            JSONObject jsonObject = new JSONObject(json);
                             if (jsonObject.getInt("error_code") == 0) {
 
                                 parseJson(jsonObject);
@@ -186,12 +193,9 @@ public class ApplyforSuccessActivity extends Activity implements OnClickListener
                             e.printStackTrace();
                         }
                     }
-
-                    @Override
-                    public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
-                    }
                 });
+            }
+        });
     }
 
     /***

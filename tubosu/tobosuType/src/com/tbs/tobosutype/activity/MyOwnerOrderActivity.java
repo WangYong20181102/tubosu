@@ -1,13 +1,11 @@
 package com.tbs.tobosutype.activity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -30,14 +28,14 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
-import com.tbs.tobosutype.utils.HttpServer;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 业主的个人订单列表页
@@ -61,7 +59,7 @@ public class MyOwnerOrderActivity extends Activity {
     private List<HashMap<String, String>> dataList = new ArrayList<HashMap<String, String>>();
 
     private String token;
-    private RequestParams params;
+    private HashMap<String, String> params;
 
     /**
      * 用户订单列表适配器
@@ -91,7 +89,7 @@ public class MyOwnerOrderActivity extends Activity {
         myownerorder_loading = (LinearLayout) findViewById(R.id.ll_loading);
         token = AppInfoUtil.getToekn(getApplicationContext());
         if (!TextUtils.isEmpty(token)) {
-            params = AppInfoUtil.getPublicParams(getApplicationContext());
+            params = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
             params.put("token", token);
             requestMyOwnerOderPost();
         }
@@ -238,41 +236,43 @@ public class MyOwnerOrderActivity extends Activity {
      */
     private void requestMyOwnerOderPost() {
 
-        HttpServer.getInstance().requestPOST(Constant.MY_OWNER_ODER_URL, params, new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(Constant.MY_OWNER_ODER_URL, params, new Callback() {
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+            public void onFailure(Call call, IOException e) {
 
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                String result = new String(responseBody);
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 //						Log.d("MyOwnerOrderActivity", result);
-                ArrayList<HashMap<String, String>> temDataList = new ArrayList<HashMap<String, String>>();
-                Log.d(TAG, result);
-                //解析json成数据
-                temDataList = parseMyOwnerOderListJSON(result);
-                if (temDataList != null) {
-                    if (temDataList.size() == 0) {
-                        Toast.makeText(mContext, "没有更多订单了", Toast.LENGTH_SHORT).show();
-                        iv_myownerorder_empty.setVisibility(View.VISIBLE);
-                    } else {
-                        if (page == 1) {
-                            dataList.clear();
+                        ArrayList<HashMap<String, String>> temDataList = new ArrayList<HashMap<String, String>>();
+                        Log.d(TAG, result);
+                        //解析json成数据
+                        temDataList = parseMyOwnerOderListJSON(result);
+                        if (temDataList != null) {
+                            if (temDataList.size() == 0) {
+                                Toast.makeText(mContext, "没有更多订单了", Toast.LENGTH_SHORT).show();
+                                iv_myownerorder_empty.setVisibility(View.VISIBLE);
+                            } else {
+                                if (page == 1) {
+                                    dataList.clear();
+                                }
+                                for (int i = 0; i < temDataList.size(); i++) {
+                                    dataList.add(temDataList.get(i));
+                                }
+                                adapter.notifyDataSetChanged();
+                                myownerorder_loading.setVisibility(View.GONE);
+                            }
                         }
-                        for (int i = 0; i < temDataList.size(); i++) {
-                            dataList.add(temDataList.get(i));
-                        }
-                        adapter.notifyDataSetChanged();
-                        myownerorder_loading.setVisibility(View.GONE);
                     }
-                }
+                });
             }
         });
     }
-
-    ;
 
     /***
      * 将json结构数据转化成一个集合

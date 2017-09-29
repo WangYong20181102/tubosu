@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,9 +14,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.customview.RoundImageView;
@@ -26,21 +22,19 @@ import com.tbs.tobosutype.customview.SelectCityDialog.Builder;
 import com.tbs.tobosutype.customview.SelectSexPopupWindow;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.Util;
 import com.tencent.android.tpush.XGPushManager;
-import com.umeng.analytics.MobclickAgent;
-import com.umeng.socialize.UMAuthListener;
-import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 业主个人资料信息页
@@ -101,6 +95,7 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
     private static final int FIELD_HEAD_PICTURE = 5;
 
 
+
     private Context mContext;
 
     private String nickname;
@@ -131,11 +126,11 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
     private ImageView iv_back_myowner_personal_info;
     private TextView tv_btn_exit;
 
-    private RequestParams changeInfoParams;
-    private RequestParams bindThirdPartyParams;
+    private HashMap<String, String> changeInfoParams;
+    private HashMap<String, String> bindThirdPartyParams;
 
     private Intent intent;
-    private UMShareAPI umShareAPI;
+
     private String weiXinUserName;
     private String weiXinImageUrl;
     private String weiXinUserId;
@@ -146,7 +141,7 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
         AppInfoUtil.setTranslucentStatus(this);
         setContentView(R.layout.activity_myowner_account_manager);
         mContext = MyOwnerAccountManagerActivity.this;
-        umShareAPI = UMShareAPI.get(mContext);
+
         initView();
         initData();
         initEvent();
@@ -235,32 +230,6 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
 //                    UMWXHandler wxHandler = new UMWXHandler(getApplicationContext(), "wx20c4f4560dcd397a", "9b06e848d40bcb04205d75335df6b814");
 //                    wxHandler.addToSocialSDK();
 //                    bindThirdParty(SHARE_MEDIA.WEIXIN);
-                    //新的微信绑定
-                    umShareAPI.getPlatformInfo(MyOwnerAccountManagerActivity.this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
-                        @Override
-                        public void onStart(SHARE_MEDIA share_media) {
-
-                        }
-
-                        @Override
-                        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-                            weiXinImageUrl = map.get("iconurl");//微信的头像
-                            weiXinUserName = map.get("name");//微信的昵称
-                            weiXinUserId = map.get("openid");//微信的openid
-                            operBindThirdParty();
-                        }
-
-                        @Override
-                        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-                            Log.e(TAG, "微信绑定出错====" + throwable.getMessage());
-                            Toast.makeText(mContext, "绑定出错~", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onCancel(SHARE_MEDIA share_media, int i) {
-                            Toast.makeText(mContext, "取消绑定~", Toast.LENGTH_SHORT).show();
-                        }
-                    });
                 }
                 break;
             case R.id.tv_btn_exit:
@@ -334,10 +303,10 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
                     return;
                 }
 
-                changeInfoParams = AppInfoUtil.getPublicParams(getApplicationContext());
+                changeInfoParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
                 changeInfoParams.put("token", token);
-                changeInfoParams.put("field", FIELD_GENDER);
-                changeInfoParams.put("new", genderFlage);
+                changeInfoParams.put("field", FIELD_GENDER + "");
+                changeInfoParams.put("new", genderFlage + "");
                 tv_gender.setText(modify_gender);
                 popupWindow.dismiss();
                 requestChangeInfo();
@@ -348,23 +317,23 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data != null) {
-            changeInfoParams = AppInfoUtil.getPublicParams(getApplicationContext());
+            changeInfoParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
             changeInfoParams.put("token", token);
             switch (requestCode) {
                 case MODIFY_NICKNAME_REQUEST_CODE:
-                    changeInfoParams.put("field", FIELD_NICKNAME);
+                    changeInfoParams.put("field", FIELD_NICKNAME + "");
                     changeInfoParams.put("new", data.getStringExtra("result"));  //  修改后的昵称
                     tv_nickname.setText(data.getStringExtra("result"));
                     requestChangeInfo();
                     break;
                 case MODIFY_COMMUNITY_REQUEST_CODE:
-                    changeInfoParams.put("field", FIELD_COMMUNITY);
+                    changeInfoParams.put("field", FIELD_COMMUNITY + "");
                     changeInfoParams.put("new", data.getStringExtra("result"));  //  修改后的小区
                     tv_icommunity.setText(data.getStringExtra("result"));
                     requestChangeInfo();
                     break;
                 case MODIFY_CITY_REQUEST_CODE:
-                    changeInfoParams.put("field", FIELD_CITY);
+                    changeInfoParams.put("field", FIELD_CITY + "");
                     if (!TextUtils.isEmpty(data.getStringExtra("result"))) {
                         changeInfoParams.put("new", data.getStringExtra("result"));  //  修改后的城市
                         tv_place.setText(data.getStringExtra("result"));
@@ -386,25 +355,34 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
      */
     private void requestChangeInfo() {
 
-        HttpServer.getInstance().requestPOST(Constant.USER_CHANGE_INFO_URL, changeInfoParams, new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(Constant.USER_CHANGE_INFO_URL, changeInfoParams, new Callback() {
             @Override
-            public void onSuccess(int code, Header[] arg1, byte[] result) {
-                //FIXME
-                try {
-                    JSONObject jsonObject = new JSONObject(new String(result));
-                    int error_code = jsonObject.getInt("error_code");
-                    if (error_code == 0) {
-                        Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(mContext, "修改信息失败，请稍后重试...", Toast.LENGTH_SHORT).show();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                });
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-                Toast.makeText(mContext, "修改信息失败，请稍后重试...", Toast.LENGTH_SHORT).show();
+            public void onResponse(Call call, Response response) throws IOException {
+                final String json = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(json);
+                            int error_code = jsonObject.getInt("error_code");
+                            if (error_code == 0) {
+                                Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }
@@ -417,27 +395,13 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
 
             @Override
             public void onClick(DialogInterface dialog, int id) {
-//                mController.deleteOauth(MyOwnerAccountManagerActivity.this, SHARE_MEDIA.WEIXIN, new SocializeListeners.SocializeClientListener() {
-//                    @Override
-//                    public void onStart() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete(int i, SocializeEntity socializeEntity) {
-//                        Util.setToast(mContext, "退出成功");
-//                    }
-//                });
-//                Util.setErrorLog(TAG, "你确定删除了微信缓存了吧");
+                Util.setErrorLog(TAG, "你确定删除了微信缓存了吧");
                 getSharedPreferences("userInfo", 0).edit().clear().commit();
                 AppInfoUtil.ISJUSTLOGIN = true;
                 getSharedPreferences("userInfo", 0).edit().clear().commit();
                 XGPushManager.unregisterPush(getApplicationContext());
                 dialog.cancel();
-                //清除微信的缓存
-                umShareAPI.deleteOauth(MyOwnerAccountManagerActivity.this, SHARE_MEDIA.WEIXIN, null);
-                MobclickAgent.onProfileSignOff();
-// Intent i = new Intent();
+//                Intent i = new Intent();
 //                i.setAction(Constant.LOGOUT_ACTION);
 //                sendBroadcast(i);
                 finish();
@@ -522,33 +486,38 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
 //    }
 
     private void operBindThirdParty() {
-        bindThirdPartyParams = AppInfoUtil.getPublicParams(getApplicationContext());
+        bindThirdPartyParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         bindThirdPartyParams.put("token", token);
         bindThirdPartyParams.put("kind", "weixin");
         bindThirdPartyParams.put("icon", weiXinImageUrl);
         bindThirdPartyParams.put("nickname", weiXinUserName);
         bindThirdPartyParams.put("account", weiXinUserId);
-        HttpServer.getInstance().requestPOST(Constant.BIND_THIRD_PARTY_URL, bindThirdPartyParams, new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(Constant.BIND_THIRD_PARTY_URL, bindThirdPartyParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                try {
-                    JSONObject jsonObject = new JSONObject(new String(body));
-                    Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
-                    if (jsonObject.getInt("error_code") == 0) {
-                        tv_weixin.setTextColor(getResources().getColor(R.color.color_neutralgrey));
-                        tv_weixin.setText("已绑定");
-                    } else {
-                        Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            public void onFailure(Call call, IOException e) {
+
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
+            public void onResponse(Call call, Response response) throws IOException {
+                final String json = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(json);
+                            Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                            if (jsonObject.getInt("error_code") == 0) {
+                                tv_weixin.setTextColor(getResources().getColor(R.color.color_neutralgrey));
+                                tv_weixin.setText("已绑定");
+                            } else {
+                                Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }

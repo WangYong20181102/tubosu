@@ -21,9 +21,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.BaoPopupWindow;
 import com.tbs.tobosutype.customview.BusinessLicensePopupWindow;
@@ -35,21 +32,22 @@ import com.tbs.tobosutype.customview.ScrollViewExtend;
 import com.tbs.tobosutype.customview.ScrollViewExtend.OnScrollChangedListener;
 import com.tbs.tobosutype.customview.VouchersPopupWindow;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 import com.tbs.tobosutype.utils.ShareUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
-
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /***
  * 找到的 装修公司明细页面
@@ -190,7 +188,7 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 	/**装修公司明细接口*/
 	private String dataUrl = Constant.TOBOSU_URL + "tapp/company/company_detail";
 	
-	private RequestParams companyDetailParams;
+	private HashMap<String, String> companyDetailParams;
 	private String oper_type = "1";
 	private String memberdegree = "1";
 	private ScrollViewExtend scrollView;
@@ -314,7 +312,7 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 		
 		
 		company_images = new ArrayList<String>();
-		companyDetailParams = AppInfoUtil.getPublicParams(getApplicationContext());
+		companyDetailParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
 		companyDetailParams.put("id", comid);
 		companyDetailParams.put("token", token);
 		requestCompanyDetailPost();
@@ -331,25 +329,27 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 	 * 装修公司明细接口请求
 	 */
 	private void requestCompanyDetailPost() {
-		HttpServer.getInstance().requestPOST(dataUrl, companyDetailParams, new AsyncHttpResponseHandler() {
 
-					@Override
-					public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-						
-					}
+		OKHttpUtil.post(dataUrl, companyDetailParams, new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
 
-					@SuppressWarnings({ "rawtypes", "unchecked" })
+			}
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				final String result = response.body().string();
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-						String result = new String(responseBody);
-						
+					public void run() {
+
 						//解析json
 						HashMap<String, Object> companyList = jsonToLoginCompanyList(result);
-						
+
 						if(companyList!=null){
 							decorate_detail_company.setText(companyList.get("comname") + "");
 //							companyId = companyList.get("comid") + "";
-                            companyId = comid;
+							companyId = comid;
 							title = companyList.get("comname") + "";
 							fenxiang_url = companyList.get("fxurl") + "";
 							tel = companyList.get("tel") + "";
@@ -369,7 +369,7 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 							ImageLoaderUtil.loadImage(getApplicationContext(), decorate_detail_company_logo, logoSmallUrl);
 							String jjb_logo = companyList.get("jjb_logo") + "";
 							String certification = companyList.get("certification") + "";
-							
+
 							//jjb_logo 家居保
 							if (HAS_INSURANCE.equals(jjb_logo)) {
 								decorate_detail_bao.setVisibility(View.VISIBLE);
@@ -398,7 +398,7 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 							decorate_detail_gridView_family.setAdapter(familyAdapter);
 							decorate_detail_gridView_family.setEmptyView(decorate_detail_family_empty);
 							decorate_detail_gridView_family.setSelector(new ColorDrawable(Color.TRANSPARENT));
-							
+
 							// 工厂装修服务
 							List factoryList = (List) companyList.get("factoryList");
 							ArrayAdapter<String> factoryAdapter = new ArrayAdapter<String>(mContext, R.layout.item_decorate_detail_gridview, factoryList);
@@ -414,9 +414,22 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 
 						}
 					}
-					
 				});
-	};
+			}
+		});
+
+		OKHttpUtil.post(dataUrl, companyDetailParams, new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+
+			}
+		});
+	}
 
 	
 	/***
@@ -802,7 +815,7 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 			return;
 		}
 		
-		RequestParams favParams = AppInfoUtil.getPublicParams(getApplicationContext());
+		HashMap<String, String> favParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
 		favParams.put("fav_conid", comid);
 		if (oper_type.equals("1")) {
 			favParams.put("token", token);
@@ -824,11 +837,18 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 		}
 		
 		// 请求网络
-		HttpServer.getInstance().requestPOST(favUrl, favParams, new AsyncHttpResponseHandler() {
+		OKHttpUtil.post(favUrl, favParams, new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
 
+			}
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				final String result = response.body().string();
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-						String result = new String(body);
+					public void run() {
 						try {
 							JSONObject jsonObject = new JSONObject(result);
 							String msg = jsonObject.getString("msg");
@@ -845,12 +865,9 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 							e.printStackTrace();
 						}
 					}
-
-					@Override
-					public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
-					}
 				});
+			}
+		});
 	}
 
 }

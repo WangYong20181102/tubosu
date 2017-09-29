@@ -24,28 +24,26 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CallDialogCompany;
 import com.tbs.tobosutype.customview.DropPopWindow;
 import com.tbs.tobosutype.customview.LfPwdPopupWindow;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.xlistview.XListView;
 import com.tbs.tobosutype.xlistview.XListView.IXListViewListener;
-
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 全部订单列表页面
@@ -83,7 +81,7 @@ public class AllOrderListActivity extends Activity implements IXListViewListener
     private LayoutParams params;
     private List<HashMap<String, Object>> allOrderList = new ArrayList<HashMap<String, Object>>();
     private AllOrderAdapter adapter;
-    private RequestParams orderParams;
+    private HashMap<String, String> orderParams;
     private String psw = "1";
     private String token;
     private RelativeLayout all_re_banner;
@@ -291,9 +289,9 @@ public class AllOrderListActivity extends Activity implements IXListViewListener
 
 
     private void initParams() {
-        orderParams = AppInfoUtil.getPublicParams(getApplicationContext());
+        orderParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         orderParams.put("token", token);
-        orderParams.put("page", page);
+        orderParams.put("page", page+"");
         orderParams.put("psw", psw);
         orderParams.put("kind", kind);
     }
@@ -560,42 +558,44 @@ public class AllOrderListActivity extends Activity implements IXListViewListener
      * 所有订单接口请求
      */
     private void requestOrderPost() {
-        HttpServer.getInstance().requestPOST(allOrderUrl, orderParams, new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(allOrderUrl, orderParams, new Callback() {
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+            public void onFailure(Call call, IOException e) {
 
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                Log.d(TAG, "--来到订单列表页面-statusCode->>>" + statusCode + "  --");
-                String result = new String(responseBody);
-                Log.d(TAG, "--result-->>>" + result + "  --");
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                Log.d(TAG, "--来到订单列表页面->>>" + result + "  --");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 
+                        List<HashMap<String, Object>> temDataList = new ArrayList<HashMap<String, Object>>();
+                        temDataList = jsonToAllOrderList(result);
 
-                List<HashMap<String, Object>> temDataList = new ArrayList<HashMap<String, Object>>();
-                temDataList = jsonToAllOrderList(result);
-
-                if (temDataList != null) {
-                    if (temDataList.size() == 0) {
-                        Toast.makeText(mContext, "无更多装修公司订单了", Toast.LENGTH_SHORT).show();
-                        iv_empty_orderdata.setVisibility(View.VISIBLE);
-                    } else {
-                        if (page == 1) {
-                            allOrderList.clear();
+                        if (temDataList != null) {
+                            if (temDataList.size() == 0) {
+                                Toast.makeText(mContext, "无更多装修公司订单了", Toast.LENGTH_SHORT).show();
+                                iv_empty_orderdata.setVisibility(View.VISIBLE);
+                            } else {
+                                if (page == 1) {
+                                    allOrderList.clear();
+                                }
+                                iv_empty_orderdata.setVisibility(View.GONE);
+                                for (int i = 0; i < temDataList.size(); i++) {
+                                    allOrderList.add(temDataList.get(i));
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
                         }
-                        iv_empty_orderdata.setVisibility(View.GONE);
-                        for (int i = 0; i < temDataList.size(); i++) {
-                            allOrderList.add(temDataList.get(i));
-                        }
-                        adapter.notifyDataSetChanged();
+                        onLoad();
+
+                        //FIXME
+                        popMap = jsonToPopWindowList(result);
                     }
-                }
-                onLoad();
-
-                //FIXME
-                popMap = jsonToPopWindowList(result);
+                });
             }
         });
     }
@@ -642,34 +642,38 @@ public class AllOrderListActivity extends Activity implements IXListViewListener
                     return;
                 }
 
-                orderParams = AppInfoUtil.getPublicParams(getApplicationContext());
+                orderParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
                 orderParams.put("recordcontent", recordcontent);
                 orderParams.put("token", token);
                 orderParams.put("lftime", lftime);
                 orderParams.put("orderid", orderid);
 
-                HttpServer.getInstance().requestPOST(lfangUrl, orderParams, new AsyncHttpResponseHandler() {
-
+                OKHttpUtil.post(lfangUrl, orderParams, new Callback() {
                     @Override
-                    public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+                    public void onFailure(Call call, IOException e) {
 
                     }
 
                     @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                        String result = new String(responseBody);
-                        try {
-                            JSONObject object = new JSONObject(result);
-                            if (object.getInt("error_code") == 0) {
-                                Toast.makeText(mContext, "量房成功！", Toast.LENGTH_SHORT).show();
-                                popupWindow.dismiss();
-                                requestOrderPost();
-                            } else {
-                                Toast.makeText(mContext, "量房失败！", Toast.LENGTH_SHORT).show();
+                    public void onResponse(Call call, Response response) throws IOException {
+                        final String result = response.body().string();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    JSONObject object = new JSONObject(result);
+                                    if (object.getInt("error_code") == 0) {
+                                        Toast.makeText(mContext, "量房成功！", Toast.LENGTH_SHORT).show();
+                                        popupWindow.dismiss();
+                                        requestOrderPost();
+                                    } else {
+                                        Toast.makeText(mContext, "量房失败！", Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        });
                     }
                 });
             }

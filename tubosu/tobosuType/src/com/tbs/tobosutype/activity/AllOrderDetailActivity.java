@@ -1,13 +1,11 @@
 package com.tbs.tobosutype.activity;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -26,17 +24,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CallDialogCompany;
 import com.tbs.tobosutype.customview.LfPwdPopupWindow;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CheckOrderUtils;
-import com.tbs.tobosutype.utils.HttpServer;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 全部订单的明细页面
@@ -245,8 +243,8 @@ public class AllOrderDetailActivity extends Activity implements OnClickListener 
     private Window window;
 
     private LayoutParams params;
-    private RequestParams orderDetailParams;
-    private RequestParams orderParams;
+    private HashMap<String, String> orderDetailParams;
+    private HashMap<String, String> orderParams;
     private RelativeLayout rl_top;
 
     /***订单量房接口*/
@@ -325,7 +323,7 @@ public class AllOrderDetailActivity extends Activity implements OnClickListener 
         order_issee = getIntent().getExtras().getString("issee");
         detail_allorder_title.setText("订单" + order_id);
         token = AppInfoUtil.getToekn(getApplicationContext());
-        orderDetailParams = AppInfoUtil.getPublicParams(getApplicationContext());
+        orderDetailParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         orderDetailParams.put("token", token);
         orderDetailParams.put("order_id", order_id);
 
@@ -350,109 +348,115 @@ public class AllOrderDetailActivity extends Activity implements OnClickListener 
      * 订单详情接口请求
      */
     public void requestOrderDetailPost() {
-        HttpServer.getInstance().requestPOST(orderDetailUrl, orderDetailParams, new AsyncHttpResponseHandler() {
 
+        OKHttpUtil.post(orderDetailUrl, orderDetailParams, new Callback() {
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+            public void onFailure(Call call, IOException e) {
+
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                String result = new String(responseBody);
-                Map<String, Object> dataMap = jsonToOrderMap(result);
-                detail_allorder_split.setText(dataMap.get("addtime").toString().substring(0, 10) + " 分单");
-                String str = dataMap.get("order_state").toString();
-                if (str.equals("未量房")) {
-                    detail_allorder_state.setBackground(getResources().getDrawable(R.drawable.img_not_lf));
-                } else if (str.equals("已量房")) {
-                    detail_allorder_state.setBackground(getResources().getDrawable(R.drawable.img_lf));
-                } else if (str.equals("已签单")) {
-                    detail_allorder_state.setBackground(getResources().getDrawable(R.drawable.img_qd));
-                } else if (str.equals("未签单")) {
-                    detail_allorder_state.setBackground(getResources().getDrawable(R.drawable.img_not_qd));
-                }
-                detail_allorder_owner.setText(dataMap.get("nick").toString());
-                detail_allorder_district.setText(dataMap.get("village").toString());
-                if ("".equals(dataMap.get("house_type_name").toString())) {
-                    detail_allorder_type.setText("其他");
-                } else {
-                    detail_allorder_type.setText(dataMap.get("house_type_name").toString());
-                }
-                if ("0".equals(dataMap.get("house_area").toString())) {
-                    detail_allorder_area.setText("0㎡");
-                } else {
-                    detail_allorder_area.setText(dataMap.get("house_area").toString() + "㎡");
-                }
-                if ("".equals(dataMap.get("decoration_style_name").toString())) {
-                    detail_allorder_style.setText("");
-                } else {
-                    detail_allorder_style.setText(dataMap.get("decoration_style_name").toString());
-                }
-                detail_allorder_budget.setText(dataMap.get("decoration_budget").toString() + "万");
-                if ("".equals(dataMap.get("decoration_type_name").toString())) {
-                    detail_allorder_zxmode.setText("其他");
-                } else {
-                    detail_allorder_zxmode.setText(dataMap.get("decoration_type_name").toString());
-                }
-                detail_allorder_hxstructure.setText(dataMap.get("house_layout_name").toString());
-                if ("0".equals(dataMap.get("house_old").toString())) {
-                    detail_allorder_oldreform.setText("否");
-                } else {
-                    detail_allorder_oldreform.setText("是");
-                }
-                if ("0".equals(dataMap.get("house_key").toString())) {
-                    detail_allorder_takekey.setText("否");
-                } else {
-                    detail_allorder_takekey.setText("是");
-                }
-                if ("".equals(dataMap.get("decoration_class_name").toString())) {
-                    detail_allorder_zxtype.setText("其他");
-                } else {
-                    detail_allorder_zxtype.setText(dataMap.get("decoration_class_name").toString());
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Map<String, Object> dataMap = jsonToOrderMap(result);
+                        detail_allorder_split.setText(dataMap.get("addtime").toString().substring(0, 10) + " 分单");
+                        String str = dataMap.get("order_state").toString();
+                        if (str.equals("未量房")) {
+                            detail_allorder_state.setBackground(getResources().getDrawable(R.drawable.img_not_lf));
+                        } else if (str.equals("已量房")) {
+                            detail_allorder_state.setBackground(getResources().getDrawable(R.drawable.img_lf));
+                        } else if (str.equals("已签单")) {
+                            detail_allorder_state.setBackground(getResources().getDrawable(R.drawable.img_qd));
+                        } else if (str.equals("未签单")) {
+                            detail_allorder_state.setBackground(getResources().getDrawable(R.drawable.img_not_qd));
+                        }
+                        detail_allorder_owner.setText(dataMap.get("nick").toString());
+                        detail_allorder_district.setText(dataMap.get("village").toString());
+                        if ("".equals(dataMap.get("house_type_name").toString())) {
+                            detail_allorder_type.setText("其他");
+                        } else {
+                            detail_allorder_type.setText(dataMap.get("house_type_name").toString());
+                        }
+                        if ("0".equals(dataMap.get("house_area").toString())) {
+                            detail_allorder_area.setText("0㎡");
+                        } else {
+                            detail_allorder_area.setText(dataMap.get("house_area").toString() + "㎡");
+                        }
+                        if ("".equals(dataMap.get("decoration_style_name").toString())) {
+                            detail_allorder_style.setText("");
+                        } else {
+                            detail_allorder_style.setText(dataMap.get("decoration_style_name").toString());
+                        }
+                        detail_allorder_budget.setText(dataMap.get("decoration_budget").toString() + "万");
+                        if ("".equals(dataMap.get("decoration_type_name").toString())) {
+                            detail_allorder_zxmode.setText("其他");
+                        } else {
+                            detail_allorder_zxmode.setText(dataMap.get("decoration_type_name").toString());
+                        }
+                        detail_allorder_hxstructure.setText(dataMap.get("house_layout_name").toString());
+                        if ("0".equals(dataMap.get("house_old").toString())) {
+                            detail_allorder_oldreform.setText("否");
+                        } else {
+                            detail_allorder_oldreform.setText("是");
+                        }
+                        if ("0".equals(dataMap.get("house_key").toString())) {
+                            detail_allorder_takekey.setText("否");
+                        } else {
+                            detail_allorder_takekey.setText("是");
+                        }
+                        if ("".equals(dataMap.get("decoration_class_name").toString())) {
+                            detail_allorder_zxtype.setText("其他");
+                        } else {
+                            detail_allorder_zxtype.setText(dataMap.get("decoration_class_name").toString());
 
-                }
+                        }
 
-                detail_allorder_addressqu.setText(dataMap.get("address").toString());
-                detail_allorder_other.setText(dataMap.get("attach_demand").toString());
-                nick = dataMap.get("nick").toString();
-                mobile = dataMap.get("mobile").toString();
-                detail_allorder_user.setText(nick + ":" + mobile);
+                        detail_allorder_addressqu.setText(dataMap.get("address").toString());
+                        detail_allorder_other.setText(dataMap.get("attach_demand").toString());
+                        nick = dataMap.get("nick").toString();
+                        mobile = dataMap.get("mobile").toString();
+                        detail_allorder_user.setText(nick + ":" + mobile);
 
-                if (start_time != null && start_time.length() > 0) {
-                    layout_one.setVisibility(View.VISIBLE);
-                    detail_allorder_start_time.setText(start_time);
-                } else {
-                    layout_one.setVisibility(View.GONE);
-                }
-                if (visit_time != null && visit_time.length() > 0) {
-                    layout_two.setVisibility(View.VISIBLE);
-                    detail_allorder_visit_time.setText(visit_time);
-                } else {
-                    layout_two.setVisibility(View.GONE);
-                    detail_image_start.setImageResource(R.drawable.flag_bottom_on);
-                    detail_allorder_start_time.setTextColor(Color.rgb(255, 156, 0));
-                    detail_allorder_start.setTextColor(Color.rgb(255, 156, 0));
-                }
-                if (lftime != null && lftime.length() > 0) {
-                    layout_three.setVisibility(View.VISIBLE);
-                    detail_allorder_lf_time.setText(lftime);
-                    detail_allorder_submit.setVisibility(View.GONE);
-                } else {
-                    layout_three.setVisibility(View.GONE);
-                    detail_image_visit.setImageResource(R.drawable.flag_on);
-                    detail_allorder_visit_time.setTextColor(Color.rgb(255, 156, 0));
-                    detail_allorder_visit.setTextColor(Color.rgb(255, 156, 0));
-                    detail_allorder_submit.setVisibility(View.VISIBLE);
-                }
-                if (tradetime != null && tradetime.length() > 0) {
-                    layout_four.setVisibility(View.VISIBLE);
-                    detail_allorder_trade_time.setText(tradetime);
-                } else {
-                    layout_four.setVisibility(View.GONE);
-                    detail_image_lf.setImageResource(R.drawable.flag_on);
-                    detail_allorder_lf_time.setTextColor(Color.rgb(255, 156, 0));
-                    detail_allorder_lf.setTextColor(Color.rgb(255, 156, 0));
-                }
+                        if (start_time != null && start_time.length() > 0) {
+                            layout_one.setVisibility(View.VISIBLE);
+                            detail_allorder_start_time.setText(start_time);
+                        } else {
+                            layout_one.setVisibility(View.GONE);
+                        }
+                        if (visit_time != null && visit_time.length() > 0) {
+                            layout_two.setVisibility(View.VISIBLE);
+                            detail_allorder_visit_time.setText(visit_time);
+                        } else {
+                            layout_two.setVisibility(View.GONE);
+                            detail_image_start.setImageResource(R.drawable.flag_bottom_on);
+                            detail_allorder_start_time.setTextColor(Color.rgb(255, 156, 0));
+                            detail_allorder_start.setTextColor(Color.rgb(255, 156, 0));
+                        }
+                        if (lftime != null && lftime.length() > 0) {
+                            layout_three.setVisibility(View.VISIBLE);
+                            detail_allorder_lf_time.setText(lftime);
+                            detail_allorder_submit.setVisibility(View.GONE);
+                        } else {
+                            layout_three.setVisibility(View.GONE);
+                            detail_image_visit.setImageResource(R.drawable.flag_on);
+                            detail_allorder_visit_time.setTextColor(Color.rgb(255, 156, 0));
+                            detail_allorder_visit.setTextColor(Color.rgb(255, 156, 0));
+                            detail_allorder_submit.setVisibility(View.VISIBLE);
+                        }
+                        if (tradetime != null && tradetime.length() > 0) {
+                            layout_four.setVisibility(View.VISIBLE);
+                            detail_allorder_trade_time.setText(tradetime);
+                        } else {
+                            layout_four.setVisibility(View.GONE);
+                            detail_image_lf.setImageResource(R.drawable.flag_on);
+                            detail_allorder_lf_time.setTextColor(Color.rgb(255, 156, 0));
+                            detail_allorder_lf.setTextColor(Color.rgb(255, 156, 0));
+                        }
+                    }
+                });
             }
         });
     }
@@ -553,32 +557,38 @@ public class AllOrderDetailActivity extends Activity implements OnClickListener 
                     return;
                 }
 
-                orderParams = AppInfoUtil.getPublicParams(getApplicationContext());
+                orderParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
                 orderParams.put("recordcontent", recordcontent);
                 orderParams.put("token", token);
                 orderParams.put("lftime", lftime);
                 orderParams.put("orderid", order_id);
 
-                HttpServer.getInstance().requestPOST(lfangUrl, orderParams, new AsyncHttpResponseHandler() {
+                OKHttpUtil.post(lfangUrl, orderParams, new Callback() {
                     @Override
-                    public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+                    public void onFailure(Call call, IOException e) {
+
                     }
 
                     @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                        String result = new String(responseBody);
-                        Log.d("result", result);
-                        try {
-                            JSONObject object = new JSONObject(result);
-                            if (object.getInt("error_code") == 0) {
-                                Toast.makeText(mContext, "量房成功！", Toast.LENGTH_SHORT).show();
-                                popupWindow.dismiss();
-                            } else {
-                                Toast.makeText(mContext, "量房失败！", Toast.LENGTH_SHORT).show();
+                    public void onResponse(Call call, Response response) throws IOException {
+                        final String result = response.body().string();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.d("result", result);
+                                try {
+                                    JSONObject object = new JSONObject(result);
+                                    if (object.getInt("error_code") == 0) {
+                                        Toast.makeText(mContext, "量房成功！", Toast.LENGTH_SHORT).show();
+                                        popupWindow.dismiss();
+                                    } else {
+                                        Toast.makeText(mContext, "量房失败！", Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        });
                     }
                 });
             }

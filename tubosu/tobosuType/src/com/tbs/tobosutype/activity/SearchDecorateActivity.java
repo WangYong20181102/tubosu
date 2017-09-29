@@ -1,5 +1,6 @@
 package com.tbs.tobosutype.activity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,12 +27,17 @@ import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.DecorateListAdapter;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.PrseJsonUtil;
 import com.tbs.tobosutype.xlistview.XListView;
 import com.tbs.tobosutype.xlistview.XListView.IXListViewListener;
 import com.umeng.analytics.MobclickAgent;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /***
  *  找装修页面顶部 搜索框搜索装修公司和地址的页面
@@ -48,7 +54,7 @@ public class SearchDecorateActivity extends Activity implements IXListViewListen
     /***装修公司列表接口*/
     private String companyListUrl = Constant.TOBOSU_URL + "tapp/company/company_list";
 
-    private RequestParams companyListParams;
+    private HashMap<String, String> companyListParams;
 
     private int page = 1;
     private XListView xlv_decorate;
@@ -94,32 +100,38 @@ public class SearchDecorateActivity extends Activity implements IXListViewListen
             return;
         }
 
-        HttpServer.getInstance().requestPOST(companyListUrl, companyListParams, new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(companyListUrl, companyListParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                List<HashMap<String, String>> temDataList = PrseJsonUtil.jsonToComList(new String(body));
-                if (temDataList.size() == 0 && comList.size() != 0 && page != 1) {
-                    Toast.makeText(SearchDecorateActivity.this, "没有搜索到更多的装修公司了", Toast.LENGTH_SHORT).show();
-                }
-                if (page == 1) {
-                    comList.clear();
-                }
-                if (temDataList.size() != 0) {
-                    for (int i = 0; i < temDataList.size(); i++) {
-                        comList.add(temDataList.get(i));
-                    }
-                } else {
-                    Toast.makeText(SearchDecorateActivity.this, "没有搜索到相关的装修公司了", Toast.LENGTH_SHORT).show();
-                }
-                onLoad();
+            public void onFailure(Call call, IOException e) {
+
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
+            public void onResponse(Call call, Response response) throws IOException {
+                final String json = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        List<HashMap<String, String>> temDataList = PrseJsonUtil.jsonToComList(json);
+                        if (temDataList.size() == 0 && comList.size() != 0 && page != 1) {
+                            Toast.makeText(SearchDecorateActivity.this, "没有搜索到更多的装修公司了", Toast.LENGTH_SHORT).show();
+                        }
+                        if (page == 1) {
+                            comList.clear();
+                        }
+                        if (temDataList.size() != 0) {
+                            for (int i = 0; i < temDataList.size(); i++) {
+                                comList.add(temDataList.get(i));
+                            }
+                        } else {
+                            Toast.makeText(SearchDecorateActivity.this, "没有搜索到相关的装修公司了", Toast.LENGTH_SHORT).show();
+                        }
+                        onLoad();
+                    }
+                });
             }
         });
+
     }
 
     /***
@@ -162,7 +174,7 @@ public class SearchDecorateActivity extends Activity implements IXListViewListen
     }
 
     private void operParams(String kw) {
-        companyListParams = AppInfoUtil.getPublicParams(getApplicationContext());
+        companyListParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         companyListParams.put("page", page + "");
         companyListParams.put("kw", kw);
         companyListParams.put("recommend", "0");

@@ -1,11 +1,9 @@
 package com.tbs.tobosutype.activity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.apache.http.Header;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -16,17 +14,17 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.DesignChartImageAdapter;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.PrseImageJsonUtil;
 import com.tbs.tobosutype.xlistview.XListView;
 import com.tbs.tobosutype.xlistview.XListView.IXListViewListener;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 由装修公司详情页的公司介绍里的三张图片跳转过来的 -- >>设计图册列表
@@ -37,7 +35,7 @@ public class DesignChartAcitivity extends Activity implements IXListViewListener
 	private Context mContext;
 	private String comid;
 	private String designChartUrl = Constant.TOBOSU_URL + "tapp/impression/comImsList";
-	private RequestParams designChartParams;
+	private HashMap<String, String> designChartParams;
 	private List<HashMap<String, String>> designDatas;
 	private XListView design_chart_listView;
 	private DesignChartImageAdapter imageAdapter;
@@ -75,19 +73,26 @@ public class DesignChartAcitivity extends Activity implements IXListViewListener
 	private void initData() {
 		comid = getIntent().getStringExtra("comid");
 		designDatas = new ArrayList<HashMap<String, String>>();
-		designChartParams = AppInfoUtil.getPublicParams(getApplicationContext());
+		designChartParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
 		requestDesign();
 	}
 
 	private void requestDesign() {
 		designChartParams.put("comid", comid);
 		designChartParams.put("page", page + "");
-		HttpServer.getInstance().requestPOST(designChartUrl, designChartParams,
-				new AsyncHttpResponseHandler() {
 
+		OKHttpUtil.post(designChartUrl, designChartParams, new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+
+			}
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				final String result = response.body().string();
+				runOnUiThread(new Runnable() {
 					@Override
-					public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-						String result = new String(body);
+					public void run() {
 						System.out.println("DesignChartAcitivity -- 解析前 result" + result);
 						List<HashMap<String, String>> temDataList = PrseImageJsonUtil.parsingJson(result, mContext, comid, "DesignChartAcitivity");
 						if (temDataList.size() == 0 && designDatas.size() != 0) {
@@ -104,12 +109,9 @@ public class DesignChartAcitivity extends Activity implements IXListViewListener
 						}
 						onLoad();
 					}
-
-					@Override
-					public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-
-					}
 				});
+			}
+		});
 	}
 
 	private void onLoad() {

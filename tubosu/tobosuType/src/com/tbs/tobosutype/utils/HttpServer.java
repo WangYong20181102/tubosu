@@ -39,10 +39,10 @@ public class HttpServer {
 		params.put("lng", lng);
 		params.put("lat", lat);
 		params.put("recommend", recommend);
-		requestPOST(url, params, httpResponseHandler);
+		requestPOST1(url, params, httpResponseHandler);
 	}
 
-	public void requestPOST(String action, RequestParams params, AsyncHttpResponseHandler httpResponseHandler) {
+	public void requestPOST1(String action, RequestParams params, AsyncHttpResponseHandler httpResponseHandler) {
 		HttpClient.post(action, params, httpResponseHandler);
 	}
 

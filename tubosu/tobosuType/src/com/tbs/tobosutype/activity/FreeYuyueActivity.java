@@ -15,20 +15,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HintInput;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.Util;
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.io.IOException;
+import java.util.HashMap;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 免费预约页面  走android端发单接口
@@ -50,7 +50,7 @@ public class FreeYuyueActivity extends Activity implements OnClickListener {
      */
     private SharedPreferences getCitySharePre;
 
-    private RequestParams pubOrderParams;
+    private HashMap<String, String> pubOrderParams;
     private String phone;
     private String cityid;
     private String userid;
@@ -81,7 +81,7 @@ public class FreeYuyueActivity extends Activity implements OnClickListener {
     }
 
     private void initData() {
-        pubOrderParams = AppInfoUtil.getPublicParams(getApplicationContext());
+        pubOrderParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
     }
 
     private void initEvent() {
@@ -177,32 +177,41 @@ public class FreeYuyueActivity extends Activity implements OnClickListener {
      * 发单接口请求
      */
     private void requestPubOrder() {
-        HttpServer.getInstance().requestPOST(Constant.PUB_ORDERS, pubOrderParams, new AsyncHttpResponseHandler() {
-
+        OKHttpUtil.post(Constant.PUB_ORDERS, pubOrderParams, new Callback() {
             @Override
-            public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-                String result = new String(body);
-                try {
-                    JSONObject jsonObject = new JSONObject(result);
-                    if (jsonObject.getInt("error_code") == 0) {
-                        Intent intent = new Intent(FreeYuyueActivity.this, ApplyforSuccessActivity.class);
-                        intent.putExtra("phone", phone);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Util.setToast(mContext, jsonObject.getString("msg"));
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Util.setToast(mContext, "请稍后再试~");
+                        hideLoadingView();
                     }
-
-                    hideLoadingView();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                });
             }
 
             @Override
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-                Util.setToast(mContext, "请稍后再试~");
-                hideLoadingView();
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(result);
+                            if (jsonObject.getInt("error_code") == 0) {
+                                Intent intent = new Intent(FreeYuyueActivity.this, ApplyforSuccessActivity.class);
+                                intent.putExtra("phone", phone);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Util.setToast(mContext, jsonObject.getString("msg"));
+                            }
+
+                            hideLoadingView();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }

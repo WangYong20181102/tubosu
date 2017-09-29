@@ -16,18 +16,18 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.io.IOException;
+import java.util.HashMap;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 智能报价 页面
@@ -76,7 +76,7 @@ public class FreeDesign extends Activity {
     private final int SECOND_TIER_CITITES = 3;//二线城市
     private final int OTHER_CITITES = 4;//其他城市
 
-    private RequestParams pubOrderParams;//请求参数
+    private HashMap<String, String> pubOrderParams;//请求参数
 
     private String userid = "";
 
@@ -88,7 +88,7 @@ public class FreeDesign extends Activity {
         setContentView(R.layout.activity_free_design);
         mContext = FreeDesign.this;
         customWaitDialog = new CustomWaitDialog(mContext);
-        pubOrderParams = AppInfoUtil.getPublicParams(getApplicationContext());//初始化参数
+        pubOrderParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());//初始化参数
         bindView();
         initView();
         Log.e("获取绑定状态", "=====" + AppInfoUtil.getCellPhone(this));
@@ -458,7 +458,7 @@ public class FreeDesign extends Activity {
         int area = Integer.valueOf(fdTextMyHomeAreaNum.getText().toString()).intValue();
         int mPrice = countMoney(area, getCityClass(fdTextCity.getText().toString().trim()));
 //        pubOrderParams.put("orderprice", mPrice);//装修预算总价
-        pubOrderParams.put("decorate_price", mPrice);
+        pubOrderParams.put("decorate_price", mPrice + "");
         pubOrderParams.put("cellphone", fdEditPhoneNum.getText().toString());//用户的手机号码
         pubOrderParams.put("city", fdTextCity.getText().toString());//用户所选的城市
         pubOrderParams.put("urlhistory", Constant.PIPE);
@@ -475,38 +475,45 @@ public class FreeDesign extends Activity {
     }
 
     //发单请求
-    private void HttpRequestPubOrder(RequestParams params) {
-        HttpServer.getInstance().requestPOST(Constant.PUB_ORDERS, params, new AsyncHttpResponseHandler() {
+    private void HttpRequestPubOrder(HashMap<String, String> params) {
+
+        OKHttpUtil.post(Constant.PUB_ORDERS, params, new Callback() {
             @Override
-            public void onSuccess(int i, Header[] headers, byte[] bytes) {
-                String result = new String(bytes);
-                try {
-                    Log.e("发单", "===接口返回的数据====" + result);
-                    JSONObject jsonObject = new JSONObject(result);
-                    if (jsonObject.getInt("error_code") == 0) {
-                        //发单成功，进行页面的跳转
-                        Log.e("发单成功", "===接口返回的数据====" + result);
-                        IntoFreeDesignPrice();
-                    } else {
-                        //请求失败
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
                         customWaitDialog.dismiss();
-                        Toast.makeText(getApplicationContext(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                        Log.e("服务器请求失败", "======");
+                        Toast.makeText(mContext, "网络请求超时请稍后重试！", Toast.LENGTH_LONG).show();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                });
             }
 
             @Override
-            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
-                customWaitDialog.dismiss();
-                Log.e("服务器请求失败", "======" + throwable.toString());
-                if (throwable.toString().equals("java.net.SocketTimeoutException")) {
-                    Toast.makeText(mContext, "网络请求超时请稍后重试！", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(mContext, "服务端请求失败！", Toast.LENGTH_LONG).show();
-                }
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 
+                        try {
+                            Log.e("发单", "===接口返回的数据====" + result);
+                            JSONObject jsonObject = new JSONObject(result);
+                            if (jsonObject.getInt("error_code") == 0) {
+                                //发单成功，进行页面的跳转
+                                Log.e("发单成功", "===接口返回的数据====" + result);
+                                IntoFreeDesignPrice();
+                            } else {
+                                //请求失败
+                                customWaitDialog.dismiss();
+                                Toast.makeText(getApplicationContext(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
     }

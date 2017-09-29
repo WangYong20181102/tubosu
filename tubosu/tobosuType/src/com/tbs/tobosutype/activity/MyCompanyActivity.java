@@ -1,9 +1,7 @@
 package com.tbs.tobosutype.activity;
 
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -20,21 +18,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.RoundImageView;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CheckOrderUtils;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.Util;
 import com.tencent.android.tpush.XGCustomPushNotificationBuilder;
 import com.tencent.android.tpush.XGPushManager;
 import com.tencent.android.tpush.service.XGPushService;
 import com.umeng.socialize.utils.Log;
+import java.io.IOException;
+import java.util.HashMap;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 装修公司主页
@@ -168,7 +168,7 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
     private String unalready_count;
 
     private String token;
-    private RequestParams myParams;
+    private HashMap<String, String> myParams;
 
     /**
      * 我的【装修公司】接口
@@ -307,7 +307,7 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
         }
 
         if (!TextUtils.isEmpty(token)) {
-            myParams = AppInfoUtil.getPublicParams(getApplicationContext());
+            myParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
             myParams.put("token", token);
             requstMyPost();
         }
@@ -319,90 +319,95 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
      * */
     private void requstMyPost() {
 //		Log.d(TAG, "--我的【装修公司】接口请求方法--");
-        HttpServer.getInstance().requestPOST(myUrl, myParams, new AsyncHttpResponseHandler() {
-
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-                Log.d(TAG, "我的【装修公司】接口请求失败" + arg1);
+        OKHttpUtil.post(myUrl, myParams, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "我的【装修公司】接口请求失败" + e.getMessage());
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                String myData = new String(responseBody);
-                Log.d(TAG, "我的【装修公司】接口请求成功" + myData);
-                try {
-                    JSONObject myObject = new JSONObject(myData);
-                    JSONObject object = myObject.getJSONObject("data");
-                    id = (String) object.get("id");
-                    icon = (String) object.get("icon");
-                    MyApplication.iconUrl = icon;
-                    nickname = (String) object.get("nickname");
-                    company_name = (String) object.get("company_name");
-                    lat = object.getString("lat");
-                    lng = object.getString("lng");
-                    name = object.getString("name");
-                    district = object.getString("district");
-                    orderTotal = object.getString("orderTotal");
-                    jjb_logo = object.getString("jjb_logo");
-                    sysmesscount = object.getString("sysmesscount");
-                    cityname = object.getString("cityname");
-                    memberdegree = object.getString("memberdegree");
-                    shareUrl = object.getString("shareUrl");
-                    wechat_check = object.getString("wechat_check");
-                    cellphone = object.getString("cellphone");
-                    // 存电话号码
-                    if ("未绑定".equals(cellphone)) {
-                        getSharedPreferences("userInfo", 0).edit().putString("cellphone", "").commit();
-                    } else {
-                        getSharedPreferences("userInfo", 0).edit().putString("cellphone", cellphone).commit();
-                    }
-                    notReadNumber = object.getString("not_see_orders_count");
+            public void onResponse(Call call, Response response) throws IOException {
+                final String myData = response.body().string();
 
-                    Log.d("sysmesscount", sysmesscount);
-                    if (Integer.parseInt(sysmesscount) > 0) {
-                        tv_not_see_sysmsg.setVisibility(View.VISIBLE);
-                        // 2016-07-08 上午，  产品说不需要显示数字，仅仅显示红点就是了
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d(TAG, "我的【装修公司】接口请求成功" + myData);
+                        try {
+                            JSONObject myObject = new JSONObject(myData);
+                            JSONObject object = myObject.getJSONObject("data");
+                            id = (String) object.get("id");
+                            icon = (String) object.get("icon");
+                            MyApplication.iconUrl = icon;
+                            nickname = (String) object.get("nickname");
+                            company_name = (String) object.get("company_name");
+                            lat = object.getString("lat");
+                            lng = object.getString("lng");
+                            name = object.getString("name");
+                            district = object.getString("district");
+                            orderTotal = object.getString("orderTotal");
+                            jjb_logo = object.getString("jjb_logo");
+                            sysmesscount = object.getString("sysmesscount");
+                            cityname = object.getString("cityname");
+                            memberdegree = object.getString("memberdegree");
+                            shareUrl = object.getString("shareUrl");
+                            wechat_check = object.getString("wechat_check");
+                            cellphone = object.getString("cellphone");
+                            // 存电话号码
+                            if ("未绑定".equals(cellphone)) {
+                                getSharedPreferences("userInfo", 0).edit().putString("cellphone", "").commit();
+                            } else {
+                                getSharedPreferences("userInfo", 0).edit().putString("cellphone", cellphone).commit();
+                            }
+                            notReadNumber = object.getString("not_see_orders_count");
+
+                            Log.d("sysmesscount", sysmesscount);
+                            if (Integer.parseInt(sysmesscount) > 0) {
+                                tv_not_see_sysmsg.setVisibility(View.VISIBLE);
+                                // 2016-07-08 上午，  产品说不需要显示数字，仅仅显示红点就是了
 //								if(Integer.parseInt(sysmesscount)>10){
 //									tv_not_see_sysmsg.setText("10+");
 //								}else{
 //									tv_not_see_sysmsg.setText(sysmesscount);
 //								}
-                    } else {
-                        tv_not_see_sysmsg.setVisibility(View.GONE);
-                    }
+                            } else {
+                                tv_not_see_sysmsg.setVisibility(View.GONE);
+                            }
 //							Log.d(TAG, "你有未看订单外 "+notReadNumber);
-                    Log.d("sysmesscount是未看系统信息数", notReadNumber);
+                            Log.d("sysmesscount是未看系统信息数", notReadNumber);
 
-                    if (notReadNumber != null && !notReadNumber.equals("0")) {
-                        tv_notyet_order_num.setVisibility(View.VISIBLE);
-                        tv_notyet_order_num.setText(notReadNumber);
-                    } else {
-                        tv_notyet_order_num.setVisibility(View.GONE);
+                            if (notReadNumber != null && !notReadNumber.equals("0")) {
+                                tv_notyet_order_num.setVisibility(View.VISIBLE);
+                                tv_notyet_order_num.setText(notReadNumber);
+                            } else {
+                                tv_notyet_order_num.setVisibility(View.GONE);
+                            }
+
+
+                            certification = object.getString("certification");
+                            already_count = object.getString("already_count");
+                            unalready_count = object.getString("unalready_count");
+                            MyApplication.imageLoader.displayImage(icon, my_decorate_pic, MyApplication.options, null);
+                            my_decorate_company_name.setText(name);
+                            if ("0".equals(jjb_logo)) {
+                                image_bao.setVisibility(View.GONE);
+                            } else {
+                                image_bao.setVisibility(View.VISIBLE);
+                            }
+                            if ("0".equals(certification)) {
+                                image_business_license.setVisibility(View.GONE);
+                            } else {
+                                image_business_license.setVisibility(View.VISIBLE);
+                            }
+                            ll_loading.setVisibility(View.GONE);
+                            tv_orderTotal.setText(orderTotal);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-
-
-                    certification = object.getString("certification");
-                    already_count = object.getString("already_count");
-                    unalready_count = object.getString("unalready_count");
-                    MyApplication.imageLoader.displayImage(icon, my_decorate_pic, MyApplication.options, null);
-                    my_decorate_company_name.setText(name);
-                    if ("0".equals(jjb_logo)) {
-                        image_bao.setVisibility(View.GONE);
-                    } else {
-                        image_bao.setVisibility(View.VISIBLE);
-                    }
-                    if ("0".equals(certification)) {
-                        image_business_license.setVisibility(View.GONE);
-                    } else {
-                        image_business_license.setVisibility(View.VISIBLE);
-                    }
-                    ll_loading.setVisibility(View.GONE);
-                    tv_orderTotal.setText(orderTotal);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                });
             }
-
         });
     }
 

@@ -1,9 +1,10 @@
 package com.tbs.tobosutype.adapter;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,30 +16,28 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.DecorateCompanyDetailActivity;
 import com.tbs.tobosutype.activity.DesignChartAcitivity;
 import com.tbs.tobosutype.activity.ImageDetailActivity;
 import com.tbs.tobosutype.activity.LoginActivity;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.utils.Log;
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
-	/***
+/***
 	 * 逛图库的适配器
 	 * @author dec
 	 *
@@ -239,7 +238,7 @@ public class ImageAdapter extends BaseAdapter {
 			return;
 		}
 		
-		final RequestParams favParams = AppInfoUtil.getPublicParams(mContext);
+		final HashMap<String, String> favParams = AppInfoUtil.getPublicHashMapParams(mContext);
 		String state = favListFromNet.get(position);
 		if("1".equals(state)) { 
 			// 点击前是 1(已收藏) --> 点击后变为0(取消收藏)
@@ -272,41 +271,55 @@ public class ImageAdapter extends BaseAdapter {
 			favListFromNet.add(position, "0");
 			oper_type = "1";
 		}
-		
-		
 
-		HttpServer.getInstance().requestPOST(favUrl, favParams, new AsyncHttpResponseHandler() {
+
+		OKHttpUtil.post(favUrl, favParams, new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+				handler.sendEmptyMessage(444);
+			}
 
 			@Override
-			public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-				String result = new String(body);
+			public void onResponse(Call call, Response response) throws IOException {
+				String result = response.body().string();
 				try {
 					JSONObject jsonObject = new JSONObject(result);
 					String msg = jsonObject.getString("msg");
 					if (msg.equals("操作成功")) {
 						if (oper_type.equals("0")) {
-							Toast.makeText(mContext, "收藏成功!", Toast.LENGTH_SHORT).show();
+							handler.sendEmptyMessage(4);
 						} else {
-							Toast.makeText(mContext, "取消收藏成功!", Toast.LENGTH_SHORT).show();
+							handler.sendEmptyMessage(44);
 						}
-						
+
 					} else {
-						Toast.makeText(mContext, "操作失败，请稍后再试!", Toast.LENGTH_SHORT).show();
+						handler.sendEmptyMessage(444);
 						Log.d(TAG, "操作失败原因是 "+msg);
 					}
-					
+
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
 			}
-
-			@Override
-			public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-				Toast.makeText(mContext, "操作失败，请稍后再试!", Toast.LENGTH_SHORT).show();
-				Log.d(TAG, "操作失败原因是 "+new String(arg2));
-			}
 		});
-		
+
 	}
+
+	private Handler handler = new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what){
+				case 4:
+					Toast.makeText(mContext, "收藏成功!", Toast.LENGTH_SHORT).show();
+					break;
+				case 44:
+					Toast.makeText(mContext, "取消收藏成功!", Toast.LENGTH_SHORT).show();
+					break;
+				case 444:
+					Toast.makeText(mContext, "操作失败，请稍后再试!", Toast.LENGTH_SHORT).show();
+					break;
+			}
+		}
+	};
 
 }

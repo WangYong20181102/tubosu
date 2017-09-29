@@ -1,13 +1,12 @@
 package com.tbs.tobosutype.activity;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,22 +17,21 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tencent.android.tpush.XGPushManager;
-import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 业主的个人信息页
- *
  * @author dec
+ *
  */
 public class MyUserInfoActivity extends Activity implements OnClickListener {
     private String nickname;
@@ -49,24 +47,18 @@ public class MyUserInfoActivity extends Activity implements OnClickListener {
     private ImageView myuser_iv_back;
     private RelativeLayout rl_exit;
 
-    /**
-     * 第三方绑定接口
-     */
+    /**第三方绑定接口*/
     private String bindThirdPartyUrl = Constant.TOBOSU_URL + "tapp/passport/bindThirdParty";
 
-    private RequestParams bindThirdPartyParams;
+    private HashMap<String, String> bindThirdPartyParams;
 
     private String weiXinUserName;
     private String weiXinImageUrl;
     private String weiXinUserId;
-    private UMShareAPI umShareAPI;
-    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = this;
-        umShareAPI = UMShareAPI.get(mContext);
         initView();
         initData();
         initEvent();
@@ -133,8 +125,6 @@ public class MyUserInfoActivity extends Activity implements OnClickListener {
 //                    UMWXHandler wxHandler = new UMWXHandler(MyUserInfoActivity.this, "wx20c4f4560dcd397a", "9b06e848d40bcb04205d75335df6b814");
 //                    wxHandler.addToSocialSDK();
 //                    bindThirdParty(SHARE_MEDIA.WEIXIN);
-//                    //新的微信绑定
-//                    umShareAPI.getPlatformInfo(MyUserInfoActivity.this);
                 }
                 break;
             case R.id.rl_exit:
@@ -236,7 +226,6 @@ public class MyUserInfoActivity extends Activity implements OnClickListener {
 //
 //    /**
 //     * 获取用户数据
-//     *
 //     * @param platform
 //     */
 //    private void getUserInfo(final SHARE_MEDIA platform) {
@@ -265,26 +254,32 @@ public class MyUserInfoActivity extends Activity implements OnClickListener {
 //
 //                });
 //    }
-//
-//    /***
-//     * 第三方绑定接口的请求方法
-//     * @param platform
-//     */
+
+    /***
+     * 第三方绑定接口的请求方法
+     */
     private void operBindThirdParty() {
-        bindThirdPartyParams = AppInfoUtil.getPublicParams(getApplicationContext());
+        bindThirdPartyParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         bindThirdPartyParams.put("token", token);
         bindThirdPartyParams.put("kind", "weixin");
         bindThirdPartyParams.put("icon", weiXinImageUrl);
         bindThirdPartyParams.put("nickname", weiXinUserName);
         bindThirdPartyParams.put("account", weiXinUserId);
-        HttpServer.getInstance().requestPOST(bindThirdPartyUrl,
-                bindThirdPartyParams, new AsyncHttpResponseHandler() {
+        OKHttpUtil.post(bindThirdPartyUrl, bindThirdPartyParams, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
 
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                final String json = response.body().string();
+                runOnUiThread(new Runnable() {
                     @Override
-                    public void onSuccess(int arg0, Header[] arg1, byte[] body) {
+                    public void run() {
                         try {
-                            JSONObject jsonObject = new JSONObject(new String(
-                                    body));
+                            JSONObject jsonObject = new JSONObject(json);
                             Toast.makeText(getApplicationContext(),
                                     jsonObject.getString("msg"),
                                     Toast.LENGTH_SHORT).show();
@@ -292,20 +287,16 @@ public class MyUserInfoActivity extends Activity implements OnClickListener {
                                 tv_weixin.setTextColor(getResources().getColor(
                                         R.color.color_neutralgrey));
                                 tv_weixin.setText("已绑定");
-                            } else {
+                            }else{
                                 Toast.makeText(getApplicationContext(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
-
-                    @Override
-                    public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-                                          Throwable arg3) {
-
-                    }
                 });
+            }
+        });
     }
 
 }

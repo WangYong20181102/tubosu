@@ -1,13 +1,11 @@
 package com.tbs.tobosutype.activity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -29,17 +27,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.PreferentialApplyForAdapter;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.xlistview.XListView;
 import com.tbs.tobosutype.xlistview.XListView.IXListViewListener;
 import com.umeng.socialize.utils.Log;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 优惠报名页面 (由装修公司用户 跳转至 该页面)
@@ -83,7 +81,7 @@ public class PreferentialApplyForActivity extends Activity implements IXListView
      */
     private String preferentialApplyForUrl = Constant.DECORATION_COMPANY_PREFERENTIAL_APPLYFOR;
 
-    private RequestParams myParams;
+    private HashMap<String, String> myParams;
 
     /**
      * 未被查看的数目
@@ -173,56 +171,57 @@ public class PreferentialApplyForActivity extends Activity implements IXListView
 
     private void initParams() {
         if (myParams == null) {
-            myParams = AppInfoUtil.getPublicParams(getApplicationContext());
+            myParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         }
         myParams.put("token", AppInfoUtil.getToekn(getApplicationContext()));
-        myParams.put("page", page);
+        myParams.put("page", page + "");
     }
 
     /***
      * 优惠报名订单接口请求
      */
     private void requestPostPreferentailApplyFor() {
+        OKHttpUtil.post(preferentialApplyForUrl, myParams, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
 
-        HttpServer.getInstance().requestPOST(preferentialApplyForUrl, myParams, new AsyncHttpResponseHandler() {
+            }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-//						Log.d("result", new String(responseBody));
-                ArrayList<HashMap<String, Object>> tempDataList = new ArrayList<HashMap<String, Object>>();
-                ll_loading.setVisibility(View.GONE);
-                String myData = new String(responseBody);
-                Log.d(TAG, myData + "");
+            public void onResponse(Call call, Response response) throws IOException {
+                final String myData = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ArrayList<HashMap<String, Object>> tempDataList = new ArrayList<HashMap<String, Object>>();
+                        ll_loading.setVisibility(View.GONE);
+                        Log.d(TAG, myData + "");
 
-                // json解析
-                tempDataList = jsonToDatas(myData);
+                        // json解析
+                        tempDataList = jsonToDatas(myData);
 //						initAdapter(preferentialDataList);
 
 						/*--------------*/
-                if (tempDataList != null) {
-                    if (tempDataList.size() == 0) {
-                        Toast.makeText(PreferentialApplyForActivity.this, "暂无活动报名", Toast.LENGTH_SHORT).show();
-                    } else {
-                        if (page == 1) {
-                            preferentialDataList.clear();
-                        }
-                        for (int i = 0; i < tempDataList.size(); i++) {
-                            preferentialDataList.add(tempDataList.get(i));
+                        if (tempDataList != null) {
+                            if (tempDataList.size() == 0) {
+                                Toast.makeText(PreferentialApplyForActivity.this, "暂无活动报名", Toast.LENGTH_SHORT).show();
+                            } else {
+                                if (page == 1) {
+                                    preferentialDataList.clear();
+                                }
+                                for (int i = 0; i < tempDataList.size(); i++) {
+                                    preferentialDataList.add(tempDataList.get(i));
+                                }
+                            }
+                            initAdapter(preferentialDataList);
+                            onLoad();
+                        } else {
+                            // 没有数据
+                            no_data_view.setVisibility(View.VISIBLE);
                         }
                     }
-                    initAdapter(preferentialDataList);
-                    onLoad();
-                } else {
-                    // 没有数据
-                    no_data_view.setVisibility(View.VISIBLE);
-                }
-                        /*-------------------------------*/
+                });
             }
-
-            public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-                Log.d(TAG, arg0 + "");
-            }
-
         });
 
         initLoadData();
