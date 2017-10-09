@@ -235,9 +235,6 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
                 if (wechatCheck.equals("1")) {
                     Toast.makeText(mContext, "您已经绑定过了！", Toast.LENGTH_SHORT).show();
                 } else {
-//                    UMWXHandler wxHandler = new UMWXHandler(getApplicationContext(), "wx20c4f4560dcd397a", "9b06e848d40bcb04205d75335df6b814");
-//                    wxHandler.addToSocialSDK();
-//                    bindThirdParty(SHARE_MEDIA.WEIXIN);
                     //新的微信绑定
                     umShareAPI.getPlatformInfo(MyOwnerAccountManagerActivity.this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
                         @Override
@@ -452,71 +449,6 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
 
     }
 
-//    /**
-//     * 授权。如果授权成功，则获取用户信息 ---第三方登录
-//     *
-//     * @param platform
-//     */
-//    private void bindThirdParty(final SHARE_MEDIA platform) {
-//
-//        mController.doOauthVerify(mContext, platform, new UMAuthListener() {
-//
-//            @Override
-//            public void onStart(SHARE_MEDIA platform) {
-//                Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onError(SocializeException e, SHARE_MEDIA platform) {
-//                Toast.makeText(mContext, "授权失败", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onComplete(Bundle value, SHARE_MEDIA platform) {
-//                // 获取uid
-//                String uid = value.getString("uid");
-//                if (!TextUtils.isEmpty(uid)) {
-//                    getUserInfo(platform);
-//                } else {
-//                    Toast.makeText(mContext, "绑定失败...", Toast.LENGTH_LONG).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancel(SHARE_MEDIA platform) {
-//                Toast.makeText(mContext, "绑定取消", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
-//
-//    /**
-//     * 获取用户信息
-//     *
-//     * @param platform
-//     */
-//    private void getUserInfo(final SHARE_MEDIA platform) {
-//        mController.getPlatformInfo(mContext, platform, new UMDataListener() {
-//
-//            @Override
-//            public void onStart() {
-//                Toast.makeText(mContext, "获取平台数据开始...", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onComplete(int status, Map<String, Object> info) {
-//                if (status == 200 && info != null) {
-//                    weiXinUserName = (String) info.get("nickname");
-//                    weiXinImageUrl = (String) info.get("headimgurl");
-//                    weiXinUserId = (String) info.get("unionid");
-//                    operBindThirdParty();
-//                } else {
-//                    Toast.makeText(mContext, "获取用户信息失败！", Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//            }
-//
-//        });
-//    }
 
     private void operBindThirdParty() {
         bindThirdPartyParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
