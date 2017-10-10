@@ -1,4 +1,5 @@
 package com.tbs.tobosutype.fragment;
+
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -22,10 +23,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.MainActivity;
+import com.tbs.tobosutype.activity.MyOwnerAccountManagerActivity;
 import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
 import com.tbs.tobosutype.customview.LoadingWindow;
 import com.tbs.tobosutype.global.Constant;
@@ -34,6 +37,8 @@ import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.HttpServer;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import org.apache.http.Header;
@@ -100,13 +105,14 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
     /*-------------手机登录相关------------*/
 
 
-
     /*-------------微信登陆相关------------*/
     private LoadingWindow wechatWindow;
 
     private String weiXinUserName;
     private String weiXinImageUrl;
     private String weiXinUserId;
+    private UMShareAPI umShareAPI;
+    private Context mContext;
 
     /**
      * 微信第三方登陆接口
@@ -116,7 +122,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
     /**
      * 微信参数对象
      */
-    private HashMap<String,String> weixinLoginParams;
+    private HashMap<String, String> weixinLoginParams;
 
     /*-------------微信登陆相关------------*/
     public static ReceiveBroadCast receiveBroadCast;
@@ -127,6 +133,8 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_login_phone, null);
+        mContext = getActivity();
+        umShareAPI = UMShareAPI.get(mContext);
         initView(view);
         initReceiver();
         return view;
@@ -149,13 +157,12 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
         this.activity = activity;
     }
 
-    private void initReceiver(){
+    private void initReceiver() {
         receiveBroadCast = new ReceiveBroadCast();
         filter = new IntentFilter();
         filter.addAction("updateUi");
         activity.registerReceiver(receiveBroadCast, filter);
     }
-
 
 
     @Override
@@ -169,7 +176,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
                 hideEdittext();
                 break;
             case R.id.ll_obtain_weixin_login2: // 微信登录
-//                loginWeixin();
+                loginWeixin();
 //			hideEdittext();
                 break;
             case R.id.rel_has_account: // 去账号登录界面
@@ -193,7 +200,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
 
 
     private void userPhoneLogin() {
-        if((TextUtils.isEmpty(et_login_userphone.getText().toString().trim()))){
+        if ((TextUtils.isEmpty(et_login_userphone.getText().toString().trim()))) {
             Toast.makeText(getActivity(), "手机号不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -299,16 +306,42 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
         }
     }
 
-//    /***
-//     * 微信登录接口请求
-//     */
-//    private void loginWeixin() {
-//        //FIXME
+    /***
+     * 微信登录接口请求
+     */
+    private void loginWeixin() {
+        //FIXME
 //        wechatWindow = new LoadingWindow(getActivity());
 //        UMWXHandler wxHandler = new UMWXHandler(getActivity(), "wx20c4f4560dcd397a", "9b06e848d40bcb04205d75335df6b814");
 //        wxHandler.addToSocialSDK();
 //        weixinThirdParty(SHARE_MEDIA.WEIXIN);
-//    }
+        //新的微信登录
+        umShareAPI.getPlatformInfo(getActivity(), SHARE_MEDIA.WEIXIN, new UMAuthListener() {
+            @Override
+            public void onStart(SHARE_MEDIA share_media) {
+
+            }
+
+            @Override
+            public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                weiXinUserName = map.get("name");//微信的昵称
+                weiXinImageUrl = map.get("iconurl");//微信的头像
+                weiXinUserId = map.get("openid");//微信的openid
+                requestWeixinLogin();
+            }
+
+            @Override
+            public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+                Log.e(TAG, "授权出错=====" + throwable.getMessage());
+                Toast.makeText(mContext, "授权出错！", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancel(SHARE_MEDIA share_media, int i) {
+                Toast.makeText(mContext, "取消微信登录！", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 //
 //    /***
 //     * 微信第三方登录
@@ -531,6 +564,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
         public void onReceive(Context context, Intent intent) {
             tv_get_verifycode.setText(intent.getExtras().getString("seconds"));
         }
+
     }
 
     private void hideEdittext() {
@@ -542,7 +576,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
     public void onDestroy() {
         super.onDestroy();
 
-        if(activity!=null && receiveBroadCast!=null){
+        if (activity != null && receiveBroadCast != null) {
             activity.unregisterReceiver(receiveBroadCast);
         }
     }

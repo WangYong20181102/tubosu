@@ -124,7 +124,7 @@
                         android:background="@color/white"
                         android:gravity="center"
                         android:inputType="number"
-                        android:maxLength="8"
+                        android:maxLength="4"
                         android:singleLine="true"
                         android:text="90"
                         android:textSize="14sp"
@@ -159,7 +159,7 @@
                         android:background="@color/bg_white"
                         android:gravity="center_vertical|right"
                         android:inputType="number"
-                        android:maxLength="5"
+                        android:maxLength="2"
                         android:text="3"
                         android:textSize="14sp" />
 
@@ -221,6 +221,7 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:maxLength="2"
                             android:id="@+id/fd_text_my_home_ting_num"
                             android:layout_width="15dp"
                             android:layout_height="wrap_content"
@@ -287,6 +288,7 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:maxLength="2"
                             android:id="@+id/fd_text_my_home_chu_num"
                             android:layout_width="15dp"
                             android:layout_height="wrap_content"
@@ -360,6 +362,7 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:maxLength="2"
                             android:id="@+id/fd_text_my_home_wei_num"
                             android:layout_width="15dp"
                             android:layout_height="wrap_content"
@@ -425,6 +428,7 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:maxLength="2"
                             android:id="@+id/fd_text_my_home_yangtai_num"
                             android:layout_width="15dp"
                             android:layout_height="wrap_content"
@@ -511,7 +515,7 @@
                         android:layout_alignBottom="@+id/fd_phone"
                         android:layout_centerHorizontal="true"
                         android:background="@null"
-                        android:hint="报价将发送短信给您"
+                        android:hint="请输入手机号码"
                         android:inputType="number"
                         android:maxLength="11"
                         android:maxLines="1"
