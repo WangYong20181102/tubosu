@@ -347,6 +347,8 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
                     }
                 } else {
                     tempRecordBeenList.addAll(_recordBeenList);
+                    tvSeeMoreCaseHistory.setVisibility(View.GONE);
+                    v_middle.setVisibility(View.GONE);
                 }
             }
             if (searchCaseAdapter == null) {

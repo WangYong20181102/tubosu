@@ -307,6 +307,7 @@ public class LoginActivity extends BaseActivity {
         param.put("system_type", "1");
         param.put("chcode", Utils.getChannType(mContext));
         HttpUtils.doPost(UrlConstans.WECHAT_LOGIN, param, new Callback() {
+
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败========" + e.toString());

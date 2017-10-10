@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.tbs.tobosupicture.utils.Utils;
+
 public class BladeView extends View {
 	private OnItemClickListener mOnItemClickListener;
 	private String[] letterArray = {"定位","热门", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
@@ -116,10 +118,12 @@ public class BladeView extends View {
 		}
 
 		String text = "";
-		if (item == 0) {
-			text = "A";
-		} else {
-			text = Character.toString((char) ('A' + item - 1));
+		if (item ==0) {
+			text = "定位";
+		} else if(item == 1) {
+			text = "热门";
+		}else{
+			text = Character.toString((char) ('A' + item - 2));
 		}
 		mPopupText.setText(text);
 		if (mPopupWindow.isShowing()) {

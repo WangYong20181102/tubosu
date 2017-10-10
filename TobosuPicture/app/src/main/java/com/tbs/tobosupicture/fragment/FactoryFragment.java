@@ -29,6 +29,8 @@ import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
+import com.umeng.analytics.MobclickAgent;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -209,7 +211,7 @@ public class FactoryFragment extends BaseFragment {
                 factoryStyrlBeenList = factoryStyle.getFactoryStyrlBeanList();
 
             } else if (factoryStyle.getStatus() == 201) {
-
+                Utils.setErrorLog(TAG, "类型无数据");
             } else {
                 Utils.setErrorLog(TAG, "类型无数据");
             }
@@ -399,6 +401,7 @@ public class FactoryFragment extends BaseFragment {
         expandableListview.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                MobclickAgent.onEvent(getActivity(), factoryStyrlBeenList.get(groupPosition).getEvent_name());
                 int len = factoryStyrlBeenList.get(groupPosition).getChild_data().size();
                 if(len==0){
                     return true;
