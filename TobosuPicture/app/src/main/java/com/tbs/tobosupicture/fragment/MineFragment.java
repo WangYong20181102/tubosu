@@ -1,4 +1,5 @@
 package com.tbs.tobosupicture.fragment;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -21,9 +22,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
@@ -52,8 +55,10 @@ import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.utils.WriteUtil;
 import com.tbs.tobosupicture.view.SelectPersonalPopupWindow;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -63,6 +68,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -239,7 +245,7 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void receiveEvent(Event event) {
-        switch (event.getCode()){
+        switch (event.getCode()) {
             case EC.EventCode.SHOW_MINE_RED_DOT:
                 //显示红点
                 mineReddot.setVisibility(View.VISIBLE);
@@ -250,10 +256,10 @@ public class MineFragment extends BaseFragment {
                 break;
             case EC.EventCode.USER_LOGIN_TYPE:
                 String type = (String) event.getData();
-                if("1".equals(type)){
+                if ("1".equals(type)) {
                     // 业主
                     text3.setText("搜索过的装修案例");
-                }else if("3".equals(type)) {
+                } else if ("3".equals(type)) {
                     // 公司
                     text3.setText("同城用户搜索的案例");
                 }
@@ -365,8 +371,8 @@ public class MineFragment extends BaseFragment {
                 mContext.startActivity(intentToweixin);
                 break;
             case R.id.fm_kefu_dianhua:
-                //开启电话
-                call("4006062221");
+                //开启弹窗
+                showOpenPhonePopwindow();
                 break;
             case R.id.fm_shezhi:
                 //进入系统设置
@@ -535,6 +541,41 @@ public class MineFragment extends BaseFragment {
                 }
             }
         });
+    }
+
+    //弹出拨打电话的弹窗
+    private void showOpenPhonePopwindow() {
+        Log.e(TAG, "显示pop================");
+        View popView = View.inflate(mContext, R.layout.pop_show_phone, null);
+        RelativeLayout callRl = (RelativeLayout) popView.findViewById(R.id.pop_show_phone_rl);
+        TextView callTv = (TextView) popView.findViewById(R.id.pop_show_phone_call);//拨打电话
+        TextView dissmissCallTv = (TextView) popView.findViewById(R.id.pop_show_phone_dismiss);//取消拨打电话
+        final PopupWindow popupWindow = new PopupWindow(popView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        callTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //进行拨打电话
+                call("4006062221");
+                popupWindow.dismiss();
+            }
+        });
+        dissmissCallTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        callRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //点击外侧消失
+                popupWindow.dismiss();
+            }
+        });
+        //窗口显示的位置
+        popupWindow.showAtLocation(popView, Gravity.BOTTOM, 0, 0);
     }
 
     //拨打客服电话
