@@ -432,7 +432,9 @@ public class SmartDesignActivity extends BaseActivity {
 
             } else {
                 //增加数据
-                edit.setText("" + (houseNum + 1));
+                if(houseNum<99){
+                    edit.setText("" + (houseNum + 1));
+                }
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();

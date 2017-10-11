@@ -362,6 +362,7 @@ public class ImageToFriendFragment extends BaseFragment {
     }
 
     private void HttpUpLoadImage() {
+        Log.e(TAG, "=====token=====" + Utils.getDateToken());
         OkHttpClient client = new OkHttpClient();
         MediaType IMG_TYPE = MediaType.parse("image/*");
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
