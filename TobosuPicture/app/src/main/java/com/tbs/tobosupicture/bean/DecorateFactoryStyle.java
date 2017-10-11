@@ -18,40 +18,42 @@ public class DecorateFactoryStyle {
     public DecorateFactoryStyle(){}
 
     public DecorateFactoryStyle(String json){
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            this.msg = jsonObject.getString("msg");
-            this.status = jsonObject.getInt("status");
-            this.data = jsonObject.getJSONArray("data");
-            int len = this.data.length();
-            for(int i=0;i<len;i++){
-                FactoryStyrlBean bean = new FactoryStyrlBean();
-                String id = this.data.getJSONObject(i).getString("id");
-                String class_name = this.data.getJSONObject(i).getString("class_name");
-                String event_name = this.data.getJSONObject(i).getString("event_name");
-                JSONArray arr = this.data.getJSONObject(i).getJSONArray("child_data");
-                int ss = arr.length();
-                ArrayList<ChildData> childDataList = new ArrayList<ChildData>();
-                if(ss>0){
-                    for(int j=0;j<ss;j++){
-                        String small_id = arr.getJSONObject(j).getString("id");
-                        String small_parent_id = arr.getJSONObject(j).getString("parent_id");
-                        String small_class_name = arr.getJSONObject(j).getString("class_name");
-                        String small_event_name = arr.getJSONObject(j).getString("event_name");
-                        ChildData childData = new ChildData(small_id,small_parent_id,small_class_name,small_event_name);
-                        childDataList.add(childData);
+        if(json.contains("data")){
+            try {
+                JSONObject jsonObject = new JSONObject(json);
+                this.msg = jsonObject.getString("msg");
+                this.status = jsonObject.getInt("status");
+                this.data = jsonObject.getJSONArray("data");
+                int len = this.data.length();
+                for(int i=0;i<len;i++){
+                    FactoryStyrlBean bean = new FactoryStyrlBean();
+                    String id = this.data.getJSONObject(i).getString("id");
+                    String class_name = this.data.getJSONObject(i).getString("class_name");
+                    String event_name = this.data.getJSONObject(i).getString("event_name");
+                    JSONArray arr = this.data.getJSONObject(i).getJSONArray("child_data");
+                    int ss = arr.length();
+                    ArrayList<ChildData> childDataList = new ArrayList<ChildData>();
+                    if(ss>0){
+                        for(int j=0;j<ss;j++){
+                            String small_id = arr.getJSONObject(j).getString("id");
+                            String small_parent_id = arr.getJSONObject(j).getString("parent_id");
+                            String small_class_name = arr.getJSONObject(j).getString("class_name");
+                            String small_event_name = arr.getJSONObject(j).getString("event_name");
+                            ChildData childData = new ChildData(small_id,small_parent_id,small_class_name,small_event_name);
+                            childDataList.add(childData);
+                        }
                     }
+
+                    bean.setId(id);
+                    bean.setEvent_name(event_name);
+                    bean.setClass_name(class_name);
+                    bean.setChild_data(childDataList);
+                    this.factoryStyrlBeanList.add(bean);
                 }
 
-                bean.setId(id);
-                bean.setEvent_name(event_name);
-                bean.setClass_name(class_name);
-                bean.setChild_data(childDataList);
-                this.factoryStyrlBeanList.add(bean);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
 

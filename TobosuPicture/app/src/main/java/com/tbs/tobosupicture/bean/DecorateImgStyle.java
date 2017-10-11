@@ -19,14 +19,17 @@ public class DecorateImgStyle {
 
     public DecorateImgStyle(){}
     public DecorateImgStyle(String json){
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            this.msg = jsonObject.getString("msg");
-            this.status = jsonObject.getInt("status");
-            this.data = jsonObject.getJSONObject("data");
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if(json.contains("data")){
+            try {
+                JSONObject jsonObject = new JSONObject(json);
+                this.msg = jsonObject.getString("msg");
+                this.status = jsonObject.getInt("status");
+                this.data = jsonObject.getJSONObject("data");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     /**

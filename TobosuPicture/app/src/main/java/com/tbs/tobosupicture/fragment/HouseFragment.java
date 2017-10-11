@@ -216,7 +216,7 @@ public class HouseFragment extends BaseFragment {
                     idDataList.add(style.get(i).getId());
                     textDataList.add(style.get(i).getClass_name());
                     iconDataList.add(iconPic[i]);
-                    eventsList.add(space.get(i).getEvent_name());
+                    eventsList.add(style.get(i).getEvent_name());
                 }
                 flag = false;
                 type = 1;
@@ -228,7 +228,7 @@ public class HouseFragment extends BaseFragment {
                     idDataList.add(partial.get(i).getId());
                     textDataList.add(partial.get(i).getClass_name());
                     iconDataList.add(R.mipmap.circle_normal);
-                    eventsList.add(space.get(i).getEvent_name());
+                    eventsList.add(partial.get(i).getEvent_name());
                 }
                 flag = true;
                 type = 2;
@@ -240,7 +240,7 @@ public class HouseFragment extends BaseFragment {
                     idDataList.add(layout.get(i).getId());
                     textDataList.add(layout.get(i).getClass_name());
                     iconDataList.add(R.mipmap.circle_normal);
-                    eventsList.add(space.get(i).getEvent_name());
+                    eventsList.add(layout.get(i).getEvent_name());
                 }
                 flag = true;
                 type = 3;
@@ -252,7 +252,7 @@ public class HouseFragment extends BaseFragment {
                     idDataList.add(color.get(i).getId());
                     textDataList.add(color.get(i).getClass_name());
                     iconDataList.add(iconColor[i]);
-                    eventsList.add(space.get(i).getEvent_name());
+                    eventsList.add(color.get(i).getEvent_name());
                 }
                 flag = false;
                 type = 4;
@@ -598,7 +598,10 @@ public class HouseFragment extends BaseFragment {
 
         public void setSelectedPosition(int selectedPosition) {
             this.selectedPosition = selectedPosition;
-            MobclickAgent.onEvent(context, clickList.get(selectedPosition));
+            if(selectedPosition!=-1){
+                MobclickAgent.onEvent(context, clickList.get(selectedPosition));
+            }
+
         }
 
         public void clearSelection(int position) {

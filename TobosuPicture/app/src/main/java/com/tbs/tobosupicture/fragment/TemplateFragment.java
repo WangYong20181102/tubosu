@@ -76,10 +76,10 @@ public class TemplateFragment extends BaseFragment {
 
     private void initView() {
         String city = SpUtils.getLocationCity(getActivity());
-        if(city.contains("市") || city.contains("县")){
-            city = city.substring(0, city.length()-1);
-        }
-        chosenCity = "".equals(city)?"深圳": city;
+//        if(city.contains("市") || city.contains("县")){
+//            city = city.substring(0, city.length()-1);
+//        }
+        chosenCity = "".equals(city)?"深圳市": city;
         tempLocation.setText(chosenCity);
         SpUtils.setTemplateFragmentCity(getActivity(), chosenCity);
 

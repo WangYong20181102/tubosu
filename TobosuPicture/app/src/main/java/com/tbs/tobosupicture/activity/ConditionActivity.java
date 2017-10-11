@@ -112,7 +112,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
             if(intent.getStringExtra("default_city")!=null){
                 cityName = intent.getStringExtra("default_city");
             }else {
-                cityName = "深圳";
+                cityName = "深圳市";
             }
             getDataFromNet();   // 获取搜索条件
             initCityDisctrictWheelView();  // 初始化省市区滚轮
@@ -146,7 +146,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
             if (data == null) {
                 return;
             }else {
-                tvChooseCity.setText("未选择  未选择  未选择");
+                tvChooseCity.setText("请选择城市");
                 if (data.ProvinceItems != null && data.ProvinceItems.Province != null) {
                     chooseAddressWheel.setProvince(data.ProvinceItems.Province);
                     chooseAddressWheel.defaultValue(data.Province, data.City, data.Area);
@@ -317,7 +317,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
             Utils.setErrorLog(TAG,"返回 有选择城市：" + city_id);
         }
 
-        b.putString("condition_text", cityName + conditionText);
+        b.putString("condition_text", cityName + " " + conditionText);
         intent.putExtra("params", b);
 
         Utils.setErrorLog(TAG, "[" +param_area + "]   [" + param_layout + "]  [" + param_price + "]  [" + param_style + "]  返回城市id[" + city_id+  "]  返回小区id[" + district_id+ "]  返回花园小区id[" + param_vilige_id+"]");
@@ -582,7 +582,7 @@ public class ConditionActivity extends BaseActivity implements OnAddressChangeLi
     private ArrayList<DistrictEntity> districtDataList;
     private ArrayList<DistrictEntity> tempGardenDataList = new ArrayList<DistrictEntity>();
     private DistrictAdapter adapter;
-    private String defaultAddr = "未选择  未选择 未选择";
+    private String defaultAddr = "请选择城市";
     private String cityName = "";
     private void showGardenWindow(boolean isTextSearch, String text, String cityID, String districtID){
         View contentView = LayoutInflater.from(mContext).inflate(R.layout.popuplayout_district, null);
