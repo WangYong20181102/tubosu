@@ -19,14 +19,17 @@ public class DecorateImgStyle {
 
     public DecorateImgStyle(){}
     public DecorateImgStyle(String json){
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-            this.msg = jsonObject.getString("msg");
-            this.status = jsonObject.getInt("status");
-            this.data = jsonObject.getJSONObject("data");
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if(json.contains("data")){
+            try {
+                JSONObject jsonObject = new JSONObject(json);
+                this.msg = jsonObject.getString("msg");
+                this.status = jsonObject.getInt("status");
+                this.data = jsonObject.getJSONObject("data");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     /**
@@ -93,7 +96,7 @@ public class DecorateImgStyle {
                     StyleBean bean = new StyleBean();
                     bean.setClass_name(class_name);
                     bean.setId(id);
-                    Utils.setErrorLog(TAG, class_name);
+//                    Utils.setErrorLog(TAG, class_name);
                     this.styleList.add(bean);
                 }
 
@@ -105,7 +108,7 @@ public class DecorateImgStyle {
                     PartialBean bean = new PartialBean();
                     bean.setClass_name(class_name);
                     bean.setId(id);
-                    Utils.setErrorLog(TAG, class_name);
+//                    Utils.setErrorLog(TAG, class_name);
                     this.partialList.add(bean);
                 }
 
@@ -118,7 +121,7 @@ public class DecorateImgStyle {
                     LayoutBean bean = new LayoutBean();
                     bean.setClass_name(class_name);
                     bean.setId(id);
-                    Utils.setErrorLog(TAG, class_name);
+//                    Utils.setErrorLog(TAG, class_name);
                     this.layoutList.add(bean);
                 }
 
@@ -130,7 +133,7 @@ public class DecorateImgStyle {
                     ColorBean bean = new ColorBean();
                     bean.setClass_name(class_name);
                     bean.setId(id);
-                    Utils.setErrorLog(TAG, class_name);
+//                    Utils.setErrorLog(TAG, class_name);
                     this.colorList.add(bean);
                 }
 
@@ -199,6 +202,15 @@ public class DecorateImgStyle {
             public void setClass_name(String class_name) {
                 this.class_name = class_name;
             }
+
+            public String getEvent_name() {
+                return event_name;
+            }
+
+            public void setEvent_name(String event_name) {
+                this.event_name = event_name;
+            }
+
         }
 
         public static class StyleBean extends HouseStyleBean{
@@ -222,6 +234,14 @@ public class DecorateImgStyle {
 
             public void setClass_name(String class_name) {
                 this.class_name = class_name;
+            }
+
+            public String getEvent_name() {
+                return event_name;
+            }
+
+            public void setEvent_name(String event_name) {
+                this.event_name = event_name;
             }
         }
 
@@ -247,6 +267,14 @@ public class DecorateImgStyle {
             public void setClass_name(String class_name) {
                 this.class_name = class_name;
             }
+
+            public String getEvent_name() {
+                return event_name;
+            }
+
+            public void setEvent_name(String event_name) {
+                this.event_name = event_name;
+            }
         }
 
         public static class LayoutBean extends HouseStyleBean{
@@ -271,6 +299,14 @@ public class DecorateImgStyle {
             public void setClass_name(String class_name) {
                 this.class_name = class_name;
             }
+
+            public String getEvent_name() {
+                return event_name;
+            }
+
+            public void setEvent_name(String event_name) {
+                this.event_name = event_name;
+            }
         }
 
         public static class ColorBean extends HouseStyleBean{
@@ -293,6 +329,14 @@ public class DecorateImgStyle {
 
             public void setClass_name(String class_name) {
                 this.class_name = class_name;
+            }
+
+            public String getEvent_name() {
+                return event_name;
+            }
+
+            public void setEvent_name(String event_name) {
+                this.event_name = event_name;
             }
         }
     }

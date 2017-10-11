@@ -65,9 +65,7 @@ public class ImageDetailFragment extends Fragment {
 
     /***添加取消收藏接口*/
     private String favUrl = Constant.TOBOSU_URL + "/tapp/user/fav";
-
     private List<String> singleMap = new ArrayList<String>();
-
     private View imageDetailLoading;//加载图层
     private ImageView imgDetailBack;//顶部返回按钮
     private TextView imgVillage;//小区名称
@@ -87,8 +85,7 @@ public class ImageDetailFragment extends Fragment {
     private List<_CardDataItem> dataList = new ArrayList<_CardDataItem>();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_image_detail, null);
         mContext = getActivity();
         customWaitDialog = new CustomWaitDialog(mContext);

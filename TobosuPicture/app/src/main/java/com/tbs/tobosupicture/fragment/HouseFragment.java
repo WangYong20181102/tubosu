@@ -116,6 +116,7 @@ public class HouseFragment extends BaseFragment {
 
     private DecorateImgStyle.DecorateStyleBeanArray dataBeanArray;
     private ArrayList<String> textDataList = new ArrayList<String>();
+    private ArrayList<String> eventsList = new ArrayList<String>();
     private ArrayList<String> idDataList = new ArrayList<String>();
     private ArrayList<Integer> iconDataList = new ArrayList<Integer>();
 
@@ -190,6 +191,7 @@ public class HouseFragment extends BaseFragment {
             return;
         }
         boolean flag = false;
+        eventsList.clear();
         textDataList.clear();
         iconDataList.clear();
         idDataList.clear();
@@ -202,6 +204,7 @@ public class HouseFragment extends BaseFragment {
                     idDataList.add(space.get(i).getId());
                     textDataList.add(space.get(i).getClass_name());
                     iconDataList.add(iconPic[i]);
+                    eventsList.add(space.get(i).getEvent_name());
                 }
                 flag = false;
                 type = 0;
@@ -213,6 +216,7 @@ public class HouseFragment extends BaseFragment {
                     idDataList.add(style.get(i).getId());
                     textDataList.add(style.get(i).getClass_name());
                     iconDataList.add(iconPic[i]);
+                    eventsList.add(style.get(i).getEvent_name());
                 }
                 flag = false;
                 type = 1;
@@ -224,6 +228,7 @@ public class HouseFragment extends BaseFragment {
                     idDataList.add(partial.get(i).getId());
                     textDataList.add(partial.get(i).getClass_name());
                     iconDataList.add(R.mipmap.circle_normal);
+                    eventsList.add(partial.get(i).getEvent_name());
                 }
                 flag = true;
                 type = 2;
@@ -235,6 +240,7 @@ public class HouseFragment extends BaseFragment {
                     idDataList.add(layout.get(i).getId());
                     textDataList.add(layout.get(i).getClass_name());
                     iconDataList.add(R.mipmap.circle_normal);
+                    eventsList.add(layout.get(i).getEvent_name());
                 }
                 flag = true;
                 type = 3;
@@ -246,12 +252,14 @@ public class HouseFragment extends BaseFragment {
                     idDataList.add(color.get(i).getId());
                     textDataList.add(color.get(i).getClass_name());
                     iconDataList.add(iconColor[i]);
+                    eventsList.add(color.get(i).getEvent_name());
                 }
                 flag = false;
                 type = 4;
                 break;
         }
-        initPopupWindow(type, textDataList, idDataList, iconDataList, flag);
+
+        initPopupWindow(type, textDataList, idDataList, iconDataList, eventsList, flag);
     }
 
 
@@ -261,9 +269,10 @@ public class HouseFragment extends BaseFragment {
      * @param textList 选中的文字
      * @param idList 选中的文字的id
      * @param iconList 选中的文字的图片
+     * @param eventClickList 点击事件
      * @param flag
      */
-    private void initPopupWindow(final int type, final ArrayList<String> textList, final ArrayList<String> idList, ArrayList<Integer> iconList,boolean flag) {
+    private void initPopupWindow(final int type, final ArrayList<String> textList, final ArrayList<String> idList, ArrayList<Integer> iconList, ArrayList<String> eventClickList, boolean flag) {
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.popuplayout, null);
         GridView gv = (GridView) contentView.findViewById(R.id.gv_converview);
         popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
@@ -272,7 +281,7 @@ public class HouseFragment extends BaseFragment {
         popupWindow.setBackgroundDrawable(cd);
         popupWindow.setOutsideTouchable(true);
         popupWindow.setFocusable(true);
-        GvAdapter gvAdapter = new GvAdapter(getActivity(), iconList, textList, flag);
+        GvAdapter gvAdapter = new GvAdapter(getActivity(), iconList, textList, eventClickList, flag);
         gv.setAdapter(gvAdapter);
         switch (type){
             case 0:
@@ -308,7 +317,7 @@ public class HouseFragment extends BaseFragment {
                         if(position>0){
                             tvSpace.setText(textList.get(position));
                             parameter.put("space_id", idList.get(position));
-                            setUmengClickCount(type, position);
+//                            setUmengClickCount(type, position);
                         }else{
                             tvSpace.setText("空间");
                             parameter.put("space_id", "0");
@@ -319,7 +328,7 @@ public class HouseFragment extends BaseFragment {
                         if(position>0){
                             tvStyle.setText(textList.get(position));
                             parameter.put("style_id", idList.get(position));
-                            setUmengClickCount(type, position);
+//                            setUmengClickCount(type, position);
                         }else{
                             tvStyle.setText("风格");
                             parameter.put("style_id", "0");
@@ -330,7 +339,7 @@ public class HouseFragment extends BaseFragment {
                         if(position>0){
                             tvPart.setText(textList.get(position));
                             parameter.put("part_id", idList.get(position));
-                            setUmengClickCount(type, position);
+//                            setUmengClickCount(type, position);
                         }else{
                             tvPart.setText("局部");
                             parameter.put("part_id", "0");
@@ -341,7 +350,7 @@ public class HouseFragment extends BaseFragment {
                         if(position>0){
                             tvHouseStyle.setText(textList.get(position));
                             parameter.put("layout_id", idList.get(position));
-                            setUmengClickCount(type, position);
+//                            setUmengClickCount(type, position);
                         }else{
                             tvHouseStyle.setText("户型");
                             parameter.put("layout_id", "0");
@@ -352,7 +361,7 @@ public class HouseFragment extends BaseFragment {
                         if(position>0){
                             tvHouseColor.setText(textList.get(position));
                             parameter.put("color_id", idList.get(position));
-                            setUmengClickCount(type, position);
+//                            setUmengClickCount(type, position);
                         }else{
                             tvHouseColor.setText("颜色");
                             parameter.put("color_id", "0");
@@ -566,6 +575,7 @@ public class HouseFragment extends BaseFragment {
     private class GvAdapter extends BaseAdapter {
         private ArrayList<Integer> iconList;
         private ArrayList<String> textList;
+        private ArrayList<String> clickList;
         private Context context;
         private ViewHolder holder;
         private LayoutInflater inflater;
@@ -573,11 +583,12 @@ public class HouseFragment extends BaseFragment {
         private int selectedPosition = 0;
 
 
-        public GvAdapter(Context context, ArrayList<Integer> iconList, ArrayList<String> textList, boolean flag) {
+        public GvAdapter(Context context, ArrayList<Integer> iconList, ArrayList<String> textList, ArrayList<String> clickList, boolean flag) {
             this.context = context;
             this.inflater = LayoutInflater.from(context);
             this.iconList = iconList;
             this.textList = textList;
+            this.clickList = clickList;
             this.flag = flag;
         }
 
@@ -587,6 +598,10 @@ public class HouseFragment extends BaseFragment {
 
         public void setSelectedPosition(int selectedPosition) {
             this.selectedPosition = selectedPosition;
+            if(selectedPosition!=-1){
+                MobclickAgent.onEvent(context, clickList.get(selectedPosition));
+            }
+
         }
 
         public void clearSelection(int position) {

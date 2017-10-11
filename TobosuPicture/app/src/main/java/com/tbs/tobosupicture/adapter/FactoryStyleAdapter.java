@@ -13,6 +13,7 @@ import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.bean.FactoryStyrlBean;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.MyGridView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -126,6 +127,7 @@ public class FactoryStyleAdapter extends BaseExpandableListAdapter {
         holder.gvChild.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MobclickAgent.onEvent(context, groupDataList.get(groupPosition).getChild_data().get(position).getEvent_name());
                 String style_id = groupDataList.get(groupPosition).getChild_data().get(position).getId();
                 String text = groupDataList.get(groupPosition).getChild_data().get(position).getClass_name();
                 onFactoryStyleItemClickListener.onFactoryStyleItemClickListener(style_id,text);

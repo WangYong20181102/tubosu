@@ -99,6 +99,7 @@ public class GetPriceActivity extends BaseActivity implements OnClickListener {
         etName = (EditText) findViewById(R.id.getprice_name);
         etPhone = (EditText) findViewById(R.id.getprice_phone);
         tvCity = (TextView) findViewById(R.id.tv_getprice_city);
+//        tvCity.setText(SpUtils.getTemplateFragmentCity(mContext));
         relChooseCity = (RelativeLayout) findViewById(R.id.rel_choose_city);
         tvSummit = (TextView) findViewById(R.id.getprice_submit);
         tvCheatTextView = (TextView) findViewById(R.id.cheat_textview);

@@ -254,8 +254,12 @@ public class DecorationCaseFragment extends BaseFragment {
                         Utils.setErrorLog(TAG, "区id是来自选择器");
                     }
                     param_vilige_id = bundle.getString("param_vilige_id"); // 花园小区id
-                    Utils.setErrorLog(TAG, param_city_id+"%%");
+//                    Utils.setErrorLog(TAG, param_city_id+"%%");
                     if(bundle.getInt("getcity") == 0){
+                        if(!city.contains("市")){
+                            // 无市要加市  测试的要求
+                            city = city + "市";
+                        }
                         tvSearchTipText.setText(city + " " + bundle.getString("condition_text"));
                         param_city_id = city;
 //                        Utils.setToast(getActivity(), "9999");

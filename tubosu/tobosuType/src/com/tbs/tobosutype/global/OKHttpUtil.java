@@ -62,6 +62,20 @@ public class OKHttpUtil {
 
 
     /**
+     * get请求
+     * @param url
+     * @param callBack
+     */
+    public static void getImg(String url, Callback callBack) {
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        Call call = getInstance().newCall(request);
+        call.enqueue(callBack);
+    }
+
+
+    /**
      * post请求
      * @param url
      * @param params

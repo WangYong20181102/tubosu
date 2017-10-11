@@ -277,9 +277,14 @@ public class SelectCityActivity extends BaseActivity implements OnClickListener 
             @Override
             public void onItemClick(String s) {
                 String key = s;
-                if (mIndexer.get(key) != null) {
-                    mCityListView.setSelection(mIndexer.get(key).intValue() + 1);
+                if(key.equals("热门")){
+                    mCityListView.setSelection(0);
+                }else {
+                    if (mIndexer.get(key) != null) {
+                        mCityListView.setSelection(mIndexer.get(key).intValue() + 1);
+                    }
                 }
+
             }
         });
 

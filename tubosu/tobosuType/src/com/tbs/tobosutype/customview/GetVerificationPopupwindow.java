@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.BindingPhoneActivity;
 import com.tbs.tobosutype.activity.FindPwdActivity2;
@@ -26,14 +24,17 @@ import com.tbs.tobosutype.activity.FreeDesignPrice;
 import com.tbs.tobosutype.activity.LoginActivity;
 import com.tbs.tobosutype.activity.RegisterActivity2;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.http.HttpClientHelper;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.HintInput;
 import com.tbs.tobosutype.utils.Util;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /***
  * 获取验证码弹窗
@@ -41,20 +42,32 @@ import java.util.HashMap;
  * @author dec
  */
 public class GetVerificationPopupwindow extends PopupWindow {
+    private String TAG = "GetVerificationPopupwindow";
     private View mView;
     private ImageView iv_imageverif;
+    private InputStream imgStream;
     private TextView tv_another;
     private TextView tv_cancel;
     private TextView tv_ensure;
-    public EditText et_input;
-    private HashMap<String, Object> headerMap = new HashMap<String, Object>();
     private String urlBase = Constant.TOBOSU_URL + "tapp/passport/get_pic_code?version=";
-    private String header;
-    private Handler imageVerifHandler = new Handler();
     private Context mContext;
     public String phone = null;
     private String imageVerif;
     public String version = null;
+    public EditText et_input;
+
+    private Handler mhandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 444:
+                    Bitmap bitmap = BitmapFactory.decodeStream(imgStream);
+                    iv_imageverif.setImageBitmap(bitmap);
+                    break;
+            }
+        }
+    };
+
 
     public GetVerificationPopupwindow(Context context) {
         super(context);
@@ -83,26 +96,38 @@ public class GetVerificationPopupwindow extends PopupWindow {
             }
         });
 
-        getVerifyCode();
+        if(Util.isNetAvailable(mContext)){
+            OKHttpUtil.get(urlBase, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    imgStream = response.body().byteStream();
+                    mhandler.sendEmptyMessage(444);
+                }
+            });
+        }
 
         tv_another.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                getVerifyCode();
-//				RequestQueue queue = Volley.newRequestQueue(mContext);
-//				ImageRequest imageRequest = new ImageRequest(urlBase, new Response.Listener<Bitmap>() {
-//					@Override
-//					public void onResponse(Bitmap response) {
-//						iv_imageverif.setImageBitmap(response);
-//					}
-//				}, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
-//
-//					@Override
-//					public void onErrorResponse(VolleyError error) {
-//
-//					}
-//				});
-//				queue.add(imageRequest);
+                if(Util.isNetAvailable(mContext)){
+                    OKHttpUtil.get(urlBase, new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            imgStream = response.body().byteStream();
+                            mhandler.sendEmptyMessage(444);
+                        }
+                    });
+                }
             }
         });
 
@@ -114,76 +139,61 @@ public class GetVerificationPopupwindow extends PopupWindow {
                     Toast.makeText(mContext, "验证码为空！", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
                 imageVerif = et_input.getText().toString().trim();
+
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put("mobile", phone);
                 map.put("pic_code", imageVerif);
-                map.put("version", version);
-                map.put("device", "android");
-                new SendMessageThread(map).start();
+//                map.put("version", version);
+//                map.put("device", "android");
+
+
+                Util.setErrorLog(TAG, phone);
+                Util.setErrorLog(TAG, imageVerif);
+//                Util.setErrorLog(TAG, version);
+//                Util.setErrorLog(TAG, imageVerif);
+
+
+                OKHttpUtil.post(Constant.TOBOSU_URL + "tapp/passport/app_sms_code"/* + System.currentTimeMillis()*/, map, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        mhandler.sendEmptyMessage(4);
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String codeJson = response.body().string();
+                        Util.setErrorLog(TAG, codeJson);
+
+
+                        if (codeJson != null && !"".equals(codeJson)) {
+                            int errorCode = -1;
+                            try {
+                                if (codeJson != null) {
+                                    JSONObject object = new JSONObject(codeJson);
+                                    errorCode = object.getInt("error_code");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            Message msg = new Message();
+                            msg.what = 0;
+                            if (errorCode == 0) {
+                                msg.obj = 0;
+                            } else {
+                                msg.obj = -1;
+                            }
+                            handler.sendMessage(msg);
+                        }
+                    }
+                });
             }
         });
         new HintInput(4, et_input, context);
     }
 
-    private void getVerifyCode() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                headerMap = HttpClientHelper.loadTextFromURL(urlBase);
-                System.out.println("urlBase-->>>" + urlBase + "<<<" + headerMap);
-                if (headerMap != null) {
-                    header = (String) headerMap.get("header");
-                    final byte[] result = (byte[]) headerMap.get("body");
-                    imageVerifHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(result, 0, result.length);
-                            iv_imageverif.setImageBitmap(bitmap);
-                        }
-                    });
-                } else {
-
-                }
-
-            }
-        }).start();
-    }
-
-    class SendMessageThread extends Thread {
-        HashMap<String, String> map;
-
-        public SendMessageThread(HashMap<String, String> map) {
-            this.map = map;
-        }
-
-        public void run() {
-            Looper.prepare();
-            if (header != null) {
-                String[] split = header.split(";");
-                String result = HttpClientHelper.doPostSubmit(Constant.TOBOSU_URL + "tapp/passport/app_sms_code?" + System.currentTimeMillis(), map, split[0]);
-                int errorCode = -1;
-                try {
-                    if (result != null) {
-                        JSONObject object = new JSONObject(result);
-                        errorCode = object.getInt("error_code");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                Message msg = new Message();
-                msg.what = 0;
-                if (errorCode == 0) {
-                    msg.obj = 0;
-                } else {
-                    msg.obj = -1;
-                }
-                handler.sendMessage(msg);
-            } else {
-                Util.setLog("GetVerificationPopupwindow", "header = null*");
-            }
-        }
-    }
 
     public Handler handler = new Handler() {
         @Override
@@ -207,7 +217,7 @@ public class GetVerificationPopupwindow extends PopupWindow {
                         ((FreeDesignPrice) activity).startCount();
                     }
                 } else {
-                    Toast.makeText(mContext, "验证码错误!", Toast.LENGTH_SHORT).show();
+                    Util.setToast(mContext, "验证码错误!");
                 }
             }
         }

@@ -7,6 +7,7 @@ package com.tbs.tobosupicture.bean;
 public class HouseStyleBean {
     protected String id;
     protected String class_name;
+    protected String event_name;
 
 //    public String getId() {
 //        return id;
@@ -23,4 +24,5 @@ public class HouseStyleBean {
 //    public void setClass_name(String class_name) {
 //        this.class_name = class_name;
 //    }
+
 }
