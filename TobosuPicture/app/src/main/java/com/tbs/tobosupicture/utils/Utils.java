@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 import com.tbs.tobosupicture.activity.LoginActivity;
@@ -37,7 +38,7 @@ import java.util.Date;
 
 public class Utils {
 
-    private static boolean isPrintLog = true;
+    private static boolean isPrintLog = false;
 
     //TODO App相关处理工具****************************
 
@@ -56,6 +57,10 @@ public class Utils {
         String mTime = format.format(date);
         String s = Md5Utils.md5(md5ZHJ + mTime);
         String dataToken = Base64Util.getBase64(s);
+//        Log.e("生成的Token====","========md5ZHJ======="+md5ZHJ);
+//        Log.e("生成的Token====","========mTime======="+mTime);
+//        Log.e("生成的Token====","========s======="+s);
+//        Log.e("dataToken====","========dataToken======="+dataToken);
         return dataToken;
     }
 
