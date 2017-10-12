@@ -501,8 +501,9 @@ public class SeeImageActivity extends BaseActivity {
                                                             @Override
                                                             public void onClick(DialogInterface dialog, int id) {
                                                                 dialog.cancel();
+                                                                dialog.dismiss();
                                                                 //退出当前账户
-                                                                finish();
+//                                                                finish();
                                                             }
                                                         });
                                                 builder.create().show();

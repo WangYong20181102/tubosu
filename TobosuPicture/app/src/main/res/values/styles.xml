@@ -59,6 +59,13 @@
         <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
     </style>
 
+    <style name="mypopwindow_anim_style">
+        <item name="android:windowEnterAnimation">@anim/push_bottom2_in</item>
+        <!-- 指定显示的动画xml -->
+
+        <item name="android:windowExitAnimation">@anim/push_buttom2_out</item>
+        <!-- 指定消失的动画xml -->
+    </style>
 
     <style name="base_listview_style" parent="@android:style/Widget.ListView">
         <item name="android:scrollbarThumbVertical">@drawable/base_list_scrollbar_handle</item>
