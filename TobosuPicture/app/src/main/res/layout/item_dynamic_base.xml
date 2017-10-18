@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/dynamic_base_item_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -47,9 +48,9 @@
                 <TextView
                     android:id="@+id/dynamic_base_title"
                     android:layout_width="match_parent"
-                    android:lineSpacingExtra="3dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
+                    android:lineSpacingExtra="3dp"
                     android:text="时尚简约软装，细节之美~"
                     android:textColor="@color/text_black"
                     android:textSize="@dimen/text_size_30px" />

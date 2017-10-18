@@ -154,10 +154,15 @@ public class SmartDesignActivity extends BaseActivity {
 
     private void initLocationCity() {
         String cityName = SpUtils.getLocationCity(mContext);
-        if(cityName.contains("市") || cityName.contains("县")){
-            cityName = cityName.substring(0, cityName.length()-1);
+        if(!TextUtils.isEmpty(cityName)){
+            if(cityName.contains("市") || cityName.contains("县")){
+                cityName = cityName.substring(0, cityName.length()-1);
+            }
+            fdTextCity.setText("" + cityName);
+        }else {
+            fdTextCity.setText("未定位");
         }
-        fdTextCity.setText("" + cityName);
+
     }
 
     @Override

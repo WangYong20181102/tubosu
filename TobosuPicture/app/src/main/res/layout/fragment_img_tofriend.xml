@@ -24,6 +24,7 @@
                 android:textSize="@dimen/text_size_30px" />
             <!--以图会友搜索-->
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/imgtofriend_sousuo"
                 android:layout_width="@dimen/banner_height"
                 android:layout_height="@dimen/banner_height"

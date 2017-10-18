@@ -342,7 +342,7 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     if (!isZaning) {
                         if (Utils.userIsLogin(mContext)) {
                             isZaning = true;
-                            HttpPraise(SpUtils.getUserUid(mContext), dynamicBaseList.get(position - 1).getId(),dynamicBaseList.get(position-1).getIs_virtual_user(),
+                            HttpPraise(SpUtils.getUserUid(mContext), dynamicBaseList.get(position - 1).getId(), dynamicBaseList.get(position - 1).getIs_virtual_user(),
                                     dynamicBaseList.get(position - 1).getUid(), ((MyOrginItemHolder) holder).dynamic_base_praise,
                                     ((MyOrginItemHolder) holder).dynamic_base_zan_add, ((MyOrginItemHolder) holder).dynamic_base_praise_count, position - 1);
                         } else {
@@ -350,6 +350,16 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                         }
                     }
 
+                }
+            });
+            ((MyOrginItemHolder) holder).dynamic_base_item_ll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, DynamicDetailActivity.class);
+                    intent.putExtra("dynamic_id", dynamicBaseList.get(position - 1).getId());
+                    intent.putExtra("commented_uid", dynamicBaseList.get(position - 1).getUid());
+                    intent.putExtra("is_virtual_user", dynamicBaseList.get(position - 1).getIs_virtual_user());
+                    mContext.startActivity(intent);
                 }
             });
             //进入评论事件
@@ -437,6 +447,7 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         private LinearLayout dynamic_base_pinglun_ll;//评论布局
         private LinearLayout dynamic_base_zan_ll;//赞布局
+        private LinearLayout dynamic_base_item_ll;//赞布局
 
         public MyOrginItemHolder(View itemView) {
             super(itemView);
@@ -462,6 +473,7 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             dynamic_base_pinglun_ll = (LinearLayout) itemView.findViewById(R.id.dynamic_base_pinglun_ll);
             dynamic_base_zan_ll = (LinearLayout) itemView.findViewById(R.id.dynamic_base_zan_ll);
+            dynamic_base_item_ll = (LinearLayout) itemView.findViewById(R.id.dynamic_base_item_ll);
         }
     }
 
@@ -484,7 +496,7 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
      * praisedUid 被点赞用户的id号
      * is_praise 点赞前的状态
      */
-    private void HttpPraise(String uid, String dynamic_id,String is_virtual_user,
+    private void HttpPraise(String uid, String dynamic_id, String is_virtual_user,
                             String praised_uid, final ImageView zan, final TextView tvAdd, final TextView tvShowNum, final int position) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());

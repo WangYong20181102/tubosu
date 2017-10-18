@@ -3,6 +3,7 @@ package com.tbs.tobosupicture.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,8 +15,8 @@ import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.LoginActivity;
+import com.tbs.tobosupicture.activity.NewReplyActivity;
 import com.tbs.tobosupicture.activity.PersonHomePageActivity;
-import com.tbs.tobosupicture.activity.ReplyActivity;
 import com.tbs.tobosupicture.bean._DynamicDetail;
 import com.tbs.tobosupicture.constants.UrlConstans;
 import com.tbs.tobosupicture.utils.GlideUtils;
@@ -102,20 +103,31 @@ public class ShowCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             //点赞数量
             ((CommentViewHolder) holder).commentZanNum.setText("" + commentArrayList.get(position).getPraise_count());
             //回复数量
-            ((CommentViewHolder) holder).commentRevert.setText("" + commentArrayList.get(position).getReply_count() + "回复");
+            ((CommentViewHolder) holder).commentRevert.setText("回复");
             //回复的点击事件
             ((CommentViewHolder) holder).commentRevert.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, ReplyActivity.class);
+                    Intent intent = new Intent(mContext, NewReplyActivity.class);
                     Log.e(TAG, "检测回复的id====" + commentArrayList.get(position).getId());
                     intent.putExtra("comment_id", commentArrayList.get(position).getId());
-                    intent.putExtra("dynamic_id", dynamic_id);
+//                    intent.putExtra("dynamic_id", dynamic_id);-
                     mContext.startActivity(intent);
                 }
             });
             //回复的内容
             ((CommentViewHolder) holder).commentTitle.setText("" + commentArrayList.get(position).getContent());
+            //设置子项回复列表数据
+            if (commentArrayList.get(position).getChild_comment().isEmpty()) {
+                ((CommentViewHolder) holder).child_comment_ll.setVisibility(View.GONE);
+            } else {
+                //显示列表
+                ((CommentViewHolder) holder).child_comment_ll.setVisibility(View.VISIBLE);
+                LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext);
+                CommentChildAdapter commentChildAdapter = new CommentChildAdapter(mContext, commentArrayList.get(position));
+                ((CommentViewHolder) holder).child_comment_recycler.setLayoutManager(mLinearLayoutManager);
+                ((CommentViewHolder) holder).child_comment_recycler.setAdapter(commentChildAdapter);
+            }
         }
     }
 
@@ -133,6 +145,8 @@ public class ShowCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         private ImageView commentZan;//点赞图标
         private TextView commentZanNum;//点赞数
         private TextView dynamic_detail_comment_zan_add;//点赞数
+        private RecyclerView child_comment_recycler;//子项的回复列表
+        private LinearLayout child_comment_ll;//子项回复列表的父布局
 
         private LinearLayout dynamic_detail_comment_ll_zan;
 
@@ -147,12 +161,14 @@ public class ShowCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             commentZanNum = (TextView) itemView.findViewById(R.id.dynamic_detail_comment_zannum);
             dynamic_detail_comment_zan_add = (TextView) itemView.findViewById(R.id.dynamic_detail_comment_zan_add);
             dynamic_detail_comment_ll_zan = (LinearLayout) itemView.findViewById(R.id.dynamic_detail_comment_ll_zan);
+            child_comment_recycler = (RecyclerView) itemView.findViewById(R.id.child_comment_recycler);
+            child_comment_ll = (LinearLayout) itemView.findViewById(R.id.child_comment_ll);
 
         }
     }
 
     //TODO 对用户得回复进行点赞 当前用户的id暂时固定
-    private void HttpCommentZan(String comment_id, String praised_uid,String user_type,final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
+    private void HttpCommentZan(String comment_id, String praised_uid, String user_type, final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("uid", SpUtils.getUserUid(mContext));
@@ -191,7 +207,7 @@ public class ShowCommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                                 }
                             }
                         });
-                    }else {
+                    } else {
                         isZaning = false;
                     }
                 } catch (JSONException e) {

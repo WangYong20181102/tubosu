@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.DynamicDetailActivity;
+import com.tbs.tobosupicture.activity.NewReplyActivity;
 import com.tbs.tobosupicture.activity.PersonHomePageActivity;
 import com.tbs.tobosupicture.bean._DynamicMsg;
 import com.tbs.tobosupicture.utils.GlideUtils;
@@ -59,15 +60,32 @@ public class DynamicMsgAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     mContext.startActivity(intent);
                 }
             });
-            //整个动态点击事件
+            //整个动态点击事件  跳转事件得做分化处理
             ((DynamicMsgHolder) holder).item_dm_click.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, DynamicDetailActivity.class);
-                    intent.putExtra("dynamic_id", dynamicMsgList.get(position).getDynamic_id());
-                    intent.putExtra("commented_uid", dynamicMsgList.get(position).getDynamic_uid());
-                    intent.putExtra("is_virtual_user", dynamicMsgList.get(position).getDynamic_user_type());
-                    mContext.startActivity(intent);
+                    if (dynamicMsgList.get(position).getPage_level().equals("1")) {
+                        //跳转到评论页  有图片的页面
+                        Intent intent = new Intent(mContext, DynamicDetailActivity.class);
+                        intent.putExtra("dynamic_id", dynamicMsgList.get(position).getDynamic_id());
+                        intent.putExtra("commented_uid", dynamicMsgList.get(position).getDynamic_uid());
+                        intent.putExtra("is_virtual_user", dynamicMsgList.get(position).getDynamic_user_type());
+
+                        intent.putExtra("msg_type", dynamicMsgList.get(position).getMsg_type());//是点赞消息还是评论消息
+                        intent.putExtra("location_id", dynamicMsgList.get(position).getLocation_id());//要定位到的id
+                        intent.putExtra("from", "dynamic_msg_adapter");//是从哪个界面跳转进来的 用于数据的加载
+                        mContext.startActivity(intent);
+
+                    } else if (dynamicMsgList.get(position).getPage_level().equals("2")) {
+                        //跳转到评论回复页面
+                        Intent intent = new Intent(mContext, NewReplyActivity.class);
+                        intent.putExtra("comment_id", dynamicMsgList.get(position).getComment_id());
+                        intent.putExtra("location_id", dynamicMsgList.get(position).getLocation_id());
+                        intent.putExtra("msg_type", dynamicMsgList.get(position).getMsg_type());//是点赞消息还是评论消息
+                        intent.putExtra("from", "dynamic_msg_adapter");
+                        mContext.startActivity(intent);
+                    }
+
                 }
             });
             //封面图

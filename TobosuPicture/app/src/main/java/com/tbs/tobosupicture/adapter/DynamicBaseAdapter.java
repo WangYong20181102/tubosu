@@ -283,7 +283,7 @@ public class DynamicBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     if (!isZaning) {
                         if (Utils.userIsLogin(mContext)) {
                             isZaning = true;
-                            HttpPraise(SpUtils.getUserUid(mContext), dynamicBaseList.get(position).getId(),dynamicBaseList.get(position).getIs_virtual_user(),
+                            HttpPraise(SpUtils.getUserUid(mContext), dynamicBaseList.get(position).getId(), dynamicBaseList.get(position).getIs_virtual_user(),
                                     dynamicBaseList.get(position).getUid(), ((DynamicBaseHolder) holder).dynamic_base_praise,
                                     ((DynamicBaseHolder) holder).dynamic_base_zan_add, ((DynamicBaseHolder) holder).dynamic_base_praise_count, position);
                         } else {
@@ -294,6 +294,16 @@ public class DynamicBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             });
             //进入评论事件
             ((DynamicBaseHolder) holder).dynamic_base_pinglun_ll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, DynamicDetailActivity.class);
+                    intent.putExtra("dynamic_id", dynamicBaseList.get(position).getId());
+                    intent.putExtra("commented_uid", dynamicBaseList.get(position).getUid());
+                    intent.putExtra("is_virtual_user", dynamicBaseList.get(position).getIs_virtual_user());
+                    mContext.startActivity(intent);
+                }
+            });
+            ((DynamicBaseHolder) holder).dynamic_base_item_ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, DynamicDetailActivity.class);
@@ -350,6 +360,7 @@ public class DynamicBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         private LinearLayout dynamic_base_pinglun_ll;//评论布局
         private LinearLayout dynamic_base_zan_ll;//赞布局
+        private LinearLayout dynamic_base_item_ll;//赞布局
 
         public DynamicBaseHolder(View itemView) {
             super(itemView);
@@ -375,6 +386,7 @@ public class DynamicBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             dynamic_base_pinglun_ll = (LinearLayout) itemView.findViewById(R.id.dynamic_base_pinglun_ll);
             dynamic_base_zan_ll = (LinearLayout) itemView.findViewById(R.id.dynamic_base_zan_ll);
+            dynamic_base_item_ll = (LinearLayout) itemView.findViewById(R.id.dynamic_base_item_ll);
         }
     }
 
@@ -399,7 +411,7 @@ public class DynamicBaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
      * praisedUid 被点赞用户的id号
      * is_praise 点赞前的状态
      */
-    private void HttpPraise(String uid, String dynamic_id,String is_virtual_user,
+    private void HttpPraise(String uid, String dynamic_id, String is_virtual_user,
                             String praised_uid, final ImageView zan,
                             final TextView tvAdd,
                             final TextView tvShowNum, final int position) {

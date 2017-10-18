@@ -138,8 +138,9 @@
         <activity android:name=".activity.MyFriendsActivity" />
         <activity android:name=".activity.DesignerActivity" />
         <activity android:name=".activity.ConditionActivity" />
-        <activity android:name=".activity.SeeImageActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize|stateVisible"/>
+        <activity
+            android:name=".activity.SeeImageActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize|stateVisible" />
         <activity android:name=".activity.PersonHomePageActivity" />
         <activity android:name=".activity.HisFriendsActivity" />
         <activity android:name=".activity.CaseDetailActivity" />
@@ -171,7 +172,8 @@
         <activity android:name=".activity.SeeBigImgActivity" />
         <activity android:name=".activity.DecorateCaseSearchActivity" />
         <activity android:name=".activity.CompanyCaseDetailActivity" />
-        <activity android:name=".activity.SendDynamicDetailActivity"></activity>
+        <activity android:name=".activity.SendDynamicDetailActivity" />
+        <activity android:name=".activity.NewReplyActivity"></activity>
     </application>
 
 </manifest>

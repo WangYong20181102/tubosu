@@ -32,6 +32,11 @@ public class _DynamicMsg {
     private String dynamic_uid;
     private String dynamic_user_type;
 
+    private String page_level;//页面层级 是返回哪个页面 页面层级：1：评论列表页； 2：评论回复页
+    private String msg_type;//是点赞还是评论  用这个参数去判断是否要定位 消息类型：1：点赞； 2：评论
+    private String location_id;//如果需要定位的id
+    private String comment_id;//如果是跳转到评论回复页所需的评论回复id
+
     public String getUid() {
         return uid;
     }
@@ -118,5 +123,37 @@ public class _DynamicMsg {
 
     public void setDynamic_user_type(String dynamic_user_type) {
         this.dynamic_user_type = dynamic_user_type;
+    }
+
+    public String getPage_level() {
+        return page_level;
+    }
+
+    public void setPage_level(String page_level) {
+        this.page_level = page_level;
+    }
+
+    public String getMsg_type() {
+        return msg_type;
+    }
+
+    public void setMsg_type(String msg_type) {
+        this.msg_type = msg_type;
+    }
+
+    public String getLocation_id() {
+        return location_id;
+    }
+
+    public void setLocation_id(String location_id) {
+        this.location_id = location_id;
+    }
+
+    public String getComment_id() {
+        return comment_id;
+    }
+
+    public void setComment_id(String comment_id) {
+        this.comment_id = comment_id;
     }
 }

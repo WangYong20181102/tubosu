@@ -354,7 +354,7 @@ public class UrlConstans {
     /**
      * 我的消息/查看动态消息有关于我
      */
-    public static final String MY_MESSAGE = ZXKK_URL + "rapp/MyRelevance/my_message";
+    public static final String MY_MESSAGE = ZXKK_URL + "rapp/msg/get_msg";
     /**
      * 发布动态查看图集
      */
@@ -394,5 +394,12 @@ public class UrlConstans {
     public static final String UPDATE_OWER_SEARCH_CASE_STATUS = ZXKK_URL + "rapp/owner/case_read";
     //通知服务器建立连接成功
     public static final String SOCKET_IS_CONNECT = ZXKK_URL + "rapp/public/is_connect";
-
+    //评论详情页
+    public static final String COMMENT_DETAIL = ZXKK_URL + "rapp/comment/comment_detail";
+    //评论详情页分页
+    public static final String COMMENT_DETAIL_LIST = ZXKK_URL + "rapp/comment/comment_detail_list";
+    //回复评论2
+    public static final String REPLY_COMMENT_TOW = ZXKK_URL + "rapp/comment/reply_comment";
+    //清除消息 阅后即焚
+    public static final String DEL_MSG = ZXKK_URL + "rapp/msg/del_msg";
 }

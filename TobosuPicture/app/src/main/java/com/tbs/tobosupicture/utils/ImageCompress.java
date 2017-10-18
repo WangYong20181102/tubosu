@@ -44,7 +44,7 @@ public class ImageCompress {
         /**
          * 图片压缩比例 默认为30 可以修改压缩质量比
          */
-        public int quality = 50;
+        public int quality = 100;
 
         public Uri uri;
     }

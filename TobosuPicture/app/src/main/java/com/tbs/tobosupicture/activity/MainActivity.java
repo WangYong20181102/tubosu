@@ -140,11 +140,17 @@ public class MainActivity extends BaseActivity {
     //初始化用户的消息提示模块
     private void initUserMsg() {
         if (Utils.userIsLogin(mContext)) {
-            //建立通并监听
+            //建立并监听
             LinkSocket();
             //监听Socket是否链接成功
             CheckSocketConnectLister();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initUserMsg();
     }
 
     //监听链接状态
@@ -159,7 +165,7 @@ public class MainActivity extends BaseActivity {
                             isSocketConnect = true;
                             Log.e(TAG, "检测Socket链接状态====成功====" + mSocket.connected());
                             //发送事件
-                            SendLoginEvent(SpUtils.getUserUid(mContext));
+                            SendLoginEvent("zxkk_" + SpUtils.getUserUid(mContext));
                             //通知后台登录成功
                             Thread.sleep(1000);
                             HttpIsConnect(SpUtils.getUserUid(mContext));
@@ -252,16 +258,16 @@ public class MainActivity extends BaseActivity {
 
                             }
                         });
-                    }else if(type.equals("2")){
+                    } else if (type.equals("2")) {
                         //新案例消息
-                        is_exist_case=jsonObject.getString("is_exist_case");
+                        is_exist_case = jsonObject.getString("is_exist_case");
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if(is_exist_case.equals("1")){
+                                if (is_exist_case.equals("1")) {
                                     mianAboutReddot.setVisibility(View.VISIBLE);
                                     EventBusUtil.sendEvent(new Event(EC.EventCode.SHOW_MINE_RED_DOT));//在我的界面中显示红点
-                                }else {
+                                } else {
                                     Log.e(TAG, "隐藏‘我的’红点提示======");
                                     mianAboutReddot.setVisibility(View.GONE);
                                     EventBusUtil.sendEvent(new Event(EC.EventCode.HINT_MINE_RED_DOT));//在我的界面中隐藏红点
@@ -279,7 +285,7 @@ public class MainActivity extends BaseActivity {
 
     //断开socket的链接
     private void disConnectSocket() {
-        if(mSocket!=null){
+        if (mSocket != null) {
             mSocket.disconnect();
             mSocket.off("new_msg", onNewMsg);
             isSocketConnect = false;
@@ -385,7 +391,32 @@ public class MainActivity extends BaseActivity {
             case EC.EventCode.MY_JOIN_FRAGMENT_GET_MSG:
                 EventBusUtil.sendEvent(new Event(EC.EventCode.MY_JOIN_MSG, receiveMsg.getMy_participation()));//我的参与
                 break;
+            case EC.EventCode.DEL_MSG:
+                String type = (String) event.getData();
+                HttpDelMsg(type);
+                break;
         }
+    }
+
+    //请求清除消息
+    private void HttpDelMsg(String type) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Utils.getDateToken());
+        param.put("uid", SpUtils.getUserUid(mContext));
+        param.put("user_type", "2");
+        param.put("type", type);
+        HttpUtils.doPost(UrlConstans.DEL_MSG, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "链接失败=========" + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                Log.e(TAG, "链接成功======" + json);
+            }
+        });
     }
 
     //重新返回按钮

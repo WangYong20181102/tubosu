@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+        <!--头像-->
+        <ImageView
+            android:id="@+id/item_new_reply_head_icon"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@mipmap/default_icon" />
+        <!--头像右侧的布局-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="24dp">
+                <!--用户的昵称-->
+                <TextView
+                    android:id="@+id/item_new_reply_head_nick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:text="我爱装修"
+                    android:textColor="@color/text_yellow"
+                    android:textSize="12sp" />
+                <!--点赞和回复-->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:orientation="horizontal">
+                    <!--点赞触控的地方-->
+                    <RelativeLayout
+                        android:id="@+id/item_new_reply_head_reply_zan_rl"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignLeft="@+id/item_new_reply_head_reply_num"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="-38dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/item_reply_item_comment_zan_add"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:text="+1"
+                            android:textColor="@color/text_yellow"
+                            android:textSize="10sp"
+                            android:visibility="invisible" />
+
+                        <ImageView
+                            android:id="@+id/item_new_reply_head_zan"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:layout_alignParentBottom="true"
+                            android:src="@mipmap/zan2" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/item_new_reply_head_zan_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignLeft="@+id/item_new_reply_head_reply_num"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="-20dp"
+                        android:text="96"
+                        android:textColor="@color/text_gray"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/item_new_reply_head_reply_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="15dp"
+                        android:text="回复15"
+                        android:textColor="@color/text_gray"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+            <!--评论的内容-->
+            <TextView
+                android:id="@+id/item_new_reply_head_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="十年生死两茫茫，不思量自难忘。且把酒欢歌，却道天凉好个秋。"
+                android:textColor="#2e3033"
+                android:textSize="14sp" />
+            <!--时间和查看原动态-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/item_new_reply_head_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="bottom"
+                    android:text="07-16 16:20"
+                    android:textColor="@color/text_gray"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/item_new_reply_head_goto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:text="查看原动态"
+                    android:textColor="@color/text_yellow"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:background="@color/bg_divide"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+</LinearLayout>
