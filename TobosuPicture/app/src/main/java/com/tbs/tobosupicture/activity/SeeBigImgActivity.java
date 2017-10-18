@@ -2,6 +2,7 @@ package com.tbs.tobosupicture.activity;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -33,6 +34,7 @@ import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.TouchImageView;
+import com.tbs.tobosupicture.view.wheelviews.DownWindow;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -119,13 +121,16 @@ public class SeeBigImgActivity extends BaseActivity {
     private void intiViewPager(ArrayList<String> imgDataList) {
         tvCaseImgTotalNum.setText(imgDataList.size() + "");
         ArrayList<TouchImageView> dataList = new ArrayList<TouchImageView>();
+        ArrayList<String> dataUrlList = new ArrayList<String>();
         for (int i = 0; i < imgDataList.size(); i++) {
             TouchImageView iv = new TouchImageView(mContext);
-            GlideUtils.glideLoader(mContext, imgDataList.get(i), R.mipmap.loading_img_fail, R.mipmap.loading_img, iv);
+            String urlPic = imgDataList.get(i);
+            GlideUtils.glideLoader(mContext, urlPic, R.mipmap.loading_img_fail, R.mipmap.loading_img, iv);
             dataList.add(iv);
+            dataUrlList.add(urlPic);
         }
 
-        ImgViewpagerAdapter adapter = new ImgViewpagerAdapter(dataList);
+        ImgViewpagerAdapter adapter = new ImgViewpagerAdapter(dataList, dataUrlList);
         vpCaseSeeImg.setAdapter(adapter);
         vpCaseSeeImg.setCurrentItem(locationIndext);
         tvCaseChangeNum.setText((locationIndext + 1) + "");
@@ -137,7 +142,7 @@ public class SeeBigImgActivity extends BaseActivity {
             }
 
             @Override
-            public void onPageSelected(int position) {
+            public void onPageSelected(final int position) {
                 tvCaseChangeNum.setText((position + 1) + "");
             }
 
@@ -146,19 +151,30 @@ public class SeeBigImgActivity extends BaseActivity {
 
             }
         });
+
     }
 
 
     private class ImgViewpagerAdapter extends PagerAdapter {
         private ArrayList<TouchImageView> imgList;
+        private ArrayList<String> imgListString;
 
-        public ImgViewpagerAdapter(ArrayList<TouchImageView> imgList) {
+        public ImgViewpagerAdapter(ArrayList<TouchImageView> imgList,ArrayList<String> imgListString) {
             this.imgList = imgList;
+            this.imgListString = imgListString;
         }
 
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(ViewGroup container, final int position) {
             ((ViewPager) container).addView(imgList.get(position), 0);
+            imgList.get(position).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+//                    Utils.setToast(mContext, imgListString.get(position));
+                    showDownload(imgListString.get(position));
+                    return true;
+                }
+            });
             return imgList.get(position);
         }
 
@@ -178,6 +194,41 @@ public class SeeBigImgActivity extends BaseActivity {
             return view == object;
         }
     }
+
+    private void showDownload(final String url) {
+        final DownWindow down = new DownWindow(SeeBigImgActivity.this);
+        down.showAtLocation(SeeBigImgActivity.this.findViewById(R.id.seebigimgact), Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+        down.setOnItemClickListener(new DownWindow.OnItemClickListener() {
+            @Override
+            public void setOnItemClick(View v) {
+                switch (v.getId()){
+                    case R.id.id_btn_select:
+                        httpDownLoadImg(down, url);
+                        break;
+                    case R.id.id_btn_cancelo:
+                        down.dismiss();
+                        break;
+                }
+            }
+        });
+    }
+
+    private void httpDownLoadImg(DownWindow down, String downloadUrl) {
+        //创建文件夹
+        File dirFile = new File(UrlConstans.IMG_PATH);
+        if (!dirFile.exists()) {
+            dirFile.mkdir();
+        }
+        String fileName = System.currentTimeMillis() + ".jpg";
+        if (Utils.isNetAvailable(mContext)) {
+            HttpUtils.downFile(downloadUrl, dirFile.getPath(), fileName);
+            Toast.makeText(mContext, "图片下载成功!", Toast.LENGTH_SHORT).show();
+            down.dismiss();
+        } else {
+            Toast.makeText(mContext, "网络不佳，图片下载失败！", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     @OnClick({R.id.relCaseSeeImgBack})
     public void onViewClickedSeeBigImgActivity(View view) {

@@ -123,7 +123,7 @@ public class HouseFragment extends BaseFragment {
     private int page = 1;
     private int pageSize = 3;
 
-    private int[] iconPic = new int[]{R.mipmap.color_all,R.mipmap.fenlei01,R.mipmap.fenlei02,R.mipmap.fenlei03,R.mipmap.fenlei04,
+    private int[] iconPic = new int[]{R.mipmap.color_all,R.mipmap.fenlei02,R.mipmap.fenlei03,R.mipmap.fenlei04,
             R.mipmap.fenlei05, R.mipmap.fenlei06,R.mipmap.fenlei07,R.mipmap.fenlei08,R.mipmap.fenlei09,R.mipmap.fenlei010,R.mipmap.fenlei011,
             R.mipmap.fenlei012, R.mipmap.fenlei01,R.mipmap.fenlei02,R.mipmap.fenlei03,R.mipmap.fenlei04,R.mipmap.fenlei05,
             R.mipmap.fenlei06,R.mipmap.fenlei07,R.mipmap.fenlei08,R.mipmap.fenlei09,R.mipmap.fenlei010,R.mipmap.fenlei011,R.mipmap.fenlei012,

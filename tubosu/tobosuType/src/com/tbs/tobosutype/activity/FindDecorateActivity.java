@@ -612,6 +612,8 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
             OKHttpUtil.post(Constant.FIND_DECORATE_COMPANY_URL, params, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
+                    Util.setErrorLog("寻找装修公司", e.getMessage());
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -634,7 +636,9 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
                                     // 缓存请求的结果
                                     getSharedPreferences("CompanyCache", 0).edit().putString("jsonResult", json).commit();
                                     operDecorationCompany(json);
-                                } else {
+                                } else if(obj.getInt("error_code") == 200){
+                                    handler.sendEmptyMessage(200);
+                                }else {
                                     handler.sendEmptyMessage(201);
                                 }
                             } catch (JSONException e) {
@@ -662,7 +666,11 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
                     Util.setToast(mContext, "服务器繁忙，请稍后再试~");
                     decorate_listView_company.stopRefresh();
                     decorate_listView_company.stopLoadMore();
-
+                    break;
+                case 200:
+                    Util.setToast(mContext, "没有相关数据");
+                    decorate_listView_company.stopRefresh();
+                    decorate_listView_company.stopLoadMore();
                     break;
             }
         }

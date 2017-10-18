@@ -89,8 +89,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@null"
-                android:text="知道啦"
-                android:textColor="@color/color_icon"
+                android:text="好的"
+                android:textColor="#1E6AE8"
                 android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>

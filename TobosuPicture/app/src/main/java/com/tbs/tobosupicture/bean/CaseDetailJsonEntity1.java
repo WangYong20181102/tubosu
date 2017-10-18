@@ -90,7 +90,7 @@ public class CaseDetailJsonEntity1 {
 //                        JSONArray imgArr = onlineDiagramArr.getJSONObject(i).getJSONArray("img_url");
                         String arrString = onlineDiagramArr.getJSONObject(i).getJSONArray("img_url").toString();
                         Utils.setErrorLog(TAG, "在线工地 原字符串 " + arrString);
-                        arrString = arrString.replace(",", "#").replace("[", "").replace("]", "").replaceAll("\"", "");
+                        arrString = arrString.replace(",", "#").replace("[", "").replace("]", "").replaceAll("\"", "").replace("\\/","/");
                         Utils.setErrorLog(TAG, "replace之后" + arrString);
                         ArrayList<String> imgList = new ArrayList<String>();
                         String[] tempArr = arrString.split("#");
@@ -117,7 +117,7 @@ public class CaseDetailJsonEntity1 {
                     stayRealImgList = new ArrayList<String>();
                     String arrString = stayRealArr.toString();
                     Utils.setErrorLog(TAG, "入住实景 原字符串 " + arrString);
-                    arrString = arrString.replace(",", "#").replace("[", "").replace("]", "").replaceAll("\"", "");
+                    arrString = arrString.replace(",", "#").replace("[", "").replace("]", "").replaceAll("\"", "").replace("\\/","/");
                     String[] tempArr = arrString.split("#");
                     for(int j=0; j<tempArr.length;j++){
                         String temp = tempArr[j];
