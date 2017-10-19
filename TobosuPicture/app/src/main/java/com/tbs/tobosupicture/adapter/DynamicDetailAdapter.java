@@ -26,9 +26,9 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.LoginActivity;
+import com.tbs.tobosupicture.activity.NewReplyActivity;
 import com.tbs.tobosupicture.activity.PersonHomePageActivity;
 import com.tbs.tobosupicture.activity.PhotoDetail;
-import com.tbs.tobosupicture.activity.ReplyActivity;
 import com.tbs.tobosupicture.bean._DynamicDetail;
 import com.tbs.tobosupicture.bean._ZanUser;
 import com.tbs.tobosupicture.constants.UrlConstans;
@@ -53,10 +53,10 @@ import static com.tbs.tobosupicture.R.mipmap.zan;
 
 /**
  * Created by Mr.Lin on 2017/7/18 16:39.
- * 动态详情 适配器
+ * 动态详情（评论） 适配器
  */
 
-public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
     private Context mContext;
     private _DynamicDetail dynamicDetail;
     private ArrayList<_DynamicDetail.Comment> commentArrayList;
@@ -78,6 +78,8 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
     private int mPage = 1;//点赞列表
     private Gson gson = new Gson();
     private List<_ZanUser.PraiseUser> praiseUserList = new ArrayList<>();
+    private CommentChildAdapter commentChildAdapter;
+    private LinearLayoutManager childLinearLayoutManager;
 
     public DynamicDetailAdapter(Context context, Activity activity, _DynamicDetail dynamicDetail, ArrayList<_DynamicDetail.Comment> commentArrayList) {
         this.mContext = context;
@@ -124,6 +126,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         } else {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_comment, parent, false);
             CommentViewHolder commentViewHolder = new CommentViewHolder(view);
+            commentViewHolder.commentRevert.setOnClickListener(this);
             return commentViewHolder;
         }
     }
@@ -332,7 +335,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             });
 
             ((DynamicDetailHeadHolder) holder).DynamicDetailPraiseCount.setText("" + dynamicDetail.getPraise_count());
-            ((DynamicDetailHeadHolder) holder).DynamicDetailCommentCount.setText("" + dynamicDetail.getDynamic().getComment_count());
+            ((DynamicDetailHeadHolder) holder).DynamicDetailCommentCount.setText("评论 " + dynamicDetail.getDynamic().getComment_count());
 
             //点赞用户的头像
             if (dynamicDetail.getPraise_user().size() >= 1 && dynamicDetail.getPraise_user().get(0) != null) {
@@ -405,7 +408,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                             isZaning = true;
                             HttpCommentZan(commentArrayList.get(position - 1).getId(),
                                     commentArrayList.get(position - 1).getUid(),
-                                    commentArrayList.get(position-1).getIs_virtual_user(),
+                                    commentArrayList.get(position - 1).getIs_virtual_user(),
                                     ((CommentViewHolder) holder).commentZan,
                                     ((CommentViewHolder) holder).dynamic_detail_comment_zan_add,
                                     ((CommentViewHolder) holder).commentZanNum);
@@ -430,27 +433,60 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             ((CommentViewHolder) holder).commentTime.setText("" + commentArrayList.get(position - 1).getAdd_time());
             //点赞数量
             ((CommentViewHolder) holder).commentZanNum.setText("" + commentArrayList.get(position - 1).getPraise_count());
+
             //当前用户无法回复自己
 //            if (SpUtils.getUserUid(mContext).equals(commentArrayList.get(position - 1).getUid())) {
 //                ((CommentViewHolder) holder).commentRevert.setVisibility(View.GONE);
 //            } else {
 //                ((CommentViewHolder) holder).commentRevert.setVisibility(View.VISIBLE);
 //            }
-            //回复数量
-            ((CommentViewHolder) holder).commentRevert.setText("" + commentArrayList.get(position - 1).getReply_count() + "条回复");
-            //回复的点击事件
-            ((CommentViewHolder) holder).commentRevert.setOnClickListener(new View.OnClickListener() {
+            //TODO: 2017/10/13 回复按钮事件涉及到外层的输入框显示问题所以要将按钮的点击事件接口化 所以之前的操作注释了
+//            ((CommentViewHolder) holder).commentRevert.setText("" + commentArrayList.get(position - 1).getReply_count() + "条回复");
+//            //回复的点击事件
+//            ((CommentViewHolder) holder).commentRevert.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(mContext, ReplyActivity.class);
+//                    Log.e(TAG, "检测回复的id====" + commentArrayList.get(position - 1).getId());
+//                    intent.putExtra("comment_id", commentArrayList.get(position - 1).getId());
+//                    intent.putExtra("dynamic_id", dynamicDetail.getDynamic().getId());
+//                    mContext.startActivity(intent);
+//                }
+//            });
+            // TODO: 2017/10/13 有关回复按钮设置
+            ((CommentViewHolder) holder).commentRevert.setTag(position);
+            //回复的内容
+            ((CommentViewHolder) holder).commentTitle.setText("" + commentArrayList.get(position - 1).getContent());
+            // TODO: 2017/10/13 设置子项列表
+            if (!commentArrayList.get(position - 1).getChild_comment().isEmpty()) {
+                ((CommentViewHolder) holder).child_comment_ll.setVisibility(View.VISIBLE);
+                ((CommentViewHolder) holder).child_comment_recycler.setVisibility(View.VISIBLE);
+                childLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+                commentChildAdapter = new CommentChildAdapter(mContext, commentArrayList.get(position - 1));
+                ((CommentViewHolder) holder).child_comment_recycler.setLayoutManager(childLinearLayoutManager);
+                ((CommentViewHolder) holder).child_comment_recycler.setAdapter(commentChildAdapter);
+            } else {
+                ((CommentViewHolder) holder).child_comment_ll.setVisibility(View.GONE);
+            }
+            //// TODO: 2017/10/14 点击子项的整个区域进入评论区
+            ((CommentViewHolder) holder).child_comment_ll.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext, ReplyActivity.class);
-                    Log.e(TAG, "检测回复的id====" + commentArrayList.get(position - 1).getId());
+                    Log.e(TAG, "点击进入详情========" + commentArrayList.get(position - 1).getId());
+                    Intent intent = new Intent(mContext, NewReplyActivity.class);
                     intent.putExtra("comment_id", commentArrayList.get(position - 1).getId());
-                    intent.putExtra("dynamic_id", dynamicDetail.getDynamic().getId());
                     mContext.startActivity(intent);
                 }
             });
-            //回复的内容
-            ((CommentViewHolder) holder).commentTitle.setText("" + commentArrayList.get(position - 1).getContent());
+            ((CommentViewHolder) holder).child_comment_recycler.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.e(TAG, "点击进入详情========" + commentArrayList.get(position - 1).getId());
+                    Intent intent = new Intent(mContext, NewReplyActivity.class);
+                    intent.putExtra("comment_id", commentArrayList.get(position - 1).getId());
+                    mContext.startActivity(intent);
+                }
+            });
         } else if (holder instanceof FootViewHolder) {
             if (position == 1) {
                 ((FootViewHolder) holder).mProgressBar.setVisibility(View.GONE);
@@ -471,6 +507,32 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public int getItemCount() {
         return commentArrayList != null ? commentArrayList.size() + 2 : 2;
+    }
+
+    //子项的点击事件接口
+    public static interface OnDynamicDetailClickLister {
+        void onDetailClick(View view, int position);
+    }
+
+    private OnDynamicDetailClickLister onDynamicDetailClickLister = null;
+
+    public void setOnDynamicDetailClickLister(OnDynamicDetailClickLister onDynamicDetailClickLister) {
+        this.onDynamicDetailClickLister = onDynamicDetailClickLister;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (onDynamicDetailClickLister != null) {
+            onDynamicDetailClickLister.onDetailClick(v, (int) v.getTag());
+        }
+    }
+
+    public void notifChildAdapterData() {
+        if (commentChildAdapter != null) {
+            Log.e(TAG, "执行子项数据的刷新~===刷新前数据长度===" + commentChildAdapter.getItemCount());
+            commentChildAdapter.notifyDataSetChanged();
+            Log.e(TAG, "执行子项数据的刷新~===刷新后数据长度===" + commentChildAdapter.getItemCount());
+        }
     }
 
     class DynamicDetailHeadHolder extends RecyclerView.ViewHolder {
@@ -550,6 +612,9 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         private ImageView commentZan;//点赞图标
         private TextView commentZanNum;//点赞数
         private TextView dynamic_detail_comment_zan_add;//点赞数
+        private RecyclerView child_comment_recycler;//子项回复的列表
+        private LinearLayout child_comment_ll;//子项回复列表的父布局
+
 
         private LinearLayout dynamic_detail_comment_ll_zan;
 
@@ -564,7 +629,8 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             commentZanNum = (TextView) itemView.findViewById(R.id.dynamic_detail_comment_zannum);
             dynamic_detail_comment_zan_add = (TextView) itemView.findViewById(R.id.dynamic_detail_comment_zan_add);
             dynamic_detail_comment_ll_zan = (LinearLayout) itemView.findViewById(R.id.dynamic_detail_comment_ll_zan);
-
+            child_comment_recycler = (RecyclerView) itemView.findViewById(R.id.child_comment_recycler);
+            child_comment_ll = (LinearLayout) itemView.findViewById(R.id.child_comment_ll);
         }
     }
 
@@ -632,7 +698,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     //TODO 对用户得回复进行点赞 当前用户的id暂时固定
-    private void HttpCommentZan(String comment_id, String praised_uid,String user_type, final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
+    private void HttpCommentZan(String comment_id, String praised_uid, String user_type, final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("uid", SpUtils.getUserUid(mContext));

@@ -43,7 +43,7 @@ public class NewSendDynamicAdapter
     @Override
     public int getItemViewType(int position) {
         if (position + 1 == getItemCount()) {
-            return 1;//天机更多的按钮
+            return 1;//添加更多的按钮
         } else {
             return 2;//普通
         }

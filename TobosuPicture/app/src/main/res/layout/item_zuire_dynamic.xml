@@ -4,8 +4,9 @@
     android:layout_height="wrap_content"
     android:background="@color/bg_white"
     android:orientation="vertical">
-
+    <!--最热动态的整个组层-->
     <LinearLayout
+        android:id="@+id/zuire_dynamic_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -158,20 +159,20 @@
                 android:layout_height="32dp">
 
                 <TextView
-                    android:layout_alignParentBottom="true"
                     android:id="@+id/zuire_dynamic_view_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
                     android:text="浏览数: 66"
                     android:textColor="@color/text_gray"
                     android:textSize="@dimen/text_size_24px" />
 
                 <LinearLayout
-                    android:layout_alignParentBottom="true"
                     android:id="@+id/item_dynamic_pinlun"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:orientation="horizontal">
 
@@ -192,21 +193,21 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_alignParentBottom="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="50dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/zuire_dynamic_zan_add"
-                        android:visibility="invisible"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="+1"
                         android:textColor="@color/text_yellow"
-                        android:textSize="@dimen/text_size_20px" />
+                        android:textSize="@dimen/text_size_20px"
+                        android:visibility="invisible" />
 
                     <LinearLayout
                         android:id="@+id/zuire_dynamic_praise"

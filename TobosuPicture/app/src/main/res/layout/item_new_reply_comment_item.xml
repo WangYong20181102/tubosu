@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/item_new_reply_comment_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal">
+        <!--头像-->
+        <ImageView
+            android:id="@+id/item_new_reply_item_icon"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@mipmap/default_icon" />
+        <!--头像右边的部分-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+            <!--用户的昵称和回复的时间-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="15dp">
+
+                <TextView
+                    android:id="@+id/item_new_reply_item_nick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:text="芈月"
+                    android:textColor="@color/text_yellow"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/item_new_reply_item_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:text="07-16 16:20"
+                    android:textColor="@color/text_gray"
+                    android:textSize="10sp" />
+            </RelativeLayout>
+            <!--评论回复的内容-->
+            <TextView
+                android:id="@+id/item_new_reply_item_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="十年生死两茫茫，不思量自难忘。且把酒欢歌，却道天凉好个秋。"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/bg_divide" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -15,8 +15,11 @@ import com.google.gson.Gson;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.adapter.DynamicMsgAdapter;
 import com.tbs.tobosupicture.base.BaseActivity;
+import com.tbs.tobosupicture.bean.EC;
+import com.tbs.tobosupicture.bean.Event;
 import com.tbs.tobosupicture.bean._DynamicMsg;
 import com.tbs.tobosupicture.constants.UrlConstans;
+import com.tbs.tobosupicture.utils.EventBusUtil;
 import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
@@ -71,6 +74,16 @@ public class DynamicMsgActivity extends BaseActivity {
         HttpGetDynamicMsgList(mPage);
     }
 
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    //发送消息
+    private void sendDelMsg() {
+        EventBusUtil.sendEvent(new Event(EC.EventCode.DEL_MSG, type));
+    }
+
     private void initViewEvent() {
         mGson = new Gson();
         mIntent = getIntent();
@@ -101,9 +114,8 @@ public class DynamicMsgActivity extends BaseActivity {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
         param.put("uid", SpUtils.getUserUid(mContext));
+        param.put("user_type", "2");
         param.put("type", type);
-        param.put("page", mPage);
-        param.put("page_size", "300");
         HttpUtils.doPost(UrlConstans.MY_MESSAGE, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -152,6 +164,13 @@ public class DynamicMsgActivity extends BaseActivity {
 
     @OnClick(R.id.dm_back)
     public void onViewClickedInDynamicMsgActivity() {
+        sendDelMsg();
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        sendDelMsg();
+        super.onDestroy();
     }
 }

@@ -152,7 +152,7 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         if (Utils.userIsLogin(mContext)) {
                             isZaning = true;
                             //用户已经登录
-                            HttpPraise(SpUtils.getUserUid(mContext), dynamicArrayList.get(position - 1).getId(),dynamicArrayList.get(position-1).getIs_virtual_user(),
+                            HttpPraise(SpUtils.getUserUid(mContext), dynamicArrayList.get(position - 1).getId(), dynamicArrayList.get(position - 1).getIs_virtual_user(),
                                     dynamicArrayList.get(position - 1).getUid(),
                                     ((ZuiXinDynamicHolder) holder).zuiXinImgZan,
                                     ((ZuiXinDynamicHolder) holder).zuiXinDynamicZanAdd, ((ZuiXinDynamicHolder) holder).zuiXinDynamicPraiseCount);
@@ -168,6 +168,17 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             //回复数
             ((ZuiXinDynamicHolder) holder).zuiXinDynamicCommentCount.setText("" + dynamicArrayList.get(position - 1).getComment_count());
             ((ZuiXinDynamicHolder) holder).zuiXinDynamicPinlun.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO 跳转进入DynamicDetailActivity  回复详情页
+                    Intent intent = new Intent(mContext, DynamicDetailActivity.class);
+                    intent.putExtra("dynamic_id", dynamicArrayList.get(position - 1).getId());
+                    intent.putExtra("commented_uid", dynamicArrayList.get(position - 1).getUid());
+                    intent.putExtra("is_virtual_user", dynamicArrayList.get(position - 1).getIs_virtual_user());
+                    mContext.startActivity(intent);
+            }
+            });
+            ((ZuiXinDynamicHolder) holder).zuiXinItemLL.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //TODO 跳转进入DynamicDetailActivity  回复详情页
@@ -383,6 +394,7 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     //普通图层  显示动态
     class ZuiXinDynamicHolder extends RecyclerView.ViewHolder {
+        private LinearLayout zuiXinItemLL;//整个最新的组层
         private ImageView zuiXinDynamicIcon;//用户的头像
         private TextView zuiXinDynamicNick;//用户的昵称
         private TextView zuiXinDynamicTitle;//用户发布的内容
@@ -409,6 +421,7 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         public ZuiXinDynamicHolder(View itemView) {
             super(itemView);
+            zuiXinItemLL = (LinearLayout) itemView.findViewById(R.id.item_zuixin_ll);
             zuiXinDynamicIcon = (ImageView) itemView.findViewById(R.id.zuixin_dynamic_icon);
             zuiXinDynamicNick = (TextView) itemView.findViewById(R.id.zuixin_dynamic_nick);
             zuiXinDynamicTitle = (TextView) itemView.findViewById(R.id.zuixin_dynamic_title);
@@ -442,7 +455,7 @@ public class ZuiXinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
      * praisedUid 被点赞用户的id号
      * is_praise 点赞前的状态
      */
-    private void HttpPraise(String uid, String dynamic_id,String is_virtual_user,
+    private void HttpPraise(String uid, String dynamic_id, String is_virtual_user,
                             String praised_uid, final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());

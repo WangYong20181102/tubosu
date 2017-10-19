@@ -154,7 +154,7 @@ public class ZuiReAdapter
                             HttpPraise(SpUtils.getUserUid(mContext),
                                     dynamicArrayList.get(position - 1).getId(),
                                     dynamicArrayList.get(position - 1).getUid(),
-                                    dynamicArrayList.get(position-1).getIs_virtual_user(),
+                                    dynamicArrayList.get(position - 1).getIs_virtual_user(),
                                     ((ZuiReDynamicHolder) holder).zuiReImgZan,
                                     ((ZuiReDynamicHolder) holder).zuiReDynamicZanAdd,
                                     ((ZuiReDynamicHolder) holder).zuiReDynamicPraiseCount);
@@ -170,6 +170,17 @@ public class ZuiReAdapter
             //回复数
             ((ZuiReDynamicHolder) holder).zuiReDynamicCommentCount.setText("" + dynamicArrayList.get(position - 1).getComment_count());
             ((ZuiReDynamicHolder) holder).zuiReDynamicPinlun.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO 跳转进入DynamicDetailActivity  回复详情页
+                    Intent intent = new Intent(mContext, DynamicDetailActivity.class);
+                    intent.putExtra("dynamic_id", dynamicArrayList.get(position - 1).getId());
+                    intent.putExtra("commented_uid", dynamicArrayList.get(position - 1).getUid());
+                    intent.putExtra("is_virtual_user", dynamicArrayList.get(position - 1).getIs_virtual_user());
+                    mContext.startActivity(intent);
+                }
+            });
+            ((ZuiReDynamicHolder) holder).zuiReDynamicItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //TODO 跳转进入DynamicDetailActivity  回复详情页
@@ -385,6 +396,7 @@ public class ZuiReAdapter
 
     //普通图层  显示动态
     class ZuiReDynamicHolder extends RecyclerView.ViewHolder {
+        private LinearLayout zuiReDynamicItem;//最热组层
         private ImageView zuiReDynamicIcon;//用户的头像
         private TextView zuiReDynamicNick;//用户的昵称
         private TextView zuiReDynamicTitle;//用户发布的内容
@@ -411,6 +423,7 @@ public class ZuiReAdapter
 
         public ZuiReDynamicHolder(View itemView) {
             super(itemView);
+            zuiReDynamicItem = (LinearLayout) itemView.findViewById(R.id.zuire_dynamic_item);
             zuiReDynamicIcon = (ImageView) itemView.findViewById(R.id.zuire_dynamic_icon);
             zuiReDynamicNick = (TextView) itemView.findViewById(R.id.zuire_dynamic_nick);
             zuiReDynamicTitle = (TextView) itemView.findViewById(R.id.zuire_dynamic_title);
@@ -444,7 +457,7 @@ public class ZuiReAdapter
      * praisedUid 被点赞用户的id号
      * is_praise 点赞前的状态
      */
-    private void HttpPraise(String uid, String dynamic_id,String is_virtual_user,
+    private void HttpPraise(String uid, String dynamic_id, String is_virtual_user,
                             String praised_uid, final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());
