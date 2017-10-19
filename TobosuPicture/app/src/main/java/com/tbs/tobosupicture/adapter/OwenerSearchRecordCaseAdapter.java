@@ -13,15 +13,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
-import com.tbs.tobosupicture.activity.CaseDetailActivity;
 import com.tbs.tobosupicture.activity.CompanyCaseDetailActivity;
 import com.tbs.tobosupicture.activity.DesignerActivity;
-import com.tbs.tobosupicture.activity.GetPriceActivity;
 import com.tbs.tobosupicture.activity.SmartDesignActivity;
 import com.tbs.tobosupicture.bean.CaseJsonEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
-import com.tbs.tobosupicture.utils.Utils;
-import com.tbs.tobosupicture.view.RoundAngleImageView;
 
 import java.util.ArrayList;
 
@@ -222,7 +218,7 @@ public class OwenerSearchRecordCaseAdapter extends RecyclerView.Adapter<Recycler
 
     public class CaseViewHolder extends RecyclerView.ViewHolder{
         RelativeLayout re_case_desiner_layout;
-        RoundAngleImageView iv_case_big_sample_pic;
+        ImageView iv_case_big_sample_pic;
         ImageView iv_case_designer_pic;
         TextView tv_case_title;
         TextView tv_case_decription;
@@ -231,7 +227,7 @@ public class OwenerSearchRecordCaseAdapter extends RecyclerView.Adapter<Recycler
         public CaseViewHolder(View itemView) {
             super(itemView);
             re_case_desiner_layout = (RelativeLayout) itemView.findViewById(R.id.re_case_desiner_layout);
-            iv_case_big_sample_pic = (RoundAngleImageView) itemView.findViewById(R.id.iv_case_big_sample_pic);
+            iv_case_big_sample_pic = (ImageView) itemView.findViewById(R.id.iv_case_big_sample_pic);
             iv_case_designer_pic = (ImageView) itemView.findViewById(R.id.iv_case_designer_pic);
             tv_case_title = (TextView) itemView.findViewById(R.id.tv_case_title);
             tv_case_decription = (TextView) itemView.findViewById(R.id.tv_case_decription);

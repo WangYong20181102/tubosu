@@ -2,9 +2,7 @@ package com.tbs.tobosupicture.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +20,7 @@ import com.tbs.tobosupicture.activity.SeeImageActivity;
 import com.tbs.tobosupicture.bean.SamplePicBeanEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.Utils;
-import com.tbs.tobosupicture.view.RoundAngleImageView;
+import com.tbs.tobosupicture.view.TRoundView;
 
 import java.util.ArrayList;
 
@@ -97,6 +95,7 @@ public class SamplePictureAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof SamplePicViewHolder){
             SamplePicViewHolder itmeHolder = (SamplePicViewHolder) holder;
+            itmeHolder.iv_big_sample_pic.setType(1);
             GlideUtils.glideLoader(mContext, dataList.get(position).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itmeHolder.iv_big_sample_pic);
             String picUrl = dataList.get(position).getDesigner_icon();
             if(!"".equals(picUrl)){
@@ -181,7 +180,7 @@ public class SamplePictureAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public class SamplePicViewHolder extends RecyclerView.ViewHolder{
         private RelativeLayout rel_desiner_layout;
-        private RoundAngleImageView iv_big_sample_pic;
+        private TRoundView iv_big_sample_pic;
         private ImageView iv_designer_pic;
         private TextView tv_samplepic_title;
         private TextView tv_pic_city;
@@ -194,7 +193,7 @@ public class SamplePictureAdapter extends RecyclerView.Adapter<RecyclerView.View
         public SamplePicViewHolder(View itemView) {
             super(itemView);
             rel_desiner_layout = (RelativeLayout) itemView.findViewById(R.id.rel_desiner_layout);
-            iv_big_sample_pic = (RoundAngleImageView) itemView.findViewById(R.id.iv_big_sample_pic);
+            iv_big_sample_pic = (TRoundView) itemView.findViewById(R.id.iv_big_sample_pic);
             iv_designer_pic = (ImageView) itemView.findViewById(R.id.iv_designer_pic);
             tv_samplepic_title = (TextView) itemView.findViewById(R.id.tv_samplepic_title);
             tv_pic_city = (TextView) itemView.findViewById(R.id.tv_pic_city);

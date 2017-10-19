@@ -3,11 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.tbs.tobosupicture.view.RoundAngleImageView
+    <com.tbs.tobosupicture.view.TRoundView
         android:id="@+id/iv_imgs"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:background="@color/white"
         android:layout_margin="4dp"
         android:scaleType="centerCrop"/>
 </RelativeLayout>

@@ -63,11 +63,10 @@
         </LinearLayout>
     </LinearLayout>
 
-    <com.tbs.tobosupicture.view.RoundAngleImageView
+    <com.tbs.tobosupicture.view.TRoundView
         android:id="@+id/iv_detail_case"
         android:layout_width="match_parent"
         android:layout_height="222dp"
-        android:background="@color/white"
         android:layout_margin="10dp"
         android:scaleType="centerCrop"/>
 

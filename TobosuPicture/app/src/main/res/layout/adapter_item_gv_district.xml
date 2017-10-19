@@ -6,7 +6,7 @@
     android:layout_margin="4dp"
     android:orientation="vertical">
 
-    <com.tbs.tobosupicture.view.RoundAngleImageView
+    <ImageView
         android:id="@+id/ivDistrictIcon"
         android:layout_width="144dp"
         android:layout_height="74dp"

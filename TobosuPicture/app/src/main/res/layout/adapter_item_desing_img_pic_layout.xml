@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="174dp">
-        <ImageView
+        <com.tbs.tobosupicture.view.TRoundView
             android:id="@+id/iv_big_pic"
             android:layout_width="match_parent"
             android:scaleType="centerCrop"

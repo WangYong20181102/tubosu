@@ -9,7 +9,7 @@
         android:background="@color/bg_white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <com.tbs.tobosupicture.view.RoundAngleImageView
+        <com.tbs.tobosupicture.view.TRoundView
             android:id="@+id/iv_big_sample_pic"
             android:layout_width="match_parent"
             android:scaleType="centerCrop"

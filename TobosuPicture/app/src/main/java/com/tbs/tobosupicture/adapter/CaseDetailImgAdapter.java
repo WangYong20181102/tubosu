@@ -1,7 +1,6 @@
 package com.tbs.tobosupicture.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tbs.tobosupicture.R;
-import com.tbs.tobosupicture.activity.SeeBigImgActivity;
-import com.tbs.tobosupicture.bean.CaseDetailEntity;
-import com.tbs.tobosupicture.bean.CaseDetailJsonEntity;
 import com.tbs.tobosupicture.bean.SuiteEntiy;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.Utils;
-import com.tbs.tobosupicture.view.RoundAngleImageView;
+import com.tbs.tobosupicture.view.TRoundView;
 
 import java.util.ArrayList;
 
@@ -64,21 +60,22 @@ public class CaseDetailImgAdapter extends BaseAdapter {
         if(convertView==null){
             holder = new ImgViewHolder();
             convertView = inflater.inflate(R.layout.adapter_item_case_detail_img, null);
-            holder.iv = (RoundAngleImageView) convertView.findViewById(R.id.iv_detail_case);
+            holder.iv = (TRoundView) convertView.findViewById(R.id.iv_detail_case);
             holder.tv = (TextView) convertView.findViewById(R.id.tvTitleCaseDetail);
             convertView.setTag(holder);
         }else {
             holder = (ImgViewHolder) convertView.getTag();
         }
 
-        GlideUtils.glideLoader(context, dataList.get(position).getImg_url(), R.mipmap.loading_img_fail, R.mipmap.loading_img, holder.iv, 1);
+        holder.iv.setType(1);
+        GlideUtils.glideLoader(context, dataList.get(position).getImg_url(), R.mipmap.loading_img_fail, R.mipmap.loading_img, holder.iv);
         holder.tv.setText(dataList.get(position).getSpace_name());
 
         return convertView;
     }
 
     class ImgViewHolder{
-        RoundAngleImageView iv;
+        TRoundView iv;
         TextView tv;
     }
 }

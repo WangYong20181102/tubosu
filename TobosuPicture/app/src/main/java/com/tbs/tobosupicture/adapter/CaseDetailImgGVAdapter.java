@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.tbs.tobosupicture.R;
 import com.tbs.tobosupicture.activity.SeeBigImgActivity;
@@ -13,7 +14,8 @@ import com.tbs.tobosupicture.bean.OnlineDiagram;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.MyGridView;
-import com.tbs.tobosupicture.view.RoundAngleImageView;
+import com.tbs.tobosupicture.view.TRoundView;
+
 import java.util.ArrayList;
 
 /**
@@ -60,7 +62,7 @@ public class CaseDetailImgGVAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.adapter_item_case_detail_gv_img, null);
             holder.tv = (TextView) convertView.findViewById(R.id.tvTitleCaseDetailGv);
             holder.gv = (MyGridView) convertView.findViewById(R.id.gv_detail_case_gv);
-            holder.iv = (RoundAngleImageView) convertView.findViewById(R.id.iv_detail_case_gv_more);
+            holder.iv = (TRoundView) convertView.findViewById(R.id.iv_detail_case_gv_more);
             holder.tvDesc = (TextView) convertView.findViewById(R.id.tvDescription);
             convertView.setTag(holder);
         }else {
@@ -78,6 +80,7 @@ public class CaseDetailImgGVAdapter extends BaseAdapter {
             String lastUrl = imgList.get(0);
             final String lastOneUrl = lastUrl.replace("\\/\\/", "//").replace("\\/", "/");
 //            Utils.setErrorLog(TAG, "施工阶段 1个 适配器  " + lastUrl + "   $$$$$  " + lastOneUrl);
+            holder.iv.setType(1);
             GlideUtils.glideLoader(context, lastOneUrl, R.mipmap.loading_img_fail, R.mipmap.loading_img, holder.iv);
             holder.iv.setOnClickListener(new View.OnClickListener() {
 
@@ -132,6 +135,7 @@ public class CaseDetailImgGVAdapter extends BaseAdapter {
                 });
 
                 Utils.setErrorLog(TAG, "单张需要加载的图片地址是：" +last_One_Url);
+                holder.iv.setType(1);
                 GlideUtils.glideLoader(context, last_One_Url, R.mipmap.loading_img_fail, R.mipmap.loading_img, holder.iv);
                 holder.iv.setOnClickListener(new View.OnClickListener() {
 
@@ -165,7 +169,7 @@ public class CaseDetailImgGVAdapter extends BaseAdapter {
     class ImgViewHolder{
         MyGridView gv;
         TextView tv;
-        RoundAngleImageView iv;  // 奇数，多出来的一张
+        TRoundView iv;  // 奇数，多出来的一张
         TextView tvDesc;
     }
 }
