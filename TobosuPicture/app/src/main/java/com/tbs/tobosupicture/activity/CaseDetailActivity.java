@@ -26,6 +26,7 @@ import com.tbs.tobosupicture.utils.HttpUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.MyListView;
+import com.tbs.tobosupicture.view.TRoundView;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -71,9 +72,9 @@ public class CaseDetailActivity extends BaseActivity {
     @BindView(R.id.tvDesignerName)
     TextView tvDesignerName;
     @BindView(R.id.ivBigHuxingTu)
-    ImageView ivBigHuxingTu;
+    TRoundView ivBigHuxingTu;
     @BindView(R.id.mylistviewCaseDetial)  // 设计图
-            MyListView mylistviewCaseDetial;
+    MyListView mylistviewCaseDetial;
     @BindView(R.id.tvCaseDescription)
     TextView tvCaseDescription;
     @BindView(R.id.myStageCaseDetial)
@@ -294,7 +295,8 @@ public class CaseDetailActivity extends BaseActivity {
         }
         GlideUtils.glideLoader(mContext, detaiJsonEntity.getCaseInfoEntity().getCover_url(), R.mipmap.loading_img_fail, R.mipmap.loading_img, ivDetailImg);
         GlideUtils.glideLoader(mContext, detaiJsonEntity.getCaseInfoEntity().getDesigner_icon(), R.mipmap.pic, R.mipmap.pic, ivDesinHead, 0);
-        GlideUtils.glideLoader(mContext, detaiJsonEntity.getCaseInfoEntity().getLayout_url(), R.mipmap.loading_img_fail, R.mipmap.loading_img, ivBigHuxingTu, 1);
+        ivBigHuxingTu.setType(1);
+        GlideUtils.glideLoader(mContext, detaiJsonEntity.getCaseInfoEntity().getLayout_url(), R.mipmap.loading_img_fail, R.mipmap.loading_img, ivBigHuxingTu);
         ivBigHuxingTu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

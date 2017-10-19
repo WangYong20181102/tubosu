@@ -18,6 +18,7 @@ import com.tbs.tobosupicture.bean.AnLiJsonEntity;
 import com.tbs.tobosupicture.bean.XiaoGuoTuJsonEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.Utils;
+import com.tbs.tobosupicture.view.TRoundView;
 
 import java.util.ArrayList;
 
@@ -112,7 +113,8 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
         if(holder instanceof PicViewHolder){
             PicViewHolder itemHolder = (PicViewHolder) holder;
             if(type == 0){// 样板图  sampleDataList
-                GlideUtils.glideLoader(mContext, sampleDataList.get(position-1).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itemHolder.iv_big_pic,1);
+                itemHolder.iv_big_pic.setType(1);
+                GlideUtils.glideLoader(mContext, sampleDataList.get(position-1).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itemHolder.iv_big_pic);
                 itemHolder.tv_big_pic_num.setText(sampleDataList.get(position-1).getImage_count());
                 itemHolder.tv_designer_collect_count.setText(sampleDataList.get(position-1).getClick_count());
                 String desc = "";
@@ -155,7 +157,8 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
             }else if(type == 1){
                 // 案例图
 
-                GlideUtils.glideLoader(mContext, caseDataList.get(position-1).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itemHolder.iv_big_pic,1);
+                itemHolder.iv_big_pic.setType(1);
+                GlideUtils.glideLoader(mContext, caseDataList.get(position-1).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itemHolder.iv_big_pic);
 //                itemHolder.tv_big_pic_num.setText(caseDataList.get(position).get());
                 itemHolder.tv_big_pic_num.setText("曾");
                 itemHolder.tv_designer_collect_count.setText(caseDataList.get(position-1).getCollect_count());
@@ -265,7 +268,7 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
 
 
     public class PicViewHolder extends RecyclerView.ViewHolder{
-        private ImageView iv_big_pic;
+        private TRoundView iv_big_pic;
         private TextView tv_big_pic_num;
         private TextView tv_pic_desa; // 描述
         private RelativeLayout rel_like;
@@ -274,7 +277,7 @@ public class DesignerPictureListAdapter extends RecyclerView.Adapter<RecyclerVie
 
         public PicViewHolder(View itemView) {
             super(itemView);
-            iv_big_pic = (ImageView) itemView.findViewById(R.id.iv_big_pic);
+            iv_big_pic = (TRoundView) itemView.findViewById(R.id.iv_big_pic);
             tv_big_pic_num = (TextView) itemView.findViewById(R.id.tv_big_pic_num);
             tv_pic_desa = (TextView) itemView.findViewById(R.id.tv_pic_desa);
             rel_like = (RelativeLayout) itemView.findViewById(R.id.rel_like);

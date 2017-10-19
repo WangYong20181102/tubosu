@@ -3,14 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <com.tbs.tobosupicture.view.RoundAngleImageView
+    <com.tbs.tobosupicture.view.TRoundView
         android:id="@+id/iv_detail_case21"
         android:layout_width="match_parent"
         android:layout_height="222dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="7dp"
-        android:background="@color/white"
         android:scaleType="centerCrop"/>
 
 </LinearLayout>

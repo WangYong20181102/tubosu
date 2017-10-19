@@ -1,24 +1,16 @@
 package com.tbs.tobosupicture.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.tbs.tobosupicture.R;
-import com.tbs.tobosupicture.activity.SeeBigImgActivity;
-import com.tbs.tobosupicture.activity.SeeImageActivity;
-import com.tbs.tobosupicture.bean.CaseTypeChild;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.Utils;
-import com.tbs.tobosupicture.view.RoundAngleImageView;
+import com.tbs.tobosupicture.view.TRoundView;
 
 import java.util.ArrayList;
 
@@ -64,7 +56,7 @@ public class GvStageAdapter extends BaseAdapter {
         if(convertView == null){
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.adapter_item_img, null);
-            holder.iv = (RoundAngleImageView) convertView.findViewById(R.id.iv_imgs);
+            holder.iv = (TRoundView) convertView.findViewById(R.id.iv_imgs);
 
             convertView.setTag(holder);
         }else{
@@ -75,6 +67,7 @@ public class GvStageAdapter extends BaseAdapter {
         Utils.setErrorLog(TAG, "4444适配器前 " + url);
         url = url.replace("\\/\\/", "//").replace("\\/", "/");
         Utils.setErrorLog(TAG, "4444适配器后 " + url);
+        holder.iv.setType(1);
         GlideUtils.glideLoader(context, url,R.mipmap.loading_img_fail, R.mipmap.loading_img,holder.iv);
 
 
@@ -90,6 +83,6 @@ public class GvStageAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        RoundAngleImageView iv;
+        TRoundView iv;
     }
 }

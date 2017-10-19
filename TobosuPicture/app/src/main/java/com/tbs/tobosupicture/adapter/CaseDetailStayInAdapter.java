@@ -6,11 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+
 import com.tbs.tobosupicture.R;
-import com.tbs.tobosupicture.bean.CaseDetailJsonEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.Utils;
-import com.tbs.tobosupicture.view.RoundAngleImageView;
+import com.tbs.tobosupicture.view.TRoundView;
 
 import java.util.ArrayList;
 
@@ -59,7 +59,7 @@ public class CaseDetailStayInAdapter extends BaseAdapter {
         if(convertView==null){
             holder = new ImgViewHolder();
             convertView = inflater.inflate(R.layout.adapter_item_case_001_img, null);
-            holder.iv = (RoundAngleImageView) convertView.findViewById(R.id.iv_detail_case21);
+            holder.iv = (TRoundView) convertView.findViewById(R.id.iv_detail_case21);
 //            holder.tv = (TextView) convertView.findViewById(R.id.tvTitleCaseDetail);
             convertView.setTag(holder);
         }else {
@@ -69,6 +69,7 @@ public class CaseDetailStayInAdapter extends BaseAdapter {
 
         String url = dataList.get(position);
         url = url.replace("\\/\\/","//").replace("\\/", "/");
+        holder.iv.setType(1);
         GlideUtils.glideLoader(context, url, R.mipmap.loading_img_fail, R.mipmap.loading_img, holder.iv);
 //        holder.tv.setText(dataList.get(position).getSpace_name());
 
@@ -76,7 +77,7 @@ public class CaseDetailStayInAdapter extends BaseAdapter {
     }
 
     class ImgViewHolder{
-        RoundAngleImageView iv;
+        TRoundView iv;
 //        TextView tv;
     }
 }

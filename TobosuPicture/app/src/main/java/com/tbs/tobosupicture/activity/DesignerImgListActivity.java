@@ -195,6 +195,8 @@ public class DesignerImgListActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     Utils.setToast(mContext, msg);
+                                    designerImgListSwipRefreshLayout.setRefreshing(false);
+                                    designerPictureListAdapter.hideLoadMoreMessage();
                                 }
                             });
                         }

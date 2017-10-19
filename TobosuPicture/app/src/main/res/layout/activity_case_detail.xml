@@ -266,7 +266,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <ImageView
+            <com.tbs.tobosupicture.view.TRoundView
                 android:id="@+id/ivBigHuxingTu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
