@@ -152,9 +152,9 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             //设置内容
             ((DynamicDetailHeadHolder) holder).DynamicDetailTitle.setText("" + dynamicDetail.getDynamic().getTitle());
             //设置图片
-            if (!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url())) {
+            if (dynamicDetail.getDynamic().getImage_url().size() >= 1 && !TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url().get(0))) {
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag1.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url(),
+                GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url().get(0),
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag1);
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag1.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -166,10 +166,10 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                     }
                 });
             }
-            if (!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url2())) {
+            if (dynamicDetail.getDynamic().getImage_url().size() >= 2 &&!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url().get(1))) {
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag2
                         .setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url2(),
+                GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url().get(1),
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag2);
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag2.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -181,10 +181,10 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                     }
                 });
             }
-            if (!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url3())) {
+            if (dynamicDetail.getDynamic().getImage_url().size() >= 3 &&!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url().get(2))) {
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag3
                         .setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url3(),
+                GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url().get(2),
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag3);
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag3.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -196,10 +196,10 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                     }
                 });
             }
-            if (!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url4())) {
+            if (dynamicDetail.getDynamic().getImage_url().size() >= 4 &&!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url().get(3))) {
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag4
                         .setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url4(),
+                GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url().get(3),
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag4);
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag4.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -211,10 +211,10 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                     }
                 });
             }
-            if (!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url5())) {
+            if (dynamicDetail.getDynamic().getImage_url().size() >= 5 &&!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url().get(4))) {
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag5
                         .setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url5(),
+                GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url().get(4),
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag5);
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag5.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -226,10 +226,10 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                     }
                 });
             }
-            if (!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url6())) {
+            if (dynamicDetail.getDynamic().getImage_url().size() >= 6 &&!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url().get(5))) {
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag6
                         .setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url6(),
+                GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url().get(5),
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag6);
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag6.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -241,10 +241,10 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                     }
                 });
             }
-            if (!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url7())) {
+            if (dynamicDetail.getDynamic().getImage_url().size() >= 7 &&!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url().get(6))) {
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag7
                         .setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url7(),
+                GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url().get(6),
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag7);
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag7.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -256,10 +256,10 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                     }
                 });
             }
-            if (!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url8())) {
+            if (dynamicDetail.getDynamic().getImage_url().size() >= 8 &&!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url().get(7))) {
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag8
                         .setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url8(),
+                GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url().get(7),
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag8);
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag8.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -271,10 +271,10 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
                     }
                 });
             }
-            if (!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url9())) {
+            if (dynamicDetail.getDynamic().getImage_url().size() >= 9 &&!TextUtils.isEmpty(dynamicDetail.getDynamic().getImage_url().get(8))) {
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag9
                         .setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url9(),
+                GlideUtils.glideLoader(mContext, dynamicDetail.getDynamic().getImage_url().get(8),
                         R.mipmap.test, R.mipmap.test, ((DynamicDetailHeadHolder) holder).DynamicDetailImag9);
                 ((DynamicDetailHeadHolder) holder).DynamicDetailImag9.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -697,7 +697,7 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         });
     }
 
-    //TODO 对用户得回复进行点赞 当前用户的id暂时固定
+    //TODO 对用户得回复进行点赞
     private void HttpCommentZan(String comment_id, String praised_uid, String user_type, final ImageView zan, final TextView tvAdd, final TextView tvShowNum) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Utils.getDateToken());

@@ -100,7 +100,7 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (holder instanceof MyOrginHeadHolder) {
             if (myOrginMsgList.isEmpty() || TextUtils.isEmpty(myOrginMsgList.get(0))) {
 //                ((MyOrginHeadHolder) holder).head_hint_rl.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,1));
-                ((MyOrginHeadHolder) holder).head_hint_rl.setVisibility(View.INVISIBLE);
+                ((MyOrginHeadHolder) holder).head_hint_rl.setVisibility(View.GONE);
             } else {
 //                ((MyOrginHeadHolder) holder).head_hint_rl.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 ((MyOrginHeadHolder) holder).head_hint_rl.setVisibility(View.VISIBLE);
@@ -403,7 +403,7 @@ public class MyOrginAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return dynamicBaseList != null ? dynamicBaseList.size() + 2 : 0;
+        return dynamicBaseList != null ? dynamicBaseList.size() + 2 : 2;
     }
 
     //头部viewHolder

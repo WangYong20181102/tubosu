@@ -1,19 +1,24 @@
 package com.tbs.tobosupicture.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
@@ -58,6 +63,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -216,7 +222,7 @@ public class PersonInfoActivity extends BaseActivity {
                 break;
             case R.id.person_info_icon_rl:
                 //点击更换头像
-                changeIcon();
+                needPermissions();
                 break;
             case R.id.person_info_nick_rl:
                 //点击更换昵称
@@ -286,6 +292,55 @@ public class PersonInfoActivity extends BaseActivity {
                     HttpChangeCity(personInfoCity.getText().toString());
                     finish();
                 }
+                break;
+        }
+    }
+
+    // 动态获取权限
+    private void needPermissions() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            List<String> permission = getPermissionList(mContext);
+            if (permission.size() > 0) {
+                requestPermissions(permission.toArray(new String[permission.size()]), 101);
+            } else {
+                //已经获取了全部的权限
+                changeIcon();
+            }
+        }
+    }
+
+    public List<String> getPermissionList(Context activity) {
+        List<String> permission = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.READ_PHONE_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_WIFI_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_WIFI_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_NETWORK_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.INTERNET);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CHANGE_WIFI_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.CHANGE_WIFI_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        return permission;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 101:
+//                SpUtils.setUserIsSetPro(mContext, "true");
+//                Log.e(TAG, "权限获取之后====permissions===" + Arrays.toString(permissions) + "====grantResults====" + Arrays.toString(permissions));
+                changeIcon();
                 break;
         }
     }
