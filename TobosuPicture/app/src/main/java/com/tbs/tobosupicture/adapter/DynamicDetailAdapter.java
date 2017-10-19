@@ -703,8 +703,9 @@ public class DynamicDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         param.put("token", Utils.getDateToken());
         param.put("uid", SpUtils.getUserUid(mContext));
         param.put("comment_id", comment_id);
-        param.put("praised_uid", praised_uid);
-        param.put("user_type", user_type);
+        Log.e(TAG, "点赞参数==============" + SpUtils.getUserUid(mContext) + "=======comment_id=====" + comment_id);
+//        param.put("praised_uid", praised_uid);
+//        param.put("user_type", user_type);
         HttpUtils.doPost(UrlConstans.COMMENT_PRAISE, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

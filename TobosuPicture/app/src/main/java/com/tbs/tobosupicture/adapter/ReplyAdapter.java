@@ -453,8 +453,8 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         param.put("token", Utils.getDateToken());
         param.put("uid", SpUtils.getUserUid(mContext));
         param.put("comment_id", comment_id);
-        param.put("praised_uid", praised_uid);
-        param.put("user_type", user_type);
+//        param.put("praised_uid", praised_uid);
+//        param.put("user_type", user_type);
         HttpUtils.doPost(UrlConstans.COMMENT_PRAISE, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
