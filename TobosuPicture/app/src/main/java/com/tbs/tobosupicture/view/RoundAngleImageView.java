@@ -1,13 +1,13 @@
 package com.tbs.tobosupicture.view;
-import android.widget.ImageView;
+import android.graphics.Color;
+import android.graphics.Path;
+import android.support.v7.widget.AppCompatImageView;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
@@ -16,7 +16,7 @@ import com.tbs.tobosupicture.R;
 /**
  * Created by Lie on 2017/8/22.
  */
-public class RoundAngleImageView extends ImageView {
+public class RoundAngleImageView extends AppCompatImageView {
 
     private Paint paint;
     private int roundWidth = 20;
@@ -114,5 +114,11 @@ public class RoundAngleImageView extends ImageView {
         path.close();
         canvas.drawPath(path, paint);
     }
+
+
+
+
+
+
 
 }

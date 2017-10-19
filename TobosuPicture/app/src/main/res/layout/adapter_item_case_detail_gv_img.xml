@@ -77,6 +77,7 @@
         android:id="@+id/iv_detail_case_gv_more"
         android:layout_width="match_parent"
         android:layout_height="120dp"
+        android:background="@color/white"
         android:layout_margin="10dp"
         android:scaleType="centerCrop"/>
 
