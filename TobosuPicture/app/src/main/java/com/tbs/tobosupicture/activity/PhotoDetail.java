@@ -185,7 +185,7 @@ public class PhotoDetail extends BaseActivity {
                 //发送评论
                 if (Utils.userIsLogin(mContext)) {
                     //用户登录的情况下 才可以评论
-                    if (TextUtils.isEmpty(photoDetailRevert.getText().toString())) {
+                    if (TextUtils.isEmpty(photoDetailRevert.getText().toString().trim())) {
                         Toast.makeText(mContext, "请输入评论内容", Toast.LENGTH_SHORT).show();
                     } else {
                         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

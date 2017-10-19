@@ -59,9 +59,8 @@ public class WelcomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         mContext = this;
-        //百度地图的相关设置
+        //获取权限
         needPermissions();
-        checkNetConnect();
     }
 
     private void welcomeInit() {
@@ -294,6 +293,8 @@ public class WelcomeActivity extends BaseActivity {
             List<String> permission = getPermissionList(mContext);
             if (permission.size() > 0) {
                 requestPermissions(permission.toArray(new String[permission.size()]), 101);
+            } else {
+                checkNetConnect();
             }
         }
     }
@@ -374,6 +375,7 @@ public class WelcomeActivity extends BaseActivity {
             case 101:
 //                SpUtils.setUserIsSetPro(mContext, "true");
 //                Log.e(TAG, "权限获取之后====permissions===" + Arrays.toString(permissions) + "====grantResults====" + Arrays.toString(permissions));
+                checkNetConnect();
                 break;
         }
     }

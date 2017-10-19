@@ -99,7 +99,7 @@ public class MyJoinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof MyJoinHeadHolder) {
             if (myJoinMsgList.isEmpty() || TextUtils.isEmpty(myJoinMsgList.get(0))) {
-                ((MyJoinHeadHolder) holder).head_hint_rl.setVisibility(View.INVISIBLE);
+                ((MyJoinHeadHolder) holder).head_hint_rl.setVisibility(View.GONE);
             } else {
                 ((MyJoinHeadHolder) holder).head_hint_rl.setVisibility(View.VISIBLE);
                 ((MyJoinHeadHolder) holder).head_hint_text.setText(myJoinMsgList.get(1) + "条新消息");
@@ -388,7 +388,7 @@ public class MyJoinAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return dynamicBaseList != null ? dynamicBaseList.size() + 2 : 0;
+        return dynamicBaseList != null ? dynamicBaseList.size() + 2 : 2;
     }
 
     //头部viewHolder

@@ -267,7 +267,8 @@ public class DynamicDetailActivity extends BaseActivity {
     private void sendComment() {
         //评论的内容
         String comment = dyndRevert.getText().toString();
-        if (TextUtils.isEmpty(comment)) {
+        Log.e(TAG, "当前获取输入框的消息===============" + comment + ";");
+        if (TextUtils.isEmpty(comment.trim())) {
             Toast.makeText(mContext, "当前您没有输入评论内容~", Toast.LENGTH_SHORT).show();
             return;
         }

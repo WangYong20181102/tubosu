@@ -1,8 +1,10 @@
 package com.tbs.tobosupicture.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -10,10 +12,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -41,6 +45,7 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -168,7 +173,7 @@ public class ImgToFriendFragment extends BaseFragment {
             case R.id.imgtofriend_fabu:
                 //调用相机或者图册进行动态发布
                 if (Utils.userIsLogin(mContext)) {
-                    CreatDynamic();
+                    needPermissions();
                 } else {
                     Utils.gotoLogin(mContext);
                 }
@@ -176,14 +181,14 @@ public class ImgToFriendFragment extends BaseFragment {
                 break;
             case R.id.imgtofriend_zuire:
                 //切换至最热
-                MobclickAgent.onEvent(mContext,"click_zui_re");
+                MobclickAgent.onEvent(mContext, "click_zui_re");
                 setIndexSelect(0);
                 clcikChange(0);
 
                 break;
             case R.id.imgtofriend_zuixin:
                 //切换至最新
-                MobclickAgent.onEvent(mContext,"click_zui_xin");
+                MobclickAgent.onEvent(mContext, "click_zui_xin");
                 setIndexSelect(1);
                 clcikChange(1);
 
@@ -196,6 +201,55 @@ public class ImgToFriendFragment extends BaseFragment {
                 } else {
                     Utils.gotoLogin(mContext);
                 }
+                break;
+        }
+    }
+
+    // 动态获取权限
+    private void needPermissions() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            List<String> permission = getPermissionList(mContext);
+            if (permission.size() > 0) {
+                requestPermissions(permission.toArray(new String[permission.size()]), 101);
+            } else {
+                //已经获取了全部的权限
+                CreatDynamic();
+            }
+        }
+    }
+
+    public List<String> getPermissionList(Context activity) {
+        List<String> permission = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.READ_PHONE_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_WIFI_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_WIFI_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_NETWORK_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.INTERNET);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CHANGE_WIFI_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.CHANGE_WIFI_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        return permission;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 101:
+//                SpUtils.setUserIsSetPro(mContext, "true");
+//                Log.e(TAG, "权限获取之后====permissions===" + Arrays.toString(permissions) + "====grantResults====" + Arrays.toString(permissions));
+                CreatDynamic();
                 break;
         }
     }

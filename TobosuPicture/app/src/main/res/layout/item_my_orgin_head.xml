@@ -6,15 +6,20 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/head_hint_rl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@color/bg_white">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
 
         <RelativeLayout
+            android:id="@+id/head_hint_rl"
             android:layout_width="115dp"
             android:layout_height="30dp"
             android:layout_centerInParent="true"
-            android:layout_marginTop="6dp"
             android:background="@drawable/shape_about_me_head_hint">
 
             <ImageView
