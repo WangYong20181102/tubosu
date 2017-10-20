@@ -153,7 +153,7 @@ public class TRoundView extends AppCompatImageView {
         }
         int w = drawable.getIntrinsicWidth();
         int h = drawable.getIntrinsicHeight();
-        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_4444);
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, w, h);
         drawable.draw(canvas);

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tbs.tobosupicture.R;
+import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
 
 import java.util.ArrayList;
@@ -49,6 +50,7 @@ public class FristActivity extends AppCompatActivity {
         for(int i=0;i<ids.length;i++){
             ImageView iv = new ImageView(this);
 //            iv.setImageResource(ids[i]);
+            iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
             Glide.with(this).load(ids[i]).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(iv);
             imgList.add(iv);
         }
