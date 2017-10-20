@@ -276,9 +276,11 @@ public class NewSendDynamicActivity extends BaseActivity {
                         param.put("title", newSendEditText.getText().toString());
                         Log.e(TAG, "发布的表情================" + newSendEditText.getText().toString());
                         for (int j = 0; j < mUpLoadImageUrlList.size(); j++) {
+                            Log.e(TAG, "image_url======" + mUpLoadImageUrlList.get(j));
                             param.put("image_url" + j, mUpLoadImageUrlList.get(j));
                         }
                         for (int k = 0; k < mTitleList.size(); k++) {
+                            Log.e(TAG, "sub_title======" + mTitleList.get(k));
                             param.put("sub_title" + k, mTitleList.get(k));
                         }
                         HttpUtils.doPost(UrlConstans.PUBLISH_DYNAMIC, param, new Callback() {

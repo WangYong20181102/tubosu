@@ -265,7 +265,7 @@ public class PhotoDetail extends BaseActivity {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = 0.5f;
         getWindow().setAttributes(lp);
-        popupWindow.showAtLocation(popView, Gravity.BOTTOM, 0,0);
+        popupWindow.showAtLocation(popView, Gravity.BOTTOM, 0, 0);
     }
 
     private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
@@ -469,16 +469,17 @@ public class PhotoDetail extends BaseActivity {
                             public void run() {
                                 //正式场景使用的数据集
                                 mImageDetailList.addAll(mPhotoDetail.getImage_detail());
-                                if(mImageDetailList.size()==1){
+                                if (mImageDetailList.size() == 1) {
                                     //只有一张图不做循环
                                     for (int i = 0; i < mImageDetailList.size(); i++) {
                                         fragmentList.add(PhotoDetailFragment.newInstance(mImageDetailList.get(i)));
                                     }
+                                    tempImageDetailList.addAll(mPhotoDetail.getImage_detail());
                                     mPhotoFragmentPagerAdapter = new PhotoFragmentPagerAdapter(getSupportFragmentManager(), fragmentList);
 
                                     photoDetailViewpager.setAdapter(mPhotoFragmentPagerAdapter);
                                     photoDetailViewpager.setCurrentItem(mImagePosition);
-                                }else {
+                                } else {
                                     //多图循环
                                     //*************** 制作伪循环  将数据集变大100倍  仅作为显示使用  ↓↓
                                     for (int j = 0; j < 100; j++) {

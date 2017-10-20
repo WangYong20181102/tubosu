@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -24,7 +25,10 @@ import android.widget.Toast;
 
 import com.tbs.tobosupicture.activity.LoginActivity;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -340,16 +344,30 @@ public class Utils {
     //获取当前时间的String值
     public static String getNowTime() {
         Date date = new Date();
-        DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String time=format.format(date);
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = format.format(date);
         return time;
     }
 
-    public static String inputCorrectPhoneNumTip(){
+    public static String inputCorrectPhoneNumTip() {
         return "请输入正确的联系电话";
     }
-    public static String inputPhoneNumTip(){
+
+    public static String inputPhoneNumTip() {
         return "请输入您的联系电话";
     }
 
+    //bitmap 转文件
+    public static File saveBitmapFile(Bitmap bitmap, String filepath) {
+        File file = new File(filepath);
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
 }
