@@ -215,6 +215,8 @@ public class ImgToFriendFragment extends BaseFragment {
                 //已经获取了全部的权限
                 CreatDynamic();
             }
+        } else {
+            CreatDynamic();
         }
     }
 
@@ -406,6 +408,7 @@ public class ImgToFriendFragment extends BaseFragment {
                     if (data.getExtras() != null) {
                         Bundle bundle = data.getExtras();
                         Bitmap photo = (Bitmap) bundle.get("data");
+                        Log.e(TAG, "拍照返回的数据========" + photo.toString());
                         if (photo != null) {
                             String ImgPath = FileUtil.saveFile(mContext, Utils.getNowTime() + "lin_zxkk.jpg", photo);
                             ArrayList<String> imgPathList = new ArrayList<>();

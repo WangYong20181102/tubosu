@@ -3,6 +3,7 @@ package com.tbs.tobosupicture.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -91,10 +92,12 @@ public class DynamicDetailActivity extends BaseActivity {
     private int mPosition = -1;
     //
     private Gson mGson;
-    //以下三个参数只有在定位的时候用到
+    //以下三个参数(mFrom,msg_type,location_id)只有在定位的时候用到
     private String mFrom = "";//从哪个页面来的参数
     private String msg_type = "";//消息类型
     private String location_id = "";//定位到某一条消息的id
+    //是否要监听键盘的弹起
+    private boolean isListerSoftShowing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +133,8 @@ public class DynamicDetailActivity extends BaseActivity {
         dyndRecycle.addOnScrollListener(onScrollListener);
 
         dyndRevert.addTextChangedListener(tw);
+        dyndRevert.setOnFocusChangeListener(focusChangeListener);
+
         if ((!TextUtils.isEmpty(mFrom)) && mFrom.equals("dynamic_msg_adapter")) {
             HttpGetDynamic(300);
         } else {
@@ -138,6 +143,15 @@ public class DynamicDetailActivity extends BaseActivity {
 
     }
 
+    private View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener() {
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            if (hasFocus) {
+                Log.e(TAG, "键盘当前已经获取到焦点=======");
+                CheckSoftIsShowing();
+            }
+        }
+    };
     //输入框的监听事件
     private TextWatcher tw = new TextWatcher() {
         @Override
@@ -172,6 +186,48 @@ public class DynamicDetailActivity extends BaseActivity {
             }
         }
     };
+
+    //判断软键盘是否开启
+    private boolean isSoftShowing() {
+        int screenHeight = getWindow().getDecorView().getHeight();
+        Rect rect = new Rect();
+        getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        return screenHeight - rect.bottom != 0;
+    }
+
+    //监听键盘开启的监听器
+    private void CheckSoftIsShowing() {
+        Log.e(TAG, "执行监听----------");
+        isListerSoftShowing = true;//开始监听键盘的弹起状态
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (isListerSoftShowing) {
+                    try {
+                        Thread.sleep(800);
+                        if (isSoftShowing()) {
+                            //键盘处于开启的状态
+                            Log.e(TAG, "键盘监听器开启中。。。。。当前键盘属于开启中");
+                        } else {
+                            //键盘属于收起的状态 设置输入框的hint 以及关闭键盘的监听
+                            isListerSoftShowing = false;//关闭键盘的监听
+                            Log.e(TAG, "键盘监听器开启中。。。。。当前键盘属于收起中");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dyndRevert.setText("");
+                                    dyndRevert.setHint("写评论...");
+                                }
+                            });
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+
     //上拉刷新
     private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -248,7 +304,7 @@ public class DynamicDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.dynd_revert:
-                //点击了回复
+                //点击了回复的输入框
                 if (!Utils.userIsLogin(mContext)) {
                     Utils.gotoLogin(mContext);
                 } else {
@@ -256,8 +312,10 @@ public class DynamicDetailActivity extends BaseActivity {
                     if (dyndRevert.getHint().equals("写评论...")) {
                         if (!TextUtils.isEmpty(mDynamicMap.get(dynamicId))) {
                             dyndRevert.setText(mDynamicMap.get(dynamicId));
+                            dyndRevert.setSelection(mDynamicMap.get(dynamicId).length());
                         }
                     }
+                    CheckSoftIsShowing();
                 }
                 break;
         }
@@ -510,10 +568,12 @@ public class DynamicDetailActivity extends BaseActivity {
 //                    parent_id = commentArrayList.get(position - 1).getId();
                     if (!TextUtils.isEmpty(mCommentMap.get(commentArrayList.get(position - 1).getId()))) {
                         dyndRevert.setText(mCommentMap.get(commentArrayList.get(position - 1).getId()));
+                        dyndRevert.setSelection(commentArrayList.get(position - 1).getId().length());
                     }
                     dyndRevert.requestFocus();
                     InputMethodManager imm = (InputMethodManager) dyndRevert.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+                    CheckSoftIsShowing();//开启监听器
                     break;
             }
         }

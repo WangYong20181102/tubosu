@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -78,10 +79,12 @@ public class NewReplyActivity extends AppCompatActivity {
     private HashMap<String, String> mDynamicMap;//存储评论当前作者的map
     private HashMap<String, String> mCommentMap;//存储当前评论用户的内容map
     private int mPosition = -1;//回复某用户时的定位标识
-    //以下两个参数用于消息的定位
+    //以下三个参数用于消息的定位
     private String from = "";
     private String location_id = "";
     private String msg_type = "";
+    //是否要监听键盘的弹起
+    private boolean isListerSoftShowing = false;
 
 
     @Override
@@ -116,6 +119,7 @@ public class NewReplyActivity extends AppCompatActivity {
         newReplyRecyclerview.addOnScrollListener(onScrollListener);
         //设置监听事件
         newReplyRevert.addTextChangedListener(tv);
+        newReplyRevert.setOnFocusChangeListener(onFocusChangeListener);
         //一进来数据的请求
         if ((!TextUtils.isEmpty(from)) && from.equals("dynamic_msg_adapter")) {
             //从适配器进来的
@@ -125,6 +129,15 @@ public class NewReplyActivity extends AppCompatActivity {
         }
     }
 
+    //焦点监听事件
+    private View.OnFocusChangeListener onFocusChangeListener = new View.OnFocusChangeListener() {
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            if (hasFocus) {
+                CheckSoftIsShowing();
+            }
+        }
+    };
     //事件监听事件
     private TextWatcher tv = new TextWatcher() {
         @Override
@@ -255,6 +268,47 @@ public class NewReplyActivity extends AppCompatActivity {
         });
     }
 
+    //判断软键盘是否开启
+    private boolean isSoftShowing() {
+        int screenHeight = getWindow().getDecorView().getHeight();
+        Rect rect = new Rect();
+        getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        return screenHeight - rect.bottom != 0;
+    }
+
+    //监听键盘开启的监听器
+    private void CheckSoftIsShowing() {
+        Log.e(TAG, "执行监听----------");
+        isListerSoftShowing = true;//开始监听键盘的弹起状态
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (isListerSoftShowing) {
+                    try {
+                        Thread.sleep(800);
+                        if (isSoftShowing()) {
+                            //键盘处于开启的状态
+                            Log.e(TAG, "键盘监听器开启中。。。。。当前键盘属于开启中");
+                        } else {
+                            //键盘属于收起的状态 设置输入框的hint 以及关闭键盘的监听
+                            isListerSoftShowing = false;//关闭键盘的监听
+                            Log.e(TAG, "键盘监听器开启中。。。。。当前键盘属于收起中");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    newReplyRevert.setText("");
+                                    newReplyRevert.setHint("写评论...");
+                                }
+                            });
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+
     //适配器子项点击事件
     private NewReplyAdapter.OnItemClickLister onItemClickLister = new NewReplyAdapter.OnItemClickLister() {
         @Override
@@ -264,10 +318,12 @@ public class NewReplyActivity extends AppCompatActivity {
             newReplyRevert.setHint("回复 " + childCommentBeanList.get(position - 1).getNick());
             if (!TextUtils.isEmpty(mCommentMap.get(childCommentBeanList.get(position - 1).getId()))) {
                 newReplyRevert.setText(mCommentMap.get(childCommentBeanList.get(position - 1).getId()));
+                newReplyRevert.setSelection(mCommentMap.get(childCommentBeanList.get(position - 1).getId()).length());
             }
             newReplyRevert.requestFocus();
             InputMethodManager imm = (InputMethodManager) newReplyRevert.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+            CheckSoftIsShowing();
         }
     };
 
@@ -431,8 +487,10 @@ public class NewReplyActivity extends AppCompatActivity {
                         Log.e(TAG, "用户已经登录===设置信息中===" + mDynamicMap.get(comment_id));
                         if (!TextUtils.isEmpty(mDynamicMap.get(comment_id))) {
                             newReplyRevert.setText(mDynamicMap.get(comment_id));
+                            newReplyRevert.setSelection(mDynamicMap.get(comment_id).length());
                         }
                     }
+                    CheckSoftIsShowing();
                 }
                 break;
         }

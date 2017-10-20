@@ -306,6 +306,8 @@ public class PersonInfoActivity extends BaseActivity {
                 //已经获取了全部的权限
                 changeIcon();
             }
+        }else {
+            changeIcon();
         }
     }
 

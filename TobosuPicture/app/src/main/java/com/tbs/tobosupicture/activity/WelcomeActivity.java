@@ -296,6 +296,8 @@ public class WelcomeActivity extends BaseActivity {
             } else {
                 checkNetConnect();
             }
+        } else {
+            checkNetConnect();
         }
     }
 
