@@ -17,6 +17,8 @@ import com.tbs.tobosupicture.activity.GetPriceActivity;
 import com.tbs.tobosupicture.activity.SeeImageActivity;
 import com.tbs.tobosupicture.bean.CollectionSampleJsonEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
+import com.tbs.tobosupicture.view.TRoundView;
+
 import java.util.ArrayList;
 
 /**
@@ -89,6 +91,7 @@ public class CollectSampleImgAdapter extends RecyclerView.Adapter<RecyclerView.V
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof SamplePicViewHolder){
             SamplePicViewHolder itmeHolder = (SamplePicViewHolder) holder;
+            itmeHolder.iv_big_sample_pic.setType(1);
             GlideUtils.glideLoader(mContext, dataList.get(position).getImg_url(), R.mipmap.loading_img_fail,R.mipmap.loading_img,itmeHolder.iv_big_sample_pic);
 
 
@@ -174,7 +177,7 @@ public class CollectSampleImgAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public class SamplePicViewHolder extends RecyclerView.ViewHolder{
         private RelativeLayout rel_desiner_layout;
-        private ImageView iv_big_sample_pic;
+        private TRoundView iv_big_sample_pic;
         private ImageView iv_designer_pic;
         private TextView tv_samplepic_title;
         private TextView tv_pic_city;
@@ -188,7 +191,7 @@ public class CollectSampleImgAdapter extends RecyclerView.Adapter<RecyclerView.V
         public SamplePicViewHolder(View itemView) {
             super(itemView);
             rel_desiner_layout = (RelativeLayout) itemView.findViewById(R.id.rel_desiner_layout);
-            iv_big_sample_pic = (ImageView) itemView.findViewById(R.id.iv_big_sample_pic);
+            iv_big_sample_pic = (TRoundView) itemView.findViewById(R.id.iv_big_sample_pic);
             iv_designer_pic = (ImageView) itemView.findViewById(R.id.iv_designer_pic);
             tv_samplepic_title = (TextView) itemView.findViewById(R.id.tv_samplepic_title);
             tv_pic_city = (TextView) itemView.findViewById(R.id.tv_pic_city);
