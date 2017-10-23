@@ -68,11 +68,13 @@ public class CommentChildAdapter
 //                Log.e("CommentChildAdapter", "子项数据打印结果=====" + i + "====子项数据===" + childCommentArrayList.get(i).getC_nick());
 //                Log.e("CommentChildAdapter", "子项数据打印结果=====" + i + "====子项数据===" + childCommentArrayList.get(i).getContent());
 //            }
+            String content = childCommentArrayList.get(position).getContent().replace(" ", "&nbsp;");
             if (!TextUtils.isEmpty(childCommentArrayList.get(position).getC_nick())) {
                 //有回复对象
-                str = "<font color='#FF882E'>" + childCommentArrayList.get(position).getNick() + "回复 " + childCommentArrayList.get(position).getC_nick() + "</font>:" + childCommentArrayList.get(position).getContent();
+
+                str = "<font color='#FF882E'>" + childCommentArrayList.get(position).getNick() + "回复 " + childCommentArrayList.get(position).getC_nick() + "</font>:" + content;
             } else {
-                str = "<font color='#FF882E'>" + childCommentArrayList.get(position).getNick() + "</font> :" + childCommentArrayList.get(position).getContent();
+                str = "<font color='#FF882E'>" + childCommentArrayList.get(position).getNick() + "</font> :" + content;
             }
             ((CommentChildHolder) holder).comment_child_context.setText(Html.fromHtml(str));
             ((CommentChildHolder) holder).comment_child_context.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +86,7 @@ public class CommentChildAdapter
                 }
             });
         } else if (holder instanceof CommentChildHolderMore) {
-            int mCommentNum= Integer.parseInt(mComment.getReply_count());
+            int mCommentNum = Integer.parseInt(mComment.getReply_count());
             if (mCommentNum > 3) {
                 ((CommentChildHolderMore) holder).comment_child_more.setVisibility(View.VISIBLE);
                 ((CommentChildHolderMore) holder).comment_child_more.setTextColor(Color.parseColor("#FF882E"));

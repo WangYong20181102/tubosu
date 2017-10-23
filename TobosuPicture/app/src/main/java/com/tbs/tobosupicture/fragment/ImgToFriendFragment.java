@@ -408,9 +408,15 @@ public class ImgToFriendFragment extends BaseFragment {
                     if (data.getExtras() != null) {
                         Bundle bundle = data.getExtras();
                         Bitmap photo = (Bitmap) bundle.get("data");
-                        Log.e(TAG, "拍照返回的数据========" + photo.toString());
+                        String mFilePath = Environment.getExternalStorageDirectory() + "/JiaXT/" + Utils.getNowTime() + ".jpg";
+                        File mFile = Utils.saveBitmapFile(photo, mFilePath);
+                        Log.e(TAG, "新的图片处理结果===文件大小====" + mFile.length() / 1024);
+                        Log.e(TAG, "新的图片处理结果===文件路径====" + mFile.getPath());
+                        Log.e(TAG, "新的图片处理结果===文件绝对路径====" + mFile.getAbsolutePath());
+                        Log.e(TAG, "新的图片处理结果===文件名称====" + mFile.getName());
                         if (photo != null) {
-                            String ImgPath = FileUtil.saveFile(mContext, Utils.getNowTime() + "lin_zxkk.jpg", photo);
+//                            String ImgPath = FileUtil.saveFile(mContext, Utils.getNowTime() + "lin_zxkk.jpg", photo);
+                            String ImgPath = mFile.getPath();
                             ArrayList<String> imgPathList = new ArrayList<>();
                             imgPathList.add(ImgPath);
 //                            Intent intent = new Intent(mContext, SendDynamicActivity.class);

@@ -207,11 +207,9 @@ public class DynamicDetailActivity extends BaseActivity {
                         Thread.sleep(800);
                         if (isSoftShowing()) {
                             //键盘处于开启的状态
-                            Log.e(TAG, "键盘监听器开启中。。。。。当前键盘属于开启中");
                         } else {
                             //键盘属于收起的状态 设置输入框的hint 以及关闭键盘的监听
                             isListerSoftShowing = false;//关闭键盘的监听
-                            Log.e(TAG, "键盘监听器开启中。。。。。当前键盘属于收起中");
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -347,6 +345,7 @@ public class DynamicDetailActivity extends BaseActivity {
         param.put("dynamic_id", dynamicId);
         param.put("parent_id", parent_id);
         param.put("content", content);
+        Log.e(TAG, "传入服务器的数据=============" + content);
         param.put("type", "2");
         HttpUtils.doPost(UrlConstans.REPLY_COMMENT_TOW, param, new Callback() {
             @Override
@@ -403,6 +402,7 @@ public class DynamicDetailActivity extends BaseActivity {
         param.put("commented_uid", commentedUid);
         param.put("is_virtual_user", is_virtual_user);
         param.put("content", comment);
+        Log.e(TAG, "传入服务器的数据=============" + comment);
         param.put("type", "2");
         HttpUtils.doPost(UrlConstans.USER_SEND_COMMENT, param, new Callback() {
             @Override
