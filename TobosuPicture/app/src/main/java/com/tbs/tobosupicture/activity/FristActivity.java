@@ -9,19 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tbs.tobosupicture.R;
-import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.SpUtils;
-
+import com.tbs.tobosupicture.utils.Utils;
 import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * 用户第一次使用我们的App时的启动页
@@ -32,7 +27,7 @@ public class FristActivity extends AppCompatActivity {
     ViewPager fristViewpager; //
     private String TAG = "FristActivity";
     private Context mContext;
-    private int[] ids = new int[]{R.mipmap.img01, R.mipmap.img02, R.mipmap.img03, R.mipmap.img04};
+    private int[] ids = new int[]{R.mipmap.mimg02, R.mipmap.mimg03, R.mipmap.mimg04};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +52,12 @@ public class FristActivity extends AppCompatActivity {
 
         ImgPageAdapter adapter = new ImgPageAdapter(mContext, imgList);
         fristViewpager.setAdapter(adapter);
+
         fristViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                Utils.setErrorLog(TAG, "==");
             }
 
             @Override
@@ -68,6 +65,7 @@ public class FristActivity extends AppCompatActivity {
                 fristViewpager.setCurrentItem(position);
                 if(position == ids.length - 1){
                     imgList.get(position).setOnClickListener(new View.OnClickListener() {
+
                         @Override
                         public void onClick(View v) {
                             startActivity(new Intent(FristActivity.this, MainActivity.class));
