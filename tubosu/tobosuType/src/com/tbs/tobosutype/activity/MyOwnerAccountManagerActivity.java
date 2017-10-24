@@ -133,8 +133,8 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
     private ImageView iv_back_myowner_personal_info;
     private TextView tv_btn_exit;
 
-    private HashMap<String, String> changeInfoParams;
-    private HashMap<String, String> bindThirdPartyParams;
+    private HashMap<String, Object> changeInfoParams;
+    private HashMap<String, Object> bindThirdPartyParams;
 
     private Intent intent;
 

@@ -257,18 +257,18 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
 //     * 装修公司的参数对象
 //     */
 //    private RequestParams mapParams;
-    private HashMap<String,String> mapParams;
+    private HashMap<String,Object> mapParams;
 
 
     /**
      * 品牌logo的参数对象
      */
-    private HashMap<String, String> getAdsParams;
+    private HashMap<String, Object> getAdsParams;
 
     /**
      * 广告的参数对象
      */
-    private HashMap<String, String> adsenseParams;
+    private HashMap<String, Object> adsenseParams;
 
     /**
      * 装修公司列表接口
@@ -606,7 +606,7 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
      *
      * @param params
      */
-    private void requestDecoratePost(HashMap<String, String> params) {
+    private void requestDecoratePost(HashMap<String, Object> params) {
         if (Util.isNetAvailable(mContext)) {
 
             OKHttpUtil.post(Constant.FIND_DECORATE_COMPANY_URL, params, new Callback() {

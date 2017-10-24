@@ -81,7 +81,7 @@ public class AllOrderListActivity extends Activity implements IXListViewListener
     private LayoutParams params;
     private List<HashMap<String, Object>> allOrderList = new ArrayList<HashMap<String, Object>>();
     private AllOrderAdapter adapter;
-    private HashMap<String, String> orderParams;
+    private HashMap<String, Object> orderParams;
     private String psw = "1";
     private String token;
     private RelativeLayout all_re_banner;

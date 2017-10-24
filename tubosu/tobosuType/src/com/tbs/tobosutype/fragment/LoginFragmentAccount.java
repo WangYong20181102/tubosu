@@ -75,7 +75,7 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
      * 登录接口
      */
     private String userLoginUrl = Constant.TOBOSU_URL + "tapp/passport/app_login";
-    private HashMap<String, String> userLoginParams;
+    private HashMap<String, Object> userLoginParams;
     /*-------------账号登陆相关------------*/
 
 
@@ -95,7 +95,7 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
     /**
      * 微信参数对象
      */
-    private HashMap<String, String> weixinLoginParams;
+    private HashMap<String, Object> weixinLoginParams;
 
 	
 	/*-------------微信登陆相关------------*/

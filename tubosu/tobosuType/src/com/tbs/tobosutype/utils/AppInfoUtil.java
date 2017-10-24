@@ -169,8 +169,8 @@ public class AppInfoUtil {
         return params;
     }
 
-    public static HashMap<String,String> getPublicHashMapParams(Context context) {
-        HashMap<String,String> params = new HashMap<String,String>();
+    public static HashMap<String,Object> getPublicHashMapParams(Context context) {
+        HashMap<String,Object> params = new HashMap<String,Object>();
         params.put("device", getDeviceName());
         params.put("version", getAppVersionName(context));
         params.put("city", getCityName(context));

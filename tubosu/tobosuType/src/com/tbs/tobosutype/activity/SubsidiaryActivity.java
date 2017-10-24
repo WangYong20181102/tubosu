@@ -37,7 +37,7 @@ public class SubsidiaryActivity extends Activity {
 	private ImageView subsidiary_back;
 	private String requestUrl = Constant.TOBOSU_URL
 			+ "/tapp/company/fund_manage";
-	private HashMap<String, String> params;
+	private HashMap<String, Object> params;
 	private int page = 1;
 	private ListView listView;
 	private static SubsidiaryAdapter adapter;

@@ -262,7 +262,7 @@ public class EditAccountAcitivity extends FragmentActivity{
 
                     if(Util.isNetAvailable(context)){
                         OKHttpUtil okHttpUtil = new OKHttpUtil();
-                        HashMap<String, String> hashMap = new HashMap<String, String>();
+                        HashMap<String, Object> hashMap = new HashMap<String, Object>();
                         hashMap.put("token", Util.getDateToken());
                         hashMap.put("uid", AppInfoUtil.getUserid(context));
                         hashMap.put("type_id", outcomeTypeId);

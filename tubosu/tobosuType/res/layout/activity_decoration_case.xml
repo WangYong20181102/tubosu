@@ -55,10 +55,13 @@
     </LinearLayout>
     <!--底部发单按钮-->
     <RelativeLayout
+        android:id="@+id/deco_case_find_price_rl"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="#cc1d1919"
         android:layout_alignParentBottom="true"
-        android:background="#cc1d1919">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -68,6 +71,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:src="@drawable/qianbi"
                 android:layout_width="17dp"
                 android:layout_height="17dp"
                 android:layout_gravity="center" />

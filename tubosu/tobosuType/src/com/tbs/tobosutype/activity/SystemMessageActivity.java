@@ -71,8 +71,8 @@ public class SystemMessageActivity extends Activity implements IXListViewListene
      */
     private String userMsgOne = Constant.TOBOSU_URL + "tapp/msg/user_msg_one";
 
-    private HashMap<String, String> userMsgParams;
-    private HashMap<String, String> userMsgOneParams;
+    private HashMap<String, Object> userMsgParams;
+    private HashMap<String, Object> userMsgOneParams;
     //banner
     private RelativeLayout rel_system_msg_bar;
     private int page = 1;

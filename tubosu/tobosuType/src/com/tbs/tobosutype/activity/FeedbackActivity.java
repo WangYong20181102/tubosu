@@ -100,7 +100,7 @@ public class FeedbackActivity extends Activity {
      */
     private String feedBackUrl = Constant.TOBOSU_URL + "tapp/util/feedback";
 
-    private HashMap<String, String> feedbackParams;
+    private HashMap<String, Object> feedbackParams;
     private String mode;
     private String mode_version;
     private String client_version;

@@ -68,7 +68,7 @@ public class GetPriceActivity extends Activity implements OnClickListener {
 	/**获取保存本地的城市参数*/
 	private SharedPreferences getCitySharePre;
 	
-	private HashMap<String, String> pubOrderParams;
+	private HashMap<String, Object> pubOrderParams;
 	private String phone;
 	private String cityid;
 	private String userid;

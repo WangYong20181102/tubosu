@@ -54,7 +54,7 @@ public class SearchDecorateActivity extends Activity implements IXListViewListen
     /***装修公司列表接口*/
     private String companyListUrl = Constant.TOBOSU_URL + "tapp/company/company_list";
 
-    private HashMap<String, String> companyListParams;
+    private HashMap<String, Object> companyListParams;
 
     private int page = 1;
     private XListView xlv_decorate;

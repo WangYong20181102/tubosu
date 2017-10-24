@@ -65,7 +65,7 @@ public class ImageDetailActivity extends Activity implements OnClickListener, On
     private String cid;
     private String id;
     private String token;
-    private HashMap<String,String> imgDetailParams;
+    private HashMap<String,Object> imgDetailParams;
 
     private ArrayList<String> imageUrlMapStringList;
     private ViewPager vp_singleMap;
@@ -129,7 +129,7 @@ public class ImageDetailActivity extends Activity implements OnClickListener, On
     private String comid;
 
     private DesignFreePopupWindow designPopupWindow;
-    private HashMap<String, String> pubOrderParams;
+    private HashMap<String, Object> pubOrderParams;
     private String phone;
     private String userid;
 
@@ -186,7 +186,7 @@ public class ImageDetailActivity extends Activity implements OnClickListener, On
 
         imageUrlMapStringList = new ArrayList<String>();
 
-        pubOrderParams = new HashMap<String, String>();
+        pubOrderParams = new HashMap<String, Object>();
         userid = getSharedPreferences("userInfo", 0).getString("userid", "");
 
 
@@ -616,7 +616,7 @@ public class ImageDetailActivity extends Activity implements OnClickListener, On
         }
 
         //开始操作  --请注意下面这个if else语句总的fav_id以及它们相应的key value值--
-        HashMap<String, String> favParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
+        HashMap<String, Object> favParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         favParams.put("fav_type", "showpic");
         favParams.put("token", token);
         favParams.put("fav_conid", favConid);

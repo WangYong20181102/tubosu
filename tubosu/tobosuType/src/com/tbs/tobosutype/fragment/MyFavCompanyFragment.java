@@ -124,7 +124,7 @@ public class MyFavCompanyFragment extends Fragment {
 	private void getDataFromNet() {
 		token = AppInfoUtil.getToekn(getActivity().getApplicationContext());
 
-		HashMap<String, String> hashMap = new HashMap<String, String>();
+		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		hashMap.put("token", token);
 		hashMap.put("fav_type", fav_type);
 		hashMap.put("page", page+"");

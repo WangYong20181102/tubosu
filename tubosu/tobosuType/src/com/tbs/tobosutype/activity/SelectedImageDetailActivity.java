@@ -88,7 +88,7 @@ public class SelectedImageDetailActivity extends Activity implements IXListViewL
 	
 	/**为我设计window*/
 	private DesignFreePopupWindow designPopupWindow;
-	private HashMap<String, String> pubOrderParams;
+	private HashMap<String, Object> pubOrderParams;
 	
 	private String userid;
 	
@@ -425,7 +425,7 @@ public class SelectedImageDetailActivity extends Activity implements IXListViewL
 		public void onClick(View v) {
 
 			designPopupWindow.dismiss();
-			pubOrderParams = new HashMap<String,String>();
+			pubOrderParams = new HashMap<String,Object>();
 			userid = getSharedPreferences("userInfo", 0).getString("userid", "");
 			
 			switch (v.getId()) {

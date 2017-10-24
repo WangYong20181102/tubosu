@@ -74,7 +74,7 @@ public class MapMarkersActivity extends Activity implements OnClickListener {
 	/**修改坐标的接口*/
 	private String mapMarkersUrl = Constant.TOBOSU_URL + "/tapp/company/set_coor";
 	
-	private HashMap<String, String> mapMarkersParams;
+	private HashMap<String, Object> mapMarkersParams;
 	
 	private LocationClient mLocationClient = null;
 	private MyBDLocationListner mListner = null;

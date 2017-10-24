@@ -238,7 +238,7 @@ public class ImageAdapter extends BaseAdapter {
 			return;
 		}
 		
-		final HashMap<String, String> favParams = AppInfoUtil.getPublicHashMapParams(mContext);
+		final HashMap<String, Object> favParams = AppInfoUtil.getPublicHashMapParams(mContext);
 		String state = favListFromNet.get(position);
 		if("1".equals(state)) { 
 			// 点击前是 1(已收藏) --> 点击后变为0(取消收藏)

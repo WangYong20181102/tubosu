@@ -97,10 +97,10 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
      */
     private String searchCommunityUrl = Constant.TOBOSU_URL + "tapp/impression/searchCommunity";
 
-    private HashMap<String, String> getListParams;
-    private HashMap<String, String> adsenseParams;
-    private HashMap<String, String> getLastMonthCompanyListParams;
-    private HashMap<String, String> searchCommunityParams;
+    private HashMap<String, Object> getListParams;
+    private HashMap<String, Object> adsenseParams;
+    private HashMap<String, Object> getLastMonthCompanyListParams;
+    private HashMap<String, Object> searchCommunityParams;
 
     private int page = 1;
 

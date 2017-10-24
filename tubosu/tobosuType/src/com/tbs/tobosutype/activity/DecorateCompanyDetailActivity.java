@@ -188,7 +188,7 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 	/**装修公司明细接口*/
 	private String dataUrl = Constant.TOBOSU_URL + "tapp/company/company_detail";
 	
-	private HashMap<String, String> companyDetailParams;
+	private HashMap<String, Object> companyDetailParams;
 	private String oper_type = "1";
 	private String memberdegree = "1";
 	private ScrollViewExtend scrollView;
@@ -815,7 +815,7 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 			return;
 		}
 		
-		HashMap<String, String> favParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
+		HashMap<String, Object> favParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
 		favParams.put("fav_conid", comid);
 		if (oper_type.equals("1")) {
 			favParams.put("token", token);

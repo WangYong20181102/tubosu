@@ -72,8 +72,8 @@ public class MyCompanyChangeInfoActivity extends Activity implements OnClickList
 	/**第三方绑定*/
 	private String bindThirdPartyUrl = Constant.TOBOSU_URL + "tapp/passport/bindThirdParty";
 	
-	private HashMap<String, String> chageInfoParams;
-	private HashMap<String, String> bindThirdPartyParams;
+	private HashMap<String, Object> chageInfoParams;
+	private HashMap<String, Object> bindThirdPartyParams;
 	private Intent intent;
 	private Context mContext;
 	private String weiXinUserName;

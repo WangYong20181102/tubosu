@@ -251,7 +251,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 //	/** 精选图册接口 */
 //	private String getSpecialUrl = Constant.TOBOSU_URL + "tapp/util/get_special";
 
-    private HashMap<String, String> decorationClassParams;
+    private HashMap<String, Object> decorationClassParams;
     private RequestParams localDiscountParams;
 
 
@@ -1128,7 +1128,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
             // 这是当天第一次
             if(Util.isNetAvailable(HomeActivity.this)){
                 final Dialog dialog = new Dialog(HomeActivity.this, R.style.popupDialog);
-                HashMap<String, String> hashMap = new HashMap<String, String>();
+                HashMap<String, Object> hashMap = new HashMap<String, Object>();
                 OKHttpUtil.post(Constant.ACTIVITY_URL, hashMap, new Callback() {
 
                     @Override

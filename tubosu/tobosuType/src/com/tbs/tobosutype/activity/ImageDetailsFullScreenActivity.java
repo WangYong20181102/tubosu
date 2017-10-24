@@ -103,7 +103,7 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
     private String androidUrl = "http://m.tobosu.com/?channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());;
 
 
-    private HashMap<String,String> imageDetaiParams;
+    private HashMap<String,Object> imageDetaiParams;
     private List<String> imageUrls;
 
     private ViewPagerAdapter adapter;
@@ -231,7 +231,7 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
                     startActivityForResult(intent, 0);
                     return;
                 }
-                HashMap<String, String> favParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
+                HashMap<String, Object> favParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
                 favParams.put("fav_conid", fav_conid);
                 if (oper_type.equals("1") && !TextUtils.isEmpty(oper_type)) {
                     favParams.put("token", token);
@@ -588,7 +588,7 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
                         Toast.makeText(mContext, "手机号码必须是11位数字！", Toast.LENGTH_SHORT).show();
                         return;
                     } else {
-                        HashMap<String, String> params = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
+                        HashMap<String, Object> params = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
                         params.put("cellphone", phone);
                         params.put("city", cityid);
                         params.put("urlhistory", Constant.PIPE); // 渠道代码
@@ -613,7 +613,7 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
          * 发单接口请求
          * @param params
          */
-        private void requestPubOrder(HashMap<String, String> params) {
+        private void requestPubOrder(HashMap<String, Object> params) {
             OKHttpUtil.post(pubOrderUrl, params, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {

@@ -54,7 +54,7 @@ public class ApplyforSuccessActivity extends Activity implements OnClickListener
      * 倒计时60s
      */
     private int count = 60;
-    private HashMap<String, String> fastLoginParams;
+    private HashMap<String, Object> fastLoginParams;
 
     /**
      * 快速注册用户接口

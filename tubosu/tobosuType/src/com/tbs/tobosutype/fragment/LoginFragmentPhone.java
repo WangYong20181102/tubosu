@@ -96,7 +96,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
 
 
     /*-------------手机登录相关------------*/
-    private HashMap<String, String> fastLoginParams;
+    private HashMap<String, Object> fastLoginParams;
 
     /**
      * 快速登录接口 和 注册接口
@@ -122,7 +122,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
     /**
      * 微信参数对象
      */
-    private HashMap<String, String> weixinLoginParams;
+    private HashMap<String, Object> weixinLoginParams;
 
     /*-------------微信登陆相关------------*/
     public static ReceiveBroadCast receiveBroadCast;

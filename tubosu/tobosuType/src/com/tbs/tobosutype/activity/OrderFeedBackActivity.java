@@ -68,8 +68,8 @@ public class OrderFeedBackActivity extends Activity {
 	/***保存反馈信息接口*/
 	private String saveFeedBackUrl = Constant.TOBOSU_URL + "/tapp/order/save_fangkiui";
 	
-	private HashMap<String, String> feedBackParams;
-	private HashMap<String, String> saveFeedBackParams;
+	private HashMap<String, Object> feedBackParams;
+	private HashMap<String, Object> saveFeedBackParams;
 	
 	/**反馈内容集合*/
 	private ArrayList<HashMap<String, String>> feedBackList;

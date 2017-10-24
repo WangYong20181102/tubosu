@@ -80,8 +80,8 @@ public class PersonalDataActivity extends Activity implements OnClickListener {
      */
     private String bindThirdPartyUrl = Constant.TOBOSU_URL + "tapp/passport/bindThirdParty";
 
-    private HashMap<String, String> chageInfoParams;
-    private HashMap<String, String> bindThirdPartyParams;
+    private HashMap<String, Object> chageInfoParams;
+    private HashMap<String, Object> bindThirdPartyParams;
     private Intent intent;
     private UMShareAPI umShareAPI;
     private Context mContext;

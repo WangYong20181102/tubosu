@@ -35,7 +35,7 @@ public class DesignChartAcitivity extends Activity implements IXListViewListener
 	private Context mContext;
 	private String comid;
 	private String designChartUrl = Constant.TOBOSU_URL + "tapp/impression/comImsList";
-	private HashMap<String, String> designChartParams;
+	private HashMap<String, Object> designChartParams;
 	private List<HashMap<String, String>> designDatas;
 	private XListView design_chart_listView;
 	private DesignChartImageAdapter imageAdapter;

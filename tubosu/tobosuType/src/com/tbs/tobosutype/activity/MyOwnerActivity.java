@@ -166,9 +166,9 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 
     private String resultStr = "";
 
-    private HashMap<String, String> userChageInfoParams;
-    private HashMap<String, String> userMyParams;
-    private HashMap<String, String> retrieveOrderParams;
+    private HashMap<String, Object> userChageInfoParams;
+    private HashMap<String, Object> userMyParams;
+    private HashMap<String, Object> retrieveOrderParams;
 
     private String gender;
     private String icommunity;

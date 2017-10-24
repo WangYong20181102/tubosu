@@ -1359,7 +1359,7 @@ public class PopOrderActivity extends Activity {
     private void popOrder(final String cellphone, final String housearea, final String orderprice, final String style) {
         showLoadingView();
         if(Util.isNetAvailable(mContext)){
-            HashMap<String, String> hashMap = new HashMap<String, String>();
+            HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("cellphone", cellphone); // 电话号码
             hashMap.put("housearea", housearea); // 面积
             hashMap.put("orderprice", orderprice); // 预算

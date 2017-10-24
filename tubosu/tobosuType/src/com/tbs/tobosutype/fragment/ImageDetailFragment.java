@@ -56,8 +56,8 @@ public class ImageDetailFragment extends Fragment {
     private String token;//用户唯一标识
     private String phone;//用户填写的手机号
     private String userid;//用户id
-    private HashMap<String, String> imgDetailParams;
-    private HashMap<String, String> pubOrderParams;//发单参数
+    private HashMap<String, Object> imgDetailParams;
+    private HashMap<String, Object> pubOrderParams;//发单参数
     private DesignFreePopupWindow designPopupWindow;//底部弹窗按钮
 
     /***效果图详情接口*/
@@ -126,7 +126,7 @@ public class ImageDetailFragment extends Fragment {
         id = mBundle.getString("id");
         url = mBundle.getString("url");
         fav_conid = mBundle.getString("fav_conid");
-        pubOrderParams = new HashMap<String, String>();
+        pubOrderParams = new HashMap<String, Object>();
         imgDetailParams = AppInfoUtil.getPublicHashMapParams(mContext);
         imgDetailParams.put("token", AppInfoUtil.getToekn(mContext));
         imgDetailParams.put("id", id);
@@ -324,7 +324,7 @@ public class ImageDetailFragment extends Fragment {
         }
 
         //开始操作  --请注意下面这个if else语句总的fav_id以及它们相应的key value值--
-        HashMap<String, String> favParams = AppInfoUtil.getPublicHashMapParams(mContext);
+        HashMap<String, Object> favParams = AppInfoUtil.getPublicHashMapParams(mContext);
         favParams.put("fav_type", "showpic");
         favParams.put("token", token);
 

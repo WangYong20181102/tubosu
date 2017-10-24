@@ -106,7 +106,7 @@ public class DecorateAccountActivity extends Activity {
         if (!floatList.isEmpty()) {
             floatList.clear();
         }
-        HashMap<String, String> param = new HashMap<>();
+        HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         Log.e(TAG, "用户的uid=====" + AppInfoUtil.getUserid(mContext));
         param.put("uid", AppInfoUtil.getUserid(mContext));
@@ -365,7 +365,7 @@ public class DecorateAccountActivity extends Activity {
 
 
     private void httpDeleteData(String deleteId) {
-        HashMap<String, String> param = new HashMap<>();
+        HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         param.put("id", deleteId);
         OKHttpUtil.post(Constant.DELETE_DECORATE_RECORD, param, new Callback() {

@@ -74,8 +74,8 @@ public class MyFavImageFragment extends Fragment {
 	 * */
 	private String fav_type = "showpic";
 	
-	private HashMap<String, String> params;
-	private HashMap<String, String> delParams;
+	private HashMap<String, Object> params;
+	private HashMap<String, Object> delParams;
 	private SharedPreferences settings;
 	private String token;
 	
@@ -140,7 +140,7 @@ public class MyFavImageFragment extends Fragment {
 		
 		if (!TextUtils.isEmpty(token)) {
 //			params = AppInfoUtil.getPublicParams(getActivity().getApplicationContext());
-			params = new HashMap<String, String>();
+			params = new HashMap<String, Object>();
 			params.put("token", token);
 			params.put("fav_type", fav_type);
 			params.put("page", page + "");

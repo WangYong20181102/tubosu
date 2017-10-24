@@ -50,7 +50,7 @@ public class FreeYuyueActivity extends Activity implements OnClickListener {
      */
     private SharedPreferences getCitySharePre;
 
-    private HashMap<String, String> pubOrderParams;
+    private HashMap<String, Object> pubOrderParams;
     private String phone;
     private String cityid;
     private String userid;

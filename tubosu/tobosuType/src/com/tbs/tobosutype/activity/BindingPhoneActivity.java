@@ -47,7 +47,7 @@ public class BindingPhoneActivity extends Activity implements OnClickListener {
     int count = 60;
 
     private String bangdingCellphoneUrl = Constant.TOBOSU_URL + "tapp/passport/app_bangding_cellphone";
-    private HashMap<String, String > bangdingCellphoneParms;
+    private HashMap<String, Object > bangdingCellphoneParms;
     private String verfication;
     private String token;
     private RelativeLayout rl_banner;

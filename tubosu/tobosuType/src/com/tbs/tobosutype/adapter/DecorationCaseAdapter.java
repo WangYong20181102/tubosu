@@ -11,6 +11,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.bean._DecorationCaseItem;
+
+import java.util.ArrayList;
 
 /**
  * Created by Mr.Lin on 2017/10/24 09:17.
@@ -19,9 +22,12 @@ import com.tbs.tobosutype.R;
 
 public class DecorationCaseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
-    private int adapterState = 1;//列表形态
-    public DecorationCaseAdapter(Context context) {
+    private int adapterState = 1;//列表展示的形态  1--加载更多  2--恢复原状
+    private ArrayList<_DecorationCaseItem> decorationCaseItemArrayList;
+
+    public DecorationCaseAdapter(Context context, ArrayList<_DecorationCaseItem> decorationCaseItemArrayList) {
         this.mContext = context;
+        this.decorationCaseItemArrayList = decorationCaseItemArrayList;
     }
 
     //图层的转换
@@ -56,16 +62,35 @@ public class DecorationCaseAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ItemCaseViewHolder) {
-            //普通子项
+            // TODO: 2017/10/24  数据的适配以及点击事件 普通子项
+            ((ItemCaseViewHolder) holder).itemCaseImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // TODO: 2017/10/24 点击进入查看图集
+                }
+            });
 
         } else if (holder instanceof FootViewHolder) {
             //加载更多的项
+            if (position == 1) {
+                ((FootViewHolder) holder).mProgressBar.setVisibility(View.GONE);
+                ((FootViewHolder) holder).mtextView.setVisibility(View.GONE);
+                return;
+            }
+            if (adapterState == 2) {
+                ((FootViewHolder) holder).mProgressBar.setVisibility(View.GONE);
+                ((FootViewHolder) holder).mtextView.setVisibility(View.GONE);
+            } else if (adapterState == 1) {
+                //显示加载更多
+                ((FootViewHolder) holder).mProgressBar.setVisibility(View.VISIBLE);
+                ((FootViewHolder) holder).mtextView.setVisibility(View.VISIBLE);
+            }
         }
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return decorationCaseItemArrayList != null ? decorationCaseItemArrayList.size() + 1 : 0;
     }
 
     //子项布局

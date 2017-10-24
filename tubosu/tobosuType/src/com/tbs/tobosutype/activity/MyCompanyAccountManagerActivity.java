@@ -66,7 +66,7 @@ public class MyCompanyAccountManagerActivity extends Activity implements OnClick
 
 
 
-    private HashMap<String, String> bindThirdPartyParams;
+    private HashMap<String, Object> bindThirdPartyParams;
 
 
     private String weiXinUserName;

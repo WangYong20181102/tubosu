@@ -52,13 +52,13 @@ public class CheckOrderUtils {
 	private String requestOrderPwdUrl = Constant.TOBOSU_URL + "tapp/order/checkOrderPwd";
 	
 	/***有密码-请求参数对象*/
-	private HashMap<String, String> hasOrderParams;
+	private HashMap<String, Object> hasOrderParams;
 	
 	/***需要密码-请求参数对象*/
-	private HashMap<String, String> requestOrderParams;
+	private HashMap<String, Object> requestOrderParams;
 	
 	/**设置密码-请求参数对象*/
-	private HashMap<String, String> setOrderParams;
+	private HashMap<String, Object> setOrderParams;
 	
 	private Context context;
 	private View view;
@@ -84,7 +84,7 @@ public class CheckOrderUtils {
 	 * 订单是否设置密码接口请求
 	 */
 	private void requestHasOrderPwd() {
-		hasOrderParams = new HashMap<String, String>();
+		hasOrderParams = new HashMap<String, Object>();
 		hasOrderParams.put("token", token);
 
 		OKHttpUtil.post(hasOrderPwdUrl, hasOrderParams, new Callback() {
@@ -188,7 +188,7 @@ public class CheckOrderUtils {
 	 * @param poWindow
 	 */
 	private void requestCheckOrderPwd(String pwd, final PopupWindow poWindow) {
-		requestOrderParams = new HashMap<String, String>();
+		requestOrderParams = new HashMap<String, Object>();
 		requestOrderParams.put("token", token);
 		requestOrderParams.put("orderpwd", MD5Util.md5(pwd));
 		OKHttpUtil.post(requestOrderPwdUrl, requestOrderParams, new Callback() {
@@ -277,7 +277,7 @@ public class CheckOrderUtils {
 	 * @param pwd2
 	 */
 	protected void requestSetOrderPwd(final SettingOrderPwdPopupWindow popuWindow, String pwd1, String pwd2){
-		setOrderParams = new HashMap<String, String>();
+		setOrderParams = new HashMap<String, Object>();
 		setOrderParams.put("token", token);
 		setOrderParams.put("orderpwd", MD5Util.md5(pwd1));
 		setOrderParams.put("orderpwd1", MD5Util.md5(pwd2));

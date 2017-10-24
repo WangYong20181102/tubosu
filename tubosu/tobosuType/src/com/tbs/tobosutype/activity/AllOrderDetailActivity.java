@@ -243,8 +243,8 @@ public class AllOrderDetailActivity extends Activity implements OnClickListener 
     private Window window;
 
     private LayoutParams params;
-    private HashMap<String, String> orderDetailParams;
-    private HashMap<String, String> orderParams;
+    private HashMap<String, Object> orderDetailParams;
+    private HashMap<String, Object> orderParams;
     private RelativeLayout rl_top;
 
     /***订单量房接口*/

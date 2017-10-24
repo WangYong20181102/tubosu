@@ -85,7 +85,7 @@ public class KeepAccountActivity extends Activity{
 
     private void summitBudget(String budget) {
         float f = Float.parseFloat(budget) * 10000;
-        HashMap<String, String> param = new HashMap<>();
+        HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         param.put("uid", AppInfoUtil.getUserid(mContext));
         param.put("expected_cost", f + "");

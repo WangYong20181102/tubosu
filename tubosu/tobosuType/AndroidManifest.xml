@@ -457,7 +457,8 @@
             android:value="A7D31W5KJ3GI" />
 
         <activity android:name=".activity.TestActivity" />
-        <activity android:name=".activity.DecorationCaseActivity"></activity>
+        <activity android:name=".activity.DecorationCaseActivity" />
+        <activity android:name=".activity.LookPhotoActivity"></activity>
     </application>
 
 </manifest>

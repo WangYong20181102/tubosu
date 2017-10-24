@@ -168,7 +168,7 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
     private String unalready_count;
 
     private String token;
-    private HashMap<String, String> myParams;
+    private HashMap<String, Object> myParams;
 
     /**
      * 我的【装修公司】接口

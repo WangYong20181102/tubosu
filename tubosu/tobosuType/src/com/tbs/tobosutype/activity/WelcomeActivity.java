@@ -126,7 +126,7 @@ public class WelcomeActivity extends Activity {
     }
 
     private void countDownloadNum(){
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("mac_code", MAC_CODE);
         map.put("type","1");
         map.put("_token", _TOKEN);
@@ -146,7 +146,7 @@ public class WelcomeActivity extends Activity {
 
 
     private void check_password() {
-        HashMap<String, String> hashMap = new HashMap<String, String>();
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
         hashMap.put("uid", getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("userid", ""));
         hashMap.put("pass", getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("encode_pass", ""));
         OKHttpUtil.post(check_password, hashMap, new Callback() {
@@ -195,7 +195,7 @@ public class WelcomeActivity extends Activity {
         public void run() {
             if(Util.isNetAvailable(mContext)){
                 Util.setErrorLog(TAG, "----11----有网络--------");
-                HashMap<String, String> hashMap = new HashMap<String, String>();
+                HashMap<String, Object> hashMap = new HashMap<String, Object>();
                 WindowManager wm = getWindowManager();
                 int width = wm.getDefaultDisplay().getWidth();
                 int height = wm.getDefaultDisplay().getHeight();

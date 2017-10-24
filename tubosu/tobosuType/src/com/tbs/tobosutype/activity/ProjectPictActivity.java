@@ -128,7 +128,7 @@ public class ProjectPictActivity extends FragmentActivity {
 
     private void getTitleTextList() {
         if(Util.isNetAvailable(mContext)){
-            HashMap<String, String> hashMap = new HashMap<String, String>();
+            HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("page", "1");
             hashMap.put("pageSize", "1");
             hashMap.put("range_name", "");

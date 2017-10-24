@@ -76,7 +76,7 @@ public class FreeDesign extends Activity {
     private final int SECOND_TIER_CITITES = 3;//二线城市
     private final int OTHER_CITITES = 4;//其他城市
 
-    private HashMap<String, String> pubOrderParams;//请求参数
+    private HashMap<String, Object> pubOrderParams;//请求参数
 
     private String userid = "";
 
@@ -475,7 +475,7 @@ public class FreeDesign extends Activity {
     }
 
     //发单请求
-    private void HttpRequestPubOrder(HashMap<String, String> params) {
+    private void HttpRequestPubOrder(HashMap<String, Object> params) {
 
         OKHttpUtil.post(Constant.PUB_ORDERS, params, new Callback() {
             @Override

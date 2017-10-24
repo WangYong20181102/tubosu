@@ -160,7 +160,7 @@ public class HomeTopFrameLayout extends FrameLayout {
     private void getBanner() {
         Util.setErrorLog(TAG, "现在是" + cityName + "的轮播图片");
         if(Util.isNetAvailable(context)){
-            HashMap<String, String> param = new HashMap<String, String>();
+            HashMap<String, Object> param = new HashMap<String, Object>();
             param.put("city", cityName);
             param.put("device", "android");
             param.put("version", AppInfoUtil.getAppVersionName(context));

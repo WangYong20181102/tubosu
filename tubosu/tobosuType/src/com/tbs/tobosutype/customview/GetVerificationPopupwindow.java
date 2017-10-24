@@ -142,7 +142,7 @@ public class GetVerificationPopupwindow extends PopupWindow {
 
                 imageVerif = et_input.getText().toString().trim();
 
-                HashMap<String, String> map = new HashMap<String, String>();
+                HashMap<String, Object> map = new HashMap<String, Object>();
                 map.put("mobile", phone);
                 map.put("pic_code", imageVerif);
 //                map.put("version", version);

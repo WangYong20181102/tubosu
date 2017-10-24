@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
 import android.widget.Toast;
+
 import com.tbs.tobosutype.utils.AppInfoUtil;
 
 
@@ -302,6 +303,6 @@ public class Constant {
         }
         return netType;
     }
-
-
+    //新的装修案例 获取案例列表
+    public static final String DECORATION_CASE = TOBOSU_URL + "";
 }

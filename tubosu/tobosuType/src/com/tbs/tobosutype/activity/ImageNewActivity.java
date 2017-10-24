@@ -77,8 +77,8 @@ public class ImageNewActivity extends BaseActivity {
     private int page = 1;//获取数据时所要用的页面数
 
     private boolean isUpRefresh;//是否处于上拉状态
-    private HashMap<String, String> getImgItemListParams;//获取图库列表的参数
-    private HashMap<String, String> getStyleListParams;//获取条件筛选的参数
+    private HashMap<String, Object> getImgItemListParams;//获取图库列表的参数
+    private HashMap<String, Object> getStyleListParams;//获取条件筛选的参数
 
     private View viewLoading;//loading图
     private View viewNetOut;//网络断开图
@@ -136,7 +136,7 @@ public class ImageNewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_new);
         mContext = ImageNewActivity.this;
-        getStyleListParams = new HashMap<String, String>();
+        getStyleListParams = new HashMap<String, Object>();
         getImgItemListParams = AppInfoUtil.getPublicHashMapParams(mContext);
         customWaitDialog = new CustomWaitDialog(mContext);
         initCache();
@@ -396,7 +396,7 @@ public class ImageNewActivity extends BaseActivity {
      * 逛图库中显示当地装修公司列表的接口请求
      * 传入的参数
      */
-    private void HttpRequestGetImgItemList(final HashMap<String, String> params) {
+    private void HttpRequestGetImgItemList(final HashMap<String, Object> params) {
         Log.e(TAG, "进入网络请求数据中。。。。");
         img_not_found_rl.setVisibility(View.GONE);
         //判断当前的网络连接情况

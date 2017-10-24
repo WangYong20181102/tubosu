@@ -81,7 +81,7 @@ public class OKHttpUtil {
      * @param params
      * @param callback
      */
-    public static void post(String url, HashMap<String, String> params, Callback callback) {
+    public static void post(String url, HashMap<String, Object> params, Callback callback) {
         FormBody.Builder builder = new FormBody.Builder();
         for (String key : params.keySet()) {
             builder.add(key, String.valueOf(params.get(key)));
@@ -94,7 +94,6 @@ public class OKHttpUtil {
         call.enqueue(callback);
 
     }
-
 //    /**
 //     * 1）获取Request对象
 //     *

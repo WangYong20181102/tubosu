@@ -101,7 +101,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
      */
     private String requsetUrl = Constant.TOBOSU_URL + "tapp/user/my";
 
-    private HashMap<String,String> requestParams;
+    private HashMap<String,Object> requestParams;
 
     /**
      * 存储 用户信息

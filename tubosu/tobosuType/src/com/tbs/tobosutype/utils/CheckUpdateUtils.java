@@ -41,7 +41,7 @@ public class CheckUpdateUtils {
 	 * 检测是否有新版本
 	 */
 	public void cheackUpdate() {
-		HashMap<String, String> qequestParams = new HashMap<String, String>();
+		HashMap<String, Object> qequestParams = new HashMap<String, Object>();
 		qequestParams.put("vname", getVersionName());
 
 

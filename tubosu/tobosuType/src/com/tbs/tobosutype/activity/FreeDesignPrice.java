@@ -43,7 +43,7 @@ public class FreeDesignPrice extends Activity {
     private Intent intent;
     private Context mContext;
     private int count = 60;//倒计时时间
-    private HashMap<String, String> fastLoginParams;//快速注册参数
+    private HashMap<String, Object> fastLoginParams;//快速注册参数
     private String fastLoginUrl = Constant.TOBOSU_URL + "tapp/passport/fast_register";//快速注册接口
     private CustomWaitDialog customWaitDialog;
     private MyChatView myChatView;

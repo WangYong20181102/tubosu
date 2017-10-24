@@ -76,7 +76,7 @@ public class LocalDiscountDetailActivity extends Activity implements OnClickList
 	/***装修公司优惠接口*/
 	private String activityUrl = Constant.TOBOSU_URL + "tapp/company/discount";
 	
-	private HashMap<String, String> activityParams;
+	private HashMap<String, Object> activityParams;
 	private ImageView iv_cover;
 	private ImageView iv_company_logo;
 	

@@ -59,7 +59,7 @@ public class MyOwnerOrderActivity extends Activity {
     private List<HashMap<String, String>> dataList = new ArrayList<HashMap<String, String>>();
 
     private String token;
-    private HashMap<String, String> params;
+    private HashMap<String, Object> params;
 
     /**
      * 用户订单列表适配器

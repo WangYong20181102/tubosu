@@ -81,7 +81,7 @@ public class PreferentialApplyForActivity extends Activity implements IXListView
      */
     private String preferentialApplyForUrl = Constant.DECORATION_COMPANY_PREFERENTIAL_APPLYFOR;
 
-    private HashMap<String, String> myParams;
+    private HashMap<String, Object> myParams;
 
     /**
      * 未被查看的数目

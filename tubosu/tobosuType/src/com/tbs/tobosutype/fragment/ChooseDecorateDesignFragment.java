@@ -52,7 +52,7 @@ public class ChooseDecorateDesignFragment extends Fragment{
 	
 	private TextView tv_giveup;
 	
-	private HashMap<String, String> pubOrderParams;
+	private HashMap<String, Object> pubOrderParams;
 	
 	private String userid = "";
 	

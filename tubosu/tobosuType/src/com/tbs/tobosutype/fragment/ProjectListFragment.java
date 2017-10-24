@@ -145,8 +145,8 @@ public class ProjectListFragment extends Fragment implements IXListViewListener 
 		}
 	}
 
-	private HashMap<String, String> hashMap = new HashMap<String, String>();
-	private HashMap<String, String> getListParams(){
+	private HashMap<String, Object> hashMap = new HashMap<String, Object>();
+	private HashMap<String, Object> getListParams(){
 		hashMap.put("page", page+"");
 		hashMap.put("pageSize", pageSize+"");
 		hashMap.put("range_name", range_name);

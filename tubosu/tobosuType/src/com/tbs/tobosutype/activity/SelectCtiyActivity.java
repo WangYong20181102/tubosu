@@ -386,7 +386,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
      * 请求所有城市的接口
      */
     private void requestSelectCity() {
-        HashMap<String, String> hashMap = new HashMap<String, String>();
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
         OKHttpUtil.post(cityUrl, hashMap, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -592,7 +592,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
      * 首次安装调用
      */
     private void countDownloadNum() {
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("mac_code", MAC_CODE);
         map.put("type", "1");
         map.put("_token", _TOKEN);
