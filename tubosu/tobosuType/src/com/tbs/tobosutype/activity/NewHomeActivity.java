@@ -42,7 +42,7 @@ public class NewHomeActivity extends BaseActivity {
 
     private void initDataFromNet(){
         if(Util.isNetAvailable(mContext)){
-            HashMap<String, String> param = new HashMap<String, String>();
+            HashMap<String, Object> param = new HashMap<String, Object>();
 //            param.put("", "");
             OKHttpUtil.post(Constant.NEWHOME_URL, param, new Callback() {
                 @Override
