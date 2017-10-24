@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+
+    <ProgressBar
+        android:id="@+id/newhome_progressbar"
+        android:layout_width="21dp"
+        android:layout_height="21dp" />
+
+    <TextView
+        android:id="@+id/newhome_loadmore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/newhome_progressbar"
+        android:textColor="#605F5F"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="14dp"
+        android:textSize="14sp"
+        android:text="加载更多数据..."/>
+</RelativeLayout>

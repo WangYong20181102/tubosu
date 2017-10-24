@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tbs.tobosutype"
-    android:versionCode="22"
-    android:versionName="3.3">
 
+
+    android:versionCode="23"
+    android:versionName="3.4">
+    <!-- 2017-10-23 将versionCode=22   versionName=3.3   改成 23   3.4 -->
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="25" />
@@ -104,10 +106,7 @@
             android:name=".activity.ImageNewActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.OrderDetailActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.CalculaterActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -145,6 +144,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.HomeActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NewHomeActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
