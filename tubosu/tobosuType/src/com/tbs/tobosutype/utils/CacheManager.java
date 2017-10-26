@@ -19,12 +19,9 @@ public class CacheManager {
     private static final String SQUARE = "square";
     private static final String BUDGET = "budget";
 
-
     private static final String STYLEPOSITION = "styleposition";
     private static final String SQUAREPOSITION = "squareposition";
     private static final String BUDGETPOSITION = "budgetposition";
-
-
 
     private static final String DECORATIONSTAGE = "decorationstage";
     private static final String DECORATIONSTAGEPOSITION = "decorationstageposition";
@@ -43,14 +40,6 @@ public class CacheManager {
 
     private static final String SELECT_CITY_GO = "select_city_go";
 
-
-
-
-    /*=============================================================================
-    * 方法 setPopWay() 说明
-    *   设值 before  -->> 准备装修
-    *   设值 ongoing  -->> 正在装修过程中
-    **/
     /***
      * 发单时 页面走向
      * @param context
@@ -69,23 +58,6 @@ public class CacheManager {
         return context.getSharedPreferences(POPORDER_BECON_PREFERENCE, Context.MODE_PRIVATE).getString(POPORDER_WAY,"");
     }
 
-
-
-
-
-
-    /*=============================================================================
-    * 方法 setBecon() 说明
-    * 选择before
-    *   设值 1  -->> 开始
-    *   设值 2  -->> 风格 页面标记
-    *   设值 3  -->> 面积 预算 页面标记
-    *   设值 4  -->> 领取设计 页面标记
-    * 选择ongoing
-    *   设值 1 -->> 阶段 页面标记
-    *   设值 2 -->> 风格 页面标记
-    *   设值 3 -->> 领取设计 页面标记
-    **/
     /***
      * 发单时记录发单的位置
      * @param context
@@ -106,10 +78,6 @@ public class CacheManager {
 
 
 
-    /*=============================================================================
-    * 方法 setFistEntryApp() 说明
-    *
-    **/
     /***
      * 发单时记录发单的位置
      * @param context
@@ -147,12 +115,6 @@ public class CacheManager {
         context.getSharedPreferences(POPORDER_BECON_PREFERENCE, Context.MODE_PRIVATE).edit().putInt(STYLEPOSITION, ps).commit();
         context.getSharedPreferences(POPORDER_BECON_PREFERENCE, Context.MODE_PRIVATE).edit().putString(STYLE, style).commit();
     }
-
-    private static final String tulaoban = "tulaoban";
-
-//    public static String getPrepareStyle(Context context){
-//        return context.getSharedPreferences(POPORDER_BECON_PREFERENCE, Context.MODE_PRIVATE).getString(tulaoban,"");
-//    }
 
     /***
      * 获取style 位置
@@ -294,7 +256,6 @@ public class CacheManager {
         context.getSharedPreferences(CITY_PREFERENCE, Context.MODE_PRIVATE).edit().putString(CITY, city).commit();
     }
 
-//    getSharedPreferences("city", Context.MODE_PRIVATE).edit().putString("", cityName).commit();
 
     /***
      * 获取城市
@@ -470,6 +431,17 @@ public class CacheManager {
     }
     public static void setLoadingHUODONG(Context context, String date){
         context.getSharedPreferences(APP_LOADING_HUODONG_PRE, Context.MODE_PRIVATE).edit().putString(APP_LOADING_HUODONG, date).commit();
+    }
+
+
+
+    private static final String APP_NEWHOME_JSON_PRE = "app_newhome_json_pre";
+    private static final String APP_NEWHOME_JSON_STRING = "app_newhome_json_string";
+    public static String getNewhomeJson(Context context){
+        return context.getSharedPreferences(APP_NEWHOME_JSON_PRE, Context.MODE_PRIVATE).getString(APP_NEWHOME_JSON_STRING, "");
+    }
+    public static void setNewhomeJson(Context context, String json){
+        context.getSharedPreferences(APP_NEWHOME_JSON_PRE, Context.MODE_PRIVATE).edit().putString(APP_NEWHOME_JSON_STRING, json).commit();
     }
 
 }

@@ -158,7 +158,7 @@ public class VerticalMarqueeView extends View {
                 if(position == datas.length - 1){
                     position = 0;
                 }else{
-                    position ++;
+                    position++;
                 }
                 textBlock.reset(datas[position], centerY + height, position);
                 blocks.add(textBlock);

@@ -91,12 +91,12 @@ public class Constant {
     /**
      * 测试环境
      */
-//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
     /**
      * 正式环境
      */
-    public static final String TOBOSU_URL = "https://www.tobosu.com/";
+//    public static final String TOBOSU_URL = "https://www.tobosu.com/";
 
     public static final String SUMMIT_BUDGET_URL = TOBOSU_URL + "mapp/RenovateExpense/expense_bookkeep";
 
@@ -169,7 +169,7 @@ public class Constant {
      */
     public static String MY_OWNER_ODER_URL = TOBOSU_URL + "tapp/order/user_order_list";
 
-    public static String NEWHOME_URL = TOBOSU_URL + "****";
+    public static String NEWHOME_URL = TOBOSU_URL + "mapp/index/index";
 
     /**
      * 发单接口地址

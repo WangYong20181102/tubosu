@@ -132,7 +132,8 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     /***所有城市接口*/
     private String cityUrl = Constant.TOBOSU_URL + "tapp/util/change_city";
 
-    private List<String> hotCityNames = new ArrayList<String>();
+//    private List<String> hotCityNames = new ArrayList<String>();
+    private List<City> hotCityNames = new ArrayList<City>();
     private MapView mMapView;
     private BaiduMap mBaiduMap;
     private BitmapDescriptor mCurrentMarker = null;
@@ -317,10 +318,11 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String cityString = (mCityAdapter.getItem(position - 1)).getNm();
+                String cid = (mCityAdapter.getItem(position - 1)).getId();
                 if (cityString.contains("市") || cityString.contains("县")) {
                     cityString = cityString.substring(0, cityString.length() - 1);
                 }
-                startActivityWithCity(cityString);
+                startActivityWithCity(cityString, cid);
             }
         });
 
@@ -344,9 +346,11 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
         MyApplication.mListeners.add(this);
         mApplication = MyApplication.getInstance();
 
-        //TODO
-        if (mApplication.isCityListComplite()) {
+//        //TODO
+//        if (mApplication.isCityListComplite()) {
             mCities = mApplication.getCityList();
+            hotCityNames.clear();
+            hotCityNames = mApplication.getAllHotCity();
             mSections = mApplication.getSections();
             mMap = mApplication.getMap();
             mPositions = mApplication.getPositions();
@@ -355,86 +359,86 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             mCityListView.setAdapter(mCityAdapter);
             mCityListView.setOnScrollListener(mCityAdapter);
             mLetter.setVisibility(View.VISIBLE);
-        }
-        // 缓存至本地
-        String result = getSharedPreferences("selectCityCache", 0).getString("result", "");
+//        }
+//        // 缓存至本地
+//        String result = getSharedPreferences("selectCityCache", 0).getString("result", "");
 //		Log.d("--SelectCityActivity--", "获取本地缓存的城市列表数据【"+result+"】");
-        if (TextUtils.isEmpty(result)) {
-            // 如果缓存的是空，则需要请求网络，获取城市列表
-            requestSelectCity();
-        } else {
-            // 缓存不为空， 则解析本地缓存，而获取城市集合
-            prseSelectDataJson(result);
-        }
-
+//        if (TextUtils.isEmpty(result)) {
+//            // 如果缓存的是空，则需要请求网络，获取城市列表
+//            requestSelectCity();
+//        } else {
+//            // 缓存不为空， 则解析本地缓存，而获取城市集合
+//            prseSelectDataJson(result);
+//        }
+        loadCityGridView();
         mCity_gridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
         // 热门城市跳转
         mCity_gridView.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String hot = hotCityNames.get(position);
+                String hot = hotCityNames.get(position).getNm();
+                String cityid = hotCityNames.get(position).getId();
                 if (hot.contains("市") || hot.contains("县")) {
                     hot = hot.substring(0, hot.length() - 1);
                 }
-                startActivityWithCity(hot);
+                startActivityWithCity(hot, cityid);
             }
         });
     }
 
-    /***
-     * 请求所有城市的接口
-     */
-    private void requestSelectCity() {
-        HashMap<String, Object> hashMap = new HashMap<String, Object>();
-        OKHttpUtil.post(cityUrl, hashMap, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
+//    /***
+//     * 请求所有城市的接口
+//     */
+//    private void requestSelectCity() {
+//        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+//        OKHttpUtil.post(cityUrl, hashMap, new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                final String result = response.body().string();
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//						Log.d("--SelectCityActivity--", "A获取的城市列表数据【"+result+"】");
+//                        LogUtil.printDugLog("--SelectCityActivity--", result);
+//                        //缓存至本地
+//                        getSharedPreferences("selectCityCache", 0).edit().putString("result", result).commit();
+//                        prseSelectDataJson(result);
+//                    }
+//                });
+//            }
+//        });
+//    }
 
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String result = response.body().string();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-//						Log.d("--SelectCityActivity--", "获取的城市列表数据【"+result+"】");
-                        LogUtil.printDugLog("--SelectCityActivity--", result);
-                        //缓存至本地
-                        getSharedPreferences("selectCityCache", 0).edit().putString("result", result).commit();
-                        prseSelectDataJson(result);
-                    }
-                });
-            }
-        });
-
-    }
-
-    /***
-     * 解析所有城市
-     * @param result
-     */
-    private void prseSelectDataJson(String result) {
-        try {
-            JSONObject object = new JSONObject(result);
-            if (object.getInt("error_code") == 0) {
-                JSONArray array = object.getJSONArray("data");
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject dataObject = array.getJSONObject(i);
-                    String _cityName = dataObject.getString("simpname");
-                    String hotFlag = dataObject.getString("hot_flag");
-                    if (hotFlag.equals("1")) {
-                        hotCityNames.add(_cityName);
-                    }
-                }
-
-                loadCityGridView();
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
+//    /***
+//     * 解析所有城市
+//     * @param result
+//     */
+//    private void prseSelectDataJson(String result) {
+//        try {
+//            JSONObject object = new JSONObject(result);
+//            if (object.getInt("error_code") == 0) {
+//                JSONArray array = object.getJSONArray("data");
+//                for (int i = 0; i < array.length(); i++) {
+//                    JSONObject dataObject = array.getJSONObject(i);
+//                    String _cityName = dataObject.getString("simpname");
+//                    String hotFlag = dataObject.getString("hot_flag");
+//                    if (hotFlag.equals("1")) {
+//                        hotCityNames.add(_cityName);
+//                    }
+//                }
+//
+//
+//            }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     /****
      * 加载热门城市gridview
@@ -443,13 +447,13 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
         List<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
         for (int i = 0; i < hotCityNames.size(); i++) {
             HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("style", hotCityNames.get(i));
+            map.put("style", hotCityNames.get(i).getNm());
             list.add(map);
         }
 
         SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.item_city_gridview, new String[]{"style"}, new int[]{R.id.item_city_tv});
         mCity_gridView.setAdapter(adapter);
-        select_loading.setVisibility(View.GONE);
+//        select_loading.setVisibility(View.GONE);
     }
 
     /**
@@ -457,7 +461,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
      *
      * @param city
      */
-    private void startActivityWithCity(final String city) {
+    private void startActivityWithCity(final String city, final String idCity) {
 
         getSharedPreferences("Save_City_Info", MODE_PRIVATE).edit().putString("save_city_now", city).commit(); //将城市保存在Save_City_Info.xml文件中
 
@@ -480,7 +484,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.dismiss();
-                                confirmCity(city);
+                                confirmCity(city, idCity);
                             }
                         })
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -493,7 +497,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
 
                 builder.create().show();
             } else {
-                confirmCity(city);
+                confirmCity(city, idCity);
             }
         }
 
@@ -501,7 +505,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     }
 
 
-    private void confirmCity(String cityName) {
+    private void confirmCity(String cityName, String cid) {
 
         getSharedPreferences("city", Context.MODE_PRIVATE).edit().putString("cityName", cityName).commit();
 
@@ -569,7 +573,9 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             Intent it = new Intent();
             Bundle b = new Bundle();
             b.putString("ci", cityName);
+            b.putString("cid", cid);
             it.putExtra("city_bundle", b);
+
             setResult(104, it);
             finish();
         } else {
@@ -890,9 +896,8 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
                         if (realLocationCity.contains("市") || realLocationCity.contains("县")) {
                             realLocationCity = realLocationCity.substring(0, realLocationCity.length() - 1);
                         }
-                        startActivityWithCity(realLocationCity);
+                        startActivityWithCity(realLocationCity, "1");
                     }
-
                 }
             }
         });
