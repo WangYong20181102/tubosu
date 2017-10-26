@@ -91,12 +91,12 @@ public class Constant {
     /**
      * 测试环境
      */
-//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
     /**
      * 正式环境
      */
-    public static final String TOBOSU_URL = "https://www.tobosu.com/";
+//    public static final String TOBOSU_URL = "https://www.tobosu.com/";
 
     public static final String SUMMIT_BUDGET_URL = TOBOSU_URL + "mapp/RenovateExpense/expense_bookkeep";
 
@@ -305,6 +305,9 @@ public class Constant {
         }
         return netType;
     }
+
     //新的装修案例 获取案例列表
-    public static final String DECORATION_CASE = TOBOSU_URL + "";
+    public static final String CASE_LIST = TOBOSU_URL + "mapp/case/case_list";
+    //新的装修案例详情
+    public static final String CASE_DETAIL = TOBOSU_URL + "mapp/case/case_detail";
 }
