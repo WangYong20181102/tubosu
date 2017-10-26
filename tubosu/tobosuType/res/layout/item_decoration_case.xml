@@ -6,16 +6,17 @@
     android:orientation="vertical">
     <!--边距为15dp-->
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
         <!--linner全局-->
         <LinearLayout
             android:id="@+id/item_case_ll"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
             android:background="@color/white"
             android:orientation="vertical">
             <!--案例的图册-->
@@ -24,6 +25,7 @@
                 android:layout_width="345dp"
                 android:layout_height="196dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="15dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/b_home_style" />
             <!--用例的描述-->
@@ -31,7 +33,7 @@
                 android:id="@+id/item_case_user_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="21dp"
+                android:layout_marginTop="16dp"
                 android:text="深圳 桃园盛景 郭先生的家"
                 android:textColor="#000000"
                 android:textSize="16sp" />
@@ -40,15 +42,16 @@
                 android:id="@+id/item_case_home_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="28dp"
-                android:layout_marginTop="9dp"
+                android:layout_marginBottom="25dp"
+                android:layout_marginTop="7dp"
                 android:text="80㎡/2局/6万/全包"
                 android:textColor="#888888"
                 android:textSize="13sp" />
         </LinearLayout>
+
         <View
-            android:background="@color/bg_gray"
             android:layout_width="match_parent"
-            android:layout_height="4dp"/>
+            android:layout_height="6dp"
+            android:background="@color/bg_gray" />
     </LinearLayout>
 </LinearLayout>

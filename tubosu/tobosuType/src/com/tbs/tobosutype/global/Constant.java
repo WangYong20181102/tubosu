@@ -305,6 +305,9 @@ public class Constant {
         }
         return netType;
     }
+
     //新的装修案例 获取案例列表
-    public static final String DECORATION_CASE = TOBOSU_URL + "";
+    public static final String CASE_LIST = TOBOSU_URL + "mapp/case/case_list";
+    //新的装修案例详情
+    public static final String CASE_DETAIL = TOBOSU_URL + "mapp/case/case_detail";
 }

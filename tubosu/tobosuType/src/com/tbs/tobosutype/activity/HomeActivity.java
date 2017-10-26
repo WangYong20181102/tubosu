@@ -1,4 +1,5 @@
 package com.tbs.tobosutype.activity;
+
 import android.Manifest;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -30,6 +31,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
@@ -51,15 +53,18 @@ import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.DensityUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -261,7 +266,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     private SharedPreferences saveCitySharePre;
 
 
-
     /**
      * 点这里获取4套免费设计
      */
@@ -376,8 +380,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
     }
 
-    private  void needPermissions(){
-        if(Build.VERSION.SDK_INT >= 23){
+    private void needPermissions() {
+        if (Build.VERSION.SDK_INT >= 23) {
             String[] permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.READ_PHONE_STATE,
@@ -553,9 +557,19 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         }
     }
 
+    //// TODO: 2017/10/25 临时添加的长按事件  等到上线时要删除
+    private View.OnLongClickListener onLongClickListener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            startActivity(new Intent(HomeActivity.this, DecorationCaseActivity.class));
+            return true;
+        }
+    };
 
     private void initEvent() {
         layout_price.setOnClickListener(this);
+        /// TODO: 2017/10/25 临时加一个长按点击事件测试新的页面
+        layout_price.setOnLongClickListener(onLongClickListener);
         layout_calculater.setOnClickListener(this);
         layout_homeactivity_yuyue_decoration.setOnClickListener(this);
         layout_decorate_myhouse.setOnClickListener(this);
@@ -591,9 +605,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
                     Toast.makeText(mContext, "刷新数据中,请稍等...", Toast.LENGTH_SHORT).show();
                 } else {
                     MobclickAgent.onEvent(mContext, "click_index_decoration_class");
-                    Util.setErrorLog(TAG,TAG + "====-前 中 后，选材，设计，风水 传过去的 拼接前 :" + decorationClassDatas.get(position));
+                    Util.setErrorLog(TAG, TAG + "====-前 中 后，选材，设计，风水 传过去的 拼接前 :" + decorationClassDatas.get(position));
                     String content_url = decorationClassDatas.get(position) + Constant.M_POP_PARAM + Constant.WANGJIANLIN;
-                    Util.setErrorLog(TAG,TAG + "====-前 中 后，选材，设计，风水 传过去的 拼接后 content_url :" + content_url);
+                    Util.setErrorLog(TAG, TAG + "====-前 中 后，选材，设计，风水 传过去的 拼接后 content_url :" + content_url);
                     // Log.d(TAG, "下面加载h5页面");
                     Intent detailIntent = new Intent(HomeActivity.this, WebViewActivity.class);
                     Bundle bundle = new Bundle();
@@ -1057,7 +1071,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
         //重新选择城市 重新加载网络加载数据
         if (requestCode == 3) {
-            if(data!=null && data.getBundleExtra("city_bundle") != null){
+            if (data != null && data.getBundleExtra("city_bundle") != null) {
                 cityName = data.getBundleExtra("city_bundle").getString("ci");
                 saveCitySharePre = this.getSharedPreferences("Save_City_Info", MODE_PRIVATE);//将城市保存在Save_City_Info.xml文件中
                 Editor editor = saveCitySharePre.edit();
@@ -1070,7 +1084,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
             Intent selectCityIntent = new Intent(Constant.ACTION_HOME_SELECT_CITY);
             Bundle b = new Bundle();
             b.putString("city_selected", cityName);
-            selectCityIntent.putExtra("f_select_city_bundle",b);
+            selectCityIntent.putExtra("f_select_city_bundle", b);
             sendBroadcast(selectCityIntent);
 
             getSharedPreferences("city", 0).edit().putString("cityName", cityName).commit();
@@ -1105,7 +1119,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     }
 
 
-
     private String activityId;
     private String activityImg_url;
     private String activityH5_url;
@@ -1115,17 +1128,17 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     /**
      * 获取活动信息
      */
-    private void getHuoDongPicture(){
+    private void getHuoDongPicture() {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         final String date = sdf.format(new Date());
 
-        if(!"".equals(CacheManager.getLoadingHUODONG(mContext)) && date.equals(CacheManager.getLoadingHUODONG(mContext))){
+        if (!"".equals(CacheManager.getLoadingHUODONG(mContext)) && date.equals(CacheManager.getLoadingHUODONG(mContext))) {
             // 已经保存过当天日期
 
-        }else {
+        } else {
             // 这是当天第一次
-            if(Util.isNetAvailable(HomeActivity.this)){
+            if (Util.isNetAvailable(HomeActivity.this)) {
                 final Dialog dialog = new Dialog(HomeActivity.this, R.style.popupDialog);
                 HashMap<String, Object> hashMap = new HashMap<String, Object>();
                 OKHttpUtil.post(Constant.ACTIVITY_URL, hashMap, new Callback() {
@@ -1144,7 +1157,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
                             public void run() {
                                 try {
                                     JSONObject jsonObject = new JSONObject(json);
-                                    if(jsonObject.getInt("error_code") == 0){
+                                    if (jsonObject.getInt("error_code") == 0) {
                                         JSONObject data = jsonObject.getJSONObject("data");
                                         activityId = data.getString("id");
                                         activityImg_url = data.getString("img_url");
@@ -1169,19 +1182,20 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
     /**
      * 显示蒙层wel
+     *
      * @param adUrl 是否显示蒙层
      */
-    private void showTap(final Dialog dialog, String adUrl, final String h5Url){
-        if(dialog == null){
+    private void showTap(final Dialog dialog, String adUrl, final String h5Url) {
+        if (dialog == null) {
             return;
         }
-        if(!"".equals(adUrl)){
+        if (!"".equals(adUrl)) {
             View view = LayoutInflater.from(HomeActivity.this).inflate(R.layout.layout_home_tab_layout, null);
             Display display = this.getWindowManager().getDefaultDisplay();
             int width = display.getWidth();
             int height = display.getHeight();
             //设置dialog的宽高为屏幕的宽高
-            ViewGroup.LayoutParams layoutParams = new  ViewGroup.LayoutParams(width, height);
+            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width, height);
             dialog.setContentView(view, layoutParams);
             dialog.setCanceledOnTouchOutside(true);
             dialog.setCancelable(true);
@@ -1193,7 +1207,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
             layout.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(dialog!=null && dialog.isShowing()) {
+                    if (dialog != null && dialog.isShowing()) {
                         dialog.dismiss();
                     }
                 }
@@ -1201,7 +1215,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
             adIvClose.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(dialog!=null && dialog.isShowing()) {
+                    if (dialog != null && dialog.isShowing()) {
                         dialog.dismiss();
                     }
                 }
@@ -1211,12 +1225,12 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
                 @Override
                 public void onClick(View v) {
                     Intent it = null;
-                    if(!"".equals(h5Url)){
+                    if (!"".equals(h5Url)) {
                         Bundle b = new Bundle();
                         b.putString("link", h5Url);
                         it.putExtras(b);
                         it = new Intent(mContext, WebViewActivity.class);
-                    }else {
+                    } else {
                         it = new Intent(mContext, GetPriceActivity.class);
                     }
 
@@ -1231,11 +1245,11 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
                     dialog.dismiss();
                 }
             });
-            if(dialog!=null && !dialog.isShowing()) {
+            if (dialog != null && !dialog.isShowing()) {
                 dialog.show();
             }
 
-        }else {
+        } else {
 
         }
     }

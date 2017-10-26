@@ -1,5 +1,6 @@
 package com.tbs.tobosutype.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,15 +14,23 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.DecorationCaseAdapter;
+import com.tbs.tobosutype.bean._DecorationCaseItem;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.Util;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -35,7 +44,7 @@ import okhttp3.Response;
  * 土拨鼠3.4版本 新增
  * 案例列表页 creat by lin
  */
-public class DecorationCaseActivity extends BaseActivity {
+public class DecorationCaseActivity extends Activity {
     @BindView(R.id.deco_case_back)
     LinearLayout decoCaseBack;
     @BindView(R.id.deco_case_recycler)
@@ -55,6 +64,7 @@ public class DecorationCaseActivity extends BaseActivity {
     private boolean isLoading = false;//是否正在加载数据
     private int mPage = 1;//加载更多数据的页数
     private DecorationCaseAdapter mDecorationCaseAdapter;
+    private ArrayList<_DecorationCaseItem> decorationCaseItemArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +96,11 @@ public class DecorationCaseActivity extends BaseActivity {
         @Override
         public void onRefresh() {
             /// TODO: 2017/10/24  下拉刷新事件  1.重置页码 2.清空列表 3.网络请求数据
+            mPage = 1;
+            if (!decorationCaseItemArrayList.isEmpty()) {
+                decorationCaseItemArrayList.clear();
+            }
+            HttpGetDecorationCase(mPage);
         }
     };
     //加载时的触碰事件
@@ -115,13 +130,22 @@ public class DecorationCaseActivity extends BaseActivity {
     };
 
     private void loadMore() {
-        // TODO: 2017/10/24  加载更多布局的变化  适配器出现加载更多图标
         mPage++;
+        adapterLoadMore();
         HttpGetDecorationCase(mPage);
     }
 
     //列表的变化--加载更多
     private void adapterLoadMore() {
+        isLoading = true;
+        if (mDecorationCaseAdapter != null) {
+            mDecorationCaseAdapter.changeAdapterState(1);
+        }
+    }
+
+    //列表恢复原状
+    private void adapterRecovery() {
+        isLoading = false;
         if (mDecorationCaseAdapter != null) {
             mDecorationCaseAdapter.changeAdapterState(2);
         }
@@ -142,21 +166,68 @@ public class DecorationCaseActivity extends BaseActivity {
 
     //网络请求数据
     private void HttpGetDecorationCase(int page) {
+        decoCaseSwipe.setRefreshing(false);
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
-        OKHttpUtil.post(Constant.DECORATION_CASE, param, new Callback() {
+        param.put("city_name", AppInfoUtil.getCityName(mContext));
+        param.put("page", page);
+        param.put("page_size", "10");
+        OKHttpUtil.post(Constant.CASE_LIST, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败=====" + e.getMessage());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        adapterRecovery();
+                    }
+                });
+
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String json = new String(response.body().string());
                 Log.e(TAG, "链接成功========" + json);
-                /// TODO: 2017/10/24 将数据布局 
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.getString("status");
+                    if (status.equals("200")) {
+                        //获取数据成功
+                        JSONArray jsonArray = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            _DecorationCaseItem decorationCaseItem = mGson.fromJson(jsonArray.get(i).toString(), _DecorationCaseItem.class);
+                            decorationCaseItemArrayList.add(decorationCaseItem);
+                        }
+                        //获取数据成功将数据布局在页面中
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (mDecorationCaseAdapter == null) {
+                                    mDecorationCaseAdapter = new DecorationCaseAdapter(mContext, decorationCaseItemArrayList);
+                                    decoCaseRecycler.setAdapter(mDecorationCaseAdapter);
+                                    mDecorationCaseAdapter.notifyDataSetChanged();
+                                } else {
+                                    mDecorationCaseAdapter.notifyDataSetChanged();
+                                }
+                                adapterRecovery();
+                            }
+                        });
+                    } else {
+                        //当前没有更多数据
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapterRecovery();
+                                Toast.makeText(mContext, "当前没有更多数据~", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
-
     }
 }
