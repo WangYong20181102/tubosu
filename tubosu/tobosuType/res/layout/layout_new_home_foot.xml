@@ -2,12 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#F7F7F7"
     android:gravity="center_horizontal">
 
     <ProgressBar
         android:id="@+id/newhome_progressbar"
         android:layout_width="21dp"
-        android:layout_height="21dp" />
+        android:layout_height="21dp"
+        android:layout_marginBottom="13dp"/>
 
     <TextView
         android:id="@+id/newhome_loadmore"
@@ -17,6 +19,7 @@
         android:textColor="#605F5F"
         android:layout_centerVertical="true"
         android:layout_marginLeft="14dp"
+        android:paddingBottom="13dp"
         android:textSize="14sp"
         android:text="加载更多数据..."/>
 </RelativeLayout>

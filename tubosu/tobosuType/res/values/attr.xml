@@ -42,4 +42,11 @@
     <declare-styleable name="swipelistviewstyle">
         <attr name="right_width" format="dimension"></attr>
     </declare-styleable>
+
+
+
+    <style name="recyclerview_divider" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:listDivider">@drawable/divider</item>
+    </style>
+
 </resources>

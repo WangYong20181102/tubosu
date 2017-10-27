@@ -18,18 +18,38 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
+import com.tbs.tobosutype.customview.BetterRecyclerView;
 import com.tbs.tobosutype.customview.CustomGridView;
+import com.tbs.tobosutype.customview.MyItemDecoration;
+import com.tbs.tobosutype.customview.MyListView;
+import com.tbs.tobosutype.customview.MySwipeRefreshLayout;
 import com.tbs.tobosutype.customview.VerticalMarqueeView;
+import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
+import com.tbs.tobosutype.utils.FullyLinearLayoutManager;
 import com.tbs.tobosutype.utils.Util;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 
 /**
@@ -60,6 +80,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private final int ITEM_VIEW_TYPE_KETANG = 8;
     private final int ITEM_VIEW_TYPE_ZHUANTI = 9;
 
+    private boolean zhuantiMore = false;
+    private List<NewHomeDataItem.NewhomeDataBean.TopicBean> topicList = new ArrayList<NewHomeDataItem.NewhomeDataBean.TopicBean>();
+
     public NewHomeAdapter(Context context, NewHomeDataItem.NewhomeDataBean dataSource){
         this.context = context;
         this.inflater = LayoutInflater.from(context);
@@ -79,7 +102,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return ITEM_VIEW_TYPE_KETANG;
         }else if(position == 4){
             return ITEM_VIEW_TYPE_ZHUANTI;
-        }else{
+        }else {
             return ADAPTER_ITEM_FOOT;
         }
     }
@@ -105,13 +128,13 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
         if(viewType == ITEM_VIEW_TYPE_KETANG){
             adapterItemViewKetang = inflater.inflate(R.layout.layout_newhome_ketang, parent, false);
-            NewHomeKetang newHomeKetang = new NewHomeKetang(adapterItemViewAnli);
+            NewHomeKetang newHomeKetang = new NewHomeKetang(adapterItemViewKetang);
             return newHomeKetang;
         }
 
         if(viewType == ITEM_VIEW_TYPE_ZHUANTI){
             adapterItemViewZhuanti = inflater.inflate(R.layout.layout_newhome_zhuanti, parent, false);
-            NewHomeZhuanti newHomeZhuanti = new NewHomeZhuanti(adapterItemViewAnli);
+            NewHomeZhuanti newHomeZhuanti = new NewHomeZhuanti(adapterItemViewZhuanti);
             return newHomeZhuanti;
         }
 
@@ -209,25 +232,107 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     Util.setToast(context, "设计 更多啦");
                 }
             });
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+
+            final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             newHomeSheji.rvSheji.setLayoutManager(linearLayoutManager);
+//            newHomeSheji.shejiSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.WHITE);
+//            newHomeSheji.shejiSwipeRefreshLayout.setColorSchemeResources(R.color.color_white);
+
+            final NewhomeShejiAdapter shejiAdapter = new NewhomeShejiAdapter(context, dataSource.getImpression());
+            newHomeSheji.rvSheji.setAdapter(shejiAdapter);
+            shejiAdapter.notifyDataSetChanged();
+            shejiAdapter.setOnItemClickListener(new NewhomeShejiAdapter.OnRecyclerViewItemClickListener() {
+
+                @Override
+                public void onRecyclerViewItemClick(View view, int position) {
+                    Util.setToast(context, "设计的单独点击事件啊 ");
+                }
+            });
+            newHomeSheji.rvSheji.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    int lastVisiableItem = linearLayoutManager.findLastVisibleItemPosition();
+                    Util.setToast(context,"-->>" + lastVisiableItem);
+
+//                  Log.e(TAG, "最后可见目标===" + lastVisiableItem + "集合总数===" + mLinearLayoutManager.getItemCount() + "==newState==" + newState + "==刷新状态==" + swipeRefreshLayout.isRefreshing());
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE  && lastVisiableItem + 1 >= linearLayoutManager.getItemCount()) {
+                        shejiAdapter.showLoadMore(true);
+                        shejiAdapter.notifyDataSetChanged();
+                        Util.setToast(context,"<<==>>" + linearLayoutManager.getItemCount());
+                    }
+                }
+            });
+
         }
 
         if(holder instanceof NewHomeKetang){
             NewHomeKetang newHomeKetang = (NewHomeKetang) holder;
+            newHomeKetang.relMoreClass.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Util.setToast(context, "装修课堂的全部啊");
+                }
+            });
 
+            LinearLayoutManager classManager = new LinearLayoutManager(context);
+            classManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            newHomeKetang.newhomeRecyclerviewClass.setLayoutManager(classManager);
+            NewhomeDecorationClassAdapter classAdapter = new NewhomeDecorationClassAdapter(context/*, dataSource.getCourseType()*/);
+            newHomeKetang.newhomeRecyclerviewClass.setAdapter(classAdapter);
+            classAdapter.notifyDataSetChanged();
+            classAdapter.setOnItemClickListener(new NewhomeDecorationClassAdapter.OnRecyclerViewItemClickListener() {
+                @Override
+                public void onRecyclerViewItemClick(View view, int position) {
+                    Util.setToast(context, dataSource.getCourseType().get(position).getTitle());
+                }
+            });
+
+            KeTangAdapter adapter = new KeTangAdapter(context, dataSource.getCourse());
+            newHomeKetang.newhomeRecyclerviewKetang.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            newHomeKetang.newhomeRecyclerviewKetang.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Util.setToast(context, dataSource.getCourse().get(position).getTitle());
+                }
+            });
+//            LinearLayoutManager ketangManager = new LinearLayoutManager(context);
+//            ketangManager.setOrientation(LinearLayoutManager.VERTICAL);
+//            newHomeKetang.newhomeRecyclerviewKetang.setLayoutManager(ketangManager);
+//            NewhomeKetangAdapter ketangAdapter = new NewhomeKetangAdapter(context, dataSource.getCourse());
+//            newHomeKetang.newhomeRecyclerviewKetang.setAdapter(ketangAdapter);
+//            ketangAdapter.notifyDataSetChanged();
+//            ketangAdapter.setOnItemClickListener(new NewhomeKetangAdapter.OnRecyclerViewItemClickListener() {
+//                @Override
+//                public void onRecyclerViewItemClick(View view, int position) {
+//                    Util.setToast(context, dataSource.getCourseType().get(position) + " ] 下课堂");
+//                }
+//            });
         }
 
         if(holder instanceof NewHomeZhuanti){
-            NewHomeZhuanti newHomeZhuanti = (NewHomeZhuanti) holder;
+            newHomeZhuanti = (NewHomeZhuanti) holder;
+
+            FullyLinearLayoutManager zhuantiManager = new FullyLinearLayoutManager(context);
+            zhuantiManager.setOrientation(LinearLayoutManager.VERTICAL);
+            newHomeZhuanti.zhuantiRecyclerView.setLayoutManager(zhuantiManager);
+            topicList.addAll(dataSource.getTopic());
+
+            initZhuantiAdapter(newHomeZhuanti, topicList);
 
         }
 
 
         if(holder instanceof NewHomeFoot){
-            NewHomeFoot newHomeFoot = (NewHomeFoot) holder;
-
+            NewHomeFoot footHolder = (NewHomeFoot) holder;
+//            if(zhuantiMore){
+//                footHolder.bar.setVisibility(View.VISIBLE);
+//                footHolder.textLoadMore.setText("加载更多...");
+//            }else {
+//                footHolder.bar.setVisibility(View.GONE);
+//                footHolder.textLoadMore.setVisibility(View.GONE);
+//            }
         }
     }
 
@@ -396,9 +501,8 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 @Override
                 public void onClick(View v) {
-                    Util.setToast(context, urlStrings.get(position));
-//                    Intent webIntent = new Intent(context, );
-//                    webIntent.putExtra("banner_url", urlStrings.get(position));
+//                    Intent webIntent = new Intent(context, NewWebActivity.class);
+//                    webIntent.putExtra("mLoadingUrl", urlStrings.get(position));
 //                    context.startActivity(webIntent);
                 }
             });
@@ -501,36 +605,126 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     class NewHomeSheji extends RecyclerView.ViewHolder{
         RelativeLayout relMoreSheji;
-        RecyclerView rvSheji;
-        SwipeRefreshLayout shejiSwipeRefreshLayout;
+        BetterRecyclerView rvSheji;
+        MySwipeRefreshLayout shejiSwipeRefreshLayout;
         public NewHomeSheji(View itemView) {
             super(itemView);
             relMoreSheji = (RelativeLayout) itemView.findViewById(R.id.rel_more_sheji);
-            rvSheji = (RecyclerView) itemView.findViewById(R.id.newhome_recyclerview_sheji);
-            shejiSwipeRefreshLayout = (SwipeRefreshLayout) itemView.findViewById(R.id.swipe_newhome_sheji);
+            rvSheji = (BetterRecyclerView) itemView.findViewById(R.id.newhome_recyclerview_sheji);
+            shejiSwipeRefreshLayout = (MySwipeRefreshLayout) itemView.findViewById(R.id.swipe_newhome_sheji);
         }
     }
 
     class NewHomeKetang extends RecyclerView.ViewHolder{
+        RelativeLayout relMoreClass;
+        BetterRecyclerView newhomeRecyclerviewClass;
+        MyListView newhomeRecyclerviewKetang;
 
         public NewHomeKetang(View itemView) {
             super(itemView);
+            relMoreClass = (RelativeLayout) itemView.findViewById(R.id.rel_more_class);
+            newhomeRecyclerviewClass = (BetterRecyclerView) itemView.findViewById(R.id.newhome_recyclerview_class);
+            newhomeRecyclerviewKetang = (MyListView) itemView.findViewById(R.id.newhome_ketang_recyclerview);
         }
     }
 
     class NewHomeZhuanti extends RecyclerView.ViewHolder{
+        RecyclerView zhuantiRecyclerView;
+//        SwipeRefreshLayout zhuantiSwipRefreshLayout;
 
         public NewHomeZhuanti(View itemView) {
             super(itemView);
+            zhuantiRecyclerView = (RecyclerView) itemView.findViewById(R.id.newhome_recyclerview_zhuanti);
+//            zhuantiSwipRefreshLayout = (SwipeRefreshLayout) itemView.findViewById(R.id.swipe_newhome_zhuanti);
         }
     }
+
+    public void loadMoreData(boolean more){
+        page++;
+        zhuantiMore = more;
+        if(zhuantiMore){
+            bar.setVisibility(View.VISIBLE);
+            textLoadMore.setText("加载更多...");
+        }else {
+            bar.setVisibility(View.GONE);
+            textLoadMore.setVisibility(View.GONE);
+        }
+
+        // 请求网络
+        if(Util.isNetAvailable(context)){
+            HashMap<String, Object> hashMap = new HashMap<String, Object>();
+            hashMap.put("token", Util.getDateToken());
+            hashMap.put("page", page);
+            hashMap.put("page_size", 10);
+            OKHttpUtil.post(Constant.ZHUANTI_URL, hashMap, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Util.setErrorLog(TAG, "请求失败");
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    List<NewHomeDataItem.NewhomeDataBean.TopicBean> zhuantiList = new ArrayList<NewHomeDataItem.NewhomeDataBean.TopicBean>();
+                    String json = response.body().string();
+                    Util.setErrorLog(TAG, json);
+                    try {
+                        JSONObject zhuantiObject = new JSONObject(json);
+                        int status = zhuantiObject.getInt("status");
+                        if(status== 200){
+                            JSONArray arr = zhuantiObject.getJSONArray("data");
+                            for(int i=0;i<arr.length();i++){
+                                NewHomeDataItem.NewhomeDataBean.TopicBean bean = new NewHomeDataItem.NewhomeDataBean.TopicBean();
+                                bean.setAdd_time(arr.getJSONObject(i).getString("add_time"));
+                                bean.setDesc(arr.getJSONObject(i).getString("desc"));
+                                bean.setId(arr.getJSONObject(i).getString("id"));
+                                bean.setImage_url(arr.getJSONObject(i).getString("image_url"));
+                                bean.setTitle(arr.getJSONObject(i).getString("title"));
+                                zhuantiList.add(bean);
+                            }
+                            topicList.addAll(zhuantiList);
+                            myhandler.sendEmptyMessage(44);
+
+                        }else if(status == 0){
+                            myhandler.sendEmptyMessage(43);
+
+                        }else if (status == 201){
+                            myhandler.sendEmptyMessage(42);
+                        }else{
+                            Util.setErrorLog(TAG, " 错误请求码是 [" + status + "]");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+        }
+
+    }
+
+    private Handler myhandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 44:
+                    initZhuantiAdapter(newHomeZhuanti, topicList);
+                    break;
+                case 42:
+                    Util.setToast(context, "没有更多数据");
+                    bar.setVisibility(View.GONE);
+                    textLoadMore.setText("别扯了，到底啦");
+                    break;
+                case 43:
+                    Util.setToast(context, "加载更多数据失败");
+                    break;
+            }
+        }
+    };
 
     /**
      * 底部类
      */
     class NewHomeFoot extends RecyclerView.ViewHolder{
-        ProgressBar bar;
-        TextView textLoadMore;
 
         public NewHomeFoot(View itemView) {
             super(itemView);
@@ -538,6 +732,28 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             textLoadMore = (TextView) itemView.findViewById(R.id.newhome_loadmore);
         }
     }
+    private ProgressBar bar;
+    private TextView textLoadMore;
+    private int page = 0;
+    private NewHomeZhuanti newHomeZhuanti;
+    private NewhomeZhuantiAdapter zhuantiAdapter;
+    private void initZhuantiAdapter(NewHomeZhuanti holder, final List<NewHomeDataItem.NewhomeDataBean.TopicBean> datalist){
+        if(zhuantiAdapter == null){
+            zhuantiAdapter = new NewhomeZhuantiAdapter(context, datalist);
+            holder.zhuantiRecyclerView.setAdapter(zhuantiAdapter);
+        }else {
+            zhuantiAdapter.notifyDataSetChanged();
+        }
 
+        holder.zhuantiRecyclerView.smoothScrollToPosition(zhuantiAdapter.getItemCount());
+        holder.zhuantiRecyclerView.addItemDecoration(new MyItemDecoration(context, LinearLayoutManager.HORIZONTAL,R.drawable.divider));
+        zhuantiAdapter.notifyDataSetChanged();
+        zhuantiAdapter.setOnItemClickListener(new NewhomeZhuantiAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onRecyclerViewItemClick(View view, int position) {
+                Util.setToast(context, datalist.get(position).getTitle());
+            }
+        });
+    }
 
 }

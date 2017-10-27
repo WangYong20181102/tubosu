@@ -6,8 +6,10 @@ import android.graphics.drawable.Drawable;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,6 +22,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.NewHomeAdapter;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
 import com.tbs.tobosutype.customview.HomeTopFrameLayout;
+import com.tbs.tobosutype.customview.MyItemDecoration;
 import com.tbs.tobosutype.customview.ScrollViewExtend;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
@@ -187,8 +190,51 @@ public class NewHomeActivity extends BaseActivity {
                 String msg = dataItem.getMsg();
                 Util.setErrorLog(TAG, dataItem.getMsg());
                 if(dataItem.getStatus() == 200){
+                    final LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext);
+                    mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                    recyclerView.setLayoutManager(mLinearLayoutManager);
                     newHomeAdapter = new NewHomeAdapter(mContext, dataItem.getData());
                     recyclerView.setAdapter(newHomeAdapter);
+//                    recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+//                        @Override
+//                        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                            super.onScrollStateChanged(recyclerView, newState);
+//                            int lastVisiableItem = mLinearLayoutManager.findLastVisibleItemPosition();
+//                            if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisiableItem + 2 >= mLinearLayoutManager.getItemCount()
+//                                    && !swipeRefreshLayout.isRefreshing()) {
+//                                Util.setToast(mContext, "外面 加载更多");
+//                            }
+//
+//                        }
+//                    });
+
+                    recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                        @Override
+                        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                            super.onScrollStateChanged(recyclerView, newState);
+                        }
+
+                        @Override
+                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                            //得到当前显示的最后一个item的view
+                            View lastChildView = recyclerView.getLayoutManager().getChildAt(recyclerView.getLayoutManager().getChildCount()-1);
+                            //得到lastChildView的bottom坐标值
+                            int lastChildBottom = lastChildView.getBottom();
+                            //得到Recyclerview的底部坐标减去底部padding值，也就是显示内容最底部的坐标
+                            int recyclerBottom =  recyclerView.getBottom()-recyclerView.getPaddingBottom();
+                            //通过这个lastChildView得到这个view当前的position值
+                            int lastPosition  = recyclerView.getLayoutManager().getPosition(lastChildView);
+
+                            //判断lastChildView的bottom值跟recyclerBottom
+                            //判断lastPosition是不是最后一个position
+                            //如果两个条件都满足则说明是真正的滑动到了底部
+                            if(lastChildBottom == recyclerBottom && lastPosition == recyclerView.getLayoutManager().getItemCount()-1 ){
+                                newHomeAdapter.loadMoreData(true);
+                            }
+                        }
+                    });
+
+
                 }else if(dataItem.getStatus() == 0){
                     Util.setToast(mContext, msg);
                 }else {
@@ -197,6 +243,19 @@ public class NewHomeActivity extends BaseActivity {
             }
         });
     }
+
+
+    private int findMax(int[] lastPositions) {
+        int max = lastPositions[0];
+        for (int value : lastPositions) {
+            if (value > max) {
+                max = value;
+            }
+        }
+        return max;
+    }
+
+
 
     private RecyclerView.OnScrollChangeListener scrollChangedListener = new View.OnScrollChangeListener() {
         @Override

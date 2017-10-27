@@ -248,7 +248,10 @@
             android:layout_margin="14dp"/>
     </RelativeLayout>
 
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="13dp"
+        android:background="#F7F7F7"/>
     <!-- 以下是装修案例 -->
 
 </LinearLayout>

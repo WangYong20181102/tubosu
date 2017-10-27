@@ -310,4 +310,6 @@ public class Constant {
     public static final String CASE_LIST = TOBOSU_URL + "mapp/case/case_list";
     //新的装修案例详情
     public static final String CASE_DETAIL = TOBOSU_URL + "mapp/case/case_detail";
+
+    public static final String ZHUANTI_URL = TOBOSU_URL + "mapp/topic/topic_list";
 }
