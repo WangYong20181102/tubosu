@@ -160,7 +160,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         tabHost = this.getTabHost();
         TabHost.TabSpec spec;
 
-        Intent intent = new Intent().setClass(this, HomeActivity.class);
+//        Intent intent = new Intent().setClass(this, HomeActivity.class);
+        Intent intent = new Intent().setClass(this, NewHomeActivity.class);
         spec = tabHost.newTabSpec("ONE").setIndicator("首页").setContent(intent);
         tabHost.addTab(spec);
 
@@ -255,7 +256,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
             }
         } else {
             // 从poporder过来
-
         }
 
 

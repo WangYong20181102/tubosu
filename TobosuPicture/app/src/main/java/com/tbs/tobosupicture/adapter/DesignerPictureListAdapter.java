@@ -19,7 +19,6 @@ import com.tbs.tobosupicture.bean.XiaoGuoTuJsonEntity;
 import com.tbs.tobosupicture.utils.GlideUtils;
 import com.tbs.tobosupicture.utils.Utils;
 import com.tbs.tobosupicture.view.TRoundView;
-
 import java.util.ArrayList;
 
 /**

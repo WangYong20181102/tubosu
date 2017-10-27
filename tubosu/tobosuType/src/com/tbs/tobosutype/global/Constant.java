@@ -169,7 +169,7 @@ public class Constant {
      */
     public static String MY_OWNER_ODER_URL = TOBOSU_URL + "tapp/order/user_order_list";
 
-    public static String NEWHOME_URL = TOBOSU_URL + "****";
+    public static String NEWHOME_URL = TOBOSU_URL + "mapp/index/index";
 
     /**
      * 发单接口地址

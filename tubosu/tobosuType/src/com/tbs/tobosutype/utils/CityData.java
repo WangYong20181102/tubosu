@@ -19,6 +19,7 @@ import java.util.List;
 @SuppressLint("DefaultLocale")
 public class CityData {
 	private Context context;
+	private List<City> hotCityList = new ArrayList<City>();
 	private List<HashMap<String, City>> city_list = new ArrayList<HashMap<String, City>>();
 
 	public CityData(Context context) {
@@ -26,6 +27,7 @@ public class CityData {
 	}
 
 	public List<City> getAllCity() {
+		hotCityList.clear();
 		List<City> list = new ArrayList<City>();
 		InputStream is = null;
 		try {
@@ -44,7 +46,9 @@ public class CityData {
 				String id = cityObj.getString("cityid");
 				String nm = cityObj.getString("simpname");
 				String py = cityObj.getString("pinyin_sort");
-				City city = new City(id, nm, py, py.toUpperCase());
+				String hot = cityObj.getString("hot_flag");
+				City city = new City(id, nm, py, py.toUpperCase(),hot);
+				hotCityList.add(city);
 				HashMap<String, City> map = new HashMap<String, City>();
 				map.put(nm, city);
 				list.add(city);
@@ -67,15 +71,6 @@ public class CityData {
 		return null;
 	}
 
-	public City getCity(String city) {
-		if (TextUtils.isEmpty(city))
-			return null;
-		City item = getCityInfo(parseName(city));
-		if (item == null) {
-			item = getCityInfo(city);
-		}
-		return item;
-	}
 
 	private String parseName(String city) {
 		if (city.contains("市")) {
@@ -102,33 +97,17 @@ public class CityData {
 
 
 	// w
-	public List<City> getAllCity1(Context context) {
-		List<City> list = new ArrayList<City>();
-		String cityJson = CacheManager.getCityJson(context);
-		try {
-			JSONObject jsonObject = new JSONObject(cityJson);
-
-			if(jsonObject.getInt("error_code")==0){
-				JSONArray array = jsonObject.getJSONArray("data");
-				for (int i = 0; i < array.length(); i++) {
-					JSONObject cityObj = array.getJSONObject(i);
-					String id = cityObj.getString("cityid");
-					String nm = cityObj.getString("simpname");
-					String py = cityObj.getString("pinyin_sort");
-					City city = new City(id, nm, py, py.toUpperCase());
-					HashMap<String, City> map = new HashMap<String, City>();
-					map.put(nm, city);
-					list.add(city);
-					city_list.add(map);
+	public List<City> getHotCity() {
+		List<City> cities = new ArrayList<City>();
+		if(hotCityList!=null && hotCityList.size()>0){
+			for(int i=0;i<hotCityList.size(); i++){
+				if("1".equals(hotCityList.get(i).getHot())){
+					cities.add(hotCityList.get(i));
 				}
 			}
-			return list;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			System.out.println("----CityData-- getAllCity1");
 		}
-		return null;
+		return cities;
 	}
+
 
 }

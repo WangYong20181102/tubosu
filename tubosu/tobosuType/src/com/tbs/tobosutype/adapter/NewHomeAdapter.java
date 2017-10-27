@@ -1,20 +1,26 @@
 package com.tbs.tobosutype.adapter;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.bean.NewHomeDataItem;
+import com.tbs.tobosutype.customview.CustomGridView;
 import com.tbs.tobosutype.customview.VerticalMarqueeView;
 import com.tbs.tobosutype.utils.DensityUtil;
 import com.tbs.tobosutype.utils.Util;
@@ -32,31 +38,50 @@ import java.util.concurrent.TimeUnit;
 
 public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final String TAG = NewHomeAdapter.class.getSimpleName();
+    private NewHomeDataItem.NewhomeDataBean dataSource;
     private ViewPager newhomeViewPager;
     private VerticalMarqueeView cheatText;
     private Context context;
     private LayoutInflater inflater;
-    private RecyclerView newhomeRecyclerView;
-    private SwipeRefreshLayout newhomeSwipRefreshLayout;
 
     private final int ADAPTER_ITEM_HEAD = 0;
-    private final int ADAPTER_ITEM_ITEM = 1;
+//    private final int ADAPTER_ITEM_ITEM = 1;
     private final int ADAPTER_ITEM_FOOT = 2;
 
     private View adapterHeadView;
-    private View adapterItemView;
+    private View adapterItemViewAnli;
+    private View adapterItemViewSheji;
+    private View adapterItemViewKetang;
+    private View adapterItemViewZhuanti;
     private View adapterFootView;
 
-    public NewHomeAdapter(Context context){
+    private final int ITEM_VIEW_TYPE_ANLI = 6;
+    private final int ITEM_VIEW_TYPE_SHEJI = 7;
+    private final int ITEM_VIEW_TYPE_KETANG = 8;
+    private final int ITEM_VIEW_TYPE_ZHUANTI = 9;
+
+    public NewHomeAdapter(Context context, NewHomeDataItem.NewhomeDataBean dataSource){
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-
+        this.dataSource = dataSource;
     }
 
 
     @Override
     public int getItemViewType(int position) {
-        return super.getItemViewType(position);
+        if(position==0){
+            return ADAPTER_ITEM_HEAD;
+        }else if(position == 1){
+            return ITEM_VIEW_TYPE_ANLI;
+        }else if(position == 2){
+            return ITEM_VIEW_TYPE_SHEJI;
+        }else if(position == 3){
+            return ITEM_VIEW_TYPE_KETANG;
+        }else if(position == 4){
+            return ITEM_VIEW_TYPE_ZHUANTI;
+        }else{
+            return ADAPTER_ITEM_FOOT;
+        }
     }
 
     @Override
@@ -67,8 +92,27 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return  newHomeHead;
         }
 
-        if(viewType == ADAPTER_ITEM_ITEM){
+        if(viewType == ITEM_VIEW_TYPE_ANLI){
+            adapterItemViewAnli = inflater.inflate(R.layout.layout_newhome_anli, parent, false);
+            NewHomeAnli newHomeAnli = new NewHomeAnli(adapterItemViewAnli);
+            return newHomeAnli;
+        }
 
+        if(viewType == ITEM_VIEW_TYPE_SHEJI){
+            adapterItemViewSheji = inflater.inflate(R.layout.layout_newhome_sheji, parent, false);
+            NewHomeSheji newHomeSheji = new NewHomeSheji(adapterItemViewSheji);
+            return newHomeSheji;
+        }
+        if(viewType == ITEM_VIEW_TYPE_KETANG){
+            adapterItemViewKetang = inflater.inflate(R.layout.layout_newhome_ketang, parent, false);
+            NewHomeKetang newHomeKetang = new NewHomeKetang(adapterItemViewAnli);
+            return newHomeKetang;
+        }
+
+        if(viewType == ITEM_VIEW_TYPE_ZHUANTI){
+            adapterItemViewZhuanti = inflater.inflate(R.layout.layout_newhome_zhuanti, parent, false);
+            NewHomeZhuanti newHomeZhuanti = new NewHomeZhuanti(adapterItemViewAnli);
+            return newHomeZhuanti;
         }
 
         if(viewType == ADAPTER_ITEM_FOOT){
@@ -83,10 +127,10 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof NewHomeHead){
             NewHomeHead headHolder = (NewHomeHead) holder;
-            List<String> imgList = null;  // FIXME 数据源
-            initBannerAdapter(newhomeViewPager, headHolder.layoutDot, imgList);
+            List<NewHomeDataItem.NewhomeDataBean.BannerBean> bannDataList = dataSource.getBanner();
+            initBannerAdapter(newhomeViewPager, headHolder.layoutDot, bannDataList);
             initCheatText();
-
+            Glide.with(context).load(R.drawable.price_gif).asGif().into(headHolder.priceBackgroud);
             headHolder.relFreeLiangFang.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -135,16 +179,51 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     Util.setToast(context, "走你");
                 }
             });
+        }
 
+        if(holder instanceof NewHomeAnli){
+            NewHomeAnli newHomeAnli = (NewHomeAnli) holder;
+            newHomeAnli.relMoreAnli.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Util.setToast(context, "案例全部啊..");
+//                    context.startActivity();
+                }
+            });
+            NewhomeAnliAdapter anliAdapter = new NewhomeAnliAdapter(context, dataSource.getCases());
+            newHomeAnli.newhomeGvAnli.setAdapter(anliAdapter);
+            anliAdapter.notifyDataSetChanged();
+            newHomeAnli.newhomeGvAnli.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Util.setToast(context, "单个 " + position);
+                }
+            });
+        }
 
+        if(holder instanceof NewHomeSheji){
+            NewHomeSheji newHomeSheji = (NewHomeSheji) holder;
+            newHomeSheji.relMoreSheji.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Util.setToast(context, "设计 更多啦");
+                }
+            });
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            newHomeSheji.rvSheji.setLayoutManager(linearLayoutManager);
+        }
 
+        if(holder instanceof NewHomeKetang){
+            NewHomeKetang newHomeKetang = (NewHomeKetang) holder;
 
         }
 
-        if(holder instanceof NewHomeItem){
-            NewHomeItem newHomeItem = (NewHomeItem) holder;
+        if(holder instanceof NewHomeZhuanti){
+            NewHomeZhuanti newHomeZhuanti = (NewHomeZhuanti) holder;
 
         }
+
 
         if(holder instanceof NewHomeFoot){
             NewHomeFoot newHomeFoot = (NewHomeFoot) holder;
@@ -154,7 +233,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return 0;
+        return 6;
     }
 
 
@@ -164,6 +243,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     class NewHomeHead extends RecyclerView.ViewHolder{
         LinearLayout layoutDot;
         ImageView cheatIcon;
+        ImageView priceBackgroud;
         RelativeLayout relFreeLiangFang;
         RelativeLayout relXuanSheJi;
         RelativeLayout relKanAnLi;
@@ -179,6 +259,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             layoutDot = (LinearLayout) itemView.findViewById(R.id.newHomeDotLayout);
             cheatIcon = (ImageView) itemView.findViewById(R.id.newhome_cheat_icon);
             cheatText = (VerticalMarqueeView) itemView.findViewById(R.id.newhome_cheat_text);
+            priceBackgroud = (ImageView) itemView.findViewById(R.id.price_img);
             relFreeLiangFang = (RelativeLayout) itemView.findViewById(R.id.relFreeLiangFang);
             relXuanSheJi = (RelativeLayout) itemView.findViewById(R.id.relXuanSheJi);
             relKanAnLi = (RelativeLayout) itemView.findViewById(R.id.relKanAnLi);
@@ -193,16 +274,19 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private ArrayList<ImageView> imageViewList = new ArrayList<ImageView>();
     private ArrayList<View> dotViewsList = new ArrayList<View>();
+    private ArrayList<String> urlList = new ArrayList<String>();
     private ScheduledExecutorService scheduledExecutorService;
-    private void initBannerAdapter(ViewPager bannerPager, LinearLayout dotLayout, List<String> bannerList){
+    private void initBannerAdapter(ViewPager bannerPager, LinearLayout dotLayout, List<NewHomeDataItem.NewhomeDataBean.BannerBean> bannerList){
         dotLayout.removeAllViews();
+        urlList.clear();
         if (bannerList != null && bannerList.size() > 0) {
             for(int i=0;i<bannerList.size();i++){
+                urlList.add(bannerList.get(i).getContent_url());
                 ImageView view = new ImageView(context);
-                view.setTag(bannerList.get(i));
+//                view.setTag(bannerList.get(i).getImg_url());
                 view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                Glide.with(context).load(bannerList.get(i).getImg_url()).into(view);
                 imageViewList.add(view);
-                // 广播图的定位点
                 ImageView dotView = new ImageView(context);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                         DensityUtil.dip2px(context, 10),
@@ -213,7 +297,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 dotViewsList.add(dotView);
             }
             bannerPager.setFocusable(true);
-            bannerPager.setAdapter(new MyPagerAdapter(imageViewList));
+            bannerPager.setAdapter(new MyPagerAdapter(imageViewList, urlList));
             bannerPager.setOnPageChangeListener(new MyPageChangeListener(bannerPager));
         }
         startSlide();
@@ -293,9 +377,11 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private class MyPagerAdapter extends PagerAdapter {
         ArrayList<ImageView> viewList;
+        ArrayList<String> urlStrings;
 
-        public MyPagerAdapter(ArrayList<ImageView> viewList){
+        public MyPagerAdapter(ArrayList<ImageView> viewList, ArrayList<String> urlStrings){
             this.viewList = viewList;
+            this.urlStrings = urlStrings;
         }
 
         @Override
@@ -304,18 +390,16 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         @Override
-        public Object instantiateItem(View container, final int position) {
-            ImageView imageView = viewList.get(position);
-            imageView.setBackgroundResource(R.drawable.firstloaderror);
-
-
+        public Object instantiateItem(final View container, final int position) {
             ((ViewPager) container).addView(viewList.get(position));
-
             viewList.get(position).setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-
+                    Util.setToast(context, urlStrings.get(position));
+//                    Intent webIntent = new Intent(context, );
+//                    webIntent.putExtra("banner_url", urlStrings.get(position));
+//                    context.startActivity(webIntent);
                 }
             });
             return viewList.get(position);
@@ -342,16 +426,33 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 //        性别：先生、女士，随机一个；
 //        福利：领取了免费设计、获得了免费报价、获得了专业推荐、领取了装修大礼包，随机一个。
         String[] familyName = new String[] {"赵","钱","孙","李","周","吴","郑","王","冯","陈","褚","卫","蒋","沈","韩","杨","何","吕","施","张","孔","曹","严","华","金","魏","陶","姜","戚","谢","邹","章","苏","潘","葛","奚","范","彭","鲁","韦","昌","马","苗","凤","花","方","俞","袁","柳","酆","鲍","史","唐","费","廉","岑","薛","雷","贺","倪","汤","滕","殷","罗","毕","郝","邬","安","常","乐","于","齐","黄","萧","尹","姚","祁","宋","熊","舒","屈","项","祝","董","梁","杜","席","贾","江","郭","林","钟","徐","邱","高","田","胡","邓"};
-        String[] fares = new String[]{"领取了免费设计","获得了免费报价","获得了专业推荐","领取了装修大礼包"};
+        final String[] fares = new String[]{"领取了免费设计","获得了免费报价","获得了专业推荐","领取了装修大礼包"};
         String[] citys = new String[]{"北京市"," 天津市"," 石家庄市"," 唐山市"," 秦皇岛市"," 太原市"," 大同市"," 长治市","呼和浩特市", "包头市", "沈阳市", "大连市", "长春市", "哈尔滨市", "上海市", "南京市", "无锡市", "徐州市", "常州市", "苏州市", "南通市", "扬州市", "杭州市", "宁波市", "温州市", "嘉兴市", "湖州市", "绍兴市", "金华市", "台州市", "合肥市", "福州市", "厦门市", "南昌市", "济南市", "青岛市", "烟台市", "潍坊市", "威海市", "郑州市", "武汉市", "长沙市", "广州市", "深圳市", "珠海市", "佛山市", "东莞市", "中山市","南宁市", "重庆市", "成都市", "贵阳市", "昆明市", "西安市", "兰州市", "江阴市", "宜兴市", "昆山市", "张家港市", "余姚市", "慈溪市"};
-
+        int[] cheatImg = new int[]{R.drawable.cheat1,R.drawable.cheat2,R.drawable.cheat3,R.drawable.cheat4,R.drawable.cheat5,R.drawable.cheat6,R.drawable.cheat7,R.drawable.cheat8,R.drawable.cheat9,R.drawable.cheat10,R.drawable.cheat11,R.drawable.cheat12,R.drawable.cheat13,R.drawable.cheat14,R.drawable.cheat15,R.drawable.cheat16,R.drawable.cheat17,R.drawable.cheat18,R.drawable.cheat19,R.drawable.cheat20};
         String[] datas = new String[64];
         for(int i=0;i<datas.length;i++){
-            datas[i] = getSecond() + "秒前," + getRandomText(citys) + getRandomText(familyName) + getLadyOrGentalman() + getRandomText(fares) + "。";
+            datas[i] = "     " + getSecond() + "秒前," + getRandomText(citys) + getRandomText(familyName) + getLadyOrGentalman() + getBigBagText(fares, i) + "。";
         }
 
+        cheatText.textSize(DensityUtil.dip2px(context, 160));
         cheatText.datas(datas);
         cheatText.startScroll();
+        cheatText.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                int currentPosition = cheatText.getCurrentPosition();
+                if(getBigBagText(fares, currentPosition).contains("设计")){
+                    Util.setToast(context, "跳转 设计 哦");
+                }else if (getBigBagText(fares, currentPosition).contains("报价")){
+                    Util.setToast(context, "跳转 报价 哦");
+                }else if(getBigBagText(fares, currentPosition).contains("推荐")){
+                    Util.setToast(context, "跳转 推荐 哦");
+                }else if(getBigBagText(fares, currentPosition).contains("礼包")){
+                    Util.setToast(context, "跳转 礼包 哦");
+                }
+            }
+        });
     }
 
     public void stopVerticalMarqueeView(){
@@ -367,6 +468,16 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
+    private String getBigBagText(String[] textArr, int position){
+        int len = textArr.length;
+        if(position>=len){
+            int pos = position % len;
+            return textArr[pos];
+        }else{
+            return textArr[position];
+        }
+    }
+
     private String getRandomText(String[] textArr){
         Random random = new Random();
         int index = random.nextInt(textArr.length - 1) + 1;
@@ -378,12 +489,40 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return r.nextInt(59) + 1;
     }
 
-    class NewHomeItem extends RecyclerView.ViewHolder{
+    class NewHomeAnli extends RecyclerView.ViewHolder{
+        RelativeLayout relMoreAnli;
+        CustomGridView newhomeGvAnli;
+        public NewHomeAnli(View itemView) {
+            super(itemView);
+            relMoreAnli = (RelativeLayout) itemView.findViewById(R.id.rel_more_anli);
+            newhomeGvAnli = (CustomGridView) itemView.findViewById(R.id.newhome_gv_anli);
+        }
+    }
 
-        public NewHomeItem(View itemView) {
+    class NewHomeSheji extends RecyclerView.ViewHolder{
+        RelativeLayout relMoreSheji;
+        RecyclerView rvSheji;
+        SwipeRefreshLayout shejiSwipeRefreshLayout;
+        public NewHomeSheji(View itemView) {
+            super(itemView);
+            relMoreSheji = (RelativeLayout) itemView.findViewById(R.id.rel_more_sheji);
+            rvSheji = (RecyclerView) itemView.findViewById(R.id.newhome_recyclerview_sheji);
+            shejiSwipeRefreshLayout = (SwipeRefreshLayout) itemView.findViewById(R.id.swipe_newhome_sheji);
+        }
+    }
+
+    class NewHomeKetang extends RecyclerView.ViewHolder{
+
+        public NewHomeKetang(View itemView) {
             super(itemView);
         }
+    }
 
+    class NewHomeZhuanti extends RecyclerView.ViewHolder{
+
+        public NewHomeZhuanti(View itemView) {
+            super(itemView);
+        }
     }
 
     /**

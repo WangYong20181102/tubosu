@@ -17,6 +17,7 @@
     <color name="category_tab_highlight_dark_bg">#fffafafa</color>
     <drawable name="color_first_head">#ff882e</drawable>
     <drawable name="color_app_bg">#ff882e</drawable>
+    <drawable name="color_white_head">#FFFFFF</drawable>
     <color name="selection_ripple">#a5c5ccf5</color>
     <color name="selection_mask">#8f000000</color>
 </resources>

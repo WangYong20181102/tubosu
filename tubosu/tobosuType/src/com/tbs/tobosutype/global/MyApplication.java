@@ -44,6 +44,7 @@ public class MyApplication extends android.app.Application {
     private SharePreferenceUtil mSpUtil;
     private CityData mCityData;
     private List<City> mCityList;
+    private List<City> hotCityList;
     private boolean isCityListComplite;
     private static final String FORMAT = "^[a-z,A-Z].*$";
     private static String NET_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
@@ -118,6 +119,7 @@ public class MyApplication extends android.app.Application {
 
     private void initCityList() {
         mCityList = new ArrayList<City>();
+        hotCityList = new ArrayList<City>();
         mSections = new ArrayList<String>();
         mMap = new HashMap<String, List<City>>();
         mPositions = new ArrayList<Integer>();
@@ -136,6 +138,7 @@ public class MyApplication extends android.app.Application {
 
     private boolean prepareCityList() {
         mCityList = mCityData.getAllCity();
+        hotCityList = mCityData.getHotCity();
         for (City city : mCityList) {
             String firstName = city.getFirstPY();
             if (firstName.matches(FORMAT)) {
@@ -221,6 +224,10 @@ public class MyApplication extends android.app.Application {
 
     public List<City> getCityList() {
         return mCityList;
+    }
+
+    public List<City> getAllHotCity(){
+        return hotCityList;
     }
 
     public List<String> getSections() {

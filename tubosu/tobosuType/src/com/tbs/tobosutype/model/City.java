@@ -8,7 +8,8 @@ public class City implements Serializable{
 	private String nm;
 	private String py;
 	private String firstPY;
-	
+	private String hot;
+
 	public String getFirstPY() {
 		return firstPY;
 	}
@@ -17,12 +18,13 @@ public class City implements Serializable{
 		super();
 	}
 
-	public City(String id, String nm, String py,String firstPY) {
+	public City(String id, String nm, String py,String firstPY,String hot) {
 		super();
 		this.id = id;
 		this.nm = nm;
 		this.py = py;
 		this.firstPY=firstPY;
+		this.hot = hot;
 	}
 
 	public String getId() {
@@ -36,6 +38,8 @@ public class City implements Serializable{
 	public String getPy() {
 		return py;
 	}
+
+	public String getHot(){return hot; }
 
 	@Override
 	public String toString() {

@@ -280,7 +280,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
         mContext = HomeActivity.this;
 
-
         needPermissions();
         initView();
         initEvent();
