@@ -1,5 +1,6 @@
 package com.tbs.tobosutype.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +45,16 @@ public class _DecoCaseDetail {
     private String designer_name;
     private String designer_icon;
     private String designer_position;
+    private String share_url;
     private ArrayList<SpaceInfoBean> space_info;
+
+    public String getShare_url() {
+        return share_url;
+    }
+
+    public void setShare_url(String share_url) {
+        this.share_url = share_url;
+    }
 
     public String getId() {
         return id;
@@ -174,7 +184,7 @@ public class _DecoCaseDetail {
         this.space_info = space_info;
     }
 
-    public static class SpaceInfoBean {
+    public static class SpaceInfoBean implements Serializable {
         /**
          * img_url : https://pic.tbscache.com/apartment/2017-03-23/small/p_58d37ea0080af.jpg
          * space_name : 户型图

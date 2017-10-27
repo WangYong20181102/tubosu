@@ -3,6 +3,7 @@
 
 
     <color name="color_white">#fff</color>
+    <drawable name="color_white">#fff</drawable>
     <color name="color_red">#ff1919</color>
     <color name="color_yellow">#ffae00</color>
     <color name="activity_bg_color">#ff882e</color>

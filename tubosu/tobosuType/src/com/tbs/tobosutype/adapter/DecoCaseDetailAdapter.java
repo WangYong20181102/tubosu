@@ -1,6 +1,8 @@
 package com.tbs.tobosutype.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -10,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.activity.LookPhotoActivity;
 import com.tbs.tobosutype.bean._DecoCaseDetail;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 
@@ -22,14 +26,35 @@ import java.util.ArrayList;
  * 整个适配器包含了头部的显示和尾部空间展示的显示
  */
 
-public class DecoCaseDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class DecoCaseDetailAdapter
+        extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+        implements View.OnClickListener {
     private Context mContext;
     private String TAG = "DecoCaseDetailAdapter";
     private _DecoCaseDetail mDecoCaseDetail;
+    private Gson mGson;
 
     public DecoCaseDetailAdapter(Context context, _DecoCaseDetail decoCaseDetail) {
         this.mContext = context;
         this.mDecoCaseDetail = decoCaseDetail;
+        mGson = new Gson();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (onItemBtnClickLister != null) {
+            onItemBtnClickLister.onItemBtnClick(v, (int) v.getTag());
+        }
+    }
+
+    public static interface OnItemBtnClickLister {
+        void onItemBtnClick(View view, int position);
+    }
+
+    private OnItemBtnClickLister onItemBtnClickLister = null;
+
+    public void setOnItemBtnClickLister(OnItemBtnClickLister onItemBtnClickLister) {
+        this.onItemBtnClickLister = onItemBtnClickLister;
     }
 
     @Override
@@ -47,6 +72,8 @@ public class DecoCaseDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             //展示头部的信息
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_deco_case_detail_head, parent, false);
             HeadViewHolder headViewHolder = new HeadViewHolder(view);
+            headViewHolder.item_deco_detail_back.setOnClickListener(this);
+            headViewHolder.item_deco_detail_share.setOnClickListener(this);
             return headViewHolder;
         } else {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_deco_case_detail_foot, parent, false);
@@ -56,11 +83,16 @@ public class DecoCaseDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof HeadViewHolder) {
+            ((HeadViewHolder) holder).item_deco_detail_share.setTag(position);
+            ((HeadViewHolder) holder).item_deco_detail_back.setTag(position);
             //布局头部展示的信息
+            ((HeadViewHolder) holder).item_deco_detail_head_ll.setBackgroundColor(Color.parseColor("#ffffff"));
             //封面图
             ImageLoaderUtil.loadImage(mContext, ((HeadViewHolder) holder).item_deco_detail_head_img, mDecoCaseDetail.getCover_url());
+            //封面图的蒙层
+            ((HeadViewHolder) holder).item_deco_detail_view.setBackgroundColor(Color.parseColor("#ffffff"));
             //拥有者
             if (TextUtils.isEmpty(mDecoCaseDetail.getOwner_name())) {
                 ((HeadViewHolder) holder).item_deco_detail_title_name.setVisibility(View.GONE);
@@ -115,7 +147,7 @@ public class DecoCaseDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             if (TextUtils.isEmpty(mDecoCaseDetail.getPrice())) {
                 ((HeadViewHolder) holder).item_deco_detail_huafei_ll.setVisibility(View.GONE);
             } else {
-                ((HeadViewHolder) holder).item_deco_detail_weizhi.setText("约" + mDecoCaseDetail.getPrice() + "万元");
+                ((HeadViewHolder) holder).item_deco_detail_huafei.setText("约" + mDecoCaseDetail.getPrice() + "万元");
             }
             //设置简介
             if (TextUtils.isEmpty(mDecoCaseDetail.getDesc())) {
@@ -127,17 +159,36 @@ public class DecoCaseDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             //布局尾部展示的信息
             ((FootViewHolder) holder).item_deco_detail_foot_title.setText("# " + mDecoCaseDetail.getSpace_info().get(position - 1).getSpace_name() + " #");
             ImageLoaderUtil.loadImage(mContext, ((FootViewHolder) holder).item_deco_detail_foot_img, mDecoCaseDetail.getSpace_info().get(position - 1).getThumb_img_url());
+            //图片点击事件进入到查看图片详情页
+            ((FootViewHolder) holder).item_deco_detail_foot_img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String lookPhotoJson = mGson.toJson(mDecoCaseDetail);
+                    Intent intent = new Intent(mContext, LookPhotoActivity.class);
+                    intent.putExtra("lookPhotoJson", lookPhotoJson);//数据对象
+                    intent.putExtra("position", position - 1);//点击的位置
+                    intent.putExtra("photoDesc", mDecoCaseDetail.getSpace_info().get(position - 1).getSpace_name());//图片的文字描述
+                    int listSize = mDecoCaseDetail.getSpace_info().size();//列表总长
+                    intent.putExtra("positionDesc", "" + position + "/" + listSize);//所在的位置描述
+                    mContext.startActivity(intent);
+                }
+            });
         }
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mDecoCaseDetail.getSpace_info() != null ? mDecoCaseDetail.getSpace_info().size() + 1 : 1;
     }
 
     //头部展示的信息
     class HeadViewHolder extends RecyclerView.ViewHolder {
+
         private ImageView item_deco_detail_head_img;//封面图
+        private LinearLayout item_deco_detail_head_ll;//整个页面的层级
+        private LinearLayout item_deco_detail_back;//fan hui anniu
+        private LinearLayout item_deco_detail_share;//fan hui anniu
+        private View item_deco_detail_view;//蒙层布局
 
         private LinearLayout item_deco_detail_name_title_ll;//XX的家以及风格
         private TextView item_deco_detail_title_name;//郭先生的家
@@ -167,12 +218,17 @@ public class DecoCaseDetailAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public HeadViewHolder(View itemView) {
             super(itemView);
+            item_deco_detail_view = (View) itemView.findViewById(R.id.item_deco_detail_view);
             item_deco_detail_head_img = (ImageView) itemView.findViewById(R.id.item_deco_detail_head_img);
             item_deco_detail_name_title_ll = (LinearLayout) itemView.findViewById(R.id.item_deco_detail_name_title_ll);
+            item_deco_detail_head_ll = (LinearLayout) itemView.findViewById(R.id.item_deco_detail_head_ll);
             item_deco_detail_title_name = (TextView) itemView.findViewById(R.id.item_deco_detail_title_name);
             item_deco_detail_title_msg = (TextView) itemView.findViewById(R.id.item_deco_detail_title_msg);
 
             item_deco_detail_design_ll = (LinearLayout) itemView.findViewById(R.id.item_deco_detail_design_ll);
+            item_deco_detail_back = (LinearLayout) itemView.findViewById(R.id.item_deco_detail_back);
+            item_deco_detail_share = (LinearLayout) itemView.findViewById(R.id.item_deco_detail_share);
+
             item_deco_detail_design_icon = (ImageView) itemView.findViewById(R.id.item_deco_detail_design_icon);
             item_deco_detail_design_name = (TextView) itemView.findViewById(R.id.item_deco_detail_design_name);
             item_deco_detail_design_title = (TextView) itemView.findViewById(R.id.item_deco_detail_design_title);

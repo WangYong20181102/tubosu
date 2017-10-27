@@ -1,10 +1,13 @@
 package com.tbs.tobosutype.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -18,6 +21,10 @@ import com.tbs.tobosutype.bean._DecoCaseDetail;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.Util;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,7 +45,7 @@ import okhttp3.Response;
  * 从案例列表点击进入
  * 头部包含相关信息
  */
-public class DecorationCaseDetailActivity extends BaseActivity {
+public class DecorationCaseDetailActivity extends Activity {
 
     @BindView(R.id.deco_case_detail_back)
     LinearLayout decoCaseDetailBack;
@@ -52,6 +59,10 @@ public class DecorationCaseDetailActivity extends BaseActivity {
     TextView decoCaseDetailFindPrice;
     @BindView(R.id.deco_case_detail_find_price_rl)
     RelativeLayout decoCaseDetailFindPriceRl;
+    @BindView(R.id.decoration_case_detail_ll)
+    RelativeLayout decorationCaseDetailLl;
+    @BindView(R.id.deco_case_detail_title)
+    TextView decoCaseDetailTitle;
 
     private Context mContext;
     private String TAG = "DecoCaseDetailActivity";
@@ -76,7 +87,12 @@ public class DecorationCaseDetailActivity extends BaseActivity {
     private void initViewEvent() {
         mIntent = getIntent();
         deco_case_id = mIntent.getStringExtra("deco_case_id");
+        //设置控件的透明度
+        decoCaseDetailBanner.getBackground().setAlpha(0);
+        decoCaseDetailBanner.setVisibility(View.GONE);
 
+
+        decorationCaseDetailLl.setBackgroundColor(Color.parseColor("#ffffff"));
         mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         mGson = new Gson();
         //RecycleView列表设置相关的事件
@@ -100,6 +116,7 @@ public class DecorationCaseDetailActivity extends BaseActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String json = new String(response.body().string());
+                Log.e(TAG, "链接成功========" + json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     String data = jsonObject.getString("data");
@@ -108,6 +125,12 @@ public class DecorationCaseDetailActivity extends BaseActivity {
                         @Override
                         public void run() {
                             mDecoCaseDetailAdapter = new DecoCaseDetailAdapter(mContext, mDecoCaseDetail);
+                            mDecoCaseDetailAdapter.setOnItemBtnClickLister(onItemBtnClickLister);
+                            if (TextUtils.isEmpty(mDecoCaseDetail.getOwner_name())) {
+                                decoCaseDetailTitle.setText("专题详情");
+                            } else {
+                                decoCaseDetailTitle.setText(mDecoCaseDetail.getOwner_name());
+                            }
                             decoCaseDetailRecycler.setAdapter(mDecoCaseDetailAdapter);
                             mDecoCaseDetailAdapter.notifyDataSetChanged();
                         }
@@ -119,18 +142,59 @@ public class DecorationCaseDetailActivity extends BaseActivity {
         });
     }
 
+    //列表子项点击事件
+    private DecoCaseDetailAdapter.OnItemBtnClickLister onItemBtnClickLister = new DecoCaseDetailAdapter.OnItemBtnClickLister() {
+        @Override
+        public void onItemBtnClick(View view, int position) {
+            switch (view.getId()) {
+                case R.id.item_deco_detail_back:
+                    //返回
+                    finish();
+                    break;
+                case R.id.item_deco_detail_share:
+                    //分享
+                    UMWeb umWeb = new UMWeb(mDecoCaseDetail.getShare_url());
+                    umWeb.setDescription(mDecoCaseDetail.getDesc());
+                    umWeb.setTitle(mDecoCaseDetail.getOwner_name());
+                    umWeb.setThumb(new UMImage(mContext, mDecoCaseDetail.getCover_url()));
+                    new ShareAction(DecorationCaseDetailActivity.this)
+                            .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
+                            .withMedia(umWeb).open();
+                    break;
+            }
+        }
+    };
     //列表滑动事件
     private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+        private int totalDy = 0;
+
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
+            Log.e(TAG, "onScrollStateChanged======" + newState);
         }
 
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
             /// TODO: 2017/10/25  在这个地方设置banner的变化
+            totalDy += dy;
+//            Log.e(TAG, "列表的数据变换=====totalDy====" + totalDy + "===dy===" + dy);
+            //控制显示与否
+            if (totalDy > 3) {
+                decoCaseDetailBanner.setVisibility(View.VISIBLE);
+            } else {
+                decoCaseDetailBanner.setVisibility(View.GONE);
+            }
+            //设置控件的透明度 totaldy==700zuo you
+            if (totalDy <= 50) {
+                decoCaseDetailBanner.getBackground().setAlpha(totalDy * (255 / 50));
+            } else {
+                decoCaseDetailBanner.getBackground().setAlpha(255);
+            }
+
         }
+
     };
 
     @OnClick({R.id.deco_case_detail_back, R.id.deco_case_detail_share, R.id.deco_case_detail_find_price, R.id.deco_case_detail_find_price_rl})
@@ -141,7 +205,14 @@ public class DecorationCaseDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.deco_case_detail_share:
-                /// TODO: 2017/10/25  分享按钮 分享整个页面 拿到分享的URl
+                //分享
+                UMWeb umWeb = new UMWeb(mDecoCaseDetail.getShare_url());
+                umWeb.setDescription(mDecoCaseDetail.getDesc());
+                umWeb.setTitle(mDecoCaseDetail.getOwner_name());
+                umWeb.setThumb(new UMImage(mContext, mDecoCaseDetail.getCover_url()));
+                new ShareAction(DecorationCaseDetailActivity.this)
+                        .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
+                        .withMedia(umWeb).open();
                 break;
             case R.id.deco_case_detail_find_price:
             case R.id.deco_case_detail_find_price_rl:
