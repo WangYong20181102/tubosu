@@ -151,7 +151,7 @@ public class DecorationCaseActivity extends Activity {
         }
     }
 
-    @OnClick({R.id.deco_case_back, R.id.deco_case_find_price})
+    @OnClick({R.id.deco_case_back, R.id.deco_case_find_price,R.id.deco_case_find_price_rl})
     public void onViewClickedInDecorationCaseActivity(View view) {
         switch (view.getId()) {
             case R.id.deco_case_back:
@@ -159,7 +159,10 @@ public class DecorationCaseActivity extends Activity {
                 break;
             case R.id.deco_case_find_price_rl:
             case R.id.deco_case_find_price:
-                /// TODO: 2017/10/24  跳转到发单页
+                /// TODO: 2017/10/24  跳转到发单页暂时写固定url
+                Intent intent = new Intent(mContext, NewWebViewActivity.class);
+                intent.putExtra("mLoadingUrl", "http://m.dev.tobosu.com/rec_company/");
+                mContext.startActivity(intent);
                 break;
         }
     }
