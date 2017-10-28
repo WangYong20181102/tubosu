@@ -1,5 +1,6 @@
 package com.tbs.tobosutype.adapter;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
+import com.tbs.tobosutype.utils.Util;
 
 import java.util.List;
 
@@ -20,9 +22,10 @@ public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private Context context;
     private LayoutInflater inflater;
     private List<NewHomeDataItem.NewhomeDataBean.ImpressionBean> dataList;
-    private final int ITEM_ITEM = 2;
-    private final int ITEM_RIGHT_FOOT =3;
+    private final int ITEM_ITEM = 4;
+    private final int ITEM_RIGHT_FOOT =6;
     private boolean loadmore = true;
+
 
     public NewhomeShejiAdapter(Context context, List<NewHomeDataItem.NewhomeDataBean.ImpressionBean> dataList){
         this.context = context;
@@ -33,10 +36,10 @@ public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        if(position == getItemCount() + 1){
-            return ITEM_RIGHT_FOOT;
-        }else {
+        if(position < dataList.size()){
             return ITEM_ITEM;
+        }else {
+            return ITEM_RIGHT_FOOT;
         }
     }
 
@@ -59,15 +62,17 @@ public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(position<dataList.size()){
-            if(holder instanceof ShejiHolder){
+        if(position<dataList.size() - 1) {
+            if (holder instanceof ShejiHolder) {
                 ShejiHolder shejiHolder = (ShejiHolder) holder;
                 Glide.with(context).load(dataList.get(position).getCover_url()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(shejiHolder.iv);
                 shejiHolder.tvTitle.setText(dataList.get(position).getDesigner_name());
                 shejiHolder.tvDesc.setText(dataList.get(position).getSub_title());
                 shejiHolder.itemView.setTag(position);
             }
+        }
 
+        if(position == getItemCount() - 1){
             if(holder instanceof ShejiFoot){
                 ShejiFoot shejiFoot = (ShejiFoot) holder;
                 if(loadmore){
@@ -77,13 +82,11 @@ public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
             }
         }
-
-
     }
 
     @Override
     public int getItemCount() {
-        return dataList==null?0:dataList.size() + 1;
+        return dataList==null? 0 : dataList.size() + 1;
     }
 
     @Override
@@ -104,6 +107,7 @@ public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public void showLoadMore(boolean loadmore){
         this.loadmore = loadmore;
+        notifyDataSetChanged();
     }
 
     class ShejiFoot extends RecyclerView.ViewHolder{

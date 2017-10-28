@@ -219,6 +219,11 @@ public class Constant {
         return false;
     }
 
+    public static final String MIANFEI_BAOJIA = "http://m.tobosu.com/free_price_page/";
+    public static final String DALIBAO = "http://m.dev.tobosu.com/company_gift/";
+    public static final String TUIJIAN = "http://m.dev.tobosu.com/rec_company/";
+//    public static final String BAOJIA = "";
+
     /**
      * 无网提示
      *

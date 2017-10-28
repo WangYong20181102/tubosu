@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,26 +17,28 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.activity.DecorationCaseActivity;
+import com.tbs.tobosutype.activity.DecorationCaseDetailActivity;
+import com.tbs.tobosutype.activity.ImageDetailNewActivity;
+import com.tbs.tobosutype.activity.NewWebViewActivity;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
 import com.tbs.tobosutype.customview.BetterRecyclerView;
 import com.tbs.tobosutype.customview.CustomGridView;
+import com.tbs.tobosutype.customview.Marquee;
+import com.tbs.tobosutype.customview.MarqueeView;
 import com.tbs.tobosutype.customview.MyItemDecoration;
 import com.tbs.tobosutype.customview.MyListView;
 import com.tbs.tobosutype.customview.MySwipeRefreshLayout;
-import com.tbs.tobosutype.customview.VerticalMarqueeView;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
+import com.tbs.tobosutype.utils.EndlessRecyclerOnScrollListener;
 import com.tbs.tobosutype.utils.FullyLinearLayoutManager;
 import com.tbs.tobosutype.utils.Util;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,7 +47,6 @@ import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -60,9 +60,14 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private final String TAG = NewHomeAdapter.class.getSimpleName();
     private NewHomeDataItem.NewhomeDataBean dataSource;
     private ViewPager newhomeViewPager;
-    private VerticalMarqueeView cheatText;
     private Context context;
     private LayoutInflater inflater;
+
+    private static final int[] cheatImageArr = new int[]{R.drawable.cheat1,R.drawable.cheat2,R.drawable.cheat3,R.drawable.cheat4,R.drawable.cheat5,R.drawable.cheat6,R.drawable.cheat7,R.drawable.cheat8,R.drawable.cheat9,R.drawable.cheat10,R.drawable.cheat11,R.drawable.cheat12,R.drawable.cheat13,R.drawable.cheat14,R.drawable.cheat15,R.drawable.cheat16,R.drawable.cheat17,R.drawable.cheat18,R.drawable.cheat19,R.drawable.cheat20};
+    private static String[] familyName = new String[] {"赵","钱","孙","李","周","吴","郑","王","冯","陈","褚","卫","蒋","沈","韩","杨","何","吕","施","张","孔","曹","严","华","金","魏","陶","姜","戚","谢","邹","章","苏","潘","葛","奚","范","彭","鲁","韦","昌","马","苗","凤","花","方","俞","袁","柳","酆","鲍","史","唐","费","廉","岑","薛","雷","贺","倪","汤","滕","殷","罗","毕","郝","邬","安","常","乐","于","齐","黄","萧","尹","姚","祁","宋","熊","舒","屈","项","祝","董","梁","杜","席","贾","江","郭","林","钟","徐","邱","高","田","胡","邓"};
+    private static final String[] fares = new String[]{"领取了免费设计","获得了免费报价","获得了专业推荐","领取了装修大礼包"};
+    private static String[] citys = new String[]{"北京市"," 天津市"," 石家庄市"," 唐山市"," 秦皇岛市"," 太原市"," 大同市"," 长治市","呼和浩特市", "包头市", "沈阳市", "大连市", "长春市", "哈尔滨市", "上海市", "南京市", "无锡市", "徐州市", "常州市", "苏州市", "南通市", "扬州市", "杭州市", "宁波市", "温州市", "嘉兴市", "湖州市", "绍兴市", "金华市", "台州市", "合肥市", "福州市", "厦门市", "南昌市", "济南市", "青岛市", "烟台市", "潍坊市", "威海市", "郑州市", "武汉市", "长沙市", "广州市", "深圳市", "珠海市", "佛山市", "东莞市", "中山市","南宁市", "重庆市", "成都市", "贵阳市", "昆明市", "西安市", "兰州市", "江阴市", "宜兴市", "昆山市", "张家港市", "余姚市", "慈溪市"};
+
 
     private final int ADAPTER_ITEM_HEAD = 0;
 //    private final int ADAPTER_ITEM_ITEM = 1;
@@ -126,6 +131,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             NewHomeSheji newHomeSheji = new NewHomeSheji(adapterItemViewSheji);
             return newHomeSheji;
         }
+
         if(viewType == ITEM_VIEW_TYPE_KETANG){
             adapterItemViewKetang = inflater.inflate(R.layout.layout_newhome_ketang, parent, false);
             NewHomeKetang newHomeKetang = new NewHomeKetang(adapterItemViewKetang);
@@ -152,54 +158,76 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             NewHomeHead headHolder = (NewHomeHead) holder;
             List<NewHomeDataItem.NewhomeDataBean.BannerBean> bannDataList = dataSource.getBanner();
             initBannerAdapter(newhomeViewPager, headHolder.layoutDot, bannDataList);
-            initCheatText();
+            initCheatText(headHolder.cheatText);
             Glide.with(context).load(R.drawable.price_gif).asGif().into(headHolder.priceBackgroud);
             headHolder.relFreeLiangFang.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Util.setToast(context, "免费量房");
+                    Util.setToast(context, "等通知");
                 }
             });
             headHolder.relXuanSheJi.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Util.setToast(context, "选设计");
+                    Intent it = new Intent("goto_activity_xiaoguotu");
+                    it.putExtra("position", 1);
+                    context.sendBroadcast(it);
                 }
             });
             headHolder.relKanAnLi.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Util.setToast(context, "看案例");
+                    context.startActivity(new Intent(context, DecorationCaseActivity.class));
                 }
             });
             headHolder.relZhaoZhuangXiu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Util.setToast(context, "找装修");
+                    Intent it = new Intent("goto_activity_zhuangxiu");
+                    it.putExtra("position", 2);
+                    context.sendBroadcast(it);
                 }
             });
+
+            headHolder.relZhuangXiuKetang.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
+                    webIntent.putExtra("mLoadingUrl", Constant.POP_URL + Constant.M_POP_PARAM + Constant.WANGJIANLIN);
+                    context.startActivity(webIntent);
+                }
+            });
+
+
             headHolder.relFreeBaojia.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Util.setToast(context, "免费报价");
+                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
+                    webIntent.putExtra("mLoadingUrl", Constant.MIANFEI_BAOJIA);
+                    context.startActivity(webIntent);
                 }
             });
             headHolder.relFreeSheji.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Util.setToast(context, "免费设计");
+                    Util.setToast(context, "等通知");
                 }
             });
             headHolder.relProfessalTuiJian.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Util.setToast(context, "专业推荐");
+                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
+                    webIntent.putExtra("mLoadingUrl", Constant.TUIJIAN);
+                    context.startActivity(webIntent);
                 }
             });
             headHolder.tvGoGet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Util.setToast(context, "走你");
+                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
+                    webIntent.putExtra("mLoadingUrl", Constant.DALIBAO);
+                    context.startActivity(webIntent);
                 }
             });
         }
@@ -209,8 +237,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             newHomeAnli.relMoreAnli.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Util.setToast(context, "案例全部啊..");
-//                    context.startActivity();
+                    context.startActivity(new Intent(context, DecorationCaseActivity.class));
                 }
             });
             NewhomeAnliAdapter anliAdapter = new NewhomeAnliAdapter(context, dataSource.getCases());
@@ -219,7 +246,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             newHomeAnli.newhomeGvAnli.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Util.setToast(context, "单个 " + position);
+                    Intent intent = new Intent(context, DecorationCaseDetailActivity.class);
+                    intent.putExtra("deco_case_id", dataSource.getCases().get(position).getId());
+                    context.startActivity(intent);
                 }
             });
         }
@@ -229,7 +258,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             newHomeSheji.relMoreSheji.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Util.setToast(context, "设计 更多啦");
+                    Intent it = new Intent("goto_activity_xiaoguotu");
+                    it.putExtra("position", 1);
+                    context.sendBroadcast(it);
                 }
             });
 
@@ -246,21 +277,29 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 @Override
                 public void onRecyclerViewItemClick(View view, int position) {
-                    Util.setToast(context, "设计的单独点击事件啊 ");
+
+                    Intent intent = new Intent(context, ImageDetailNewActivity.class);
+                    intent.putExtra("id", dataSource.getImpression().get(position).getId());
+                    context.startActivity(intent);
                 }
             });
             newHomeSheji.rvSheji.setOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                     int lastVisiableItem = linearLayoutManager.findLastVisibleItemPosition();
-                    Util.setToast(context,"-->>" + lastVisiableItem);
-
-//                  Log.e(TAG, "最后可见目标===" + lastVisiableItem + "集合总数===" + mLinearLayoutManager.getItemCount() + "==newState==" + newState + "==刷新状态==" + swipeRefreshLayout.isRefreshing());
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE  && lastVisiableItem + 1 >= linearLayoutManager.getItemCount()) {
-                        shejiAdapter.showLoadMore(true);
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE  && lastVisiableItem <linearLayoutManager.getItemCount()) {
                         shejiAdapter.notifyDataSetChanged();
-                        Util.setToast(context,"<<==>>" + linearLayoutManager.getItemCount());
                     }
+                }
+            });
+            newHomeSheji.rvSheji.addOnScrollListener(new EndlessRecyclerOnScrollListener() {
+                @Override
+                public void onLoadMore() {
+                    shejiAdapter.showLoadMore(false);
+                    shejiAdapter.showLoadMore(true);
+                    Intent it = new Intent("goto_activity_xiaoguotu");
+                    it.putExtra("position", 1);
+                    context.sendBroadcast(it);
                 }
             });
 
@@ -271,7 +310,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             newHomeKetang.relMoreClass.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Util.setToast(context, "装修课堂的全部啊");
+                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
+                    webIntent.putExtra("mLoadingUrl", dataSource.getCourse_list_url());
+                    context.startActivity(webIntent);
                 }
             });
 
@@ -284,7 +325,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             classAdapter.setOnItemClickListener(new NewhomeDecorationClassAdapter.OnRecyclerViewItemClickListener() {
                 @Override
                 public void onRecyclerViewItemClick(View view, int position) {
-                    Util.setToast(context, dataSource.getCourseType().get(position).getTitle());
+                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
+                    webIntent.putExtra("mLoadingUrl", dataSource.getCourse_type().get(position).getJump_url());
+                    context.startActivity(webIntent);
                 }
             });
 
@@ -294,7 +337,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             newHomeKetang.newhomeRecyclerviewKetang.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Util.setToast(context, dataSource.getCourse().get(position).getTitle());
+                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
+                    webIntent.putExtra("mLoadingUrl", dataSource.getCourse().get(position).getJump_url());
+                    context.startActivity(webIntent);
                 }
             });
 //            LinearLayoutManager ketangManager = new LinearLayoutManager(context);
@@ -347,12 +392,14 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
      */
     class NewHomeHead extends RecyclerView.ViewHolder{
         LinearLayout layoutDot;
-        ImageView cheatIcon;
+//        ImageView cheatIcon;
+        MarqueeView cheatText;
         ImageView priceBackgroud;
         RelativeLayout relFreeLiangFang;
         RelativeLayout relXuanSheJi;
         RelativeLayout relKanAnLi;
         RelativeLayout relZhaoZhuangXiu;
+        RelativeLayout relZhuangXiuKetang;
         RelativeLayout relFreeBaojia;
         RelativeLayout relFreeSheji;
         RelativeLayout relProfessalTuiJian;
@@ -362,13 +409,14 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             super(itemView);
             newhomeViewPager = (ViewPager) itemView.findViewById(R.id.newhome_head_viewpager);
             layoutDot = (LinearLayout) itemView.findViewById(R.id.newHomeDotLayout);
-            cheatIcon = (ImageView) itemView.findViewById(R.id.newhome_cheat_icon);
-            cheatText = (VerticalMarqueeView) itemView.findViewById(R.id.newhome_cheat_text);
+//            cheatIcon = (ImageView) itemView.findViewById(R.id.newhome_cheat_icon);
+            cheatText = (MarqueeView) itemView.findViewById(R.id.newhome_cheat_text);
             priceBackgroud = (ImageView) itemView.findViewById(R.id.price_img);
             relFreeLiangFang = (RelativeLayout) itemView.findViewById(R.id.relFreeLiangFang);
             relXuanSheJi = (RelativeLayout) itemView.findViewById(R.id.relXuanSheJi);
             relKanAnLi = (RelativeLayout) itemView.findViewById(R.id.relKanAnLi);
             relZhaoZhuangXiu = (RelativeLayout) itemView.findViewById(R.id.relZhaoZhuangXiu);
+            relZhuangXiuKetang = (RelativeLayout) itemView.findViewById(R.id.relZhuangXiuKetang);
             relFreeBaojia = (RelativeLayout) itemView.findViewById(R.id.relFreeBaojia);
             relFreeSheji = (RelativeLayout) itemView.findViewById(R.id.relFreeSheji);
             relProfessalTuiJian = (RelativeLayout) itemView.findViewById(R.id.relProfessalTuiJian);
@@ -501,9 +549,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 @Override
                 public void onClick(View v) {
-//                    Intent webIntent = new Intent(context, NewWebActivity.class);
-//                    webIntent.putExtra("mLoadingUrl", urlStrings.get(position));
-//                    context.startActivity(webIntent);
+                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
+                    webIntent.putExtra("mLoadingUrl", urlStrings.get(position));
+                    context.startActivity(webIntent);
                 }
             });
             return viewList.get(position);
@@ -521,7 +569,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     }
 
-    private void initCheatText(){
+    private void initCheatText(final MarqueeView cheatView){
 //        交互规则：播报内容固定位置显示，每3秒向上翻动一次。
 //        报告内容：“时间”+前，“城市”+“姓氏”+“性别”+“福利”
 //        时间：1到59秒，随机一个时间；
@@ -529,39 +577,41 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 //        姓氏：赵、钱、孙、李、周、吴、郑、王、冯、陈、褚、卫、蒋、沈、韩、杨、何、吕、施、张、孔、曹、严、华、金、魏、陶、姜、戚、谢、邹、章、苏、潘、葛、奚、范、彭、鲁、韦、昌、马、苗、凤、花、方、俞、袁、柳、酆、鲍、史、唐、费、廉、岑、薛、雷、贺、倪、汤、滕、殷、罗、毕、郝、邬、安、常、乐、于、齐、黄、萧、尹、姚、祁、宋、熊、舒、屈、项、祝、董、梁、杜、席、贾、江、郭、林、钟、徐、邱、高、田、胡、邓，随机一个；
 //        性别：先生、女士，随机一个；
 //        福利：领取了免费设计、获得了免费报价、获得了专业推荐、领取了装修大礼包，随机一个。
-        String[] familyName = new String[] {"赵","钱","孙","李","周","吴","郑","王","冯","陈","褚","卫","蒋","沈","韩","杨","何","吕","施","张","孔","曹","严","华","金","魏","陶","姜","戚","谢","邹","章","苏","潘","葛","奚","范","彭","鲁","韦","昌","马","苗","凤","花","方","俞","袁","柳","酆","鲍","史","唐","费","廉","岑","薛","雷","贺","倪","汤","滕","殷","罗","毕","郝","邬","安","常","乐","于","齐","黄","萧","尹","姚","祁","宋","熊","舒","屈","项","祝","董","梁","杜","席","贾","江","郭","林","钟","徐","邱","高","田","胡","邓"};
-        final String[] fares = new String[]{"领取了免费设计","获得了免费报价","获得了专业推荐","领取了装修大礼包"};
-        String[] citys = new String[]{"北京市"," 天津市"," 石家庄市"," 唐山市"," 秦皇岛市"," 太原市"," 大同市"," 长治市","呼和浩特市", "包头市", "沈阳市", "大连市", "长春市", "哈尔滨市", "上海市", "南京市", "无锡市", "徐州市", "常州市", "苏州市", "南通市", "扬州市", "杭州市", "宁波市", "温州市", "嘉兴市", "湖州市", "绍兴市", "金华市", "台州市", "合肥市", "福州市", "厦门市", "南昌市", "济南市", "青岛市", "烟台市", "潍坊市", "威海市", "郑州市", "武汉市", "长沙市", "广州市", "深圳市", "珠海市", "佛山市", "东莞市", "中山市","南宁市", "重庆市", "成都市", "贵阳市", "昆明市", "西安市", "兰州市", "江阴市", "宜兴市", "昆山市", "张家港市", "余姚市", "慈溪市"};
-        int[] cheatImg = new int[]{R.drawable.cheat1,R.drawable.cheat2,R.drawable.cheat3,R.drawable.cheat4,R.drawable.cheat5,R.drawable.cheat6,R.drawable.cheat7,R.drawable.cheat8,R.drawable.cheat9,R.drawable.cheat10,R.drawable.cheat11,R.drawable.cheat12,R.drawable.cheat13,R.drawable.cheat14,R.drawable.cheat15,R.drawable.cheat16,R.drawable.cheat17,R.drawable.cheat18,R.drawable.cheat19,R.drawable.cheat20};
         String[] datas = new String[64];
         for(int i=0;i<datas.length;i++){
-            datas[i] = "     " + getSecond() + "秒前," + getRandomText(citys) + getRandomText(familyName) + getLadyOrGentalman() + getBigBagText(fares, i) + "。";
+            datas[i] = " " + getSecond() + "秒前," + getRandomText(citys) + getRandomText(familyName) + getLadyOrGentalman() + getBigBagText(fares, i) + "。";
         }
 
-        cheatText.textSize(DensityUtil.dip2px(context, 160));
-        cheatText.datas(datas);
-        cheatText.startScroll();
-        cheatText.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                int currentPosition = cheatText.getCurrentPosition();
-                if(getBigBagText(fares, currentPosition).contains("设计")){
-                    Util.setToast(context, "跳转 设计 哦");
-                }else if (getBigBagText(fares, currentPosition).contains("报价")){
-                    Util.setToast(context, "跳转 报价 哦");
-                }else if(getBigBagText(fares, currentPosition).contains("推荐")){
-                    Util.setToast(context, "跳转 推荐 哦");
-                }else if(getBigBagText(fares, currentPosition).contains("礼包")){
-                    Util.setToast(context, "跳转 礼包 哦");
-                }
-            }
-        });
+        List<Marquee> marquees = new ArrayList<>();
+        for (int i = 0; i < cheatImageArr.length; i++) {
+            Marquee marquee = new Marquee();
+            marquee.setImgId(cheatImageArr[i]);
+            marquee.setTitle(datas[i]);
+            marquees.add(marquee);
+        }
+        cheatView.setImage(true);
+        cheatView.startWithList(marquees);
+//        cheatView.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                int currentPosition = cheatView.getPosition();
+//                Util.setToast(context, ">>>" + currentPosition);
+//                if(getBigBagText(fares, currentPosition).contains("设计")){
+//                    Util.setToast(context, "跳转 设计 哦");
+//                }else if (getBigBagText(fares, currentPosition).contains("报价")){
+//                    Util.setToast(context, "跳转 报价 哦");
+//                }else if(getBigBagText(fares, currentPosition).contains("推荐")){
+//                    Util.setToast(context, "跳转 推荐 哦");
+//                }else if(getBigBagText(fares, currentPosition).contains("礼包")){
+//                    Util.setToast(context, "跳转 礼包 哦");
+//                }else {
+//                    Util.setToast(context, "ojks");
+//                }
+//            }
+//        });
     }
 
-    public void stopVerticalMarqueeView(){
-        cheatText.stopScroll();
-    }
 
     private String getLadyOrGentalman(){
         int num = new Random().nextInt(10) + 1;

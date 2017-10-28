@@ -1,9 +1,4 @@
 package com.tbs.tobosutype.activity;
-/**
- * [首页] [逛图库] [找装修] [我]   
- * 这四个页面的父类
- */
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -13,7 +8,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.protocol.JpyProtocol;
 
-public class BaseActivity extends Activity implements JpyProtocol.MDataUpdateNotify {
+import cn.jpush.android.api.InstrumentedActivity;
+
+public class BaseActivity extends InstrumentedActivity implements JpyProtocol.MDataUpdateNotify {
 	protected String TAG = BaseActivity.class.getSimpleName();
 	protected Context mContext;
 

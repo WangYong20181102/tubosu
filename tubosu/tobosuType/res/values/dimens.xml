@@ -6,4 +6,9 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="home_page_recyclerview_banner_height">49dp</dimen>
+    <dimen name="home_page_banner_height">544dp</dimen>
+
+
+
 </resources>

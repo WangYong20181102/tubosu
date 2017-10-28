@@ -14,6 +14,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="14dp"
             android:text="装修设计"
+            android:textStyle="bold"
             android:textColor="@color/color_black"
             android:textSize="16sp" />
 

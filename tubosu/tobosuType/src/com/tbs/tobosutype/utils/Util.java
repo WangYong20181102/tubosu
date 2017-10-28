@@ -1,5 +1,6 @@
 package com.tbs.tobosutype.utils;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,6 +10,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -17,8 +19,10 @@ import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -273,6 +277,32 @@ public class Util {
         int nowMonth = nowCalendar.get(Calendar.MONTH) + 1;
         int nowDay = nowCalendar.get(Calendar.DAY_OF_MONTH);
         return nowYear + "-" + nowMonth + "-" + nowDay;
+    }
+
+
+    public static List<String> getPermissionList(Context activity) {
+        List<String> permission = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.READ_PHONE_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_WIFI_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_WIFI_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_NETWORK_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.INTERNET);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CHANGE_WIFI_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.CHANGE_WIFI_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        return permission;
     }
 //
 //    /**

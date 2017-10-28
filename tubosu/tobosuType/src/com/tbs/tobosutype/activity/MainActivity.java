@@ -24,9 +24,12 @@ import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.adapter.NewHomeAdapter;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.receiver.LocalBroadcastManager;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.ExampleUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.tencent.android.tpush.XGPushManager;
 import com.umeng.analytics.MobclickAgent;
@@ -77,6 +80,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
      */
     private static RelativeLayout main_tab_decorate;
 
+    public static boolean isForeground = false;
     /**
      * 我 按钮
      */
@@ -144,6 +148,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 
         initView();
         initReceiver();
+        registerMessageReceiver();
         initEvent();
         needPermissions();
     }
@@ -166,11 +171,11 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         tabHost.addTab(spec);
 
         intent = new Intent().setClass(this, ImageNewActivity.class);
-        spec = tabHost.newTabSpec("TWO").setIndicator("逛图库").setContent(intent);
+        spec = tabHost.newTabSpec("TWO").setIndicator("效果图").setContent(intent);
         tabHost.addTab(spec);
 
         intent = new Intent().setClass(this, FindDecorateActivity.class);
-        spec = tabHost.newTabSpec("THREE").setIndicator("找装修").setContent(intent);
+        spec = tabHost.newTabSpec("THREE").setIndicator("装修公司").setContent(intent);
         tabHost.addTab(spec);
 
 		/* ------------------------------------
@@ -225,8 +230,9 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         receiver = new NetStateReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.NET_STATE_ACTION);
-//        filter.addAction(Constant.LOGIN_ACTION);
-//        filter.addAction(Constant.LOGOUT_ACTION);
+        filter.addAction("goto_activity_zhuangxiu");
+        filter.addAction("goto_activity_xiaoguotu");
+        filter.addAction(Constant.LOGOUT_ACTION);
         registerReceiver(receiver, filter);
     }
 
@@ -420,33 +426,52 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     }
 
 
-//	/***
-//	 * 底部根据不同tab 选择不同页面
-//	 * @param tab 0-->首页；
-//	 *        tab 1-->逛图库；
-//	 *        tab 2-->找装修公司；
-//	 *        tab 3-->我
-//	 */
-//	public void setTab(int tab) {
-//		tabHost.setCurrentTab(tab);
-//	}
+    private MessageReceiver mMessageReceiver;
+    public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
+    public static final String KEY_TITLE = "title";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_EXTRAS = "extras";
 
-//	/***
-//	 * 网络状况不佳的时候显示
-//	 */
-//	private void judgeNetWorkState(){
-//		Message msg = new Message();
-//		if(checkNetwork()){
-//			msg.what = GOOD_NETWORK_STATE;
-//		}else{
-//			msg.what = BAD_NETWORK_STATE;
-//		}
-//		netStateHandler.sendMessage(msg);
-//	}
+    public void registerMessageReceiver() {
+        mMessageReceiver = new MessageReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+        filter.addAction(MESSAGE_RECEIVED_ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, filter);
+    }
+
+    public class MessageReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            try {
+                if (MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
+                    String messge = intent.getStringExtra(KEY_MESSAGE);
+                    String extras = intent.getStringExtra(KEY_EXTRAS);
+                    StringBuilder showMsg = new StringBuilder();
+                    showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
+                    if (!ExampleUtil.isEmpty(extras)) {
+                        showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
+                    }
+//                    setCostomMsg(showMsg.toString());
+                    Util.setToast(context, "MainActivity 这里 ["+showMsg.toString() + "]");
+                }
+            } catch (Exception e){
+            }
+        }
+    }
+
+//    private void setCostomMsg(String msg){
+//        if (null != msgText) {
+//            msgText.setText(msg);
+//            msgText.setVisibility(android.view.View.VISIBLE);
+//        }
+//    }
 
 
     @Override
     protected void onResume() {
+        isForeground = true;
         super.onResume();
         initData();
         if (AppInfoUtil.ISJUSTLOGIN) {
@@ -479,8 +504,10 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     }
 
     protected void onPause() {
+        isForeground = false;
         super.onPause();
-        XGPushManager.onActivityStoped(this);
+//        XGPushManager.onActivityStoped(this);
+
         MobclickAgent.onPause(this);
     }
 
@@ -627,6 +654,16 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     m.what = BAD_NETWORK_STATE;
                 }
                 netStateHandler.sendMessage(m);
+            }
+
+            if(intent.getAction().equals("goto_activity_zhuangxiu")){
+                int position = intent.getIntExtra("position", -1);
+                setFragmentPosition(position);
+            }
+
+            if(intent.getAction().equals("goto_activity_xiaoguotu")){
+                int position = intent.getIntExtra("position", -1);
+                setFragmentPosition(position);
             }
 
 //            // 以下跟网络无关 只是我不想再写一个广播类了

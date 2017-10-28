@@ -949,10 +949,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
 
     @Override
     protected void onPause() {
@@ -980,7 +976,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
                 break;
             case R.id.layout_homeactivity_yuyue_decoration:
                 // 走设计与报价 走安卓发单接口
-
                 //MobclickAgent 友盟统计
                 MobclickAgent.onEvent(mContext, "click_index_design_quote");
 //                Intent freeIntent = new Intent(mContext, FreeActivity.class);
