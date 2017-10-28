@@ -17,7 +17,7 @@
             android:layout_centerHorizontal="true"
             android:text="#户型图#"
             android:textColor="#808080"
-            android:textSize="12sp" />
+            android:textSize="13sp" />
         <!--图片-->
         <ImageView
             android:id="@+id/item_deco_detail_foot_img"
@@ -25,7 +25,7 @@
             android:layout_height="193dp"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="25dp"
-            android:layout_marginTop="33dp"
+            android:layout_marginTop="39dp"
             android:scaleType="centerCrop"
             android:src="@drawable/b_home_style" />
     </RelativeLayout>

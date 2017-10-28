@@ -557,19 +557,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         }
     }
 
-    //// TODO: 2017/10/25 临时添加的长按事件  等到上线时要删除
-    private View.OnLongClickListener onLongClickListener = new View.OnLongClickListener() {
-        @Override
-        public boolean onLongClick(View v) {
-            startActivity(new Intent(HomeActivity.this, DecorationCaseActivity.class));
-            return true;
-        }
-    };
-
     private void initEvent() {
         layout_price.setOnClickListener(this);
-        /// TODO: 2017/10/25 临时加一个长按点击事件测试新的页面
-        layout_price.setOnLongClickListener(onLongClickListener);
         layout_calculater.setOnClickListener(this);
         layout_homeactivity_yuyue_decoration.setOnClickListener(this);
         layout_decorate_myhouse.setOnClickListener(this);

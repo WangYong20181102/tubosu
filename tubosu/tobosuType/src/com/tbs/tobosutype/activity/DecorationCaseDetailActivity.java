@@ -63,6 +63,8 @@ public class DecorationCaseDetailActivity extends Activity {
     RelativeLayout decorationCaseDetailLl;
     @BindView(R.id.deco_case_detail_title)
     TextView decoCaseDetailTitle;
+    @BindView(R.id.banner_dever)
+    View bannerDever;
 
     private Context mContext;
     private String TAG = "DecoCaseDetailActivity";
@@ -127,7 +129,7 @@ public class DecorationCaseDetailActivity extends Activity {
                             mDecoCaseDetailAdapter = new DecoCaseDetailAdapter(mContext, mDecoCaseDetail);
                             mDecoCaseDetailAdapter.setOnItemBtnClickLister(onItemBtnClickLister);
                             if (TextUtils.isEmpty(mDecoCaseDetail.getOwner_name())) {
-                                decoCaseDetailTitle.setText("专题详情");
+                                decoCaseDetailTitle.setText("案例详情");
                             } else {
                                 decoCaseDetailTitle.setText(mDecoCaseDetail.getOwner_name());
                             }
@@ -158,7 +160,7 @@ public class DecorationCaseDetailActivity extends Activity {
                     umWeb.setTitle(mDecoCaseDetail.getOwner_name());
                     umWeb.setThumb(new UMImage(mContext, mDecoCaseDetail.getCover_url()));
                     new ShareAction(DecorationCaseDetailActivity.this)
-                            .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
+                            .setDisplayList(SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.QQ)
                             .withMedia(umWeb).open();
                     break;
             }
@@ -183,14 +185,18 @@ public class DecorationCaseDetailActivity extends Activity {
             //控制显示与否
             if (totalDy > 3) {
                 decoCaseDetailBanner.setVisibility(View.VISIBLE);
+                mDecoCaseDetailAdapter.changeTitle(0);
             } else {
                 decoCaseDetailBanner.setVisibility(View.GONE);
+                mDecoCaseDetailAdapter.changeTitle(1);
             }
             //设置控件的透明度 totaldy==700zuo you
-            if (totalDy <= 50) {
-                decoCaseDetailBanner.getBackground().setAlpha(totalDy * (255 / 50));
+            if (totalDy <= 450) {
+                decoCaseDetailBanner.getBackground().setAlpha((int) (totalDy * (255 / 450.1)));
+                bannerDever.setVisibility(View.GONE);
             } else {
                 decoCaseDetailBanner.getBackground().setAlpha(255);
+                bannerDever.setVisibility(View.VISIBLE);
             }
 
         }
@@ -211,12 +217,15 @@ public class DecorationCaseDetailActivity extends Activity {
                 umWeb.setTitle(mDecoCaseDetail.getOwner_name());
                 umWeb.setThumb(new UMImage(mContext, mDecoCaseDetail.getCover_url()));
                 new ShareAction(DecorationCaseDetailActivity.this)
-                        .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
+                        .setDisplayList(SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.QQ)
                         .withMedia(umWeb).open();
                 break;
             case R.id.deco_case_detail_find_price:
             case R.id.deco_case_detail_find_price_rl:
-                /// TODO: 2017/10/25  进入报价页面
+                /// TODO: 2017/10/24  跳转到免费报价发单页暂时写固定url
+                Intent intent = new Intent(mContext, NewWebViewActivity.class);
+                intent.putExtra("mLoadingUrl", "http://m.dev.tobosu.com/free_price_page/");
+                mContext.startActivity(intent);
                 break;
         }
     }

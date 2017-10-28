@@ -79,6 +79,7 @@ public class LookPhotoFragment extends BaseFragment {
         lookFragmentRl.addView(mTouchImageView);
         ImageLoaderUtil.loadImage(mContext, mTouchImageView, mSpaceInfoBean.getImg_url());
         mTouchImageView.setOnClickListener(onClickListener);
+        mTouchImageView.setOnLongClickListener(onLongClickListener);
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -87,7 +88,13 @@ public class LookPhotoFragment extends BaseFragment {
             EventBusUtil.sendEvent(new Event(EC.EventCode.CLICK_IMAGE_IN_LOOK_PHOTO));
         }
     };
-
+    private View.OnLongClickListener onLongClickListener=new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            EventBusUtil.sendEvent(new Event(EC.EventCode.LOOG_CLICK_IMAGE_IN_LOOK_PHOTO,mSpaceInfoBean.getImg_url()));
+            return true;
+        }
+    };
     @Override
     public void onDestroyView() {
         super.onDestroyView();

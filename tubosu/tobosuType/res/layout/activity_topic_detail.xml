@@ -2,69 +2,75 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context="com.tbs.tobosutype.activity.DecorationCaseActivity">
+    tools:context="com.tbs.tobosutype.activity.TopicDetailActivity">
     <View
-        android:layout_marginTop="50dp"
+        android:layout_below="@+id/topic_detail_banner"
         android:id="@+id/banner_dever"
         android:layout_width="match_parent"
         android:layout_height="12dp"
         android:background="@drawable/yinying4"
         android:visibility="visible" />
-    <!--整体的  包含标题 和数据列表-->
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/topic_detail_banner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:background="@color/white"
+        android:elevation="10dp"
+        android:visibility="visible">
+        <!--返回键-->
+        <LinearLayout
+            android:id="@+id/topic_detail_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/activity_back" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/topic_detail_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="专题详情"
+            android:textColor="#000000"
+            android:textSize="17sp" />
+        <!--分享按钮-->
+        <LinearLayout
+            android:id="@+id/topic_detail_share"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/new_share" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:visibility="visible"
+        android:id="@+id/topic_detail_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_marginTop="50dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/white">
-            <!--返回键-->
-            <LinearLayout
-                android:id="@+id/deco_case_back"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentLeft="true"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/activity_back" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="装修案例"
-                android:textColor="#000000"
-                android:textSize="17sp" />
-        </RelativeLayout>
-
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/deco_case_swipe"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/deco_case_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </android.support.v7.widget.RecyclerView>
-        </android.support.v4.widget.SwipeRefreshLayout>
-    </LinearLayout>
+    </android.support.v7.widget.RecyclerView>
     <!--底部发单按钮-->
     <RelativeLayout
-        android:id="@+id/deco_case_find_price_rl"
+        android:id="@+id/ltopic_detail_find_price_rl"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
@@ -89,13 +95,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
-                android:text="深圳装修多少钱？"
+                android:text="限时免费设计"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/deco_case_find_price"
+            android:id="@+id/topic_detail_find_price"
             android:layout_width="95dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
@@ -103,7 +109,7 @@
             android:layout_marginRight="16dp"
             android:background="@drawable/shape_decoration_case_price"
             android:gravity="center"
-            android:text="立即询价"
+            android:text="马上预约"
             android:textColor="@color/white"
             android:textSize="13sp" />
     </RelativeLayout>

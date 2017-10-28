@@ -159,9 +159,9 @@ public class DecorationCaseActivity extends Activity {
                 break;
             case R.id.deco_case_find_price_rl:
             case R.id.deco_case_find_price:
-                /// TODO: 2017/10/24  跳转到发单页暂时写固定url
+                /// TODO: 2017/10/24  跳转到免费报价发单页暂时写固定url
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", "http://m.dev.tobosu.com/rec_company/");
+                intent.putExtra("mLoadingUrl", "http://m.dev.tobosu.com/free_price_page/");
                 mContext.startActivity(intent);
                 break;
         }

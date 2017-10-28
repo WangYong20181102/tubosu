@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
+
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
@@ -30,12 +31,15 @@ import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.tencent.android.tpush.XGPushManager;
 import com.umeng.analytics.MobclickAgent;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -101,7 +105,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
      */
     private String requsetUrl = Constant.TOBOSU_URL + "tapp/user/my";
 
-    private HashMap<String,Object> requestParams;
+    private HashMap<String, Object> requestParams;
 
     /**
      * 存储 用户信息
@@ -134,7 +138,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-		AppInfoUtil.setActivityTheme(MainActivity.this);
+        AppInfoUtil.setActivityTheme(MainActivity.this);
 //		AppInfoUtil.setActivityTheme(this, R.color.whole_color_theme);
         setContentView(R.layout.activity_main);
 //        AppInfoUtil.setTranslucentStatus(this);
@@ -200,8 +204,24 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 //        radioGroup = (RadioGroup) this.findViewById(R.id.main_tab_group);
         main_tab_home = (RelativeLayout) this.findViewById(R.id.main_tab_first);
         main_tab_home.setOnClickListener(this);
+        main_tab_home.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                startActivity(new Intent(MainActivity.this, DecorationCaseActivity.class));
+                return true;
+            }
+        });
         main_tab_image = (RelativeLayout) this.findViewById(R.id.main_tab_image);
         main_tab_image.setOnClickListener(this);
+        main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent1 = new Intent(MainActivity.this, TopicDetailActivity.class);
+                intent1.putExtra("mTopicId", "7696");
+                startActivity(intent1);
+                return true;
+            }
+        });
         main_tab_decorate = (RelativeLayout) this.findViewById(R.id.main_tab_decorate);
         main_tab_decorate.setOnClickListener(this);
         main_tab_my = (RelativeLayout) this.findViewById(R.id.main_tab_my);
@@ -556,7 +576,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     }
 
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -638,7 +657,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         }
     }
 
-    private  void needPermissions(){
+    private void needPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
             List<String> permission = getPermissionList(mContext);
             if (permission.size() > 0) {
