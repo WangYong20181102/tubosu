@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -240,9 +241,10 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     context.startActivity(new Intent(context, DecorationCaseActivity.class));
                 }
             });
-            NewhomeAnliAdapter anliAdapter = new NewhomeAnliAdapter(context, dataSource.getCases());
-            newHomeAnli.newhomeGvAnli.setAdapter(anliAdapter);
-            anliAdapter.notifyDataSetChanged();
+
+            NewhomeCasesGridAdapter caseAdapter = new NewhomeCasesGridAdapter(context, dataSource.getCases());
+            newHomeAnli.newhomeGvAnli.setAdapter(caseAdapter);
+            caseAdapter.notifyDataSetChanged();
             newHomeAnli.newhomeGvAnli.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -251,6 +253,21 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     context.startActivity(intent);
                 }
             });
+
+//            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
+//            newHomeAnli.newhomeGvAnli.setLayoutManager(gridLayoutManager);
+//
+//            NewhomeAnliAdapter anliAdapter = new NewhomeAnliAdapter(context, dataSource.getCases());
+//            newHomeAnli.newhomeGvAnli.setAdapter(anliAdapter);
+//            anliAdapter.notifyDataSetChanged();
+//            anliAdapter.setmOnCaseClickListener(new NewhomeAnliAdapter.OnCaseClickListener() {
+//                @Override
+//                public void onCaseClickListener(View parent, final int ps) {
+//                    Intent intent = new Intent(context, DecorationCaseDetailActivity.class);
+//                    intent.putExtra("deco_case_id", dataSource.getCases().get(ps).getId());
+//                    context.startActivity(intent);
+//                }
+//            });
         }
 
         if(holder instanceof NewHomeSheji){
@@ -591,25 +608,6 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
         cheatView.setImage(true);
         cheatView.startWithList(marquees);
-//        cheatView.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                int currentPosition = cheatView.getPosition();
-//                Util.setToast(context, ">>>" + currentPosition);
-//                if(getBigBagText(fares, currentPosition).contains("设计")){
-//                    Util.setToast(context, "跳转 设计 哦");
-//                }else if (getBigBagText(fares, currentPosition).contains("报价")){
-//                    Util.setToast(context, "跳转 报价 哦");
-//                }else if(getBigBagText(fares, currentPosition).contains("推荐")){
-//                    Util.setToast(context, "跳转 推荐 哦");
-//                }else if(getBigBagText(fares, currentPosition).contains("礼包")){
-//                    Util.setToast(context, "跳转 礼包 哦");
-//                }else {
-//                    Util.setToast(context, "ojks");
-//                }
-//            }
-//        });
     }
 
 

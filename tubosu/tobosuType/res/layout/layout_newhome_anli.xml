@@ -46,12 +46,10 @@
     <com.tbs.tobosutype.customview.CustomGridView
         android:id="@+id/newhome_gv_anli"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:listSelector="@android:color/transparent"
+        android:layout_height="300dp"
         android:scrollbars="none"
-        android:layout_marginBottom="12dp"
-        android:numColumns="2">
-    </com.tbs.tobosutype.customview.CustomGridView>
+        android:listSelector="@color/transparent"
+        android:numColumns="2"/>
 
     <View
         android:layout_width="match_parent"

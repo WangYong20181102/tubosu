@@ -51,16 +51,8 @@
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.BATTERY_STATS" />
 
-
-
-    <!-- Required -->
-    <permission
-        android:name="com.tbs.tobosutypepermission.JPUSH_MESSAGE"
-        android:protectionLevel="signature" />
-
-    <!-- Required  一些系统要求的权限，如访问网络等-->
-    <uses-permission android:name="com.tbs.tobosutypepermission.JPUSH_MESSAGE" />
-
+    <uses-permission android:name="com.tbs.tobosutype.permission.JPUSH_MESSAGE" />
+    <permission android:name="com.tbs.tobosutype.permission.JPUSH_MESSAGE" android:protectionLevel="signature" />
 
     <!-- Optional for location -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
@@ -446,7 +438,7 @@
         </service>
         <!-- since 3.0.9 Required SDK 核心功能-->
         <provider
-            android:authorities="com.tbs.tobosutypeDataProvider"
+            android:authorities="com.tbs.tobosutype.DataProvider"
             android:name="cn.jpush.android.service.DataProvider"
             android:exported="true"
             />
@@ -459,7 +451,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.DaemonService" />
-                <category android:name="abc.wtb.myjpushappdemo" />
+                <category android:name="com.tbs.tobosutype" />
             </intent-filter>
 
         </service>
@@ -471,7 +463,7 @@
             android:exported="false">
             <intent-filter android:priority="1000">
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />   <!--Required  显示通知栏 -->
-                <category android:name="abc.wtb.myjpushappdemo" />
+                <category android:name="com.tbs.tobosutype" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT" />
@@ -500,7 +492,7 @@
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
                 <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
                 <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
-                <category android:name="abc.wtb.myjpushappdemo" />
+                <category android:name="com.tbs.tobosutype" />
             </intent-filter>
         </receiver>
 
@@ -508,12 +500,12 @@
         <receiver android:name=".receiver.MyJPushMessageReceiver">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
-                <category android:name="abc.wtb.myjpushappdemo"></category>
+                <category android:name="com.tbs.tobosutype"></category>
             </intent-filter>
         </receiver>
         <!-- Required  . Enable it you can get statistics data with channel -->
         <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
-        <meta-data android:name="JPUSH_APPKEY" android:value="这是从平台来获取的appkey" /> <!--  </>值来自开发者平台取得的AppKey-->
+        <meta-data android:name="JPUSH_APPKEY" android:value="296b86ca9ffe1bfd4f43b655" /> <!--  值来自开发者平台取得的AppKey-->
 
 
         <!-- Required SDK核心功能-->
@@ -525,7 +517,7 @@
             <intent-filter>
                 <action android:name="cn.jpush.android.ui.PushActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="abc.wtb.myjpushappdemo" />
+                <category android:name="com.tbs.tobosutype" />
             </intent-filter>
         </activity>
 
