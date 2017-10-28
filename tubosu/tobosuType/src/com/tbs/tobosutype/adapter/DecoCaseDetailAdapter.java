@@ -33,6 +33,7 @@ public class DecoCaseDetailAdapter
     private String TAG = "DecoCaseDetailAdapter";
     private _DecoCaseDetail mDecoCaseDetail;
     private Gson mGson;
+    private int titleState = 1;//标题头部的显示
 
     public DecoCaseDetailAdapter(Context context, _DecoCaseDetail decoCaseDetail) {
         this.mContext = context;
@@ -66,6 +67,11 @@ public class DecoCaseDetailAdapter
         }
     }
 
+    public void changeTitle(int titleState) {
+        this.titleState = titleState;
+        notifyDataSetChanged();
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 0) {
@@ -87,6 +93,14 @@ public class DecoCaseDetailAdapter
         if (holder instanceof HeadViewHolder) {
             ((HeadViewHolder) holder).item_deco_detail_share.setTag(position);
             ((HeadViewHolder) holder).item_deco_detail_back.setTag(position);
+            if (titleState == 0) {
+                //隐藏标题头
+                ((HeadViewHolder) holder).item_deco_detail_share.setVisibility(View.GONE);
+                ((HeadViewHolder) holder).item_deco_detail_back.setVisibility(View.GONE);
+            } else {
+                ((HeadViewHolder) holder).item_deco_detail_share.setVisibility(View.VISIBLE);
+                ((HeadViewHolder) holder).item_deco_detail_back.setVisibility(View.VISIBLE);
+            }
             //布局头部展示的信息
             ((HeadViewHolder) holder).item_deco_detail_head_ll.setBackgroundColor(Color.parseColor("#ffffff"));
             //封面图

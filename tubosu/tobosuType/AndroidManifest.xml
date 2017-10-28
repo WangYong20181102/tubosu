@@ -530,6 +530,13 @@
             </intent-filter>
         </activity>
 
+
+        <activity android:name=".activity.DecorationCaseActivity" />
+        <activity android:name=".activity.LookPhotoActivity" />
+        <activity android:name=".activity.SubjectActivity" />
+        <activity android:name=".activity.DecorationCaseDetailActivity" />
+        <activity android:name=".activity.NewWebViewActivity" />
+        <activity android:name=".activity.TopicDetailActivity"></activity>
         <!-- Rich push 核心功能 since 2.0.6-->
         <activity
             android:name="cn.jpush.android.ui.PopWinActivity"

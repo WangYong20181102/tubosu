@@ -8,13 +8,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.lidroid.xutils.HttpUtils;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.LookPhotoAdapter;
 import com.tbs.tobosutype.base.*;
@@ -22,7 +27,13 @@ import com.tbs.tobosutype.bean.EC;
 import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.bean._DecoCaseDetail;
 import com.tbs.tobosutype.fragment.LookPhotoFragment;
+import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.Util;
+import com.tbs.tobosutype.utils.Utils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +75,8 @@ public class LookPhotoActivity extends com.tbs.tobosutype.base.BaseActivity {
     private String photoDesc = "";//图片的描述
     private String photoPositionDesc = "";//图片位置的描述
     private boolean isShowingBanner = true;//是否隐藏banner等 默认显示
+    private PopupWindow mDownLoadImagePopWindow;
+    private View mDownLoadImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +136,58 @@ public class LookPhotoActivity extends com.tbs.tobosutype.base.BaseActivity {
                     isShowingBanner = true;
                 }
                 break;
+            case EC.EventCode.LOOG_CLICK_IMAGE_IN_LOOK_PHOTO:
+                //长按事件弹出pop下载图片
+                Log.e(TAG, "收到长按事件=========" + (String) event.getData());
+                showDownLoadImagePopWindow((String) event.getData());
+                break;
         }
+    }
+
+    //长按事件弹出下载弹框
+    private void showDownLoadImagePopWindow(final String downloadUrl) {
+        mDownLoadImageView = View.inflate(mContext, R.layout.popwindow_image_download, null);
+        TextView pop_img_dw_ok = (TextView) mDownLoadImageView.findViewById(R.id.pop_img_dw_ok);
+        TextView pop_img_dw_no = (TextView) mDownLoadImageView.findViewById(R.id.pop_img_dw_no);
+        RelativeLayout pop_image_download_rl = (RelativeLayout) mDownLoadImageView.findViewById(R.id.pop_image_download_rl);
+        mDownLoadImagePopWindow = new PopupWindow(mDownLoadImageView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        mDownLoadImagePopWindow.setFocusable(true);
+        mDownLoadImagePopWindow.setOutsideTouchable(true);
+        mDownLoadImagePopWindow.update();
+        //确定下载
+        pop_img_dw_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDownLoadImagePopWindow.dismiss();
+                //创建文件夹
+                File dirFile = new File(Constant.DOWNLOAD_IMG_PATH);
+                if (!dirFile.exists()) {
+                    dirFile.mkdir();
+                }
+                String fileName = System.currentTimeMillis() + ".jpg";
+                OKHttpUtil.downFile(mContext,downloadUrl, dirFile.getPath(), fileName);
+                if (Util.isNetAvailable(mContext)) {
+                    Toast.makeText(mContext, "图片下载成功!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(mContext, "图片下载失败！", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        //取消
+        pop_img_dw_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDownLoadImagePopWindow.dismiss();
+            }
+        });
+        //点击空白取消
+        pop_image_download_rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDownLoadImagePopWindow.dismiss();
+            }
+        });
+        mDownLoadImagePopWindow.showAtLocation(mDownLoadImageView, Gravity.CENTER, 0, 0);
     }
 
     //页面滑动监听事件
@@ -155,7 +219,10 @@ public class LookPhotoActivity extends com.tbs.tobosutype.base.BaseActivity {
                 break;
             case R.id.look_photo_find_price:
             case R.id.look_photo_find_price_rl:
-                /// TODO: 2017/10/26 into fadan
+                /// TODO: 2017/10/24  跳转到免费报价发单页暂时写固定url
+                Intent intent = new Intent(mContext, NewWebViewActivity.class);
+                intent.putExtra("mLoadingUrl", "http://m.dev.tobosu.com/free_price_page/");
+                mContext.startActivity(intent);
                 break;
         }
     }

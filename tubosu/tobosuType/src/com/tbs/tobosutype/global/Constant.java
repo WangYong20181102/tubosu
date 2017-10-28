@@ -61,6 +61,8 @@ public class Constant {
      * 广告页面
      */
     public static final String IMG_PATH = Environment.getExternalStorageDirectory() + "/tbs_adpic/";
+    //下载存储路径
+    public static final String DOWNLOAD_IMG_PATH = Environment.getExternalStorageDirectory() + "/tbs_image/";
 
 
     /**
@@ -315,6 +317,7 @@ public class Constant {
     public static final String CASE_LIST = TOBOSU_URL + "mapp/case/case_list";
     //新的装修案例详情
     public static final String CASE_DETAIL = TOBOSU_URL + "mapp/case/case_detail";
-
+    //新的装修案例详情
+    public static final String TOPIC_DETAIL = TOBOSU_URL + "mapp/topic/topic_detail";
     public static final String ZHUANTI_URL = TOBOSU_URL + "mapp/topic/topic_list";
 }

@@ -9,6 +9,7 @@ public class EC {
     public static final class EventCode{
         public static final int EvetA = 0x000001;//事件代码
         public static final int CLICK_IMAGE_IN_LOOK_PHOTO = 0x000002;//点击看图传递事件
+        public static final int LOOG_CLICK_IMAGE_IN_LOOK_PHOTO = 0x000003;//看图长按事件
     }
 
 }

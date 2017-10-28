@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/decoration_case_detail_ll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/decoration_case_detail_ll"
     android:background="@color/white"
     tools:context="com.tbs.tobosutype.activity.DecorationCaseDetailActivity">
     <!--整个列表-->
@@ -18,14 +18,14 @@
     <RelativeLayout
         android:id="@+id/deco_case_detail_banner"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:background="@color/white"
         android:visibility="visible">
         <!--返回键-->
         <LinearLayout
             android:id="@+id/deco_case_detail_back"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_alignParentLeft="true"
             android:gravity="center">
 
@@ -40,14 +40,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="专题详情"
+            android:text="案例详情"
             android:textColor="#000000"
             android:textSize="17sp" />
         <!--分享按钮-->
         <LinearLayout
             android:id="@+id/deco_case_detail_share"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:gravity="center">
@@ -57,14 +57,15 @@
                 android:layout_height="18dp"
                 android:src="@drawable/new_share" />
         </LinearLayout>
-        <View
-            android:id="@+id/banner_dever"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/bg_gray" />
     </RelativeLayout>
     <!--上拉时显示的部分阴影-->
+    <View
+        android:visibility="gone"
+        android:id="@+id/banner_dever"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_below="@+id/deco_case_detail_banner"
+        android:background="@drawable/yinying4" />
     <!--底部发单按钮-->
     <RelativeLayout
         android:id="@+id/deco_case_detail_find_price_rl"
