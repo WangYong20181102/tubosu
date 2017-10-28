@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -29,25 +30,19 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp">
-        <ImageView
-            android:id="@+id/newhome_cheat_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:layout_marginRight="12dp"/>
-
-        <com.tbs.tobosutype.customview.VerticalMarqueeView
+        <com.tbs.tobosutype.customview.MarqueeView
             android:id="@+id/newhome_cheat_text"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:drawableLeft="@drawable/ic_launcher"
-            android:textColor="#656565"
-            android:text="10秒前，深圳张女士领取了免费设计图"/>
+            android:layout_height="40dp"
+            app:mvAnimDuration="644"
+            android:layout_centerInParent="true"
+            app:mvInterval="3000"
+            app:mvTextSize="14sp" />
     </RelativeLayout>
 
     <LinearLayout
@@ -136,11 +131,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/zhuangxiuketang"/>
+                android:background="@drawable/zhaozhuangxiu"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_newhome4"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="13dp"
+                android:textColor="#666666"
+                android:textSize="14sp"
+                android:text="找装修"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/relZhuangXiuKetang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/iv_newhome5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/zhuangxiuketang"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_newhome5"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="13dp"
                 android:textColor="#666666"
@@ -248,7 +265,10 @@
             android:layout_margin="14dp"/>
     </RelativeLayout>
 
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="13dp"
+        android:background="#F7F7F7"/>
     <!-- 以下是装修案例 -->
 
 </LinearLayout>

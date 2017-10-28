@@ -11,47 +11,55 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="装修设计"
-            android:textSize="16sp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="14dp"
-            android:textColor="@color/color_black"/>
+            android:text="装修设计"
+            android:textStyle="bold"
+            android:textColor="@color/color_black"
+            android:textSize="16sp" />
 
         <RelativeLayout
             android:id="@+id/rel_more_sheji"
             android:layout_width="wrap_content"
             android:layout_height="49dp"
-            android:layout_marginRight="14dp"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="14dp">
+
             <TextView
                 android:id="@+id/tv_more_sheji"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="更多"
-                android:textSize="14sp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="14dp"
-                android:textColor="#666666"/>
+                android:text="更多"
+                android:textColor="#666666"
+                android:textSize="14sp" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/tv_more_sheji"
-                android:background="@drawable/right"/>
+                android:background="@drawable/right" />
         </RelativeLayout>
     </RelativeLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <com.tbs.tobosutype.customview.MySwipeRefreshLayout
         android:id="@+id/swipe_newhome_sheji"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <android.support.v7.widget.RecyclerView
+        android:layout_marginBottom="10dp"
+        android:layout_height="190dp">
+        <com.tbs.tobosutype.customview.BetterRecyclerView
             android:id="@+id/newhome_recyclerview_sheji"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </android.support.v7.widget.RecyclerView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+            android:layout_height="190dp">
+        </com.tbs.tobosutype.customview.BetterRecyclerView>
+    </com.tbs.tobosutype.customview.MySwipeRefreshLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="13dp"
+        android:background="#F7F7F7"/>
 
 </LinearLayout>

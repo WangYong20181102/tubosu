@@ -713,17 +713,6 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
         Log.e(TAG, "==onRestart==");
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.e(TAG, "==onStart==");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.e(TAG, "==onStop==");
-    }
 
     @Override
     protected void onPostResume() {

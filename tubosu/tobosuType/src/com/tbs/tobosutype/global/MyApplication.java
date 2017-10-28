@@ -31,6 +31,8 @@ import com.tbs.tobosutype.utils.SharePreferenceUtil;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class MyApplication extends android.app.Application {
     public static String iconUrl;
     public LocationClient mLocationClient;
@@ -78,6 +80,9 @@ public class MyApplication extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
+
         SDKInitializer.initialize(this);
         //初始化友盟
         UMShareAPI.get(this);

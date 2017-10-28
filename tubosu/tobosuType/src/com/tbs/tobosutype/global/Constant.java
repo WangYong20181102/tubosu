@@ -221,6 +221,11 @@ public class Constant {
         return false;
     }
 
+    public static final String MIANFEI_BAOJIA = "http://m.tobosu.com/free_price_page/";
+    public static final String DALIBAO = "http://m.dev.tobosu.com/company_gift/";
+    public static final String TUIJIAN = "http://m.dev.tobosu.com/rec_company/";
+//    public static final String BAOJIA = "";
+
     /**
      * 无网提示
      *
@@ -314,4 +319,5 @@ public class Constant {
     public static final String CASE_DETAIL = TOBOSU_URL + "mapp/case/case_detail";
     //新的装修案例详情
     public static final String TOPIC_DETAIL = TOBOSU_URL + "mapp/topic/topic_detail";
+    public static final String ZHUANTI_URL = TOBOSU_URL + "mapp/topic/topic_list";
 }

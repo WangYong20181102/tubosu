@@ -102,7 +102,7 @@
                         android:id="@+id/tv_image_textview"
                         style="@style/MMTabTextView"
                         android:layout_below="@+id/img_image"
-                        android:text="逛图库"/>
+                        android:text="效果图"/>
                 </RelativeLayout>
 
 
@@ -119,7 +119,7 @@
                         android:id="@+id/tv_decorate_textview"
                         style="@style/MMTabTextView"
                         android:layout_below="@+id/img_decorate"
-                        android:text="找装修"/>
+                        android:text="装修公司"/>
                 </RelativeLayout>
 
 
