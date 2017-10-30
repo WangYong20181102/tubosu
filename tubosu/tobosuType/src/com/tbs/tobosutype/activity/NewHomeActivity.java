@@ -1,37 +1,25 @@
 package com.tbs.tobosutype.activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.location.Poi;
 import com.baidu.mapapi.SDKInitializer;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.NewHomeAdapter;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
-import com.tbs.tobosutype.customview.HomeTopFrameLayout;
-import com.tbs.tobosutype.customview.MyItemDecoration;
-import com.tbs.tobosutype.customview.ScrollViewExtend;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
@@ -40,7 +28,6 @@ import com.tbs.tobosutype.utils.Util;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -61,8 +48,6 @@ public class NewHomeActivity extends BaseActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayoutManager linearLayoutManager;
     private NewHomeAdapter newHomeAdapter;
-    private int mRecyclerHeaderBannerHeight;
-    private int recyclerItemHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,13 +58,8 @@ public class NewHomeActivity extends BaseActivity {
         initView();
         initBaiduMap();
         cityId = "0";
-//        cityName = "深圳";
-//        String temp = CacheManager.getNewhomeJson(mContext);
-//        if(!"".equals(temp)){
-//            initData(temp);
-//        }
-        getDataFromNet();
         setClick();
+        getDataFromNet();
     }
 
     private void initView(){
@@ -88,8 +68,6 @@ public class NewHomeActivity extends BaseActivity {
         rel_newhomebar.setAlpha(0);
         relSelectCity = (RelativeLayout) findViewById(R.id.relSelectCity);
         newhomeCity = (TextView) findViewById(R.id.newhomeCity);
-        mRecyclerHeaderBannerHeight = (int) getResources().getDimension(R.dimen.home_page_banner_height);
-        recyclerItemHeight = (int) getResources().getDimension(R.dimen.home_page_recyclerview_banner_height);
         recyclerView = (RecyclerView) findViewById(R.id.newhome_recyclerview);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.newhome_swiprefreshlayout);
 
@@ -109,7 +87,7 @@ public class NewHomeActivity extends BaseActivity {
                 float alpha = 0;
                 int scollYHeight = getScollYHeight(true, tubosu.getHeight());
                 //起始截止变化高度,如可以变化高度为mRecyclerHeaderHeight
-                int baseHeight = mRecyclerHeaderBannerHeight - recyclerItemHeight - tubosu.getHeight();
+                int baseHeight = 564;
                 if(scollYHeight >= baseHeight) {
                     //完全不透明
                     alpha = 1;
@@ -219,6 +197,11 @@ public class NewHomeActivity extends BaseActivity {
                     initData(result);
                 }
             });
+        }else {
+            String temp = CacheManager.getNewhomeJson(mContext);
+            if(!"".equals(temp)){
+                initData(temp);
+            }
         }
     }
 
@@ -237,19 +220,7 @@ public class NewHomeActivity extends BaseActivity {
                     recyclerView.setLayoutManager(mLinearLayoutManager);
                     newHomeAdapter = new NewHomeAdapter(mContext, dataItem.getData());
                     recyclerView.setAdapter(newHomeAdapter);
-//                    recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-//                        @Override
-//                        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                            super.onScrollStateChanged(recyclerView, newState);
-//                            int lastVisiableItem = mLinearLayoutManager.findLastVisibleItemPosition();
-//                            if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisiableItem + 2 >= mLinearLayoutManager.getItemCount()
-//                                    && !swipeRefreshLayout.isRefreshing()) {
-//                                Util.setToast(mContext, "外面 加载更多");
-//                            }
-//
-//                        }
-//                    });
-
+                    newHomeAdapter.notifyDataSetChanged();
                     recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
                         @Override
                         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -286,33 +257,6 @@ public class NewHomeActivity extends BaseActivity {
         });
     }
 
-
-    private int findMax(int[] lastPositions) {
-        int max = lastPositions[0];
-        for (int value : lastPositions) {
-            if (value > max) {
-                max = value;
-            }
-        }
-        return max;
-    }
-
-
-
-//    private RecyclerView.OnScrollChangeListener scrollChangedListener = new RecyclerView.OnScrollChangeListener() {
-//        @Override
-//        public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-////            if (scrollY > fadingHeight) {
-////                scrollY = fadingHeight;
-////            }
-////            drawable.setAlpha(scrollY * (END_ALPHA - START_ALPHA) / fadingHeight + START_ALPHA);
-////            if (scrollY >= END_ALPHA) {
-////                rel_newhomebar.setVisibility(View.VISIBLE);
-////            } else {
-////                rel_newhomebar.setVisibility(View.GONE);
-////            }
-//        }
-//    };
 
     private String getCityName_Id(int flag){
         if(flag>0){

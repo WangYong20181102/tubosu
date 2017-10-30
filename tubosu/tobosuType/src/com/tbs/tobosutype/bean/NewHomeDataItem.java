@@ -8,7 +8,6 @@ import java.util.List;
 
 public class NewHomeDataItem {
 
-
     /**
      * status : 200
      * msg : success
