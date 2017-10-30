@@ -197,7 +197,6 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
         mContext = MyOwnerActivity.this;
         initReceiver();
         initView();
-        initData();
         initEvent();
     }
 
@@ -231,50 +230,10 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
-        initData();
-    }
-
-    private void initData() {
         token = AppInfoUtil.getToekn(getApplicationContext());
-        String userid = AppInfoUtil.getUserid(getApplicationContext());
-        String mark = AppInfoUtil.getMark(getApplicationContext());
-
-
-        XGCustomPushNotificationBuilder build = new XGCustomPushNotificationBuilder();
-        build.setSound(RingtoneManager.getActualDefaultRingtoneUri(
-                mContext, RingtoneManager.TYPE_ALARM)) // 设置声音
-                // setSound(
-                // Uri.parse("android.resource://" + getPackageName()
-                // + "/" + R.raw.wind)) 设定Raw下指定声音文件
-                .setDefaults(Notification.DEFAULT_VIBRATE)
-                .setFlags(Notification.FLAG_AUTO_CANCEL);
-        // 设置自定义通知图片资源
-        build.setLayoutIconDrawableId(R.drawable.app_icon);
-        // 设置状态栏的通知小图标
-        build.setIcon(R.drawable.app_icon);
-        XGPushManager.setDefaultNotificationBuilder(mContext, build);
-
-
         requestUserMy();
-        if (mark.equals("0")) {
-            XGPushManager.setTag(this, "loginOff");
-            XGPushManager.deleteTag(this, "loginOn");
-            XGPushManager.deleteTag(this, "isNotCompany");
-            XGPushManager.deleteTag(this, "isCompany");
-        } else if (mark.equals("1")) {
-            XGPushManager.deleteTag(this, "loginOff");
-            XGPushManager.setTag(this, "loginOn");
-            XGPushManager.setTag(this, "isNotCompany");
-
-        } else if (mark.equals("3")) {
-            if (!TextUtils.isEmpty(userid)) {
-                XGPushManager.registerPush(getApplicationContext(), userid);
-            }
-            XGPushManager.deleteTag(this, "loginOff");
-            XGPushManager.setTag(this, "loginOn");
-            XGPushManager.setTag(this, "isCompany");
-        }
     }
+
 
     private void initEvent() {
         rel_my_owenr_user_layout.setOnClickListener(this);

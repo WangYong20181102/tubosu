@@ -80,12 +80,15 @@ public class MyApplication extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        JPushInterface.setDebugMode(true);
-        JPushInterface.init(this);
 
         SDKInitializer.initialize(this);
         //初始化友盟
         UMShareAPI.get(this);
+
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
+
+
         mLocationClient = new LocationClient(this.getApplicationContext());
         mMyLocationListener = new MyLocationListener();
         context = getApplicationContext();

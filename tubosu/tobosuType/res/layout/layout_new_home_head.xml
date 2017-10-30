@@ -48,8 +48,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
-        android:layout_marginBottom="13dp"
+        android:layout_margin="14dp"
         android:orientation="horizontal">
         <RelativeLayout
             android:id="@+id/relFreeLiangFang"
@@ -169,6 +168,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="4dp">
         <ImageView
@@ -213,12 +214,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_height="100dp">
         <ImageView
             android:id="@+id/ivRedBag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="14dp"
+            android:layout_marginLeft="2dp"
             android:layout_centerVertical="true"
             android:background="@drawable/red_bag"/>
         <RelativeLayout
@@ -262,12 +265,12 @@
             android:textSize="16sp"
             android:textColor="@color/white"
             android:background="@drawable/shape_poporder_sumit_bg"
-            android:layout_margin="14dp"/>
+            android:layout_margin="2dp"/>
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="13dp"
+        android:layout_height="9dp"
         android:background="#F7F7F7"/>
     <!-- 以下是装修案例 -->
 

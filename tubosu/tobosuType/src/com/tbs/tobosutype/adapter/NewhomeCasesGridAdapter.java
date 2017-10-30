@@ -1,5 +1,7 @@
 package com.tbs.tobosutype.adapter;
 import android.content.Context;
+import android.content.Intent;
+import android.nfc.Tag;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
+import com.tbs.tobosutype.utils.Util;
+
 import java.util.List;
 /**
  * Created by Lie on 2017/10/28.
@@ -24,6 +28,11 @@ public class NewhomeCasesGridAdapter extends BaseAdapter {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.casesBeenList = casesBeenList;
+//        Util.setErrorLog("send——andli" ,">>>>>>>>>"+casesBeenList.size());
+        if(casesBeenList.size() == 0){
+            Intent it = new Intent("anli_list_is_empty");
+            context.sendBroadcast(it);
+        }
     }
 
 

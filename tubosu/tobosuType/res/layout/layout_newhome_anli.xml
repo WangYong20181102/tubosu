@@ -6,23 +6,23 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="49dp">
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_height="64dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="装修案例"
-            android:textStyle="bold"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="14dp"
             android:textColor="@color/color_black"/>
 
         <RelativeLayout
             android:id="@+id/rel_more_anli"
             android:layout_width="wrap_content"
             android:layout_height="49dp"
-            android:layout_marginRight="14dp"
+            android:layout_centerVertical="true"
             android:layout_alignParentRight="true">
             <TextView
                 android:id="@+id/tv_more_anli"
@@ -46,14 +46,19 @@
     <com.tbs.tobosutype.customview.CustomGridView
         android:id="@+id/newhome_gv_anli"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:scrollbars="none"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:horizontalSpacing="16dp"
+        android:verticalSpacing="16dp"
         android:listSelector="@color/transparent"
         android:numColumns="2"/>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="13dp"
+        android:layout_height="9dp"
+        android:layout_marginTop="10dp"
         android:background="#F7F7F7"/>
 
 </LinearLayout>

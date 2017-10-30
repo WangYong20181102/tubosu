@@ -1,5 +1,8 @@
 package com.tbs.tobosutype.activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -15,7 +18,6 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.SDKInitializer;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.NewHomeAdapter;
@@ -37,17 +39,18 @@ import okhttp3.Response;
  */
 
 public class NewHomeActivity extends BaseActivity {
+    private View home_view;
     private RelativeLayout rel_newhomebar;
     private RelativeLayout relSelectCity;
     private TextView newhomeCity;
     private String cityId;
     private String cityName;
-    private Drawable drawable;
     private RecyclerView recyclerView;
     private TextView tubosu;
     private SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayoutManager linearLayoutManager;
     private NewHomeAdapter newHomeAdapter;
+    private boolean showAnli = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +63,11 @@ public class NewHomeActivity extends BaseActivity {
         cityId = "0";
         setClick();
         getDataFromNet();
+        initReceiver();
     }
 
     private void initView(){
+        home_view = (View)findViewById(R.id.home_view);
         tubosu = (TextView) findViewById(R.id.app_title_text);
         rel_newhomebar = (RelativeLayout) findViewById(R.id.rel_newhomebar);
         rel_newhomebar.setAlpha(0);
@@ -71,9 +76,37 @@ public class NewHomeActivity extends BaseActivity {
         recyclerView = (RecyclerView) findViewById(R.id.newhome_recyclerview);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.newhome_swiprefreshlayout);
 
-        linearLayoutManager = new LinearLayoutManager(mContext);
+        linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                //得到当前显示的最后一个item的view
+                View lastChildView = recyclerView.getLayoutManager().getChildAt(recyclerView.getLayoutManager().getChildCount()-1);
+                //得到lastChildView的bottom坐标值
+                int lastChildBottom = lastChildView.getBottom();
+                //得到Recyclerview的底部坐标减去底部padding值，也就是显示内容最底部的坐标
+                int recyclerBottom =  recyclerView.getBottom()-recyclerView.getPaddingBottom();
+                //通过这个lastChildView得到这个view当前的position值
+                int lastPosition  = recyclerView.getLayoutManager().getPosition(lastChildView);
+
+                //判断lastChildView的bottom值跟recyclerBottom
+                //判断lastPosition是不是最后一个position
+                //如果两个条件都满足则说明是真正的滑动到了底部
+                if(lastChildBottom == recyclerBottom && lastPosition == recyclerView.getLayoutManager().getItemCount()-1 ){
+                    if(newHomeAdapter!=null){
+                        newHomeAdapter.loadMoreData(true);
+                    }
+                }
+            }
+        });
 
         //初始化swipeRreshLayout
         swipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.WHITE);
@@ -86,14 +119,15 @@ public class NewHomeActivity extends BaseActivity {
                 //设置其透明度
                 float alpha = 0;
                 int scollYHeight = getScollYHeight(true, tubosu.getHeight());
-                //起始截止变化高度,如可以变化高度为mRecyclerHeaderHeight
-                int baseHeight = 564;
+
+                int baseHeight = 574;
                 if(scollYHeight >= baseHeight) {
-                    //完全不透明
                     alpha = 1;
                 }else {
-                    //产生渐变效果
                     alpha = scollYHeight / (baseHeight*1.0f);
+                    if(alpha>4){
+                        home_view.setVisibility(View.INVISIBLE);
+                    }
                 }
                 rel_newhomebar.setAlpha(alpha);
             }
@@ -205,6 +239,8 @@ public class NewHomeActivity extends BaseActivity {
         }
     }
 
+
+
     private void initData(final String json){
         runOnUiThread(new Runnable() {
 
@@ -215,38 +251,9 @@ public class NewHomeActivity extends BaseActivity {
                 String msg = dataItem.getMsg();
                 Util.setErrorLog(TAG, dataItem.getMsg());
                 if(dataItem.getStatus() == 200){
-                    final LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext);
-                    mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                    recyclerView.setLayoutManager(mLinearLayoutManager);
                     newHomeAdapter = new NewHomeAdapter(mContext, dataItem.getData());
                     recyclerView.setAdapter(newHomeAdapter);
                     newHomeAdapter.notifyDataSetChanged();
-                    recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-                        @Override
-                        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                            super.onScrollStateChanged(recyclerView, newState);
-                        }
-
-                        @Override
-                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                            //得到当前显示的最后一个item的view
-                            View lastChildView = recyclerView.getLayoutManager().getChildAt(recyclerView.getLayoutManager().getChildCount()-1);
-                            //得到lastChildView的bottom坐标值
-                            int lastChildBottom = lastChildView.getBottom();
-                            //得到Recyclerview的底部坐标减去底部padding值，也就是显示内容最底部的坐标
-                            int recyclerBottom =  recyclerView.getBottom()-recyclerView.getPaddingBottom();
-                            //通过这个lastChildView得到这个view当前的position值
-                            int lastPosition  = recyclerView.getLayoutManager().getPosition(lastChildView);
-
-                            //判断lastChildView的bottom值跟recyclerBottom
-                            //判断lastPosition是不是最后一个position
-                            //如果两个条件都满足则说明是真正的滑动到了底部
-                            if(lastChildBottom == recyclerBottom && lastPosition == recyclerView.getLayoutManager().getItemCount()-1 ){
-                                newHomeAdapter.loadMoreData(true);
-                            }
-                        }
-                    });
-
 
                 }else if(dataItem.getStatus() == 0){
                     Util.setToast(mContext, msg);
@@ -271,6 +278,9 @@ public class NewHomeActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(anliReceiver!=null){
+            unregisterReceiver(anliReceiver);
+        }
     }
 
     private LocationClient mLocationClient;
@@ -405,4 +415,23 @@ public class NewHomeActivity extends BaseActivity {
 
     }
 
+
+
+    private void initReceiver(){
+        anliReceiver = new AnliReceiver();
+        IntentFilter intentFilter = new IntentFilter("anli_list_is_empty");
+        registerReceiver(anliReceiver, intentFilter);
+    }
+
+    private AnliReceiver anliReceiver;
+    private class AnliReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getAction().equals("anli_list_is_empty")){
+                getDataFromNet();
+                Util.setErrorLog(TAG, "重新请求案例了");
+            }
+        }
+    }
 }

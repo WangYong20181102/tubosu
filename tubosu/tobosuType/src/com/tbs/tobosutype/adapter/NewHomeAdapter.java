@@ -23,6 +23,7 @@ import com.tbs.tobosutype.activity.DecorationCaseActivity;
 import com.tbs.tobosutype.activity.DecorationCaseDetailActivity;
 import com.tbs.tobosutype.activity.ImageDetailNewActivity;
 import com.tbs.tobosutype.activity.NewWebViewActivity;
+import com.tbs.tobosutype.activity.TopicDetailActivity;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
 import com.tbs.tobosutype.customview.BetterRecyclerView;
 import com.tbs.tobosutype.customview.CustomGridView;
@@ -319,6 +320,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     context.sendBroadcast(it);
                 }
             });
+            shejiAdapter.notifyDataSetChanged();
 
         }
 
@@ -799,7 +801,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         zhuantiAdapter.setOnItemClickListener(new NewhomeZhuantiAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onRecyclerViewItemClick(View view, int position) {
-                Util.setToast(context, datalist.get(position).getTitle());
+                Intent it = new Intent(context, TopicDetailActivity.class);
+                it.putExtra("mTopicId", dataSource.getTopic().get(position).getId());
+                context.startActivity(it);
             }
         });
     }
