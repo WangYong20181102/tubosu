@@ -298,7 +298,7 @@ public class NewHomeActivity extends BaseActivity {
 
     private LocationClient mLocationClient;
     private void initBaiduMap(){
-        SDKInitializer.initialize(getApplicationContext());
+//        SDKInitializer.initialize(getApplicationContext());
         initLocationSetting();
     }
 
