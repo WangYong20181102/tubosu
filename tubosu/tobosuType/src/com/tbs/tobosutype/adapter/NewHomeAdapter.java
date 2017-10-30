@@ -165,7 +165,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             headHolder.relFreeLiangFang.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Util.setToast(context, "等通知");
+                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
+                    webIntent.putExtra("mLoadingUrl", Constant.DALIBAO);
+                    context.startActivity(webIntent);
                 }
             });
             headHolder.relXuanSheJi.setOnClickListener(new View.OnClickListener() {
@@ -460,9 +462,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 Glide.with(context).load(bannerList.get(i).getImg_url()).into(view);
                 imageViewList.add(view);
                 ImageView dotView = new ImageView(context);
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                        DensityUtil.dip2px(context, 10),
-                        DensityUtil.dip2px(context, 10));
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                        DensityUtil.dip2px(context, 10),
+//                        DensityUtil.dip2px(context, 10));
                 params.leftMargin = 8;
                 params.rightMargin = 8;
                 dotLayout.addView(dotView, params);
@@ -514,9 +516,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             currentItem = pos;
             for (int i = 0; i < dotViewsList.size(); i++) {
                 if (i == pos) {
-                    ((View) dotViewsList.get(pos)).setBackgroundResource(R.drawable.dot_select);
+                    ((View) dotViewsList.get(pos)).setBackgroundResource(R.drawable.selecteds);
                 } else {
-                    ((View) dotViewsList.get(i)).setBackgroundResource(R.drawable.dot_normal);
+                    ((View) dotViewsList.get(i)).setBackgroundResource(R.drawable.not_select);
                 }
             }
         }

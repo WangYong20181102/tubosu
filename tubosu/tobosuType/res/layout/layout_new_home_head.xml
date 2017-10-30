@@ -270,7 +270,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="9dp"
+        android:layout_height="4dp"
         android:background="#F7F7F7"/>
     <!-- 以下是装修案例 -->
 

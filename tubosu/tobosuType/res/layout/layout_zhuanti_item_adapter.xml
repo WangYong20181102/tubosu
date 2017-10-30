@@ -10,7 +10,7 @@
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
         android:scaleType="centerCrop"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/new_home_loading"/>
 
     <LinearLayout
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="xxxxx"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_gravity="center_horizontal"
             android:textSize="13sp"
             android:maxLines="2"
@@ -47,7 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2017-10-26"
-            android:layout_margin="16dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="8dp"
             android:layout_gravity="center_horizontal"
             android:textSize="12sp"
             android:textColor="#666666"/>
