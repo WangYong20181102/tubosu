@@ -69,19 +69,6 @@
             android:layout_alignParentBottom="true"
             android:layout_marginRight="30dp" />
 
-        <TextView
-            android:id="@+id/item_deco_detail_huafei"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="96dp"
-            android:layout_marginStart="96dp"
-            android:layout_marginTop="322dp"
-            android:text="约35万元（半包）"
-            android:textColor="#000000"
-            android:textSize="13sp" />
     </RelativeLayout>
     <!--XX的家以及风格-->
     <LinearLayout
@@ -316,7 +303,14 @@
                 android:text="花费"
                 android:textColor="#999999"
                 android:textSize="13sp" />
-
+            <TextView
+                android:id="@+id/item_deco_detail_huafei"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:text="约20万元"
+                android:textColor="#000000"
+                android:textSize="13sp" />
         </LinearLayout>
 
         <View

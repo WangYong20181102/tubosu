@@ -60,12 +60,12 @@
     </RelativeLayout>
     <!--上拉时显示的部分阴影-->
     <View
-        android:visibility="gone"
         android:id="@+id/banner_dever"
         android:layout_width="match_parent"
         android:layout_height="12dp"
         android:layout_below="@+id/deco_case_detail_banner"
-        android:background="@drawable/yinying4" />
+        android:background="@drawable/yinying4"
+        android:visibility="visible" />
     <!--底部发单按钮-->
     <RelativeLayout
         android:id="@+id/deco_case_detail_find_price_rl"
