@@ -3,6 +3,7 @@ package com.tbs.tobosutype.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
@@ -30,6 +32,8 @@ public class NewWebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
     TextView newWebviewTitle;
     @BindView(R.id.new_webview_web)
     WebView newWebviewWeb;
+    @BindView(R.id.new_webview_banner_rl)
+    RelativeLayout newWebviewBannerRl;
 
     private Context mContext;
     private String TAG = "NewWebViewActivity";
@@ -47,13 +51,15 @@ public class NewWebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
 
     private void initViewEvent() {
         mIntent = getIntent();
+        newWebviewBannerRl.setBackgroundColor(Color.parseColor("#ffffff"));
         mLoadingUrl = mIntent.getStringExtra("mLoadingUrl");
         newWebviewWeb.getSettings().setJavaScriptEnabled(true);
         newWebviewWeb.setWebChromeClient(webChromeClient);
         newWebviewWeb.setWebViewClient(webViewClient);
         newWebviewWeb.loadUrl(mLoadingUrl);
     }
-    private WebViewClient webViewClient=new WebViewClient(){
+
+    private WebViewClient webViewClient = new WebViewClient() {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);

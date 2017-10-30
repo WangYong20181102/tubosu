@@ -2,6 +2,7 @@ package com.tbs.tobosutype.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,17 +52,49 @@ public class TopicDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof HeadHolder) {
-            ((HeadHolder) holder).item_topic_head_title.setText(mTopicDetail.getTitle());
-            ((HeadHolder) holder).item_topic_head_time.setText(mTopicDetail.getAdd_time());
-            ((HeadHolder) holder).item_topic_head_content.setText(mTopicDetail.getDesc());
+            //标题的显示
+            if (TextUtils.isEmpty(mTopicDetail.getTitle())) {
+                ((HeadHolder) holder).item_topic_head_title.setVisibility(View.GONE);
+            } else {
+                ((HeadHolder) holder).item_topic_head_title.setVisibility(View.VISIBLE);
+                ((HeadHolder) holder).item_topic_head_title.setText(mTopicDetail.getTitle());
+            }
+            //时间的显示
+            if (TextUtils.isEmpty(mTopicDetail.getAdd_time())) {
+                ((HeadHolder) holder).item_topic_head_time.setVisibility(View.GONE);
+            } else {
+                ((HeadHolder) holder).item_topic_head_time.setVisibility(View.VISIBLE);
+                ((HeadHolder) holder).item_topic_head_time.setText(mTopicDetail.getAdd_time());
+            }
+            //简介的显示
+            if (TextUtils.isEmpty(mTopicDetail.getDesc())) {
+                ((HeadHolder) holder).item_topic_head_content.setVisibility(View.GONE);
+                ((HeadHolder) holder).item_topic_head_down_dou.setVisibility(View.GONE);
+                ((HeadHolder) holder).item_topic_head_up_dou.setVisibility(View.GONE);
+            } else {
+                ((HeadHolder) holder).item_topic_head_down_dou.setVisibility(View.VISIBLE);
+                ((HeadHolder) holder).item_topic_head_up_dou.setVisibility(View.VISIBLE);
+                ((HeadHolder) holder).item_topic_head_content.setVisibility(View.VISIBLE);
+                ((HeadHolder) holder).item_topic_head_content.setText(mTopicDetail.getDesc());
+            }
         } else if (holder instanceof FootHolder) {
-            ImageLoaderUtil.loadImage(mContext, ((FootHolder) holder).item_topic_foot_img, mTopicDetail.getDetail_info().get(position - 1).getImage_url());
             if (mTopicDetail.getDetail_info().size() < 10) {
                 ((FootHolder) holder).item_topic_foot_num.setText("0" + position + "/");
             } else {
                 ((FootHolder) holder).item_topic_foot_num.setText(position + "/");
             }
-            ((FootHolder) holder).item_topic_foot_title.setText(mTopicDetail.getDetail_info().get(position - 1).getSub_title());
+            if (TextUtils.isEmpty(mTopicDetail.getDetail_info().get(position - 1).getImage_url())) {
+                ((FootHolder) holder).item_topic_foot_img.setVisibility(View.GONE);
+            } else {
+                ((FootHolder) holder).item_topic_foot_img.setVisibility(View.VISIBLE);
+                ImageLoaderUtil.loadImage(mContext, ((FootHolder) holder).item_topic_foot_img, mTopicDetail.getDetail_info().get(position - 1).getImage_url());
+            }
+            if (TextUtils.isEmpty(mTopicDetail.getDetail_info().get(position - 1).getSub_title())) {
+                ((FootHolder) holder).item_topic_foot_title.setVisibility(View.GONE);
+            } else {
+                ((FootHolder) holder).item_topic_foot_title.setVisibility(View.VISIBLE);
+                ((FootHolder) holder).item_topic_foot_title.setText(mTopicDetail.getDetail_info().get(position - 1).getSub_title());
+            }
         }
     }
 
@@ -75,12 +108,16 @@ public class TopicDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         private TextView item_topic_head_title;//标题
         private TextView item_topic_head_time;//时间
         private TextView item_topic_head_content;//内容
+        private TextView item_topic_head_up_dou;//简介上边的逗号
+        private TextView item_topic_head_down_dou;//简介下边的逗号
 
         public HeadHolder(View itemView) {
             super(itemView);
             item_topic_head_title = (TextView) itemView.findViewById(R.id.item_topic_head_title);
             item_topic_head_time = (TextView) itemView.findViewById(R.id.item_topic_head_time);
             item_topic_head_content = (TextView) itemView.findViewById(R.id.item_topic_head_content);
+            item_topic_head_up_dou = (TextView) itemView.findViewById(R.id.item_topic_head_up_dou);
+            item_topic_head_down_dou = (TextView) itemView.findViewById(R.id.item_topic_head_down_dou);
         }
     }
 

@@ -24,6 +24,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/deco_case_banner_rl"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/white">

@@ -2,6 +2,7 @@ package com.tbs.tobosutype.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,6 +57,10 @@ public class TopicDetailActivity extends com.tbs.tobosutype.base.BaseActivity {
     TextView topicDetailFindPrice;
     @BindView(R.id.ltopic_detail_find_price_rl)
     RelativeLayout ltopicDetailFindPriceRl;
+    @BindView(R.id.topic_detail_banner)
+    RelativeLayout topicDetailBanner;
+    @BindView(R.id.topic_detail_all)
+    RelativeLayout topicDetailAll;
 
     private Context mContext;
     private String TAG = "TopicDetailActivity";
@@ -78,6 +83,8 @@ public class TopicDetailActivity extends com.tbs.tobosutype.base.BaseActivity {
     private void initViewEvent() {
         mIntent = getIntent();
         mGson = new Gson();
+        topicDetailBanner.setBackgroundColor(Color.parseColor("#ffffff"));
+        topicDetailAll.setBackgroundColor(Color.parseColor("#ffffff"));
         mTopicId = mIntent.getStringExtra("mTopicId");
         mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         topicDetailRecycler.setLayoutManager(mLinearLayoutManager);

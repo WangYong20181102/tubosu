@@ -55,6 +55,8 @@ public class DecorationCaseActivity extends Activity {
     TextView decoCaseFindPrice;
     @BindView(R.id.deco_case_find_price_rl)
     RelativeLayout decoCaseFindPriceRl;
+    @BindView(R.id.deco_case_banner_rl)
+    RelativeLayout decoCaseBannerRl;
 
     private Context mContext;
     private String TAG = "DecorationCaseActivity";
@@ -78,6 +80,7 @@ public class DecorationCaseActivity extends Activity {
     private void initViewEvet() {
         //实例化相关工具
         mGson = new Gson();
+        decoCaseBannerRl.setBackgroundColor(Color.parseColor("#ffffff"));
         //初始化下拉刷新控件
         decoCaseSwipe.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE);
         decoCaseSwipe.setBackgroundColor(Color.WHITE);
@@ -151,7 +154,7 @@ public class DecorationCaseActivity extends Activity {
         }
     }
 
-    @OnClick({R.id.deco_case_back, R.id.deco_case_find_price,R.id.deco_case_find_price_rl})
+    @OnClick({R.id.deco_case_back, R.id.deco_case_find_price, R.id.deco_case_find_price_rl})
     public void onViewClickedInDecorationCaseActivity(View view) {
         switch (view.getId()) {
             case R.id.deco_case_back:

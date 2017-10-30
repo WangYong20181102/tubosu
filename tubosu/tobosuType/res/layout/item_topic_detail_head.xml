@@ -42,6 +42,7 @@
             android:orientation="vertical">
             <!--上边的逗号-->
             <TextView
+                android:id="@+id/item_topic_head_up_dou"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:gravity="left"
@@ -61,6 +62,7 @@
                 android:textSize="13sp" />
             <!--下边的逗号-->
             <TextView
+                android:id="@+id/item_topic_head_down_dou"
                 android:gravity="top"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
