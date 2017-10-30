@@ -62,8 +62,10 @@ public class DecoCaseDetailAdapter
     public int getItemViewType(int position) {
         if (position == 0) {
             return 0;//展示头部
+        } else if (position + 1 == getItemCount()) {
+            return 2;//展示假尾部
         } else {
-            return 1;//展示尾部
+            return 1;
         }
     }
 
@@ -81,10 +83,14 @@ public class DecoCaseDetailAdapter
             headViewHolder.item_deco_detail_back.setOnClickListener(this);
             headViewHolder.item_deco_detail_share.setOnClickListener(this);
             return headViewHolder;
-        } else {
+        } else if (viewType == 1) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_deco_case_detail_foot, parent, false);
             FootViewHolder footViewHolder = new FootViewHolder(view);
             return footViewHolder;
+        } else {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.item_foot_viewholder_white, parent, false);
+            FootViewHolders footViewHolders = new FootViewHolders(view);
+            return footViewHolders;
         }
     }
 
@@ -192,7 +198,7 @@ public class DecoCaseDetailAdapter
 
     @Override
     public int getItemCount() {
-        return mDecoCaseDetail.getSpace_info() != null ? mDecoCaseDetail.getSpace_info().size() + 1 : 1;
+        return mDecoCaseDetail.getSpace_info() != null ? mDecoCaseDetail.getSpace_info().size() + 2 : 2;
     }
 
     //头部展示的信息
@@ -270,6 +276,16 @@ public class DecoCaseDetailAdapter
             super(itemView);
             item_deco_detail_foot_title = (TextView) itemView.findViewById(R.id.item_deco_detail_foot_title);
             item_deco_detail_foot_img = (ImageView) itemView.findViewById(R.id.item_deco_detail_foot_img);
+        }
+    }
+
+    //假尾巴
+    class FootViewHolders extends RecyclerView.ViewHolder {
+        private View item_foot_white;
+
+        public FootViewHolders(View itemView) {
+            super(itemView);
+            item_foot_white = (View) itemView.findViewById(R.id.item_foot_white);
         }
     }
 }

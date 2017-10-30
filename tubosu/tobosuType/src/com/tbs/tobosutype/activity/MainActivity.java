@@ -212,7 +212,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         main_tab_home.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                startActivity(new Intent(MainActivity.this, DecorationCaseActivity.class));
+//                startActivity(new Intent(MainActivity.this, DecorationCaseActivity.class));
                 return true;
             }
         });
@@ -221,9 +221,9 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Intent intent1 = new Intent(MainActivity.this, TopicDetailActivity.class);
-                intent1.putExtra("mTopicId", "7696");
-                startActivity(intent1);
+//                Intent intent1 = new Intent(MainActivity.this, TopicDetailActivity.class);
+//                intent1.putExtra("mTopicId", "7696");
+//                startActivity(intent1);
                 return true;
             }
         });
