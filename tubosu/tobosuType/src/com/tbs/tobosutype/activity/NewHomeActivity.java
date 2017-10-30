@@ -18,7 +18,6 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.SDKInitializer;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.NewHomeAdapter;
@@ -46,7 +45,6 @@ public class NewHomeActivity extends BaseActivity {
     private TextView newhomeCity;
     private String cityId;
     private String cityName;
-    private Drawable drawable;
     private RecyclerView recyclerView;
     private TextView tubosu;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -122,21 +120,10 @@ public class NewHomeActivity extends BaseActivity {
                 float alpha = 0;
                 int scollYHeight = getScollYHeight(true, tubosu.getHeight());
 
-
-//                if(scollYHeight>0){
-//                    if(showAnli && newHomeAdapter!=null){
-//                        newHomeAdapter.notifyDataSetChanged();
-//                        showAnli = false;
-//                    }
-//                }
-
-                //起始截止变化高度,如可以变化高度为mRecyclerHeaderHeight
                 int baseHeight = 574;
                 if(scollYHeight >= baseHeight) {
-                    //完全不透明
                     alpha = 1;
                 }else {
-                    //产生渐变效果
                     alpha = scollYHeight / (baseHeight*1.0f);
                     if(alpha>4){
                         home_view.setVisibility(View.INVISIBLE);
