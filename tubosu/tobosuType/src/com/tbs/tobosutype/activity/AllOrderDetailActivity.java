@@ -9,9 +9,11 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -21,17 +23,23 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CallDialogCompany;
+import com.tbs.tobosutype.customview.CheckOrderPwdPopupWindow;
+import com.tbs.tobosutype.customview.InputWarnDialog;
 import com.tbs.tobosutype.customview.LfPwdPopupWindow;
+import com.tbs.tobosutype.customview.SettingOrderPwdPopupWindow;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.CheckOrderUtils;
+import com.tbs.tobosutype.utils.MD5Util;
+import com.tbs.tobosutype.utils.Util;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -328,12 +336,236 @@ public class AllOrderDetailActivity extends Activity implements OnClickListener 
         orderDetailParams.put("order_id", order_id);
 
         if (MyApplication.ISPUSHLOOKORDER) {
-            new CheckOrderUtils(detail_allorder_loading, AllOrderDetailActivity.this, token, "0");// 0-->> 全部订单
+//            new CheckOrderUtils(detail_allorder_loading, AllOrderDetailActivity.this, token, "0");// 0-->> 全部订单
+            requestHasOrderPwd();
         } else {
             requestOrderDetailPost();
         }
     }
 
+    /***订单是否设置密码*/
+    private String hasOrderPwdUrl = Constant.TOBOSU_URL + "tapp/order/hasOrderPwd";
+    /**是否验证了订单密码*/
+    private boolean isCheckOrderPwd;
+    /***未设置过订单密码*/
+    private static final int NEVER_SET_PSD= 20301;
+
+    /**pc端重新设置过密码*/
+    private static final int PC_RESET_PSD = 20302;
+
+//	/**没有密码*/
+//	private static final int NO_PSD = 0;
+
+    /**订单密码已设置*/
+    private static final int HAS_SET_PSD = 0;
+    /***
+     * 订单是否设置密码接口请求
+     */
+    private void requestHasOrderPwd() {
+        HashMap hasOrderParams = new HashMap<String, Object>();
+        hasOrderParams.put("token", token);
+        isCheckOrderPwd = mContext.getSharedPreferences("CheckOrderPwd", 0).getBoolean("CheckOrderPwd", false);
+        OKHttpUtil.post(hasOrderPwdUrl, hasOrderParams, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String result = response.body().string();
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+
+                    //订单密码已设置     -->>[debug得知]
+                    if (isCheckOrderPwd && jsonObject.getInt("error_code") == HAS_SET_PSD) {
+                        requestOrderDetailPost();
+                    }
+
+
+                    // 没设密码，则需要设置密码
+                    if (jsonObject.getInt("error_code") == NEVER_SET_PSD) {
+                        InputWarnDialog.Builder builder = new InputWarnDialog.Builder(mContext);
+                        builder.setTitle("提示")/*.setMessage("您还没设置订单密码，请先设置")*/;
+                        builder.setMessage("你确定退出吗？").setPositiveButton("设置订单密码", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+//														Util.setToast(context, "-  标记 4  -");
+                                //去设置密码
+                                operSetOrderPwd();
+                            }
+                        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        builder.create().show();
+
+                        return;
+                    }
+
+
+                    // 20302
+                    if (jsonObject.getInt("error_code") == PC_RESET_PSD || !isCheckOrderPwd) {
+                        // 输入密码查看
+//						Util.setToast(context, "-  标记 5  -");
+                        operCheckOrderPwd();
+                        return;
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 给订单设置密码
+     */
+    private void operSetOrderPwd() {
+        final SettingOrderPwdPopupWindow popuWindow = new SettingOrderPwdPopupWindow(mContext);
+        popuWindow.showAtLocation(detail_allorder_loading.getRootView(), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        popuWindow.bt_subit.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String pwd1 = popuWindow.et_setting_order_pwd1.getText().toString().trim();
+                String pwd2 = popuWindow.et_setting_order_pwd2.getText().toString().trim();
+
+                if("".equals(pwd1) || "".equals(pwd2)){
+                    Util.setToast(mContext, "密码不能为空");
+                    return;
+                }else{
+                    if(pwd1.equals(pwd2)){
+                        if(pwd1.length()>16 || pwd1.length()<6){
+                            Util.setToast(mContext, "密码长度在6-16位之间");
+                            return;
+                        }
+                        requestSetOrderPwd(popuWindow, pwd1, pwd2);
+                    }else{
+                        Util.setToast(mContext, "两次输入密码不一样，请重新输入");
+                        return;
+                    }
+                }
+
+            }
+        });
+    }
+
+    /***订单填写密码*/
+    private String setOrderPwdUrl = Constant.TOBOSU_URL + "tapp/passport/setOrderPwd";
+    /***
+     * 提交订单填写密码接口请求
+     * @param popuWindow
+     * @param pwd1
+     * @param pwd2
+     */
+    protected void requestSetOrderPwd(final SettingOrderPwdPopupWindow popuWindow, String pwd1, String pwd2){
+        HashMap setOrderParams = new HashMap<String, Object>();
+        setOrderParams.put("token", token);
+        setOrderParams.put("orderpwd", MD5Util.md5(pwd1));
+        setOrderParams.put("orderpwd1", MD5Util.md5(pwd2));
+
+        OKHttpUtil.post(setOrderPwdUrl, setOrderParams, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String result = response.body().string();
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    int code = jsonObject.getInt("error_code");
+                    switch (code) {
+                        case HAS_SET_PSD:  // 已经设置密码  HAS_SET_PSD == 0
+                        case PC_RESET_PSD: // pc端重置过密码，需重新验证   PC_RESET_PSD == 20302
+                            getSharedPreferences("CheckOrderPwd", 0).edit().putBoolean("CheckOrderPwd", false).commit();
+
+                            // 输入密码来查看
+                            operCheckOrderPwd();
+                            Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                            popuWindow.dismiss();
+                            break;
+
+                        default:
+                            Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                            break;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /****
+     * 需要输入订单密码才能进入全部订单列表
+     */
+    private void operCheckOrderPwd() {
+        final CheckOrderPwdPopupWindow checkOrderPwdPopupWindow = new CheckOrderPwdPopupWindow(mContext);
+        checkOrderPwdPopupWindow.showAtLocation(detail_allorder_loading.getRootView(), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        checkOrderPwdPopupWindow.bt_subit.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String pwd = checkOrderPwdPopupWindow.et_check_order_pwd.getText().toString().trim();
+                if (TextUtils.isEmpty(pwd)) {
+                    Toast.makeText(mContext, "密码不能为空！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                // 验证订单秘密
+                requestCheckOrderPwd(pwd, checkOrderPwdPopupWindow);
+            }
+        });
+    }
+
+
+    /***订单验证密码*/
+    private String requestOrderPwdUrl = Constant.TOBOSU_URL + "tapp/order/checkOrderPwd";
+    /***
+     *
+     * 订单验证接口请求
+     * @param pwd
+     * @param poWindow
+     */
+    private void requestCheckOrderPwd(String pwd, final PopupWindow poWindow) {
+        HashMap requestOrderParams = new HashMap<String, Object>();
+        requestOrderParams.put("token", token);
+        requestOrderParams.put("orderpwd", MD5Util.md5(pwd));
+        OKHttpUtil.post(requestOrderPwdUrl, requestOrderParams, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String result = response.body().string();
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    if (jsonObject.getInt("error_code") == HAS_SET_PSD) {
+                        requestOrderDetailPost();
+                        getSharedPreferences("CheckOrderPwd", 0).edit().putBoolean("CheckOrderPwd", true).commit();
+                        poWindow.dismiss();
+                    } else {
+                        Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
     private void initEvent() {
         detail_allorder_back.setOnClickListener(this);

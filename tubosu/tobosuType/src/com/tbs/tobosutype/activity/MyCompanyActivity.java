@@ -2,33 +2,36 @@ package com.tbs.tobosutype.activity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import android.app.Notification;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.media.RingtoneManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.customview.CheckOrderPwdPopupWindow;
+import com.tbs.tobosutype.customview.InputWarnDialog;
 import com.tbs.tobosutype.customview.RoundImageView;
+import com.tbs.tobosutype.customview.SettingOrderPwdPopupWindow;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.CheckOrderUtils;
+import com.tbs.tobosutype.utils.MD5Util;
 import com.tbs.tobosutype.utils.Util;
-import com.tencent.android.tpush.XGCustomPushNotificationBuilder;
-import com.tencent.android.tpush.XGPushManager;
-import com.tencent.android.tpush.service.XGPushService;
 import com.umeng.socialize.utils.Log;
 import java.io.IOException;
 import java.util.HashMap;
@@ -63,6 +66,29 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
     private TextView tv_orderTotal;
 
     private ImageView image_business_license;
+
+    /***未设置过订单密码*/
+    private static final int NEVER_SET_PSD= 20301;
+
+    /**pc端重新设置过密码*/
+    private static final int PC_RESET_PSD = 20302;
+
+//	/**没有密码*/
+//	private static final int NO_PSD = 0;
+
+    /**订单密码已设置*/
+    private static final int HAS_SET_PSD = 0;
+
+
+    /***订单是否设置密码*/
+    private String hasOrderPwdUrl = Constant.TOBOSU_URL + "tapp/order/hasOrderPwd";
+
+    /***订单填写密码*/
+    private String setOrderPwdUrl = Constant.TOBOSU_URL + "tapp/passport/setOrderPwd";
+
+    /***订单验证密码*/
+    private String requestOrderPwdUrl = Constant.TOBOSU_URL + "tapp/order/checkOrderPwd";
+
 
     /**
      * 装修保
@@ -207,15 +233,10 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
         mContext = MyCompanyActivity.this;
         initReceiver();
         initView();
-
+//        initData();
         initEvent();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initData();
-    }
 
     private void initView() {
         tv_not_see_sysmsg = (TextView) findViewById(R.id.tv_not_see_sysmsg);
@@ -255,62 +276,18 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
     }
 
     private void initData() {
-        mainActivity = new MainActivity();
         token = AppInfoUtil.getToekn(getApplicationContext());
-        String userid = AppInfoUtil.getUserid(getApplicationContext());
-        String mark = AppInfoUtil.getMark(getApplicationContext());
-
-
-        XGCustomPushNotificationBuilder build = new XGCustomPushNotificationBuilder();
-        build.setSound(RingtoneManager.getActualDefaultRingtoneUri(
-                mContext, RingtoneManager.TYPE_ALARM)) // 设置声音
-                // setSound(
-                // Uri.parse("android.resource://" + getPackageName()
-                // + "/" + R.raw.wind)) 设定Raw下指定声音文件
-                .setDefaults(Notification.DEFAULT_VIBRATE)
-                .setFlags(Notification.FLAG_AUTO_CANCEL);
-        // 设置自定义通知图片资源
-        build.setLayoutIconDrawableId(R.drawable.app_icon);
-        // 设置状态栏的通知小图标
-        build.setIcon(R.drawable.app_icon);
-        XGPushManager.setDefaultNotificationBuilder(mContext, build);
-
-
-//		Log.d(TAG, "mark标记是" + mark);
-
-        // 根据不同mark标记，注册推送
-        if (mark.equals("0")) {
-            XGPushManager.setTag(this, "loginOff");
-            XGPushManager.deleteTag(this, "loginOn");
-            XGPushManager.deleteTag(this, "isNotCompany");
-            XGPushManager.deleteTag(this, "isCompany");
-        } else if (mark.equals("1")) {
-            XGPushManager.deleteTag(this, "loginOff");
-            XGPushManager.setTag(this, "loginOn");
-            XGPushManager.setTag(this, "isNotCompany");
-
-        } else if (mark.equals("3")) {
-            if (!TextUtils.isEmpty(userid) && getSharedPreferences("Push_Config", MODE_PRIVATE).getBoolean("Is_Push_Message", true)) {
-                XGPushManager.registerPush(getApplicationContext(), userid);
-                spPushConfig = getSharedPreferences("Push_Config", MODE_PRIVATE);
-                Editor editor = spPushConfig.edit();
-                editor.putBoolean("Is_Push_Message", true);
-                editor.commit();
-
-                XGPushManager.deleteTag(this, "loginOff");
-                XGPushManager.setTag(this, "loginOn");
-                XGPushManager.setTag(this, "isCompany");
-                Intent service = new Intent(mContext, XGPushService.class);
-                Log.d(TAG, "注册成功");
-                startService(service);
-            }
-        }
-
         if (!TextUtils.isEmpty(token)) {
             myParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
             myParams.put("token", token);
             requstMyPost();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
     }
 
     /***
@@ -419,7 +396,7 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
             case R.id.my_notyet_order: // 2-->> 未量房
                 MyApplication.ISPUSHLOOKORDER = false;
 //			ll_loading.setVisibility(View.VISIBLE);
-                new CheckOrderUtils(my_layout_allorder, mContext, token, "2");
+                requestHasOrderPwd("2");
                 break;
             case R.id.iv_system_message_company: // 消息
             case R.id.ll_msgnote:
@@ -428,17 +405,17 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
             case R.id.my_yet_order: // 1-->>  已量房
 //			ll_loading.setVisibility(View.VISIBLE);
                 MyApplication.ISPUSHLOOKORDER = false;
-                new CheckOrderUtils(my_layout_allorder, mContext, token, "1");
+                requestHasOrderPwd("1");
                 break;
             case R.id.my_layout_allorder: // 0-->>  全部订单
 //			ll_loading.setVisibility(View.VISIBLE);
                 MyApplication.ISPUSHLOOKORDER = false;
-                new CheckOrderUtils(my_layout_allorder, mContext, token, "0");
+                requestHasOrderPwd("0");
                 break;
             case R.id.my_has_sign_bill: // 3-->>  已签单
 //			ll_loading.setVisibility(View.VISIBLE);
                 MyApplication.ISPUSHLOOKORDER = false;
-                new CheckOrderUtils(my_layout_allorder, mContext, token, "3");
+                requestHasOrderPwd("3");
                 break;
 
             case R.id.my_layout_preferential_applyfor: // 优惠报名
@@ -482,7 +459,251 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
             default:
                 break;
         }
+    }
 
+
+
+    /**是否验证了订单密码*/
+    private boolean isCheckOrderPwd;
+    /***
+     * 订单是否设置密码接口请求
+     */
+    private void requestHasOrderPwd(final String kind) {
+        HashMap hasOrderParams = new HashMap<String, Object>();
+        hasOrderParams.put("token", token);
+        isCheckOrderPwd = getSharedPreferences("CheckOrderPwd", 0).getBoolean("CheckOrderPwd", false);
+        OKHttpUtil.post(hasOrderPwdUrl, hasOrderParams, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(result);
+
+                            //订单密码已设置     -->>[debug得知]
+                            if (isCheckOrderPwd && jsonObject.getInt("error_code") == HAS_SET_PSD) {
+                                goAllOrder(kind);
+                                return;
+                            }
+
+
+                            // 没设密码，则需要设置密码
+                            if (jsonObject.getInt("error_code") == NEVER_SET_PSD) {
+                                InputWarnDialog.Builder builder = new InputWarnDialog.Builder(mContext);
+                                builder.setTitle("提示")/*.setMessage("您还没设置订单密码，请先设置")*/;
+                                builder.setMessage("你确定退出吗？").setPositiveButton("设置订单密码", new DialogInterface.OnClickListener() {
+
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.dismiss();
+//														Util.setToast(context, "-  标记 4  -");
+                                        //去设置密码
+                                        operSetOrderPwd(kind);
+                                    }
+                                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                                builder.create().show();
+
+                                return;
+                            }
+
+
+                            // 20302
+                            if (jsonObject.getInt("error_code") == PC_RESET_PSD || !isCheckOrderPwd) {
+                                operCheckOrderPwd(kind);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+            }
+        });
+    }
+
+
+    /**
+     * 给订单设置密码
+     */
+    private void operSetOrderPwd(final String kind) {
+        final SettingOrderPwdPopupWindow popuWindow = new SettingOrderPwdPopupWindow(mContext);
+        popuWindow.showAtLocation(my_layout_allorder.getRootView(), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        popuWindow.bt_subit.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String pwd1 = popuWindow.et_setting_order_pwd1.getText().toString().trim();
+                String pwd2 = popuWindow.et_setting_order_pwd2.getText().toString().trim();
+
+                if("".equals(pwd1) || "".equals(pwd2)){
+                    Util.setToast(mContext, "密码不能为空");
+                    return;
+                }else{
+                    if(pwd1.equals(pwd2)){
+                        if(pwd1.length()>16 || pwd1.length()<6){
+                            Util.setToast(mContext, "密码长度在6-16位之间");
+                            return;
+                        }
+                        requestSetOrderPwd(popuWindow, pwd1, pwd2, kind);
+                    }else{
+                        Util.setToast(mContext, "两次输入密码不一样，请重新输入");
+                        return;
+                    }
+                }
+
+            }
+        });
+    }
+
+
+    /***
+     * 提交订单填写密码接口请求
+     * @param popuWindow
+     * @param pwd1
+     * @param pwd2
+     */
+    protected void requestSetOrderPwd(final SettingOrderPwdPopupWindow popuWindow, String pwd1, String pwd2, final String kind){
+        HashMap<String, Object> setOrderParams = new HashMap<String, Object>();
+        setOrderParams.put("token", token);
+        setOrderParams.put("orderpwd", MD5Util.md5(pwd1));
+        setOrderParams.put("orderpwd1", MD5Util.md5(pwd2));
+
+        OKHttpUtil.post(setOrderPwdUrl, setOrderParams, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(result);
+                            int code = jsonObject.getInt("error_code");
+                            switch (code) {
+                                case HAS_SET_PSD:  // 已经设置密码  HAS_SET_PSD == 0
+                                case PC_RESET_PSD: // pc端重置过密码，需重新验证   PC_RESET_PSD == 20302
+                                    getSharedPreferences("CheckOrderPwd", 0).edit().putBoolean("CheckOrderPwd", false).commit();
+
+                                    // 输入密码来查看
+                                    operCheckOrderPwd(kind);
+                                    Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                                    popuWindow.dismiss();
+                                    break;
+
+                                default:
+                                    Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+            }
+        });
+    }
+
+    /****
+     * 需要输入订单密码才能进入全部订单列表
+     */
+    private void operCheckOrderPwd(final String kind) {
+        final CheckOrderPwdPopupWindow checkOrderPwdPopupWindow = new CheckOrderPwdPopupWindow(mContext);
+        checkOrderPwdPopupWindow.showAtLocation(my_layout_allorder.getRootView(), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        checkOrderPwdPopupWindow.bt_subit.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String pwd = checkOrderPwdPopupWindow.et_check_order_pwd.getText().toString().trim();
+                if (TextUtils.isEmpty(pwd)) {
+                    Toast.makeText(mContext, "密码不能为空！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                // 验证订单秘密
+                requestCheckOrderPwd(pwd, kind, checkOrderPwdPopupWindow);
+            }
+        });
+    }
+
+
+    /***
+     *
+     * 订单验证接口请求
+     * @param pwd
+     * @param poWindow
+     */
+    private void requestCheckOrderPwd(String pwd, final String kind, final PopupWindow poWindow) {
+        HashMap<String, Object> requestOrderParams = new HashMap<String, Object>();
+        requestOrderParams.put("token", token);
+        requestOrderParams.put("orderpwd", MD5Util.md5(pwd));
+        OKHttpUtil.post(requestOrderPwdUrl, requestOrderParams, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            JSONObject jsonObject = new JSONObject(result);
+                            if (jsonObject.getInt("error_code") == HAS_SET_PSD) {
+                                goAllOrder(kind);
+//                        if (activity instanceof MyCompanyActivity) {
+//                            // 去全部订单列表页面
+//                            goAllOrder(kind);
+//                        }
+//                        // 去订单详情页面
+//                        if (activity instanceof AllOrderDetailActivity) {
+//                            ((AllOrderDetailActivity) activity).requestOrderDetailPost();
+//                        }
+                                getSharedPreferences("CheckOrderPwd", 0).edit().putBoolean("CheckOrderPwd", true).commit();
+                                poWindow.dismiss();
+                            } else {
+                                Toast.makeText(mContext, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+            }
+        });
+    }
+    /****
+     * 根据不同的类型跳转到全部订单页面
+     *
+     * @param kind
+     */
+    public void goAllOrder(String kind) {
+        Intent allOrderIntent = new Intent(mContext, AllOrderListActivity.class);
+        Bundle allOrderBundle = new Bundle();
+        allOrderBundle.putString("kind", kind);
+        allOrderIntent.putExtras(allOrderBundle);
+        mContext.startActivity(allOrderIntent);
     }
 
     @Override
@@ -508,7 +729,7 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
         @Override
         public void onReceive(Context context, Intent intent) {
             if(Constant.LOGOUT_ACTION.equals(intent.getAction())){
-                Util.setToast(mContext, "怎？？？");
+//                Util.setToast(mContext, "怎？？？");
 //                requstMyPost();
             }
         }

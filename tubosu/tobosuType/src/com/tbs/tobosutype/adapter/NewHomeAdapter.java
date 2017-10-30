@@ -319,6 +319,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     context.sendBroadcast(it);
                 }
             });
+            shejiAdapter.notifyDataSetChanged();
 
         }
 

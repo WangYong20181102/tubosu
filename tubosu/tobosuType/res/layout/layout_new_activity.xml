@@ -16,6 +16,11 @@
         </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
+    <View
+        android:id="@+id/home_view"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:background="#40000000"/>
 
     <RelativeLayout
         android:id="@+id/rel_newhomebar"
@@ -45,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="14dp"
-            android:background="@drawable/sdf"/>
+            android:background="@drawable/ad_icon"/>
 
         <TextView
             android:id="@+id/newhomeCity"
@@ -56,7 +61,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="6dp"
             android:textSize="14sp"
-            android:textColor="#403f3f"/>
+            android:textColor="@color/white"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -64,6 +69,6 @@
             android:layout_toRightOf="@+id/newhomeCity"
             android:layout_centerVertical="true"
             android:layout_marginLeft="6dp"
-            android:background="@drawable/tt"/>
+            android:background="@drawable/sanjiaoxing"/>
     </RelativeLayout>
 </FrameLayout>

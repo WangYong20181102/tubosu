@@ -1,4 +1,5 @@
 package com.tbs.tobosutype.activity;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -10,7 +11,7 @@ import com.tbs.tobosutype.protocol.JpyProtocol;
 
 import cn.jpush.android.api.InstrumentedActivity;
 
-public class BaseActivity extends InstrumentedActivity implements JpyProtocol.MDataUpdateNotify {
+public class BaseActivity extends Activity implements JpyProtocol.MDataUpdateNotify {
 	protected String TAG = BaseActivity.class.getSimpleName();
 	protected Context mContext;
 
