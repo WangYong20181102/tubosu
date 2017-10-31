@@ -1,7 +1,6 @@
 package com.tbs.tobosutype.activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,39 +12,51 @@ import android.os.SystemClock;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
-import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
+import com.tbs.tobosutype.utils.ImageLoaderUtil;
 import com.tbs.tobosutype.utils.MD5Util;
 import com.tbs.tobosutype.utils.Util;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
-import java.util.List;
+import okhttp3.Response;
 
 /**
  * 欢迎 页
  *
  * @author dec
  */
-public class WelcomeActivity extends Activity {
+public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     private static final String TAG = WelcomeActivity.class.getSimpleName();
+    @BindView(R.id.welcome_image)
+    ImageView welcomeImage;
 //    private CheckUpdateUtils updateUtils;
 
     private String check_password = Constant.TOBOSU_URL + "tapp/passport/isCheckPwdUp";
-    private String check_ab_test  = Constant.TOBOSU_URL + "tapp/spcailpic/get_ab";
-    private String SURVIVAL_URL   = Constant.TOBOSU_URL + "tapp/DataCount/survival_count";
+    private String check_ab_test = Constant.TOBOSU_URL + "tapp/spcailpic/get_ab";
+    private String SURVIVAL_URL = Constant.TOBOSU_URL + "tapp/DataCount/survival_count";
 
     private Context mContext;
     private long startapp_time = 0L;
@@ -53,10 +64,12 @@ public class WelcomeActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppInfoUtil.setTranslucentStatus(this);
+//        AppInfoUtil.setTranslucentStatus(this);
         setContentView(R.layout.activity_welcome_bg);
+        ButterKnife.bind(this);
         mContext = WelcomeActivity.this;
         startapp_time = new Date().getTime();
+        initView();
         needPermissions();
 //        do_webpage();
         getSetting();
@@ -68,11 +81,11 @@ public class WelcomeActivity extends Activity {
                 countDownloadNum();
                 if ("".equals(getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("encode_pass", ""))) {
                     // 没有登录
-					Util.setErrorLog(TAG,">>>>>>>没有登录<<<<<");
+                    Util.setErrorLog(TAG, ">>>>>>>没有登录<<<<<");
                 } else {
                     // 登录
                     check_password();
-					Util.setErrorLog(TAG,">>>>>>>登录<<<<<");
+                    Util.setErrorLog(TAG, ">>>>>>>登录<<<<<");
                     SystemClock.sleep(2000);
                 }
 
@@ -87,6 +100,10 @@ public class WelcomeActivity extends Activity {
                 runOnUiThread(new IntentTask());
             }
         }.start();
+    }
+
+    private void initView() {
+        Glide.with(mContext).load(R.drawable.welcome_image).placeholder(R.drawable.welcome_image).error(R.drawable.welcome_image).into(welcomeImage);
     }
 
     private String MAC_CODE = "";
@@ -119,27 +136,27 @@ public class WelcomeActivity extends Activity {
     }
 
 
-    private void getSetting(){
+    private void getSetting() {
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         MAC_CODE = getMacAddress(mContext);
-        _TOKEN = MD5Util.md5(MD5Util.md5(MAC_CODE+1)+date);
+        _TOKEN = MD5Util.md5(MD5Util.md5(MAC_CODE + 1) + date);
     }
 
-    private void countDownloadNum(){
+    private void countDownloadNum() {
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("mac_code", MAC_CODE);
-        map.put("type","1");
+        map.put("type", "1");
         map.put("_token", _TOKEN);
         OKHttpUtil.post(SURVIVAL_URL, map, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Util.setLog(TAG, "onFailure >>>"+e.getMessage());
+                Util.setLog(TAG, "onFailure >>>" + e.getMessage());
             }
 
             @Override
-            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+            public void onResponse(Call call, Response response) throws IOException {
                 String json = response.body().string();
-                Util.setLog(TAG, "onResponse >>>"+json);
+                Util.setLog(TAG, "onResponse >>>" + json);
             }
         });
     }
@@ -156,9 +173,9 @@ public class WelcomeActivity extends Activity {
             }
 
             @Override
-            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+            public void onResponse(Call call, Response response) throws IOException {
                 final String json = response.body().string();
-                Util.setErrorLog(TAG,">>>>>>>检查修改密码请求结果[" + json + "]<<<<<");
+                Util.setErrorLog(TAG, ">>>>>>>检查修改密码请求结果[" + json + "]<<<<<");
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -167,10 +184,10 @@ public class WelcomeActivity extends Activity {
                             if (obj.getInt("error_code") == 0) {
                                 long gap = startapp_time - getSharedPreferences("userInfo", Context.MODE_PRIVATE).getLong("login_time", 0);
                                 int days = (int) (gap / 1000 / 3600 / 24);
-                                Util.setErrorLog(TAG,">>>>>>>" + days + "<<<<<");
+                                Util.setErrorLog(TAG, ">>>>>>>" + days + "<<<<<");
                                 if (days >= 30) {
                                     getSharedPreferences("userInfo", Context.MODE_PRIVATE).edit().clear().commit();
-                                    Util.setErrorLog(TAG,">>>>>>>有30天啦<<<<<");
+                                    Util.setErrorLog(TAG, ">>>>>>>有30天啦<<<<<");
                                 }
                             } else if (obj.getInt("error_code") == 250) {
                                 getSharedPreferences("userInfo", Context.MODE_PRIVATE).edit().clear().commit();
@@ -193,14 +210,14 @@ public class WelcomeActivity extends Activity {
 
         @Override
         public void run() {
-            if(Util.isNetAvailable(mContext)){
+            if (Util.isNetAvailable(mContext)) {
                 Util.setErrorLog(TAG, "----11----有网络--------");
                 HashMap<String, Object> hashMap = new HashMap<String, Object>();
                 WindowManager wm = getWindowManager();
                 int width = wm.getDefaultDisplay().getWidth();
                 int height = wm.getDefaultDisplay().getHeight();
-                hashMap.put("width",width+"");
-                hashMap.put("height",height+"");
+                hashMap.put("width", width + "");
+                hashMap.put("height", height + "");
                 OKHttpUtil.post(Constant.GET_LOADING_AD_URL, hashMap, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -210,12 +227,12 @@ public class WelcomeActivity extends Activity {
                     }
 
                     @Override
-                    public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                    public void onResponse(Call call, Response response) throws IOException {
                         final String json = response.body().string();
                         Util.setErrorLog(TAG, json);
                         try {
                             JSONObject jsonObject = new JSONObject(json);
-                            if(jsonObject.getInt("error_code") == 0){
+                            if (jsonObject.getInt("error_code") == 0) {
                                 // 拿到了图片地址
                                 JSONObject data = jsonObject.getJSONObject("data");
                                 String url = data.getString("img_url");
@@ -229,8 +246,8 @@ public class WelcomeActivity extends Activity {
 //                                }
                                 String time = data.getString("stay_time");
                                 Util.setErrorLog(TAG, "----33---有网络 有地址------");
-                                goLoadingActivity(url,Integer.parseInt(time));
-                            }else {
+                                goLoadingActivity(url, Integer.parseInt(time));
+                            } else {
                                 // 没有拿到图片地址
                                 Util.setErrorLog(TAG, "---44----有网络 无地址------");
                                 goLoadingActivity("", -1);
@@ -240,7 +257,7 @@ public class WelcomeActivity extends Activity {
                         }
                     }
                 });
-            }else {
+            } else {
                 // 没有拿到图片地址
                 Util.setErrorLog(TAG, "-----5---无网络--------");
                 goLoadingActivity("", -1);
@@ -249,7 +266,8 @@ public class WelcomeActivity extends Activity {
     }
 
     /**
-     *  下载广告页面
+     * 下载广告页面
+     *
      * @param downloadUrl
      */
     private void httpDownLoadImg(String downloadUrl) {
@@ -264,33 +282,34 @@ public class WelcomeActivity extends Activity {
 
     /**
      * 跳转
+     *
      * @param time 广告停留时间
      */
-    private void goLoadingActivity(String imgUrl, int time){
-        Util.setErrorLog(TAG, "-----66---"+time+"s--------");
+    private void goLoadingActivity(String imgUrl, int time) {
+        Util.setErrorLog(TAG, "-----66---" + time + "s--------");
         Intent intent = null;
-        if(time == -1){
+        if (time == -1) {
             // 没有图片下载
             if ("".equals(CacheManager.getAppEntryOrderPre(mContext))) {
                 CacheManager.setAppEntryOrderPre(mContext, "abc"); // 标识已经进入过发单页面
                 intent = new Intent(mContext, PopOrderActivity.class);
-            }else {
+            } else {
                 intent = new Intent(mContext, MainActivity.class);
             }
-        }else {
+        } else {
             // 有图片下载
-            if(!"".equals(imgUrl/*CacheManager.getLoadingAdPath(mContext)*/)){
+            if (!"".equals(imgUrl/*CacheManager.getLoadingAdPath(mContext)*/)) {
                 // 已经下载好了
                 intent = new Intent(mContext, LoadingActivity.class);
                 // 传递url
                 intent.putExtra("loading_img_url", imgUrl);
                 intent.putExtra("staytime", time);
-            }else {
+            } else {
                 // 图片正在下载中，还没有下载好
                 if ("".equals(CacheManager.getAppEntryOrderPre(mContext))) {
                     CacheManager.setAppEntryOrderPre(mContext, "abc"); // 标识已经进入过发单页面
                     intent = new Intent(mContext, PopOrderActivity.class);
-                }else {
+                } else {
                     intent = new Intent(mContext, MainActivity.class);
                 }
             }
@@ -307,13 +326,13 @@ public class WelcomeActivity extends Activity {
         OKHttpUtil.post(check_ab_test, null, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Util.setErrorLog(TAG,">>>>>>>ab测试 请求结果6465415613153<<<<<");
+                Util.setErrorLog(TAG, ">>>>>>>ab测试 请求结果6465415613153<<<<<");
             }
 
             @Override
-            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+            public void onResponse(Call call, Response response) throws IOException {
                 final String json = response.body().string();
-                Util.setErrorLog(TAG,">>>>>>>ab测试 请求结果[" + json + "]<<<<<");
+                Util.setErrorLog(TAG, ">>>>>>>ab测试 请求结果[" + json + "]<<<<<");
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -325,12 +344,12 @@ public class WelcomeActivity extends Activity {
                                     status = array.getJSONObject(i).getString("status");
                                     // 保存 ab测的状态
                                     getSharedPreferences("AB_TEST", Context.MODE_PRIVATE).edit().putString("status", status).commit();
-                                    Util.setErrorLog(TAG,"-- 已经存ab测的状态 --");
+                                    Util.setErrorLog(TAG, "-- 已经存ab测的状态 --");
                                     break;
                                 }
 
                             } else if (obj.getInt("error_code") == 201) {
-                                Util.setErrorLog(TAG,"-- 获取ab测 状态失败 --");
+                                Util.setErrorLog(TAG, "-- 获取ab测 状态失败 --");
                             }
 
 
@@ -358,7 +377,7 @@ public class WelcomeActivity extends Activity {
 //        }
 //    }
 
-    private  void needPermissions(){
+    private void needPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
             List<String> permission = getPermissionList(mContext);
             if (permission.size() > 0) {
