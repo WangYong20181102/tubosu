@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,7 +33,6 @@ import com.tbs.tobosutype.customview.MyListView;
 import com.tbs.tobosutype.customview.MySwipeRefreshLayout;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
-import com.tbs.tobosutype.utils.DensityUtil;
 import com.tbs.tobosutype.utils.EndlessRecyclerOnScrollListener;
 import com.tbs.tobosutype.utils.FullyLinearLayoutManager;
 import com.tbs.tobosutype.utils.Util;
@@ -52,7 +50,6 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-
 
 /**
  * Created by Lie on 2017/10/23.
@@ -244,10 +241,15 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     context.startActivity(new Intent(context, DecorationCaseActivity.class));
                 }
             });
+            NewhomeCasesGridAdapter caseAdapter = null;
+            if(caseAdapter==null){
+                caseAdapter = new NewhomeCasesGridAdapter(context, dataSource.getCases());
+                newHomeAnli.newhomeGvAnli.setAdapter(caseAdapter);
+                caseAdapter.notifyDataSetChanged();
+            }else {
+                caseAdapter.notifyDataSetChanged();
+            }
 
-            NewhomeCasesGridAdapter caseAdapter = new NewhomeCasesGridAdapter(context, dataSource.getCases());
-            newHomeAnli.newhomeGvAnli.setAdapter(caseAdapter);
-            caseAdapter.notifyDataSetChanged();
             newHomeAnli.newhomeGvAnli.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -384,7 +386,6 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             zhuantiManager.setOrientation(LinearLayoutManager.VERTICAL);
             newHomeZhuanti.zhuantiRecyclerView.setLayoutManager(zhuantiManager);
             topicList.addAll(dataSource.getTopic());
-
             initZhuantiAdapter(newHomeZhuanti, topicList);
 
         }
@@ -707,7 +708,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("token", Util.getDateToken());
             hashMap.put("page", page);
-            hashMap.put("page_size", 10);
+            hashMap.put("page_size", 5);
             OKHttpUtil.post(Constant.ZHUANTI_URL, hashMap, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -735,7 +736,6 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                             }
                             topicList.addAll(zhuantiList);
                             myhandler.sendEmptyMessage(44);
-
                         }else if(status == 0){
                             myhandler.sendEmptyMessage(43);
 
@@ -747,11 +747,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 }
             });
         }
-
     }
 
     private Handler myhandler = new Handler(){
@@ -784,30 +782,31 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             textLoadMore = (TextView) itemView.findViewById(R.id.newhome_loadmore);
         }
     }
+
     private ProgressBar bar;
     private TextView textLoadMore;
-    private int page = 0;
+    private int page = 1;
     private NewHomeZhuanti newHomeZhuanti;
     private NewhomeZhuantiAdapter zhuantiAdapter;
-    private void initZhuantiAdapter(NewHomeZhuanti holder, final List<NewHomeDataItem.NewhomeDataBean.TopicBean> datalist){
+    private void initZhuantiAdapter(NewHomeZhuanti holder, final List<NewHomeDataItem.NewhomeDataBean.TopicBean> list){
         if(zhuantiAdapter == null){
-            zhuantiAdapter = new NewhomeZhuantiAdapter(context, datalist);
+            zhuantiAdapter = new NewhomeZhuantiAdapter(context, list);
             holder.zhuantiRecyclerView.setAdapter(zhuantiAdapter);
+            zhuantiAdapter.notifyDataSetChanged();
         }else {
             zhuantiAdapter.notifyDataSetChanged();
         }
 
-        holder.zhuantiRecyclerView.smoothScrollToPosition(zhuantiAdapter.getItemCount());
         holder.zhuantiRecyclerView.addItemDecoration(new MyItemDecoration(context, LinearLayoutManager.HORIZONTAL,R.drawable.divider));
-        zhuantiAdapter.notifyDataSetChanged();
+//        holder.zhuantiRecyclerView.setNestedScrollingEnabled(true);
         zhuantiAdapter.setOnItemClickListener(new NewhomeZhuantiAdapter.OnRecyclerViewItemClickListener() {
+
             @Override
             public void onRecyclerViewItemClick(View view, int position) {
                 Intent it = new Intent(context, TopicDetailActivity.class);
-                it.putExtra("mTopicId", dataSource.getTopic().get(position).getId());
+                it.putExtra("mTopicId", list.get(position).getId());
                 context.startActivity(it);
             }
         });
     }
-
 }

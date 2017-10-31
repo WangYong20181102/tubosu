@@ -34,11 +34,6 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import java.util.List;
 
-/**
- * 欢迎 页
- *
- * @author dec
- */
 public class WelcomeActivity extends Activity {
     private static final String TAG = WelcomeActivity.class.getSimpleName();
 //    private CheckUpdateUtils updateUtils;
@@ -58,6 +53,7 @@ public class WelcomeActivity extends Activity {
         mContext = WelcomeActivity.this;
         startapp_time = new Date().getTime();
         needPermissions();
+        CacheManager.setStartFlag(WelcomeActivity.this, 0);
 //        do_webpage();
         getSetting();
 

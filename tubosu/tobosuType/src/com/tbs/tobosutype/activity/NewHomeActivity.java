@@ -18,6 +18,8 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.location.Poi;
+import com.baidu.mapapi.SDKInitializer;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.NewHomeAdapter;
@@ -43,14 +45,15 @@ public class NewHomeActivity extends BaseActivity {
     private RelativeLayout rel_newhomebar;
     private RelativeLayout relSelectCity;
     private TextView newhomeCity;
-    private String cityId;
+    private String choose;
+    private String chooseId;
     private String cityName;
     private RecyclerView recyclerView;
     private TextView tubosu;
     private SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayoutManager linearLayoutManager;
     private NewHomeAdapter newHomeAdapter;
-    private boolean showAnli = true;
+    private boolean isSheji = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +63,7 @@ public class NewHomeActivity extends BaseActivity {
         setContentView(R.layout.layout_new_activity);
         initView();
         initBaiduMap();
-        cityId = "0";
+        chooseId = "0";
         setClick();
         getDataFromNet();
         initReceiver();
@@ -193,12 +196,16 @@ public class NewHomeActivity extends BaseActivity {
         //重新选择城市 重新加载网络加载数据
         if (requestCode == 3) {
             if(data!=null && data.getBundleExtra("city_bundle") != null){
-                cityName = data.getBundleExtra("city_bundle").getString("ci");
-                cityId = data.getBundleExtra("city_bundle").getString("cid");
+                choose = data.getBundleExtra("city_bundle").getString("ci");
+                chooseId = data.getBundleExtra("city_bundle").getString("cid");
                 getSharedPreferences("Save_City_Info", MODE_PRIVATE).edit().putString("save_city_now", cityName).commit();
                 AppInfoUtil.setCityName(mContext, cityName);
+                Util.setErrorLog(TAG, chooseId +" id==choose "+ choose);
+                newhomeCity.setText(choose);
+                CacheManager.setStartFlag(NewHomeActivity.this, 1);
+                getDataFromNet();
             }
-            newhomeCity.setText(cityName);
+
 
             Intent selectCityIntent = new Intent(Constant.ACTION_HOME_SELECT_CITY);
             Bundle b = new Bundle();
@@ -206,17 +213,32 @@ public class NewHomeActivity extends BaseActivity {
             selectCityIntent.putExtra("f_select_city_bundle",b);
             sendBroadcast(selectCityIntent);
             getSharedPreferences("city", 0).edit().putString("cityName", cityName).commit();
-            getDataFromNet();
+
         }
     }
 
+
+    private HashMap<String, Object> getParam(int num){
+        HashMap<String, Object> param = new HashMap<String, Object>();
+        param.put("token", Util.getDateToken());
+        String city = newhomeCity.getText().toString();
+        if(num == 0){
+            param.put("city_id", "0");
+            param.put("city_name", city);
+            Util.setErrorLog("-zengzhaozhong-", "id = 0    cityname = " + city);
+        }else{
+            // 选择
+            param.put("city_id", chooseId);
+            param.put("city_name", choose);
+            Util.setErrorLog("-zengzhaozhong-", "id = "+ chooseId + "    cityname = " + city);
+        }
+        return param;
+    }
+
     private void getDataFromNet(){
+        int start = CacheManager.getStartFlag(NewHomeActivity.this);
         if(Util.isNetAvailable(mContext)){
-            HashMap<String, Object> param = new HashMap<String, Object>();
-            param.put("token", Util.getDateToken());
-            param.put("city_id", getCityName_Id(0));
-            param.put("city_name", getCityName_Id(1));
-            OKHttpUtil.post(Constant.NEWHOME_URL, param, new Callback() {
+            OKHttpUtil.post(Constant.NEWHOME_URL, getParam(start), new Callback() {
 
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -226,7 +248,7 @@ public class NewHomeActivity extends BaseActivity {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String result = response.body().string();
-                    Util.setErrorLog(TAG, "---banner结果-->>" + result);
+                    Util.setErrorLog(TAG, "---zengzhaozhong-->>" + result);
                     CacheManager.setNewhomeJson(mContext, result);
                     initData(result);
                 }
@@ -265,16 +287,6 @@ public class NewHomeActivity extends BaseActivity {
     }
 
 
-    private String getCityName_Id(int flag){
-        if(flag>0){
-            // 城市名
-            return cityName;
-        }else{
-            // 城市id
-            return cityId;
-        }
-
-    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -283,15 +295,11 @@ public class NewHomeActivity extends BaseActivity {
         }
     }
 
+
     private LocationClient mLocationClient;
     private void initBaiduMap(){
-//        SDKInitializer.initialize(getApplicationContext());
-        initLocationSetting();
-    }
-
-    private void initLocationSetting(){
         try{
-            mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
+            mLocationClient = new LocationClient(NewHomeActivity.this.getParent());     //声明LocationClient类
             mLocationClient.start();
 
             LocationClientOption option = new LocationClientOption();
@@ -308,19 +316,13 @@ public class NewHomeActivity extends BaseActivity {
             option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
             option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤GPS仿真结果，默认需要
             mLocationClient.setLocOption(option);
-
-            if (mLocationClient != null && mLocationClient.isStarted()){
-                System.out.println("--SelectCityActivity-->>" + mLocationClient.requestLocation());
-            }else{
-                System.out.println("SelectCityActivity === locClient is null or not started");
-            }
-
             mLocationClient.registerLocationListener(new MyLocationListener());    //注册监听函数
         }catch (Exception e){
             e.printStackTrace();
         }
 
         needPermissions();
+
     }
 
     private  void needPermissions(){
@@ -351,16 +353,17 @@ public class NewHomeActivity extends BaseActivity {
             AppInfoUtil.setLng(mContext, location.getLongitude()+"");
             sb.append("\nradius : ");
             cityName = location.getCity();
-            if(cityName!=null){
-                if(cityName.contains("市") || cityName.contains("县")){
-                    cityName = cityName.substring(0, cityName.length()-1);
+            if(CacheManager.getStartFlag(NewHomeActivity.this) == 0){
+                if(cityName!=null){
+                    if(cityName.contains("市") || cityName.contains("县")){
+                        cityName = cityName.substring(0, cityName.length()-1);
+                    }
+                    CacheManager.setCity(mContext, cityName);
+                    newhomeCity.setText(cityName);
+                }else{
+                    newhomeCity.setText("深圳");
                 }
-                CacheManager.setCity(mContext, cityName);
-                newhomeCity.setText(cityName);
-            }else{
-                newhomeCity.setText("深圳");
             }
-
 
 //            sb.append(location.getRadius());
 //            if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
@@ -410,7 +413,8 @@ public class NewHomeActivity extends BaseActivity {
 //                }
 //            }
 
-//            Log.d(TAG, "--NewhomeActivity 草--" + sb);
+
+//            Util.setErrorLog(TAG, ">>> " + sb.toString());
         }
 
     }
@@ -428,9 +432,12 @@ public class NewHomeActivity extends BaseActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals("anli_list_is_empty")){
-                getDataFromNet();
-                Util.setErrorLog(TAG, "重新请求案例了");
+            if(isSheji){
+                isSheji = false;
+                if(intent.getAction().equals("anli_list_is_empty")){
+                    getDataFromNet();
+                    Util.setErrorLog(TAG, "重新请求案例了");
+                }
             }
         }
     }
