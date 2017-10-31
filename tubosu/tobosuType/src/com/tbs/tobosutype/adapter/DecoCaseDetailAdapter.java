@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.LookPhotoActivity;
+import com.tbs.tobosutype.activity.NewWebViewActivity;
 import com.tbs.tobosutype.bean._DecoCaseDetail;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 
@@ -140,7 +141,10 @@ public class DecoCaseDetailAdapter
                 ((HeadViewHolder) holder).item_deco_detail_find_he_design.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //跳转到H5页面
+                        //跳转到免费设计的H5页面
+                        Intent intent = new Intent(mContext, NewWebViewActivity.class);
+                        intent.putExtra("mLoadingUrl", "http://m.tobosu.com/quote/");
+                        mContext.startActivity(intent);
                     }
                 });
             }
