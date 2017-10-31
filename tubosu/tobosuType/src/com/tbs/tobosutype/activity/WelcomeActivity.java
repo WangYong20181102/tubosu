@@ -21,7 +21,6 @@ import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.CacheManager;
-import com.tbs.tobosutype.utils.ImageLoaderUtil;
 import com.tbs.tobosutype.utils.MD5Util;
 import com.tbs.tobosutype.utils.Util;
 

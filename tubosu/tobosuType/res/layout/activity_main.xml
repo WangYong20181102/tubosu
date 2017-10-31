@@ -47,30 +47,32 @@
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="match_parent"
-            android:layout_height="0.0dip"
+            android:layout_height="match_parent"
             android:layout_weight="1.0" />
 
         <TabWidget
             android:id="@android:id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.0"
             android:visibility="gone" />
 
-        <ImageView
+        <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/dividing_line_bg" >
-        </ImageView>
+        </View>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="57dp"
+            android:layout_gravity="bottom"
+            android:layout_weight="0"
             android:background="@android:color/white" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
                 android:orientation="horizontal">
                 <RelativeLayout
                     android:id="@+id/main_tab_first"
