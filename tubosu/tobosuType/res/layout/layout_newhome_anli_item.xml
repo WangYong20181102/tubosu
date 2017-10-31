@@ -51,7 +51,7 @@
             android:layout_marginBottom="14dp"
             android:layout_below="@+id/newhome_anli_item_title"
             android:layout_alignLeft="@+id/newhome_anli_item_title"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:textColor="#888888"/>
     </RelativeLayout>
 

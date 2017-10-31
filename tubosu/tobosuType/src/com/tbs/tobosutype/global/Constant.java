@@ -221,10 +221,10 @@ public class Constant {
         return false;
     }
 
-    public static final String MIANFEI_BAOJIA = "http://m.tobosu.com/free_price_page/";
-    public static final String DALIBAO = "http://m.dev.tobosu.com/company_gift/";
-    public static final String TUIJIAN = "http://m.dev.tobosu.com/rec_company/";
-//    public static final String BAOJIA = "";
+    public static final String MIANFEI_BAOJIA = "http://m.tobosu.com/free_price_page/"; // 免费报价
+    public static final String DALIBAO = "http://m.dev.tobosu.com/company_gift/";       // 大礼包
+    public static final String TUIJIAN = "http://m.dev.tobosu.com/rec_company/";        // 推荐
+//    public static final String BAOJIA = ""; // 报价
 
     /**
      * 无网提示

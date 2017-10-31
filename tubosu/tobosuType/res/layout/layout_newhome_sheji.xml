@@ -49,8 +49,6 @@
         android:id="@+id/swipe_newhome_sheji"
         android:layout_width="match_parent"
         android:layout_marginBottom="10dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_height="192dp">
         <com.tbs.tobosutype.customview.BetterRecyclerView
             android:id="@+id/newhome_recyclerview_sheji"

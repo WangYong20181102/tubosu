@@ -444,4 +444,14 @@ public class CacheManager {
         context.getSharedPreferences(APP_NEWHOME_JSON_PRE, Context.MODE_PRIVATE).edit().putString(APP_NEWHOME_JSON_STRING, json).commit();
     }
 
+
+    private static final String APP_START_PRE = "app_start_pre";
+    private static final String APP_START_STRING = "app_start_string";
+    public static int getStartFlag(Context context){
+        return context.getSharedPreferences(APP_START_PRE, Context.MODE_PRIVATE).getInt(APP_START_STRING, 0);
+    }
+    public static void setStartFlag(Context context, int fag){
+        context.getSharedPreferences(APP_START_PRE, Context.MODE_PRIVATE).edit().putInt(APP_START_STRING, fag).commit();
+    }
+
 }

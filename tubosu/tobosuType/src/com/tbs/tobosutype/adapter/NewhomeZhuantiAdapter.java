@@ -6,9 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
@@ -64,7 +62,7 @@ public class NewhomeZhuantiAdapter extends RecyclerView.Adapter<NewhomeZhuantiAd
         ZhuanTiHolder zhuanTiHolder = (ZhuanTiHolder) holder;
         Glide.with(context).load(dataList.get(position).getImage_url()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(zhuanTiHolder.iv);
         zhuanTiHolder.tvZhuantiTime.setText(dataList.get(position).getAdd_time());
-        zhuanTiHolder.tvZhuantiTitle.setText("  -  " + dataList.get(position).getTitle() + "  -  ");
+        zhuanTiHolder.tvZhuantiTitle.setText(dataList.get(position).getTitle());
         zhuanTiHolder.tvZhuantiDesc.setText(dataList.get(position).getDesc());
         zhuanTiHolder.itemView.setTag(position);
 //        }

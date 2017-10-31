@@ -477,25 +477,29 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             }
 
             if (!"".equals(realLocationCity) && !realLocationCity.equals(city)) {
-                SwitchCityDialog.Builder builder = new SwitchCityDialog.Builder(this);
-                builder.setMessage("您当前定位在" + realLocationCity + "， 是否切换到" + city + "？")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                try {
+                    SwitchCityDialog.Builder builder = new SwitchCityDialog.Builder(SelectCtiyActivity.this);
+                    builder.setMessage("您当前定位在" + realLocationCity + "， 是否切换到" + city + "？")
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
-                                confirmCity(city, idCity);
-                            }
-                        })
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                    confirmCity(city, idCity);
+                                }
+                            }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
 
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
-                            }
-                        });
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
 
-                builder.create().show();
+                    builder.create().show();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
             } else {
                 confirmCity(city, idCity);
             }
@@ -516,6 +520,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             b.putString("ci", cityName);
             cityData.putExtra("city_bundle", b);
             setResult(77, cityData);
+            System.gc();
             finish();
             return;
         }
@@ -528,6 +533,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             b.putString("ci", cityName);
             cityData.putExtra("city_bundle", b);
             setResult(39, cityData);
+            System.gc();
             finish();
             return;
         }
@@ -540,6 +546,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             b.putString("ci", cityName);
             cityData.putExtra("city_bundle", b);
             setResult(124, cityData);
+            System.gc();
             finish();
             return;
         }
@@ -551,6 +558,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             b.putString("ci", cityName);
             cityData.putExtra("city_bundle", b);
             setResult(644, cityData);
+            System.gc();
             finish();
             return;
         }
@@ -563,6 +571,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             b.putString("ci", cityName);
             cityData.putExtra("city_bundle", b);
             setResult(78, cityData);
+            System.gc();
             finish();
             return;
         }
@@ -575,8 +584,8 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             b.putString("ci", cityName);
             b.putString("cid", cid);
             it.putExtra("city_bundle", b);
-
             setResult(104, it);
+            System.gc();
             finish();
         } else {
 
@@ -589,6 +598,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
                 startActivity(new Intent(mContext, MainActivity.class));
                 Log.d(TAG, "--直接进入 MainActivity 页面--");
             }
+            System.gc();
             finish();
         }
     }
@@ -614,8 +624,6 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             }
         });
     }
-
-
 
 
     @Override
@@ -708,7 +716,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             LocationClientOption option = new LocationClientOption();
             option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
             option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
-            int span=1000;
+            int span = 1000;
             option.setIsNeedAddress(true);
             option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
             option.setOpenGps(true);//可选，默认false,设置是否使用gps

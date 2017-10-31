@@ -1,6 +1,5 @@
 package com.tbs.tobosutype.adapter;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
 import com.tbs.tobosutype.utils.Util;
-
 import java.util.List;
 
 /**
@@ -23,7 +21,7 @@ public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private LayoutInflater inflater;
     private List<NewHomeDataItem.NewhomeDataBean.ImpressionBean> dataList;
     private final int ITEM_ITEM = 4;
-    private final int ITEM_RIGHT_FOOT =6;
+    private final int ITEM_RIGHT_FOOT = 6;
     private boolean loadmore = true;
 
 
@@ -31,6 +29,7 @@ public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.dataList = dataList;
+        Util.setErrorLog("<><><><><> ", dataList.size() + "<><><><>");
     }
 
 
@@ -38,8 +37,10 @@ public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public int getItemViewType(int position) {
         if(position < dataList.size()){
             return ITEM_ITEM;
-        }else {
+        }else if(position == dataList.size()){
             return ITEM_RIGHT_FOOT;
+        }else {
+            return -1;
         }
     }
 
@@ -62,7 +63,7 @@ public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(position<dataList.size() - 1) {
+        if(position<dataList.size()) {
             if (holder instanceof ShejiHolder) {
                 ShejiHolder shejiHolder = (ShejiHolder) holder;
                 Glide.with(context).load(dataList.get(position).getCover_url()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(shejiHolder.iv);
@@ -72,7 +73,7 @@ public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
         }
 
-        if(position == getItemCount() - 1){
+        if(position == dataList.size()){
             if(holder instanceof ShejiFoot){
                 ShejiFoot shejiFoot = (ShejiFoot) holder;
                 if(loadmore){
@@ -107,7 +108,6 @@ public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public void showLoadMore(boolean loadmore){
         this.loadmore = loadmore;
-        notifyDataSetChanged();
     }
 
     class ShejiFoot extends RecyclerView.ViewHolder{

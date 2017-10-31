@@ -313,10 +313,10 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                 tabHost.setCurrentTab(fragmentPostion);
                 tabHost.setCurrentTabByTag("ONE");
 
-                img_home.setBackgroundResource(R.drawable.menu_icon_0_pressed);
-                img_image.setBackgroundResource(R.drawable.menu_icon_1_normal);
-                img_decorate.setBackgroundResource(R.drawable.menu_icon_2_normal);
-                img_my.setBackgroundResource(R.drawable.menu_icon_3_normal);
+                img_home.setBackgroundResource(R.drawable.home_orange);
+                img_image.setBackgroundResource(R.drawable.tu_black);
+                img_decorate.setBackgroundResource(R.drawable.company_black);
+                img_my.setBackgroundResource(R.drawable.me_black);
 
                 tv_home_textview.setTextColor(Color.parseColor("#ff9c00"));
                 tv_image_textview.setTextColor(Color.parseColor("#A8AAAC"));
@@ -326,10 +326,10 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
             case 1:
                 tabHost.setCurrentTab(fragmentPostion);
                 tabHost.setCurrentTabByTag("TWO");
-                img_home.setBackgroundResource(R.drawable.menu_icon_0_normal);
-                img_image.setBackgroundResource(R.drawable.menu_icon_1_pressed);
-                img_decorate.setBackgroundResource(R.drawable.menu_icon_2_normal);
-                img_my.setBackgroundResource(R.drawable.menu_icon_3_normal);
+                img_home.setBackgroundResource(R.drawable.home_black);
+                img_image.setBackgroundResource(R.drawable.tu_orange);
+                img_decorate.setBackgroundResource(R.drawable.company_black);
+                img_my.setBackgroundResource(R.drawable.me_black);
 
                 tv_home_textview.setTextColor(Color.parseColor("#A8AAAC"));
                 tv_image_textview.setTextColor(Color.parseColor("#ff9c00"));
@@ -339,10 +339,10 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
             case 2:
                 tabHost.setCurrentTab(fragmentPostion);
                 tabHost.setCurrentTabByTag("THREE");
-                img_home.setBackgroundResource(R.drawable.menu_icon_0_normal);
-                img_image.setBackgroundResource(R.drawable.menu_icon_1_normal);
-                img_decorate.setBackgroundResource(R.drawable.menu_icon_2_pressed);
-                img_my.setBackgroundResource(R.drawable.menu_icon_3_normal);
+                img_home.setBackgroundResource(R.drawable.home_black);
+                img_image.setBackgroundResource(R.drawable.tu_black);
+                img_decorate.setBackgroundResource(R.drawable.company_orange);
+                img_my.setBackgroundResource(R.drawable.me_black);
 
                 tv_home_textview.setTextColor(Color.parseColor("#A8AAAC"));
                 tv_image_textview.setTextColor(Color.parseColor("#A8AAAC"));
@@ -362,10 +362,10 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     // 业主
                     tabHost.setCurrentTabByTag("FOUR3");
                     tabPosition = 3;
-                    img_home.setBackgroundResource(R.drawable.menu_icon_0_normal);
-                    img_image.setBackgroundResource(R.drawable.menu_icon_1_normal);
-                    img_decorate.setBackgroundResource(R.drawable.menu_icon_2_normal);
-                    img_my.setBackgroundResource(R.drawable.menu_icon_3_pressed);
+                    img_home.setBackgroundResource(R.drawable.home_black);
+                    img_image.setBackgroundResource(R.drawable.tu_black);
+                    img_decorate.setBackgroundResource(R.drawable.company_black);
+                    img_my.setBackgroundResource(R.drawable.me_orange);
 
                     tv_home_textview.setTextColor(Color.parseColor("#A8AAAC"));
                     tv_image_textview.setTextColor(Color.parseColor("#A8AAAC"));
@@ -376,10 +376,10 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     tabHost.setCurrentTabByTag("FOUR2");
 
                     tabPosition = 3;
-                    img_home.setBackgroundResource(R.drawable.menu_icon_0_normal);
-                    img_image.setBackgroundResource(R.drawable.menu_icon_1_normal);
-                    img_decorate.setBackgroundResource(R.drawable.menu_icon_2_normal);
-                    img_my.setBackgroundResource(R.drawable.menu_icon_3_pressed);
+                    img_home.setBackgroundResource(R.drawable.home_black);
+                    img_image.setBackgroundResource(R.drawable.tu_black);
+                    img_decorate.setBackgroundResource(R.drawable.company_black);
+                    img_my.setBackgroundResource(R.drawable.me_orange);
 
                     tv_home_textview.setTextColor(Color.parseColor("#A8AAAC"));
                     tv_image_textview.setTextColor(Color.parseColor("#A8AAAC"));
@@ -390,10 +390,10 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     tabHost.setCurrentTab(fragmentPostion);
                     tabHost.setCurrentTabByTag("FOUR");
 
-                    img_home.setBackgroundResource(R.drawable.menu_icon_0_normal);
-                    img_image.setBackgroundResource(R.drawable.menu_icon_1_normal);
-                    img_decorate.setBackgroundResource(R.drawable.menu_icon_2_normal);
-                    img_my.setBackgroundResource(R.drawable.menu_icon_3_pressed);
+                    img_home.setBackgroundResource(R.drawable.home_black);
+                    img_image.setBackgroundResource(R.drawable.tu_black);
+                    img_decorate.setBackgroundResource(R.drawable.company_black);
+                    img_my.setBackgroundResource(R.drawable.me_orange);
 
                     tv_home_textview.setTextColor(Color.parseColor("#A8AAAC"));
                     tv_image_textview.setTextColor(Color.parseColor("#A8AAAC"));

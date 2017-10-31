@@ -43,11 +43,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-/**
- * 欢迎 页
- *
- * @author dec
- */
+
 public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     private static final String TAG = WelcomeActivity.class.getSimpleName();
     @BindView(R.id.welcome_image)
@@ -71,6 +67,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         startapp_time = new Date().getTime();
         initView();
         needPermissions();
+        CacheManager.setStartFlag(WelcomeActivity.this, 0);
 //        do_webpage();
         getSetting();
 
