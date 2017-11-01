@@ -190,14 +190,14 @@ public class AppInfoUtil {
      * @param activity
      */
     public static void setTranslucentStatus(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            SystemStatusManager tintManager = new SystemStatusManager(activity);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(R.color.color_icon);
-            activity.getWindow().getDecorView().setFitsSystemWindows(true);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            SystemStatusManager tintManager = new SystemStatusManager(activity);
+//            tintManager.setStatusBarTintEnabled(true);
+//            tintManager.setStatusBarTintResource(R.color.color_icon);
+//            activity.getWindow().getDecorView().setFitsSystemWindows(true);
+//        }
     }
 
     /***
@@ -206,38 +206,38 @@ public class AppInfoUtil {
      * @param activity
      */
     public static void setActivityTheme1(Activity activity, int color) {
-        if (AndtoidRomUtil.isMIUI() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // 小米手机
-            boolean sIsMiuiV6 = false;
-            try {
-                Class<?> sysClass = Class.forName("android.os.SystemProperties");
-                Method getStringMethod = sysClass.getDeclaredMethod("get", String.class);
-                sIsMiuiV6 = "V6".equals((String) getStringMethod.invoke(sysClass, "ro.miui.ui.version.name"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            if (sIsMiuiV6) {
-                Class<? extends Window> clazz = activity.getWindow().getClass();
-                try {
-                    int darkModeFlag = 0;
-                    Class<?> layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
-                    Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
-                    darkModeFlag = field.getInt(layoutParams);
-                    Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
-                    extraFlagField.invoke(activity.getWindow(), true ? darkModeFlag : 0, darkModeFlag);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            SystemStatusManager tintManager = new SystemStatusManager(activity);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(color);
-            activity.getWindow().getDecorView().setFitsSystemWindows(true);
-        }
+//        if (AndtoidRomUtil.isMIUI() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            // 小米手机
+//            boolean sIsMiuiV6 = false;
+//            try {
+//                Class<?> sysClass = Class.forName("android.os.SystemProperties");
+//                Method getStringMethod = sysClass.getDeclaredMethod("get", String.class);
+//                sIsMiuiV6 = "V6".equals((String) getStringMethod.invoke(sysClass, "ro.miui.ui.version.name"));
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
+//            if (sIsMiuiV6) {
+//                Class<? extends Window> clazz = activity.getWindow().getClass();
+//                try {
+//                    int darkModeFlag = 0;
+//                    Class<?> layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
+//                    Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
+//                    darkModeFlag = field.getInt(layoutParams);
+//                    Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
+//                    extraFlagField.invoke(activity.getWindow(), true ? darkModeFlag : 0, darkModeFlag);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//            SystemStatusManager tintManager = new SystemStatusManager(activity);
+//            tintManager.setStatusBarTintEnabled(true);
+//            tintManager.setStatusBarTintResource(color);
+//            activity.getWindow().getDecorView().setFitsSystemWindows(true);
+//        }
 
     }
 
