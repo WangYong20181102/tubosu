@@ -8,14 +8,6 @@
     android:background="@color/white"
     android:orientation="vertical"
     tools:context="com.tbs.tobosutype.activity.DecorationCaseActivity">
-    <!--阴影-->
-    <View
-        android:layout_marginTop="50dp"
-        android:id="@+id/banner_dever"
-        android:layout_width="match_parent"
-        android:layout_height="12dp"
-        android:background="@drawable/yinying4"
-        android:visibility="visible" />
     <!--整体的  包含标题 和数据列表-->
     <LinearLayout
         android:background="@color/white"
@@ -64,6 +56,14 @@
             </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
+    <!--阴影-->
+    <View
+        android:layout_marginTop="50dp"
+        android:id="@+id/banner_dever"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:background="@drawable/yinying4"
+        android:visibility="visible" />
     <!--底部发单按钮-->
     <RelativeLayout
         android:id="@+id/deco_case_find_price_rl"
