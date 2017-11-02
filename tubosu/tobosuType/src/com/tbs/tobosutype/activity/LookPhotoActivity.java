@@ -1,17 +1,16 @@
 package com.tbs.tobosutype.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -19,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.lidroid.xutils.HttpUtils;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.LookPhotoAdapter;
 import com.tbs.tobosutype.base.*;
@@ -29,9 +27,7 @@ import com.tbs.tobosutype.bean._DecoCaseDetail;
 import com.tbs.tobosutype.fragment.LookPhotoFragment;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
-import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.Util;
-import com.tbs.tobosutype.utils.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -61,6 +57,8 @@ public class LookPhotoActivity extends com.tbs.tobosutype.base.BaseActivity {
     TextView lookPhotoFindPrice;
     @BindView(R.id.look_photo_find_price_rl)
     RelativeLayout lookPhotoFindPriceRl;
+    @BindView(R.id.look_photo_title_rl)
+    RelativeLayout lookPhotoTitleRl;
 
     private Context mContext;
     private String TAG = "LookPhotoActivity";
@@ -126,14 +124,53 @@ public class LookPhotoActivity extends com.tbs.tobosutype.base.BaseActivity {
                 Log.e(TAG, "收到点击事件===============");
                 if (isShowingBanner) {
                     //正在显示 让它隐藏
+                    isShowingBanner = false;
+                    //回退按钮的动画
+                    TranslateAnimation mAnimBc = new TranslateAnimation(
+                            Animation.RELATIVE_TO_SELF, 0.0f,
+                            Animation.RELATIVE_TO_SELF, 0.0f,
+                            Animation.RELATIVE_TO_SELF, 0.0f,
+                            Animation.RELATIVE_TO_SELF, -1.0f);
+                    mAnimBc.setDuration(500);
+                    //发单页动画
+                    TranslateAnimation mAnimBanner = new TranslateAnimation(
+                            Animation.RELATIVE_TO_SELF, 0.0f,
+                            Animation.RELATIVE_TO_SELF, 0.0f,
+                            Animation.RELATIVE_TO_SELF, 0.0f,
+                            Animation.RELATIVE_TO_SELF, 1.0f);
+                    mAnimBanner.setDuration(500);
+
+                    mAnimBanner.setFillAfter(true);
+                    lookPhotoBack.setAnimation(mAnimBc);
+                    lookPhotoFindPriceRl.setAnimation(mAnimBanner);
+                    lookPhotoTitleRl.setAnimation(mAnimBanner);
+
                     lookPhotoFindPriceRl.setVisibility(View.GONE);
                     lookPhotoBack.setVisibility(View.GONE);
-                    isShowingBanner = false;
                 } else {
                     //未显示 让它显示
+                    isShowingBanner = true;
+                    TranslateAnimation mAnimBc = new TranslateAnimation(
+                            Animation.RELATIVE_TO_SELF, 0.0f,
+                            Animation.RELATIVE_TO_SELF, 0.0f,
+                            Animation.RELATIVE_TO_SELF, -1.0f,
+                            Animation.RELATIVE_TO_SELF, 0.0f);
+                    mAnimBc.setDuration(500);
+                    //发单页动画
+                    TranslateAnimation mAnimBanner = new TranslateAnimation(
+                            Animation.RELATIVE_TO_SELF, 0.0f,
+                            Animation.RELATIVE_TO_SELF, 0.0f,
+                            Animation.RELATIVE_TO_SELF, 1.0f,
+                            Animation.RELATIVE_TO_SELF, 0.0f);
+                    mAnimBanner.setDuration(500);
+
+                    lookPhotoBack.setAnimation(mAnimBc);
+                    lookPhotoTitleRl.setAnimation(mAnimBanner);
+                    lookPhotoFindPriceRl.setAnimation(mAnimBanner);
+
                     lookPhotoFindPriceRl.setVisibility(View.VISIBLE);
                     lookPhotoBack.setVisibility(View.VISIBLE);
-                    isShowingBanner = true;
+
                 }
                 break;
             case EC.EventCode.LOOG_CLICK_IMAGE_IN_LOOK_PHOTO:
@@ -165,7 +202,7 @@ public class LookPhotoActivity extends com.tbs.tobosutype.base.BaseActivity {
                     dirFile.mkdir();
                 }
                 String fileName = System.currentTimeMillis() + ".jpg";
-                OKHttpUtil.downFile(mContext,downloadUrl, dirFile.getPath(), fileName);
+                OKHttpUtil.downFile(mContext, downloadUrl, dirFile.getPath(), fileName);
                 if (Util.isNetAvailable(mContext)) {
                     Toast.makeText(mContext, "图片下载成功!", Toast.LENGTH_SHORT).show();
                 } else {

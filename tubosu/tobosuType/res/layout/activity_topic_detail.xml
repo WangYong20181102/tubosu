@@ -73,7 +73,7 @@
     <RelativeLayout
         android:id="@+id/ltopic_detail_find_price_rl"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
