@@ -96,6 +96,19 @@ public class AppInfoUtil {
         context.getSharedPreferences("city", 0).edit().putString("cityName", city).commit();
     }
 
+
+
+    public static String getCityInAnli(Context context) {
+        return context.getSharedPreferences("city_anli", 0).getString("AnliCityName", "深圳");
+    }
+
+    public static void setCityNameInAnli(Context context, String city){
+        context.getSharedPreferences("city_anli", 0).edit().putString("AnliCityName", city).commit();
+    }
+
+
+
+
     public static void setLat(Context context, String lat){
         context.getSharedPreferences("city", 0).edit().putString("lat", lat).commit();
     }
