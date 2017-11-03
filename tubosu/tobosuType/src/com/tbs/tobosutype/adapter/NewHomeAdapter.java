@@ -623,47 +623,20 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private ScheduledExecutorService scheduledExecutorService;
 
     private void initBannerAdapter(ViewPager bannerPager, LinearLayout dotLayout, List<NewHomeDataItem.NewhomeDataBean.BannerBean> bannerList) {
-//        dotLayout.removeAllViews();
-//        urlList.clear();
-//        if (bannerList != null && bannerList.size() > 0) {
-//            for (int i = 0; i < bannerList.size(); i++) {
-//                urlList.add(bannerList.get(i).getContent_url());
-//                ImageView view = new ImageView(context);
-////                view.setTag(bannerList.get(i).getImg_url());
-//                view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//                Glide.with(context).load(bannerList.get(i).getImg_url()).into(view);
-//                imageViewList.add(view);
-//                ImageView dotView = new ImageView(context);
-//                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-////                        DensityUtil.dip2px(context, 10),
-////                        DensityUtil.dip2px(context, 10));
-//                params.leftMargin = 8;
-//                params.rightMargin = 8;
-//                dotLayout.addView(dotView, params);
-//                dotViewsList.add(dotView);
-//            }
-//            bannerPager.setFocusable(true);
-//            bannerPager.setAdapter(new MyPagerAdapter(imageViewList, urlList));
-//            bannerPager.setOnPageChangeListener(new MyPageChangeListener(bannerPager));
-//        }
-//        startSlide();
-
-
-
-
-
-        String[] fakeUrl = {"http://cdn111.dev.tobosu.com/mobile_banner_img/2017-11-02/59fabf771b89a.jpg", "https://pic.tbscache.com/head_file/2017-07-07/595f0eab1c23b.jpg"};
         dotLayout.removeAllViews();
         urlList.clear();
         if (bannerList != null && bannerList.size() > 0) {
-            for (int i = 0; i < fakeUrl.length; i++) {
-                urlList.add(fakeUrl[i]);
+            for (int i = 0; i < bannerList.size(); i++) {
+                urlList.add(bannerList.get(i).getContent_url());
                 ImageView view = new ImageView(context);
+//                view.setTag(bannerList.get(i).getImg_url());
                 view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                Glide.with(context).load(fakeUrl[i]).into(view);
+                Glide.with(context).load(bannerList.get(i).getImg_url()).into(view);
                 imageViewList.add(view);
                 ImageView dotView = new ImageView(context);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                        DensityUtil.dip2px(context, 10),
+//                        DensityUtil.dip2px(context, 10));
                 params.leftMargin = 8;
                 params.rightMargin = 8;
                 dotLayout.addView(dotView, params);
@@ -675,6 +648,33 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
         startSlide();
 
+
+
+
+        // =====================以下是骗人的====================
+//        String[] fakeUrl = {"http://cdn111.dev.tobosu.com/mobile_banner_img/2017-11-02/59fabf771b89a.jpg", "https://pic.tbscache.com/head_file/2017-07-07/595f0eab1c23b.jpg"};
+//        dotLayout.removeAllViews();
+//        urlList.clear();
+//        if (bannerList != null && bannerList.size() > 0) {
+//            for (int i = 0; i < fakeUrl.length; i++) {
+//                urlList.add(fakeUrl[i]);
+//                ImageView view = new ImageView(context);
+//                view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//                Glide.with(context).load(fakeUrl[i]).into(view);
+//                imageViewList.add(view);
+//                ImageView dotView = new ImageView(context);
+//                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                params.leftMargin = 8;
+//                params.rightMargin = 8;
+//                dotLayout.addView(dotView, params);
+//                dotViewsList.add(dotView);
+//            }
+//            bannerPager.setFocusable(true);
+//            bannerPager.setAdapter(new MyPagerAdapter(imageViewList, urlList));
+//            bannerPager.setOnPageChangeListener(new MyPageChangeListener(bannerPager));
+//        }
+//        startSlide();
+        // =====================以上是骗人的====================
 
 
     }
