@@ -14,6 +14,7 @@
         android:background="@drawable/new_home_loading"/>
 
     <LinearLayout
+        android:id="@+id/sfsdfgfdadfg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -78,6 +79,12 @@
             android:textSize="12sp"
             android:textColor="#c5c5c5"/>
     </LinearLayout>
+
+    <View
+        android:layout_below="@+id/sfsdfgfdadfg"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#F7F7F7"/>
 
 </RelativeLayout>
 

@@ -14,13 +14,12 @@
         android:layout_toRightOf="@+id/sleft_six"
         android:layout_height="match_parent" />
 
-    <ImageView
+    <com.tbs.tobosutype.utils.TRoundView
         android:id="@+id/newhome_sheji_item_img"
         android:layout_width="188dp"
         android:layout_height="123dp"
         android:layout_toRightOf="@+id/slsix"
-        android:scaleType="centerCrop"
-        android:background="@drawable/new_home_loading"/>
+        android:scaleType="centerCrop"/>
 
     <RelativeLayout
         android:id="@+id/resheji"

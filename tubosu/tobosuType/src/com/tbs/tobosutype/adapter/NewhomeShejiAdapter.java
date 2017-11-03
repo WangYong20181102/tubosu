@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
+import com.tbs.tobosutype.utils.TRoundView;
 import com.tbs.tobosutype.utils.Util;
 import java.util.List;
 
@@ -66,6 +67,7 @@ public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if(position<dataList.size()) {
             if (holder instanceof ShejiHolder) {
                 ShejiHolder shejiHolder = (ShejiHolder) holder;
+                shejiHolder.iv.setType(1);
                 Glide.with(context).load(dataList.get(position).getCover_url()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(shejiHolder.iv);
                 shejiHolder.tvTitle.setText(dataList.get(position).getSub_title());
                 shejiHolder.tvDesc.setText(dataList.get(position).getDesigner_name());
@@ -140,7 +142,7 @@ public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     class ShejiHolder extends RecyclerView.ViewHolder{
-        ImageView iv;
+        TRoundView iv;
         TextView tvTitle;
         TextView tvDesc;
 
@@ -151,7 +153,7 @@ public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public ShejiHolder(View itemView) {
             super(itemView);
-            iv = (ImageView) itemView.findViewById(R.id.newhome_sheji_item_img);
+            iv = (TRoundView) itemView.findViewById(R.id.newhome_sheji_item_img);
             tvTitle = (TextView) itemView.findViewById(R.id.newhome_sheji_item_title);
             tvDesc = (TextView) itemView.findViewById(R.id.tv_newhome_sheji_item_desc);
 

@@ -5,18 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -30,16 +27,13 @@ import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.Util;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -112,6 +106,8 @@ public class NewHomeActivity extends BaseActivity {
                     }
                 }
             }
+
+
         });
 
         //初始化swipeRreshLayout
@@ -126,16 +122,14 @@ public class NewHomeActivity extends BaseActivity {
                 float alpha = 0;
                 int scollYHeight = getScollYHeight(true, tubosu.getHeight());
 
-                if(scollYHeight>222){
-                    rel_newhomebar.setVisibility(View.VISIBLE);
-                }
                 int baseHeight = 574;
                 if (scollYHeight >= baseHeight) {
                     alpha = 1;
                 } else {
                     alpha = scollYHeight / (baseHeight * 1.0f);
-                    if (alpha > 14) {
+                    if (alpha > 0.34) {
                         home_view.setVisibility(View.INVISIBLE);// 黑色渐变 隐藏
+                        rel_newhomebar.setVisibility(View.VISIBLE);
                     }else {
                         home_view.setVisibility(View.VISIBLE);
                         rel_newhomebar.setVisibility(View.INVISIBLE);
@@ -397,6 +391,14 @@ public class NewHomeActivity extends BaseActivity {
                     swipeRefreshLayout.setRefreshing(false);
                 }
 
+//                newHomeAdapter.setmListener(new NewHomeAdapter.OnZhuantiItemClickListener() {
+//                    @Override
+//                    public void onZhuantiItemClickListener(int position) {
+//                        Intent it = new Intent(mContext, TopicDetailActivity.class);
+//                        it.putExtra("mTopicId", topicBeansList.get(position).getId());
+//                        startActivity(it);
+//                    }
+//                });
             }
         });
     }

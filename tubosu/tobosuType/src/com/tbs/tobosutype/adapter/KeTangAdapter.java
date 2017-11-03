@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
+import com.tbs.tobosutype.utils.TRoundView;
+
 import java.util.List;
 
 /**
@@ -49,7 +51,7 @@ public class KeTangAdapter extends BaseAdapter {
         if(convertView == null){
             convertView = inflater.inflate(R.layout.layout_item_ketang_adapter, null, false);
             holder = new KetangHolder();
-            holder.iv = (ImageView) convertView.findViewById(R.id.iv_ketang_img);
+            holder.iv = (TRoundView) convertView.findViewById(R.id.iv_ketang_img);
             holder.tvtitle= (TextView) convertView.findViewById(R.id.tv_ketang_title);
             holder.tvdesc= (TextView) convertView.findViewById(R.id.tv_ketang_desc);
             convertView.setTag(holder);
@@ -57,6 +59,7 @@ public class KeTangAdapter extends BaseAdapter {
             holder = (KetangHolder) convertView.getTag();
         }
 
+        holder.iv.setType(1);
         Glide.with(context).load(dataList.get(position).getImage_url()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(holder.iv);
         holder.tvtitle.setText(dataList.get(position).getTitle());
         holder.tvdesc.setText(dataList.get(position).getAdd_time());
@@ -64,7 +67,7 @@ public class KeTangAdapter extends BaseAdapter {
     }
 
     class KetangHolder{
-        ImageView iv;
+        TRoundView iv;
         TextView tvtitle;
         TextView tvdesc;
     }
