@@ -107,14 +107,14 @@
         },
         {
             "cityid": "51",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "c",
             "simpname": "长春"
         },
         {
             "cityid": "77",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "c",
             "simpname": "常州"
@@ -156,21 +156,21 @@
         },
         {
             "cityid": "235",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "c",
             "simpname": "成都"
         },
         {
             "cityid": "354",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "c",
             "simpname": "常熟"
         },
         {
             "cityid": "359",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "c",
             "simpname": "慈溪"
@@ -219,7 +219,7 @@
         },
         {
             "cityid": "213",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "d",
             "simpname": "东莞"
@@ -303,7 +303,7 @@
         },
         {
             "cityid": "202",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "f",
             "simpname": "佛山"
@@ -352,7 +352,7 @@
         },
         {
             "cityid": "256",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "g",
             "simpname": "贵阳"
@@ -408,7 +408,7 @@
         },
         {
             "cityid": "91",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "h",
             "simpname": "湖州"
@@ -583,7 +583,7 @@
         },
         {
             "cityid": "346",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "j",
             "simpname": "江阴"
@@ -611,14 +611,14 @@
         },
         {
             "cityid": "265",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "k",
             "simpname": "昆明"
         },
         {
             "cityid": "349",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "k",
             "simpname": "昆山"
@@ -751,7 +751,7 @@
         },
         {
             "cityid": "356",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "l",
             "simpname": "溧阳"
@@ -814,7 +814,7 @@
         },
         {
             "cityid": "79",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "n",
             "simpname": "南通"
@@ -842,7 +842,7 @@
         },
         {
             "cityid": "124",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "n",
             "simpname": "南昌"
@@ -905,7 +905,7 @@
         },
         {
             "cityid": "5",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "q",
             "simpname": "秦皇岛"
@@ -968,7 +968,7 @@
         },
         {
             "cityid": "37",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "s",
             "simpname": "沈阳"
@@ -989,14 +989,14 @@
         },
         {
             "cityid": "73",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "s",
             "simpname": "上海"
         },
         {
             "cityid": "78",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "s",
             "simpname": "苏州"
@@ -1010,7 +1010,7 @@
         },
         {
             "cityid": "92",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "s",
             "simpname": "绍兴"
@@ -1122,14 +1122,14 @@
         },
         {
             "cityid": "4",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "t",
             "simpname": "唐山"
         },
         {
             "cityid": "14",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "t",
             "simpname": "太原"
@@ -1192,7 +1192,7 @@
         },
         {
             "cityid": "357",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "t",
             "simpname": "太仓"
@@ -1234,7 +1234,7 @@
         },
         {
             "cityid": "169",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "w",
             "simpname": "武汉"
@@ -1269,7 +1269,7 @@
         },
         {
             "cityid": "76",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "x",
             "simpname": "徐州"
@@ -1339,7 +1339,7 @@
         },
         {
             "cityid": "288",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "x",
             "simpname": "西安"
@@ -1388,7 +1388,7 @@
         },
         {
             "cityid": "83",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "y",
             "simpname": "扬州"
@@ -1486,14 +1486,14 @@
         },
         {
             "cityid": "348",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "y",
             "simpname": "宜兴"
         },
         {
             "cityid": "358",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "y",
             "simpname": "余姚"
@@ -1521,7 +1521,7 @@
         },
         {
             "cityid": "84",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "z",
             "simpname": "镇江"
@@ -1556,7 +1556,7 @@
         },
         {
             "cityid": "152",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "z",
             "simpname": "郑州"
@@ -1584,7 +1584,7 @@
         },
         {
             "cityid": "200",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "z",
             "simpname": "珠海"
@@ -1605,7 +1605,7 @@
         },
         {
             "cityid": "214",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "z",
             "simpname": "中山"
@@ -1633,7 +1633,7 @@
         },
         {
             "cityid": "350",
-            "hot_flag": "1",
+            "hot_flag": "0",
             "isopen": "1",
             "pinyin_sort": "z",
             "simpname": "张家港"

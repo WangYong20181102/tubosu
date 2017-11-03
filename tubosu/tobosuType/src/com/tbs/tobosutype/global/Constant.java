@@ -93,12 +93,12 @@ public class Constant {
     /**
      * 测试环境
      */
-    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
     /**
      * 正式环境
      */
-//    public static final String TOBOSU_URL = "http://www.tobosu.com/";
+    public static final String TOBOSU_URL = "http://www.tobosu.com/";
 
     public static final String SUMMIT_BUDGET_URL = TOBOSU_URL + "mapp/RenovateExpense/expense_bookkeep";
 
@@ -221,10 +221,14 @@ public class Constant {
         return false;
     }
 
-    public static final String MIANFEI_BAOJIA = "http://m.tobosu.com/free_price_page/"; // 免费报价
-    public static final String DALIBAO = "http://m.tobosu.com/new_t_price/ ";       // 大礼包   http://m.dev.tobosu.com/company_gift/
-    public static final String TUIJIAN = "http://m.tobosu.com/new_t_price/ ";        // 推荐   http://m.dev.tobosu.com/rec_company/
-    public static final String BAOJIA = "http://m.tobosu.com/new_t_price/ "; // 报价
+    public static final String MIANFEI_BAOJIA = "http://m.tobosu.com/free_price_page/";
+    public static final String DALIBAO = "http://m.tobosu.com/company_gift/";
+    public static final String TUIJIAN = "http://m.tobosu.com/rec_company/";
+    public static final String BAOJIA = "http://m.tobosu.com/free_price_page/";
+//    陈林(Cl)  2017/11//03  14:58:08
+//    报价：http://m.tobosu.com/free_price_page/
+//    大礼包：http://m.tobosu.com/company_gift/
+//    推荐：http://m.tobosu.com/rec_company/
 
     /**
      * 无网提示
