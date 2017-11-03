@@ -279,28 +279,30 @@ public class NewHomeActivity extends BaseActivity {
 
                         final String json = new String(response.body().string());
                         Util.setErrorLog(TAG, json);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    List<NewHomeDataItem.NewhomeDataBean.TopicBean> zhuantiList = new ArrayList<NewHomeDataItem.NewhomeDataBean.TopicBean>();
-                                    JSONObject zhuantiObject = new JSONObject(json);
-                                    int status = zhuantiObject.getInt("status");
-                                    String msg = zhuantiObject.getString("msg");
-                                    if (status == 200) {
-                                        JSONArray arr = zhuantiObject.getJSONArray("data");
-                                        for (int i = 0; i < arr.length(); i++) {
-                                            NewHomeDataItem.NewhomeDataBean.TopicBean bean = mGson.fromJson(arr.get(i).toString(), NewHomeDataItem.NewhomeDataBean.TopicBean.class);
+                        // 有数据 这样处理是不至于无数据的时候出现app闪退
+                        if(json.contains("data")){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        List<NewHomeDataItem.NewhomeDataBean.TopicBean> zhuantiList = new ArrayList<NewHomeDataItem.NewhomeDataBean.TopicBean>();
+                                        JSONObject zhuantiObject = new JSONObject(json);
+                                        int status = zhuantiObject.getInt("status");
+                                        String msg = zhuantiObject.getString("msg");
+                                        if (status == 200) {
+                                            JSONArray arr = zhuantiObject.getJSONArray("data");
+                                            for (int i = 0; i < arr.length(); i++) {
+                                                NewHomeDataItem.NewhomeDataBean.TopicBean bean = mGson.fromJson(arr.get(i).toString(), NewHomeDataItem.NewhomeDataBean.TopicBean.class);
 //                                        NewHomeDataItem.NewhomeDataBean.TopicBean bean = new NewHomeDataItem.NewhomeDataBean.TopicBean();
 //                                        bean.setAdd_time(arr.getJSONObject(i).getString("add_time"));
 //                                        bean.setDesc(arr.getJSONObject(i).getString("desc"));
 //                                        bean.setId(arr.getJSONObject(i).getString("id"));
 //                                        bean.setCover_url(arr.getJSONObject(i).getString("cover_url"));
 //                                        bean.setTitle(arr.getJSONObject(i).getString("title"));o
-                                            zhuantiList.add(bean);
-                                        }
+                                                zhuantiList.add(bean);
+                                            }
 
-                                        topicBeansList.addAll(zhuantiList);
+                                            topicBeansList.addAll(zhuantiList);
 //                                        // TODO: 2017/11/2
 //                                        if(newHomeAdapter1==null){
 //                                            newHomeAdapter1 = new NewHomeAdapter(mContext, bigData, topicBeansList);
@@ -309,21 +311,24 @@ public class NewHomeActivity extends BaseActivity {
 //                                        }else {
 //                                            newHomeAdapter1.notifyDataSetChanged();
 //                                        }
-                                        initData();
+                                            initData();
 
-                                    } else if (status == 0) {
-                                        Util.setToast(mContext, msg);
-                                    } else if (status == 201) {
-                                        Util.setToast(mContext, msg);
-                                    } else {
-                                        Util.setErrorLog(TAG, " 错误请求码是 [" + status + "]");
+                                        } else if (status == 0) {
+                                            Util.setToast(mContext, msg);
+                                        } else if (status == 201) {
+                                            Util.setToast(mContext, msg);
+                                        } else {
+                                            Util.setErrorLog(TAG, " 错误请求码是 [" + status + "]");
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
                                 }
-                            }
-                        });
-
+                            });
+                        }else {
+                            // 无数据 这样处理是不至于无数据的时候出现app闪退
+                            Util.setErrorLog(TAG, "后台无数据返回给我===1===");
+                        }
                     }
                 });
             }else {
@@ -340,33 +345,39 @@ public class NewHomeActivity extends BaseActivity {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         String result = new String(response.body().string());
-                        Util.setErrorLog(TAG, "---zengzhaozhong-->>" + result);
-                        CacheManager.setNewhomeJson(mContext, result);
-                        Gson gson = new Gson();
-                        final NewHomeDataItem dataItem = gson.fromJson(result, NewHomeDataItem.class);
-                        final String msg = dataItem.getMsg();
-                        Util.setErrorLog(TAG, dataItem.getMsg());
-                        if (dataItem.getStatus() == 200) {
-                            bigData = dataItem.getData();
-                            initData();
-                        }else if (dataItem.getStatus() == 0) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Util.setToast(mContext, msg);
-                                }
-                            });
+                        // 有数据 这样处理是不至于无数据的时候出现app闪退
+                        if(result.contains("data")){
+                            Util.setErrorLog(TAG, "---zengzhaozhong-->>" + result);
+                            CacheManager.setNewhomeJson(mContext, result);
+                            Gson gson = new Gson();
+                            final NewHomeDataItem dataItem = gson.fromJson(result, NewHomeDataItem.class);
+                            final String msg = dataItem.getMsg();
+                            Util.setErrorLog(TAG, dataItem.getMsg());
+                            if (dataItem.getStatus() == 200) {
+                                bigData = dataItem.getData();
+                                initData();
+                            }else if (dataItem.getStatus() == 0) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Util.setToast(mContext, msg);
+                                    }
+                                });
 
-                        } else {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Util.setToast(mContext, msg);
-                                }
-                            });
-                        }
-                        if (swipeRefreshLayout.isRefreshing()) {
-                            swipeRefreshLayout.setRefreshing(false);
+                            } else {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Util.setToast(mContext, msg);
+                                    }
+                                });
+                            }
+                            if (swipeRefreshLayout.isRefreshing()) {
+                                swipeRefreshLayout.setRefreshing(false);
+                            }
+                        }else {
+                            // 无数据 这样处理是不至于无数据的时候出现app闪退
+                            Util.setErrorLog(TAG, "后台无数据返回给我===2===");
                         }
                     }
                 });
