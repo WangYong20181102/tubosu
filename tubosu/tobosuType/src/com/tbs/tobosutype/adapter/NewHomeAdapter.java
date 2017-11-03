@@ -157,7 +157,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_MIANMFEI_BAOJIA);
+                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_MIANFEI_LIANGFANG);
                     context.startActivity(webIntent);
                 }
             });
