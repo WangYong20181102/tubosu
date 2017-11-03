@@ -17,6 +17,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.LookPhotoActivity;
 import com.tbs.tobosutype.activity.NewWebViewActivity;
 import com.tbs.tobosutype.bean._DecoCaseDetail;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 
 import java.util.ArrayList;
@@ -143,7 +144,7 @@ public class DecoCaseDetailAdapter
                     public void onClick(View v) {
                         //跳转到免费设计的H5页面
                         Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                        intent.putExtra("mLoadingUrl", "http://m.tobosu.com/quote/");
+                        intent.putExtra("mLoadingUrl", Constant.ZHAO_TA_SHEJI);
                         mContext.startActivity(intent);
                     }
                 });

@@ -164,7 +164,7 @@ public class DecorationCaseActivity extends Activity {
             case R.id.deco_case_find_price:
                 /// TODO: 2017/10/24  跳转到免费报价发单页暂时写固定url
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.DALIBAO);
+                intent.putExtra("mLoadingUrl", Constant.ANLI_LIST_FADAN);
                 mContext.startActivity(intent);
                 break;
         }
