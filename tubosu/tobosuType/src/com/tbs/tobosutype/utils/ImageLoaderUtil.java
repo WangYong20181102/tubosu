@@ -23,7 +23,7 @@ public class ImageLoaderUtil {
 //		bitmapUtils.configDefaultReadTimeout(3000);
 //		bitmapUtils.display(view, url);
 
-        Glide.with(context).load(url).placeholder(R.drawable.icon_tobosu_default).into((ImageView) view);
+        Glide.with(context).load(url).placeholder(R.drawable.new_home_loading).into((ImageView) view);
 
     }
 
@@ -34,7 +34,7 @@ public class ImageLoaderUtil {
 //		bitmapUtils.configDefaultLoadingImage(R.drawable.icon_tobosu_default);
 //		bitmapUtils.configDefaultReadTimeout(3000);
 //		bitmapUtils.display(view, url);
-        Glide.with(context).load(url).placeholder(R.drawable.icon_tobosu_default).into((ImageView) view);
+        Glide.with(context).load(url).placeholder(R.drawable.new_home_loading).into((ImageView) view);
     }
 
     //处理圆形图片
