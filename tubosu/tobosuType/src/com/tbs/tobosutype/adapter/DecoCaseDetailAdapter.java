@@ -116,7 +116,7 @@ public class DecoCaseDetailAdapter
             ((HeadViewHolder) holder).item_deco_detail_view.setBackgroundColor(Color.parseColor("#ffffff"));
             //拥有者
             if (TextUtils.isEmpty(mDecoCaseDetail.getOwner_name())) {
-                ((HeadViewHolder) holder).item_deco_detail_title_name.setVisibility(View.GONE);
+                ((HeadViewHolder) holder).item_deco_detail_title_name.setText(mDecoCaseDetail.getCommunity_name());
             } else {
                 ((HeadViewHolder) holder).item_deco_detail_title_name.setText("" + mDecoCaseDetail.getOwner_name());
             }
