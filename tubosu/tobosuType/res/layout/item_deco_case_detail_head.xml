@@ -128,7 +128,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
+            android:layout_marginLeft="12dp"
             android:layout_marginTop="14dp">
 
             <ImageView
@@ -218,7 +218,7 @@
             android:id="@+id/item_deco_detail_huxing_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
+            android:layout_marginLeft="12dp"
             android:layout_marginTop="24dp"
             android:orientation="horizontal">
 
@@ -243,7 +243,7 @@
             android:id="@+id/item_deco_detail_mianji_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
+            android:layout_marginLeft="12dp"
             android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
@@ -268,7 +268,7 @@
             android:id="@+id/item_deco_detail_weizhi_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
+            android:layout_marginLeft="12dp"
             android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
@@ -293,7 +293,7 @@
             android:id="@+id/item_deco_detail_huafei_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
+            android:layout_marginLeft="12dp"
             android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
@@ -353,8 +353,8 @@
             android:id="@+id/item_deco_detail_jianjie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="28dp"
             android:layout_marginTop="16dp"
             android:lineSpacingExtra="5dp"
             android:text="复活卡就是疯狂就撒旦浩丰科技哈萨克大姐夫好复活卡就是疯狂就撒旦浩丰科技哈萨克大姐夫好"
