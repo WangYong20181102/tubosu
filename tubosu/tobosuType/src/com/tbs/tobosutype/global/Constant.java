@@ -345,5 +345,13 @@ public class Constant {
     //找他设计
     public static final String ZHAO_TA_SHEJI = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=al-xq-sheji";
 
+    public static final String LINK_HOME_MIANFEI_LIANGFANG = "http://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=sy-icon-liangfang";
+    public static final String LINK_HOME_MIANMFEI_BAOJIA = "http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=sy-fd-baojia";
+    public static final String LINK_HOME_MIANFEI_SHEJI = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=sy-fd-sheji";
+    public static final String LINK_HOME_ZHUANYE_TUIJIAN = "http://m.tobosu.com/rec_company?channel=app&subchannel=android&chcode=sy-fd-tuijian";
+    public static final String LINK_HOME_DALIBAO = "http://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=sy-fd-libao";
+
+
+
 
 }

@@ -157,7 +157,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.BAOJIA);
+                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_MIANMFEI_BAOJIA);
                     context.startActivity(webIntent);
                 }
             });
@@ -199,7 +199,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.BAOJIA);
+                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_DALIBAO);
                     context.startActivity(webIntent);
                 }
             });
@@ -207,7 +207,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.BAOJIA);
+                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_MIANFEI_SHEJI);
                     context.startActivity(webIntent);
                 }
             });
@@ -215,7 +215,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.BAOJIA);
+                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_ZHUANYE_TUIJIAN);
                     context.startActivity(webIntent);
                 }
             });
@@ -223,7 +223,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.BAOJIA);
+                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_DALIBAO);
                     context.startActivity(webIntent);
                 }
             });
@@ -777,7 +777,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.BAOJIA); // TODO: 2017/11/3  urlStrings.get(position)
+                    webIntent.putExtra("mLoadingUrl", urlStrings.get(position));
                     context.startActivity(webIntent);
                 }
             });

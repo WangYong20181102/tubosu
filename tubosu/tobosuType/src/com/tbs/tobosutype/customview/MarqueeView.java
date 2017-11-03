@@ -165,13 +165,13 @@ public class MarqueeView extends ViewFlipper {
                 webIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 String text = tvMarquee.getText().toString();
                 if(text.contains("设计")){
-                    webIntent.putExtra("mLoadingUrl", Constant.BAOJIA);  // MIANFEI_BAOJIA
+                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_MIANFEI_SHEJI);
                 }else if (text.contains("报价")){
-                    webIntent.putExtra("mLoadingUrl", Constant.BAOJIA);   // MIANFEI_BAOJIA
+                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_MIANMFEI_BAOJIA);
                 }else if(text.contains("推荐")){
-                    webIntent.putExtra("mLoadingUrl", Constant.BAOJIA);   // TUIJIAN
+                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_ZHUANYE_TUIJIAN);
                 }else if(text.contains("礼包")){
-                    webIntent.putExtra("mLoadingUrl", Constant.BAOJIA);   // DALIBAO
+                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_DALIBAO);
                 }
                 context.startActivity(webIntent);
             }
