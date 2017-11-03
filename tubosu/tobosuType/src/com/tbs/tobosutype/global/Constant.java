@@ -337,8 +337,11 @@ public class Constant {
 //    案例-详情-报价（包括看图）        al-xq-baojia	         http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=al-xq-baojia
 //    专题-详情-设计	                   zt-xq-sheji	         http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=zt-xq-sheji
 
-
-
+    public static final String LINK_HOME_MIANFEI_LIANGFANG = "http://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=sy-icon-liangfang";
+    public static final String LINK_HOME_MIANMFEI_BAOJIA = "http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=sy-fd-baojia";
+    public static final String LINK_HOME_MIANFEI_SHEJI = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=sy-fd-sheji";
+    public static final String LINK_HOME_ZHUANYE_TUIJIAN = "http://m.tobosu.com/rec_company?channel=app&subchannel=android&chcode=sy-fd-tuijian";
+    public static final String LINK_HOME_DALIBAO = "http://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=sy-fd-libao";
 
 
 
