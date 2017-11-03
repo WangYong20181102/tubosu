@@ -36,6 +36,7 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -64,9 +65,11 @@ import com.tbs.tobosutype.utils.MD5Util;
 import com.tbs.tobosutype.utils.NetUtil;
 import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -74,6 +77,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -132,7 +136,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     /***所有城市接口*/
     private String cityUrl = Constant.TOBOSU_URL + "tapp/util/change_city";
 
-//    private List<String> hotCityNames = new ArrayList<String>();
+    //    private List<String> hotCityNames = new ArrayList<String>();
     private List<City> hotCityNames = new ArrayList<City>();
     private MapView mMapView;
     private BaiduMap mBaiduMap;
@@ -270,7 +274,6 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
         }
 
 
-
         headView = getLayoutInflater().inflate(R.layout.head_view_select_city, null);
         mCity_gridView = (FirstGridView) headView.findViewById(R.id.city_gridView);
         select_loading = (LinearLayout) findViewById(R.id.ll_loading);
@@ -348,17 +351,17 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
 
 //        //TODO
 //        if (mApplication.isCityListComplite()) {
-            mCities = mApplication.getCityList();
-            hotCityNames.clear();
-            hotCityNames = mApplication.getAllHotCity();
-            mSections = mApplication.getSections();
-            mMap = mApplication.getMap();
-            mPositions = mApplication.getPositions();
-            mIndexer = mApplication.getIndexer();
-            mCityAdapter = new CityAdapter(SelectCtiyActivity.this, mCities, mMap, mSections, mPositions);
-            mCityListView.setAdapter(mCityAdapter);
-            mCityListView.setOnScrollListener(mCityAdapter);
-            mLetter.setVisibility(View.VISIBLE);
+        mCities = mApplication.getCityList();
+        hotCityNames.clear();
+        hotCityNames = mApplication.getAllHotCity();
+        mSections = mApplication.getSections();
+        mMap = mApplication.getMap();
+        mPositions = mApplication.getPositions();
+        mIndexer = mApplication.getIndexer();
+        mCityAdapter = new CityAdapter(SelectCtiyActivity.this, mCities, mMap, mSections, mPositions);
+        mCityListView.setAdapter(mCityAdapter);
+        mCityListView.setOnScrollListener(mCityAdapter);
+        mLetter.setVisibility(View.VISIBLE);
 //        }
 //        // 缓存至本地
 //        String result = getSharedPreferences("selectCityCache", 0).getString("result", "");
@@ -471,7 +474,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
 
 
 //		showWarnText(realLocationCity, cityFromClick);
-        if(realLocationCity!=null){
+        if (realLocationCity != null) {
             if (realLocationCity.contains("市") || realLocationCity.contains("县")) {
                 realLocationCity = realLocationCity.substring(0, realLocationCity.length() - 1);
             }
@@ -489,14 +492,14 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
                                 }
                             }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
 
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.cancel();
-                                }
-                            });
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
 
                     builder.create().show();
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -512,7 +515,10 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     private void confirmCity(String cityName, String cid) {
 
         getSharedPreferences("city", Context.MODE_PRIVATE).edit().putString("cityName", cityName).commit();
-
+        AppInfoUtil.setCityNameInAnli(mContext, cityName);
+        Log.e(TAG, "获取的选择的城市====================" + cityName);
+        Log.e(TAG, "存储的城市位置=====================" + AppInfoUtil.getCityName(mContext));
+        Log.e(TAG, "获取案例存储的城市位置=====================" + AppInfoUtil.getCityInAnli(mContext));
         if (from == 31) {
             // 来自poporder页面
             Intent cityData = new Intent();
@@ -577,7 +583,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
         }
 
 
-        if(fromHome.equals("101")){
+        if (fromHome.equals("101")) {
 
             Intent it = new Intent();
             Bundle b = new Bundle();
@@ -704,12 +710,13 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
         mCityListView.setOnScrollListener(mCityAdapter);
     }
 
-    private void initBaidu(){
+    private void initBaidu() {
         SDKInitializer.initialize(getApplicationContext());
         initLocationSetting();
     }
-    private void initLocationSetting(){
-        try{
+
+    private void initLocationSetting() {
+        try {
             mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
             mLocationClient.start();
 
@@ -728,21 +735,21 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤GPS仿真结果，默认需要
             mLocationClient.setLocOption(option);
 
-            if (mLocationClient != null && mLocationClient.isStarted()){
+            if (mLocationClient != null && mLocationClient.isStarted()) {
                 System.out.println("--SelectCityActivity-->>" + mLocationClient.requestLocation());
-            }else{
+            } else {
                 System.out.println("SelectCityActivity === locClient is null or not started");
             }
 
             mLocationClient.registerLocationListener(new MyLocationListener());    //注册监听函数
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         needPermissions();
     }
 
-    private  void needPermissions(){
+    private void needPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
             List<String> permission = getPermissionList(mContext);
             if (permission.size() > 0) {
@@ -777,12 +784,15 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     }
 
 
-    /**自定义个权限码*/
-    private static final int ACCESS_LOCATION =100;
+    /**
+     * 自定义个权限码
+     */
+    private static final int ACCESS_LOCATION = 100;
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch(requestCode) {
+        switch (requestCode) {
 
             // requestCode即所声明的权限获取码，在checkSelfPermission时传入
             case ACCESS_LOCATION:
@@ -814,18 +824,18 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             sb.append(location.getLocType());
             sb.append("\nlatitude : ");
             sb.append(location.getLatitude());
-            AppInfoUtil.setLat(mContext, location.getLatitude()+"");
+            AppInfoUtil.setLat(mContext, location.getLatitude() + "");
             sb.append("\nlontitude : ");
             sb.append(location.getLongitude());
-            AppInfoUtil.setLng(mContext, location.getLongitude()+"");
+            AppInfoUtil.setLng(mContext, location.getLongitude() + "");
             sb.append("\nradius : ");
             realLocationCity = location.getCity();
-            if(realLocationCity!=null){
+            if (realLocationCity != null) {
 //                realLocationCity= realLocationCity.replaceAll("[^\u4E00-\u9FA5]", "");
 //                System.out.println("=============有没有city>>>" + locationCity +"<<<");
                 CacheManager.setCity(mContext, realLocationCity);
                 select_positioning.setText(realLocationCity);
-            }else{
+            } else {
                 select_positioning.setText("定位中...");
             }
 
@@ -900,7 +910,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
                 } else {
                     // 定位成功
 
-                    if(realLocationCity!=null){
+                    if (realLocationCity != null) {
                         if (realLocationCity.contains("市") || realLocationCity.contains("县")) {
                             realLocationCity = realLocationCity.substring(0, realLocationCity.length() - 1);
                         }

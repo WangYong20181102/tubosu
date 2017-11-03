@@ -164,7 +164,7 @@ public class DecorationCaseActivity extends Activity {
             case R.id.deco_case_find_price:
                 /// TODO: 2017/10/24  跳转到免费报价发单页暂时写固定url
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl",Constant.DALIBAO);
+                intent.putExtra("mLoadingUrl", Constant.DALIBAO);
                 mContext.startActivity(intent);
                 break;
         }
@@ -175,7 +175,9 @@ public class DecorationCaseActivity extends Activity {
         decoCaseSwipe.setRefreshing(false);
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
-        param.put("city_name", AppInfoUtil.getCityName(mContext));
+        param.put("city_name", AppInfoUtil.getCityInAnli(mContext));
+        Log.e(TAG, "案例获取本地存储的城市==============" + AppInfoUtil.getCityName(mContext));
+        Log.e(TAG, "案例获取本地存储的城市======案例案例========" + AppInfoUtil.getCityInAnli(mContext));
         param.put("page", page);
         param.put("page_size", "10");
         OKHttpUtil.post(Constant.CASE_LIST, param, new Callback() {
