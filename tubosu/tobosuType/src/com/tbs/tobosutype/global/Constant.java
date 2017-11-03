@@ -337,17 +337,17 @@ public class Constant {
 //    专题-详情-设计	                   zt-xq-sheji	         http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=zt-xq-sheji
 
     //案例列表发单
-    public static final String ANLI_LIST_FADAN = "http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=al-lb-baojia";
+    public static final String ANLI_LIST_FADAN = "http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=allbbaojia";
     //案例详情（看图页）
-    public static final String ANLI_XIANGQING_FADAN = "http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=al-xq-baojia";
+    public static final String ANLI_XIANGQING_FADAN = "http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=alxqbaojia";
     //专题详情
-    public static final String ZHUANTI_XIANGQING_FADAN = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=zt-xq-sheji";
+    public static final String ZHUANTI_XIANGQING_FADAN = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=ztxqsheji";
     //找他设计
-    public static final String ZHAO_TA_SHEJI = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=al-xq-sheji";
+    public static final String ZHAO_TA_SHEJI = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=alxqsheji";
 
-    public static final String LINK_HOME_MIANFEI_LIANGFANG = "http://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=sy-icon-liangfang";
-    public static final String LINK_HOME_MIANMFEI_BAOJIA = "http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=sy-fd-baojia";
-    public static final String LINK_HOME_MIANFEI_SHEJI = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=sy-fd-sheji";
-    public static final String LINK_HOME_ZHUANYE_TUIJIAN = "http://m.tobosu.com/rec_company?channel=app&subchannel=android&chcode=sy-fd-tuijian";
-    public static final String LINK_HOME_DALIBAO = "http://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=sy-fd-libao";
+    public static final String LINK_HOME_MIANFEI_LIANGFANG = "http://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=syiconliangfang";
+    public static final String LINK_HOME_MIANMFEI_BAOJIA = "http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=syfdbaojia";
+    public static final String LINK_HOME_MIANFEI_SHEJI = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=syfdsheji";
+    public static final String LINK_HOME_ZHUANYE_TUIJIAN = "http://m.tobosu.com/rec_company?channel=app&subchannel=android&chcode=syfdtuijian";
+    public static final String LINK_HOME_DALIBAO = "http://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=syfdlibao";
 }
