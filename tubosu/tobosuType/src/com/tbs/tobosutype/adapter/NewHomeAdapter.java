@@ -33,7 +33,6 @@ import com.tbs.tobosutype.customview.MyListView;
 import com.tbs.tobosutype.customview.MySwipeRefreshLayout;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.EndlessRecyclerOnScrollListener;
-import com.tbs.tobosutype.utils.Util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -220,7 +219,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     context.startActivity(webIntent);
                 }
             });
-            headHolder.tvGoGet.setOnClickListener(new View.OnClickListener() {
+            headHolder.rel_cuiying.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
@@ -561,7 +560,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         RelativeLayout relFreeSheji;
         RelativeLayout relProfessalTuiJian;
         TextView tvGoGet;
-
+        RelativeLayout rel_cuiying;
 
         // 案例
         RelativeLayout relMoreAnli;
@@ -597,7 +596,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             relFreeSheji = (RelativeLayout) itemView.findViewById(R.id.relFreeSheji);
             relProfessalTuiJian = (RelativeLayout) itemView.findViewById(R.id.relProfessalTuiJian);
             tvGoGet = (TextView) itemView.findViewById(R.id.tvGoGet);
-
+            rel_cuiying = (RelativeLayout) itemView.findViewById(R.id.rel_cuiying);
 
             // 案例
             relMoreAnli = (RelativeLayout) itemView.findViewById(R.id.rel_more_anli);
@@ -660,7 +659,6 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             for (int i = 0; i < fakeUrl.length; i++) {
                 urlList.add(fakeUrl[i]);
                 ImageView view = new ImageView(context);
-//                view.setTag(bannerList.get(i).getImg_url());
                 view.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 Glide.with(context).load(fakeUrl[i]).into(view);
                 imageViewList.add(view);
@@ -779,7 +777,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", urlStrings.get(position));
+                    webIntent.putExtra("mLoadingUrl", Constant.BAOJIA); // TODO: 2017/11/3  urlStrings.get(position)
                     context.startActivity(webIntent);
                 }
             });
