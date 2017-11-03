@@ -35,6 +35,7 @@ import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.EndlessRecyclerOnScrollListener;
 import com.tbs.tobosutype.utils.Util;
+import com.tbs.tobosutype.utils.Utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -206,7 +207,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             headHolder.relFreeBaojia.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    fadanClick();
+                    fadanClick("1009", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
                     webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_MIANMFEI_BAOJIA);
                     context.startActivity(webIntent);
@@ -215,7 +216,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             headHolder.relFreeSheji.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    fadanClick();
+                    fadanClick("950", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
                     webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_MIANFEI_SHEJI);
                     context.startActivity(webIntent);
@@ -224,7 +225,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             headHolder.relProfessalTuiJian.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    fadanClick();
+                    fadanClick("1010", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
                     webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_ZHUANYE_TUIJIAN);
                     context.startActivity(webIntent);
@@ -233,7 +234,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             headHolder.rel_cuiying.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    fadanClick();
+                    fadanClick("1011", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
                     webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_DALIBAO);
                     context.startActivity(webIntent);
@@ -951,12 +952,12 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         OKHttpUtil.post(Constant.BANNER_CLICK_URL, click, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Util.setErrorLog(TAG, "发单 点击失败");
+                Util.setErrorLog(TAG, "newhome 发单 点击失败");
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Util.setErrorLog(TAG, "发单 点击成功");
+                Util.setErrorLog(TAG, "newhome 发单 点击成功");
             }
         });
     }
