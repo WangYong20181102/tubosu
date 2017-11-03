@@ -211,6 +211,7 @@ public class NewHomeActivity extends BaseActivity {
                 Util.setErrorLog(TAG, chooseId + " id==choose " + choose);
                 newhomeCity.setText(choose);
                 CacheManager.setStartFlag(NewHomeActivity.this, 1);
+
                 getDataFromNet(false);
             }
 
@@ -247,6 +248,7 @@ public class NewHomeActivity extends BaseActivity {
         if (Util.isNetAvailable(mContext)) {
             isLoading = true;
             int start = CacheManager.getStartFlag(NewHomeActivity.this);
+            Util.setErrorLog(TAG, "---zengzhaozhong--start>>" + start);
             if(more){
                 // 加载更多
                 HashMap<String, Object> hashMap = new HashMap<String, Object>();
@@ -319,7 +321,8 @@ public class NewHomeActivity extends BaseActivity {
                     }
                 });
             }else {
-
+                newHomeAdapter = null;
+                bigData = null;
                 // 第一次加载
                 OKHttpUtil.post(Constant.NEWHOME_URL, getParam(start), new Callback() {
 
