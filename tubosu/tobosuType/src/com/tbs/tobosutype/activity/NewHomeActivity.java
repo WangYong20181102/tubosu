@@ -208,7 +208,7 @@ public class NewHomeActivity extends BaseActivity {
                 chooseId = data.getBundleExtra("city_bundle").getString("cid");
                 getSharedPreferences("Save_City_Info", MODE_PRIVATE).edit().putString("save_city_now", cityName).commit();
                 AppInfoUtil.setCityName(mContext, cityName);
-                Util.setErrorLog(TAG, chooseId + " id==choose " + choose);
+                Util.setErrorLog(TAG, chooseId + " <<#id == choose>>> " + choose);
                 newhomeCity.setText(choose);
                 CacheManager.setStartFlag(NewHomeActivity.this, 1);
 
@@ -227,6 +227,11 @@ public class NewHomeActivity extends BaseActivity {
     }
 
 
+    /**
+     *
+     * @param num
+     * @return
+     */
     private HashMap<String, Object> getParam(int num) {
         HashMap<String, Object> param = new HashMap<String, Object>();
         param.put("token", Util.getDateToken());
@@ -239,7 +244,7 @@ public class NewHomeActivity extends BaseActivity {
             // 选择
             param.put("city_id", chooseId);
             param.put("city_name", choose);
-            Util.setErrorLog("-zengzhaozhong-", "id = " + chooseId + "    cityname = " + city);
+            Util.setErrorLog("-zengzhaozhong-", "#id = " + chooseId + "    cityname = " + city);
         }
         return param;
     }
@@ -247,6 +252,7 @@ public class NewHomeActivity extends BaseActivity {
     private void getDataFromNet(boolean more) {
         if (Util.isNetAvailable(mContext)) {
             isLoading = true;
+            // start 1 选择过城市，  start 0 未选择过城市
             int start = CacheManager.getStartFlag(NewHomeActivity.this);
             Util.setErrorLog(TAG, "---zengzhaozhong--start>>" + start);
             if(more){

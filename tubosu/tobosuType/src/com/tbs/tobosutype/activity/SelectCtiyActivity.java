@@ -914,7 +914,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
                         if (realLocationCity.contains("市") || realLocationCity.contains("县")) {
                             realLocationCity = realLocationCity.substring(0, realLocationCity.length() - 1);
                         }
-                        startActivityWithCity(realLocationCity, "1");
+                        startActivityWithCity(realLocationCity, "0");
                     }
                 }
             }
