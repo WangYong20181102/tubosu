@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="8dp"
                 android:text="阿斯蒂芬伽伽是开发就按三大空间发挥就开始打回访个地方就是个看到法国"
-                android:textColor="#000000"
+                android:textColor="#4c4c4c"
                 android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>

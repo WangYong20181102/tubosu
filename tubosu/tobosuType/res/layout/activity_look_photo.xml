@@ -15,6 +15,7 @@
     </android.support.v4.view.ViewPager>
     <!--返回的按钮-->
     <LinearLayout
+        android:animateLayoutChanges="true"
         android:id="@+id/look_photo_back"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -31,18 +32,20 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="96dp"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
+            android:id="@+id/look_photo_title_rl"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp">
 
             <TextView
+                android:layout_centerInParent="true"
                 android:id="@+id/look_photo_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,6 +54,7 @@
                 android:textColor="@color/white" />
 
             <TextView
+                android:layout_centerInParent="true"
                 android:id="@+id/look_photo_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,9 +64,10 @@
         </RelativeLayout>
         <!--底部发单按钮-->
         <RelativeLayout
+            android:animateLayoutChanges="true"
             android:id="@+id/look_photo_find_price_rl"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="48dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
