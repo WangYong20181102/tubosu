@@ -1,7 +1,6 @@
 package com.tbs.tobosutype.adapter;
 import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
-import com.tbs.tobosutype.utils.Util;
+import com.tbs.tobosutype.utils.GlideUtils;
+import com.tbs.tobosutype.utils.TRoundView;
 
 import java.util.List;
 /**
@@ -65,7 +65,8 @@ public class NewhomeCasesGridAdapter extends BaseAdapter {
         }else {
             holder = (CaseViewHolder) convertView.getTag();
         }
-        Glide.with(context).load(casesBeenList.get(position).getCover_url()).error(R.drawable.new_home_loading).placeholder(R.drawable.new_home_loading).into(holder.iv);
+//        Glide.with(context).load(casesBeenList.get(position).getCover_url()).error(R.drawable.new_home_loading).placeholder(R.drawable.new_home_loading).into(holder.iv);
+        GlideUtils.glideLoader(context, casesBeenList.get(position).getCover_url(), R.drawable.new_home_loading,R.drawable.new_home_loading,holder.iv);
         holder.title.setText(casesBeenList.get(position).getCommunity_name());
         holder.name.setText(casesBeenList.get(position).getOwner_name());
         holder.desc.setText(casesBeenList.get(position).getSub_title());
@@ -78,5 +79,4 @@ public class NewhomeCasesGridAdapter extends BaseAdapter {
         TextView name;
         TextView desc;
     }
-
 }

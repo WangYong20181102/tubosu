@@ -16,11 +16,11 @@
         </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <View
+    <ImageView
         android:id="@+id/home_view"
         android:layout_width="match_parent"
         android:layout_height="49dp"
-        android:background="#40000000"/>
+        android:background="@drawable/drawable_hdpi"/>
 
     <RelativeLayout
         android:id="@+id/rel_newhomebar"

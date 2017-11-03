@@ -31,6 +31,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
         android:layout_marginRight="20dp"
@@ -176,8 +177,8 @@
             android:id="@+id/price_img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/price_gif"
-            android:scaleType="centerCrop"/>
+            android:scaleType="fitXY"
+            android:background="@drawable/price_gif"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -213,10 +214,18 @@
 
 
     <RelativeLayout
+        android:id="@+id/rel_cuiying"
         android:layout_width="match_parent"
         android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"
         android:layout_height="100dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="#FFFCFB"/>
         <ImageView
             android:id="@+id/ivRedBag"
             android:layout_width="wrap_content"
@@ -272,6 +281,249 @@
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:background="#F7F7F7"/>
+
+
+
+
+
+
     <!-- 以下是装修案例 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_height="64dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="装修案例"
+                android:textSize="18sp"
+                android:layout_centerVertical="true"
+                android:textColor="@color/color_black"/>
+
+            <RelativeLayout
+                android:id="@+id/rel_more_anli"
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true">
+                <TextView
+                    android:id="@+id/tv_more_anli"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="更多"
+                    android:textSize="14sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:textColor="#666666"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/tv_more_anli"
+                    android:background="@drawable/fuck_more"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <com.tbs.tobosutype.customview.CustomGridView
+            android:id="@+id/newhome_gv_anli"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-6dp"
+            android:scrollbars="none"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:horizontalSpacing="10dp"
+            android:verticalSpacing="10dp"
+            android:layout_marginBottom="4dp"
+            android:listSelector="@color/transparent"
+            android:numColumns="2"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginTop="14dp"
+            android:background="#F7F7F7"/>
+
+    </LinearLayout>
+
+
+    <!-- 装修设计 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_height="64dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="装修设计"
+                android:textColor="@color/color_black"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:id="@+id/rel_more_sheji"
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true">
+
+                <TextView
+                    android:id="@+id/tv_more_sheji"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:text="更多"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/tv_more_sheji"
+                    android:background="@drawable/fuck_more" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <com.tbs.tobosutype.customview.MySwipeRefreshLayout
+            android:id="@+id/swipe_newhome_sheji"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="-6dp"
+            android:layout_height="192dp">
+            <com.tbs.tobosutype.customview.BetterRecyclerView
+                android:id="@+id/newhome_recyclerview_sheji"
+                android:layout_width="match_parent"
+                android:layout_height="192dp">
+            </com.tbs.tobosutype.customview.BetterRecyclerView>
+        </com.tbs.tobosutype.customview.MySwipeRefreshLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginBottom="18dp"
+            android:background="#F7F7F7"/>
+
+    </LinearLayout>
+
+
+
+
+
+    <!-- 装修课堂 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_height="23dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="装修课堂"
+                android:textColor="@color/color_black"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:id="@+id/rel_more_class"
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true">
+
+                <TextView
+                    android:id="@+id/tv_more_class"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:text="更多"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/tv_more_class"
+                    android:background="@drawable/fuck_more" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <com.tbs.tobosutype.customview.MySwipeRefreshLayout
+            android:id="@+id/swipe_newhome_class"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+            <com.tbs.tobosutype.customview.BetterRecyclerView
+                android:id="@+id/newhome_recyclerview_class"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+            </com.tbs.tobosutype.customview.BetterRecyclerView>
+        </com.tbs.tobosutype.customview.MySwipeRefreshLayout>
+
+        <com.tbs.tobosutype.customview.MyListView
+            android:id="@+id/newhome_ketang_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginRight="16dp"
+            android:divider="#F7F7F7"
+            android:dividerHeight="1dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="2dp"
+            android:listSelector="@color/transparent"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="8dp"
+            android:background="#F7F7F7"/>
+
+    </LinearLayout>
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:text="精选专题"
+            android:textColor="@color/color_black"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+
+
+
 
 </LinearLayout>

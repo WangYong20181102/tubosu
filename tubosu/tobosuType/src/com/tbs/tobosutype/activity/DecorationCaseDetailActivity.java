@@ -224,7 +224,7 @@ public class DecorationCaseDetailActivity extends Activity {
             case R.id.deco_case_detail_find_price_rl:
                 /// TODO: 2017/10/24  跳转到免费报价发单页暂时写固定url
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", "http://m.dev.tobosu.com/free_price_page/");
+                intent.putExtra("mLoadingUrl", Constant.DALIBAO);
                 mContext.startActivity(intent);
                 break;
         }

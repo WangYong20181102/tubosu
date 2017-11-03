@@ -3,13 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#F7F7F7"
+    android:layout_margin="6dp"
     android:gravity="center_horizontal">
 
     <ProgressBar
         android:id="@+id/newhome_progressbar"
         android:layout_width="21dp"
+        android:layout_centerVertical="true"
         android:layout_height="21dp"
-        android:layout_marginBottom="13dp"/>
+        android:layout_marginBottom="4dp"/>
 
     <TextView
         android:id="@+id/newhome_loadmore"
@@ -17,9 +19,9 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/newhome_progressbar"
         android:textColor="#605F5F"
+        android:gravity="center_vertical"
         android:layout_centerVertical="true"
         android:layout_marginLeft="14dp"
-        android:paddingBottom="13dp"
         android:textSize="14sp"
         android:text="加载更多数据..."/>
 </RelativeLayout>

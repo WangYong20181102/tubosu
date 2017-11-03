@@ -1,4 +1,5 @@
 package com.tbs.tobosutype.activity;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,16 +11,16 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.location.Poi;
-import com.baidu.mapapi.SDKInitializer;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.NewHomeAdapter;
@@ -29,9 +30,16 @@ import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.Util;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -54,6 +62,8 @@ public class NewHomeActivity extends BaseActivity {
     private LinearLayoutManager linearLayoutManager;
     private NewHomeAdapter newHomeAdapter;
     private boolean isSheji = true;
+    private Gson mGson;
+    private ArrayList<NewHomeDataItem.NewhomeDataBean.TopicBean> topicBeansList = new ArrayList<NewHomeDataItem.NewhomeDataBean.TopicBean>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +75,13 @@ public class NewHomeActivity extends BaseActivity {
         initBaiduMap();
         chooseId = "0";
         setClick();
-        getDataFromNet();
+        getDataFromNet(false);
         initReceiver();
     }
 
-    private void initView(){
-        home_view = (View)findViewById(R.id.home_view);
+    private void initView() {
+        mGson = new Gson();
+        home_view = (View) findViewById(R.id.home_view);
         tubosu = (TextView) findViewById(R.id.app_title_text);
         rel_newhomebar = (RelativeLayout) findViewById(R.id.rel_newhomebar);
         rel_newhomebar.setAlpha(0);
@@ -83,7 +94,7 @@ public class NewHomeActivity extends BaseActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -92,20 +103,12 @@ public class NewHomeActivity extends BaseActivity {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 //得到当前显示的最后一个item的view
-                View lastChildView = recyclerView.getLayoutManager().getChildAt(recyclerView.getLayoutManager().getChildCount()-1);
-                //得到lastChildView的bottom坐标值
-                int lastChildBottom = lastChildView.getBottom();
-                //得到Recyclerview的底部坐标减去底部padding值，也就是显示内容最底部的坐标
-                int recyclerBottom =  recyclerView.getBottom()-recyclerView.getPaddingBottom();
-                //通过这个lastChildView得到这个view当前的position值
-                int lastPosition  = recyclerView.getLayoutManager().getPosition(lastChildView);
-
-                //判断lastChildView的bottom值跟recyclerBottom
-                //判断lastPosition是不是最后一个position
-                //如果两个条件都满足则说明是真正的滑动到了底部
-                if(lastChildBottom == recyclerBottom && lastPosition == recyclerView.getLayoutManager().getItemCount()-1 ){
-                    if(newHomeAdapter!=null){
-                        newHomeAdapter.loadMoreData(true);
+                int lastPosition = linearLayoutManager.findLastVisibleItemPosition();
+                if (!isLoading && lastPosition + 2 >= recyclerView.getLayoutManager().getItemCount()) {
+                    if (newHomeAdapter != null) {
+                        newHomeAdapter.setLoadMoreFlag(true);
+                        page++;
+                        getDataFromNet(true);
                     }
                 }
             }
@@ -123,13 +126,19 @@ public class NewHomeActivity extends BaseActivity {
                 float alpha = 0;
                 int scollYHeight = getScollYHeight(true, tubosu.getHeight());
 
+                if(scollYHeight>222){
+                    rel_newhomebar.setVisibility(View.VISIBLE);
+                }
                 int baseHeight = 574;
-                if(scollYHeight >= baseHeight) {
+                if (scollYHeight >= baseHeight) {
                     alpha = 1;
-                }else {
-                    alpha = scollYHeight / (baseHeight*1.0f);
-                    if(alpha>4){
-                        home_view.setVisibility(View.INVISIBLE);
+                } else {
+                    alpha = scollYHeight / (baseHeight * 1.0f);
+                    if (alpha > 14) {
+                        home_view.setVisibility(View.INVISIBLE);// 黑色渐变 隐藏
+                    }else {
+                        home_view.setVisibility(View.VISIBLE);
+                        rel_newhomebar.setVisibility(View.INVISIBLE);
                     }
                 }
                 rel_newhomebar.setAlpha(alpha);
@@ -137,6 +146,8 @@ public class NewHomeActivity extends BaseActivity {
         });
     }
 
+    private int page = 1;
+    private boolean isLoading = false;//是否正在加载数据
     private int getScollYHeight(boolean hasHead, int headerHeight) {
         LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         //获取到第一个可见的position,其添加的头部不算其position当中
@@ -146,10 +157,10 @@ public class NewHomeActivity extends BaseActivity {
         //获取自身的高度
         int itemHeight = firstVisiableChildView.getHeight();
         //有头部
-        if(hasHead) {
-            return headerHeight + itemHeight*position - firstVisiableChildView.getTop();
-        }else {
-            return itemHeight*position - firstVisiableChildView.getTop();
+        if (hasHead) {
+            return headerHeight + itemHeight * position - firstVisiableChildView.getTop();
+        } else {
+            return itemHeight * position - firstVisiableChildView.getTop();
         }
     }
 
@@ -159,8 +170,11 @@ public class NewHomeActivity extends BaseActivity {
         @Override
         public void onRefresh() {
             //下拉刷新数据 重新初始化各种数据
+            topicBeansList.clear();
+            newHomeAdapter = null;
             swipeRefreshLayout.setRefreshing(false);
-            getDataFromNet();
+            page = 1;
+            getDataFromNet(false);
         }
     };
 
@@ -176,7 +190,7 @@ public class NewHomeActivity extends BaseActivity {
         }
     };
 
-    private void setClick(){
+    private void setClick() {
         relSelectCity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,22 +209,22 @@ public class NewHomeActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         //重新选择城市 重新加载网络加载数据
         if (requestCode == 3) {
-            if(data!=null && data.getBundleExtra("city_bundle") != null){
+            if (data != null && data.getBundleExtra("city_bundle") != null) {
                 choose = data.getBundleExtra("city_bundle").getString("ci");
                 chooseId = data.getBundleExtra("city_bundle").getString("cid");
                 getSharedPreferences("Save_City_Info", MODE_PRIVATE).edit().putString("save_city_now", cityName).commit();
                 AppInfoUtil.setCityName(mContext, cityName);
-                Util.setErrorLog(TAG, chooseId +" id==choose "+ choose);
+                Util.setErrorLog(TAG, chooseId + " id==choose " + choose);
                 newhomeCity.setText(choose);
                 CacheManager.setStartFlag(NewHomeActivity.this, 1);
-                getDataFromNet();
+                getDataFromNet(false);
             }
 
 
             Intent selectCityIntent = new Intent(Constant.ACTION_HOME_SELECT_CITY);
             Bundle b = new Bundle();
             b.putString("city_selected", cityName);
-            selectCityIntent.putExtra("f_select_city_bundle",b);
+            selectCityIntent.putExtra("f_select_city_bundle", b);
             sendBroadcast(selectCityIntent);
             getSharedPreferences("city", 0).edit().putString("cityName", cityName).commit();
 
@@ -218,70 +232,171 @@ public class NewHomeActivity extends BaseActivity {
     }
 
 
-    private HashMap<String, Object> getParam(int num){
+    private HashMap<String, Object> getParam(int num) {
         HashMap<String, Object> param = new HashMap<String, Object>();
         param.put("token", Util.getDateToken());
         String city = newhomeCity.getText().toString();
-        if(num == 0){
+        if (num == 0) {
             param.put("city_id", "0");
             param.put("city_name", city);
             Util.setErrorLog("-zengzhaozhong-", "id = 0    cityname = " + city);
-        }else{
+        } else {
             // 选择
             param.put("city_id", chooseId);
             param.put("city_name", choose);
-            Util.setErrorLog("-zengzhaozhong-", "id = "+ chooseId + "    cityname = " + city);
+            Util.setErrorLog("-zengzhaozhong-", "id = " + chooseId + "    cityname = " + city);
         }
         return param;
     }
 
-    private void getDataFromNet(){
-        int start = CacheManager.getStartFlag(NewHomeActivity.this);
-        if(Util.isNetAvailable(mContext)){
-            OKHttpUtil.post(Constant.NEWHOME_URL, getParam(start), new Callback() {
+    private void getDataFromNet(boolean more) {
+        if (Util.isNetAvailable(mContext)) {
+            isLoading = true;
+            int start = CacheManager.getStartFlag(NewHomeActivity.this);
+            if(more){
+                // 加载更多
+                HashMap<String, Object> hashMap = new HashMap<String, Object>();
+                hashMap.put("token", Util.getDateToken());
+                hashMap.put("page", page);
+                hashMap.put("page_size", 5);
+                OKHttpUtil.post(Constant.ZHUANTI_URL, hashMap, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        isLoading = false;
+                        Util.setErrorLog(TAG, "请求失败");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Util.setToast(mContext, "加载更多专题失败");
+                            }
+                        });
+                    }
 
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Util.setErrorLog(TAG, "---onFailure-->>首页请求网络失败--");
-                }
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
 
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    String result = response.body().string();
-                    Util.setErrorLog(TAG, "---zengzhaozhong-->>" + result);
-                    CacheManager.setNewhomeJson(mContext, result);
-                    initData(result);
-                }
-            });
-        }else {
-            String temp = CacheManager.getNewhomeJson(mContext);
-            if(!"".equals(temp)){
-                initData(temp);
+                        final String json = new String(response.body().string());
+                        Util.setErrorLog(TAG, json);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    List<NewHomeDataItem.NewhomeDataBean.TopicBean> zhuantiList = new ArrayList<NewHomeDataItem.NewhomeDataBean.TopicBean>();
+                                    JSONObject zhuantiObject = new JSONObject(json);
+                                    int status = zhuantiObject.getInt("status");
+                                    String msg = zhuantiObject.getString("msg");
+                                    if (status == 200) {
+                                        JSONArray arr = zhuantiObject.getJSONArray("data");
+                                        for (int i = 0; i < arr.length(); i++) {
+                                            NewHomeDataItem.NewhomeDataBean.TopicBean bean = mGson.fromJson(arr.get(i).toString(), NewHomeDataItem.NewhomeDataBean.TopicBean.class);
+//                                        NewHomeDataItem.NewhomeDataBean.TopicBean bean = new NewHomeDataItem.NewhomeDataBean.TopicBean();
+//                                        bean.setAdd_time(arr.getJSONObject(i).getString("add_time"));
+//                                        bean.setDesc(arr.getJSONObject(i).getString("desc"));
+//                                        bean.setId(arr.getJSONObject(i).getString("id"));
+//                                        bean.setCover_url(arr.getJSONObject(i).getString("cover_url"));
+//                                        bean.setTitle(arr.getJSONObject(i).getString("title"));o
+                                            zhuantiList.add(bean);
+                                        }
+
+                                        topicBeansList.addAll(zhuantiList);
+//                                        // TODO: 2017/11/2
+//                                        if(newHomeAdapter1==null){
+//                                            newHomeAdapter1 = new NewHomeAdapter(mContext, bigData, topicBeansList);
+//                                            recyclerView.setAdapter(newHomeAdapter1);
+//                                            newHomeAdapter1.notifyDataSetChanged();
+//                                        }else {
+//                                            newHomeAdapter1.notifyDataSetChanged();
+//                                        }
+                                        initData();
+
+                                    } else if (status == 0) {
+                                        Util.setToast(mContext, msg);
+                                    } else if (status == 201) {
+                                        Util.setToast(mContext, msg);
+                                    } else {
+                                        Util.setErrorLog(TAG, " 错误请求码是 [" + status + "]");
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+                    }
+                });
+            }else {
+
+                // 第一次加载
+                OKHttpUtil.post(Constant.NEWHOME_URL, getParam(start), new Callback() {
+
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        Util.setErrorLog(TAG, "---onFailure-->>首页请求网络失败--");
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String result = new String(response.body().string());
+                        Util.setErrorLog(TAG, "---zengzhaozhong-->>" + result);
+                        CacheManager.setNewhomeJson(mContext, result);
+                        Gson gson = new Gson();
+                        final NewHomeDataItem dataItem = gson.fromJson(result, NewHomeDataItem.class);
+                        final String msg = dataItem.getMsg();
+                        Util.setErrorLog(TAG, dataItem.getMsg());
+                        if (dataItem.getStatus() == 200) {
+                            bigData = dataItem.getData();
+                            initData();
+                        }else if (dataItem.getStatus() == 0) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Util.setToast(mContext, msg);
+                                }
+                            });
+
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Util.setToast(mContext, msg);
+                                }
+                            });
+                        }
+                        if (swipeRefreshLayout.isRefreshing()) {
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                });
             }
+
+        }else {
+            Util.setErrorLog(TAG, "无网络");
         }
+
     }
 
 
-
-    private void initData(final String json){
+    private NewHomeDataItem.NewhomeDataBean bigData;
+    private void initData() {
         runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
-                Gson gson = new Gson();
-                final NewHomeDataItem dataItem = gson.fromJson(json, NewHomeDataItem.class);
-                String msg = dataItem.getMsg();
-                Util.setErrorLog(TAG, dataItem.getMsg());
-                if(dataItem.getStatus() == 200){
-                    newHomeAdapter = new NewHomeAdapter(mContext, dataItem.getData());
+                isLoading = false;
+                if(newHomeAdapter==null){
+                    newHomeAdapter = new NewHomeAdapter(mContext, bigData, topicBeansList);
                     recyclerView.setAdapter(newHomeAdapter);
                     newHomeAdapter.notifyDataSetChanged();
-
-                }else if(dataItem.getStatus() == 0){
-                    Util.setToast(mContext, msg);
                 }else {
-                    Util.setErrorLog(TAG, msg);
+                    if(topicBeansList.size()>0){
+                        newHomeAdapter.setTopicData(topicBeansList);
+                    }
+                    newHomeAdapter.notifyDataSetChanged();
                 }
+                if (swipeRefreshLayout.isRefreshing()) {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+
             }
         });
     }
@@ -290,22 +405,23 @@ public class NewHomeActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(anliReceiver!=null){
+        if (anliReceiver != null) {
             unregisterReceiver(anliReceiver);
         }
     }
 
 
     private LocationClient mLocationClient;
-    private void initBaiduMap(){
-        try{
+
+    private void initBaiduMap() {
+        try {
             mLocationClient = new LocationClient(NewHomeActivity.this.getParent());     //声明LocationClient类
             mLocationClient.start();
 
             LocationClientOption option = new LocationClientOption();
             option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
             option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
-            int span=1000;
+            int span = 1000;
             option.setIsNeedAddress(true);
             option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
             option.setOpenGps(true);//可选，默认false,设置是否使用gps
@@ -317,7 +433,7 @@ public class NewHomeActivity extends BaseActivity {
             option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤GPS仿真结果，默认需要
             mLocationClient.setLocOption(option);
             mLocationClient.registerLocationListener(new MyLocationListener());    //注册监听函数
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -325,7 +441,7 @@ public class NewHomeActivity extends BaseActivity {
 
     }
 
-    private  void needPermissions(){
+    private void needPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
             List<String> permission = Util.getPermissionList(mContext);
             if (permission.size() > 0) {
@@ -347,20 +463,20 @@ public class NewHomeActivity extends BaseActivity {
             sb.append(location.getLocType());
             sb.append("\nlatitude : ");
             sb.append(location.getLatitude());
-            AppInfoUtil.setLat(mContext, location.getLatitude()+"");
+            AppInfoUtil.setLat(mContext, location.getLatitude() + "");
             sb.append("\nlontitude : ");
             sb.append(location.getLongitude());
-            AppInfoUtil.setLng(mContext, location.getLongitude()+"");
+            AppInfoUtil.setLng(mContext, location.getLongitude() + "");
             sb.append("\nradius : ");
             cityName = location.getCity();
-            if(CacheManager.getStartFlag(NewHomeActivity.this) == 0){
-                if(cityName!=null){
-                    if(cityName.contains("市") || cityName.contains("县")){
-                        cityName = cityName.substring(0, cityName.length()-1);
+            if (CacheManager.getStartFlag(NewHomeActivity.this) == 0) {
+                if (cityName != null) {
+                    if (cityName.contains("市") || cityName.contains("县")) {
+                        cityName = cityName.substring(0, cityName.length() - 1);
                     }
                     CacheManager.setCity(mContext, cityName);
                     newhomeCity.setText(cityName);
-                }else{
+                } else {
                     newhomeCity.setText("深圳");
                 }
             }
@@ -420,22 +536,22 @@ public class NewHomeActivity extends BaseActivity {
     }
 
 
-
-    private void initReceiver(){
+    private void initReceiver() {
         anliReceiver = new AnliReceiver();
         IntentFilter intentFilter = new IntentFilter("anli_list_is_empty");
         registerReceiver(anliReceiver, intentFilter);
     }
 
     private AnliReceiver anliReceiver;
-    private class AnliReceiver extends BroadcastReceiver{
+
+    private class AnliReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(isSheji){
+            if (isSheji) {
                 isSheji = false;
-                if(intent.getAction().equals("anli_list_is_empty")){
-                    getDataFromNet();
+                if (intent.getAction().equals("anli_list_is_empty")) {
+//                    getDataFromNet(false);
                     Util.setErrorLog(TAG, "重新请求案例了");
                 }
             }

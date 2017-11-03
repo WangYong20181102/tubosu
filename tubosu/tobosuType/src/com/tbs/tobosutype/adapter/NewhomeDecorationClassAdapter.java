@@ -39,6 +39,23 @@ public class NewhomeDecorationClassAdapter extends RecyclerView.Adapter<NewhomeD
     @Override
     public void onBindViewHolder(NewhomeDecorationClassAdapter.ClassHolder holder, int position) {
         holder.iv.setBackgroundResource(icons[position]);
+        if(position == 0){
+            holder.left_six.setVisibility(View.VISIBLE);
+            holder.left.setVisibility(View.VISIBLE);
+            holder.right.setVisibility(View.GONE);
+            holder.right_six.setVisibility(View.GONE);
+
+        }else if(position == icons.length -1){
+            holder.left_six.setVisibility(View.GONE);
+            holder.left.setVisibility(View.VISIBLE);
+            holder.right.setVisibility(View.VISIBLE);
+            holder.right_six.setVisibility(View.VISIBLE);
+        }else{
+            holder.left_six.setVisibility(View.GONE);           //    6
+            holder.left.setVisibility(View.VISIBLE);            //    10
+            holder.right.setVisibility(View.GONE);           //    10
+            holder.right_six.setVisibility(View.GONE);           //    6
+        }
         holder.itemView.setTag(position);
 
     }
@@ -67,9 +84,16 @@ public class NewhomeDecorationClassAdapter extends RecyclerView.Adapter<NewhomeD
 
     class ClassHolder extends RecyclerView.ViewHolder{
         ImageView iv;
+        TextView left, left_six;
+        TextView right, right_six;
         public ClassHolder(View itemView) {
             super(itemView);
             iv = (ImageView) itemView.findViewById(R.id.iv_class_imgsd);
+            right=(TextView) itemView.findViewById(R.id.right);
+            left=(TextView) itemView.findViewById(R.id.left);
+            right_six=(TextView) itemView.findViewById(R.id.right_six);
+            left_six=(TextView) itemView.findViewById(R.id.left_six);
+
         }
     }
 }

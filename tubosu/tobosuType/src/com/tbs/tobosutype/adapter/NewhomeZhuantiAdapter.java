@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
+import com.tbs.tobosutype.utils.Util;
 
 import java.util.List;
 
@@ -60,7 +61,8 @@ public class NewhomeZhuantiAdapter extends RecyclerView.Adapter<NewhomeZhuantiAd
     public void onBindViewHolder(ZhuanTiHolder holder, int position) {
 //        if(holder instanceof ZhuanTiHolder){
         ZhuanTiHolder zhuanTiHolder = (ZhuanTiHolder) holder;
-        Glide.with(context).load(dataList.get(position).getImage_url()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(zhuanTiHolder.iv);
+//        Util.setErrorLog("专题路径", "[" +dataList.get(position).getCover_url()+"]");
+        Glide.with(context).load(dataList.get(position).getCover_url()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(zhuanTiHolder.iv);
         zhuanTiHolder.tvZhuantiTime.setText(dataList.get(position).getAdd_time());
         zhuanTiHolder.tvZhuantiTitle.setText(dataList.get(position).getTitle());
         zhuanTiHolder.tvZhuantiDesc.setText(dataList.get(position).getDesc());

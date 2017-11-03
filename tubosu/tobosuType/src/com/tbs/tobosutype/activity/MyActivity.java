@@ -31,7 +31,7 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        AppInfoUtil.setTranslucentStatus(MyActivity.this);
-        Util.setActivityStatusColor(MyActivity.this);
+//        Util.setActivityStatusColor(MyActivity.this);
         setContentView(R.layout.activity_my);
         mContext = MyActivity.this;
         TAG = MyActivity.class.getSimpleName();

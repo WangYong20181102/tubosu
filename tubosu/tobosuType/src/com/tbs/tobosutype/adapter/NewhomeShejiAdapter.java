@@ -67,8 +67,28 @@ public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if (holder instanceof ShejiHolder) {
                 ShejiHolder shejiHolder = (ShejiHolder) holder;
                 Glide.with(context).load(dataList.get(position).getCover_url()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(shejiHolder.iv);
-                shejiHolder.tvTitle.setText(dataList.get(position).getDesigner_name());
-                shejiHolder.tvDesc.setText(dataList.get(position).getSub_title());
+                shejiHolder.tvTitle.setText(dataList.get(position).getSub_title());
+                shejiHolder.tvDesc.setText(dataList.get(position).getDesigner_name());
+
+                if(position == 0){ // 左边
+                    shejiHolder.sleft_six.setVisibility(View.VISIBLE);
+                    shejiHolder.slsix.setVisibility(View.VISIBLE);
+                    shejiHolder.sright_six.setVisibility(View.GONE);
+                    shejiHolder.srights1ix.setVisibility(View.GONE);
+                }else if(position == dataList.size() - 1){  // 右
+                    shejiHolder.sleft_six.setVisibility(View.GONE);
+                    shejiHolder.slsix.setVisibility(View.VISIBLE);
+                    shejiHolder.sright_six.setVisibility(View.VISIBLE);
+                    shejiHolder.srights1ix.setVisibility(View.VISIBLE);
+                }else{
+                    shejiHolder.sleft_six.setVisibility(View.GONE);       //    6
+                    shejiHolder.slsix.setVisibility(View.VISIBLE);        //    10
+                    shejiHolder.sright_six.setVisibility(View.GONE);      //    10
+                    shejiHolder.srights1ix.setVisibility(View.GONE);      //    6
+                }
+
+
+
                 shejiHolder.itemView.setTag(position);
             }
         }
@@ -124,11 +144,21 @@ public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView tvTitle;
         TextView tvDesc;
 
+        TextView sleft_six;
+        TextView slsix;
+        TextView sright_six;
+        TextView srights1ix;
+
         public ShejiHolder(View itemView) {
             super(itemView);
             iv = (ImageView) itemView.findViewById(R.id.newhome_sheji_item_img);
             tvTitle = (TextView) itemView.findViewById(R.id.newhome_sheji_item_title);
             tvDesc = (TextView) itemView.findViewById(R.id.tv_newhome_sheji_item_desc);
+
+            sleft_six = (TextView) itemView.findViewById(R.id.sleft_six);
+            slsix = (TextView) itemView.findViewById(R.id.slsix);
+            sright_six = (TextView) itemView.findViewById(R.id.sright_six);
+            srights1ix = (TextView) itemView.findViewById(R.id.srights1ix);
         }
     }
 }

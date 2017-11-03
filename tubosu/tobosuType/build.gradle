@@ -77,6 +77,11 @@ android {
 
     useLibrary 'org.apache.http.legacy'
 
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+    }
+
     productFlavors {
         aisi {}
         ali {}

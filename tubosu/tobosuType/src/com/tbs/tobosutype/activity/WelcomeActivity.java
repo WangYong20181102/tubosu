@@ -406,4 +406,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
             permission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         return permission;
     }
+
+
+
 }
