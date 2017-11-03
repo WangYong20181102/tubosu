@@ -324,4 +324,23 @@ public class Constant {
     //新的装修案例详情
     public static final String TOPIC_DETAIL = TOBOSU_URL + "mapp/topic/topic_detail";
     public static final String ZHUANTI_URL = TOBOSU_URL + "mapp/topic/topic_list";
+
+
+
+//  入口位置                            渠道代码              对应连接
+//    首页-icon-免费量房	               sy-icon-liangfang	 http://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=sy-icon-liangfang
+//    首页-发单-免费报价	               sy-fd-baojia	         http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=sy-fd-baojia
+//    首页-发单-免费设计	               sy-fd-sheji	         http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=sy-fd-sheji
+//    首页-发单-专业推荐	               sy-fd-tuijian	     http://m.tobosu.com/rec_company?channel=app&subchannel=android&chcode=sy-fd-tuijian
+//    首页-发单-装修大礼包	           sy-fd-libao	         http://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=sy-fd-libao
+//    案例-列表-报价                    al-lb-baojia	         http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=al-lb-baojia
+//    案例-详情-报价（包括看图）        al-xq-baojia	         http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=al-xq-baojia
+//    专题-详情-设计	                   zt-xq-sheji	         http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=zt-xq-sheji
+
+
+
+
+
+
+
 }
