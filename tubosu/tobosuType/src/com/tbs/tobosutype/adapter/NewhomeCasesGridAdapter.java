@@ -57,7 +57,7 @@ public class NewhomeCasesGridAdapter extends BaseAdapter {
         if(convertView==null){
             holder = new CaseViewHolder();
             convertView = inflater.inflate(R.layout.layout_newhome_anli_item, null);
-            holder.iv = (ImageView) convertView.findViewById(R.id.newhome_anli_item_img);
+            holder.iv = (TRoundView) convertView.findViewById(R.id.newhome_anli_item_img);
             holder.title = (TextView) convertView.findViewById(R.id.newhome_anli_item_title);
             holder.name = (TextView) convertView.findViewById(R.id.newhome_anli_item_name);
             holder.desc = (TextView) convertView.findViewById(R.id.newhome_anli_item_desc);
@@ -66,6 +66,7 @@ public class NewhomeCasesGridAdapter extends BaseAdapter {
             holder = (CaseViewHolder) convertView.getTag();
         }
 //        Glide.with(context).load(casesBeenList.get(position).getCover_url()).error(R.drawable.new_home_loading).placeholder(R.drawable.new_home_loading).into(holder.iv);
+        holder.iv.setType(1);
         GlideUtils.glideLoader(context, casesBeenList.get(position).getCover_url(), R.drawable.new_home_loading,R.drawable.new_home_loading,holder.iv);
         holder.title.setText(casesBeenList.get(position).getCommunity_name());
         holder.name.setText(casesBeenList.get(position).getOwner_name());
@@ -74,7 +75,7 @@ public class NewhomeCasesGridAdapter extends BaseAdapter {
     }
 
     class CaseViewHolder{
-        ImageView iv;
+        TRoundView iv;
         TextView title;
         TextView name;
         TextView desc;

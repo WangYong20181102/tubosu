@@ -5,7 +5,7 @@
     android:layout_marginRight="16dp"
     android:layout_marginLeft="16dp">
 
-    <ImageView
+    <com.tbs.tobosutype.utils.TRoundView
         android:id="@+id/newhome_anli_item_img"
         android:layout_width="match_parent"
         android:layout_height="100dp"

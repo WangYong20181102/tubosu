@@ -23,6 +23,7 @@ import com.tbs.tobosutype.activity.DecorationCaseActivity;
 import com.tbs.tobosutype.activity.DecorationCaseDetailActivity;
 import com.tbs.tobosutype.activity.ImageDetailNewActivity;
 import com.tbs.tobosutype.activity.NewWebViewActivity;
+import com.tbs.tobosutype.activity.TopicDetailActivity;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
 import com.tbs.tobosutype.customview.BetterRecyclerView;
 import com.tbs.tobosutype.customview.CustomGridView;
@@ -32,7 +33,6 @@ import com.tbs.tobosutype.customview.MyListView;
 import com.tbs.tobosutype.customview.MySwipeRefreshLayout;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.EndlessRecyclerOnScrollListener;
-import com.tbs.tobosutype.utils.Util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -44,13 +44,13 @@ import java.util.concurrent.TimeUnit;
  * Created by Lie on 2017/10/23.
  */
 
-public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> /*implements View.OnClickListener*/{
     private final String TAG = NewHomeAdapter.class.getSimpleName();
     private NewHomeDataItem.NewhomeDataBean dataSource;
     private ViewPager newhomeViewPager;
     private Context context;
     private LayoutInflater inflater;
-    private boolean isInitBanner = false;
+    private OnZhuantiItemClickListener mListener;
 
     private static final int[] cheatImageArr = new int[]{R.drawable.cheat1, R.drawable.cheat2, R.drawable.cheat3, R.drawable.cheat4, R.drawable.cheat5, R.drawable.cheat6, R.drawable.cheat7, R.drawable.cheat8, R.drawable.cheat9, R.drawable.cheat10, R.drawable.cheat11, R.drawable.cheat12, R.drawable.cheat13, R.drawable.cheat14, R.drawable.cheat15, R.drawable.cheat16, R.drawable.cheat17, R.drawable.cheat18, R.drawable.cheat19, R.drawable.cheat20};
     private static String[] familyName = new String[]{"赵", "钱", "孙", "李", "周", "吴", "郑", "王", "冯", "陈", "褚", "卫", "蒋", "沈", "韩", "杨", "何", "吕", "施", "张", "孔", "曹", "严", "华", "金", "魏", "陶", "姜", "戚", "谢", "邹", "章", "苏", "潘", "葛", "奚", "范", "彭", "鲁", "韦", "昌", "马", "苗", "凤", "花", "方", "俞", "袁", "柳", "酆", "鲍", "史", "唐", "费", "廉", "岑", "薛", "雷", "贺", "倪", "汤", "滕", "殷", "罗", "毕", "郝", "邬", "安", "常", "乐", "于", "齐", "黄", "萧", "尹", "姚", "祁", "宋", "熊", "舒", "屈", "项", "祝", "董", "梁", "杜", "席", "贾", "江", "郭", "林", "钟", "徐", "邱", "高", "田", "胡", "邓"};
@@ -63,15 +63,8 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private final int ADAPTER_ITEM_FOOT = 2;
 
     private View adapterHeadView;
-    //    private View adapterItemViewAnli;
-//    private View adapterItemViewSheji;
-//    private View adapterItemViewKetang;
     private View adapterItemViewZhuanti;
     private View adapterFootView;
-
-//    private final int ITEM_VIEW_TYPE_ANLI = 6;
-//    private final int ITEM_VIEW_TYPE_SHEJI = 7;
-//    private final int ITEM_VIEW_TYPE_KETANG = 8;
 
 
     private boolean zhuantiMore = false;
@@ -122,7 +115,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         } else if (viewType == ITEM_VIEW_TYPE_ZHUANTI) {
             adapterItemViewZhuanti = inflater.inflate(R.layout.layout_zhuanti_item_adapter /*layout_newhome_zhuanti*/, parent, false);
             NewHomeZhuanti newHomeZhuanti = new NewHomeZhuanti(adapterItemViewZhuanti);
-
+//            adapterItemViewZhuanti.setOnClickListener(this);
             return newHomeZhuanti;
         } else { // ==>>> (viewType == ADAPTER_ITEM_FOOT)
             adapterFootView = inflater.inflate(R.layout.layout_new_home_foot, parent, false);
@@ -151,7 +144,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof NewHomeHead) {
             NewHomeHead headHolder = (NewHomeHead) holder;
 //            List<NewHomeDataItem.NewhomeDataBean.BannerBean> bannDataList = new ArrayList<>();
@@ -164,7 +157,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.DALIBAO);
+                    webIntent.putExtra("mLoadingUrl", Constant.BAOJIA);
                     context.startActivity(webIntent);
                 }
             });
@@ -206,29 +199,31 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.MIANFEI_BAOJIA);
+                    webIntent.putExtra("mLoadingUrl", Constant.BAOJIA);
                     context.startActivity(webIntent);
                 }
             });
             headHolder.relFreeSheji.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Util.setToast(context, "等通知");
+                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
+                    webIntent.putExtra("mLoadingUrl", Constant.BAOJIA);
+                    context.startActivity(webIntent);
                 }
             });
             headHolder.relProfessalTuiJian.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.TUIJIAN);
+                    webIntent.putExtra("mLoadingUrl", Constant.BAOJIA);
                     context.startActivity(webIntent);
                 }
             });
-            headHolder.tvGoGet.setOnClickListener(new View.OnClickListener() {
+            headHolder.rel_cuiying.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.DALIBAO);
+                    webIntent.putExtra("mLoadingUrl", Constant.BAOJIA);
                     context.startActivity(webIntent);
                 }
             });
@@ -491,6 +486,14 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             newHomeZhuanti.tvZhuantiTitle.setText(topicList.get(position - 1).getTitle());
             newHomeZhuanti.tvZhuantiDesc.setText(topicList.get(position - 1).getDesc());
             newHomeZhuanti.itemView.setTag(position - 1);
+            newHomeZhuanti.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent it = new Intent(context, TopicDetailActivity.class);
+                    it.putExtra("mTopicId", topicList.get(position -1).getId());
+                    context.startActivity(it);
+                }
+            });
         }
 
 
@@ -518,6 +521,27 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         notifyDataSetChanged();
     }
 
+//    @Override
+//    public void onClick(View v) {
+//        if(mListener!=null){
+//            mListener.onZhuantiItemClickListener((int)v.getTag());
+//        }
+//    }
+
+
+    public interface OnZhuantiItemClickListener{
+        void onZhuantiItemClickListener(int position);
+    }
+
+
+    public OnZhuantiItemClickListener getmListener() {
+        return mListener;
+    }
+
+    public void setmListener(OnZhuantiItemClickListener mListener) {
+        this.mListener = mListener;
+    }
+
     /**
      * 头部类
      */
@@ -536,7 +560,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         RelativeLayout relFreeSheji;
         RelativeLayout relProfessalTuiJian;
         TextView tvGoGet;
-
+        RelativeLayout rel_cuiying;
 
         // 案例
         RelativeLayout relMoreAnli;
@@ -572,7 +596,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             relFreeSheji = (RelativeLayout) itemView.findViewById(R.id.relFreeSheji);
             relProfessalTuiJian = (RelativeLayout) itemView.findViewById(R.id.relProfessalTuiJian);
             tvGoGet = (TextView) itemView.findViewById(R.id.tvGoGet);
-
+            rel_cuiying = (RelativeLayout) itemView.findViewById(R.id.rel_cuiying);
 
             // 案例
             relMoreAnli = (RelativeLayout) itemView.findViewById(R.id.rel_more_anli);
@@ -599,20 +623,47 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private ScheduledExecutorService scheduledExecutorService;
 
     private void initBannerAdapter(ViewPager bannerPager, LinearLayout dotLayout, List<NewHomeDataItem.NewhomeDataBean.BannerBean> bannerList) {
+//        dotLayout.removeAllViews();
+//        urlList.clear();
+//        if (bannerList != null && bannerList.size() > 0) {
+//            for (int i = 0; i < bannerList.size(); i++) {
+//                urlList.add(bannerList.get(i).getContent_url());
+//                ImageView view = new ImageView(context);
+////                view.setTag(bannerList.get(i).getImg_url());
+//                view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//                Glide.with(context).load(bannerList.get(i).getImg_url()).into(view);
+//                imageViewList.add(view);
+//                ImageView dotView = new ImageView(context);
+//                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+////                        DensityUtil.dip2px(context, 10),
+////                        DensityUtil.dip2px(context, 10));
+//                params.leftMargin = 8;
+//                params.rightMargin = 8;
+//                dotLayout.addView(dotView, params);
+//                dotViewsList.add(dotView);
+//            }
+//            bannerPager.setFocusable(true);
+//            bannerPager.setAdapter(new MyPagerAdapter(imageViewList, urlList));
+//            bannerPager.setOnPageChangeListener(new MyPageChangeListener(bannerPager));
+//        }
+//        startSlide();
+
+
+
+
+
+        String[] fakeUrl = {"http://cdn111.dev.tobosu.com/mobile_banner_img/2017-11-02/59fabf771b89a.jpg", "https://pic.tbscache.com/head_file/2017-07-07/595f0eab1c23b.jpg"};
         dotLayout.removeAllViews();
         urlList.clear();
         if (bannerList != null && bannerList.size() > 0) {
-            for (int i = 0; i < bannerList.size(); i++) {
-                urlList.add(bannerList.get(i).getContent_url());
+            for (int i = 0; i < fakeUrl.length; i++) {
+                urlList.add(fakeUrl[i]);
                 ImageView view = new ImageView(context);
-//                view.setTag(bannerList.get(i).getImg_url());
                 view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                Glide.with(context).load(bannerList.get(i).getImg_url()).into(view);
+                Glide.with(context).load(fakeUrl[i]).into(view);
                 imageViewList.add(view);
                 ImageView dotView = new ImageView(context);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                        DensityUtil.dip2px(context, 10),
-//                        DensityUtil.dip2px(context, 10));
                 params.leftMargin = 8;
                 params.rightMargin = 8;
                 dotLayout.addView(dotView, params);
@@ -623,6 +674,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             bannerPager.setOnPageChangeListener(new MyPageChangeListener(bannerPager));
         }
         startSlide();
+
+
+
     }
 
     private int currentItem = 0;
@@ -723,7 +777,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", urlStrings.get(position));
+                    webIntent.putExtra("mLoadingUrl", Constant.BAOJIA); // TODO: 2017/11/3  urlStrings.get(position)
                     context.startActivity(webIntent);
                 }
             });
