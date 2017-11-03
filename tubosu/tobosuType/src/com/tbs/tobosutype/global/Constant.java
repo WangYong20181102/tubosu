@@ -155,6 +155,14 @@ public class Constant {
 
     public static String FIND_DECORATE_COMPANY_URL = Constant.TOBOSU_URL + "/tapp/company/company_list";
 
+
+    //发单页点击接口
+    public static String FADAN_CLICK_URL = Constant.TOBOSU_URL + "/mapp/OrderPort/click_count";
+
+    // 轮播图有效点击量
+    public static String BANNER_CLICK_URL = Constant.TOBOSU_URL + "/mapp/banner/click_count";
+
+
     /**
      * 修改用户信息接口
      * <br/> field  <br/>

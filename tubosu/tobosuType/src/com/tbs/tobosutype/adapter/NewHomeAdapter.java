@@ -32,13 +32,22 @@ import com.tbs.tobosutype.customview.MarqueeView;
 import com.tbs.tobosutype.customview.MyListView;
 import com.tbs.tobosutype.customview.MySwipeRefreshLayout;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.EndlessRecyclerOnScrollListener;
+import com.tbs.tobosutype.utils.Util;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by Lie on 2017/10/23.
@@ -187,7 +196,6 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             headHolder.relZhuangXiuKetang.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
                     webIntent.putExtra("mLoadingUrl", Constant.POP_URL + Constant.M_POP_PARAM + Constant.WANGJIANLIN);
                     context.startActivity(webIntent);
@@ -198,14 +206,16 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             headHolder.relFreeBaojia.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+//                    fadanClick();
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_DALIBAO);
+                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_MIANMFEI_BAOJIA);
                     context.startActivity(webIntent);
                 }
             });
             headHolder.relFreeSheji.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+//                    fadanClick();
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
                     webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_MIANFEI_SHEJI);
                     context.startActivity(webIntent);
@@ -214,6 +224,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             headHolder.relProfessalTuiJian.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+//                    fadanClick();
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
                     webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_ZHUANYE_TUIJIAN);
                     context.startActivity(webIntent);
@@ -222,6 +233,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             headHolder.rel_cuiying.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+//                    fadanClick();
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
                     webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_DALIBAO);
                     context.startActivity(webIntent);
@@ -776,6 +788,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 @Override
                 public void onClick(View v) {
+                    bannerClick(dataSource.getBanner().get(position).getId());
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
                     webIntent.putExtra("mLoadingUrl", urlStrings.get(position));
                     context.startActivity(webIntent);
@@ -911,6 +924,42 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     }
 
+
+    private void bannerClick(String id){
+        HashMap<String, Object> click = new HashMap<String, Object>();
+        click.put("token", Util.getDateToken());
+        click.put("id", id);
+        OKHttpUtil.post(Constant.BANNER_CLICK_URL, click, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Util.setErrorLog(TAG, "banner 点击失败");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Util.setErrorLog(TAG, "banner 点击成功");
+            }
+        });
+    }
+
+
+    private void fadanClick(String port_code, String ip){
+        HashMap<String, Object> click = new HashMap<String, Object>();
+        click.put("token", Util.getDateToken());
+        click.put("port_code", port_code);
+        click.put("ip", ip);
+        OKHttpUtil.post(Constant.BANNER_CLICK_URL, click, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Util.setErrorLog(TAG, "发单 点击失败");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Util.setErrorLog(TAG, "发单 点击成功");
+            }
+        });
+    }
 
     /**
      * 底部类
