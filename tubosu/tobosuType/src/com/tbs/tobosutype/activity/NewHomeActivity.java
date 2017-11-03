@@ -327,7 +327,7 @@ public class NewHomeActivity extends BaseActivity {
                             });
                         }else {
                             // 无数据 这样处理是不至于无数据的时候出现app闪退
-                            Util.setErrorLog(TAG, "后台无数据返回给我===1===");
+                            Util.setErrorLog(TAG, "后台无数据返回给我===1===如下：" +json);
                         }
                     }
                 });
@@ -377,7 +377,7 @@ public class NewHomeActivity extends BaseActivity {
                             }
                         }else {
                             // 无数据 这样处理是不至于无数据的时候出现app闪退
-                            Util.setErrorLog(TAG, "后台无数据返回给我===2===");
+                            Util.setErrorLog(TAG, "后台无数据返回给我===2===如下：" + result);
                         }
                     }
                 });
