@@ -350,8 +350,4 @@ public class Constant {
     public static final String LINK_HOME_MIANFEI_SHEJI = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=sy-fd-sheji";
     public static final String LINK_HOME_ZHUANYE_TUIJIAN = "http://m.tobosu.com/rec_company?channel=app&subchannel=android&chcode=sy-fd-tuijian";
     public static final String LINK_HOME_DALIBAO = "http://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=sy-fd-libao";
-
-
-
-
 }
