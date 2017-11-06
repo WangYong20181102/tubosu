@@ -202,24 +202,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 //        radioGroup = (RadioGroup) this.findViewById(R.id.main_tab_group);
         main_tab_home = (RelativeLayout) this.findViewById(R.id.main_tab_first);
         main_tab_home.setOnClickListener(this);
-        main_tab_home.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-//                startActivity(new Intent(MainActivity.this, DecorationCaseActivity.class));
-                return true;
-            }
-        });
         main_tab_image = (RelativeLayout) this.findViewById(R.id.main_tab_image);
         main_tab_image.setOnClickListener(this);
-        main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Intent intent1 = new Intent(MainActivity.this, TopicDetailActivity.class);
-                intent1.putExtra("mTopicId", "7696");
-                startActivity(intent1);
-                return true;
-            }
-        });
         main_tab_decorate = (RelativeLayout) this.findViewById(R.id.main_tab_decorate);
         main_tab_decorate.setOnClickListener(this);
         main_tab_my = (RelativeLayout) this.findViewById(R.id.main_tab_my);
