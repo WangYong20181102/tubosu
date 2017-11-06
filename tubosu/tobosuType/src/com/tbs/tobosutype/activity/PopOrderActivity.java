@@ -690,6 +690,7 @@ public class PopOrderActivity extends Activity {
             getSharedPreferences("Cancel_Get_Design", Context.MODE_PRIVATE).edit().putInt("cancel_String", 1).commit(); // 1代表是skip
         }
         CacheManager.setBecon(mContext, "0");
+        notNow();
         finish();
     }
 
@@ -1256,7 +1257,7 @@ public class PopOrderActivity extends Activity {
                         // 保证首页能够出现发单按钮
                         getSharedPreferences("Cancel_Get_Design", Context.MODE_PRIVATE).edit().putInt("cancel_String", 1).commit();
                     }
-
+                    notNow();
                     finish();
                     return true;
                 }else if(position==-1){
