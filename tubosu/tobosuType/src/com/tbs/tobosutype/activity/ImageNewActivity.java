@@ -24,7 +24,9 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.ImageNewActivityAdapter;
 import com.tbs.tobosutype.adapter.MyGridViewAdapter;
@@ -34,14 +36,17 @@ import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -130,12 +135,14 @@ public class ImageNewActivity extends BaseActivity {
     private ImageView fengge_down;
     private ImageView mianji_down;
     private RelativeLayout img_not_found_rl;
+    private Gson mGson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_new);
         mContext = ImageNewActivity.this;
+        mGson = new Gson();
         getStyleListParams = new HashMap<String, Object>();
         getImgItemListParams = AppInfoUtil.getPublicHashMapParams(mContext);
         customWaitDialog = new CustomWaitDialog(mContext);
@@ -276,7 +283,7 @@ public class ImageNewActivity extends BaseActivity {
                     popBtnListFg.clear();
                 }
                 String json = AppInfoUtil.getStyleFgCache(mContext);
-                if(!"".equals(json)){
+                if (!"".equals(json)) {
                     JSONObject jsonObjectFg = new JSONObject(json);
                     JSONArray dataArrayFg = jsonObjectFg.getJSONArray("data");
                     for (int i = 0; i < dataArrayFg.length(); i++) {
@@ -290,7 +297,7 @@ public class ImageNewActivity extends BaseActivity {
                     popBtnListHx.clear();
                 }
                 String mJson = AppInfoUtil.getStyleHxCache(mContext);
-                if(!"".equals(mJson)){
+                if (!"".equals(mJson)) {
                     JSONObject jsonObjectHx = new JSONObject(mJson);
                     JSONArray dataArrayHx = jsonObjectHx.getJSONArray("data");
                     for (int i = 0; i < dataArrayHx.length(); i++) {
@@ -304,7 +311,7 @@ public class ImageNewActivity extends BaseActivity {
                     popBtnListMj.clear();
                 }
                 String jsonm = AppInfoUtil.getStyleMjCache(mContext);
-                if(!"".equals(jsonm)){
+                if (!"".equals(jsonm)) {
                     JSONObject jsonObjectMj = new JSONObject(jsonm);
                     JSONArray dataArrayMj = jsonObjectMj.getJSONArray("data");
                     for (int i = 0; i < dataArrayMj.length(); i++) {
@@ -484,7 +491,7 @@ public class ImageNewActivity extends BaseActivity {
                                             if (imageItemsList.isEmpty()) {
                                                 img_not_found_rl.setVisibility(View.VISIBLE);
                                             }
-                                            Log.e(TAG,"没有更多数据===数据的集合的长度==="+imageItemsList.size());
+                                            Log.e(TAG, "没有更多数据===数据的集合的长度===" + imageItemsList.size());
                                             imageNewActivityAdapter.changeState(2);
                                             imageNewActivityAdapter.notifyDataSetChanged();
                                             Toast.makeText(mContext, "当前没有更多数据！", Toast.LENGTH_LONG).show();
@@ -734,7 +741,7 @@ public class ImageNewActivity extends BaseActivity {
                         Log.e(TAG, "面积子项点击事件====" + position + "==" + popBtnListMj.get(position).getClass_name() + "==" + popBtnListMj.get(position).getId());
                         if (popBtnListMj.get(position).getId().equals("0")) {
                             MianjiTv.setText("面积");
-                        }else {
+                        } else {
                             MianjiTv.setText("" + popBtnListMj.get(position).getClass_name());
                         }
 //                        if (!imageItemsList.isEmpty()) {
