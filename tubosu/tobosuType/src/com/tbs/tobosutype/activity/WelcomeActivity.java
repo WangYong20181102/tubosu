@@ -283,7 +283,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
      */
     private void goLoadingActivity(String imgUrl, int time) {
         Util.setErrorLog(TAG, "-----66---" + time + "s--------");
-        Intent intent = null;
+        Intent intent;
         if (time == -1) {
             // 没有图片下载
             if ("".equals(CacheManager.getAppEntryOrderPre(mContext))) {
@@ -310,9 +310,12 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                 }
             }
         }
-        startActivity(intent);
-        finish();
-        System.gc();
+        if(intent!=null){
+            startActivity(intent);
+            finish();
+            System.gc();
+        }
+
     }
 
 
