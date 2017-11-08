@@ -99,6 +99,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
     private void initView() {
+        //welcome_image
         Glide.with(mContext).load(R.drawable.welcome_image).placeholder(R.drawable.welcome_image).error(R.drawable.welcome_image).into(welcomeImage);
     }
 
