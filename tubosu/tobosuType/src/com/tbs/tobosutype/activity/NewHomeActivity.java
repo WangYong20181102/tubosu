@@ -39,7 +39,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
- * Created by Lie on 2017/10/23.
+ * Created by Lie on 2017/08/23.
  */
 
 public class NewHomeActivity extends BaseActivity {
@@ -239,11 +239,13 @@ public class NewHomeActivity extends BaseActivity {
         if (num == 0) {
             param.put("city_id", "0");
             param.put("city_name", city);
+            param.put("type", "1");
             Util.setErrorLog("-zengzhaozhong-", "id = 0    cityname = " + city);
         } else {
             // 选择
             param.put("city_id", chooseId);
             param.put("city_name", choose);
+            param.put("type", "1");
             Util.setErrorLog("-zengzhaozhong-", "#id = " + chooseId + "    cityname = " + city);
         }
         return param;
@@ -260,6 +262,7 @@ public class NewHomeActivity extends BaseActivity {
                 HashMap<String, Object> hashMap = new HashMap<String, Object>();
                 hashMap.put("token", Util.getDateToken());
                 hashMap.put("page", page);
+                hashMap.put("type", "1");
                 hashMap.put("page_size", 5);
                 OKHttpUtil.post(Constant.ZHUANTI_URL, hashMap, new Callback() {
                     @Override
