@@ -43,13 +43,7 @@ import java.util.regex.Pattern;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-
 import static com.tbs.tobosutype.utils.CacheManager.getOngoingStyle;
-
-
-/**
- * Created by dec on 2017/2/14.
- */
 
 public class PopOrderActivity extends Activity {
     private static final String TAG = PopOrderActivity.class.getSimpleName();
@@ -171,7 +165,8 @@ public class PopOrderActivity extends Activity {
 //                .bitmapTransform(new BlurTransformation(PopOrderActivity.this, 25), new CropCircleTransformation(PopOrderActivity.this))
 //                .into(gif_left);
 
-        Glide.with(this).load(R.drawable.juse0225).asGif().diskCacheStrategy(DiskCacheStrategy.NONE).into(gif_left);
+//        Glide.with(this).load(R.drawable.juse0225).asGif().diskCacheStrategy(DiskCacheStrategy.NONE).into(gif_left);
+        Glide.with(this).load(R.drawable.juse0225).asGif().diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.juse0225).error(R.drawable.juse0225).into(gif_left);
 //        gif_left.setBackgroundResource(R.drawable.juse022);
 
         gif_right = (ImageView) findViewById(R.id.gif_right);
@@ -179,7 +174,8 @@ public class PopOrderActivity extends Activity {
 //        Glide.with(this).load(R.drawable.lanse0225)
 //                .bitmapTransform(new BlurTransformation(PopOrderActivity.this, 25), new CropCircleTransformation(PopOrderActivity.this))
 //                .into(gif_right);
-        Glide.with(this).load(R.drawable.lanse0225).asGif().diskCacheStrategy(DiskCacheStrategy.NONE).into(gif_right);
+//        Glide.with(this).load(R.drawable.lanse0225).asGif().diskCacheStrategy(DiskCacheStrategy.NONE).into(gif_right);
+        Glide.with(this).load(R.drawable.lanse0225).asGif().diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(R.drawable.lanse0225).error(R.drawable.lanse0225).into(gif_right);
 //        gif_right.setBackgroundResource(R.drawable.lanse022);
 
 

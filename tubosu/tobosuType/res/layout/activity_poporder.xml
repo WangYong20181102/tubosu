@@ -73,7 +73,6 @@
                         android:id="@+id/gif_left"
                         android:layout_width="130dp"
                         android:layout_height="130dp"
-                        android:background="@color/transparent"
                         android:layout_centerInParent="true"/>
 
                     <TextView
@@ -98,7 +97,6 @@
                         android:id="@+id/gif_right"
                         android:layout_width="130dp"
                         android:layout_height="130dp"
-                        android:background="@color/transparent"
                         android:layout_centerInParent="true"/>
                     <TextView
                         android:id="@+id/tv_ongoing_title"
