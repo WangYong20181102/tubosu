@@ -213,6 +213,8 @@ public class Constant {
 
     public static final String GONGSI_URL = TOBOSU_URL + "mapp/collect/collect_company_list";
 
+    public static final String SHANCHU_URL1 = TOBOSU_URL + "mapp/collect/batch_quit_collect";
+
     /**
      * 检测网络状态<br/>
      *

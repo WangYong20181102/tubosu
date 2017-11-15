@@ -55,7 +55,7 @@ public class TaoTuAcitivity extends AppCompatActivity {
         if(Util.isNetAvailable(context)){
             SharedPreferences sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
             String type = sp.getString("typeid", "1");
-            String userid = sp.getString("userid", "333568");
+            String userid = sp.getString("userid", "272286");
 
             OKHttpUtil okHttpUtil = new OKHttpUtil();
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
