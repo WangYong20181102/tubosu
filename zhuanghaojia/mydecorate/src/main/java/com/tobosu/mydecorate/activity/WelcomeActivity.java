@@ -10,15 +10,7 @@ import android.os.Message;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -34,20 +26,15 @@ import com.tencent.android.tpush.service.XGPushService;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.application.MyApplication;
 import com.tobosu.mydecorate.database.ChannelManage;
-import com.tobosu.mydecorate.database.DBManager;
 import com.tobosu.mydecorate.entity.DecorateTitleEntity;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.tobosu.mydecorate.util.CacheManager;
-import com.tobosu.mydecorate.util.CheckUpdateUtils;
 import com.tobosu.mydecorate.util.Util;
 import com.tobosu.mydecorate.view.CustomDialog;
 import com.umeng.analytics.MobclickAgent;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,10 +52,6 @@ import java.util.Map;
 public class WelcomeActivity extends AppCompatActivity {
     private static final String TAG = WelcomeActivity.class.getSimpleName();
     private Context context;
-
-    private StringRequest stringRequest;
-    private RequestQueue requestQueue;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -255,10 +238,13 @@ public class WelcomeActivity extends AppCompatActivity {
 
     /**测试用*/
     private void requestForIndext(){
-        requestQueue = Volley.newRequestQueue(context);
-        stringRequest = new StringRequest(com.android.volley.Request.Method.POST, Constant.HOME_FRAGMENT_URL, new com.android.volley.Response.Listener<String>() {
+        OKHttpUtil okHttpUtil = new OKHttpUtil();
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        hashMap.put("token", Util.getDateToken());
+        Util.setErrorLog(TAG, "cao----有没有token->>" + Util.getDateToken() );
+        okHttpUtil.post(Constant.HOME_FRAGMENT_URL, hashMap, new OKHttpUtil.BaseCallBack() {
             @Override
-            public void onResponse(String json) {
+            public void onSuccess(Response response, String json) {
                 Util.setErrorLog(TAG, "--cao-->>"+json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
@@ -281,23 +267,17 @@ public class WelcomeActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Util.setErrorLog(TAG, "--cao--volleyError>>>"+volleyError.toString());
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("token", Util.getDateToken());
-                Util.setErrorLog(TAG, "cao----有没有token->>" + Util.getDateToken() );
-                return hashMap;
-            }
-        };
 
-        stringRequest.setTag("for_index");
-        requestQueue.add(stringRequest);
+            @Override
+            public void onFail(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onError(Response response, int code) {
+
+            }
+        });
     }
 
 
@@ -382,9 +362,6 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(requestQueue!=null){
-            requestQueue.cancelAll("for_index");
-        }
     }
 
     private ArrayList<DecorateTitleEntity.ChannelItem> titleList = new ArrayList<DecorateTitleEntity.ChannelItem>();

@@ -19,7 +19,9 @@ import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.MD5Util;
 import com.tbs.tobosutype.utils.Util;
@@ -99,8 +101,26 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
     private void initView() {
-        //welcome_image
-        Glide.with(mContext).load(R.drawable.welcome_image).placeholder(R.drawable.welcome_image).error(R.drawable.welcome_image).into(welcomeImage);
+//        Glide.with(mContext).load(R.drawable.welcome_image).placeholder(R.drawable.welcome_image).error(R.drawable.welcome_image).into(welcomeImage);
+        if("appxiaomi".equals(AppInfoUtil.getChannType(MyApplication.getContext()))){
+            Glide.with(mContext).load(R.drawable.wel_xiaomi).placeholder(R.drawable.wel_xiaomi).error(R.drawable.wel_xiaomi).into(welcomeImage);
+        }else if("ali".equals(AppInfoUtil.getChannType(MyApplication.getContext()))){
+            Glide.with(mContext).load(R.drawable.wel_ali_green).placeholder(R.drawable.wel_xiaomi).error(R.drawable.wel_xiaomi).into(welcomeImage);
+        }else{
+            Glide.with(mContext).load(R.drawable.welcome_image).placeholder(R.drawable.welcome_image).error(R.drawable.welcome_image).into(welcomeImage);
+        }
+
+//        appbaidu
+//        apphuawei
+//        applenovo
+//        appmeizu
+//        appoppo
+//        appqihu
+//        appttt
+//        appvivo
+//        appwdj
+//        appyyb
+
     }
 
     private String MAC_CODE = "";

@@ -689,10 +689,10 @@ public class WallPicFragment extends Fragment {
 						}else if("".equals(total_price)){
 							Toast.makeText(getActivity(),total_price, Toast.LENGTH_SHORT).show();
 							String url = "&tbsNum="+ total_num;
-							new ShareUtil(getActivity(), tvPicShare, "我的装修，来自一砖一瓦", "我需要"+total_num+"卷", Constant.CALCULATER_SHARE_URL + url);
+							new ShareUtil(getActivity(),  "我的装修，来自一砖一瓦", "我需要"+total_num+"卷", Constant.CALCULATER_SHARE_URL + url);
 						}else{
 							String url = "tbsPrice="+ total_price +"&tbsNum="+ total_num;
-							new ShareUtil(getActivity(), tvPicShare, "我的装修，来自一砖一瓦", "我需要"+total_num+"卷", Constant.CALCULATER_SHARE_URL + url);
+							new ShareUtil(getActivity(), "我的装修，来自一砖一瓦", "我需要"+total_num+"卷", Constant.CALCULATER_SHARE_URL + url);
 						}
 					}
 				});

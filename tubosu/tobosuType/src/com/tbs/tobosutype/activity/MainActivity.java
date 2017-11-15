@@ -351,7 +351,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                 } else if ("3".equals(mark)) {
                     // 装修公司
                     tabHost.setCurrentTabByTag("FOUR2");
-
                     tabPosition = 3;
                     img_home.setBackgroundResource(R.drawable.home_black);
                     img_image.setBackgroundResource(R.drawable.tu_black);

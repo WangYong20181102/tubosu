@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:background="@drawable/color_app_bg">
+        <RelativeLayout
+            android:id="@+id/relBackTao"
+            android:layout_width="49dp"
+            android:layout_height="49dp">
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="17dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/back"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="套图"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tvEditTaotu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="14dp"
+            android:text="编辑"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerviewTaotu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+
+
+
+        <TextView
+            android:id="@+id/tvDelelteTaotu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_textview_bg"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="14dp"
+            android:visibility="gone"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:text="删除"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

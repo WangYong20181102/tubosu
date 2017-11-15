@@ -23,15 +23,12 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
     private LinearLayout myUnloginPersonalData;
     private LinearLayout myUnloginStore;
     private RelativeLayout relUnlogin;
-    private RelativeLayout rl_search;
     private ImageView ivSetting;
     private ImageView ivSystemMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        AppInfoUtil.setTranslucentStatus(MyActivity.this);
-//        Util.setActivityStatusColor(MyActivity.this);
         setContentView(R.layout.activity_my);
         mContext = MyActivity.this;
         TAG = MyActivity.class.getSimpleName();
@@ -48,8 +45,6 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
         myUnloginPersonalData = (LinearLayout) findViewById(R.id.my_unlogin_personal_data);
         myUnloginStore = (LinearLayout) findViewById(R.id.my_unlogin_store);
         relUnlogin = (RelativeLayout) findViewById(R.id.rel_go_login);
-        rl_search = (RelativeLayout) findViewById(R.id.rl_search);
-        rl_search.setBackgroundColor(Color.parseColor("#ff882e"));
         ivSetting = (ImageView) findViewById(R.id.iv_unlogin_setting);
         ivSystemMessage = (ImageView) findViewById(R.id.iv_unlogin_system_message);
     }

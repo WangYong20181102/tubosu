@@ -58,20 +58,6 @@ public class ImageNewActivity extends BaseActivity {
     private String getListUrl = Constant.TOBOSU_URL + "tapp/impression/get_list";
 
     /**
-     * 逛图库顶部广告位接口
-     */
-    private String adsenseUrl = Constant.TOBOSU_URL + "tapp/util/adsense";
-
-    /**
-     * 上个月冠亚季军三个公司
-     */
-    private String getLastMonthCompanyListUrl = Constant.TOBOSU_URL + "tapp/impression/getLastMonthCompanyList";
-
-    /**
-     * 搜索逛图库 ，输入小区名称
-     */
-    private String searchCommunityUrl = Constant.TOBOSU_URL + "tapp/impression/searchCommunity";
-    /**
      * 获取风格户型面积
      */
     private String getStytleUrl = Constant.TOBOSU_URL + "tapp/impression/style";

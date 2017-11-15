@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/activity_bg_color" >
+    android:background="@color/white" >
 
     <LinearLayout
         android:id="@+id/linearlayout_find_decorate"
@@ -11,10 +11,9 @@
         android:orientation="vertical" >
 		<!-- 本页顶部的bar start -->
         <RelativeLayout
-            android:id="@+id/rel_find_decorate_titlebar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/color_icon" >
+            android:layout_height="49dp"
+            android:background="@color/white" >
 
             <TextView
                 android:id="@+id/tv_city_decorate"
@@ -27,8 +26,8 @@
                 android:gravity="center"
                 android:padding="3dp"
                 android:text="岳阳"
-                android:textColor="@color/white"
-                android:textSize="16.0sp" />
+                android:textColor="@color/color_black"
+                android:textSize="14sp" />
 
             <ImageView
                 android:id="@+id/iv_select_city"
@@ -36,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/tv_city_decorate"
-                android:background="@drawable/first_down"
+                android:background="@drawable/tt"
                 android:padding="2dp" />
 
             <TextView
@@ -44,18 +43,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="@string/decorate_title"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:text="找装修"
+                android:textColor="@color/color_black"
+                android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/iv_search_decoration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/img_search" />
+                android:layout_marginRight="16dp"
+                android:background="@drawable/search3x" />
         </RelativeLayout>
         <!-- 本页顶部的bar end -->
 		
@@ -96,6 +95,7 @@
     <include
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         layout="@layout/layout_loading_data"/>
     
     

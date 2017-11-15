@@ -12,18 +12,14 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/activity_bg_color"></RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:background="@drawable/my_top_bg">
+            android:layout_height="197dp"
+            android:layout_marginBottom="10dp">
 
             <RelativeLayout
                 android:id="@+id/rel_mycompany_msg_set"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="49dp"
+                android:background="@drawable/drawable_hdpi">
 
                 <ImageView
                     android:id="@+id/iv_system_message_company"
@@ -31,9 +27,16 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
-                    android:background="@drawable/my_lingdan_img1"
-                    android:layout_marginTop="10dp" />
-
+                    android:background="@drawable/app_alarm"
+                    android:layout_centerVertical="true" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    android:textColor="@color/white"
+                    android:text="我的" />
                 <TextView
                     android:id="@+id/tv_not_see_sysmsg"
                     android:layout_width="10dp"
@@ -47,18 +50,22 @@
                     android:textColor="@android:color/white"
                     android:textSize="5sp"
                     android:visibility="gone" />
-
                 <ImageView
                     android:id="@+id/mycompany_set"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:layout_marginTop="10dp"
                     android:layout_toLeftOf="@+id/iv_system_message_company"
-                    android:background="@drawable/my_setting_img" />
-
-
+                    android:background="@drawable/app_setting" />
             </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rel_mycompany_msg_set"
+                android:background="@drawable/banner"/>
+
 
             <RelativeLayout
                 android:id="@+id/rel_mycompany_info"
@@ -252,9 +259,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:gravity="bottom"
-            android:paddingBottom="8dp"
             android:paddingLeft="25dp"
+            android:gravity="center_vertical"
             android:text="企业服务"
             android:textColor="@color/color_darkgray"
             android:textSize="13sp" />

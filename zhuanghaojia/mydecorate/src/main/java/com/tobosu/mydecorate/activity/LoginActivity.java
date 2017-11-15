@@ -20,18 +20,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
@@ -48,10 +42,8 @@ import com.umeng.socialize.controller.listener.SocializeListeners;
 import com.umeng.socialize.exception.SocializeException;
 import com.umeng.socialize.sso.UMSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -73,10 +65,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private String weixin_login_url = Constant.ZHJ + "tapp/passport/login_third_party";
 
     private GetVerificationPopupwindow popupwindow = null;
-
-    private RequestQueue loginRequestQueue;
-
-    private StringRequest loginStringRequest;
 
     private String token = "";
 
@@ -232,39 +220,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 } else {
                     if (Util.isNetAvailable(mContext)) {
                         showLoadingView();
-
-                        loginRequestQueue = Volley.newRequestQueue(mContext);
-//                        token = AppUtil.getToekn(mContext);
-                        loginStringRequest = new StringRequest(Request.Method.POST, phone_code_login_url, new Response.Listener<String>() {
+                        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+//                                hashMap.put("token", ""); //必须穿空字符串
+                        hashMap.put("system_type", "1"); // 1是安卓， 2是ios
+                        hashMap.put("platform_type", "2"); // 1是土拨鼠， 2是装好家
+                        hashMap.put("chcode", Util.getChannType(getApplicationContext()));
+                        hashMap.put("mobile", et_phonenum.getText().toString().trim().replaceAll("-", ""));
+                        hashMap.put("msg_code", et_verify_code.getText().toString().trim());
+                        OKHttpUtil okHttpUtil = new OKHttpUtil();
+                        okHttpUtil.post(phone_code_login_url, hashMap, new OKHttpUtil.BaseCallBack() {
                             @Override
-                            public void onResponse(String s) {
+                            public void onSuccess(Response response, String s) {
                                 hideLoadingView();
                                 System.out.println("请求结果:" + s);
                                 parseLoginJson(s);
                             }
-                        }, new Response.ErrorListener() {
 
                             @Override
-                            public void onErrorResponse(VolleyError volleyError) {
-                                System.out.println("--login_error_" + volleyError.getMessage());
-                            }
-                        }) {
-                            // 携带参数
-                            @Override
-                            protected HashMap<String, String> getParams() throws AuthFailureError {
-                                HashMap<String, String> hashMap = new HashMap<String, String>();
-//                                hashMap.put("token", ""); //必须穿空字符串
-                                hashMap.put("system_type", "1"); // 1是安卓， 2是ios
-                                hashMap.put("platform_type", "2"); // 1是土拨鼠， 2是装好家
-                                hashMap.put("chcode", Util.getChannType(getApplicationContext()));
-                                hashMap.put("mobile", et_phonenum.getText().toString().trim().replaceAll("-", ""));
-                                hashMap.put("msg_code", et_verify_code.getText().toString().trim());
-                                return hashMap;
+                            public void onFail(Request request, IOException e) {
+
                             }
 
-                        };
-                        loginStringRequest.setTag("volley_request_login");
-                        loginRequestQueue.add(loginStringRequest);
+                            @Override
+                            public void onError(Response response, int code) {
+
+                            }
+                        });
 
                     } else {
                         hideLoadingView();
@@ -359,17 +340,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-//    private void getVerifyCode() {
-//        if (Util.isNetAvailable(mContext)) {
-//            popupwindow = new GetVerificationPopupwindow(mContext);
-//            popupwindow.phone = et_phonenum.getText().toString().trim().replaceAll("-", "");
-//            popupwindow.version = Util.getAppVersionName(mContext);
-//            popupwindow.showAtLocation(findViewById(R.id.rel_login_activity), Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
-//        } else {
-//            Toast.makeText(mContext, "请检查网络是否可用", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -427,9 +397,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onStop() {
         super.onStop();
-        if (loginRequestQueue != null) {
-            loginRequestQueue.cancelAll("volley_request_login");
-        }
     }
 
     @Override

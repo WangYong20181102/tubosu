@@ -159,7 +159,7 @@ public class FreeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (!TextUtils.isEmpty(title)) {
-					new ShareUtil(mContext, image_share, title, title, Constant.PIPE);
+					new ShareUtil(mContext,title, title, Constant.PIPE);
 				}
 			}
 		});

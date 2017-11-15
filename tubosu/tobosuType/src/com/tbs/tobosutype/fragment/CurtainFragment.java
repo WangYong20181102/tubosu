@@ -638,10 +638,10 @@ public class CurtainFragment extends Fragment {
 						}else if("".equals(total_price)){
 							Toast.makeText(getActivity(),total_price, Toast.LENGTH_SHORT).show();
 							String url = "&tbsNum="+ total_num;
-							new ShareUtil(getActivity(), tvCurtainShare, "我的装修，来自一砖一瓦", "我需要"+total_num+"平米", Constant.CALCULATER_SHARE_URL + url);
+							new ShareUtil(getActivity(), "我的装修，来自一砖一瓦", "我需要"+total_num+"平米", Constant.CALCULATER_SHARE_URL + url);
 						}else{
 							String url = "tbsPrice="+ total_price +"&tbsNum="+ total_num;
-							new ShareUtil(getActivity(), tvCurtainShare, "我的装修，来自一砖一瓦", "我需要"+total_num+"平米", Constant.CALCULATER_SHARE_URL + url);
+							new ShareUtil(getActivity(), "我的装修，来自一砖一瓦", "我需要"+total_num+"平米", Constant.CALCULATER_SHARE_URL + url);
 						}
 					}
 				});

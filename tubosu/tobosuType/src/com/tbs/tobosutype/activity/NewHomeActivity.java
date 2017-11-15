@@ -1,17 +1,21 @@
 package com.tbs.tobosutype.activity;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.baidu.location.BDLocation;
@@ -44,9 +48,13 @@ import okhttp3.Response;
 
 public class NewHomeActivity extends BaseActivity {
     private View home_view;
-    private RelativeLayout rel_newhomebar;
-    private RelativeLayout relSelectCity;
+    private View rel_newhomebar;
+    private ImageView iv_sanjiaoxing;
+    private ImageView iv_add;
+    private ImageView home_kefu;
     private TextView newhomeCity;
+    private TextView app_title_text;
+    private RelativeLayout relSelectCity;
     private String choose;
     private String chooseId;
     private String cityName;
@@ -77,10 +85,16 @@ public class NewHomeActivity extends BaseActivity {
         mGson = new Gson();
         home_view = (View) findViewById(R.id.home_view);
         tubosu = (TextView) findViewById(R.id.app_title_text);
-        rel_newhomebar = (RelativeLayout) findViewById(R.id.rel_newhomebar);
+        rel_newhomebar = (View) findViewById(R.id.newhomeView);
         rel_newhomebar.setAlpha(0);
         relSelectCity = (RelativeLayout) findViewById(R.id.relSelectCity);
         newhomeCity = (TextView) findViewById(R.id.newhomeCity);
+
+        iv_sanjiaoxing = (ImageView) findViewById(R.id.iv_sanjiaoxing );
+        iv_add = (ImageView) findViewById(R.id.iv_add );
+        home_kefu = (ImageView) findViewById(R.id.home_kefu );
+        app_title_text = (TextView) findViewById(R.id.app_title_text );
+
         recyclerView = (RecyclerView) findViewById(R.id.newhome_recyclerview);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.newhome_swiprefreshlayout);
 
@@ -88,27 +102,6 @@ public class NewHomeActivity extends BaseActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                //得到当前显示的最后一个item的view
-                int lastPosition = linearLayoutManager.findLastVisibleItemPosition();
-                if (!isLoading && lastPosition + 2 >= recyclerView.getLayoutManager().getItemCount()) {
-                    if (newHomeAdapter != null) {
-                        newHomeAdapter.setLoadMoreFlag(true);
-                        page++;
-                        getDataFromNet(true);
-                    }
-                }
-            }
-
-
-        });
 
         //初始化swipeRreshLayout
         swipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.WHITE);
@@ -118,6 +111,18 @@ public class NewHomeActivity extends BaseActivity {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                //得到当前显示的最后一个item的view
+                int lastPosition = linearLayoutManager.findLastVisibleItemPosition();
+                if (!isLoading && lastPosition + 2 >= recyclerView.getLayoutManager().getItemCount()) {
+                    if (newHomeAdapter != null) {
+                        newHomeAdapter.setLoadMoreFlag(true);
+                        page++;
+                        getDataFromNet(true);
+                    }
+                }
+
+
                 //设置其透明度
                 float alpha = 0;
                 int scollYHeight = getScollYHeight(true, tubosu.getHeight());
@@ -128,16 +133,113 @@ public class NewHomeActivity extends BaseActivity {
                 } else {
                     alpha = scollYHeight / (baseHeight * 1.0f);
                     if (alpha > 0.34) {
-                        home_view.setVisibility(View.INVISIBLE);// 黑色渐变 隐藏
+                        home_view.setVisibility(View.INVISIBLE);// 白色渐变 隐藏
                         rel_newhomebar.setVisibility(View.VISIBLE);
+                        iv_sanjiaoxing.setBackgroundResource(R.drawable.tt);
+                        iv_add.setBackgroundResource(R.drawable.sdf);
+                        home_kefu.setBackgroundResource(R.drawable.kefu_black);
+                        newhomeCity.setTextColor(Color.parseColor("#000000"));
+                        app_title_text.setTextColor(Color.parseColor("#000000"));
+                        rel_newhomebar.setBackgroundColor(Color.parseColor("#FFFFFF"));
                     }else {
                         home_view.setVisibility(View.VISIBLE);
                         rel_newhomebar.setVisibility(View.INVISIBLE);
+                        iv_sanjiaoxing.setBackgroundResource(R.drawable.sanjiaoxing);
+                        iv_add.setBackgroundResource(R.drawable.ad_icon);
+                        home_kefu.setBackgroundResource(R.drawable.home_kefu);
+                        newhomeCity.setTextColor(Color.parseColor("#FFFFFF"));
+                        app_title_text.setTextColor(Color.parseColor("#FFFFFF"));
+                        rel_newhomebar.setBackgroundColor(Color.parseColor("#00FFFFFF"));
                     }
                 }
                 rel_newhomebar.setAlpha(alpha);
             }
         });
+
+        home_kefu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showZixunPopwindow();
+            }
+        });
+    }
+
+    private View zixunPopView;
+    private PopupWindow zixunPopupWindow;
+    private void showZixunPopwindow() {
+        zixunPopView = View.inflate(mContext, R.layout.popwindow_zixun, null);
+        TextView qq_lianxi = (TextView) zixunPopView.findViewById(R.id.qq_lianxi);
+        TextView dianhua_lianxi = (TextView) zixunPopView.findViewById(R.id.dianhua_lianxi);
+        RelativeLayout pop_zixun_rl = (RelativeLayout) zixunPopView.findViewById(R.id.pop_zixun_rl);
+        zixunPopupWindow = new PopupWindow(zixunPopView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        zixunPopupWindow.setFocusable(true);
+        zixunPopupWindow.setOutsideTouchable(true);
+        zixunPopupWindow.update();
+        //打开QQ
+        qq_lianxi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //弹窗  尝试打开QQ
+                String url = "http://wpa.b.qq.com/cgi/wpa.php?ln=2&uin=4006062221";
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                zixunPopupWindow.dismiss();
+            }
+        });
+        //打开电话联系
+        dianhua_lianxi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //弹出窗口电话联系
+                showOpenPhone();
+                zixunPopupWindow.dismiss();
+            }
+        });
+        //界面消失
+        pop_zixun_rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                zixunPopupWindow.dismiss();
+            }
+        });
+        //窗口显示的位置
+        zixunPopupWindow.showAtLocation(zixunPopView, Gravity.CENTER, 0, 0);
+    }
+
+
+    private void showOpenPhone() {
+        View popview = View.inflate(mContext, R.layout.popwindow_qqzixun, null);
+        TextView quxiao_phone = (TextView) popview.findViewById(R.id.quxiao_phone);
+        TextView open_phone = (TextView) popview.findViewById(R.id.open_phone);
+        RelativeLayout pop_phone_zixun = (RelativeLayout) popview.findViewById(R.id.pop_phone_zixun);
+        final PopupWindow popupWindow = new PopupWindow(popview, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.update();
+        //打电话
+        open_phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //打电话
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "4006062221"));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                popupWindow.dismiss();
+            }
+        });
+        //取消
+        quxiao_phone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        pop_phone_zixun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        popupWindow.showAtLocation(popview, Gravity.CENTER, 0, 0);
     }
 
     private int page = 1;
@@ -186,17 +288,19 @@ public class NewHomeActivity extends BaseActivity {
 
     private void setClick() {
         relSelectCity.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                Intent selectCityIntent = new Intent(mContext, SelectCtiyActivity.class);
-                Bundle cityBundle = new Bundle();
-                cityBundle.putString("fromHomeActivity", "101");
-                selectCityIntent.putExtra("HomeActivitySelectcityBundle", cityBundle);
-                startActivityForResult(selectCityIntent, 3);
+//                Intent selectCityIntent = new Intent(mContext, SelectCtiyActivity.class);
+//                Bundle cityBundle = new Bundle();
+//                cityBundle.putString("fromHomeActivity", "101");
+//                selectCityIntent.putExtra("HomeActivitySelectcityBundle", cityBundle);
+//                startActivityForResult(selectCityIntent, 3);
+
+                startActivity(new Intent(NewHomeActivity.this, ShoucangAcitivity.class));
             }
         });
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

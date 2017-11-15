@@ -1,17 +1,12 @@
 package com.tbs.tobosutype.activity;
-
 import android.app.Activity;
-import android.app.Notification;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -42,8 +37,6 @@ import com.tbs.tobosutype.utils.DensityUtil;
 import com.tbs.tobosutype.utils.FileUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.tbs.tobosutype.utils.WriteUtil;
-import com.tencent.android.tpush.XGCustomPushNotificationBuilder;
-import com.tencent.android.tpush.XGPushManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.DataOutputStream;
@@ -58,30 +51,14 @@ import java.util.Map;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-
-/**
- * 我的页面【业主】
- *
- * @author dec
- */
 public class MyOwnerActivity extends BaseActivity implements OnClickListener {
     private static final String TAG = MyOwnerActivity.class.getSimpleName();
     private Context mContext;
-
     private String icon;
     private String nickname;
     private String token;
-
-    /**
-     * 用户头像
-     */
     private ImageView my_owner_pic;
-
-    /**
-     * 用户信息布局
-     */
     private RelativeLayout rel_my_owenr_user_layout;
-
     private TextView my_owner_name;
     private TextView tv_my_owner_allorder;
     private TextView tv_location;
@@ -89,87 +66,33 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
     private TextView tv_delstatus;
     private TextView tv_orderid;
     private TextView tv_icommunity;
-
-    /**
-     * 业主可查看装修公司的订单详情 <br/>
-     * <p>
-     * 订单状态
-     */
     private TextView tv_delstatusDes;
-
     private TextView tv_order_now;
     private TextView tv_find_order;
-
     private LinearLayout myowner_layout_personal_data;
-
-    /**
-     * 我的收藏布局
-     */
     private LinearLayout myowner_layout_store_pic;
-
-    /**
-     * 我要反馈布局
-     */
     private LinearLayout my_layout_feedback;
-
-//    /**消息*/
-//    private LinearLayout my_layout_ower_msg;
-
-    /**
-     * 开支
-     */
     private LinearLayout my_layout_ower_outcome;
-
-    /**
-     * 头像下面显示一些订单信息的布局
-     */
     private LinearLayout linearlayout_have_order_information;
-
-    /**
-     * 暂时没有订单的布局
-     */
     private LinearLayout ll_not_order_information;
-
-    /**
-     * 装修保障布局
-     */
     private LinearLayout ll_decorate_security;
-
     private ImageView iv_myowner_set;
-
     private ProgressDialog pd;
-
     private SelectPersonalPopupWindow menuWindow;
-
     private static final int REQUESTCODE_PICK = 0;
     private static final int REQUESTCODE_TAKE = 1;
     private static final int REQUESTCODE_CUTTING = 2;
-
-    /**
-     * 头像存储的名称
-     */
     private static final String IMAGE_FILE_NAME = "avatarImage.jpg";
     private String urlpath;
     private Bitmap photo = null;
-
-    /*** 上传头像的接口*/
     private String imgUrl = Constant.TOBOSU_URL + "cloud/upload/upload_for_ke?";
-
-    /***我的[业主]接口*/
     private String userMyUrl = Constant.TOBOSU_URL + "tapp/user/my";
-
-    /***找回订单接口*/
     private String retrieveOrderUrl = Constant.TOBOSU_URL + "tapp/order/retrieveOrder";
-
-    /***修改用户信息接口*/
     private String userChageInfoUrl = Constant.TOBOSU_URL + "tapp/user/chage_user_info";
-
     private String resultStr = "";
-
     private HashMap<String, Object> userChageInfoParams;
     private HashMap<String, Object> userMyParams;
     private HashMap<String, Object> retrieveOrderParams;
-
     private String gender;
     private String icommunity;
     private String province;
@@ -195,7 +118,6 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myowner);
         mContext = MyOwnerActivity.this;
-        initReceiver();
         initView();
         initEvent();
     }
@@ -220,7 +142,6 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
         linearlayout_have_order_information = (LinearLayout) findViewById(R.id.linearlayout_have_order_information);
         ll_not_order_information = (LinearLayout) findViewById(R.id.ll_not_order_information);
         my_layout_feedback = (LinearLayout) findViewById(R.id.my_layout_feedback);
-//        my_layout_ower_msg = (LinearLayout) findViewById(R.id.my_layout_ower_msg);
         my_layout_ower_outcome = (LinearLayout) findViewById(R.id.my_layout_ower_outcome);
         iv_myowner_set = (ImageView) findViewById(R.id.iv_myowner_set);
         ll_decorate_security = (LinearLayout) findViewById(R.id.ll_decorate_security);
@@ -243,7 +164,6 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
         myowner_layout_personal_data.setOnClickListener(this);
         myowner_layout_store_pic.setOnClickListener(this);
         my_layout_feedback.setOnClickListener(this);
-//        my_layout_ower_msg.setOnClickListener(this);
         my_layout_ower_outcome.setOnClickListener(this);
         iv_myowner_set.setOnClickListener(this);
         tv_find_order.setOnClickListener(this);
@@ -253,9 +173,6 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
         iv_system_message_user.setOnClickListener(this);
     }
 
-    /***
-     * 我的业主接口请求
-     */
     private void requestUserMy() {
         userMyParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         userMyParams.put("token", token);
@@ -311,13 +228,7 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
                                     viewcount = object.getString("viewcount");
                                     position = object.getString("position");
                                     clickOrNot = object.getString("clickOrNot");
-//									if(clickOrNot.equals("1")) {
-//										// 可点
                                     orderDetailUrl = object.getString("orderDetailUrl");
-//									}else if(clickOrNot.equals("0")){
-//										//不可点
-//										orderDetailUrl = "";
-//									}
                                 }
                             }
                             operView();
@@ -329,10 +240,6 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
             }
         });
     }
-
-    /***
-     * 设置用户信息
-     */
     private void operView() {
         MyApplication.imageLoader.displayImage(icon, my_owner_pic, MyApplication.options);
         my_owner_name.setText(nickname);
@@ -343,16 +250,7 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
             tv_location.setTextColor(getResources().getColor(R.color.white));
             tv_location.setText(province + " - " + cityname);
         }
-        //FIXME 什么意思？
         if (lastOrderFlag.equals("1")) {
-
-            //FIXME 显示红点
-//			Drawable drawable = getResources().getDrawable(R.drawable.red_point_img);
-//			drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-            //FIXME 什么意思？
-//			if ("0".equals(viewcount)) {
-//				tv_delstatus.setCompoundDrawables(drawable, null, null, null);
-//			}
             tv_icommunity.setText("城市: " + position + "     小区:" + housename);
             tv_addtime.setText(addtime + " 预约");
             if ("已确认需求".equals(delstatus)) {
@@ -423,8 +321,7 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
                 }
                 break;
             case R.id.myowner_layout_store_pic:
-//			Intent storeIntent = new Intent(mContext, MyStoreActivity.class);
-                Intent storeIntent = new Intent(mContext, MyFavActivity.class);
+                Intent storeIntent = new Intent(mContext, ShoucangAcitivity.class);
                 startActivity(storeIntent);
                 break;
             case R.id.iv_myowner_set:
@@ -436,9 +333,6 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
                 Intent intent = new Intent(mContext, FeedbackActivity.class);
                 startActivity(intent);
                 break;
-//        case R.id.my_layout_ower_msg:
-//            startActivity(new Intent(mContext, SystemMessageActivity.class));
-//            break;
             case R.id.my_layout_ower_outcome:
                 Util.setErrorLog(TAG, "是否有设置预算>>>" + CacheManager.getDecorateBudget(mContext) + "<<<<<");
                 if (CacheManager.getDecorateBudget(mContext) <= 0) {
@@ -472,12 +366,7 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
             default:
                 break;
         }
-
     }
-
-    /**
-     * 对订单的操作
-     */
     private void operFindOrder() {
         if (TextUtils.isEmpty(cellphone) || "未绑定".equals(cellphone)) {
             CustomDialog.Builder builder = new CustomDialog.Builder(this);
@@ -503,7 +392,6 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
             showFindOrderDialog();
         }
     }
-
     private OnClickListener itemsPersonOnClick = new OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -526,8 +414,6 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
             }
         }
     };
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -573,9 +459,6 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
         }
     }
 
-    /***
-     * 找回订单
-     */
     private void showFindOrderDialog() {
         CustomDialog.Builder builder = new CustomDialog.Builder(this);
 
@@ -597,10 +480,6 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
         builder.create().show();
     }
 
-    /***
-     * 找回订单接口请求方法
-     * @param dialog
-     */
     private void requestFindOrder(final DialogInterface dialog) {
         retrieveOrderParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         retrieveOrderParams.put("token", token);
@@ -635,11 +514,6 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
         });
     }
 
-
-    /***
-     * 裁剪头像图片
-     * @param uri
-     */
     public void startPhotoZoom(Uri uri) {
 
         Intent intent = new Intent("com.android.camera.action.CROP");
@@ -653,10 +527,6 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
         startActivityForResult(intent, REQUESTCODE_CUTTING);
     }
 
-    /***
-     * 上传用户头像至服务器
-     * @param picdata
-     */
     private void setPicToView(Intent picdata) {
         Bundle extras = picdata.getExtras();
         if (extras != null) {
@@ -701,13 +571,9 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
                 WriteUtil.writeStringParams(textParams, ds);
                 WriteUtil.writeFileParams(fileparams, ds);
                 WriteUtil.paramsEnd(ds);
-                // 对文件流操作完,要记得及时关闭
                 os.close();
-                // 服务器返回的响应吗
                 int code = conn.getResponseCode(); // 从Internet获取网页,发送请求,将网页以流的形式读回来
-                // 对响应码进行判断
                 if (code == 200) {// 返回的响应码200,是成功
-                    // 得到网络返回的输入流
                     InputStream is = conn.getInputStream();
                     resultStr = WriteUtil.readString(is);
                 } else {
@@ -770,27 +636,4 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
             return false;
         }
     });
-
-
-    private void initReceiver() {
-        receiver = new DataRefreshReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Constant.LOGOUT_ACTION);
-        registerReceiver(receiver, filter);
-    }
-
-    private DataRefreshReceiver receiver;
-
-    private class DataRefreshReceiver extends BroadcastReceiver {
-
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (Constant.LOGOUT_ACTION.equals(intent.getAction())) {
-                Util.setToast(mContext, "怎？？？111");
-//				requestUserMy();
-            }
-        }
-    }
-
 }

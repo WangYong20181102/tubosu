@@ -302,7 +302,7 @@ public class ImageDetailFragment extends Fragment {
                     if (TextUtils.isEmpty(shareUrl)) {
                         Log.e(TAG, "分享链接为空");
                     } else {
-                        new ShareUtil(mContext, imgDetailShare, shareContent, shareUrl, shareUrl);
+                        new ShareUtil(mContext,  shareContent, shareUrl, shareUrl);
                     }
                     break;
                 case R.id.img_detail_like:

@@ -1,5 +1,4 @@
 package com.tbs.tobosutype.activity;
-import android.Manifest;
 import android.app.ActionBar.LayoutParams;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,7 +8,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -28,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.tbs.tobosutype.R;
@@ -65,21 +62,10 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-/**
- * 找装修页面
- *
- * @author dec
- */
 public class FindDecorateActivity extends BaseActivity implements IXListViewListener, OnClickListener {
-
     private static final String TAG = FindDecorateActivity.class.getSimpleName();
-
     private LinearLayout findDecorateLinearLayout;
-
-    private RelativeLayout rel_find_decorate_titlebar;
-
     private Context mContext;
-
     /**
      * 装修工公司ListView
      */
@@ -170,9 +156,6 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
 
     private int page = 1;
     private int pageSize = 10;
-
-    public static String COMPANY_LIST_PER_NUM = "5";
-
     private String cityName;
 
     /**
@@ -212,8 +195,6 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
      */
     private PopupWindow mPopupWindow;
 
-//	/**类型搜索适配器的数据集合*/
-//	private ArrayList<HashMap<String, String>> typesList = new ArrayList<HashMap<String, String>>(); // 类型
     /**
      * 区域搜索适配器的数据集合
      */
@@ -248,15 +229,7 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
      */
     private TypeAdapter typeWindowAdapter;
 
-    /**
-     * 排序适配器
-     */
     private SortAdapter sortWindowAdapter;
-
-//    /**
-//     * 装修公司的参数对象
-//     */
-//    private RequestParams mapParams;
     private HashMap<String,Object> mapParams;
 
 
@@ -269,11 +242,6 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
      * 广告的参数对象
      */
     private HashMap<String, Object> adsenseParams;
-
-    /**
-     * 装修公司列表接口
-     */
-//    private String dataUrl = Constant.TOBOSU_URL + "/tapp/company/company_list";
 
     /**
      * 品牌logo接口
@@ -392,7 +360,6 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
     private void initView() {
         /*-------------------顶部区域------------------*/
         // 顶部topbar
-        rel_find_decorate_titlebar = (RelativeLayout) findViewById(R.id.rel_find_decorate_titlebar);
         tv_city = (TextView) findViewById(R.id.tv_city_decorate);
         iv_select_city = (ImageView) findViewById(R.id.iv_select_city);
         iv_search_decoration = (ImageView) findViewById(R.id.iv_search_decoration);
@@ -452,12 +419,8 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
             builder.create().show();
             getSharedPreferences("FirstLookDecorat", 0).edit().putBoolean("FirstLookDecorat", false).commit();
         }
-        rel_find_decorate_titlebar.setBackgroundColor(Color.parseColor("#ff882e"));
     }
 
-    /**
-     * 初始化公司列表adapter
-     */
     private void initDecorateListAdapter() {
         if (decorateAdapter == null) {
             decorateAdapter = new DecorateListAdapter(mContext, decorateCompanyList);
@@ -513,9 +476,6 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
         }
     }
 
-    /**
-     * 首次进入该页面 先使用之前保存下来的缓存
-     */
     private void initCacheCompanyList() {
         String result = getSharedPreferences("CompanyCache", 0).getString("jsonResult", "");
         if (!TextUtils.isEmpty(result)) {
@@ -564,29 +524,15 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
 		/*----------------归 类-----------*/
 
 
-        // 所有的筛选条件适配器数据集合先清除
-//		typesList.clear();
         districtList.clear();
         sortList.clear();
 
-        /***
-         * 这个是排序文字是本地固定写死的 并不是网络给的
-         *
-         * 	 但是 若要请求网络时 相应的请求参数字段则需要额外相应上传， 规则如下：
-         * 	 	默认排序：不传或者任意不跟下面三个相同即可
-         * 		离我最近：dis
-         * 		案例最多：casenormalcount
-         * 		签单最多：ordercount
-         */
         for (int i = 0; i < sorts.length; i++) {
             HashMap<String, String> sortMap = new HashMap<String, String>();
             sortMap.put("id", i + ""); // 这是原来的，我不做修改
             sortMap.put("class_name", sorts[i]);
             sortList.add(sortMap);
         }
-
-        //[@"默认排序", @"离我最近", @"案例最多", @"签单最多"]
-//      排序方式：casenormalcount：案例数排序；ordercount：订单数排序，dis：距离排序 
     }
 
 
@@ -676,27 +622,18 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
         }
     };
 
-    /**
-     * 广告接口请求
-     */
     private void initGetAdsenseParamsRequset() {
         adsenseParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         adsenseParams.put("position", "4");
         requestAdsense();
     }
 
-    /**
-     * 品牌logo接口请求
-     */
     private void initGetAdsParamsRequest() {
         getAdsParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         requestGetAds();
     }
 
 
-    /***
-     * 请求的是广告位接口
-     */
     private void requestAdsense() {
         OKHttpUtil.post(adsenseUrl, adsenseParams, new Callback() {
             @Override
@@ -729,9 +666,6 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
         });
     }
 
-    /***
-     * 请求的是品牌logo接口
-     */
     private void requestGetAds() {
         OKHttpUtil.post(getAdsUrl, getAdsParams, new Callback() {
             @Override
@@ -745,7 +679,6 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-//                System.out.println("---------装修公司--getAdsUrl-->>>" + result + "<<<");
                         try {
                             JSONObject jsonString = new JSONObject(result);
                             recommandBrandListData = new ArrayList<HashMap<String, String>>();
@@ -841,38 +774,11 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
         list.add(map0);
         list.add(map1);
         list.add(map2);
-//		try {
-//
-//			HashMap<String, String> map0 = new HashMap<String, String>();
-//			map0.put("pinyin", "0");
-//			map0.put("name", "全部类型");
-//
-//			JSONObject object1 = new JSONObject(jsonString);
-//			JSONObject object2 = object1.getJSONObject("data");
-//			JSONArray array = object2.getJSONArray("homeServiceList");
-//			list.add(map0);
-//			for (int i = 0; i < array.length(); i++) {
-//				HashMap<String, String> dataMap = new HashMap<String, String>();
-//				JSONObject dataString = array.getJSONObject(i);
-//				dataMap.put("name", dataString.getString("name"));
-//				dataMap.put("pinyin", dataString.getString("pinyin"));
-////				Log.d(TAG, "name--"+dataMap.get("name"));
-////				Log.d(TAG, "pinyin--"+dataMap.get("pinyin"));
-//				list.add(dataMap);
-//			}
-//			return list;
-//
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
 
         return null;
 
     }
 
-    /***
-     * json解析  为区域adapter得到list集合数据
-     */
     private List<HashMap<String, String>> jsonToDistrictList(String jsonString) {
         List<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
         try {
@@ -937,14 +843,6 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
                 break;
             case R.id.linearlayout_type:
                 getTypePopupwindow();
-//			if(districtList.size()==0){
-//				return;
-//			}
-//			if (types.size() == 0) {
-//				for (int i = 0; i < typesList.size(); i++) {
-//					types.add(typesList.get(i).get("name").toString().trim());
-//				}
-//			}
 
                 if (types.size() == 0) {
                     for (int i = 0; i < decorateType.length; i++) {
@@ -967,9 +865,6 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
                 break;
             case R.id.linearlayout_sort:
                 getSortPopupwindow();
-//			if(districtList.size()==0){
-//				return;
-//			}
                 if (sortNames.size() == 0) {
                     for (int i = 0; i < sortList.size(); i++) {
                         sortNames.add(sortList.get(i).get("class_name").toString().trim());
@@ -1080,9 +975,7 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
         mPopupWindow.setHeight(LayoutParams.MATCH_PARENT);
         ColorDrawable dw = new ColorDrawable(0x80000000);
         mPopupWindow.setBackgroundDrawable(dw);
-//		mPopupWindow.setAnimationStyle(R.style.custom_popupwindow_animstyle);
 
-        // 需要设置，点击之后取消popupview，即使点击外面，也可以捕获事件
         popupArea.setOnTouchListener(new OnTouchListener() {
 
             @Override
@@ -1098,9 +991,6 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
     }
 
 
-    /***
-     * 选择类型的window  全部 【不传】;  装修保jjb_logo  0或1; 实体认证 certification 0或1
-     */
     public void getTypePopupwindow() {
         popupType = getLayoutInflater().inflate(R.layout.item_decorate_type, null);
         lvType = (ListView) popupType.findViewById(R.id.item_decorate_lvtype);
@@ -1167,7 +1057,6 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
         mPopupWindow.setBackgroundDrawable(dw);
         mPopupWindow.setAnimationStyle(R.style.custom_popupwindow_animstyle);
 
-        // 需要设置，点击之后取消popupview，即使点击外面，也可以捕获事件
         popupType.setOnTouchListener(new OnTouchListener() {
 
             @Override
@@ -1183,9 +1072,6 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
 
     }
 
-    /***
-     * 选择排序的window
-     */
     public void getSortPopupwindow() {
         popupSort = getLayoutInflater().inflate(R.layout.item_decorate_sort, null);
         lvSort = (ListView) popupSort.findViewById(R.id.item_decorate_lvsort);
@@ -1269,7 +1155,6 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
         page = 1;
         initGetCompanyListParams();
         requestDecoratePost(mapParams);
-//		initDecorateListAdapter();
         if (decorateAdapter != null) {
             decorateAdapter.notifyDataSetChanged();
         }
@@ -1280,7 +1165,6 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
         page++;
         initGetCompanyListParams();
         requestDecoratePost(mapParams);
-//		initDecorateListAdapter();
         if (decorateAdapter != null) {
             decorateAdapter.notifyDataSetChanged();
         }
@@ -1304,30 +1188,19 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
      */
     private void operDecorationCompany(String result) {
 
-        // 装修公司json解析后的列表
         ArrayList<HashMap<String, String>> temDataList = new ArrayList<HashMap<String, String>>();
-        // 区域列表
         ArrayList<HashMap<String, String>> districtDataList = new ArrayList<HashMap<String, String>>();
-        //
-//		ArrayList<HashMap<String, String>> homeDataList = new ArrayList<HashMap<String, String>>();
-
-
-        // 找装修页面 解析找到公司的json得到公司数据
         temDataList = PrseJsonUtil.jsonToComList(result);
 
         if (temDataList.size() == 0 && decorateCompanyList.size() != 0) {
             Toast.makeText(mContext, "没有更多装修公司了", Toast.LENGTH_SHORT).show();
         }
-
-//		homeDataList = (ArrayList<HashMap<String, String>>) initDecorateType()/*jsonToHomeServiceList()*/;
-
         districtDataList = (ArrayList<HashMap<String, String>>) jsonToDistrictList(result);
 
         if (temDataList.size() != 0) {
             if (page == 1) {
                 // 回到第一页
                 decorateCompanyList.clear();
-//				typesList.clear();
             }
             for (int i = 0; i < temDataList.size(); i++) {
                 decorateCompanyList.add(temDataList.get(i));
@@ -1336,9 +1209,6 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
             for (int i = 0; i < districtDataList.size(); i++) {
                 districtList.add(districtDataList.get(i));
             }
-//			for (int i = 0; i < homeDataList.size(); i++) {
-//				typesList.add(homeDataList.get(i));
-//			}
             page_loading.setVisibility(View.GONE);
         }
         handler.sendEmptyMessage(0);
@@ -1415,24 +1285,8 @@ public class FindDecorateActivity extends BaseActivity implements IXListViewList
     @Override
     protected void onResume() {
         super.onResume();
-//        needPermissions();
     }
 
-    // 动态获取权限
-    private  void needPermissions(){
-        if(Build.VERSION.SDK_INT >= 23){
-            String[] permissions = new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS,
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_WIFI_STATE,
-                    Manifest.permission.ACCESS_NETWORK_STATE,
-            };
-
-            requestPermissions(permissions, 101);
-        }
-    }
 
     @Override
     protected void onDestroy() {

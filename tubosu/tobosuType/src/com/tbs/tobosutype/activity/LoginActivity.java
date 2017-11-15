@@ -13,12 +13,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.fragment.LoginFragmentAccount;
 import com.tbs.tobosutype.fragment.LoginFragmentPhone;
 import com.tbs.tobosutype.utils.Util;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,12 +44,6 @@ public class LoginActivity extends FragmentActivity {
      * 初始化为-2
      */
     public static int fromTab = -2;
-
-//	/**忘记密码按钮*/
-//	private TextView login_frogetPwd;
-//	private List<String> mDatas = Arrays.asList("手机快速登录", "账户登录");
-//	private ViewPagerIndicator mIndicator;
-
     private LoginFragmentAccount accountFragment;
     private LoginFragmentPhone phoneFragment;
 
@@ -68,8 +60,6 @@ public class LoginActivity extends FragmentActivity {
 
 
     private void initData() {
-//        b.putInt("tabPosition", tabPosition);
-//        it.putExtra("tabPositionBundle", b);
         if (getIntent() != null && getIntent().getBundleExtra("tabPositionBundle") != null) {
             Bundle bundle = getIntent().getBundleExtra("tabPositionBundle");
             fromTab = bundle.getInt("tabPosition");
@@ -88,21 +78,6 @@ public class LoginActivity extends FragmentActivity {
 
         mViewPager = (ViewPager) findViewById(R.id.login_vp);
         rel_find_decorate_titlebar.setBackgroundColor(Color.parseColor("#ff882e"));
-        // 来自点击收藏时 跳转 intent.putExtra("isFav", true);
-//		if(getIntent()!=null && getIntent().getExtras()!=null && getIntent().getExtras().getBoolean("isFav")){
-//			login_framelayout.setVisibility(View.VISIBLE);
-//			iv_login_back_.setVisibility(View.VISIBLE);
-//			iv_login_back_.setOnClickListener(new OnClickListener() {
-//
-//				@Override
-//				public void onClick(View v) {
-//					exitTbs();
-//				}
-//			});
-//		}else{
-//			login_framelayout.setVisibility(View.GONE);
-//			iv_login_back_.setVisibility(View.GONE);
-//		}
     }
 
     /***

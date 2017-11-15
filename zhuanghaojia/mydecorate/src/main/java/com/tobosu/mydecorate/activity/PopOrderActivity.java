@@ -22,30 +22,23 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.adapter.PopAdapter;
 import com.tobosu.mydecorate.global.Constant;
+import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.tobosu.mydecorate.util.CacheManager;
 import com.tobosu.mydecorate.util.Util;
 import com.tobosu.mydecorate.view.CustomWaitDialog;
 import com.tobosu.mydecorate.view.TextSeekBar;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -454,9 +447,6 @@ public class PopOrderActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (poporderQueue != null) {
-            poporderQueue.cancelAll("poporder");
-        }
     }
 
     private int gopoporder_code = -1;
@@ -1293,16 +1283,24 @@ public class PopOrderActivity extends AppCompatActivity {
         }
     }
 
-    private RequestQueue poporderQueue;
-    private StringRequest poporderRequest;
 
     private void popOrder(final String cellphone, final String housearea, final String orderprice, final String style) {
         showLoadingView();
-
-        poporderQueue = Volley.newRequestQueue(mContext);
-        poporderRequest = new StringRequest(Request.Method.POST, popOrderUrl, new Response.Listener<String>() {
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        hashMap.put("cellphone", cellphone); // 电话号码
+        hashMap.put("housearea", housearea); // 面积
+        hashMap.put("orderprice", orderprice); // 预算
+        hashMap.put("style", style); // 风格
+        hashMap.put("device", "android");
+        hashMap.put("source", "1016");
+        hashMap.put("city", "0".equals(chosenCity) ? CacheManager.getCity(mContext):chosenCity);
+        hashMap.put("version", Util.getAppVersionName(mContext));
+        hashMap.put("urlhistory", Constant.PIPE_CODE); // 渠道代码
+        hashMap.put("comeurl", Constant.PIPE_CODE); //订单发布页面
+        OKHttpUtil okHttpUtil = new OKHttpUtil();
+        okHttpUtil.post(popOrderUrl, hashMap, new OKHttpUtil.BaseCallBack() {
             @Override
-            public void onResponse(String s) {
+            public void onSuccess(Response response, String s) {
                 try {
                     JSONObject orderObject = new JSONObject(s);
                     if (orderObject.getInt("error_code") == 0) {
@@ -1337,11 +1335,10 @@ public class PopOrderActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError volleyError) {
+            public void onFail(Request request, IOException e) {
                 Util.setToast(mContext, "领取失败 请稍后再试");
                 hideLoadingView();
                 CacheManager.setDontNeed(mContext, "dontneed");
@@ -1355,25 +1352,12 @@ public class PopOrderActivity extends AppCompatActivity {
                 startActivity(new Intent(mContext, MainActivity.class));
                 finish();
             }
-        }) {
+
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("cellphone", cellphone); // 电话号码
-                hashMap.put("housearea", housearea); // 面积
-                hashMap.put("orderprice", orderprice); // 预算
-                hashMap.put("style", style); // 风格
-                hashMap.put("device", "android");
-                hashMap.put("source", "1016");
-                hashMap.put("city", "0".equals(chosenCity) ? CacheManager.getCity(mContext):chosenCity);
-                hashMap.put("version", Util.getAppVersionName(mContext));
-                hashMap.put("urlhistory", Constant.PIPE_CODE); // 渠道代码
-                hashMap.put("comeurl", Constant.PIPE_CODE); //订单发布页面
-                return hashMap;
+            public void onError(Response response, int code) {
+
             }
-        };
-        poporderRequest.setTag("poporder");
-        poporderQueue.add(poporderRequest);
+        });
     }
 
 
