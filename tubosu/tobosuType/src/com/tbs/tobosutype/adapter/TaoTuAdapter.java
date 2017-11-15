@@ -159,11 +159,6 @@ public class TaoTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public interface OnTaotuItemClickListener{
         void OnTaotuItemClickListener(int position, ArrayList<TaotuEntity> taotuList);
     }
-
-    public OnTaotuItemClickListener getTaotuItemClickListener() {
-        return taotuItemClickListener;
-    }
-
     public void setTaotuItemClickListener(OnTaotuItemClickListener taotuItemClickListener) {
         this.taotuItemClickListener = taotuItemClickListener;
     }
