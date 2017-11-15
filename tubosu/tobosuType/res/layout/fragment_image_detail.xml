@@ -7,7 +7,7 @@
     tools:context="com.tbs.tobosutype.fragment.ImageDetailFragment">
 
     <include
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/img_detail_Loading"
         layout="@layout/layout_loading_data"
         android:layout_width="match_parent"

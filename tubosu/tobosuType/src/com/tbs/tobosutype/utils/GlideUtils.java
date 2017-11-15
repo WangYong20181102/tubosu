@@ -28,7 +28,7 @@ public class GlideUtils {
      * @param imageView
      */
     public static void glideLoader(Context context, String imgUrl, int erroImg, int emptyImg, ImageView imageView) {
-        Glide.with(context).load(imgUrl).placeholder(emptyImg).error(erroImg).into(imageView);
+        Glide.with(context).load(imgUrl).placeholder(emptyImg).error(erroImg).centerCrop().into(imageView);
     }
 
     /**
@@ -53,6 +53,21 @@ public class GlideUtils {
             });
         } else if (ROUND_IMAGE == imageType) {
             Glide.with(context).load(url).placeholder(emptyImg).error(erroImg).transform(new GlideRoundTransform(context, 6)).into(iv);
+        }
+    }
+    //加载本地资源
+    public static void glideLoader(final Context context, int imge,final ImageView iv, int imageType) {
+        if (CIRCLE_IMAGE == imageType) {
+            Glide.with(context).load(imge).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv) {
+                @Override
+                protected void setResource(Bitmap resource) {
+                    RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                    circularBitmapDrawable.setCircular(true);
+                    iv.setImageDrawable(circularBitmapDrawable);
+                }
+            });
+        } else if (ROUND_IMAGE == imageType) {
+            Glide.with(context).load(imge).placeholder(imge).error(imge).transform(new GlideRoundTransform(context, 6)).into(iv);
         }
     }
 }

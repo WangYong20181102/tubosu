@@ -6,10 +6,12 @@
     android:orientation="vertical">
 
     <GridView
-        android:listSelector="@android:color/transparent"
         android:id="@+id/pop_window_show"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="20dp"
         android:background="#f5f3f2"
+        android:listSelector="@android:color/transparent"
         android:numColumns="4"></GridView>
 </LinearLayout>

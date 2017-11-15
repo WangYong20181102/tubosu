@@ -197,8 +197,8 @@ public class OrderFeedBackActivity extends Activity {
 					@Override
 					public void run() {
 						feedBackList = jsonToFeedBackList(result);
-						orderFeedBackAdapter.notifyDataSetChanged();
 						orderFeedBackAdapter = new OrderFeedBackAdapter();
+						orderFeedBackAdapter.notifyDataSetChanged();
 						order_feedback_listview.setAdapter(orderFeedBackAdapter);
 						order_feedback_listview.setSelection(order_feedback_listview.getCount() - 1);
 					}

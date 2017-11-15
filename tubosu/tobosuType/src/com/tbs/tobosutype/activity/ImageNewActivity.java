@@ -664,7 +664,7 @@ public class ImageNewActivity extends BaseActivity {
                 imgNewFengge_jt.setVisibility(View.VISIBLE);
                 imgNewHuxing_jt.setVisibility(View.GONE);
                 imgNewMianji_jt.setVisibility(View.GONE);
-                myGridViewAdapterFg = new MyGridViewAdapter(mContext, popBtnListFg);
+//                myGridViewAdapterFg = new MyGridViewAdapter(mContext, popBtnListFg);
                 mGridView.setAdapter(myGridViewAdapterFg);
                 mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -699,7 +699,7 @@ public class ImageNewActivity extends BaseActivity {
                 imgNewHuxing_jt.setVisibility(View.VISIBLE);
                 imgNewMianji_jt.setVisibility(View.GONE);
                 imgNewFengge_jt.setVisibility(View.GONE);
-                myGridViewAdapterHx = new MyGridViewAdapter(mContext, popBtnListHx);
+//                myGridViewAdapterHx = new MyGridViewAdapter(mContext, popBtnListHx);
                 mGridView.setAdapter(myGridViewAdapterHx);
                 mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -733,7 +733,7 @@ public class ImageNewActivity extends BaseActivity {
                 imgNewMianji_jt.setVisibility(View.VISIBLE);
                 imgNewHuxing_jt.setVisibility(View.GONE);
                 imgNewFengge_jt.setVisibility(View.GONE);
-                myGridViewAdapterMj = new MyGridViewAdapter(mContext, popBtnListMj);
+//                myGridViewAdapterMj = new MyGridViewAdapter(mContext, popBtnListMj);
                 mGridView.setAdapter(myGridViewAdapterMj);
                 mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override

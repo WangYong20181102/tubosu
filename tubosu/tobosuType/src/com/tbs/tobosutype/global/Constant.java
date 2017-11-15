@@ -93,12 +93,12 @@ public class Constant {
     /**
      * 测试环境
      */
-//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
     /**
      * 正式环境
      */
-    public static final String TOBOSU_URL = "http://www.tobosu.com/";
+//    public static final String TOBOSU_URL = "http://www.tobosu.com/";
 
     public static final String SUMMIT_BUDGET_URL = TOBOSU_URL + "mapp/RenovateExpense/expense_bookkeep";
 
@@ -358,4 +358,15 @@ public class Constant {
     public static final String LINK_HOME_MIANFEI_SHEJI = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
     public static final String LINK_HOME_ZHUANYE_TUIJIAN = "http://m.tobosu.com/rec_company?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
     public static final String LINK_HOME_DALIBAO = "http://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+
+    //新的逛图库 套图 3.5版本 add time 20171111
+    public static final String SUITE_LIST = TOBOSU_URL + "mapp/impression/suite_list";
+    //新的逛图库 3.5版本 套图筛选条件
+    public static final String SUITE_CLASS = TOBOSU_URL + "mapp/impressionClass/suite_class";
+    //收藏或者取消收藏套图或者单图
+    public static final String IMAGE_COLLECT = TOBOSU_URL + "mapp/collect/collect";
+    //新的逛图库 单图 3.5版本 add time 20171114
+    public static final String SINGLE_MAP_LIST = TOBOSU_URL + "mapp/impressionSingle/single_map_list";
+    //新的逛图库 3.5版本 单图筛选条件
+    public static final String SINGLE_CLASS = TOBOSU_URL + "mapp/impressionClass/single_class";
 }

@@ -47,6 +47,7 @@ public class AppInfoUtil {
         }
         return versionName;
     }
+
     /**
      * 获取手机mac地址<br/>
      * 错误返回12个0
@@ -71,6 +72,7 @@ public class AppInfoUtil {
         }
         return macAddress;
     }
+
     //获取渠道信息（在AndroidManifest文件中的渠道信息）
     public static String getChannType(Context context) {
         String mChannType = "";
@@ -92,24 +94,21 @@ public class AppInfoUtil {
         return context.getSharedPreferences("city", 0).getString("cityName", "深圳");
     }
 
-    public static void setCityName(Context context, String city){
+    public static void setCityName(Context context, String city) {
         context.getSharedPreferences("city", 0).edit().putString("cityName", city).commit();
     }
-
 
 
     public static String getCityInAnli(Context context) {
         return context.getSharedPreferences("city_anli", 0).getString("AnliCityName", "深圳");
     }
 
-    public static void setCityNameInAnli(Context context, String city){
+    public static void setCityNameInAnli(Context context, String city) {
         context.getSharedPreferences("city_anli", 0).edit().putString("AnliCityName", city).commit();
     }
 
 
-
-
-    public static void setLat(Context context, String lat){
+    public static void setLat(Context context, String lat) {
         context.getSharedPreferences("city", 0).edit().putString("lat", lat).commit();
     }
 
@@ -129,7 +128,7 @@ public class AppInfoUtil {
         return context.getSharedPreferences("userInfo", 0).getString("token", "");
     }
 
-    public static void setToken(Context context, String token){
+    public static void setToken(Context context, String token) {
         context.getSharedPreferences("userInfo", 0).edit().putString("token", token).commit();
     }
 
@@ -168,6 +167,37 @@ public class AppInfoUtil {
         return context.getSharedPreferences("StyleMjCache", 0).getString("resultJson", "");
     }
 
+    //缓存逛图库的套图选择    add 2017.11.13
+    public static void setSelectMsg(Context context, String selectMsg) {
+        context.getSharedPreferences("SelectMsg", 0).edit().putString("selectMsgJson", selectMsg).commit();
+    }
+
+    //获取逛图库的套图缓存信息   add 2017.11.13
+    public static String getSelectMsg(Context context) {
+        return context.getSharedPreferences("SelectMsg", 0).getString("selectMsgJson", "");
+    }
+
+    //缓存逛图库的单图选择    add 2017.11.13
+    public static void setSingleSelectMsg(Context context, String singleSelectMsg) {
+        context.getSharedPreferences("SingleSelectMsg", 0).edit().putString("singleSelectMsgJson", singleSelectMsg).commit();
+    }
+
+    //获取逛图库的单图缓存信息   add 2017.11.13
+    public static String getSingleSelectMsg(Context context) {
+        return context.getSharedPreferences("SingleSelectMsg", 0).getString("singleSelectMsgJson", "");
+    }
+
+    //缓存逛图库列表的时间token   add 2017.11.13
+    public static void setImageListDateToken(Context context, String ImageListDateToken) {
+        context.getSharedPreferences("ImageListDateToken", 0).edit().putString("imageListdatetoken", ImageListDateToken).commit();
+    }
+
+    //缓存逛图库列表的时间token   add 2017.11.13
+    public static String getImageListDateToken(Context context) {
+        return context.getSharedPreferences("ImageListDateToken", 0).getString("imageListdatetoken", "");
+    }
+
+
     public static String getDeviceName() {
         return "android";
     }
@@ -182,8 +212,8 @@ public class AppInfoUtil {
         return params;
     }
 
-    public static HashMap<String,Object> getPublicHashMapParams(Context context) {
-        HashMap<String,Object> params = new HashMap<String,Object>();
+    public static HashMap<String, Object> getPublicHashMapParams(Context context) {
+        HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("device", getDeviceName());
         params.put("version", getAppVersionName(context));
         params.put("city", getCityName(context));

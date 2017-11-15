@@ -26,6 +26,7 @@
     <!-- 橙色 -->
     <color name="color_darkgray">#1e1f1f</color>
     <color name="color_neutralgrey">#74777a</color>
+    <color name="color_pop_tv_select">#4d4d4d</color>
     <color name="color_lightgray">#cbd2da</color>
     <color name="color_huxing">#f4f4f4</color>
     <color name="color_black">#000</color>

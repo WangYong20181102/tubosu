@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/frag_new_img_single_swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/frag_new_img_single_tab"
+        android:background="@color/white">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/frag_new_img_single_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <!--下拉框出现时的阴影-->
+    <View
+        android:id="@+id/frag_shardow_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/frag_new_img_single_tab"
+        android:background="#b4353332"
+        android:visibility="gone" />
+    <!--没有任何选择数据时的占位图-->
+    <RelativeLayout
+        android:id="@+id/frag_new_img_single_none_data_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/frag_new_img_tab"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/frag_new_img_none_data" />
+    </RelativeLayout>
+    <!--选项栏-->
+    <LinearLayout
+        android:id="@+id/frag_new_img_single_tab"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:weightSum="4">
+        <!--单个选项风格-->
+        <LinearLayout
+            android:id="@+id/frag_new_img_single_fengge_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/frag_new_img_single_fengge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="风格"
+                android:textColor="#808080"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/frag_new_img_single_fengge_san"
+                android:layout_width="9dp"
+                android:layout_height="9dp"
+                android:layout_marginLeft="9dp"
+                android:src="@drawable/img_san_down" />
+        </LinearLayout>
+        <!--单个选项户型-->
+        <LinearLayout
+            android:id="@+id/frag_new_img_single_kongjian_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/frag_new_img_single_kongjian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="空间"
+                android:textColor="#808080"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/frag_new_img_single_kongjian_san"
+                android:layout_width="9dp"
+                android:layout_height="9dp"
+                android:layout_marginLeft="9dp"
+                android:src="@drawable/img_san_down" />
+        </LinearLayout>
+        <!--单个选项局部-->
+        <LinearLayout
+            android:id="@+id/frag_new_img_single_jubu_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/frag_new_img_single_jubu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="局部"
+                android:textColor="#808080"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/frag_new_img_single_jubu_san"
+                android:layout_width="9dp"
+                android:layout_height="9dp"
+                android:layout_marginLeft="9dp"
+                android:src="@drawable/img_san_down" />
+        </LinearLayout>
+        <!--单个选项颜色-->
+        <LinearLayout
+            android:id="@+id/frag_new_img_single_yanse_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/frag_new_img_single_yanse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="颜色"
+                android:textColor="#808080"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/frag_new_img_single_yanse_san"
+                android:layout_width="9dp"
+                android:layout_height="9dp"
+                android:layout_marginLeft="9dp"
+                android:src="@drawable/img_san_down" />
+        </LinearLayout>
+    </LinearLayout>
+    <!--阴影-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_below="@+id/frag_new_img_single_tab"
+        android:background="@drawable/yinying4" />
+</RelativeLayout>

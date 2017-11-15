@@ -99,7 +99,6 @@
     </style>
 
 
-
     <style name="getpriceImageView">
         <item name="android:layout_width">112dp</item>
         <item name="android:layout_height">112dp</item>
@@ -171,4 +170,7 @@
         <item name="android:backgroundDimAmount">0.6</item>
     </style>
 
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>
