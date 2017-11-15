@@ -93,12 +93,12 @@ public class Constant {
     /**
      * 测试环境
      */
-//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
     /**
      * 正式环境
      */
-    public static final String TOBOSU_URL = "http://www.tobosu.com/";
+//    public static final String TOBOSU_URL = "http://www.tobosu.com/";
 
     public static final String SUMMIT_BUDGET_URL = TOBOSU_URL + "mapp/RenovateExpense/expense_bookkeep";
 
@@ -152,16 +152,23 @@ public class Constant {
      */
     public static String BIND_THIRD_PARTY_URL = TOBOSU_URL + "tapp/passport/bindThirdParty";
 
+    // 收藏
+    public static String MYFAV_URL = TOBOSU_URL + "mapp/collect/my_collect";
 
     public static String FIND_DECORATE_COMPANY_URL = Constant.TOBOSU_URL + "/tapp/company/company_list";
 
 
     //发单页点击接口
-    public static String FADAN_CLICK_URL = Constant.TOBOSU_URL + "/mapp/OrderPort/click_count";
+    public static String FADAN_CLICK_URL = Constant.TOBOSU_URL + "mapp/OrderPort/click_count";
 
     // 轮播图有效点击量
-    public static String BANNER_CLICK_URL = Constant.TOBOSU_URL + "/mapp/banner/click_count";
+    public static String BANNER_CLICK_URL = Constant.TOBOSU_URL + "mapp/banner/click_count";
 
+    //收藏单图url
+    public static String FAV_TU_URL = Constant.TOBOSU_URL + "mapp/collect/collect_single_list";
+
+    //收藏单图url
+    public static String FAV_TAO_TU_URL = Constant.TOBOSU_URL + "mapp/collect/collect_suite_list";
 
     /**
      * 修改用户信息接口
@@ -204,6 +211,7 @@ public class Constant {
 
     public static final String ANDROID_SHARE = "&channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "&tbsfrom=share";
 
+    public static final String GONGSI_URL = TOBOSU_URL + "mapp/collect/collect_company_list";
 
     /**
      * 检测网络状态<br/>

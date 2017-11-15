@@ -1,15 +1,10 @@
 package com.tbs.tobosutype.activity;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Looper;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -20,7 +15,6 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CheckOrderPwdPopupWindow;
 import com.tbs.tobosutype.customview.InputWarnDialog;
@@ -39,107 +33,31 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-/**
- * 装修公司主页
- *
- * @author dec
- */
 public class MyCompanyActivity extends BaseActivity implements OnClickListener {
     private static final String TAG = MyCompanyActivity.class.getSimpleName();
     private Context mContext;
     private RoundImageView my_decorate_pic;
     private TextView my_decorate_company_name;
-
-    /**
-     * 顶部用户信息布局
-     */
     private RelativeLayout rel_mycompany_info;
-
-    /**
-     * 全部订单布局
-     */
     private RelativeLayout my_layout_allorder;
-
-    /**
-     * 全部订单数
-     */
     private TextView tv_orderTotal;
-
     private ImageView image_business_license;
-
-    /***未设置过订单密码*/
     private static final int NEVER_SET_PSD= 20301;
-
-    /**pc端重新设置过密码*/
     private static final int PC_RESET_PSD = 20302;
-
-//	/**没有密码*/
-//	private static final int NO_PSD = 0;
-
-    /**订单密码已设置*/
     private static final int HAS_SET_PSD = 0;
-
-
-    /***订单是否设置密码*/
     private String hasOrderPwdUrl = Constant.TOBOSU_URL + "tapp/order/hasOrderPwd";
-
-    /***订单填写密码*/
     private String setOrderPwdUrl = Constant.TOBOSU_URL + "tapp/passport/setOrderPwd";
-
-    /***订单验证密码*/
     private String requestOrderPwdUrl = Constant.TOBOSU_URL + "tapp/order/checkOrderPwd";
-
-
-    /**
-     * 装修保
-     */
     private ImageView image_bao;
-
-    /**
-     * 未读订单数量
-     */
     private String notReadNumber;
-
-    /**
-     * 未量房布局
-     */
     private LinearLayout my_notyet_order;
-
-    /**
-     * 已量房布局
-     */
     private LinearLayout my_yet_order;
-
-    /**
-     * 网店设置布局
-     */
     private LinearLayout my_layout_network;
-
-    /**
-     * 问题反馈布局
-     */
     private LinearLayout my_layout_feedback;
-
-    /**
-     * 优惠报名布局
-     */
     private LinearLayout my_layout_preferential_applyfor;
-
-    /**
-     * 已签单布局
-     */
     private LinearLayout my_has_sign_bill;
-
-    /**
-     * 账户管理布局
-     */
     private LinearLayout my_layout_userinfo;
-
-    /**
-     * 右上角 设置按钮
-     */
     private ImageView mycompany_set;
-
     private String id;
     private String icon;
     private String lng;
@@ -149,94 +67,34 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
     private String nickname;
     private String district;
     private String orderTotal;
-
-    /**
-     * 装修保字段
-     */
     private String jjb_logo;
-
-    /**
-     * 实体认证字段
-     */
     private String certification;
     private String cityname;
-
-    /**
-     * 会员等级
-     * <p>
-     * 1非会员
-     * 2高级会员 X
-     * 3初级会员
-     * 4广告会员
-     * 5延期会员
-     * 6高级会员 X
-     */
     private String memberdegree;
     private String shareUrl;
-
-    /**
-     * 是否绑定
-     * 1 已绑定
-     * 0 未绑定
-     */
     private String wechat_check;
-
     private String cellphone;
-
-    /**
-     * 已读消息数量
-     */
     private String already_count;
-
-    /**
-     * 未读消息数量
-     */
     private String unalready_count;
-
     private String token;
     private HashMap<String, Object> myParams;
-
-    /**
-     * 我的【装修公司】接口
-     */
     private String myUrl = Constant.TOBOSU_URL + "tapp/user/my";
-
     private LinearLayout ll_loading;
     private LinearLayout ll_msgnote;//消息
-
-    public MainActivity mainActivity;
     private ImageView iv_system_message_company;
-
-    /**
-     * 系统消息
-     */
     private String sysmesscount;
     private TextView tv_not_see_sysmsg;
-
-    /**
-     * 未量房若有未看订单时出现红点
-     */
     private TextView tv_notyet_order_num;
-
-    private SharedPreferences spPushConfig;
-
-    private String companyCellphone = "";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_my_company);
         my_decorate_pic = (RoundImageView) findViewById(R.id.my_decorate_pic);
-
         mContext = MyCompanyActivity.this;
-        initReceiver();
         initView();
-//        initData();
         initEvent();
     }
-
 
     private void initView() {
         tv_not_see_sysmsg = (TextView) findViewById(R.id.tv_not_see_sysmsg);
@@ -289,13 +147,7 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
         super.onResume();
         initData();
     }
-
-    /***
-     *  我的【装修公司】接口请求方法
-     *
-     * */
     private void requstMyPost() {
-//		Log.d(TAG, "--我的【装修公司】接口请求方法--");
         OKHttpUtil.post(myUrl, myParams, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -330,7 +182,6 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
                             shareUrl = object.getString("shareUrl");
                             wechat_check = object.getString("wechat_check");
                             cellphone = object.getString("cellphone");
-                            // 存电话号码
                             if ("未绑定".equals(cellphone)) {
                                 getSharedPreferences("userInfo", 0).edit().putString("cellphone", "").commit();
                             } else {
@@ -341,16 +192,9 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
                             Log.d("sysmesscount", sysmesscount);
                             if (Integer.parseInt(sysmesscount) > 0) {
                                 tv_not_see_sysmsg.setVisibility(View.VISIBLE);
-                                // 2016-07-08 上午，  产品说不需要显示数字，仅仅显示红点就是了
-//								if(Integer.parseInt(sysmesscount)>10){
-//									tv_not_see_sysmsg.setText("10+");
-//								}else{
-//									tv_not_see_sysmsg.setText(sysmesscount);
-//								}
                             } else {
                                 tv_not_see_sysmsg.setVisibility(View.GONE);
                             }
-//							Log.d(TAG, "你有未看订单外 "+notReadNumber);
                             Log.d("sysmesscount是未看系统信息数", notReadNumber);
 
                             if (notReadNumber != null && !notReadNumber.equals("0")) {
@@ -359,7 +203,6 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
                             } else {
                                 tv_notyet_order_num.setVisibility(View.GONE);
                             }
-
 
                             certification = object.getString("certification");
                             already_count = object.getString("already_count");
@@ -391,11 +234,9 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
     @Override
     public void onClick(View v) {
 
-        Util.setLog(TAG, "点击了吗？？？？？");
         switch (v.getId()) {
             case R.id.my_notyet_order: // 2-->> 未量房
                 MyApplication.ISPUSHLOOKORDER = false;
-//			ll_loading.setVisibility(View.VISIBLE);
                 requestHasOrderPwd("2");
                 break;
             case R.id.iv_system_message_company: // 消息
@@ -403,21 +244,17 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
                 startActivity(new Intent(this, SystemMessageActivity.class));
                 break;
             case R.id.my_yet_order: // 1-->>  已量房
-//			ll_loading.setVisibility(View.VISIBLE);
                 MyApplication.ISPUSHLOOKORDER = false;
                 requestHasOrderPwd("1");
                 break;
             case R.id.my_layout_allorder: // 0-->>  全部订单
-//			ll_loading.setVisibility(View.VISIBLE);
                 MyApplication.ISPUSHLOOKORDER = false;
                 requestHasOrderPwd("0");
                 break;
             case R.id.my_has_sign_bill: // 3-->>  已签单
-//			ll_loading.setVisibility(View.VISIBLE);
                 MyApplication.ISPUSHLOOKORDER = false;
                 requestHasOrderPwd("3");
                 break;
-
             case R.id.my_layout_preferential_applyfor: // 优惠报名
                 startActivity(new Intent(mContext, PreferentialApplyForActivity.class));
                 break;
@@ -463,11 +300,7 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
 
 
 
-    /**是否验证了订单密码*/
     private boolean isCheckOrderPwd;
-    /***
-     * 订单是否设置密码接口请求
-     */
     private void requestHasOrderPwd(final String kind) {
         HashMap hasOrderParams = new HashMap<String, Object>();
         hasOrderParams.put("token", token);
@@ -493,8 +326,6 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
                                 return;
                             }
 
-
-                            // 没设密码，则需要设置密码
                             if (jsonObject.getInt("error_code") == NEVER_SET_PSD) {
                                 InputWarnDialog.Builder builder = new InputWarnDialog.Builder(mContext);
                                 builder.setTitle("提示")/*.setMessage("您还没设置订单密码，请先设置")*/;
@@ -503,8 +334,6 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
                                     @Override
                                     public void onClick(DialogInterface dialog, int id) {
                                         dialog.dismiss();
-//														Util.setToast(context, "-  标记 4  -");
-                                        //去设置密码
                                         operSetOrderPwd(kind);
                                     }
                                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -514,14 +343,9 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
                                         dialog.cancel();
                                     }
                                 });
-
                                 builder.create().show();
-
                                 return;
                             }
-
-
-                            // 20302
                             if (jsonObject.getInt("error_code") == PC_RESET_PSD || !isCheckOrderPwd) {
                                 operCheckOrderPwd(kind);
                             }
@@ -536,10 +360,6 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
         });
     }
 
-
-    /**
-     * 给订单设置密码
-     */
     private void operSetOrderPwd(final String kind) {
         final SettingOrderPwdPopupWindow popuWindow = new SettingOrderPwdPopupWindow(mContext);
         popuWindow.showAtLocation(my_layout_allorder.getRootView(), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -570,13 +390,6 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
         });
     }
 
-
-    /***
-     * 提交订单填写密码接口请求
-     * @param popuWindow
-     * @param pwd1
-     * @param pwd2
-     */
     protected void requestSetOrderPwd(final SettingOrderPwdPopupWindow popuWindow, String pwd1, String pwd2, final String kind){
         HashMap<String, Object> setOrderParams = new HashMap<String, Object>();
         setOrderParams.put("token", token);
@@ -622,10 +435,6 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
             }
         });
     }
-
-    /****
-     * 需要输入订单密码才能进入全部订单列表
-     */
     private void operCheckOrderPwd(final String kind) {
         final CheckOrderPwdPopupWindow checkOrderPwdPopupWindow = new CheckOrderPwdPopupWindow(mContext);
         checkOrderPwdPopupWindow.showAtLocation(my_layout_allorder.getRootView(), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -645,12 +454,6 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
     }
 
 
-    /***
-     *
-     * 订单验证接口请求
-     * @param pwd
-     * @param poWindow
-     */
     private void requestCheckOrderPwd(String pwd, final String kind, final PopupWindow poWindow) {
         HashMap<String, Object> requestOrderParams = new HashMap<String, Object>();
         requestOrderParams.put("token", token);
@@ -671,14 +474,6 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
                             JSONObject jsonObject = new JSONObject(result);
                             if (jsonObject.getInt("error_code") == HAS_SET_PSD) {
                                 goAllOrder(kind);
-//                        if (activity instanceof MyCompanyActivity) {
-//                            // 去全部订单列表页面
-//                            goAllOrder(kind);
-//                        }
-//                        // 去订单详情页面
-//                        if (activity instanceof AllOrderDetailActivity) {
-//                            ((AllOrderDetailActivity) activity).requestOrderDetailPost();
-//                        }
                                 getSharedPreferences("CheckOrderPwd", 0).edit().putBoolean("CheckOrderPwd", true).commit();
                                 poWindow.dismiss();
                             } else {
@@ -693,11 +488,6 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
             }
         });
     }
-    /****
-     * 根据不同的类型跳转到全部订单页面
-     *
-     * @param kind
-     */
     public void goAllOrder(String kind) {
         Intent allOrderIntent = new Intent(mContext, AllOrderListActivity.class);
         Bundle allOrderBundle = new Bundle();
@@ -715,24 +505,4 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
-    private void initReceiver(){
-        receiver = new DataRefreshReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Constant.LOGOUT_ACTION);
-        registerReceiver(receiver, filter);
-    }
-    private DataRefreshReceiver receiver;
-    private class DataRefreshReceiver extends BroadcastReceiver {
-
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if(Constant.LOGOUT_ACTION.equals(intent.getAction())){
-//                Util.setToast(mContext, "怎？？？");
-//                requstMyPost();
-            }
-        }
-    }
-
 }

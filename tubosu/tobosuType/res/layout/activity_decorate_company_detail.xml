@@ -5,43 +5,64 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true" >
 
-    <FrameLayout
-	    android:id="@+id/rel_layout_decorate_bar"
-	    android:layout_width="match_parent"
-	    android:layout_height="50dip" >
-	
-	    <RelativeLayout
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent" >
-	
-	        <ImageView
-	            android:id="@+id/decorate_goback"
-				android:layout_width="20dp"
-				android:layout_height="20dp"
-				android:layout_marginLeft="10dp"
-				android:layout_centerVertical="true"
-				android:src="@drawable/back_up" />
-	
-	        <ImageView
-	            android:id="@+id/decorate_detail_fav"
-	            android:layout_width="20dp"
-	            android:layout_height="20dp"
-	            android:layout_centerVertical="true"
-	            android:layout_marginRight="14dp"
-				android:layout_toLeftOf="@+id/find_decorate_detail_share"
-	            android:background="@drawable/image_love_nor1" />
-	
-	        <ImageView
-	            android:id="@+id/find_decorate_detail_share"
-	            android:layout_width="20dp"
-	            android:layout_height="20dp"
-	            android:layout_alignParentRight="true"
-	            android:layout_centerVertical="true"
-	            android:layout_marginRight="20dp"
-	            android:clickable="true"
-	            android:background="@drawable/share" />
-	    </RelativeLayout>
+
+	<FrameLayout
+		android:id="@+id/framelayoutCompany"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content" >
+		<RelativeLayout
+			android:id="@+id/rel_layout_decorate_bar"
+			android:layout_width="match_parent"
+			android:layout_alignParentTop="true"
+			android:layout_height="49dip" >
+
+			<View
+				android:id="@+id/oldVueiew"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:background="@drawable/drawable_hdpi"/>
+			<View
+				android:id="@+id/decorateVueiew"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:visibility="invisible"
+				android:background="@drawable/white_bg"/>
+
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent" >
+
+				<ImageView
+					android:id="@+id/decorate_goback"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="10dp"
+					android:layout_centerVertical="true"
+					android:src="@drawable/activity_back1" />
+
+				<ImageView
+					android:id="@+id/decorate_detail_fav"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_centerVertical="true"
+					android:layout_marginRight="14dp"
+					android:layout_toLeftOf="@+id/find_decorate_detail_share"
+					android:background="@drawable/fa_white" />
+
+				<ImageView
+					android:id="@+id/find_decorate_detail_share"
+					android:layout_width="16dp"
+					android:layout_height="16dp"
+					android:layout_alignParentRight="true"
+					android:layout_centerVertical="true"
+					android:layout_marginRight="20dp"
+					android:clickable="true"
+					android:background="@drawable/out_white" />
+			</RelativeLayout>
+		</RelativeLayout>
 	</FrameLayout>
+
+
 
 	<com.tbs.tobosutype.customview.ScrollViewExtend
 		android:id="@+id/scrollView_decorate_company_details"
@@ -841,7 +862,5 @@
 		android:layout_alignParentTop="true"
 		android:layout_toRightOf="@+id/decorate_detail_bottom"
 		android:layout_toEndOf="@+id/decorate_detail_bottom" />
-
-
 
 </RelativeLayout>

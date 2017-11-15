@@ -460,7 +460,7 @@ public class ImageDetailActivity extends Activity implements OnClickListener, On
 //			Log.d(TAG, "--分享标题【"+tv_village_desc.getText().toString().trim()+"】");
 //			Log.d(TAG, "--分享简述【"+fenxiang_url+"】");
 //			Log.d(TAG, "--分享url【"+fenxiang_url+"】");
-                new ShareUtil(ImageDetailActivity.this, image_share, tv_village_desc.getText().toString().trim(), fenxiang_url, fenxiang_url);
+                new ShareUtil(ImageDetailActivity.this, tv_village_desc.getText().toString().trim(), fenxiang_url, fenxiang_url);
                 break;
             case R.id.image_collect_imagedetail_activity: // 添加 或者 取消 收藏
                 operCollect();

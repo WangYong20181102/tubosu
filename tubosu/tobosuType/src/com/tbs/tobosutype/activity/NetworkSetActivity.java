@@ -166,7 +166,7 @@ public class NetworkSetActivity extends Activity implements OnClickListener {
                 finish();
                 break;
             case R.id.rl_share_network:
-                new ShareUtil(NetworkSetActivity.this, rl_share_network, title, title, shareUrl);
+                new ShareUtil(NetworkSetActivity.this, title, title, shareUrl);
                 break;
             case R.id.networkset_markers_layout:
                 Intent intent = new Intent(NetworkSetActivity.this, MapMarkersActivity.class);

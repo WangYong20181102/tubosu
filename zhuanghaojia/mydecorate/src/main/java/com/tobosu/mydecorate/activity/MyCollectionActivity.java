@@ -1,5 +1,4 @@
 package com.tobosu.mydecorate.activity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,25 +9,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.adapter.CollectionAdapter;
 import com.tobosu.mydecorate.global.Constant;
+import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.tobosu.mydecorate.util.Util;
 import com.tobosu.mydecorate.view.CustomWaitDialog;
 import com.umeng.analytics.MobclickAgent;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -46,10 +39,6 @@ public class MyCollectionActivity extends AppCompatActivity {
     private RelativeLayout include_netout_layout;
 
     private String uid = "";
-
-    private RequestQueue collectionRequestQueue;
-
-    private StringRequest collectionStringRequest;
 
     private String mycollection_url = Constant.ZHJ + "tapp/mt/myCollection";
 
@@ -122,31 +111,29 @@ public class MyCollectionActivity extends AppCompatActivity {
         if (Util.isNetAvailable(mContext)) {
             showLoadingView();
             Util.showNetOutView(mContext,include_netout_layout,true);
-            collectionRequestQueue = Volley.newRequestQueue(mContext);
-            collectionStringRequest = new StringRequest(Request.Method.POST, mycollection_url, new Response.Listener<String>() {
+
+            HashMap<String, Object> hashMap = new HashMap<String, Object>();
+            hashMap.put("uid", uid);
+            OKHttpUtil okHttpUtil = new OKHttpUtil();
+            okHttpUtil.post(mycollection_url, hashMap, new OKHttpUtil.BaseCallBack() {
                 @Override
-                public void onResponse(String s) {
+                public void onSuccess(Response response, String s) {
                     System.out.println("请求结果:" + s);
                     collectionData = parseMyCollectionJson(s);
                     hideLoadingView();
                     initCollection();
                 }
-            }, new Response.ErrorListener() {
+
                 @Override
-                public void onErrorResponse(VolleyError volleyError) {
+                public void onFail(Request request, IOException e) {
 
                 }
-            }){
-                // 携带参数
+
                 @Override
-                protected HashMap<String, String> getParams() throws AuthFailureError {
-                    HashMap<String, String> hashMap = new HashMap<String, String>();
-                    hashMap.put("uid", uid);
-                    return hashMap;
+                public void onError(Response response, int code) {
+
                 }
-            };
-            collectionStringRequest.setTag("volley_request_collection");
-            collectionRequestQueue.add(collectionStringRequest);
+            });
 
         }else {
             Util.showNetOutView(mContext,include_netout_layout,false);
@@ -242,9 +229,6 @@ public class MyCollectionActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if(collectionRequestQueue!= null){
-            collectionRequestQueue.cancelAll("volley_request_collection");
-        }
     }
 
 

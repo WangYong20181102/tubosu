@@ -23,9 +23,7 @@ import com.tobosu.mydecorate.view.BackDialog;
 import com.umeng.analytics.MobclickAgent;
 
 
-/**
- * 有问题 废弃  不再使用
- */
+
 public class FreeActivity extends Activity {
 	private Context mContext;
 	private WebView webView;

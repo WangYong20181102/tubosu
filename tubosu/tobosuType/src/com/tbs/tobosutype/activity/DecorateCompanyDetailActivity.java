@@ -5,11 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -42,6 +42,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,71 +51,31 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-/***
- * 找到的 装修公司明细页面
- * @author dec
- *
- */
 
 public class DecorateCompanyDetailActivity extends Activity implements OnClickListener {
 	private Context mContext;
 	private TextView tv_designer_num;
 	private TextView tv_images_num;
 	private TextView tv_price;
-
 	private String companyId;
-	
-	/**有优惠活动*/
 	private static final String HAS_DISCOUNT_ACTIVITY = "1";
-	
-	/**无优惠活动*/
 	private static final String NO_DISCOUNT_ACTIVITY = "0";
-	
-	/**实体认证*/
 	private static final String HAS_VERIFIED = "1";
-	
-	/**未实体认证*/
 	private static final String NO_VERIFIED = "0";
-	
-	/**有家居保*/
 	private static final String HAS_INSURANCE = "1";
-	
-	/**无家居保*/
 	private static final String NO_INSURANCE = "0";
-
-	/**右上角分享图标*/
+	private ImageView ivBack;
 	private ImageView decorate_detail_share;
-	
-	/***返回*/
 	private ImageView decorate_back;
-	
 	private String comid;
-	
-	/***添加 取消收藏*/
 	private ImageView decorate_detail_fav;
-	
-	/**装修公司电话布局*/
 	private RelativeLayout decorate_detail_phonelayout;
-	
-	/**位于上部正中的装修公司logo*/
 	private ImageView decorate_detail_company_logo;
-	
-	/**装修公司名称*/
 	private TextView decorate_detail_company;
-	
-	/**装修公司地址*/
 	private TextView decorate_detail_address;
-	
-	/**装修公司电话*/
 	private TextView decorate_detail_phonenum;
-	
-	/***装修公司【实体认证】标记*/
 	private ImageView decorate_detail_business_license;
-	
-	/***装修公司【装修保】标记*/
 	private ImageView decorate_detail_bao;
-	
-	/***装修公司【支持使用券抵现】标记*/
 	private ImageView decorate_detail_vouchers;
 	
 	/***装修公司简介文字*/
@@ -145,26 +107,13 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 	
 	/**设计图数量*/
 	private TextView tv_design_chart_count;
-	
-	/**公司设计图册中三幅图中第一幅*/
 	private ImageView iv_design_chart1;
-	
-	/**公司设计图册中三幅图中第二幅*/
 	private ImageView iv_design_chart2;
-	
-	/**公司设计图册中三幅图中第三幅*/
 	private ImageView iv_design_chart3;
-	
-	/**公司介绍中三幅图的布局*/
+
 	private LinearLayout ll_company_image;
-	
-	/**设计图册中三幅图中第一幅*/
 	private ImageView iv_company_image1;
-	
-	/**设计图册中三幅图中第二幅*/
 	private ImageView iv_company_image2;
-	
-	/**设计图册中三幅图中第三幅*/
 	private ImageView iv_company_image3;
 	
 	/**公司介绍图片的数目*/
@@ -184,26 +133,15 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 	private Window window;
 	private android.view.WindowManager.LayoutParams params;
 	private String token;
-	
-	/**装修公司明细接口*/
 	private String dataUrl = Constant.TOBOSU_URL + "tapp/company/company_detail";
-	
 	private HashMap<String, Object> companyDetailParams;
 	private String oper_type = "1";
 	private String memberdegree = "1";
 	private ScrollViewExtend scrollView;
-	
-	/**土拨鼠认证服务 text*/
 	private TextView textView8;
-	
-	/**土拨鼠认证服务布局*/
 	private LinearLayout ll_certification_services;
-	
 	private LinearLayout ll_loading;
-	
-	/**装一平米送一平米 text*/
 	private TextView tv_activity_title;
-	
 	private List<String> company_images;
 	private List<String> design_charts;
 	private String qq;
@@ -212,32 +150,21 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 	private String hav_fav = "0";
 	
 	/**添加或取消收藏*/
-	private String favUrl = Constant.TOBOSU_URL + "/tapp/user/fav";;
+	private String favUrl = Constant.TOBOSU_URL + "/tapp/user/fav";
 	
 	
 	/**顶部bar*/
-	private FrameLayout rel_layout_decorate_bar;
-	
-	private Drawable drawableBar;
-	
-	/**
-	 * ---------顶部标题栏隐藏和出现---------
-	 * */
-	private static final int START_ALPHA = 0;
-	private static final int END_ALPHA = 255;
-	private int fadingHeight = 300;
-	/*-----------------------------------*/
-
+	private RelativeLayout rel_layout_decorate_bar;
+	private FrameLayout framelayoutCompany;
+	private View oldVueiew;
+	private View decorateVueiew;
 	private LinearLayout imageLayout;
 	
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		AppInfoUtil.setActivityTheme(this, R.color.whole_color_theme);
 		AppInfoUtil.setTranslucentStatus(this);
 		setContentView(R.layout.activity_decorate_company_detail);
-		
 		mContext = DecorateCompanyDetailActivity.this;
 		initView();
 		initData();
@@ -245,36 +172,41 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 	}
 
 	private void initView() {
-		rel_layout_decorate_bar = (FrameLayout) findViewById(R.id.rel_layout_decorate_bar);
-		rel_layout_decorate_bar.bringToFront();
-		
-		drawableBar = getResources().getDrawable(R.drawable.color_first_head);
-		drawableBar.setAlpha(START_ALPHA);
-		rel_layout_decorate_bar.setBackgroundDrawable(drawableBar);
-		
+		framelayoutCompany = (FrameLayout) findViewById(R.id.framelayoutCompany);
+		framelayoutCompany.bringToFront();
+		rel_layout_decorate_bar = (RelativeLayout) findViewById(R.id.rel_layout_decorate_bar);
+		oldVueiew = (View) findViewById(R.id.oldVueiew);
+		oldVueiew.setFocusable(true);
+		oldVueiew.setFocusableInTouchMode(true);
+		oldVueiew.requestFocus();
+		oldVueiew.setVisibility(View.VISIBLE);
+
+		decorateVueiew = (View) findViewById(R.id.decorateVueiew);
+		decorateVueiew.setVisibility(View.INVISIBLE);
 		scrollView = (ScrollViewExtend) findViewById(R.id.scrollView_decorate_company_details);
-		scrollView.smoothScrollTo(0, 0);
-		
+		scrollView.setOnScrollChangedListener(scrollChangedListener);
+		if(scrollView.getScrollY() == 0){
+			oldVueiew.setVisibility(View.VISIBLE);
+			decorateVueiew.setVisibility(View.INVISIBLE);
+		}
+		scrollView.smoothScrollTo(1,1);
 		decorate_detail_fav = (ImageView) findViewById(R.id.decorate_detail_fav);
 		tv_qq = (TextView) findViewById(R.id.tv_qq);
 		decorate_detail_company_logo = (ImageView) findViewById(R.id.decorate_detail_company_logo);
 		decorate_detail_company = (TextView) findViewById(R.id.decorate_detail_company);
 		ll_activity = (RelativeLayout) findViewById(R.id.ll_activity);
 		tv_activity_title = (TextView) findViewById(R.id.tv_activity_title);
-
 		decorate_detail_phonelayout = (RelativeLayout) findViewById(R.id.decorate_detail_phonelayout);
-
 		decorate_detail_share = (ImageView) findViewById(R.id.find_decorate_detail_share);
 		decorate_detail_business_license = (ImageView) findViewById(R.id.decorate_detail_business_license);
-
 		decorate_detail_bao = (ImageView) findViewById(R.id.decorate_detail_bao);
 		decorate_detail_vouchers = (ImageView) findViewById(R.id.decorate_detail_vouchers);
 		decorate_detail_address = (TextView) findViewById(R.id.decorate_detail_address);
 		decorate_detail_phonenum = (TextView) findViewById(R.id.decorate_detail_phonenum);
 		decorate_detail_introduce = (TextView) findViewById(R.id.decorate_detail_introduce);
-
 		decorate_detail_gridView_family = (CustomGridView) findViewById(R.id.decorate_detail_gridView_family);
 		decorate_detail_gridView_factory = (CustomGridView) findViewById(R.id.decorate_detail_gridView_factory);
+		decorate_detail_gridView_factory.setFocusable(false);
 		decorate_detail_family_empty = (TextView) findViewById(R.id.decorate_detail_family_empty);
 		decorate_detail_factory_empty = (TextView) findViewById(R.id.decorate_detail_factory_empty);
 		decorate_detail_introduce = (TextView) findViewById(R.id.decorate_detail_introduce);
@@ -295,22 +227,17 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 		textView8 = (TextView) findViewById(R.id.textView8);
 		ll_certification_services = (LinearLayout) findViewById(R.id.ll_certification_services);
 		decorate_back = (ImageView) findViewById(R.id.decorate_goback);
-
 		tv_designer_num = (TextView) findViewById(R.id.tv_designer_num);
 		tv_images_num = (TextView) findViewById(R.id.tv_images_num);
 		tv_price = (TextView) findViewById(R.id.tv_price);
-
 		imageLayout = (LinearLayout) findViewById(R.id.ll_image_laylout);
+		ivBack = (ImageView) findViewById(R.id.decorate_goback);
 	}
 
 	private void initData() {
-		
 		comid = getIntent().getExtras().getString("comid");
-//		Util.setLog("DecorateCompanyDetailActivity", "装修公司带过来的公司id" + comid);
 		Util.setLog("DecorateCompanyDetailActivity", "songchengcai获取到" + comid);
 		token = AppInfoUtil.getToekn(getApplicationContext());
-		
-		
 		company_images = new ArrayList<String>();
 		companyDetailParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
 		companyDetailParams.put("id", comid);
@@ -320,14 +247,9 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//		token = data.getStringExtra("token"); //TODO 空指针异常
 		token = AppInfoUtil.getToekn(getApplicationContext());
-
 	}
 
-	/***
-	 * 装修公司明细接口请求
-	 */
 	private void requestCompanyDetailPost() {
 
 		OKHttpUtil.post(dataUrl, companyDetailParams, new Callback() {
@@ -348,7 +270,6 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 
 						if(companyList!=null){
 							decorate_detail_company.setText(companyList.get("comname") + "");
-//							companyId = companyList.get("comid") + "";
 							companyId = comid;
 							title = companyList.get("comname") + "";
 							fenxiang_url = companyList.get("fxurl") + "";
@@ -370,7 +291,6 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 							String jjb_logo = companyList.get("jjb_logo") + "";
 							String certification = companyList.get("certification") + "";
 
-							//jjb_logo 家居保
 							if (HAS_INSURANCE.equals(jjb_logo)) {
 								decorate_detail_bao.setVisibility(View.VISIBLE);
 							} else {
@@ -384,33 +304,24 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 
 							hav_fav = companyList.get("hav_fav") + "";
 							if ("0".equals(hav_fav)) {
-								decorate_detail_fav.setImageResource(R.drawable.image_love_nor1);
+								decorate_detail_fav.setImageResource(R.drawable.fa_white);
 								oper_type = "1";
 							} else {
-								decorate_detail_fav.setImageResource(R.drawable.image_love_sel);
+								decorate_detail_fav.setImageResource(R.drawable.fa_red);
 								oper_type = "0";
 							}
 
-							// 显示装修公司能够装修的服务
-							//家居装修服务
 							List familyList = (List) companyList.get("familyList");
 							ArrayAdapter<String> familyAdapter = new ArrayAdapter<String>(mContext, R.layout.item_decorate_detail_gridview, familyList);
 							decorate_detail_gridView_family.setAdapter(familyAdapter);
 							decorate_detail_gridView_family.setEmptyView(decorate_detail_family_empty);
 							decorate_detail_gridView_family.setSelector(new ColorDrawable(Color.TRANSPARENT));
 
-							// 工厂装修服务
 							List factoryList = (List) companyList.get("factoryList");
 							ArrayAdapter<String> factoryAdapter = new ArrayAdapter<String>(mContext, R.layout.item_decorate_detail_gridview, factoryList);
 							decorate_detail_gridView_factory.setSelector(new ColorDrawable(Color.TRANSPARENT));
 							decorate_detail_gridView_factory.setAdapter(factoryAdapter);
 							decorate_detail_gridView_factory.setEmptyView(decorate_detail_factory_empty);
-
-//							tv_designer_num;
-//							tv_images_num;
-//							tv_price;
-
-
 
 						}
 					}
@@ -432,10 +343,6 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 	}
 
 	
-	/***
-	 * FIXME
-	 * @param memberdegree 会员等级 怎么分？
-	 */
 	private void initCertification(String memberdegree) {
 		ll_loading.setVisibility(View.GONE);
 		decorate_detail_bottom.setVisibility(View.VISIBLE);
@@ -450,11 +357,6 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 		}
 	}
 
-	/***
-	 * 获取公司QQ号码
-	 * @param object2
-	 * @throws JSONException
-	 */
 	private void getCompanyQQ(JSONObject object2) throws JSONException {
 		qq = object2.getString("qq");
 		if (qq != null && qq.length() > 0) {
@@ -464,13 +366,6 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 			tv_qq.setVisibility(View.GONE);
 		}
 	}
-
-	/**
-	 * 该公司有优惠， 则跳转到装修公司优惠页面
-	 * @param object2
-	 * @throws JSONException
-	 *  
-	 */
 	private void goPreferentialActivity(final JSONObject object2) throws JSONException {
 		if (HAS_DISCOUNT_ACTIVITY.equals(object2.getString("activity"))) {
 			ll_activity.setVisibility(View.VISIBLE);
@@ -494,11 +389,6 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 		}
 	}
 
-	/***
-	 *  显示公司设计图册的图片
-	 * @param object2
-	 * @throws JSONException
-	 */
 	private void showCompanyDesignCharts(JSONObject object2) throws JSONException {
 		design_charts = new ArrayList<String>();
 		String imsCount = object2.getString("imsCount");
@@ -526,12 +416,6 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 			ll_company_detail_design_chart.setVisibility(View.GONE);
 		}
 	}
-
-	/**
-	 * 公司简介里显示的公司图片
-	 * @param object2
-	 * @throws JSONException
-	 */
 	private void showCompanyDescriptionImg(JSONObject object2) throws JSONException {
 		JSONArray show_img = object2.getJSONArray("show_img");
 		company_images.clear();
@@ -568,11 +452,6 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 		}
 	}
 
-	/***
-	 *  将json解析 获取数据
-	 * @param jsonString
-	 * @return
-	 */
 	private HashMap<String, Object> jsonToLoginCompanyList(String jsonString) {
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -602,13 +481,13 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 			tv_images_num.setText(object2.getString("suite_count"));
 			tv_price.setText(object2.getString("half_plan_price"));
 
-
 			// 家居装修
 			JSONArray familyArray = object2.getJSONArray("home");
 			List<String> familyList = new ArrayList<String>();
 			for (int i = 0; i < familyArray.length(); i++) {
 				familyList.add((String) familyArray.get(i));
 			}
+
 			// 工厂装修
 			JSONArray factoryArray = object2.getJSONArray("industry");
 			List<String> factoryList = new ArrayList<String>();
@@ -616,15 +495,9 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 				factoryList.add((String) factoryArray.get(i));
 			}
 			
-			//公司简介里显示的公司图片
 			showCompanyDescriptionImg(object2);
-			
-			// 显示公司设计图册的图片
 			showCompanyDesignCharts(object2);
-			
-			// 根据是否有优惠 跳转到优惠公司页面去
 			goPreferentialActivity(object2);
-			
 			getCompanyQQ(object2);
 			map.put("comid", comid);
 			map.put("hav_fav", hav_fav);
@@ -633,7 +506,6 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 			map.put("address", address);
 			map.put("fxurl", fxurl);
 			map.put("memberdegree", memberdegree);
-
 			map.put("tel", tel);
 			map.put("cellphone", cellphone);
 			map.put("lng", lng);
@@ -641,7 +513,6 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 			map.put("jjb_logo", jjb_logo);
 			map.put("certification", certification);
 			map.put("intro", intro);
-
 			map.put("familyList", familyList); // 添加家装
 			map.put("factoryList", factoryList); // 添加工装
 			return map;
@@ -652,20 +523,38 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 		return null;
 	}
 
-	/**
-	 * 顶部标题栏的透明度监控
-	 */
 	private OnScrollChangedListener scrollChangedListener = new OnScrollChangedListener() {
 		
 		@Override
 		public void onScrollChanged(ScrollView who, int x, int y, int oldx, int oldy) {
-			if (y > fadingHeight) {
-				y = fadingHeight;
+			int temp = 1;
+			if(y>294){
+				temp = 294;
+			}else {
+				temp = y;
 			}
-			drawableBar.setAlpha(y * (END_ALPHA - START_ALPHA) / fadingHeight + START_ALPHA);
+			float f = new BigDecimal((float)temp/294).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+			rel_layout_decorate_bar.setAlpha(1);
+			decorateVueiew.setAlpha(f);
+			if(y==0 && y <144){
+//				decorate_detail_fav.setBackgroundResource(R.drawable.fa_white);
+				decorate_detail_share.setBackgroundResource(R.drawable.out_white);
+				ivBack.setBackgroundResource(R.drawable.activity_back1);
+				oldVueiew.setVisibility(View.VISIBLE);
+				decorateVueiew.setVisibility(View.INVISIBLE);
+			}
+			if(y > 144){
+				//  超过多少 显示黑色
+//				decorate_detail_fav.setBackgroundResource(R.drawable.fa_red);
+				decorate_detail_share.setBackgroundResource(R.drawable.out_black);
+				ivBack.setBackgroundResource(R.drawable.activity_back);
+				oldVueiew.setVisibility(View.INVISIBLE);
+				decorateVueiew.setVisibility(View.VISIBLE);
+			}
 		}
 	};
-	
+
+
 	private void initEvent() {
 		decorate_detail_bao.setOnClickListener(this);
 		decorate_detail_vouchers.setOnClickListener(this);
@@ -682,7 +571,6 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 		decorate_detail_introduce.setOnClickListener(this);
 		decorate_detail_fav.setOnClickListener(this);
 		decorate_detail_share.setOnClickListener(this);
-		scrollView.setOnScrollChangedListener(scrollChangedListener);
 		imageLayout.setOnClickListener(this);
 	}
 
@@ -711,7 +599,6 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 			callDialog.show();
 			break;
 		case R.id.decorate_detail_introduce: // 点击公司简介文字 展开公司全部简介
-			
 			if (flag) {
 				flag = false;
 				decorate_detail_introduce.setEllipsize(null);
@@ -726,7 +613,7 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 			operFav();
 			break;
 		case R.id.find_decorate_detail_share:
-			new ShareUtil(mContext, decorate_detail_share, title, title, fenxiang_url);
+			new ShareUtil(mContext, title, title, fenxiang_url);
 			break;
 		case R.id.iv_design_chart1:
 			if(design_charts!=null && design_charts.size()>0){
@@ -742,7 +629,6 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 		case R.id.iv_design_chart2:
 			if(design_charts!=null && design_charts.size()>1){
 				Bundle bundle2 = new Bundle();
-//				bundle2.putString("companyId", companyId);
 				bundle2.putString("url", design_charts.get(1));
 				Intent intent2 = new Intent(mContext, ImageDetailActivity.class);
 				intent2.putExtras(bundle2);
@@ -753,17 +639,11 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 		case R.id.iv_design_chart3:
 			if(design_charts!=null && design_charts.size()>2){
 				Bundle bundle3 = new Bundle();
-//				bundle3.putString("companyId", companyId);
 				bundle3.putString("url", design_charts.get(2));
 				Intent intent3 = new Intent(mContext, ImageDetailActivity.class);
 				intent3.putExtras(bundle3);
 				startActivity(intent3);
 			}
-			break;
-		case R.id.tv_design_chart_count: // 点击装修图册   FIXME 禁用了，以后解封 DesignChartAcitivity
-//			Intent intent = new Intent(mContext, ImageNewActivity.class);
-//			intent.putExtra("comid", comid);
-//			startActivity(intent);
 			break;
 		case R.id.decorate_detail_bao: // 点击装修保
 			BaoPopupWindow baoPopupWindow = new BaoPopupWindow(getApplicationContext());
@@ -801,10 +681,6 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 			break;
 		}
 	}
-
-	/**
-	 * 添加收藏和取消收藏
-	 */
 	private void operFav() {
 		token = AppInfoUtil.getToekn(getApplicationContext());
 		if (TextUtils.isEmpty(token)) {
@@ -829,14 +705,13 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 			hav_fav = "0";
 		}
 		if ("0".equals(hav_fav)) {
-			decorate_detail_fav.setImageResource(R.drawable.image_love_nor1);
+			decorate_detail_fav.setImageResource(R.drawable.fa_white);
 			oper_type = "1";
 		} else {
-			decorate_detail_fav.setImageResource(R.drawable.image_love_sel);
+			decorate_detail_fav.setImageResource(R.drawable.fa_red);
 			oper_type = "0";
 		}
 		
-		// 请求网络
 		OKHttpUtil.post(favUrl, favParams, new Callback() {
 			@Override
 			public void onFailure(Call call, IOException e) {
@@ -869,5 +744,4 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 			}
 		});
 	}
-
 }

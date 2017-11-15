@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="match_parent">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/newhome_swiprefreshlayout"
@@ -23,25 +22,38 @@
         android:background="@drawable/drawable_hdpi"/>
 
     <RelativeLayout
-        android:id="@+id/rel_newhomebar"
         android:layout_width="match_parent"
-        android:background="@color/color_icon"
         android:layout_height="49dp">
 
+        <View
+            android:id="@+id/newhomeView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
         <TextView
             android:id="@+id/app_title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="土拨鼠"
-            android:textStyle="bold"
             android:layout_centerInParent="true"
             android:textSize="17sp"
             android:textColor="@color/white"/>
+
+        <ImageView
+            android:id="@+id/home_kefu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="18dp"
+            android:background="@drawable/sdf"/>
+
+
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/relSelectCity"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:background="#00000000"
         android:layout_height="49dp">
         <ImageView
@@ -64,6 +76,7 @@
             android:textColor="@color/white"/>
 
         <ImageView
+            android:id="@+id/iv_sanjiaoxing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/newhomeCity"
@@ -71,4 +84,6 @@
             android:layout_marginLeft="6dp"
             android:background="@drawable/sanjiaoxing"/>
     </RelativeLayout>
+
+
 </FrameLayout>

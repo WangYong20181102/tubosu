@@ -319,7 +319,7 @@ public class SelectedImageDetailActivity extends Activity implements IXListViewL
 
 			@Override
 			public void onClick(View v) {
-				new ShareUtil(mContext, detail_share, title, desc, fengxiang);
+				new ShareUtil(mContext, title, desc, fengxiang);
 			}
 		});
 		
@@ -328,7 +328,7 @@ public class SelectedImageDetailActivity extends Activity implements IXListViewL
 
 			@Override
 			public void onClick(View v) {
-				new ShareUtil(mContext, detail_share, title, desc, fengxiang);
+				new ShareUtil(mContext,title, desc, fengxiang);
 			}
 		});
 

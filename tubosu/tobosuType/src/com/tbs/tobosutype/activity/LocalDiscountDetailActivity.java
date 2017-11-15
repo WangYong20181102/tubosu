@@ -380,11 +380,7 @@ public class LocalDiscountDetailActivity extends Activity implements OnClickList
 			finish();
 			break;
 		case R.id.head_right_image_share: // 标题栏分享按钮
-//			Log.d(TAG, "--分享的接口是--【"+shareUrl+"】");
-//			Log.d(TAG, "显示标题内容是：" + title);
-//			Log.d(TAG, "优惠地址是：" + shareUrl);
-//			Log.d(TAG, "分享的url是：" +shareUrl);
-			new ShareUtil(LocalDiscountDetailActivity.this, image_share, title, shareUrl, shareUrl);
+			new ShareUtil(LocalDiscountDetailActivity.this, title, shareUrl, shareUrl);
 			break;
 		case R.id.iv_company_logo:
 		case R.id.tv_company_name:
@@ -392,7 +388,6 @@ public class LocalDiscountDetailActivity extends Activity implements OnClickList
 				Intent intent = new Intent();
 				intent.setClass(mContext, DecorateCompanyDetailActivity.class);
 				intent.putExtra("comid", companyId);
-//				Log.d(TAG, "公司id是" + companyId);
 				startActivity(intent);
 			}
 			break;

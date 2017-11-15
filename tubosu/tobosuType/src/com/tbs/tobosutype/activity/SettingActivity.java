@@ -308,7 +308,7 @@ public class SettingActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				new ShareUtil(context, rel_layout_share, "土拨鼠装修网！", "土拨鼠装修网！", "http://www.tobosu.com/");
+				new ShareUtil(context, "土拨鼠装修网！", "土拨鼠装修网！", "http://www.tobosu.com/");
 			}
 		});
 

@@ -23,13 +23,6 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -37,21 +30,24 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BitmapDescriptor;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.adapter.CityAdapter;
 import com.tobosu.mydecorate.application.MyApplication;
 import com.tobosu.mydecorate.entity.City;
 import com.tobosu.mydecorate.global.Constant;
+import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.tobosu.mydecorate.util.CacheManager;
 import com.tobosu.mydecorate.util.CityData;
 import com.tobosu.mydecorate.view.BladeView;
 import com.tobosu.mydecorate.view.FirstGridView;
 import com.tobosu.mydecorate.view.PinnedHeaderListView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -420,30 +416,25 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 
 
 	private static final String cityUrl = Constant.ZHJ + "tapp/util/change_city";
-	private RequestQueue locationQueue;
-	private StringRequest locationRequest;
 	private void requestSelectCity() {
-		locationQueue = Volley.newRequestQueue(context);
-		locationRequest = new StringRequest(Request.Method.POST, cityUrl, new Response.Listener<String>() {
+		OKHttpUtil okHttpUtil = new OKHttpUtil();
+		okHttpUtil.post(cityUrl, null, new OKHttpUtil.BaseCallBack() {
 			@Override
-			public void onResponse(String s) {
+			public void onSuccess(Response response, String s) {
 				CacheManager.setCityJson(context, s);
 				prseSelectDataJson(s);
 			}
-		}, new Response.ErrorListener() {
 
 			@Override
-			public void onErrorResponse(VolleyError volleyError) {
-//				System.out.println("-----获取省城市json失败-->>>");
+			public void onFail(Request request, IOException e) {
+
 			}
-		}){
+
 			@Override
-			protected Map<String, String> getParams() throws AuthFailureError {
-				return null;
+			public void onError(Response response, int code) {
+
 			}
-		};
-		locationRequest.setTag("cityJson");
-		locationQueue.add(locationRequest);
+		});
 
 	}
 
@@ -543,9 +534,6 @@ public class SelectCityActivity extends Activity implements OnClickListener{
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		if(locationQueue!=null){
-			locationQueue.cancelAll("cityJson");
-		}
 	}
 
 

@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import static com.android.volley.VolleyLog.TAG;
 
 /**
  * Created by dec on 2016/10/18.
@@ -45,7 +44,7 @@ public class ItemDivider extends RecyclerView.ItemDecoration{
 
     @Override
     public void onDraw(Canvas c, RecyclerView parent) {
-        Log.d(TAG,"recyclerview - itemdecoration  onDraw()");
+        Log.d("ItemDyidider","recyclerview - itemdecoration  onDraw()");
 
         if (mOrientation == VERTICAL_LIST) {
             drawVertical(c, parent);

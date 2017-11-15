@@ -8,11 +8,11 @@
     <ImageView
         android:id="@+id/iv_yuyue_findv_decorate_acitivty"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="116dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/descr_image"
         android:scaleType="fitXY"
-        android:src="@drawable/img_guide_order" />
+        android:src="@drawable/find" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -25,6 +25,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:visibility="gone"
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 

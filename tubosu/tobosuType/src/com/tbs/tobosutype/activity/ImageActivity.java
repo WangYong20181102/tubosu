@@ -16,9 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.ImageAdapter;
 import com.tbs.tobosutype.bean._ImageItem;
@@ -27,160 +24,59 @@ import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 import com.tbs.tobosutype.utils.PrseImageJsonUtil;
 import com.tbs.tobosutype.xlistview.XListView;
 import com.tbs.tobosutype.xlistview.XListView.IXListViewListener;
 import com.umeng.analytics.MobclickAgent;
-
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-/***
- * 逛图库页面
- * @author dec
- *
- */
 public class ImageActivity extends BaseActivity implements IXListViewListener, OnClickListener {
     private static final String TAG = ImageActivity.class.getSimpleName();
     public static final String REFLASH_DATA_ADAPTER = "com.tobosu.reflash_image_adapter_data";
     private Context mContext;
-    /**
-     * 顶部搜索布局
-     */
     private RelativeLayout rl_search;
-
-    /**
-     * 装修公司列表ListView
-     */
     private XListView image_listView_company;
-
-    /**
-     * 底部上拉加载更多布局
-     */
     private LinearLayout ll_loading;
-
-    /**
-     * 顶部搜索
-     */
     private TextView tv_name;
-
-    /**
-     * 逛图库中显示当地装修公司列表的接口
-     */
     private String getListUrl = Constant.TOBOSU_URL + "tapp/impression/get_list";
-
-    /**
-     * 逛图库顶部广告位接口
-     */
     private String adsenseUrl = Constant.TOBOSU_URL + "tapp/util/adsense";
-
-    /**
-     * 上个月冠亚季军三个公司
-     */
     private String getLastMonthCompanyListUrl = Constant.TOBOSU_URL + "tapp/impression/getLastMonthCompanyList";
-
-    /**
-     * 搜索逛图库 ，输入小区名称
-     */
     private String searchCommunityUrl = Constant.TOBOSU_URL + "tapp/impression/searchCommunity";
-
     private HashMap<String, Object> getListParams;
     private HashMap<String, Object> adsenseParams;
     private HashMap<String, Object> getLastMonthCompanyListParams;
     private HashMap<String, Object> searchCommunityParams;
-
     private int page = 1;
-
     private String layout_id;
     private String style_id;
     private String area_id;
-
-    /**
-     * 逛图库的适配器数据集合
-     */
     private List<HashMap<String, String>> imageDatas;
-
-    /**
-     * 逛图库的适配器
-     */
     private ImageAdapter imageAdapter;
-
-    /**
-     * 清空搜索框
-     */
     private ImageView iv_del;
-
-    /**
-     * 小区名称
-     */
     private String communityName;
-
     private boolean isSearch = false;
-
     private View headView;
-
-    /**
-     * 顶部广告位ImageView
-     */
     private ImageView iv_adse;
-
-    /**
-     * 30天活跃榜标题布局
-     */
     private RelativeLayout rl_active;
-
-    /**
-     * 30天活跃榜的冠亚季军三个公司的布局
-     */
     private LinearLayout ll_active;
-
-    /**
-     * 冠军
-     */
     private RoundImageView riv_champion;
-
-    /**
-     * 亚军
-     */
     private RoundImageView riv_second;
-
-    /**
-     * 季军
-     */
     private RoundImageView riv_bronze;
-
-    /**
-     * 冠亚季的数据集合
-     */
     private List<String> comids;
-
-    /**
-     * 冠亚季的公司的图标
-     */
     private List<String> logos;
-
     private String content_url;
-
-    /**
-     * 分割线
-     */
     private LinearLayout ll_line;
-
     private ReflashDataBroadcastReceiver receiver;
-
     private LinearLayout linearlayout_imagesactivity;
     private LinearLayout imagesactivity_netoutview;
 
@@ -273,12 +169,6 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
             imageDatas.addAll(temDataList);
             onLoad();
         }
-
-        //不要缓存
-//		if (!TextUtils.isEmpty(getSharedPreferences("MonthCompanyListCache", 0).getString("result", ""))) {
-//			operMonthCompanyList(getSharedPreferences("MonthCompanyListCache", 0).getString("result", ""));
-//		}
-
         requestGetLastMonthCompanyList();
         adsenseParams = AppInfoUtil.getPublicHashMapParams(this);
         requestAdsense();
@@ -286,9 +176,6 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
     }
 
 
-    /***
-     * 广告位接口请求
-     */
     private void requestAdsense() {
         adsenseParams.put("position", "3"); // 后面参数3是指逛图库的数字标记码
         OKHttpUtil.post(adsenseUrl, adsenseParams, new Callback() {
@@ -322,10 +209,6 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
         });
     }
 
-
-    /***
-     * 活跃榜上的冠亚季军的三家公司请求接口
-     */
     private void requestGetLastMonthCompanyList() {
         getLastMonthCompanyListParams = AppInfoUtil.getPublicHashMapParams(this);
 
@@ -359,12 +242,6 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
             }
         });
     }
-
-    /***
-     *
-     * 展示冠亚季军
-     * @param result
-     */
     private void operMonthCompanyList(String result) {
         try {
             JSONObject jsonObject = new JSONObject(result);
@@ -397,9 +274,6 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
         }
     }
 
-    /**
-     * 初始化参数以备请求网络使用
-     */
     private void initParams() {
         getListParams = AppInfoUtil.getPublicHashMapParams(this);
         getListParams.put("page", page + "");
@@ -410,9 +284,6 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
         requestGetList();
     }
 
-    /***
-     *  逛图库中显示当地装修公司列表的接口请求
-     */
     private void requestGetList() {
         OKHttpUtil.post(getListUrl, getListParams, new Callback() {
             @Override
@@ -427,12 +298,9 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
                     @Override
                     public void run() {
                         getSharedPreferences("IsImageCache", 0).edit().putString("result", json).commit();
-                        //**********************************************************************测试
                         try {
                             JSONObject jsonObject = new JSONObject(json);
                             JSONArray dataArray = jsonObject.getJSONArray("data");
-//                    Log.e(TAG, "获取的JSON数据集合" + dataArray.toString());
-                            //将获取的数组转换成集合
                             List<_ImageItem> imageItemsList = new ArrayList<_ImageItem>();
                             for (int i = 0; i < dataArray.length(); i++) {
                                 Log.e(TAG, "====查看数组到底是啥玩意====" + dataArray.get(i));
@@ -444,7 +312,6 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        //**********************************************************************测试
                         List<HashMap<String, String>> temDataList = PrseImageJsonUtil.parsingJson(json, mContext, null, "ImageActivity");
                         if (temDataList.size() == 0 && imageDatas.size() != 0) {
                             Toast.makeText(mContext, "没有更多图库！", Toast.LENGTH_SHORT).show();
@@ -469,10 +336,6 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
         iv_del.setOnClickListener(this);
         iv_adse.setOnClickListener(this);
     }
-
-    /***
-     * 上拉 下拉 加载更多
-     */
     private void onLoad() {
         imageAdapter.notifyDataSetChanged();
         image_listView_company.stopRefresh();
@@ -580,12 +443,6 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
         }
     }
 
-    /***
-     * 搜索效果图返回的数据 刷新数据
-     * @param key
-     * @param value
-     * @param name
-     */
     private void operResult(String key, String value, String name) {
         if ("communityName".equals(key)) {
             communityName = value;
@@ -617,10 +474,6 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
         isSearch = false;
         initParams();
     }
-
-    /***
-     * 初始化搜索接口的请求参数
-     */
     private void initSearchParams() {
         searchCommunityParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
         page = 1;
@@ -629,9 +482,6 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
         requestSearch();
     }
 
-    /***
-     * 搜索请求
-     */
     private void requestSearch() {
         OKHttpUtil.post(searchCommunityUrl, searchCommunityParams, new Callback() {
             @Override
@@ -673,7 +523,6 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
         });
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -683,10 +532,6 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
         }
     }
 
-
-    /**
-     * 刷新数据广播
-     */
     class ReflashDataBroadcastReceiver extends BroadcastReceiver {
 
         @Override
@@ -700,24 +545,4 @@ public class ImageActivity extends BaseActivity implements IXListViewListener, O
             }
         }
     }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.e(TAG, "==onPause==");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.e(TAG, "==onRestart==");
-    }
-
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        Log.e(TAG, "==onPostResume==");
-    }
-
 }

@@ -15,14 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import com.squareup.picasso.Picasso;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.adapter.RelatedAdapter;
@@ -51,15 +45,12 @@ import com.umeng.socialize.utils.Log;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
 import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -96,8 +87,6 @@ public class ArticleDetailActivity extends AppCompatActivity {
 
     private int concerned = -1;
 
-    private RequestQueue articleDetailQueue = null;
-    private StringRequest articleDetailRequest = null;
     /**** 文章详情接口 */
     private String detail_url = Constant.ZHJ + "tapp/mt/getArticle";
 
@@ -116,8 +105,6 @@ public class ArticleDetailActivity extends AppCompatActivity {
      * 收藏接口
      */
     private String collect_url = Constant.ZHJ + "tapp/mt/collectionArticle";
-    private RequestQueue collectRequestQueue = null;
-    private StringRequest collectStringRequest = null;
 
 
     private ImageView iv_detail_top_image;
@@ -475,36 +462,34 @@ public class ArticleDetailActivity extends AppCompatActivity {
     private void getDataFromNet() {
         if (Util.isNetAvailable(mContext)) {
             Util.showNetOutView(mContext, include_netout_layout, true);
-            articleDetailQueue = Volley.newRequestQueue(mContext);
-            articleDetailRequest = new StringRequest(Request.Method.POST, detail_url, new Response.Listener<String>() {
+            HashMap<String, Object> hashMap = new HashMap<String, Object>();
+            hashMap.put("id", article_id);
+            hashMap.put("type_id", type_id);
+            if (Util.isLogin(mContext)) {
+                hashMap.put("uid", getSharedPreferences("User_Info_SP", Context.MODE_PRIVATE).getString("user_id", ""));
+            } else {
+                hashMap.put("uid", "0");
+            }
+            OKHttpUtil okHttpUtil = new OKHttpUtil();
+            okHttpUtil.post(detail_url, hashMap, new OKHttpUtil.BaseCallBack() {
                 @Override
-                public void onResponse(String s) {
-                    System.out.println("详情页 请求结果" + s);
+                public void onSuccess(Response response, String json) {
+                    System.out.println("详情页 请求结果" + json);
                     article_container.setVisibility(View.VISIBLE);
-                    do_parseJson(s);
+                    do_parseJson(json);
                 }
-            }, new Response.ErrorListener() {
+
                 @Override
-                public void onErrorResponse(VolleyError volleyError) {
+                public void onFail(Request request, IOException e) {
 
                 }
-            }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    HashMap<String, String> hashMap = new HashMap<String, String>();
-                    hashMap.put("id", article_id);
-                    hashMap.put("type_id", type_id);
-                    if (Util.isLogin(mContext)) {
-                        hashMap.put("uid", getSharedPreferences("User_Info_SP", Context.MODE_PRIVATE).getString("user_id", ""));
-                    } else {
-                        hashMap.put("uid", "0");
-                    }
 
-                    return hashMap;
+                @Override
+                public void onError(Response response, int code) {
+
                 }
-            };
-            articleDetailRequest.setTag("volley_request_collection_detail");
-            articleDetailQueue.add(articleDetailRequest);
+            });
+
         } else {
             hideLoadingView();
             Util.showNetOutView(mContext, include_netout_layout, false);
@@ -844,14 +829,15 @@ public class ArticleDetailActivity extends AppCompatActivity {
 //    }
 
 
-    private RequestQueue praiseRequestQueue = null;
-    private StringRequest praiseStringRequest = null;
 
     private void do_praise_article() {
-        praiseRequestQueue = Volley.newRequestQueue(mContext);
-        praiseStringRequest = new StringRequest(Request.Method.POST, praise_url, new Response.Listener<String>() {
+        OKHttpUtil okHttpUtil = new OKHttpUtil();
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        hashMap.put("aid", article_id);
+        hashMap.put("from_os", "1");
+        okHttpUtil.post(praise_url, hashMap, new OKHttpUtil.BaseCallBack() {
             @Override
-            public void onResponse(String s) {
+            public void onSuccess(Response response, String s) {
                 System.out.println("wtb点赞后结果-->>" + s + "---文章id->>" + _aid_ + "---文章type_id->>" + _type_id_);
                 try {
                     JSONObject obj = new JSONObject(s);
@@ -865,25 +851,19 @@ public class ArticleDetailActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError volleyError) {
+            public void onFail(Request request, IOException e) {
                 Toast.makeText(mContext, "点赞失败，请稍后重试~", Toast.LENGTH_SHORT).show();
             }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("aid", article_id);
-                hashMap.put("from_os", "1");
-                return hashMap;
-            }
-        };
 
-        praiseStringRequest.setTag("volley_request_praise_article");
-        praiseRequestQueue.add(praiseStringRequest);
+            @Override
+            public void onError(Response response, int code) {
+
+            }
+        });
+
     }
 
 
@@ -952,15 +932,17 @@ public class ArticleDetailActivity extends AppCompatActivity {
     }
 
 
-    private RequestQueue concernQueue = null;
-    private StringRequest concernRequest = null;
 
     private void do_concern() {
         MobclickAgent.onEvent(mContext, "click_article_focous");
-        concernQueue = Volley.newRequestQueue(mContext);
-        concernRequest = new StringRequest(Request.Method.POST, concern_url, new Response.Listener<String>() {
+
+        OKHttpUtil okHttpUtil = new OKHttpUtil();
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        hashMap.put("aid", concernUserId);  // 被关注用户id
+        hashMap.put("uid", getSharedPreferences("User_Info_SP", Context.MODE_PRIVATE).getString("user_id", "")); // 用户id
+        okHttpUtil.post(concern_url, hashMap, new OKHttpUtil.BaseCallBack() {
             @Override
-            public void onResponse(String s) {
+            public void onSuccess(Response response, String s) {
                 try {
                     JSONObject obj = new JSONObject(s);
                     if (obj.getInt("error_code") == 0) {
@@ -975,32 +957,29 @@ public class ArticleDetailActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+
+            @Override
+            public void onFail(Request request, IOException e) {
 
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError volleyError) {
+            public void onError(Response response, int code) {
 
             }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("aid", concernUserId);  // 被关注用户id
-                hashMap.put("uid", getSharedPreferences("User_Info_SP", Context.MODE_PRIVATE).getString("user_id", "")); // 用户id
-                return hashMap;
-            }
-        };
-        concernRequest.setTag("volley_request_concern_detail");
-        concernQueue.add(concernRequest);
+        });
     }
 
 
     private void do_collectActicle() {
-        collectRequestQueue = Volley.newRequestQueue(mContext);
-        collectStringRequest = new StringRequest(Request.Method.POST, collect_url, new Response.Listener<String>() {
+        OKHttpUtil okHttpUtil = new OKHttpUtil();
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        hashMap.put("aid", article_id); // 文章id
+        hashMap.put("uid", Util.getUserId(mContext)); //登录用户id
+        okHttpUtil.post(collect_url, hashMap, new OKHttpUtil.BaseCallBack() {
             @Override
-            public void onResponse(String s) {
+            public void onSuccess(Response response, String s) {
                 System.out.println("---收藏结果--" + s);
                 try {
                     JSONObject obj = new JSONObject(s);
@@ -1017,24 +996,17 @@ public class ArticleDetailActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }, new Response.ErrorListener() {
 
             @Override
-            public void onErrorResponse(VolleyError volleyError) {
+            public void onFail(Request request, IOException e) {
 
             }
-        }) {
+
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> hashMap = new HashMap<String, String>();
-                hashMap.put("aid", article_id); // 文章id
-                hashMap.put("uid", Util.getUserId(mContext)); //登录用户id
-                return hashMap;
-            }
-        };
+            public void onError(Response response, int code) {
 
-        collectStringRequest.setTag("volley_request_collect_arcticle");
-        collectRequestQueue.add(collectStringRequest);
+            }
+        });
     }
 
     private void do_cancelConcern() {
@@ -1090,20 +1062,7 @@ public class ArticleDetailActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (articleDetailQueue != null) {
-            articleDetailQueue.cancelAll("volley_request_collection_detail");
-        }
-        if (concernQueue != null) {
-            concernQueue.cancelAll("volley_request_concern_detail");
-        }
-        if (praiseRequestQueue != null) {
-            praiseRequestQueue.cancelAll("volley_request_praise_article");
-        }
-        if (collectRequestQueue != null) {
-            collectRequestQueue.cancelAll("volley_request_collect_arcticle");
-        }
     }
-
 
     public void onResume() {
         super.onResume();

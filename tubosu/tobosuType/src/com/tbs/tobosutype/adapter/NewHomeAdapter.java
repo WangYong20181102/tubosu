@@ -51,7 +51,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 /**
- * Created by Lie on 2017/07/23.
+ * Created by Lie on 2017/04/23.
  */
 
 public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> /*implements View.OnClickListener*/{
@@ -125,7 +125,6 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         } else if (viewType == ITEM_VIEW_TYPE_ZHUANTI) {
             adapterItemViewZhuanti = inflater.inflate(R.layout.layout_zhuanti_item_adapter /*layout_newhome_zhuanti*/, parent, false);
             NewHomeZhuanti newHomeZhuanti = new NewHomeZhuanti(adapterItemViewZhuanti);
-//            adapterItemViewZhuanti.setOnClickListener(this);
             return newHomeZhuanti;
         } else { // ==>>> (viewType == ADAPTER_ITEM_FOOT)
             adapterFootView = inflater.inflate(R.layout.layout_new_home_foot, parent, false);
@@ -133,32 +132,12 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return newHomeFoot;
         }
 
-//        if(viewType == ITEM_VIEW_TYPE_ANLI){
-//            adapterItemViewAnli = inflater.inflate(R.layout.layout_newhome_anli, parent, false);
-//            NewHomeAnli newHomeAnli = new NewHomeAnli(adapterItemViewAnli);
-//            return newHomeAnli;
-//        }
-//
-//        if(viewType == ITEM_VIEW_TYPE_SHEJI){
-//            adapterItemViewSheji = inflater.inflate(R.layout.layout_newhome_sheji, parent, false);
-//            NewHomeSheji newHomeSheji = new NewHomeSheji(adapterItemViewSheji);
-//            return newHomeSheji;
-//        }
-//
-//        if(viewType == ITEM_VIEW_TYPE_KETANG){
-//            adapterItemViewKetang = inflater.inflate(R.layout.layout_newhome_ketang, parent, false);
-//            NewHomeKetang newHomeKetang = new NewHomeKetang(adapterItemViewKetang);
-//            return newHomeKetang;
-//        }
-
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof NewHomeHead) {
             NewHomeHead headHolder = (NewHomeHead) holder;
-//            List<NewHomeDataItem.NewhomeDataBean.BannerBean> bannDataList = new ArrayList<>();
-//            bannDataList.addAll(dataSource.getBanner());
             initBannerAdapter(newhomeViewPager, headHolder.layoutDot, dataSource.getBanner());
 
             initCheatText(headHolder.cheatText);
@@ -335,6 +314,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             headHolder.newhomeRecyclerviewKetang.setAdapter(adapter);
             adapter.notifyDataSetChanged();
             headHolder.newhomeRecyclerviewKetang.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
@@ -342,154 +322,6 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     context.startActivity(webIntent);
                 }
             });
-
-
-//        if(holder instanceof NewHomeAnli){
-//            NewHomeAnli newHomeAnli = (NewHomeAnli) holder;
-//            newHomeAnli.relMoreAnli.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    context.startActivity(new Intent(context, DecorationCaseActivity.class));
-//                }
-//            });
-//            NewhomeCasesGridAdapter caseAdapter = null;
-//            if(caseAdapter==null){
-//                caseAdapter = new NewhomeCasesGridAdapter(context, dataSource.getCases());
-//                newHomeAnli.newhomeGvAnli.setAdapter(caseAdapter);
-//                caseAdapter.notifyDataSetChanged();
-//            }else {
-//                caseAdapter.notifyDataSetChanged();
-//            }
-//
-//            newHomeAnli.newhomeGvAnli.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                    Intent intent = new Intent(context, DecorationCaseDetailActivity.class);
-//                    intent.putExtra("deco_case_id", dataSource.getCases().get(position).getId());
-//                    context.startActivity(intent);
-//                }
-//            });
-//
-////            GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
-////            newHomeAnli.newhomeGvAnli.setLayoutManager(gridLayoutManager);
-////
-////            NewhomeAnliAdapter anliAdapter = new NewhomeAnliAdapter(context, dataSource.getCases());
-////            newHomeAnli.newhomeGvAnli.setAdapter(anliAdapter);
-////            anliAdapter.notifyDataSetChanged();
-////            anliAdapter.setmOnCaseClickListener(new NewhomeAnliAdapter.OnCaseClickListener() {
-////                @Override
-////                public void onCaseClickListener(View parent, final int ps) {
-////                    Intent intent = new Intent(context, DecorationCaseDetailActivity.class);
-////                    intent.putExtra("deco_case_id", dataSource.getCases().get(ps).getId());
-////                    context.startActivity(intent);
-////                }
-////            });
-//        }
-
-//        if(holder instanceof NewHomeSheji){
-//            NewHomeSheji newHomeSheji = (NewHomeSheji) holder;
-//            newHomeSheji.relMoreSheji.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent it = new Intent("goto_activity_xiaoguotu");
-//                    it.putExtra("position", 1);
-//                    context.sendBroadcast(it);
-//                }
-//            });
-//
-//            final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-//            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//            newHomeSheji.rvSheji.setLayoutManager(linearLayoutManager);
-////            newHomeSheji.shejiSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(Color.WHITE);
-////            newHomeSheji.shejiSwipeRefreshLayout.setColorSchemeResources(R.color.color_white);
-//
-//            final NewhomeShejiAdapter shejiAdapter = new NewhomeShejiAdapter(context, dataSource.getImpression());
-//            newHomeSheji.rvSheji.setAdapter(shejiAdapter);
-//            shejiAdapter.notifyDataSetChanged();
-//            shejiAdapter.setOnItemClickListener(new NewhomeShejiAdapter.OnRecyclerViewItemClickListener() {
-//
-//                @Override
-//                public void onRecyclerViewItemClick(View view, int position) {
-//
-//                    Intent intent = new Intent(context, ImageDetailNewActivity.class);
-//                    intent.putExtra("id", dataSource.getImpression().get(position).getId());
-//                    context.startActivity(intent);
-//                }
-//            });
-//            newHomeSheji.rvSheji.setOnScrollListener(new RecyclerView.OnScrollListener() {
-//                @Override
-//                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                    int lastVisiableItem = linearLayoutManager.findLastVisibleItemPosition();
-//                    if (newState == RecyclerView.SCROLL_STATE_IDLE  && lastVisiableItem <linearLayoutManager.getItemCount()) {
-//                        shejiAdapter.notifyDataSetChanged();
-//                    }
-//                }
-//            });
-//            newHomeSheji.rvSheji.addOnScrollListener(new EndlessRecyclerOnScrollListener() {
-//                @Override
-//                public void onLoadMore() {
-//                    shejiAdapter.showLoadMore(false);
-//                    shejiAdapter.showLoadMore(true);
-//                    Intent it = new Intent("goto_activity_xiaoguotu");
-//                    it.putExtra("position", 1);
-//                    context.sendBroadcast(it);
-//                }
-//            });
-//            shejiAdapter.notifyDataSetChanged();
-//
-//        }
-
-        /*===================================================*/
-//        if(holder instanceof NewHomeKetang){
-//            NewHomeKetang newHomeKetang = (NewHomeKetang) holder;
-//            newHomeKetang.relMoreClass.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
-//                    webIntent.putExtra("mLoadingUrl", dataSource.getCourse_list_url());
-//                    context.startActivity(webIntent);
-//                }
-//            });
-//
-//            LinearLayoutManager classManager = new LinearLayoutManager(context);
-//            classManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-//            newHomeKetang.newhomeRecyclerviewClass.setLayoutManager(classManager);
-//            NewhomeDecorationClassAdapter classAdapter = new NewhomeDecorationClassAdapter(context/*, dataSource.getCourseType()*/);
-//            newHomeKetang.newhomeRecyclerviewClass.setAdapter(classAdapter);
-//            classAdapter.notifyDataSetChanged();
-//            classAdapter.setOnItemClickListener(new NewhomeDecorationClassAdapter.OnRecyclerViewItemClickListener() {
-//                @Override
-//                public void onRecyclerViewItemClick(View view, int position) {
-//                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
-//                    webIntent.putExtra("mLoadingUrl", dataSource.getCourse_type().get(position).getJump_url());
-//                    context.startActivity(webIntent);
-//                }
-//            });
-//
-//            KeTangAdapter adapter = new KeTangAdapter(context, dataSource.getCourse());
-//            newHomeKetang.newhomeRecyclerviewKetang.setAdapter(adapter);
-//            adapter.notifyDataSetChanged();
-//            newHomeKetang.newhomeRecyclerviewKetang.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
-//                    webIntent.putExtra("mLoadingUrl", dataSource.getCourse().get(position).getJump_url());
-//                    context.startActivity(webIntent);
-//                }
-//            });
-            /*============================================================================*/
-//            LinearLayoutManager ketangManager = new LinearLayoutManager(context);
-//            ketangManager.setOrientation(LinearLayoutManager.VERTICAL);
-//            newHomeKetang.newhomeRecyclerviewKetang.setLayoutManager(ketangManager);
-//            NewhomeKetangAdapter ketangAdapter = new NewhomeKetangAdapter(context, dataSource.getCourse());
-//            newHomeKetang.newhomeRecyclerviewKetang.setAdapter(ketangAdapter);
-//            ketangAdapter.notifyDataSetChanged();
-//            ketangAdapter.setOnItemClickListener(new NewhomeKetangAdapter.OnRecyclerViewItemClickListener() {
-//                @Override
-//                public void onRecyclerViewItemClick(View view, int position) {
-//                    Util.setToast(context, dataSource.getCourseType().get(position) + " ] 下课堂");
-//                }
-//            });
         }
 
         if (holder instanceof NewHomeZhuanti) {
@@ -533,13 +365,6 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.zhuantiMore = more;
         notifyDataSetChanged();
     }
-
-//    @Override
-//    public void onClick(View v) {
-//        if(mListener!=null){
-//            mListener.onZhuantiItemClickListener((int)v.getTag());
-//        }
-//    }
 
 
     public interface OnZhuantiItemClickListener{
