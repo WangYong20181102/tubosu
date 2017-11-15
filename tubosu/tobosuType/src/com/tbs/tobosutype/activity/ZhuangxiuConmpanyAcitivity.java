@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.CompanyAdapter;
 import com.tbs.tobosutype.bean.CompanyBean;
@@ -24,11 +23,9 @@ import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.DividerItemDecoration;
 import com.tbs.tobosutype.utils.Util;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -134,6 +131,7 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             Util.setToast(context, "系统繁忙，请稍后再试。");
+                            gongsiRefreshLayout.setRefreshing(false);
                         }
                     });
                 }
@@ -146,6 +144,7 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
 
                         @Override
                         public void run() {
+                            gongsiRefreshLayout.setRefreshing(false);
                             if (json.contains("data")) {
                                 ivNoCompany.setVisibility(View.GONE);
                                 try {
@@ -298,6 +297,7 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                             Util.setErrorLog(TAG, "==删除=>>" + json);
 
                             runOnUiThread(new Runnable() {
+
                                 @Override
                                 public void run() {
                                     try {

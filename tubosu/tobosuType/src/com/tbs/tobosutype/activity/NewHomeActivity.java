@@ -47,7 +47,7 @@ import okhttp3.Response;
  */
 
 public class NewHomeActivity extends BaseActivity {
-    private View home_view;
+    private ImageView home_view;
     private View rel_newhomebar;
     private ImageView iv_sanjiaoxing;
     private ImageView iv_add;
@@ -83,7 +83,11 @@ public class NewHomeActivity extends BaseActivity {
 
     private void initView() {
         mGson = new Gson();
-        home_view = (View) findViewById(R.id.home_view);
+        home_view = (ImageView) findViewById(R.id.home_view);
+        home_view.setFocusable(true);
+        home_view.setFocusableInTouchMode(true);
+        home_view.requestFocus();
+        home_view.setVisibility(View.VISIBLE);
         tubosu = (TextView) findViewById(R.id.app_title_text);
         rel_newhomebar = (View) findViewById(R.id.newhomeView);
         rel_newhomebar.setAlpha(0);

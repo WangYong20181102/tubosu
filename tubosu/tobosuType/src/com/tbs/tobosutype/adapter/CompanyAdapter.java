@@ -100,6 +100,11 @@ public class CompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
 
+    public void loadMoreData(boolean more){
+        this.more = more;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemViewType(int position) {
         if(position == getItemCount()-1){

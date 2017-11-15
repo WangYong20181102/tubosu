@@ -6,7 +6,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="49dp"
-        android:background="@drawable/color_app_bg">
+        android:background="@color/white">
         <RelativeLayout
             android:id="@+id/relBackDantu"
             android:layout_width="49dp"
@@ -15,14 +15,14 @@
                 android:layout_width="14dp"
                 android:layout_height="17dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/back"/>
+                android:src="@drawable/activity_back"/>
         </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="单图"
-            android:textColor="@color/white"
+            android:textColor="@color/color_black"
             android:layout_centerInParent="true"
             android:textSize="14sp"/>
 

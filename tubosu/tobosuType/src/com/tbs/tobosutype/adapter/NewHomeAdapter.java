@@ -131,13 +131,15 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             NewHomeFoot newHomeFoot = new NewHomeFoot(adapterFootView);
             return newHomeFoot;
         }
-
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof NewHomeHead) {
             NewHomeHead headHolder = (NewHomeHead) holder;
+            newhomeViewPager.setFocusable(true);
+            newhomeViewPager.setFocusableInTouchMode(true);
+            newhomeViewPager.requestFocus();
             initBannerAdapter(newhomeViewPager, headHolder.layoutDot, dataSource.getBanner());
 
             initCheatText(headHolder.cheatText);
@@ -228,6 +230,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     context.startActivity(new Intent(context, DecorationCaseActivity.class));
                 }
             });
+            headHolder.newhomeGvAnli.setFocusable(false);
+            headHolder.newhomeGvAnli.setFocusableInTouchMode(false);
+            headHolder.newhomeGvAnli.clearFocus();
             NewhomeCasesGridAdapter caseAdapter = null;
             if (caseAdapter == null) {
                 caseAdapter = new NewhomeCasesGridAdapter(context, dataSource.getCases());
@@ -248,6 +253,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
             // ===============设计==============
+            headHolder.relMoreSheji.setFocusable(false);
+            headHolder.relMoreSheji.setFocusableInTouchMode(false);
+            headHolder.relMoreSheji.clearFocus();
             headHolder.relMoreSheji.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -259,6 +267,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            headHolder.rvSheji.setFocusable(false);
+            headHolder.rvSheji.setFocusableInTouchMode(false);
+            headHolder.rvSheji.clearFocus();
             headHolder.rvSheji.setLayoutManager(linearLayoutManager);
             final NewhomeShejiAdapter shejiAdapter = new NewhomeShejiAdapter(context, dataSource.getImpression());
             headHolder.rvSheji.setAdapter(shejiAdapter);
@@ -286,6 +297,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
             // 课堂
+            headHolder.relMoreClass.setFocusable(false);
+            headHolder.relMoreClass.setFocusableInTouchMode(false);
+            headHolder.relMoreClass.clearFocus();
             headHolder.relMoreClass.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

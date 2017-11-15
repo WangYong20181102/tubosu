@@ -8,12 +8,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:background="@drawable/new_home_loading"/>
+        android:scaleType="center"/>
     <ImageView
         android:id="@+id/tao_fav_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="22dp"
+        android:layout_margin="10dp"
         android:background="@drawable/d_selected"/>
 
     <TextView
