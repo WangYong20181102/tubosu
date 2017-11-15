@@ -170,14 +170,14 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
                 //整合动画
                 AnimationSet animationSet = new AnimationSet(false);
                 ScaleAnimation scaleAnimation = new ScaleAnimation(1.0f, 0.0f, 1.0f, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 1.5f, Animation.RELATIVE_TO_SELF, 1.5f);
+                        Animation.RELATIVE_TO_SELF, 1.2f, Animation.RELATIVE_TO_SELF, 1.2f);
                 TranslateAnimation translateAnimation = new TranslateAnimation(
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 1.8f,
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 1.8f);
                 scaleAnimation.setDuration(1500);
-                translateAnimation.setDuration(1800);
+                translateAnimation.setDuration(1500);
                 animationSet.addAnimation(translateAnimation);
                 animationSet.addAnimation(scaleAnimation);
                 animationSet.setFillAfter(true);
