@@ -9,27 +9,24 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.bean.CompanyJsonItem;
-import com.tbs.tobosutype.utils.Util;
-
+import com.tbs.tobosutype.bean.CompanyBean;
 import java.util.ArrayList;
 
 /**
  * Created by Lie on 2017/10/14.
  */
 
-public class CompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener{
+public class CompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private String TAG = "CompanyAdapter";
     private Context context;
     private LayoutInflater inflater;
-    private ArrayList<CompanyJsonItem.CompanyBean> dataList;
+    private ArrayList<CompanyBean> dataList;
     private boolean isDeleting = false;
     private int ITEM_BODY_TYPE = 0;
     private int ITEM_FOOT_TYPE = 1;
-    private ArrayList<Boolean> isSelectedList = new ArrayList<Boolean>();
 
 
-    public CompanyAdapter(Context context, ArrayList<CompanyJsonItem.CompanyBean> dataList){
+    public CompanyAdapter(Context context, ArrayList<CompanyBean> dataList){
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.dataList = dataList;
@@ -37,7 +34,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private boolean more = false;
 
-    public void setDeleting(boolean delete){
+    public void setDeletingStutas(boolean delete){
         isDeleting = delete;
     }
 
@@ -47,7 +44,6 @@ public class CompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if(viewType == 0){
             View view = inflater.inflate(R.layout.company_layout_item, parent, false);
             CompanyHolder holder = new CompanyHolder(view);
-            holder.itemView.setOnClickListener(this);
             return holder;
         }else{
             View fooot = inflater.inflate(R.layout.layout_new_home_foot, parent, false);
@@ -75,25 +71,20 @@ public class CompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             if(isDeleting){
                 // 在编辑状态下
                 cHolder.delete_icon_company.setVisibility(View.VISIBLE);
-                cHolder.delete_icon_company.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(isSelectedList.get(position)){
-                            // 已经是选中状态下
-                            cHolder.delete_icon_company.setBackgroundResource(R.drawable.d_unselect);
-                            isSelectedList.add(position, false);
-                        }else {
-                            // 不是选中状态下
-                            cHolder.delete_icon_company.setBackgroundResource(R.drawable.d_selected);
-                            isSelectedList.add(position, true);
-                        }
-                    }
-                });
+                if(dataList.get(position).isSelected()){
+                    cHolder.delete_icon_company.setBackgroundResource(R.drawable.d_selected);
+                }else {
+                    cHolder.delete_icon_company.setBackgroundResource(R.drawable.d_unselect);
+                }
             }else {
                 cHolder.delete_icon_company.setVisibility(View.GONE);
             }
-
-            cHolder.itemView.setTag(position);
+            cHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    companyItemClickListener.onCompanyItemClickListener(cHolder.getAdapterPosition(), dataList);
+                }
+            });
         }
 
         if(holder instanceof FooterHolder){
@@ -108,37 +99,6 @@ public class CompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    public boolean getDeleteData(){
-        onDeleteCompanyListener.deleteCompanyListener(isSelectedList);
-        int flag = 0;
-        for(int i=0;i<isSelectedList.size();i++){
-            if(isSelectedList.get(i)){
-                flag++;
-            }
-        }
-        if(flag>0){
-            return true;
-        }else {
-            return false;
-        }
-
-    }
-
-
-    public void notifyAdapter(boolean isSelected){
-        isSelectedList.clear();
-        for(int i=0;i<getItemCount()-1;i++){
-            isSelectedList.add(isSelected);
-        }
-        notifyDataSetChanged();
-    }
-
-    public ArrayList<CompanyJsonItem.CompanyBean> getCompanyDataList(){
-        if (dataList == null)  {
-            dataList = new ArrayList<CompanyJsonItem.CompanyBean>();
-        }
-        return dataList;
-    }
 
     @Override
     public int getItemViewType(int position) {
@@ -154,10 +114,6 @@ public class CompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return dataList == null? 0:dataList.size() + 1;
     }
 
-    @Override
-    public void onClick(View v) {
-        companyItemClickListener.onCompanyItemClickListener((Integer) v.getTag());
-    }
 
 
     class CompanyHolder extends RecyclerView.ViewHolder{
@@ -192,7 +148,7 @@ public class CompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public interface OnCompanyItemClickListener{
-        void onCompanyItemClickListener(int position);
+        void onCompanyItemClickListener(int position, ArrayList<CompanyBean> companyList);
     }
 
     public OnCompanyItemClickListener getCompanyItemClickListener() {
@@ -204,21 +160,4 @@ public class CompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private OnCompanyItemClickListener companyItemClickListener;
-
-
-
-
-    public interface OnDeleteCompanyListener{
-        void deleteCompanyListener(ArrayList<Boolean> deleteList);
-    }
-
-    private OnDeleteCompanyListener onDeleteCompanyListener;
-
-    public OnDeleteCompanyListener getOnDeleteCompanyListener() {
-        return onDeleteCompanyListener;
-    }
-
-    public void setOnDeleteCompanyListener(OnDeleteCompanyListener onDeleteCompanyListener) {
-        this.onDeleteCompanyListener = onDeleteCompanyListener;
-    }
 }

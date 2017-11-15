@@ -16,7 +16,6 @@ import com.tbs.tobosutype.bean.ShoucangItem;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.Util;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,13 +23,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+
 
 public class ShoucangAcitivity extends AppCompatActivity {
     @BindView(R.id.relBackShoucang)
@@ -56,7 +55,7 @@ public class ShoucangAcitivity extends AppCompatActivity {
     private void getDataFromNet() {
         SharedPreferences sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         String type = sp.getString("typeid", "1");
-        String userid = sp.getString("userid", "333568");
+        String userid = sp.getString("userid", "272286");
 
         Util.setErrorLog(TAG,type +  "=======type收藏id=====" + userid);
         if(Util.isNetAvailable(context)){

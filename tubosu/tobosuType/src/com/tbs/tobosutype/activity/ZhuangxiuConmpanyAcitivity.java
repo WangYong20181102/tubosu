@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,10 +19,16 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.CompanyAdapter;
-import com.tbs.tobosutype.bean.CompanyJsonItem;
+import com.tbs.tobosutype.bean.CompanyBean;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.DividerItemDecoration;
 import com.tbs.tobosutype.utils.Util;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,12 +55,13 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
     ImageView ivNoCompany;
     private LinearLayoutManager linearLayoutManager;
     private Context context;
-    private String TAG = "ConmpanyListActivity";
+    private String TAG = "ZhuangxiuConmpanyAcitivity";
     private int page = 1;
     private boolean isEdittext = false;
     private CompanyAdapter adapter;
-    private ArrayList<CompanyJsonItem.CompanyBean> companyBeanArrayList = new ArrayList<CompanyJsonItem.CompanyBean>();
+    private ArrayList<CompanyBean> companyBeanArrayList = new ArrayList<CompanyBean>();
     private boolean isDeletingCompany = false;
+    private ArrayList<String> deletComannaySelectIdList = new ArrayList<>();
 
 
     @Override
@@ -71,8 +79,12 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         reclerviewGongsi.setLayoutManager(linearLayoutManager);
+        DividerItemDecoration itemDecorationHeader = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
+        itemDecorationHeader.setDividerDrawable(ContextCompat.getDrawable(this, R.drawable.divider_main_bg_height_1));
+        reclerviewGongsi.addItemDecoration(itemDecorationHeader);
         gongsiRefreshLayout.setColorSchemeColors(Color.RED, Color.BLUE);
         gongsiRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
             @Override
             public void onRefresh() {
                 if(!isDeletingCompany){
@@ -85,7 +97,9 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                 }
             }
         });
+
         gongsiRefreshLayout.setOnTouchListener(new View.OnTouchListener() {
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 //处于下拉刷新时列表不允许点击  死锁问题
@@ -104,7 +118,7 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
         if (Util.isNetAvailable(context)) {
             SharedPreferences sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
             String type = sp.getString("typeid", "1");
-            String userid = sp.getString("userid", "333568");
+            String userid = sp.getString("userid", "272286");
             OKHttpUtil okHttpUtil = new OKHttpUtil();
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("token", Util.getDateToken());
@@ -129,20 +143,37 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                     final String json = response.body().string();
                     Util.setErrorLog(TAG, json);
                     runOnUiThread(new Runnable() {
+
                         @Override
                         public void run() {
                             if (json.contains("data")) {
                                 ivNoCompany.setVisibility(View.GONE);
-                                Gson gson = new Gson();
-                                CompanyJsonItem companyJsonItem = gson.fromJson(json, CompanyJsonItem.class);
-                                String msg = companyJsonItem.getMsg();
-                                if(companyJsonItem.getStatus() == 200){
-                                    companyBeanArrayList.addAll(companyJsonItem.getData());
-                                    initAdapter();
-                                }else if(companyJsonItem.getStatus() == 0 || companyJsonItem.getStatus() == 201){
-                                    Util.setToast(context, msg);
+                                try {
+                                    JSONObject object = new JSONObject(json);
+                                    String msg = object.getString("msg");
+                                    if(object.getInt("status") == 200){
+                                        JSONArray arr = object.getJSONArray("data");
+                                        for(int i=0;i<arr.length();i++){
+                                            CompanyBean bean = new CompanyBean();
+                                            bean.setId(arr.getJSONObject(i).getString("id"));
+                                            bean.setCollect_id(arr.getJSONObject(i).getString("collect_id"));
+                                            bean.setName(arr.getJSONObject(i).getString("name"));
+                                            bean.setIcon(arr.getJSONObject(i).getString("icon"));
+                                            bean.setIs_certified(arr.getJSONObject(i).getString("is_certified"));
+                                            bean.setDistrict_name(arr.getJSONObject(i).getString("district_name"));
+                                            bean.setIs_discount(arr.getJSONObject(i).getString("is_discount"));
+                                            bean.setSuite_count(arr.getJSONObject(i).getString("suite_count"));
+                                            bean.setCase_count(arr.getJSONObject(i).getString("case_count"));
+                                            bean.setSelected(false);
+                                            companyBeanArrayList.add(bean);
+                                        }
+                                        initAdapter();
+                                    }else if(object.getInt("status") == 201 || object.getInt("status") == 0){
+                                        Util.setToast(context, msg);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-
                             } else {
                                 ivNoCompany.setVisibility(View.VISIBLE);
                             }
@@ -153,27 +184,46 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
         }
     }
 
-
     private void initAdapter(){
+        if(companyBeanArrayList.size()>0){
+            tvEditZhuangxiuGongsi.setVisibility(View.VISIBLE);
+        }else {
+            tvEditZhuangxiuGongsi.setVisibility(View.GONE);
+        }
+
         if(adapter == null){
             adapter = new CompanyAdapter(context, companyBeanArrayList);
             reclerviewGongsi.setAdapter(adapter);
-            adapter.notifyAdapter(false);
+            adapter.notifyDataSetChanged();
         }else {
-            adapter.notifyAdapter(false);
+            adapter.notifyDataSetChanged();
         }
 
-        if(isEdittext){
-            adapter.setCompanyItemClickListener(new CompanyAdapter.OnCompanyItemClickListener() {
-                @Override
-                public void onCompanyItemClickListener(int position) {
-                    Util.setToast(context, "跳转 " + position);
+
+        adapter.setCompanyItemClickListener(new CompanyAdapter.OnCompanyItemClickListener() {
+
+            @Override
+            public void onCompanyItemClickListener(int position, ArrayList<CompanyBean> companyList) {
+                if(isEdittext){
+                    // 正在编辑删除中
+                    Util.setToast(context, "选中 ");
+                    CompanyBean bean = companyList.get(position);
+                    boolean isSelect = bean.isSelected();
+                    if (!isSelect) {
+                        bean.setSelected(true);
+                        deletComannaySelectIdList.add(bean.getCollect_id());
+                    } else {
+                        deletComannaySelectIdList.remove(bean.getCollect_id());
+                        bean.setSelected(false);
+                    }
+                    adapter.notifyDataSetChanged();
+                }else {
+                    // 没有编辑删除中
+                    Util.setToast(context, "跳转 ");
+
                 }
-            });
-        }
-
-
-
+            }
+        });
     }
 
     @Override
@@ -214,22 +264,61 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                 break;
             case R.id.tvDelelteZhuangxiuGongsi:
                 // 删除请求
-                if(adapter!=null){
+                int size = deletComannaySelectIdList.size();
+                if(size>0){
+                    String idString = "";
+                    for(int i=0;i<size;i++){
+                        if(i!=size-1){
+                            idString += deletComannaySelectIdList.get(i) + ",";
+                        }else {
+                            idString += deletComannaySelectIdList.get(i);
+                        }
+                    }
+                    OKHttpUtil okHttpUtil = new OKHttpUtil();
+                    HashMap<String, Object> hashMap = new HashMap<String, Object>();
+                    hashMap.put("token", Util.getDateToken());
+                    hashMap.put("ids", idString); // idString
+                    Util.setErrorLog(TAG, "==收藏id号=>>" + idString);
+                    okHttpUtil.post(Constant.SHANCHU_URL1, hashMap, new Callback() {
 
-                    adapter.setOnDeleteCompanyListener(new CompanyAdapter.OnDeleteCompanyListener() {
                         @Override
-                        public void deleteCompanyListener(ArrayList<Boolean> deleteList) {
-                            for(int i=0;i<deleteList.size();i++){
-                                if(deleteList.get(i)){
-                                    Util.setErrorLog(TAG, "删除的id是" + companyBeanArrayList.get(i));
+                        public void onFailure(Call call, IOException e) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Util.setToast(context, "删除失败");
                                 }
+                            });
+                            e.printStackTrace();
+                        }
 
-                            }
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            final String json = response.body().string();
+                            Util.setErrorLog(TAG, "==删除=>>" + json);
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        JSONObject object = new JSONObject(json);
+                                        String msg = object.getString("msg");
+                                        Util.setToast(context, msg);
+                                        if(object.getInt("status") == 200){
+                                            adapter.setDeletingStutas(false);
+                                            adapter.notifyDataSetChanged();
+                                        }else {
+
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                         }
                     });
-                    if(adapter.getDeleteData()){
-                        Util.setToast(context, "你没有选择公司");
-                    }
+                }else{
+                    Util.setToast(context, "你没有选择公司");
                 }
                 break;
         }
@@ -238,12 +327,13 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
 
     private void setDeleteFlag(boolean flag){
         if(adapter!=null){
-            adapter.setDeleting(flag);
+            adapter.setDeletingStutas(flag);
             if(flag){
                 adapter.notifyDataSetChanged();
             }else {
-                adapter.notifyAdapter(flag);
+                adapter.setDeletingStutas(flag);
             }
+            adapter.notifyDataSetChanged();
         }
     }
 
