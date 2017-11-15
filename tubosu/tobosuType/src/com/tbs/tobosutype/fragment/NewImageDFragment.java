@@ -174,6 +174,7 @@ public class NewImageDFragment extends BaseFragment {
         HttpGetSelectData();
         //请求数据
         HttpGetImageList(mPage);
+
     }
 
     //上拉加载更多
