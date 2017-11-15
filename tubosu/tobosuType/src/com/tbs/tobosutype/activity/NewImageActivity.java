@@ -2,6 +2,7 @@ package com.tbs.tobosutype.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -9,23 +10,22 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.NewImagePagerAdapter;
 import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.fragment.NewImageDFragment;
 import com.tbs.tobosutype.fragment.NewImageSFragment;
+import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.Util;
 
@@ -54,13 +54,12 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
     ImageView newImageGif;
     @BindView(R.id.new_image_free_design_img_rl)
     RelativeLayout newImageFreeDesignImgRl;
+    @BindView(R.id.tab_view_pager_rl)
+    RelativeLayout tabViewPagerRl;//包含了tab和viewpage
     private Context mContext;
     private String TAG = "NewImageActivity";
     private ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
     private NewImagePagerAdapter mNewImagePagerAdapter;
-    //缩放动画
-    private ScaleAnimation scaleAnimation;
-
 
     private int mTime = 0;//倒计时时间
     private boolean isAddTime = false;//是否在倒计时
@@ -75,11 +74,6 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
     private void initViewEvent() {
-        //加载gif
-        Glide.with(mContext).load(R.drawable.image_free_design_gif)
-                .placeholder(R.drawable.image_free_design_gif)
-                .error(R.drawable.image_free_design_gif)
-                .into(newImageGif);
         //初始化ViewPager
         fragmentArrayList.add(new NewImageDFragment());
         fragmentArrayList.add(new NewImageSFragment());
@@ -91,38 +85,6 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
         newImageTab.getTabAt(0).setText("套图");
         newImageTab.getTabAt(1).setText("单图");
     }
-
-    //通过反射 改变tab的指示器的长度
-//    public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
-//        Class<?> tabLayout = tabs.getClass();
-//        Field tabStrip = null;
-//        try {
-//            tabStrip = tabLayout.getDeclaredField("mTabStrip");
-//        } catch (NoSuchFieldException e) {
-//            e.printStackTrace();
-//        }
-//
-//        tabStrip.setAccessible(true);
-//        LinearLayout llTab = null;
-//        try {
-//            llTab = (LinearLayout) tabStrip.get(tabs);
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//        }
-//
-//        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip, Resources.getSystem().getDisplayMetrics());
-//        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip, Resources.getSystem().getDisplayMetrics());
-//
-//        for (int i = 0; i < llTab.getChildCount(); i++) {
-//            View child = llTab.getChildAt(i);
-//            child.setPadding(0, 0, 0, 0);
-//            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-//            params.leftMargin = left;
-//            params.rightMargin = right;
-//            child.setLayoutParams(params);
-//            child.invalidate();
-//        }
-//    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -157,12 +119,25 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    @OnClick({R.id.new_image_free_design_img, R.id.new_image_free_design_img_close})
+    @OnClick({R.id.new_image_free_design_img, R.id.new_image_free_design_img_close, R.id.new_image_gif, R.id.new_image_free_design_img_rl})
     public void onViewClickedInNewImageActivity(View view) {
         switch (view.getId()) {
+            case R.id.new_image_free_design_img_rl:
+
+                break;
+            case R.id.new_image_gif:
+                //右侧gif点击进发单页
+                Intent intent = new Intent(mContext, NewWebViewActivity.class);
+                intent.putExtra("mLoadingUrl", Constant.IAMGE_LIST_RIGHT_GIF);
+                startActivity(intent);
+                break;
             case R.id.new_image_free_design_img:
                 //跳转到发单页
                 Log.e(TAG, "点击了发单按钮===================");
+                Intent intent2 = new Intent(mContext, NewWebViewActivity.class);
+                intent2.putExtra("mLoadingUrl", Constant.IAMGE_LIST_DIALOG);
+                startActivity(intent2);
+                dismissTanChuang();
                 break;
             case R.id.new_image_free_design_img_close:
                 //关闭界面弹出的界面 处理关闭时的动画
@@ -170,14 +145,14 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
                 //整合动画
                 AnimationSet animationSet = new AnimationSet(false);
                 ScaleAnimation scaleAnimation = new ScaleAnimation(1.0f, 0.0f, 1.0f, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 1.2f, Animation.RELATIVE_TO_SELF, 1.2f);
+                        Animation.RELATIVE_TO_SELF, 1.3f, Animation.RELATIVE_TO_SELF, 1.4f);
                 TranslateAnimation translateAnimation = new TranslateAnimation(
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 1.8f,
                         Animation.RELATIVE_TO_SELF, 0.0f,
                         Animation.RELATIVE_TO_SELF, 1.8f);
-                scaleAnimation.setDuration(1500);
-                translateAnimation.setDuration(1500);
+                scaleAnimation.setDuration(1000);
+                translateAnimation.setDuration(1200);
                 animationSet.addAnimation(translateAnimation);
                 animationSet.addAnimation(scaleAnimation);
                 animationSet.setFillAfter(true);
@@ -185,6 +160,7 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
 //                AlphaAnimation alphaAnimation = new AlphaAnimation(0.5f, 0.0f);
 //                alphaAnimation.setFillAfter(true);
 //                newImageFreeDesignImgRl.startAnimation(alphaAnimation);
+
                 animationSet.setAnimationListener(animationListener);
                 newImageFreeDesignImg.startAnimation(animationSet);
                 newImageFreeDesignImgClose.setVisibility(View.GONE);
@@ -202,8 +178,7 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
         @Override
         public void onAnimationEnd(Animation animation) {
             Log.e(TAG, "动画结束==============");
-            //动画结束时弹出右侧的GIF动图
-            newImageFreeDesignImgRl.setVisibility(View.GONE);
+            dismissTanChuang();
         }
 
         @Override
@@ -212,17 +187,37 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
         }
     };
 
-    //展示右侧的帧动画
-    private void showRightAnim() {
+    //结束弹窗
+    private void dismissTanChuang() {
+        //动画结束时弹出右侧的GIF动图
+        newImageFreeDesignImgRl.setVisibility(View.GONE);
+        AppInfoUtil.setImageListDateToken(mContext, Util.getDateToken() + "list");
+        ShowRightGifAnim();
+    }
+
+    //加载右侧的帧动画
+    private void LoadingRightGifAnim() {
         newImageGif.setImageResource(R.drawable.anim_free_design_right);
         AnimationDrawable animationDrawable = (AnimationDrawable) newImageGif.getDrawable();
         animationDrawable.start();
     }
 
+    //弹出右侧的Gif动画
+    private void ShowRightGifAnim() {
+        newImageGif.setVisibility(View.VISIBLE);
+        TranslateAnimation mAnimShowGif = new TranslateAnimation(
+                Animation.RELATIVE_TO_SELF, 1.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f);
+        mAnimShowGif.setDuration(500);
+        newImageGif.startAnimation(mAnimShowGif);
+    }
+
     //定时显示弹窗
     private void showImageDesignDialog() {
         if (AppInfoUtil.getImageListDateToken(mContext).equals(Util.getDateToken() + "list")) {
-            //日期数据相同 说明当日已经弹出了对话框 不做处理
+            //日期数据相同 说明当日已经弹出了对话框
             Log.e(TAG, "弹窗已经出现过===============!!!!!!");
         } else {
             //存储的日期数据不相同说明没有弹出对话框  开始计时弹出
@@ -238,7 +233,6 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
                                 //设置出现弹窗
                                 Log.e(TAG, "出现弹窗==================!!!!!!!");
                                 isAddTime = false;
-//                                AppInfoUtil.setImageListDateToken(mContext, Util.getDateToken() + "list");
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -259,9 +253,18 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
     @Override
     protected void onResume() {
         Log.e(TAG, "===========onResume 开始 ====");
-        isAddTime = true;
-//        showImageDesignDialog();
-        showRightAnim();
+        LoadingRightGifAnim();//加载动画
+        if (AppInfoUtil.getImageListDateToken(mContext).equals(Util.getDateToken() + "list")) {
+            //比对成功  1.显示Gif图  2.倒计时开关isAddtime=false
+            newImageGif.setVisibility(View.VISIBLE);
+            isAddTime = false;//倒计时开关关闭
+        } else {
+            //比对失败当天未开启弹窗 1.隐藏Gif  2.倒计时开关 isAddtime=true 3窗口出现
+            isAddTime = true;
+            showImageDesignDialog();
+        }
+
+
         super.onResume();
     }
 

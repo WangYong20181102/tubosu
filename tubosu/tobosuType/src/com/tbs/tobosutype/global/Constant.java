@@ -362,12 +362,21 @@ public class Constant {
     public static final String ZHUANTI_XIANGQING_FADAN = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
     //找他设计
     public static final String ZHAO_TA_SHEJI = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-
+    //发单地址
     public static final String LINK_HOME_MIANFEI_LIANGFANG = "http://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
     public static final String LINK_HOME_MIANMFEI_BAOJIA = "http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
     public static final String LINK_HOME_MIANFEI_SHEJI = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
     public static final String LINK_HOME_ZHUANYE_TUIJIAN = "http://m.tobosu.com/rec_company?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
     public static final String LINK_HOME_DALIBAO = "http://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    //逛图库 列表弹窗发单地址
+    public static final String IAMGE_LIST_DIALOG = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    //逛图库 右侧悬浮窗发单地址
+    public static final String IAMGE_LIST_RIGHT_GIF = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    //图库详情 弹窗发单地址
+    public static final String IAMGE_DETAIL_DIALOG = "http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    //图库详情 底部发单地址
+    public static final String IAMGE_DETAIL_BUTTON = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+
 
     //新的逛图库 套图 3.5版本 add time 20171111
     public static final String SUITE_LIST = TOBOSU_URL + "mapp/impression/suite_list";
