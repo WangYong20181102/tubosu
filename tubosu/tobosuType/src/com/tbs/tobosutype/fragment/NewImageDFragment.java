@@ -32,6 +32,8 @@ import com.tbs.tobosutype.activity.LoginActivity;
 import com.tbs.tobosutype.adapter.MyGridViewAdapter;
 import com.tbs.tobosutype.adapter.NewImageDAdapter;
 import com.tbs.tobosutype.base.BaseFragment;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.bean._ImageD;
 import com.tbs.tobosutype.bean._SelectMsg;
 import com.tbs.tobosutype.global.Constant;
@@ -151,6 +153,22 @@ public class NewImageDFragment extends BaseFragment {
         mContext = getActivity();
         initView();
         return view;
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case EC.EventCode.CLOSE_POP_WINDOW_IN_NEW_IMAGE_ACTIVITY:
+                if (popupWindow != null) {
+                    popupWindow.dismiss();
+                }
+                break;
+        }
     }
 
     //初始化view事件
@@ -632,6 +650,7 @@ public class NewImageDFragment extends BaseFragment {
     private void HttpCollection(String id, String uid, String user_type, final int position) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
+        param.put("state", mImageDArrayList.get(position).getIs_collect());
         param.put("id", id);//套图或者单图的id
         param.put("uid", uid);//用户id
         param.put("user_type", user_type);//用户类型

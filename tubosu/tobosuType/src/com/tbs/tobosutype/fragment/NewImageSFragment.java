@@ -1,6 +1,7 @@
 package com.tbs.tobosutype.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -27,14 +28,18 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.activity.SImageLookingActivity;
 import com.tbs.tobosutype.adapter.MyGridViewAdapter;
 import com.tbs.tobosutype.adapter.NewImageSAdapter;
 import com.tbs.tobosutype.base.BaseFragment;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.bean._ImageS;
 import com.tbs.tobosutype.bean._SelectMsg;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 
 import org.json.JSONArray;
@@ -112,6 +117,7 @@ public class NewImageSFragment extends BaseFragment {
     private String mPartParam = "";//局部的参数
     private String mColorParam = "";//颜色的参数
     private boolean isDownRefresh = false;//是否是下拉刷新
+    private boolean isLoadingData = false;//列表集合是否在加载数据
     //回显用的位置数据
     private int mPositionStyle = 0;
     private int mPositionSpace = 0;
@@ -144,6 +150,22 @@ public class NewImageSFragment extends BaseFragment {
         mContext = getActivity();
         initView();
         return view;
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case EC.EventCode.CLOSE_POP_WINDOW_IN_NEW_IMAGE_ACTIVITY:
+                if (popupWindow != null) {
+                    popupWindow.dismiss();
+                }
+                break;
+        }
     }
 
     private void initView() {
@@ -181,11 +203,13 @@ public class NewImageSFragment extends BaseFragment {
             }
         }
     };
+
     //加载更多数据
     private void LoadMore() {
         mPage++;
         HttpGetSingleImageList(mPage);
     }
+
     //用于判断角标最大者
     private int getMaxElem(int[] arr) {
         int size = arr.length;
@@ -196,6 +220,7 @@ public class NewImageSFragment extends BaseFragment {
         }
         return maxVal;
     }
+
     //touch事件
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         @Override
@@ -215,6 +240,7 @@ public class NewImageSFragment extends BaseFragment {
             initData();
         }
     };
+
     //刷新(更新)数据
     private void initData() {
         isDownRefresh = true;
@@ -224,6 +250,7 @@ public class NewImageSFragment extends BaseFragment {
         }
         HttpGetSingleImageList(mPage);
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -251,6 +278,7 @@ public class NewImageSFragment extends BaseFragment {
                 break;
         }
     }
+
     //点击条件的选择框显示条件选择的页面 0--风格  1--户型  2--面积  3--颜色
     private void showPopSelect(int witch) {
         switch (witch) {
@@ -397,6 +425,7 @@ public class NewImageSFragment extends BaseFragment {
             }
         });
     }
+
     //网络获取类型数据
     private void HttpGetSelectData() {
         HashMap<String, Object> param = new HashMap<>();
@@ -490,6 +519,8 @@ public class NewImageSFragment extends BaseFragment {
 
     //网络获取数据列表
     private void HttpGetSingleImageList(int mPage) {
+        //正在加载数据
+        isLoadingData = true;
         //隐藏没有数据的蒙层
         fragNewImgSingleNoneDataRl.setVisibility(View.GONE);
         //下拉刷新停止
@@ -526,6 +557,7 @@ public class NewImageSFragment extends BaseFragment {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "数据链接失败=============" + e.getMessage());
+                isLoadingData = false;//数据加载完成
             }
 
             @Override
@@ -549,6 +581,7 @@ public class NewImageSFragment extends BaseFragment {
                             public void run() {
                                 if (mNewImageSAdapter == null) {
                                     mNewImageSAdapter = new NewImageSAdapter(mContext, mImageSArrayList);
+                                    mNewImageSAdapter.setOnImgaeSClickLister(onImgaeSClickLister);
                                     fragNewImgSingleRecycler.setAdapter(mNewImageSAdapter);
                                     mNewImageSAdapter.notifyDataSetChanged();
                                 } else {
@@ -581,9 +614,32 @@ public class NewImageSFragment extends BaseFragment {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                } finally {
+                    isLoadingData = false;
                 }
             }
         });
     }
 
+    private NewImageSAdapter.OnImgaeSClickLister onImgaeSClickLister = new NewImageSAdapter.OnImgaeSClickLister() {
+        @Override
+        public void onImageSClick(View view, int position) {
+            //点击进入详情
+            switch (view.getId()) {
+                case R.id.item_new_image_s_img_click_view:
+                    //进入详情  数据不在加载的情况下点击进入下一页
+                    if (!isLoadingData) {
+                        Log.e(TAG, "点击单图进入详情==============");
+                        String mSImageListJson = mGson.toJson(mImageSArrayList);
+                        SpUtil.setSingImageListJson(mContext, mSImageListJson);
+                        Intent intent = new Intent(mContext, SImageLookingActivity.class);
+                        intent.putExtra("mPosition", position);
+                        mContext.startActivity(intent);
+                    } else {
+                        Log.e(TAG, "正在加载数据，无法进入下一个页面！");
+                    }
+                    break;
+            }
+        }
+    };
 }

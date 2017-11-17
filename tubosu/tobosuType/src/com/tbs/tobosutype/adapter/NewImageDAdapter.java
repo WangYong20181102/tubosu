@@ -78,6 +78,7 @@ public class NewImageDAdapter
                     .load(mImageDArrayList.get(position).getCover_url())
                     .placeholder(R.drawable.iamge_loading).error(R.drawable.iamge_loading).centerCrop()
                     .override(spWidth / 2, (int) ((imgH / imgW) * (spWidth / 2)))
+                    .dontAnimate()
                     .into(((NewImageDViewHolder) holder).item_new_image_img);
             //设置标题
             ((NewImageDViewHolder) holder).item_new_image_title.setText(mImageDArrayList.get(position).getTitle());
