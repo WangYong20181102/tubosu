@@ -69,11 +69,25 @@
     </RelativeLayout>
 
 
-    <ImageView
-        android:id="@+id/iv_no_company"
+    <RelativeLayout
+        android:id="@+id/rel_no_company"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone"
-        android:background="@drawable/no_shoucang"/>
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/iv_no_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/no_shoucang"/>
+        <TextView
+            android:layout_below="@+id/iv_no_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="#D0D1D3"
+            android:layout_centerHorizontal="true"
+            android:text="暂无收藏，赶紧去逛逛吧!"/>
+    </RelativeLayout>
 </RelativeLayout>

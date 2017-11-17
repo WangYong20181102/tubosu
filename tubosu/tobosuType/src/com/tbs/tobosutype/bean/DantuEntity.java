@@ -18,11 +18,16 @@ public class DantuEntity {
     private int image_height;
     private boolean isSelected;
 
-//    private String id;//单图的id
-//    private String cover_url;//封面图
-//    private int image_width;//图片的额宽度
-//    private int image_height;//图片的高度
-//    private String image_url;//大图的地址
+//    private String id;
+//    private String cover_url;
+//    private int image_width;
+//    private int image_height;
+//    private String style_id;  Y
+//    private String space_id;
+//    private String image_url;
+//    private String title;
+//    private String is_collect;
+//    private String share_url;
 
 
     public String getId() {

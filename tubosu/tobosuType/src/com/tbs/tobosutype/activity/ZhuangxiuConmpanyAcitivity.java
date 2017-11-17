@@ -49,8 +49,8 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
     TextView tvDelelteZhuangxiuGongsi;
     @BindView(R.id.tvEditZhuangxiuGongsi)
     TextView tvEditZhuangxiuGongsi;
-    @BindView(R.id.iv_no_company)
-    ImageView ivNoCompany;
+    @BindView(R.id.rel_no_company)
+    RelativeLayout rel_no_company;
     private LinearLayoutManager linearLayoutManager;
     private Context context;
     private String TAG = "ZhuangxiuConmpanyAcitivity";
@@ -68,7 +68,6 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
         setContentView(R.layout.activity_zhuangxiu_gongsi);
         context = ZhuangxiuConmpanyAcitivity.this;
         ButterKnife.bind(this);
-
         initView();
     }
 
@@ -246,9 +245,9 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
         }
 
         if(adapter.getItemCount()>1){
-            ivNoCompany.setVisibility(View.GONE);
+            rel_no_company.setVisibility(View.GONE);
         }else {
-            ivNoCompany.setVisibility(View.VISIBLE);
+            rel_no_company.setVisibility(View.VISIBLE);
         }
 
         adapter.setCompanyItemClickListener(new CompanyAdapter.OnCompanyItemClickListener() {

@@ -54,8 +54,8 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
     @BindView(R.id.taotuSwipe)
     SwipeRefreshLayout taotuSwipe;
     private boolean isEditTaoTu = false;
-    @BindView(R.id.ivTaotuNoData)
-    ImageView ivTaotuNoData;
+    @BindView(R.id.rel_no_taotu)
+    RelativeLayout rel_no_taotu;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
     private ArrayList<TaotuEntity> taotuEntityArrayList = new ArrayList<TaotuEntity>();
     private TaoTuAdapter taoTuAdapter;
@@ -78,11 +78,13 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
         taotuSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if(!isDeletingTaotu){
+                if(!isEditTaoTu){
                     page = 1;
                     taotuEntityArrayList.clear();
                     getNetData();
                 }
+                taotuSwipe.setRefreshing(false);
+
             }
         });
 
@@ -197,9 +199,9 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                                     });
 
                                     if(taotuEntityArrayList.size()>0){
-                                        ivTaotuNoData.setVisibility(View.GONE);
+                                        rel_no_taotu.setVisibility(View.GONE);
                                     }else {
-                                        ivTaotuNoData.setVisibility(View.VISIBLE);
+                                        rel_no_taotu.setVisibility(View.VISIBLE);
                                     }
                                 }
                             });
@@ -251,11 +253,13 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
     private void LoadMore(){
-        isLoadMore = true;
-        page++;
-        getNetData();
-        if(taoTuAdapter!=null){
-            taoTuAdapter.loadMoreData(true);
+        if(!isEditTaoTu){
+            isLoadMore = true;
+            page++;
+            getNetData();
+            if(taoTuAdapter!=null){
+                taoTuAdapter.loadMoreData(true);
+            }
         }
     }
 
@@ -328,7 +332,7 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Util.setToast(context, "删除失败");
+                                    Util.setToast(context, "取消收藏失败!");
                                 }
                             });
                             e.printStackTrace();
@@ -359,11 +363,12 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                                     try {
                                         JSONObject object = new JSONObject(json);
                                         String msg = object.getString("msg");
-                                        Util.setToast(context, msg);
+
                                         if(object.getInt("status") == 200){
                                             taoTuAdapter.setDeletingStutas(false);
+                                            Util.setToast(context, "取消收藏!");
                                         }else {
-
+                                            Util.setToast(context, msg);
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();

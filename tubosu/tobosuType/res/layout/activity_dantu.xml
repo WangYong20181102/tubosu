@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
     <RelativeLayout
+        android:id="@+id/reltantuac"
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:background="@color/white">
@@ -21,7 +22,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="单图"
+            android:text="收藏的单图"
             android:textColor="@color/color_black"
             android:layout_centerInParent="true"
             android:textSize="14sp"/>
@@ -37,6 +38,7 @@
 
     </RelativeLayout>
     <RelativeLayout
+        android:layout_below="@+id/reltantuac"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <android.support.v4.widget.SwipeRefreshLayout
@@ -62,15 +64,29 @@
             android:layout_centerHorizontal="true"
             android:textColor="#ff8214"
             android:text="删除"/>
-
-
-        <ImageView
-            android:id="@+id/ivDantuNoData"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="gone"
-            android:background="@drawable/no_shoucang"/>
     </RelativeLayout>
 
-</LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel_no_dantu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/iv_no_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/no_shoucang"/>
+        <TextView
+            android:layout_below="@+id/iv_no_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="#D0D1D3"
+            android:layout_centerHorizontal="true"
+            android:text="暂无收藏，赶紧去逛逛吧!"/>
+    </RelativeLayout>
+
+</RelativeLayout>
