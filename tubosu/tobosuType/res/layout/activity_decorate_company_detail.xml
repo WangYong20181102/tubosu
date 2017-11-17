@@ -38,7 +38,7 @@
 					android:layout_height="wrap_content"
 					android:layout_marginLeft="10dp"
 					android:layout_centerVertical="true"
-					android:src="@drawable/activity_back1" />
+					android:src="@drawable/activity_back" />
 
 				<ImageView
 					android:id="@+id/decorate_detail_fav"

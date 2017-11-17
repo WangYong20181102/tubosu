@@ -1,13 +1,12 @@
 package com.tbs.tobosutype.activity;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -17,9 +16,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.TaoTuAdapter;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.bean.TaotuEntity;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.EventBusUtil;
 import com.tbs.tobosutype.utils.Util;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,7 +36,11 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class TaoTuAcitivity extends AppCompatActivity {
+/**
+ * 套图页
+ */
+
+public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
     @BindView(R.id.relBackTao)
     RelativeLayout relBackTao;
     @BindView(R.id.recyclerviewTaotu)
@@ -54,7 +60,8 @@ public class TaoTuAcitivity extends AppCompatActivity {
     private ArrayList<TaotuEntity> taotuEntityArrayList = new ArrayList<TaotuEntity>();
     private TaoTuAdapter taoTuAdapter;
     private ArrayList<String> deletTaotuSelectIdList = new ArrayList<String>();
-
+    private ArrayList<TaotuEntity> deletingEntity = new ArrayList<TaotuEntity>();
+    private boolean isLoadMore = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,7 +70,6 @@ public class TaoTuAcitivity extends AppCompatActivity {
         setContentView(R.layout.activity_taotu);
         ButterKnife.bind(this);
         initViews();
-
     }
 
 
@@ -75,16 +81,15 @@ public class TaoTuAcitivity extends AppCompatActivity {
                 if(!isDeletingTaotu){
                     page = 1;
                     taotuEntityArrayList.clear();
-                    taoTuAdapter = null;
                     getNetData();
                 }
             }
         });
 
-
-
         staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerviewTaotu.setLayoutManager(staggeredGridLayoutManager);
+        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        ((SimpleItemAnimator) recyclerviewTaotu.getItemAnimator()).setSupportsChangeAnimations(false);
         recyclerviewTaotu.setOnTouchListener(onTouchListener);
         recyclerviewTaotu.addOnScrollListener(onScrollListener);
         getNetData();
@@ -92,17 +97,18 @@ public class TaoTuAcitivity extends AppCompatActivity {
 
 
     private int page = 1;
+    private int pageSize = 20;
     private void getNetData(){
         if(Util.isNetAvailable(context)){
             SharedPreferences sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
             String type = sp.getString("typeid", "1");
-            String userid = sp.getString("userid", "272286");
+            String userid = sp.getString("userid", Constant.DEFAULT_USER_ID);
             OKHttpUtil okHttpUtil = new OKHttpUtil();
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("token", Util.getDateToken());
             hashMap.put("uid", userid);
             hashMap.put("user_type", type);
-            hashMap.put("page_size", "10");
+            hashMap.put("page_size", pageSize);
             hashMap.put("page", page);
 
             okHttpUtil.post(Constant.FAV_TAO_TU_URL, hashMap, new Callback() {
@@ -113,6 +119,9 @@ public class TaoTuAcitivity extends AppCompatActivity {
                         public void run() {
                             Util.setToast(context, "服务繁忙，稍后再试。");
                             taotuSwipe.setRefreshing(false);
+                            if(taoTuAdapter!=null){
+                                taoTuAdapter.loadMoreData(false);
+                            }
                         }
                     });
                     e.printStackTrace();
@@ -120,85 +129,104 @@ public class TaoTuAcitivity extends AppCompatActivity {
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    final String json = response.body().string();
+                    String json = response.body().string();
                     Util.setErrorLog(TAG, json);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            taotuSwipe.setRefreshing(false);
-                            if(taoTuAdapter!=null){
-                                taoTuAdapter.loadMoreData(false);
+
+                    try {
+                        JSONObject object = new JSONObject(json);
+                        final String msg = object.getString("msg");
+                        if(object.getInt("status") == 200){
+                            JSONArray array = object.getJSONArray("data");
+                            for(int i=0;i<array.length();i++){
+                                TaotuEntity entity = new TaotuEntity();
+                                entity.setId(array.getJSONObject(i).getString("id"));
+                                entity.setCollect_id(array.getJSONObject(i).getString("collect_id"));
+                                entity.setCover_url(array.getJSONObject(i).getString("cover_url"));
+                                entity.setImage_width(array.getJSONObject(i).getInt("image_width"));
+                                entity.setImage_height(array.getJSONObject(i).getInt("image_height"));
+                                entity.setTitle(array.getJSONObject(i).getString("title"));
+                                entity.setSeleteStatus(false);
+                                taotuEntityArrayList.add(entity);
                             }
-                            try {
-                                JSONObject object = new JSONObject(json);
-                                String msg = object.getString("msg");
-                                if(object.getInt("status") == 200){
-                                    JSONArray array = object.getJSONArray("data");
-                                    for(int i=0;i<array.length();i++){
-                                        TaotuEntity entity = new TaotuEntity();
-                                        entity.setId(array.getJSONObject(i).getString("id"));
-                                        entity.setCollect_id(array.getJSONObject(i).getString("collect_id"));
-                                        entity.setCover_url(array.getJSONObject(i).getString("cover_url"));
-                                        entity.setImage_width(array.getJSONObject(i).getInt("image_width"));
-                                        entity.setImage_height(array.getJSONObject(i).getInt("image_height"));
-                                        entity.setTitle(array.getJSONObject(i).getString("title"));
-                                        entity.setSeleteStatus(false);
-                                        taotuEntityArrayList.add(entity);
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    taotuSwipe.setRefreshing(false);
+                                    if(taoTuAdapter!=null){
+                                        taoTuAdapter.loadMoreData(false);
                                     }
 
-                                    initAdapter();
-                                }else if(object.getInt("status") == 201 || object.getInt("status") == 0){
+                                    if(taoTuAdapter == null){
+                                        taoTuAdapter = new TaoTuAdapter(context, taotuEntityArrayList);
+                                        recyclerviewTaotu.setAdapter(taoTuAdapter);
+                                        taoTuAdapter.notifyDataSetChanged();
+                                    }else {
+                                        if(isLoadMore){
+                                            isLoadMore = false;
+                                            taoTuAdapter.notifyDataSetChanged();
+                                        }else {
+                                            taoTuAdapter.notifyItemInserted(taotuEntityArrayList.size() - pageSize);
+                                        }
+                                    }
+
+                                    taoTuAdapter.setTaotuItemClickListener(new TaoTuAdapter.OnTaotuItemClickListener() {
+
+                                        @Override
+                                        public void OnTaotuItemClickListener(int position, ArrayList<TaotuEntity> taotuList) {
+
+                                            if(isEditTaoTu){
+                                                // 正在编辑删除中
+                                                TaotuEntity bean = taotuList.get(position);
+                                                boolean isSelect = bean.isSeleteStatus();
+                                                if (!isSelect) {
+                                                    bean.setSeleteStatus(true);
+                                                    deletTaotuSelectIdList.add(bean.getCollect_id());
+                                                    deletingEntity.add(bean);
+                                                } else {
+                                                    deletingEntity.remove(bean);
+                                                    deletTaotuSelectIdList.remove(bean.getCollect_id());
+                                                    bean.setSeleteStatus(false);
+                                                }
+                                                taoTuAdapter.notifyDataSetChanged();
+                                            }else {
+                                                // 没有编辑删除中
+                                                Util.setToast(context, "跳转 ");
+                                            }
+                                        }
+                                    });
+
+                                    if(taotuEntityArrayList.size()>0){
+                                        ivTaotuNoData.setVisibility(View.GONE);
+                                    }else {
+                                        ivTaotuNoData.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                            });
+                        }else if(object.getInt("status") == 201 || object.getInt("status") == 0){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    taotuSwipe.setRefreshing(false);
                                     Util.setToast(context, msg);
                                     if(taoTuAdapter!=null){
                                         taoTuAdapter.notifyDataSetChanged();
                                     }
                                 }
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                            });
                         }
-                    });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         }
     }
 
-    private void initAdapter(){
-        if(taoTuAdapter == null){
-            taoTuAdapter = new TaoTuAdapter(context, taotuEntityArrayList);
-            recyclerviewTaotu.setAdapter(taoTuAdapter);
-            taoTuAdapter.notifyDataSetChanged();
-        }else {
-            taoTuAdapter.notifyDataSetChanged();
-        }
-        taoTuAdapter.setTaotuItemClickListener(new TaoTuAdapter.OnTaotuItemClickListener() {
-            @Override
-            public void OnTaotuItemClickListener(int position, ArrayList<TaotuEntity> taotuList) {
-                if(isEditTaoTu){
-                    // 正在编辑删除中
-                    Util.setToast(context, "选中 ");
-                    TaotuEntity bean = taotuList.get(position);
-                    boolean isSelect = bean.isSeleteStatus();
-                    if (!isSelect) {
-                        bean.setSeleteStatus(true);
-                        deletTaotuSelectIdList.add(bean.getCollect_id());
-                    } else {
-                        deletTaotuSelectIdList.remove(bean.getCollect_id());
-                        bean.setSeleteStatus(false);
-                    }
-                    taoTuAdapter.notifyDataSetChanged();
-                }else {
-                    // 没有编辑删除中
-                    Util.setToast(context, "跳转 ");
 
-                }
-            }
-        });
-
-    }
 
     private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
@@ -211,6 +239,7 @@ public class TaoTuAcitivity extends AppCompatActivity {
         }
     };
 
+
     private int getMaxElem(int[] arr) {
         int size = arr.length;
         int maxVal = Integer.MIN_VALUE;
@@ -222,6 +251,7 @@ public class TaoTuAcitivity extends AppCompatActivity {
     }
 
     private void LoadMore(){
+        isLoadMore = true;
         page++;
         getNetData();
         if(taoTuAdapter!=null){
@@ -253,6 +283,7 @@ public class TaoTuAcitivity extends AppCompatActivity {
             if(flag){
                 taoTuAdapter.notifyDataSetChanged();
             }else {
+                // 非删除状态，隐藏删除选择标识
                 taoTuAdapter.setDeletingStutas(flag);
             }
             taoTuAdapter.notifyDataSetChanged();
@@ -312,13 +343,25 @@ public class TaoTuAcitivity extends AppCompatActivity {
 
                                 @Override
                                 public void run() {
+
+                                    for(int i=0; i<deletingEntity.size();i++){
+                                        taoTuAdapter.getTaotuEntityList().remove(deletingEntity.get(i));
+                                    }
+
+                                    tvEditTaotu.setText("编辑");
+                                    tvDelelteTaotu.setVisibility(View.GONE);
+                                    isDeletingTaotu = false;
+                                    setDeleteFlag(isDeletingTaotu);
+                                    isEditTaoTu = !isEditTaoTu;
+
+                                    EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_TAOTU_CODE));
+
                                     try {
                                         JSONObject object = new JSONObject(json);
                                         String msg = object.getString("msg");
                                         Util.setToast(context, msg);
                                         if(object.getInt("status") == 200){
                                             taoTuAdapter.setDeletingStutas(false);
-                                            taoTuAdapter.notifyDataSetChanged();
                                         }else {
 
                                         }
@@ -350,6 +393,10 @@ public class TaoTuAcitivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

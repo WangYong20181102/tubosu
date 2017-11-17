@@ -1,6 +1,7 @@
 package com.tbs.tobosutype.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -69,7 +70,6 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         initView();
-        getNetData();
     }
 
     private void initView(){
@@ -91,6 +91,9 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                     gongsiRefreshLayout.setRefreshing(false);
                     page = 1;
                     getNetData();
+                    if(adapter!=null){
+                        adapter.loadMoreData(false);
+                    }
                 }
             }
         });
@@ -108,8 +111,48 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
             }
         });
 
-
+        reclerviewGongsi.setOnTouchListener(onTouchListener);
+        reclerviewGongsi.addOnScrollListener(onScrollListener);
+        getNetData();
     }
+
+    private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            int lastVisiableItems = linearLayoutManager.findLastVisibleItemPosition();
+            if (newState == RecyclerView.SCROLL_STATE_IDLE
+                    && lastVisiableItems + 2 >= adapter.getItemCount()) {
+                LoadMore();
+            }
+        }
+    };
+
+    private void LoadMore(){
+        page++;
+        getNetData();
+        if(adapter!=null){
+            adapter.loadMoreData(true);
+        }
+    }
+
+    private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (gongsiRefreshLayout.isRefreshing()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    };
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        getNetData();
+//    }
 
     public void getNetData() {
         if (Util.isNetAvailable(context)) {
@@ -132,21 +175,27 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                         public void run() {
                             Util.setToast(context, "系统繁忙，请稍后再试。");
                             gongsiRefreshLayout.setRefreshing(false);
+                            if(adapter!=null){
+                                adapter.loadMoreData(false);
+                            }
                         }
                     });
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
+
                     final String json = response.body().string();
                     Util.setErrorLog(TAG, json);
                     runOnUiThread(new Runnable() {
 
                         @Override
                         public void run() {
+                            if(adapter!=null){
+                                adapter.loadMoreData(false);
+                            }
                             gongsiRefreshLayout.setRefreshing(false);
                             if (json.contains("data")) {
-                                ivNoCompany.setVisibility(View.GONE);
                                 try {
                                     JSONObject object = new JSONObject(json);
                                     String msg = object.getString("msg");
@@ -173,8 +222,6 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-                            } else {
-                                ivNoCompany.setVisibility(View.VISIBLE);
                             }
                         }
                     });
@@ -198,6 +245,11 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         }
 
+        if(adapter.getItemCount()>1){
+            ivNoCompany.setVisibility(View.GONE);
+        }else {
+            ivNoCompany.setVisibility(View.VISIBLE);
+        }
 
         adapter.setCompanyItemClickListener(new CompanyAdapter.OnCompanyItemClickListener() {
 
@@ -218,7 +270,14 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                 }else {
                     // 没有编辑删除中
-                    Util.setToast(context, "跳转 ");
+                    String comid = companyBeanArrayList.get(position).getId(); //comid
+                    Util.setLog(TAG, "收藏公司 传过去" + comid);
+                    Intent detailIntent = new Intent(context, DecorateCompanyDetailActivity.class);
+                    Bundle bundle = new Bundle();
+                    // 从列表带过去的公司id
+                    bundle.putString("comid", comid);
+                    detailIntent.putExtras(bundle);
+                    startActivity(detailIntent);
 
                 }
             }

@@ -64,6 +64,7 @@ public class Constant {
     //下载存储路径
     public static final String DOWNLOAD_IMG_PATH = Environment.getExternalStorageDirectory() + "/tbs_image/";
 
+    public static final String DEFAULT_USER_ID = "263616"; // 263616   333568
 
     /**
      * 获取数据
@@ -73,6 +74,7 @@ public class Constant {
      * 人力
      */
     public static final String ACTION_MANPOWER_FRAGMENT_DATA = "action_manpower_fragment_data";
+
     /**
      * 建材
      */
@@ -214,7 +216,7 @@ public class Constant {
     public static final String GONGSI_URL = TOBOSU_URL + "mapp/collect/collect_company_list";
 
     public static final String SHANCHU_URL1 = TOBOSU_URL + "mapp/collect/batch_quit_collect";
-
+    public static final String DUANXIN_URL = TOBOSU_URL + "mapp/smsCode/send_sms_code";
     /**
      * 检测网络状态<br/>
      *
@@ -239,14 +241,6 @@ public class Constant {
         return false;
     }
 
-    public static final String MIANFEI_BAOJIA = "http://m.tobosu.com/free_price_page/";
-    public static final String DALIBAO = "http://m.tobosu.com/company_gift/";
-    public static final String TUIJIAN = "http://m.tobosu.com/rec_company/";
-    public static final String BAOJIA = "http://m.tobosu.com/free_price_page/";
-//    陈林(Cl)  2017/11//03  14:58:08
-//    报价：http://m.tobosu.com/free_price_page/
-//    大礼包：http://m.tobosu.com/company_gift/
-//    推荐：http://m.tobosu.com/rec_company/
 
     /**
      * 无网提示

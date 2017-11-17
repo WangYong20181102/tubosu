@@ -7,14 +7,16 @@
         android:id="@+id/dan_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="2dp"/>
+        android:layout_margin="4dp"/>
 
     <ImageView
         android:id="@+id/dan_fav_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="22dp"
-        android:visibility="invisible"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        android:layout_alignTop="@+id/dan_img"
+        android:layout_alignLeft="@+id/dan_img"
         android:background="@drawable/d_unselect"/>
 
 </RelativeLayout>

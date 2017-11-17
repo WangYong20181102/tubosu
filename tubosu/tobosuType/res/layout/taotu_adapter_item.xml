@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/tao_img"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:scaleType="center"/>
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_margin="7dp"/>
+
     <ImageView
         android:id="@+id/tao_fav_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tao_img"
+        android:layout_alignLeft="@+id/tao_img"
         android:layout_margin="10dp"
         android:background="@drawable/d_selected"/>
 
@@ -21,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="6dp"
         android:layout_marginBottom="13dp"
         android:layout_marginLeft="6dp"
         android:maxLines="1"

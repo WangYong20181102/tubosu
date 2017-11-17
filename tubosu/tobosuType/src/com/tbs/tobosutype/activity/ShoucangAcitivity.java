@@ -12,6 +12,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.ShoucangAdapter;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.bean.ShoucangItem;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
@@ -31,7 +33,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 
-public class ShoucangAcitivity extends AppCompatActivity {
+public class ShoucangAcitivity extends com.tbs.tobosutype.base.BaseActivity {
     @BindView(R.id.relBackShoucang)
     RelativeLayout relBackShoucang;
     @BindView(R.id.shouList)
@@ -41,6 +43,7 @@ public class ShoucangAcitivity extends AppCompatActivity {
     private Context context;
     private String TAG = "ShoucangAcitivity";
     private List<ShoucangItem> favList = new ArrayList<>();
+    private ShoucangAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,7 +58,7 @@ public class ShoucangAcitivity extends AppCompatActivity {
     private void getDataFromNet() {
         SharedPreferences sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         String type = sp.getString("typeid", "1");
-        String userid = sp.getString("userid", "272286");
+        String userid = sp.getString("userid", Constant.DEFAULT_USER_ID);
 
         Util.setErrorLog(TAG,type +  "=======type收藏id=====" + userid);
         if(Util.isNetAvailable(context)){
@@ -97,17 +100,17 @@ public class ShoucangAcitivity extends AppCompatActivity {
                                         shoucangItem.setName(dataArr.getJSONObject(i).getString("name"));
                                         favList.add(shoucangItem);
                                     }
-                                    ShoucangAdapter adapter = new ShoucangAdapter(context, favList);
+                                    adapter = new ShoucangAdapter(context, favList);
                                     shouList.setAdapter(adapter);
                                     adapter.notifyDataSetChanged();
                                     shouList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                         @Override
                                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                            if(position == 0){
-                                                startActivity(new Intent(context, DanTuAcitivity.class));
-                                            }else if(position == 1){
+                                            if(favList.get(position).getIcon().equals("suite")){
                                                 startActivity(new Intent(context, TaoTuAcitivity.class));
-                                            }else {
+                                            }else if(favList.get(position).getIcon().equals("single")){
+                                                startActivity(new Intent(context, DanTuAcitivity.class));
+                                            }else if(favList.get(position).getIcon().equals("company")){
                                                 startActivity(new Intent(context, ZhuangxiuConmpanyAcitivity.class));
                                             }
                                         }
@@ -126,6 +129,23 @@ public class ShoucangAcitivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    protected void receiveEvent(Event event) {
+        super.receiveEvent(event);
+        switch (event.getCode()){
+            case EC.EventCode.DELETE_TAOTU_CODE:
+                favList.clear();
+                adapter = null;
+                getDataFromNet();
+                break;
+        }
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
 
     @Override
     protected void onDestroy() {
