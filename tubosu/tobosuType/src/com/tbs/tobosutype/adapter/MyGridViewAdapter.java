@@ -64,6 +64,7 @@ public class MyGridViewAdapter extends BaseAdapter {
             holder.BtntextView = (TextView) convertView.findViewById(R.id.item_pop_tv);
             holder.BtnDotView = (TextView) convertView.findViewById(R.id.item_pop_dot);
             holder.BtnDotImageView = (ImageView) convertView.findViewById(R.id.item_pop_dot_colorful);
+            holder.BtnWhiteDotImageView = (ImageView) convertView.findViewById(R.id.item_pop_dot_white);
             convertView.setTag(holder);
         } else {
             holder = (MyViewHolder) convertView.getTag();
@@ -71,21 +72,26 @@ public class MyGridViewAdapter extends BaseAdapter {
         holder.BtntextView.setText("" + btnName.get(position).getName());
         if (!TextUtils.isEmpty(btnName.get(position).getValue())
                 && !btnName.get(position).getValue().equals("colour")
-                && !btnName.get(position).getValue().equals("ffffff")) {
+                && !btnName.get(position).getValue().equals("white")) {
+            //非彩色，非白色
             GradientDrawable gradientDrawable = new GradientDrawable();
             gradientDrawable.setColor(Color.parseColor(btnName.get(position).getValue()));
             gradientDrawable.setCornerRadius(30);
             holder.BtnDotView.setBackgroundDrawable(gradientDrawable);
         } else if (!TextUtils.isEmpty(btnName.get(position).getValue()) &&
-                btnName.get(position).getValue().equals("#ffffff")) {
-            GradientDrawable gradientDrawable = new GradientDrawable();
-            gradientDrawable.setColor(Color.parseColor(btnName.get(position).getValue()));
-            gradientDrawable.setStroke(2, Color.parseColor("#cccccc"));
-            gradientDrawable.setCornerRadius(30);
-            holder.BtnDotView.setBackgroundDrawable(gradientDrawable);
-//            holder.BtnDotView.setVisibility(View.GONE);
+                btnName.get(position).getValue().equals("white")) {
+            //白色
+//            GradientDrawable gradientDrawable = new GradientDrawable();
+//            gradientDrawable.setColor(Color.parseColor(btnName.get(position).getValue()));
+//            gradientDrawable.setStroke(5, Color.parseColor("#000000"));
+//            gradientDrawable.setCornerRadius(30);
+//            holder.BtnDotView.setBackgroundDrawable(gradientDrawable);
+//            holder.BtnDotView.setVisibility(View.VISIBLE);
 //            holder.BtnDotImageView.setVisibility(View.VISIBLE);
 //            holder.BtnDotImageView.setImageResource(R.drawable.white_image_dot);
+            //图片的加载
+            holder.BtnDotView.setVisibility(View.GONE);
+            holder.BtnWhiteDotImageView.setVisibility(View.VISIBLE);
 
         } else if (!TextUtils.isEmpty(btnName.get(position).getValue()) &&
                 btnName.get(position).getValue().equals("colour")) {
@@ -95,7 +101,11 @@ public class MyGridViewAdapter extends BaseAdapter {
         }
         if (position == mPosition) {
             holder.BtntextView.setTextColor(Color.parseColor("#ffffff"));
-            holder.BtntextView.setBackgroundColor(Color.parseColor("#ff882e"));
+            GradientDrawable gradientDrawable = new GradientDrawable();
+            gradientDrawable.setColor(Color.parseColor("#ff882e"));
+            gradientDrawable.setCornerRadius(10);
+//            holder.BtntextView.setBackgroundColor(Color.parseColor("#ff882e"));
+            holder.BtntextView.setBackgroundDrawable(gradientDrawable);
         }
         return convertView;
     }
@@ -104,5 +114,6 @@ public class MyGridViewAdapter extends BaseAdapter {
         private TextView BtntextView;
         private TextView BtnDotView;
         private ImageView BtnDotImageView;
+        private ImageView BtnWhiteDotImageView;
     }
 }

@@ -19,7 +19,8 @@ import java.util.ArrayList;
  */
 
 public class NewImageSAdapter
-        extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+        extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+        implements View.OnClickListener {
     private Context mContext;
     private String TAG = "NewImageSAdapter";
     private ArrayList<_ImageS> mImageSArrayList;
@@ -33,8 +34,19 @@ public class NewImageSAdapter
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_new_image_s, parent, false);
         NewImageSViewHolder newImageSViewHolder = new NewImageSViewHolder(view);
+        newImageSViewHolder.item_new_image_s_img_click_view.setOnClickListener(this);
         return newImageSViewHolder;
     }
+
+    public static interface OnImgaeSClickLister {
+        void onImageSClick(View view, int position);
+    }
+
+    public void setOnImgaeSClickLister(OnImgaeSClickLister onImgaeSClickLister) {
+        this.onImgaeSClickLister = onImgaeSClickLister;
+    }
+
+    private OnImgaeSClickLister onImgaeSClickLister = null;
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -48,6 +60,8 @@ public class NewImageSAdapter
             float imgH = mImageSArrayList.get(position).getImage_height();
             layoutParams.height = (int) ((imgH / imgW) * (spWidth / 2));
             ((NewImageSViewHolder) holder).item_new_image_s_img.setLayoutParams(layoutParams);
+            ((NewImageSViewHolder) holder).item_new_image_s_img_click_view.setLayoutParams(layoutParams);
+            ((NewImageSViewHolder) holder).item_new_image_s_img_click_view.setTag(position);
             //绑定数据
             //封面图 设置宽高加载
             Glide.with(mContext)
@@ -63,12 +77,21 @@ public class NewImageSAdapter
         return mImageSArrayList.size();
     }
 
+    @Override
+    public void onClick(View v) {
+        if (onImgaeSClickLister != null) {
+            onImgaeSClickLister.onImageSClick(v, (int) v.getTag());
+        }
+    }
+
     class NewImageSViewHolder extends RecyclerView.ViewHolder {
         private ImageView item_new_image_s_img;
+        private View item_new_image_s_img_click_view;
 
         public NewImageSViewHolder(View itemView) {
             super(itemView);
             item_new_image_s_img = (ImageView) itemView.findViewById(R.id.item_new_image_s_img);
+            item_new_image_s_img_click_view = (View) itemView.findViewById(R.id.item_new_image_s_img_click_view);
         }
     }
 }

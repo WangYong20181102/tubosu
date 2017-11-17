@@ -22,11 +22,14 @@ import android.widget.RelativeLayout;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.NewImagePagerAdapter;
 import com.tbs.tobosutype.base.*;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.fragment.NewImageDFragment;
 import com.tbs.tobosutype.fragment.NewImageSFragment;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.EventBusUtil;
 import com.tbs.tobosutype.utils.Util;
 
 import java.util.ArrayList;
@@ -71,6 +74,11 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
         ButterKnife.bind(this);
         mContext = this;
         initViewEvent();
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
     }
 
     private void initViewEvent() {
@@ -232,6 +240,7 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
                             if (mTime >= 10) {
                                 //设置出现弹窗
                                 Log.e(TAG, "出现弹窗==================!!!!!!!");
+                                EventBusUtil.sendEvent(new Event(EC.EventCode.CLOSE_POP_WINDOW_IN_NEW_IMAGE_ACTIVITY));
                                 isAddTime = false;
                                 runOnUiThread(new Runnable() {
                                     @Override

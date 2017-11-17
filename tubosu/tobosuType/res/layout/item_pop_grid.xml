@@ -23,18 +23,26 @@
 
         <TextView
             android:id="@+id/item_pop_dot"
-            android:layout_width="9dp"
-            android:layout_height="9dp"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="9dp" />
 
         <ImageView
             android:id="@+id/item_pop_dot_colorful"
-            android:layout_width="9dp"
-            android:layout_height="9dp"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="9dp"
             android:src="@drawable/colorful"
+            android:visibility="gone" />
+        <ImageView
+            android:id="@+id/item_pop_dot_white"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="9dp"
+            android:src="@drawable/white_image_dot"
             android:visibility="gone" />
     </RelativeLayout>
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.tbs.tobosutype.activity.NewImageActivity">
     <!--可切换的Touch页面-->
     <RelativeLayout
@@ -71,11 +72,11 @@
     <!--悬浮贴边-->
     <ImageView
         android:id="@+id/new_image_gif"
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_width="40dp"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="48dp"
-        android:src="@drawable/image_free_design_gif"
+        android:src="@drawable/free_design_anim_01"
         android:visibility="gone" />
 </RelativeLayout>
