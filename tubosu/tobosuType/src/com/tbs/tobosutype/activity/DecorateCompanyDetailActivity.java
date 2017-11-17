@@ -304,7 +304,7 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 
 							hav_fav = companyList.get("hav_fav") + "";
 							if ("0".equals(hav_fav)) {
-								decorate_detail_fav.setImageResource(R.drawable.fa_white);
+								decorate_detail_fav.setImageResource(R.drawable.fa02);
 								oper_type = "1";
 							} else {
 								decorate_detail_fav.setImageResource(R.drawable.fa_red);
@@ -538,15 +538,15 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 			decorateVueiew.setAlpha(f);
 			if(y==0 && y <144){
 //				decorate_detail_fav.setBackgroundResource(R.drawable.fa_white);
-				decorate_detail_share.setBackgroundResource(R.drawable.out_white);
-				ivBack.setBackgroundResource(R.drawable.activity_back1);
+				decorate_detail_share.setBackgroundResource(R.drawable.zh02);
+				ivBack.setBackgroundResource(R.drawable.activity_back);
 				oldVueiew.setVisibility(View.VISIBLE);
 				decorateVueiew.setVisibility(View.INVISIBLE);
 			}
 			if(y > 144){
 				//  超过多少 显示黑色
 //				decorate_detail_fav.setBackgroundResource(R.drawable.fa_red);
-				decorate_detail_share.setBackgroundResource(R.drawable.out_black);
+				decorate_detail_share.setBackgroundResource(R.drawable.zh02);
 				ivBack.setBackgroundResource(R.drawable.activity_back);
 				oldVueiew.setVisibility(View.INVISIBLE);
 				decorateVueiew.setVisibility(View.VISIBLE);
@@ -705,7 +705,7 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 			hav_fav = "0";
 		}
 		if ("0".equals(hav_fav)) {
-			decorate_detail_fav.setImageResource(R.drawable.fa_white);
+			decorate_detail_fav.setImageResource(R.drawable.fa02);
 			oper_type = "1";
 		} else {
 			decorate_detail_fav.setImageResource(R.drawable.fa_red);

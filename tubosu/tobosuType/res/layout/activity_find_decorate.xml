@@ -25,6 +25,7 @@
                 android:clickable="true"
                 android:gravity="center"
                 android:padding="3dp"
+                android:visibility="gone"
                 android:text="岳阳"
                 android:textColor="@color/color_black"
                 android:textSize="14sp" />
@@ -34,6 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:visibility="gone"
                 android:layout_toRightOf="@id/tv_city_decorate"
                 android:background="@drawable/tt"
                 android:padding="2dp" />

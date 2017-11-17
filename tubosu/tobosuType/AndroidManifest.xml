@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tbs.tobosutype"
-    android:versionCode="23"
-    android:versionName="3.4"> <!-- 2017-10-23 将versionCode=22   versionName=3.3   改成 23   3.4 -->
+    android:versionCode="24"
+    android:versionName="3.5"> <!-- 2017-11-16 修改成  24  &  3.5-->
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="25" />
@@ -35,7 +35,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- SD卡读取权限，用户写入离线定位数据 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-
+    <uses-permission android:name="android.permission.CAMERA" />
     <!-- QQ、QQ空间所需权限 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.BLUETOOTH" />

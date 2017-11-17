@@ -295,13 +295,11 @@ public class NewHomeActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
-//                Intent selectCityIntent = new Intent(mContext, SelectCtiyActivity.class);
-//                Bundle cityBundle = new Bundle();
-//                cityBundle.putString("fromHomeActivity", "101");
-//                selectCityIntent.putExtra("HomeActivitySelectcityBundle", cityBundle);
-//                startActivityForResult(selectCityIntent, 3);
-
-                startActivity(new Intent(NewHomeActivity.this, ShoucangAcitivity.class));
+                Intent selectCityIntent = new Intent(mContext, SelectCtiyActivity.class);
+                Bundle cityBundle = new Bundle();
+                cityBundle.putString("fromHomeActivity", "101");
+                selectCityIntent.putExtra("HomeActivitySelectcityBundle", cityBundle);
+                startActivityForResult(selectCityIntent, 3);
             }
         });
     }

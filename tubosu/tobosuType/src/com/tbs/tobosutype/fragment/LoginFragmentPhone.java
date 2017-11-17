@@ -37,6 +37,7 @@ import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.HttpServer;
+import com.tbs.tobosutype.utils.Util;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -169,7 +170,12 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_get_verifycode: // 验证码
-                getVerificationCode();
+//                getVerificationCode();
+
+                if ("重新获取".equals(tv_get_verifycode.getText().toString()) || "获取验证码".equals(tv_get_verifycode.getText().toString())) {
+                    getMSMCode();
+                }
+
                 break;
             case R.id.tv_phonelogin: // 登录
                 userPhoneLogin();
@@ -177,7 +183,6 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
                 break;
             case R.id.ll_obtain_weixin_login2: // 微信登录
                 loginWeixin();
-//			hideEdittext();
                 break;
             case R.id.rel_has_account: // 去账号登录界面
                 break;
@@ -187,6 +192,49 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
 
     }
 
+    private void getMSMCode(){
+        if(Util.isNetAvailable(getActivity())){
+            OKHttpUtil okHttpUtil = new OKHttpUtil();
+            HashMap<String, Object> hashMap = new HashMap<String, Object>();
+            String token = Util.getDateToken();
+            String number = et_login_userphone.getText().toString().trim();
+            Util.setErrorLog(TAG, "==========" +token + "=============" + number);
+            hashMap.put("token", token);
+            hashMap.put("cellphone", number);
+
+            okHttpUtil.post(Constant.DUANXIN_URL, hashMap, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Util.setToast(getActivity(), "网络繁忙，请稍后再试");
+                        }
+                    });
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String json = response.body().string();
+                    Util.setErrorLog(TAG, json);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONObject jsonObject = new JSONObject(json);
+                                if(jsonObject.getInt("status") == 200){
+                                    Util.setToast(getActivity(), jsonObject.getString("msg"));
+                                }
+                                startCount();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    }
 
     @Override
     public boolean onKey(View v, int keyCode, KeyEvent event) {

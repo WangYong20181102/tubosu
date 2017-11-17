@@ -56,14 +56,15 @@
 
             <TextView
                 android:id="@+id/tvDelelteTaotu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
                 android:background="@drawable/edit_textview_bg"
                 android:layout_alignParentBottom="true"
-                android:layout_margin="14dp"
+                android:gravity="center"
+                android:textColor="#ff8214"
+                android:layout_margin="16dp"
                 android:visibility="gone"
                 android:layout_centerHorizontal="true"
-                android:textColor="@color/white"
                 android:text="删除"/>
         </RelativeLayout>
     </LinearLayout>

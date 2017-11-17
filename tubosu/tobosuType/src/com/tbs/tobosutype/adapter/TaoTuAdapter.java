@@ -9,16 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.bean.CompanyBean;
-import com.tbs.tobosutype.bean.DanTuJsonItem;
 import com.tbs.tobosutype.bean.TaotuEntity;
-import com.tbs.tobosutype.bean.TaotuJsonItem;
-
 import java.util.ArrayList;
-
 /**
  * Created by Lie on 2017/11/13.
  */
@@ -41,6 +35,10 @@ public class TaoTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public void setDeletingStutas(boolean delete){
         isDeleting = delete;
+        for(int i=0;i<dataList.size();i++){
+            dataList.get(i).setSeleteStatus(false);
+        }
+        notifyDataSetChanged();
     }
 
     @Override
@@ -74,6 +72,7 @@ public class TaoTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             params.width = spWidth / 2;
             float imgWidth = dataList.get(position).getImage_width();
             float imgHeight = dataList.get(position).getImage_height();
+
             params.height = (int) ((imgHeight / imgWidth) * (spWidth / 2));
 
             int w = spWidth / 2;
@@ -84,7 +83,8 @@ public class TaoTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 .with(context)
                 .load(dataList.get(position).getCover_url())
                 .placeholder(R.drawable.iamge_loading)
-                .error(R.drawable.iamge_loading).centerCrop()
+                .error(R.drawable.iamge_loading)
+                .centerCrop()
                 .override(w, h)
                 .into(tao.tao_img);
 
@@ -159,14 +159,16 @@ public class TaoTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public interface OnTaotuItemClickListener{
         void OnTaotuItemClickListener(int position, ArrayList<TaotuEntity> taotuList);
     }
-
-    public OnTaotuItemClickListener getTaotuItemClickListener() {
-        return taotuItemClickListener;
-    }
-
     public void setTaotuItemClickListener(OnTaotuItemClickListener taotuItemClickListener) {
         this.taotuItemClickListener = taotuItemClickListener;
     }
 
     private OnTaotuItemClickListener taotuItemClickListener;
+
+    public ArrayList<TaotuEntity> getTaotuEntityList() {
+        if (dataList == null) {
+            dataList = new ArrayList<TaotuEntity>();
+        }
+        return dataList;
+    }
 }

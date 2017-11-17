@@ -1,19 +1,27 @@
 package com.tbs.tobosutype.activity;
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -46,11 +54,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+
+
 public class MyOwnerActivity extends BaseActivity implements OnClickListener {
     private static final String TAG = MyOwnerActivity.class.getSimpleName();
     private Context mContext;
@@ -118,6 +130,7 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myowner);
         mContext = MyOwnerActivity.this;
+        init7Setting();
         initView();
         initEvent();
     }
@@ -367,6 +380,22 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
                 break;
         }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == 104){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                // 授权
+//                Toast.makeText(this, " user Permission" , Toast.LENGTH_SHORT).show();
+            } else {
+                //拒绝
+//                Toast.makeText(this, "你拒绝了相机权限" , Toast.LENGTH_SHORT).show();
+//                ActivityCompat.requestPermissions(MyOwnerActivity.this, new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }
+        }
+    }
+
     private void operFindOrder() {
         if (TextUtils.isEmpty(cellphone) || "未绑定".equals(cellphone)) {
             CustomDialog.Builder builder = new CustomDialog.Builder(this);
@@ -392,16 +421,51 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
             showFindOrderDialog();
         }
     }
+
+    public List<String> getPermissionList(Context activity) {
+        List<String> permission = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.CAMERA);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        return permission;
+    }
+
     private OnClickListener itemsPersonOnClick = new OnClickListener() {
+
         @Override
         public void onClick(View v) {
             menuWindow.dismiss();
             switch (v.getId()) {
                 case R.id.takePhotoBtn:
-                    // 拍照获取头像
-                    Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
-                    startActivityForResult(takeIntent, REQUESTCODE_TAKE);
+
+                    //判断当前系统是否高于或等于6.0
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        //当前系统大于等于6.0
+                        if (ContextCompat.checkSelfPermission(MyOwnerActivity.this,Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                            //具有拍照权限，直接调用相机
+                            //具体调用代码
+                            // 拍照获取头像
+                            Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
+                            startActivityForResult(takeIntent, REQUESTCODE_TAKE);
+                        } else {
+                            //不具有拍照权限，需要进行权限申请
+                            ActivityCompat.requestPermissions(MyOwnerActivity.this,new String[]{Manifest.permission.CAMERA}, 104);
+                        }
+                    } else {
+                        //当前系统小于6.0，直接调用拍照
+                        // 拍照获取头像
+                        Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
+                        startActivityForResult(takeIntent, REQUESTCODE_TAKE);
+                    }
+
+
+//                    // 拍照获取头像
+//                    Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
+//                    startActivityForResult(takeIntent, REQUESTCODE_TAKE);
                     break;
                 case R.id.pickPhotoBtn:
                     // 选择本地文件夹中图片获取头像
@@ -636,4 +700,11 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
             return false;
         }
     });
+
+    private void init7Setting(){
+        //解决拍照问题
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
+    }
 }
