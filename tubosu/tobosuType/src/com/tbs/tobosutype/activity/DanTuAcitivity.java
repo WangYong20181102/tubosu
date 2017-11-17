@@ -269,7 +269,6 @@ public class DanTuAcitivity extends AppCompatActivity {
                                     }
                                 });
                             }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

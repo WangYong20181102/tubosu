@@ -257,7 +257,6 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
             public void onCompanyItemClickListener(int position, ArrayList<CompanyBean> companyList) {
                 if(isEdittext){
                     // 正在编辑删除中
-                    Util.setToast(context, "选中 ");
                     CompanyBean bean = companyList.get(position);
                     boolean isSelect = bean.isSelected();
                     if (!isSelect) {
@@ -377,7 +376,7 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                         }
                     });
                 }else{
-                    Util.setToast(context, "你没有选择公司");
+                    Util.setToast(context, "你没有选择");
                 }
                 break;
         }
