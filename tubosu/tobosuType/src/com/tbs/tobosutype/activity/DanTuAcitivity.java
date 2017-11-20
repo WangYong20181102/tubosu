@@ -1,11 +1,11 @@
 package com.tbs.tobosutype.activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -14,14 +14,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import com.tbs.tobosutype.bean._ImageS;
+import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.DanTuAdapter;
-import com.tbs.tobosutype.bean.DantuEntity;
 import com.tbs.tobosutype.bean.EC;
 import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.EventBusUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.SpacingItemDecoration;
 import com.tbs.tobosutype.utils.Util;
 import org.json.JSONArray;
@@ -37,7 +39,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class DanTuAcitivity extends AppCompatActivity {
+public class DanTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
 
     @BindView(R.id.relBackDantu)
     RelativeLayout relBackDantu;
@@ -53,19 +55,19 @@ public class DanTuAcitivity extends AppCompatActivity {
     @BindView(R.id.rel_no_dantu)
     RelativeLayout rel_no_dantu;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
-    private Context context;
     private String TAG = "DanTuAcitivity";
     private boolean isLoadMore = false;
-    private ArrayList<DantuEntity> dantuArrayList = new ArrayList<DantuEntity>();
+    private ArrayList<_ImageS> dantuArrayList = new ArrayList<_ImageS>();
     private DanTuAdapter danTuAdapter;
     private ArrayList<String> deletDantuSelectIdList = new ArrayList<String>();
-    private ArrayList<DantuEntity> deletingEntity = new ArrayList<DantuEntity>();
+    private ArrayList<_ImageS> deletingEntity = new ArrayList<_ImageS>();
     private boolean isDeletingDantu = false;
+    private Gson gson = new Gson();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = DanTuAcitivity.this;
+        mContext = DanTuAcitivity.this;
         setContentView(R.layout.activity_dantu);
         ButterKnife.bind(this);
         initView();
@@ -150,7 +152,7 @@ public class DanTuAcitivity extends AppCompatActivity {
     private int page = 1;
     private int pageSize = 20;
     private void getNetData(){
-        if(Util.isNetAvailable(context)){
+        if(Util.isNetAvailable(mContext)){
             SharedPreferences sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
             String type = sp.getString("typeid", "1");
             String userid = sp.getString("userid", Constant.DEFAULT_USER_ID);
@@ -173,7 +175,7 @@ public class DanTuAcitivity extends AppCompatActivity {
 
                         @Override
                         public void run() {
-                            Util.setToast(context, "系统繁忙，请求失败。");
+                            Util.setToast(mContext, "系统繁忙，请求失败。");
                         }
                     });
                     e.printStackTrace();
@@ -190,15 +192,20 @@ public class DanTuAcitivity extends AppCompatActivity {
                             if(jsonObject.getInt("status") == 200){
                                 JSONArray array = jsonObject.getJSONArray("data");
                                 for(int i=0;i<array.length();i++){
-                                    DantuEntity entity = new DantuEntity();
-                                    entity.setId(array.getJSONObject(i).getString("id"));
-                                    entity.setCollect_id(array.getJSONObject(i).getString("collect_id"));
-                                    entity.setCover_url(array.getJSONObject(i).getString("cover_url"));
-                                    entity.setImage_width(array.getJSONObject(i).getInt("image_width"));
-                                    entity.setImage_height(array.getJSONObject(i).getInt("image_height"));
-                                    entity.setId(array.getJSONObject(i).getString("id"));
-                                    dantuArrayList.add(entity);
+                                    _ImageS img = gson.fromJson(array.getJSONObject(i).toString(), _ImageS.class);
+                                    img.setSeleteStatus(false);
+                                    dantuArrayList.add(img);
+//                                    DantuEntity entity = new DantuEntity();
+//                                    entity.setId(array.getJSONObject(i).getString("id"));
+//                                    entity.setCollect_id(array.getJSONObject(i).getString("collect_id"));
+//                                    entity.setCover_url(array.getJSONObject(i).getString("cover_url"));
+//                                    entity.setImage_width(array.getJSONObject(i).getInt("image_width"));
+//                                    entity.setImage_height(array.getJSONObject(i).getInt("image_height"));
+//                                    entity.setId(array.getJSONObject(i).getString("id"));
+//                                    dantuArrayList.add(entity);
                                 }
+
+
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -209,7 +216,7 @@ public class DanTuAcitivity extends AppCompatActivity {
                                         }
 
                                         if(danTuAdapter == null){
-                                            danTuAdapter = new DanTuAdapter(context, dantuArrayList);
+                                            danTuAdapter = new DanTuAdapter(mContext, dantuArrayList);
                                             reclerviewDantu.setAdapter(danTuAdapter);
                                             danTuAdapter.notifyDataSetChanged();
                                         }else{
@@ -224,10 +231,10 @@ public class DanTuAcitivity extends AppCompatActivity {
 
                                         danTuAdapter.setDantuItemClickListener(new DanTuAdapter.OnDantuItemClickListener() {
                                             @Override
-                                            public void OnDantuItemClickListener(int position, ArrayList<DantuEntity> dantuList) {
+                                            public void OnDantuItemClickListener(int position, ArrayList<_ImageS> dantuList) {
                                                 if(isEditting){
                                                     // 正在编辑删除中
-                                                    DantuEntity bean = dantuList.get(position);
+                                                    _ImageS bean = dantuList.get(position);
                                                     boolean isSelect = bean.getSeleteStatus();
                                                     if (!isSelect) {
                                                         bean.setSeleteStatus(true);
@@ -241,11 +248,13 @@ public class DanTuAcitivity extends AppCompatActivity {
                                                     danTuAdapter.notifyDataSetChanged();
                                                 }else {
                                                     // 没有编辑删除中
-//                                                    String imgJson = mGson.toJson(mImageSArrayList);
-//                                                    SpUtil.setSingImageListJson(context, imgJson);
-//                                                    Intent intent = new Intent(context, SImageLookingActivity.class);
-//                                                    intent.putExtra("mPosition", position);
-//                                                    startActivity(intent);
+
+                                                    String imgJson = new Gson().toJson(dantuArrayList);
+                                                    SpUtil.setSingImageListJson(mContext, imgJson);
+                                                    Intent intent = new Intent(mContext, SImageLookingActivity.class);
+                                                    intent.putExtra("mPosition", position);
+                                                    intent.putExtra("mWhereFrom","DanTuActivity");
+                                                    startActivity(intent);
                                                 }
                                             }
                                         });
@@ -262,7 +271,7 @@ public class DanTuAcitivity extends AppCompatActivity {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Util.setToast(context, msg);
+                                        Util.setToast(mContext, msg);
                                         dantuRefreshLayout.setRefreshing(false);
                                         if(danTuAdapter!=null){
                                             danTuAdapter.loadMoreData(false);
@@ -354,7 +363,7 @@ public class DanTuAcitivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Util.setToast(context, "删除失败");
+                                    Util.setToast(mContext, "删除失败");
                                 }
                             });
                             e.printStackTrace();
@@ -388,9 +397,9 @@ public class DanTuAcitivity extends AppCompatActivity {
 
                                         if(object.getInt("status") == 200){
                                             danTuAdapter.setDeletingStutas(false);
-                                            Util.setToast(context, "取消收藏!");
+                                            Util.setToast(mContext, "取消收藏!");
                                         }else {
-                                            Util.setToast(context, msg);
+                                            Util.setToast(mContext, msg);
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -400,7 +409,7 @@ public class DanTuAcitivity extends AppCompatActivity {
                         }
                     });
                 }else{
-                    Util.setToast(context, "你没有选择套图");
+                    Util.setToast(mContext, "你没有选择套图");
                 }
 
                 break;
@@ -408,6 +417,25 @@ public class DanTuAcitivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()){
+            case EC.EventCode.DELETE_DANTU_LIST_CODE:
+                int pos = (int) event.getData();
+                if(danTuAdapter!=null){
+                    dantuArrayList.get(pos).setIs_collect("0");
+                    danTuAdapter.notifyDataSetChanged();
+                    EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_TAOTU_CODE));
+                }
+                break;
+        }
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

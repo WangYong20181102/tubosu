@@ -35,6 +35,22 @@ public class _ImageD  implements Serializable {
     private String is_collect;
     private String share_url;
     private List<String> sub_images;
+    private String collect_id;
+
+    public String getCollect_id() {
+        return collect_id;
+    }
+    public void setCollect_id(String collect_id) {
+        this.collect_id = collect_id;
+    }
+
+    private boolean seleteStatus;
+    public boolean isSeleteStatus() {
+        return seleteStatus;
+    }
+    public void setSeleteStatus(boolean seleteStatus) {
+        this.seleteStatus = seleteStatus;
+    }
 
     public String getId() {
         return id;

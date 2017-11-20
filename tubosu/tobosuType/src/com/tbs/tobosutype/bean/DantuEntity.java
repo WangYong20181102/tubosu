@@ -18,16 +18,16 @@ public class DantuEntity {
     private int image_height;
     private boolean isSelected;
 
-//    private String id;
-//    private String cover_url;
-//    private int image_width;
-//    private int image_height;
-//    private String style_id;  Y
-//    private String space_id;
-//    private String image_url;
-//    private String title;
-//    private String is_collect;
-//    private String share_url;
+//    private String id;         0
+//    private String cover_url;  0
+//    private int image_width;   0
+//    private int image_height;  0
+//    private String style_id;   1
+//    private String space_id;   1
+//    private String image_url;  1
+//    private String title;      1
+//    private String is_collect; 0
+//    private String share_url;  1
 
 
     public String getId() {

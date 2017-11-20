@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean.TaotuEntity;
+import com.tbs.tobosutype.bean._ImageD;
+
 import java.util.ArrayList;
 
 /**
@@ -21,11 +23,11 @@ public class TaoTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private String TAG = TaoTuAdapter.class.getSimpleName();
     private Context context;
     private LayoutInflater inflater;
-    private ArrayList<TaotuEntity> dataList;
+    private ArrayList<_ImageD> dataList;
     private boolean more = false;
     private boolean isDeleting = false;
 
-    public TaoTuAdapter(Context context, ArrayList<TaotuEntity> dataList){
+    public TaoTuAdapter(Context context, ArrayList<_ImageD> dataList){
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.dataList = dataList;
@@ -116,18 +118,9 @@ public class TaoTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    class TaoFootHolder extends RecyclerView.ViewHolder{
-        ProgressBar bar;
-        TextView loadText;
-        public TaoFootHolder(View itemView) {
-            super(itemView);
-            bar = (ProgressBar) itemView.findViewById(R.id.newhome_progressbar);
-            loadText = (TextView) itemView.findViewById(R.id.newhome_loadmore);
-        }
-    }
 
     public interface OnTaotuItemClickListener{
-        void OnTaotuItemClickListener(int position, ArrayList<TaotuEntity> taotuList);
+        void OnTaotuItemClickListener(int position, ArrayList<_ImageD> taotuList);
     }
     public void setTaotuItemClickListener(OnTaotuItemClickListener taotuItemClickListener) {
         this.taotuItemClickListener = taotuItemClickListener;
@@ -135,9 +128,9 @@ public class TaoTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private OnTaotuItemClickListener taotuItemClickListener;
 
-    public ArrayList<TaotuEntity> getTaotuEntityList() {
+    public ArrayList<_ImageD> getTaotuEntityList() {
         if (dataList == null) {
-            dataList = new ArrayList<TaotuEntity>();
+            dataList = new ArrayList<_ImageD>();
         }
         return dataList;
     }

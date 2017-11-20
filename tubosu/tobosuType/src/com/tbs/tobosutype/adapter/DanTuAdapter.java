@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean.DantuEntity;
 import java.util.ArrayList;
-
+import com.tbs.tobosutype.bean._ImageS;
 /**
  * Created by Lie on 2017/11/13.
  */
@@ -19,11 +19,11 @@ public class DanTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private String TAG = DanTuAdapter.class.getSimpleName();
     private Context context;
     private LayoutInflater inflater;
-    private ArrayList<DantuEntity> dataList;
+    private ArrayList<_ImageS> dataList;
     private boolean more = false;
     private boolean isDeleting = false;
 
-    public DanTuAdapter(Context context, ArrayList<DantuEntity> dataList){
+    public DanTuAdapter(Context context, ArrayList<_ImageS> dataList){
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.dataList = dataList;
@@ -98,9 +98,9 @@ public class DanTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
 
-    public ArrayList<DantuEntity> getDantuEntityList() {
+    public ArrayList<_ImageS> getDantuEntityList() {
         if (dataList == null) {
-            dataList = new ArrayList<DantuEntity>();
+            dataList = new ArrayList<_ImageS>();
         }
         return dataList;
     }
@@ -117,7 +117,7 @@ public class DanTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     public interface OnDantuItemClickListener{
-        void OnDantuItemClickListener(int position, ArrayList<DantuEntity> taotuList);
+        void OnDantuItemClickListener(int position, ArrayList<_ImageS> taotuList);
     }
     public void setDantuItemClickListener(OnDantuItemClickListener dantuItemClickListener) {
         this.dantuItemClickListener = dantuItemClickListener;

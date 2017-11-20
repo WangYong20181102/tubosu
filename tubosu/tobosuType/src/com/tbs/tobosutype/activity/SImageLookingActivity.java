@@ -500,7 +500,10 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                                     mImageSArrayList.get(mPosition).setIs_collect("0");
                                     Toast.makeText(mContext, "取消收藏成功", Toast.LENGTH_SHORT).show();
                                     if(mWhereFrom.equals("NewImageSFragment")){
+                                        // TODO: 2017/11/20
                                         EventBusUtil.sendEvent(new Event(EC.EventCode.NOTIF_SHOUCANG_DATA_CHANGE_IS_NOT_COLLECT, mPosition));
+                                    }else if(mWhereFrom.equals("DanTuActivity")){
+                                        EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_DANTU_LIST_CODE, mPosition));
                                     }
                                 }
                             }

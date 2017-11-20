@@ -567,6 +567,9 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                                     Toast.makeText(mContext, "取消收藏成功", Toast.LENGTH_SHORT).show();
                                     if(mWhereFrom.equals("NewImageDFragment")){
                                         EventBusUtil.sendEvent(new Event(EC.EventCode.NOTIF_D_SHOUCANG_DATA_CHANGE_IS_NOT_COLLECT, mArrayListPosition));
+                                    }else if(mWhereFrom.equals("TaotuActivity")){
+                                        // TODO: 2017/11/20
+                                        EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_TAOTU_LIST_CODE, mArrayListPosition));
                                     }
                                 }
                             }

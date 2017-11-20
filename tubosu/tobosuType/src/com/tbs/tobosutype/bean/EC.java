@@ -21,6 +21,8 @@ public class EC {
         public static final int LOOG_CLICK_DIMAGE_IN_LOOK_PHOTO = 0x000012;//长按套图传递事件
 
         public static final int DELETE_TAOTU_CODE = 0x100000;//删除收藏
+        public static final int DELETE_TAOTU_LIST_CODE = 0x100001;//删除收藏套图
+        public static final int DELETE_DANTU_LIST_CODE = 0x100002;//删除收藏单图
     }
 
 }
