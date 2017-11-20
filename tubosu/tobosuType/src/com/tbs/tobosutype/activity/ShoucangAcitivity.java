@@ -38,8 +38,8 @@ public class ShoucangAcitivity extends com.tbs.tobosutype.base.BaseActivity {
     RelativeLayout relBackShoucang;
     @BindView(R.id.shouList)
     ListView shouList;
-    @BindView(R.id.ivMyfavNodata)
-    ImageView ivMyfavNodata;
+    @BindView(R.id.relMyfavNodata)
+    RelativeLayout relMyfavNodata;
     private Context context;
     private String TAG = "ShoucangAcitivity";
     private List<ShoucangItem> favList = new ArrayList<>();
@@ -86,7 +86,7 @@ public class ShoucangAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            ivMyfavNodata.setVisibility(View.GONE);
+                            relMyfavNodata.setVisibility(View.GONE);
                             try {
                                 JSONObject jsonObject = new JSONObject(json);
                                 int status = jsonObject.getInt("status");
@@ -117,7 +117,7 @@ public class ShoucangAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                                     });
                                 }else if(status==0 || status==201){
                                     Util.setToast(context, msg);
-                                    ivMyfavNodata.setVisibility(View.VISIBLE);
+                                    relMyfavNodata.setVisibility(View.VISIBLE);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
