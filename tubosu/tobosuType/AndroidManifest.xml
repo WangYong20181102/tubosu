@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tbs.tobosutype"
     android:versionCode="24"
-    android:versionName="3.5"> <!-- 2017-11-16 修改成  24  &  3.5-->
+    android:versionName="3.5"> <!-- 2017-11-16 修改成  24  &  3.5 -->
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="25" />
@@ -555,7 +555,8 @@
         <activity
             android:name="cn.jpush.android.ui.PopWinActivity"
             android:exported="false" />
-        <activity android:name=".activity.SImageLookingActivity"></activity>
+        <activity android:name=".activity.SImageLookingActivity" />
+        <activity android:name=".activity.DImageLookingActivity" />
     </application>
 
 </manifest>

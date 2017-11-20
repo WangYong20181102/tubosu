@@ -12,7 +12,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.base.BaseFragment;
 import com.tbs.tobosutype.bean.EC;
 import com.tbs.tobosutype.bean.Event;
-import com.tbs.tobosutype.bean._ImageS;
+import com.tbs.tobosutype.bean._ImageD;
 import com.tbs.tobosutype.customview.TouchImageView;
 import com.tbs.tobosutype.utils.EventBusUtil;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
@@ -22,20 +22,19 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * Created by Mr.Lin on 2017/11/16 18:07.
- * 单图查看子项
+ * Created by Mr.Lin on 2017/11/17 17:41.
  */
 
-public class SImageLookFragment extends BaseFragment {
+public class DImageLookFragment extends BaseFragment {
     @BindView(R.id.look_fragment_rl)
     RelativeLayout lookFragmentRl;
     Unbinder unbinder;
     private Context mContext;
     private TouchImageView mTouchImageView;
-    private _ImageS mImageS;
+    private String mImageUrl;
     private String TAG = "SImageLookFragment";
 
-    public SImageLookFragment() {
+    public DImageLookFragment() {
 
     }
 
@@ -44,12 +43,12 @@ public class SImageLookFragment extends BaseFragment {
         return true;
     }
 
-    public static final SImageLookFragment newInstance(_ImageS mImageS) {
-        SImageLookFragment sImageLookFragment = new SImageLookFragment();
+    public static final DImageLookFragment newInstance(String mImageUrl) {
+        DImageLookFragment dImageLookFragment = new DImageLookFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("mImageS", mImageS);
-        sImageLookFragment.setArguments(bundle);
-        return sImageLookFragment;
+        bundle.putSerializable("mImageUrl", mImageUrl);
+        dImageLookFragment.setArguments(bundle);
+        return dImageLookFragment;
     }
 
     @Override
@@ -57,7 +56,7 @@ public class SImageLookFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         if (args != null) {
-            this.mImageS = (_ImageS) args.getSerializable("mImageS");
+            this.mImageUrl = (String) args.getSerializable("mImageUrl");
         }
     }
 
@@ -76,23 +75,22 @@ public class SImageLookFragment extends BaseFragment {
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         mTouchImageView.setLayoutParams(layoutParams);
         lookFragmentRl.addView(mTouchImageView);
-        ImageLoaderUtil.loadImage(mContext, mTouchImageView, mImageS.getImage_url());
+        ImageLoaderUtil.loadImage(mContext, mTouchImageView, mImageUrl);
         mTouchImageView.setOnClickListener(onClickListener);
         mTouchImageView.setOnLongClickListener(onLongClickListener);
     }
-
     //点击事件  单击
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            EventBusUtil.sendEvent(new Event(EC.EventCode.CLICK_SIMAGE_IN_LOOK_PHOTO));
+            EventBusUtil.sendEvent(new Event(EC.EventCode.CLICK_DIMAGE_IN_LOOK_PHOTO));
 
         }
     };
     private View.OnLongClickListener onLongClickListener = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
-            EventBusUtil.sendEvent(new Event(EC.EventCode.LOOG_CLICK_SIMAGE_IN_LOOK_PHOTO, mImageS.getImage_url()));
+            EventBusUtil.sendEvent(new Event(EC.EventCode.LOOG_CLICK_DIMAGE_IN_LOOK_PHOTO, mImageUrl));
             return true;
         }
     };

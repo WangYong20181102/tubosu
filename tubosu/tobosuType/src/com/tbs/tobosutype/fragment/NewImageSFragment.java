@@ -165,6 +165,14 @@ public class NewImageSFragment extends BaseFragment {
                     popupWindow.dismiss();
                 }
                 break;
+            case EC.EventCode.NOTIF_SHOUCANG_DATA_CHANGE_IS_COLLECT:
+                //修改为已收藏状态
+                mImageSArrayList.get((int) event.getData()).setIs_collect("1");
+                break;
+            case EC.EventCode.NOTIF_SHOUCANG_DATA_CHANGE_IS_NOT_COLLECT:
+                //修改为未收藏状态
+                mImageSArrayList.get((int) event.getData()).setIs_collect("0");
+                break;
         }
     }
 
@@ -273,7 +281,7 @@ public class NewImageSFragment extends BaseFragment {
                 showPopSelect(2);
                 break;
             case R.id.frag_new_img_single_yanse_ll:
-                //颜色安妮弹窗
+                //颜色按钮弹窗
                 showPopSelect(3);
                 break;
         }
@@ -551,6 +559,10 @@ public class NewImageSFragment extends BaseFragment {
             Log.e(TAG, "获取请求参数==空间==mColorParam====" + mColorParam);
             param.put("color_id", mColorParam);
         }
+        if (!TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {
+            //传入UID
+            param.put("uid", AppInfoUtil.getUserid(mContext));
+        }
         param.put("page", mPage);
         param.put("page_size", mPageSize);
         OKHttpUtil.post(Constant.SINGLE_MAP_LIST, param, new Callback() {
@@ -634,6 +646,7 @@ public class NewImageSFragment extends BaseFragment {
                         SpUtil.setSingImageListJson(mContext, mSImageListJson);
                         Intent intent = new Intent(mContext, SImageLookingActivity.class);
                         intent.putExtra("mPosition", position);
+                        intent.putExtra("mWhereFrom", "NewImageSFragment");
                         mContext.startActivity(intent);
                     } else {
                         Log.e(TAG, "正在加载数据，无法进入下一个页面！");
