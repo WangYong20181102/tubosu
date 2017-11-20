@@ -60,7 +60,7 @@
                 android:ems="7"
                 android:singleLine="true"
                 android:text="害羞的小狮子"
-                android:textColor="#adb1d3"
+                android:textColor="#b3b3b3"
                 android:textSize="11sp" />
             <!--收藏的图标-->
             <LinearLayout
@@ -83,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="662"
-                    android:textColor="#adb1d3"
+                    android:textColor="#b3b3b3"
                     android:textSize="11sp" />
             </LinearLayout>
 

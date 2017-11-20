@@ -30,7 +30,7 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_width="18dp"
+                android:layout_width="16dp"
                 android:layout_height="18dp"
                 android:src="@drawable/back_white" />
         </LinearLayout>
@@ -173,7 +173,7 @@
         android:id="@+id/d_img_look_frist_into_rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#78000000"
+        android:background="#99000000"
         android:visibility="gone">
 
         <LinearLayout
@@ -214,7 +214,7 @@
         android:id="@+id/d_img_look_fadan_rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#8c000000"
+        android:background="#9d000000"
         android:visibility="gone">
 
         <LinearLayout

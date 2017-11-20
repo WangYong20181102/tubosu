@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/new_image_tab"
-            android:background="@color/divider" />
+            android:background="#efefef" />
         <!--切换的viewpage-->
         <android.support.v4.view.ViewPager
             android:id="@+id/new_image_viewpager"
@@ -48,7 +48,7 @@
         android:id="@+id/new_image_free_design_img_rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#7f666666"
+        android:background="#99666666"
         android:visibility="gone">
         <ImageView
             android:layout_width="match_parent"
