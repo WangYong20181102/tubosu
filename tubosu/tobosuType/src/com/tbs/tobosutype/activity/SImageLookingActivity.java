@@ -422,7 +422,7 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                 //分享按钮
                 //分享
                 UMWeb umWeb = new UMWeb(mImageSArrayList.get(mPosition).getShare_url() + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(mContext));
-                umWeb.setDescription("土拨鼠装修网");
+                umWeb.setDescription("这里的图片很不错，分享给你哦");
                 umWeb.setTitle(mImageSArrayList.get(mPosition).getTitle());
                 umWeb.setThumb(new UMImage(mContext, mImageSArrayList.get(mPosition).getCover_url()));
                 new ShareAction(SImageLookingActivity.this)

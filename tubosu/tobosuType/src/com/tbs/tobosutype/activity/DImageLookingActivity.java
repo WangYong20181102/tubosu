@@ -443,7 +443,7 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             case R.id.d_img_look_share_ll:
                 //分享
                 UMWeb umWeb = new UMWeb(mImageDArrayList.get(mArrayListPosition).getShare_url() + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(mContext));
-                umWeb.setDescription("土拨鼠装修网");
+                umWeb.setDescription("这里的图片很不错，分享给你哦");
                 umWeb.setTitle(mImageDArrayList.get(mArrayListPosition).getTitle());
                 umWeb.setThumb(new UMImage(mContext, mImageDArrayList.get(mArrayListPosition).getCover_url()));
                 new ShareAction(DImageLookingActivity.this)
