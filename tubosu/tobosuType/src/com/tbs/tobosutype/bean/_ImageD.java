@@ -1,34 +1,40 @@
 package com.tbs.tobosutype.bean;
 
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * Created by Mr.Lin on 2017/11/10 14:54.
  * 套图的数据模型
  * 作用于逛图库的套图模式
  */
 
-public class _ImageD {
+public class _ImageD  implements Serializable {
 
     /**
-     * id : 83433
-     * cover_url : http://cdn111.dev.tobosu.com/impress_pic/2017-11-06/p_59fffc03e549e.jpg
-     * image_width : 864
+     * id : 83438
+     * cover_url : http://cdn111.dev.tobosu.com/impress_pic/2017-11-17/small/p_5a0e54afe295b.jpg
+     * image_width : 800
      * image_height : 600
-     * title : 混搭小户型
-     * designer_name : 今天星期一
-     * designer_icon : http://aliyun.tbscache.com/res/common/images/icon/icon8.jpg
-     * collect_count : 8
-     * is_collect : 1
+     * title :
+     * designer_name : 陈小姐
+     * designer_icon : http://opic.tbscache.com/users/sjs/logo/2013/12-30/11d11b27-e1ab-778b-8c90-e60d3c8d5a8c.jpeg
+     * collect_count : 1
+     * is_collect : 0
+     * sub_images : ["http://cdn111.dev.tobosu.com/impress_pic/2017-11-17/p_5a0e54ab9bf45.jpg","http://cdn111.dev.tobosu.com/impress_pic/2017-11-17/p_5a0e54ad87d5f.jpg","http://cdn111.dev.tobosu.com/impress_pic/2017-11-17/p_5a0e54afe295b.jpg","http://cdn111.dev.tobosu.com/impress_pic/2017-11-17/p_5a0e54b2153b9.png"]
      */
 
     private String id;
-    private String cover_url;//封面图
-    private int image_width;//图片的宽高
+    private String cover_url;
+    private int image_width;
     private int image_height;
     private String title;
     private String designer_name;
     private String designer_icon;
     private String collect_count;
     private String is_collect;
+    private String share_url;
+    private List<String> sub_images;
 
     public String getId() {
         return id;
@@ -100,5 +106,21 @@ public class _ImageD {
 
     public void setIs_collect(String is_collect) {
         this.is_collect = is_collect;
+    }
+
+    public List<String> getSub_images() {
+        return sub_images;
+    }
+
+    public void setSub_images(List<String> sub_images) {
+        this.sub_images = sub_images;
+    }
+
+    public String getShare_url() {
+        return share_url;
+    }
+
+    public void setShare_url(String share_url) {
+        this.share_url = share_url;
     }
 }

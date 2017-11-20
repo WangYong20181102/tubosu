@@ -57,6 +57,7 @@ public class NewImageDAdapter
         //设置含有点击事件的控件
         newImageDViewHolder.item_new_image_shoucan_icon.setOnClickListener(this);
         newImageDViewHolder.item_new_image_shoucan_icon_ll.setOnClickListener(this);
+        newImageDViewHolder.item_new_image_img_ll.setOnClickListener(this);//封面点击事件
         return newImageDViewHolder;
     }
 
@@ -71,6 +72,7 @@ public class NewImageDAdapter
             float imgW = mImageDArrayList.get(position).getImage_width();
             float imgH = mImageDArrayList.get(position).getImage_height();
             layoutParams.height = (int) ((imgH / imgW) * (spWidth / 2));
+            ((NewImageDViewHolder) holder).item_new_image_img_ll.setTag(position);
             ((NewImageDViewHolder) holder).item_new_image_img.setLayoutParams(layoutParams);
             //绑定数据
             //封面图 设置宽高加载
@@ -124,6 +126,7 @@ public class NewImageDAdapter
         private ImageView item_new_image_shoucan_icon;//收藏的图标
         private TextView item_new_image_shoucan_num;//收藏的数量
         private LinearLayout item_new_image_shoucan_icon_ll;//收藏图层
+        private LinearLayout item_new_image_img_ll;//套图的图层
 
         public NewImageDViewHolder(View itemView) {
             super(itemView);
@@ -134,6 +137,7 @@ public class NewImageDAdapter
             item_new_image_shoucan_icon = (ImageView) itemView.findViewById(R.id.item_new_image_shoucan_icon);
             item_new_image_shoucan_num = (TextView) itemView.findViewById(R.id.item_new_image_shoucan_num);
             item_new_image_shoucan_icon_ll = (LinearLayout) itemView.findViewById(R.id.item_new_image_shoucan_icon_ll);
+            item_new_image_img_ll = (LinearLayout) itemView.findViewById(R.id.item_new_image_img_ll);
         }
     }
 }

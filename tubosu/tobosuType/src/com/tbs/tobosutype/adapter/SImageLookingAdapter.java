@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Mr.Lin on 2017/11/16 17:43.
- * 查看单图详情适配器
+ * 单图(套图)详情适配器
  */
 
 public class SImageLookingAdapter extends FragmentStatePagerAdapter {

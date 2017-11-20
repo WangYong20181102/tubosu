@@ -64,8 +64,8 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
     private ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
     private NewImagePagerAdapter mNewImagePagerAdapter;
 
-    private int mTime = 0;//倒计时时间
-    private boolean isAddTime = false;//是否在倒计时
+    private int mTime = 0;//计时时间
+    private boolean isAddTime = false;//是否在计时
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,12 +153,13 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
                 //整合动画
                 AnimationSet animationSet = new AnimationSet(false);
                 ScaleAnimation scaleAnimation = new ScaleAnimation(1.0f, 0.0f, 1.0f, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 1.3f, Animation.RELATIVE_TO_SELF, 1.4f);
+                        Animation.RELATIVE_TO_SELF, 1.5f,
+                        Animation.RELATIVE_TO_SELF, 1.6f);
                 TranslateAnimation translateAnimation = new TranslateAnimation(
                         Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 1.8f,
+                        Animation.RELATIVE_TO_SELF, 1.9f,
                         Animation.RELATIVE_TO_SELF, 0.0f,
-                        Animation.RELATIVE_TO_SELF, 1.8f);
+                        Animation.RELATIVE_TO_SELF, 2.7f);
                 scaleAnimation.setDuration(1000);
                 translateAnimation.setDuration(1200);
                 animationSet.addAnimation(translateAnimation);

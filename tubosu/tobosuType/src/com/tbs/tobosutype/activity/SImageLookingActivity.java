@@ -31,6 +31,7 @@ import com.tbs.tobosutype.fragment.SImageLookFragment;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.EventBusUtil;
 import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.socialize.ShareAction;
@@ -56,6 +57,7 @@ import okhttp3.Response;
 
 /**
  * 单图查看器
+ * creat by lin
  * 传入该页面 位置
  * 页面的数据通过Sp中转
  */
@@ -83,6 +85,12 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
     TextView sImgLookIKnow;
     @BindView(R.id.s_img_look_frist_into_rl)
     RelativeLayout sImgLookFristIntoRl;
+    @BindView(R.id.s_img_look_fadan_img)
+    ImageView sImgLookFadanImg;
+    @BindView(R.id.s_img_look_fadan_close)
+    ImageView sImgLookFadanClose;
+    @BindView(R.id.s_img_look_fadan_rl)
+    RelativeLayout sImgLookFadanRl;
 
     private String TAG = "SImageLookingActivity";
     private Context mContext;
@@ -93,9 +101,15 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
     private ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
     private SImageLookingAdapter mSImageLookingAdapter;
     private int mPosition = 0;//上一个界面传来的位置信息
+    private String mWhereFrom="";//上一个界面传来用
     private boolean isShowingBanner = true;//是否显示banner  默认显示
     private PopupWindow mDownLoadImagePopWindow;//长按显示下载的pop
     private View mDownLoadImageView;//承载pop的view
+    private boolean isAddTime = false;//是否在倒计时
+    private int mTime = 0;//计时时间
+    //判断viewpager滑动情况
+    private int lastValue = -1;
+    private boolean isLeft = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +127,7 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
         mSImageListJson = SpUtil.getSingImageListJson(mContext);
         //获取上一个界面传来的位置信息
         mPosition = mIntent.getIntExtra("mPosition", 0);
+        mWhereFrom = mIntent.getStringExtra("mWhereFrom");
         //根据json处理数据
         if (TextUtils.isEmpty(mSImageListJson)) {
             Toast.makeText(mContext, "数据获取失败！", Toast.LENGTH_SHORT).show();
@@ -127,29 +142,111 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             sImgLookViewpager.setAdapter(mSImageLookingAdapter);
             sImgLookViewpager.setCurrentItem(mPosition);
             sImgLookViewpager.addOnPageChangeListener(onPageChangeListener);
+            //显示收藏的状态
+            if (mImageSArrayList.get(mPosition).getIs_collect().equals("1")) {
+                //已收藏
+                sImgLookShoucan.setImageResource(R.drawable.shoucang_after);
+            } else {
+                //未收藏
+                sImgLookShoucan.setImageResource(R.drawable.shoucang_detail_befor);
+            }
         }
         //展示动画
         ShowFristIntoAnim();
     }
 
-    // 加载动画
+    // 加载滑动演示动画
     private void ShowFristIntoAnim() {
-        sImgLookFristIntoAnim.setImageResource(R.drawable.anim_frist_into_look_img);
-        AnimationDrawable animationDrawable = (AnimationDrawable) sImgLookFristIntoAnim.getDrawable();
-        animationDrawable.start();
+        if (TextUtils.isEmpty(SpUtil.getFristIntoImageLook(mContext))) {
+            SpUtil.setFristIntoImageLook(mContext, "已经显示");
+            sImgLookFristIntoRl.setVisibility(View.VISIBLE);
+            sImgLookFristIntoAnim.setImageResource(R.drawable.anim_frist_into_look_img);
+            AnimationDrawable animationDrawable = (AnimationDrawable) sImgLookFristIntoAnim.getDrawable();
+            animationDrawable.start();
+        } else {
+            sImgLookFristIntoRl.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        if (SpUtil.getImageDetailDataToken(mContext).equals(Util.getDateToken() + "detail")) {
+            //比对成功 当天已经弹窗过
+            isAddTime = false;
+        } else {
+            isAddTime = true;
+            ShowFadanTanChuang();
+        }
+
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        Log.e(TAG, "===========onPause 暂停 离开页面时");
+        if (isAddTime) {
+            isAddTime = false;
+            mTime = 0;
+        }
+        super.onPause();
+    }
+
+    //用户进入页面每天一次的弹窗
+    private void ShowFadanTanChuang() {
+        if (SpUtil.getImageDetailDataToken(mContext).equals(Util.getDateToken() + "detail")) {
+            Log.e(TAG, "弹窗已经出现过！！！！！！！！============");
+        } else {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        while (isAddTime) {
+                            Thread.sleep(1000);
+                            mTime++;
+                            Log.e(TAG, "时间累积=============" + mTime);
+                            if (mTime >= 45) {
+                                //出现弹窗
+                                isAddTime = false;
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        //显示弹窗
+                                        SpUtil.setImageDetailDataToken(mContext, Util.getDateToken() + "detail");
+                                        sImgLookFadanRl.setVisibility(View.VISIBLE);
+                                        sImgLookFristIntoRl.setVisibility(View.GONE);
+                                    }
+                                });
+                            }
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
     }
 
     //页面滑动监听事件
     private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+//            Log.e(TAG, "单图查看器ViewPager====onPageScrolled===position====" + position+"====positionOffset===="+positionOffset+"====positionOffsetPixels==="+positionOffsetPixels);
+            if (positionOffset != 0) {
+                if (lastValue >= positionOffsetPixels) {
+                    //右滑
+                    isLeft = false;
+                } else if (lastValue < positionOffsetPixels) {
+                    //左滑
+                    isLeft = true;
+                }
+            }
+            lastValue = positionOffsetPixels;
         }
 
         @Override
         public void onPageSelected(int position) {
             //滑动时的位置切换
-            Log.e(TAG, "当前页面滑动的位置========" + position);
+//            Log.e(TAG, "单图查看器ViewPager====onPageSelected===position====" + position);
             mPosition = position;
             //改变收藏的状态
             if (mImageSArrayList.get(mPosition).getIs_collect().equals("1")) {
@@ -157,11 +254,16 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             } else {
                 sImgLookShoucan.setImageResource(R.drawable.shoucang_detail_befor);
             }
+            if (isLeft){
+                Log.e(TAG,"--->左划==============="+position);
+            }else {
+                Log.e(TAG,"--->右划==============="+position);
+            }
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
-
+//            Log.e(TAG, "单图查看器ViewPager====onPageScrollStateChanged===state====" + state);
         }
     };
 
@@ -293,7 +395,9 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
     @OnClick({R.id.s_img_look_title_back, R.id.s_img_look_shoucan,
             R.id.s_img_look_share, R.id.s_img_look_btn_fadan,
             R.id.s_img_look_shoucan_ll, R.id.s_img_look_share_ll,
-            R.id.s_img_look_frist_into_rl, R.id.s_img_look_i_know})
+            R.id.s_img_look_frist_into_rl, R.id.s_img_look_i_know,
+            R.id.s_img_look_fadan_img, R.id.s_img_look_fadan_close,
+            R.id.s_img_look_fadan_rl})
     public void onViewClickedInSImageLookingActivity(View view) {
         switch (view.getId()) {
             case R.id.s_img_look_title_back:
@@ -318,7 +422,7 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                 //分享按钮
                 //分享
                 UMWeb umWeb = new UMWeb(mImageSArrayList.get(mPosition).getShare_url() + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(mContext));
-//                umWeb.setDescription(mDecoCaseDetail.getDesc());
+                umWeb.setDescription("土拨鼠装修网");
                 umWeb.setTitle(mImageSArrayList.get(mPosition).getTitle());
                 umWeb.setThumb(new UMImage(mContext, mImageSArrayList.get(mPosition).getCover_url()));
                 new ShareAction(SImageLookingActivity.this)
@@ -336,7 +440,22 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                 sImgLookFristIntoRl.setVisibility(View.GONE);
                 break;
             case R.id.s_img_look_frist_into_rl:
-
+                //初次进入的图层 不做任何处理  只是设置点击事件 防止触摸透传
+                break;
+            case R.id.s_img_look_fadan_img:
+                //发单的图片 跳转到发单的页面
+                Log.e(TAG, "点击了发单按钮===================");
+                sImgLookFadanRl.setVisibility(View.GONE);
+                Intent intent2 = new Intent(mContext, NewWebViewActivity.class);
+                intent2.putExtra("mLoadingUrl", Constant.IAMGE_DETAIL_DIALOG);
+                startActivity(intent2);
+                break;
+            case R.id.s_img_look_fadan_close:
+                //关闭发单的按钮
+                sImgLookFadanRl.setVisibility(View.GONE);
+                break;
+            case R.id.s_img_look_fadan_rl:
+                //不做任何处理
                 break;
         }
     }
@@ -368,14 +487,21 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                             @Override
                             public void run() {
                                 if (msg.equals("收藏成功")) {
-                                    //收藏成功将收藏的图标改变 将数据模型改变
+                                    //收藏成功将收藏的图标改变 将数据模型改变 同时通知外部的数据改变
                                     sImgLookShoucan.setImageResource(R.drawable.shoucang_after);
                                     mImageSArrayList.get(mPosition).setIs_collect("1");
                                     Toast.makeText(mContext, "收藏成功", Toast.LENGTH_SHORT).show();
+                                    if(mWhereFrom.equals("NewImageSFragment")){
+                                        EventBusUtil.sendEvent(new Event(EC.EventCode.NOTIF_SHOUCANG_DATA_CHANGE_IS_COLLECT, mPosition));
+                                    }
                                 } else {
+                                    //取消收藏  同时通知外部的数据改变
                                     sImgLookShoucan.setImageResource(R.drawable.shoucang_before);
                                     mImageSArrayList.get(mPosition).setIs_collect("0");
                                     Toast.makeText(mContext, "取消收藏成功", Toast.LENGTH_SHORT).show();
+                                    if(mWhereFrom.equals("NewImageSFragment")){
+                                        EventBusUtil.sendEvent(new Event(EC.EventCode.NOTIF_SHOUCANG_DATA_CHANGE_IS_NOT_COLLECT, mPosition));
+                                    }
                                 }
                             }
                         });

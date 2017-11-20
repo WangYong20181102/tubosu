@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.activity.DImageLookingActivity;
 import com.tbs.tobosutype.activity.LoginActivity;
 import com.tbs.tobosutype.adapter.MyGridViewAdapter;
 import com.tbs.tobosutype.adapter.NewImageDAdapter;
@@ -39,6 +40,7 @@ import com.tbs.tobosutype.bean._SelectMsg;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 
 import org.json.JSONArray;
@@ -130,6 +132,7 @@ public class NewImageDFragment extends BaseFragment {
     private GridView mGridView;
     private PopupWindow popupWindow;
     private View popView;//承载体
+    private boolean isLoadingData = false;//列表集合是否在加载数据
     //条件选择框的适配器
     private MyGridViewAdapter myGridViewAdapterStyle;//风格
     private MyGridViewAdapter myGridViewAdapterLayout;//户型
@@ -167,6 +170,14 @@ public class NewImageDFragment extends BaseFragment {
                 if (popupWindow != null) {
                     popupWindow.dismiss();
                 }
+                break;
+            case EC.EventCode.NOTIF_D_SHOUCANG_DATA_CHANGE_IS_COLLECT:
+                //修改为已收藏状态
+                mImageDArrayList.get((int) event.getData()).setIs_collect("1");
+                break;
+            case EC.EventCode.NOTIF_D_SHOUCANG_DATA_CHANGE_IS_NOT_COLLECT:
+                //修改为未收藏状态
+                mImageDArrayList.get((int) event.getData()).setIs_collect("0");
                 break;
         }
     }
@@ -523,6 +534,8 @@ public class NewImageDFragment extends BaseFragment {
 
     //网络获取数据列表
     private void HttpGetImageList(int mPage) {
+        //正在加载数据
+        isLoadingData = true;
         //隐藏没有数据的蒙层
         fragNewImgNoneDataRl.setVisibility(View.GONE);
         //下拉刷新停止
@@ -560,10 +573,12 @@ public class NewImageDFragment extends BaseFragment {
         }
         param.put("page", mPage);
         param.put("page_size", mPageSize);
+        param.put("type", "1");
         OKHttpUtil.post(Constant.SUITE_LIST, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "数据链接失败=============" + e.getMessage());
+                isLoadingData = false;//数据加载完成
             }
 
             @Override
@@ -620,6 +635,8 @@ public class NewImageDFragment extends BaseFragment {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                } finally {
+                    isLoadingData = false;//数据加载完成
                 }
             }
         });
@@ -640,6 +657,20 @@ public class NewImageDFragment extends BaseFragment {
                         startActivityForResult(intent, 0);
                     } else {
                         HttpCollection(mImageDArrayList.get(position).getId(), AppInfoUtil.getUserid(mContext), AppInfoUtil.getTypeid(mContext), position);
+                    }
+                    break;
+                case R.id.item_new_image_img_ll:
+                    //点击图片的操作
+                    //1.将当前的数据中转
+                    if (!isLoadingData) {
+                        String DImageJson = mGson.toJson(mImageDArrayList);
+                        SpUtil.setDoubleImageListJson(mContext, DImageJson);
+                        Intent intent = new Intent(mContext, DImageLookingActivity.class);
+                        intent.putExtra("mPosition", position);
+                        intent.putExtra("mWhereFrom", "NewImageDFragment");
+                        mContext.startActivity(intent);
+                    } else {
+                        Log.e(TAG, "正在加载数据，无法进入下一个页面！");
                     }
                     break;
             }
