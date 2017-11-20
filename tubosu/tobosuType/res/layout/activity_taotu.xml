@@ -77,13 +77,13 @@
         android:layout_centerInParent="true"
         android:visibility="gone">
         <ImageView
-            android:id="@+id/iv_no_company"
+            android:id="@+id/iv_no_c1ompany"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:background="@drawable/no_shoucang"/>
         <TextView
-            android:layout_below="@+id/iv_no_company"
+            android:layout_below="@+id/iv_no_c1ompany"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
