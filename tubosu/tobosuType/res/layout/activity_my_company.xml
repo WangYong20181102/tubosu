@@ -92,7 +92,6 @@
                     android:layout_marginTop="5dp"
                     android:layout_toRightOf="@+id/my_decorate_pic"
                     android:gravity="center"
-                    android:textColor="@color/white"
                     android:textSize="15sp" />
 
                 <ImageView

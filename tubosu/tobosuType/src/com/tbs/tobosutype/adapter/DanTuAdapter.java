@@ -29,15 +29,6 @@ public class DanTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.dataList = dataList;
     }
 
-//    @Override
-//    public int getItemViewType(int position) {
-//        if(position == getItemCount()-1){
-//            return ITEM_FOOT_TYPE;
-//        }else{
-//            return ITEM_BODY_TYPE;
-//        }
-//    }
-
     public void setDeletingStutas(boolean delete){
         isDeleting = delete;
         for(int i=0;i<dataList.size();i++){
@@ -48,15 +39,6 @@ public class DanTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        /*if(viewType == ITEM_BODY_TYPE){
-            View view = inflater.inflate(R.layout.dantu_adapter_item, parent, false);
-            DanTuHolder danTuHolder = new DanTuHolder(view);
-            return danTuHolder;
-        }else {
-            View foot = inflater.inflate(R.layout.layout_new_home_foot, parent, false);
-            DanFootHolder footHolder = new DanFootHolder(foot);
-            return footHolder;
-        }*/
         View view = inflater.inflate(R.layout.dantu_adapter_item, parent, false);
         DanTuHolder danTuHolder = new DanTuHolder(view);
         return danTuHolder;
@@ -78,13 +60,13 @@ public class DanTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         dan.dan_img.setLayoutParams(params);
 
         Glide
-                .with(context)
-                .load(dataList.get(position).getCover_url())
-                .placeholder(R.drawable.iamge_loading)
-                .error(R.drawable.iamge_loading)
-                .centerCrop()
-                .override(w, h)
-                .into(dan.dan_img);
+            .with(context)
+            .load(dataList.get(position).getCover_url())
+            .placeholder(R.drawable.iamge_loading)
+            .error(R.drawable.iamge_loading)
+            .centerCrop()
+            .override(w, h)
+            .into(dan.dan_img);
 
         if(isDeleting){
             dan.dan_fav_img.setVisibility(View.VISIBLE);
@@ -103,21 +85,6 @@ public class DanTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 dantuItemClickListener.OnDantuItemClickListener(dan.getAdapterPosition(), dataList);
             }
         });
-//        if(holder instanceof DanTuHolder){
-//
-//        }
-
-//        if(holder instanceof DanFootHolder){
-//            DanFootHolder foot = (DanFootHolder) holder;
-//            // 这里不需要使用页脚
-//            if(more){
-//                foot.bar.setVisibility(View.GONE);
-//                foot.loadText.setVisibility(View.GONE);
-//            }else{
-//                foot.bar.setVisibility(View.GONE);
-//                foot.loadText.setVisibility(View.GONE);
-//            }
-//        }
     }
 
     public void loadMoreData(boolean more){
@@ -127,7 +94,7 @@ public class DanTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return dataList == null?0:dataList.size() + 1;
+        return dataList == null?0:dataList.size();
     }
 
 
@@ -148,18 +115,6 @@ public class DanTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             dan_fav_img = (ImageView) itemView.findViewById(R.id.dan_fav_img);
         }
     }
-
-//    class DanFootHolder extends RecyclerView.ViewHolder{
-//        ProgressBar bar;
-//        TextView loadText;
-//
-//        public DanFootHolder(View itemView) {
-//            super(itemView);
-//            bar = (ProgressBar) itemView.findViewById(R.id.newhome_progressbar);
-//            loadText = (TextView) itemView.findViewById(R.id.newhome_loadmore);
-//        }
-//    }
-
 
     public interface OnDantuItemClickListener{
         void OnDantuItemClickListener(int position, ArrayList<DantuEntity> taotuList);

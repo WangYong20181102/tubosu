@@ -15,41 +15,51 @@
         </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <ImageView
-        android:id="@+id/home_view"
-        android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:background="@drawable/drawable_hdpi"/>
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="49dp">
-
-        <View
-            android:id="@+id/newhomeView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"/>
-        <TextView
-            android:id="@+id/app_title_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="土拨鼠"
-            android:layout_centerInParent="true"
-            android:textSize="17sp"
-            android:textColor="@color/white"/>
-
+        android:layout_height="wrap_content">
         <ImageView
-            android:id="@+id/home_kefu"
-            android:layout_width="wrap_content"
+            android:id="@+id/home_view"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:background="@drawable/drawable_hdpi"/>
+        <ImageView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="18dp"
-            android:background="@drawable/kefu_black"/>
+            android:layout_below="@+id/home_view"
+            android:background="@drawable/dfgying"/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="49dp">
 
+            <View
+                android:id="@+id/newhomeView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"/>
+            <TextView
+                android:id="@+id/app_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="土拨鼠"
+                android:layout_centerInParent="true"
+                android:textSize="17sp"
+                android:textColor="@color/white"/>
+
+            <ImageView
+                android:id="@+id/home_kefu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="18dp"
+                android:background="@drawable/kefu_black"/>
+
+        </RelativeLayout>
     </RelativeLayout>
+
+
 
     <RelativeLayout
         android:id="@+id/relSelectCity"

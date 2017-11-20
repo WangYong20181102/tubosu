@@ -12,16 +12,13 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.DanTuAdapter;
-import com.tbs.tobosutype.adapter.TaoTuAdapter;
 import com.tbs.tobosutype.bean.DantuEntity;
 import com.tbs.tobosutype.bean.EC;
 import com.tbs.tobosutype.bean.Event;
-import com.tbs.tobosutype.bean.TaotuEntity;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.EventBusUtil;
@@ -41,6 +38,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class DanTuAcitivity extends AppCompatActivity {
+
     @BindView(R.id.relBackDantu)
     RelativeLayout relBackDantu;
     @BindView(R.id.reclerviewDantu)
@@ -52,11 +50,9 @@ public class DanTuAcitivity extends AppCompatActivity {
     TextView tvDelelteDantu;
     @BindView(R.id.dantuRefreshLayout)
     SwipeRefreshLayout dantuRefreshLayout;
-    @BindView(R.id.ivDantuNoData)
-    ImageView ivDantuNoData;
-
+    @BindView(R.id.rel_no_dantu)
+    RelativeLayout rel_no_dantu;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
-
     private Context context;
     private String TAG = "DanTuAcitivity";
     private boolean isLoadMore = false;
@@ -64,7 +60,7 @@ public class DanTuAcitivity extends AppCompatActivity {
     private DanTuAdapter danTuAdapter;
     private ArrayList<String> deletDantuSelectIdList = new ArrayList<String>();
     private ArrayList<DantuEntity> deletingEntity = new ArrayList<DantuEntity>();
-
+    private boolean isDeletingDantu = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,7 +68,6 @@ public class DanTuAcitivity extends AppCompatActivity {
         context = DanTuAcitivity.this;
         setContentView(R.layout.activity_dantu);
         ButterKnife.bind(this);
-
         initView();
     }
 
@@ -109,12 +104,12 @@ public class DanTuAcitivity extends AppCompatActivity {
         @Override
         public void onRefresh() {
             //下拉刷新数据 重新初始化各种数据
-            if(!isDeletingDantu){
+            if(!isEditting){
                 dantuArrayList.clear();
-                dantuRefreshLayout.setRefreshing(false);
                 page = 1;
                 getNetData();
             }
+            dantuRefreshLayout.setRefreshing(false);
         }
     };
 
@@ -129,11 +124,13 @@ public class DanTuAcitivity extends AppCompatActivity {
     }
 
     private void LoadMore(){
-        isLoadMore = true;
-        page++;
-        getNetData();
-        if(danTuAdapter!=null){
-            danTuAdapter.loadMoreData(true);
+        if(!isEditting){
+            isLoadMore = true;
+            page++;
+            getNetData();
+            if(danTuAdapter!=null){
+                danTuAdapter.loadMoreData(true);
+            }
         }
     }
 
@@ -244,15 +241,19 @@ public class DanTuAcitivity extends AppCompatActivity {
                                                     danTuAdapter.notifyDataSetChanged();
                                                 }else {
                                                     // 没有编辑删除中
-                                                    Util.setToast(context, "跳转 ");
+//                                                    String imgJson = mGson.toJson(mImageSArrayList);
+//                                                    SpUtil.setSingImageListJson(context, imgJson);
+//                                                    Intent intent = new Intent(context, SImageLookingActivity.class);
+//                                                    intent.putExtra("mPosition", position);
+//                                                    startActivity(intent);
                                                 }
                                             }
                                         });
 
-                                        if(deletDantuSelectIdList.size()>0){
-                                            ivDantuNoData.setVisibility(View.GONE);
+                                        if(dantuArrayList.size()>0){
+                                            rel_no_dantu.setVisibility(View.GONE);
                                         }else {
-                                            ivDantuNoData.setVisibility(View.VISIBLE);
+                                            rel_no_dantu.setVisibility(View.VISIBLE);
                                         }
 
                                     }
@@ -269,7 +270,6 @@ public class DanTuAcitivity extends AppCompatActivity {
                                     }
                                 });
                             }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -385,11 +385,12 @@ public class DanTuAcitivity extends AppCompatActivity {
                                     try {
                                         JSONObject object = new JSONObject(json);
                                         String msg = object.getString("msg");
-                                        Util.setToast(context, msg);
+
                                         if(object.getInt("status") == 200){
                                             danTuAdapter.setDeletingStutas(false);
+                                            Util.setToast(context, "取消收藏!");
                                         }else {
-
+                                            Util.setToast(context, msg);
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -407,7 +408,7 @@ public class DanTuAcitivity extends AppCompatActivity {
     }
 
 
-    private boolean isDeletingDantu = false;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(!isEditting){

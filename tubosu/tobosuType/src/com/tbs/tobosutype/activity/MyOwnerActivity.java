@@ -390,7 +390,7 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
 //                Toast.makeText(this, " user Permission" , Toast.LENGTH_SHORT).show();
             } else {
                 //拒绝
-//                Toast.makeText(this, "你拒绝了相机权限" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "你拒绝了相机权限" , Toast.LENGTH_SHORT).show();
 //                ActivityCompat.requestPermissions(MyOwnerActivity.this, new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             }
         }

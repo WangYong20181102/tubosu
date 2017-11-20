@@ -49,8 +49,8 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
     TextView tvDelelteZhuangxiuGongsi;
     @BindView(R.id.tvEditZhuangxiuGongsi)
     TextView tvEditZhuangxiuGongsi;
-    @BindView(R.id.iv_no_company)
-    ImageView ivNoCompany;
+    @BindView(R.id.rel_no_company)
+    RelativeLayout rel_no_company;
     private LinearLayoutManager linearLayoutManager;
     private Context context;
     private String TAG = "ZhuangxiuConmpanyAcitivity";
@@ -68,7 +68,6 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
         setContentView(R.layout.activity_zhuangxiu_gongsi);
         context = ZhuangxiuConmpanyAcitivity.this;
         ButterKnife.bind(this);
-
         initView();
     }
 
@@ -246,9 +245,9 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
         }
 
         if(adapter.getItemCount()>1){
-            ivNoCompany.setVisibility(View.GONE);
+            rel_no_company.setVisibility(View.GONE);
         }else {
-            ivNoCompany.setVisibility(View.VISIBLE);
+            rel_no_company.setVisibility(View.VISIBLE);
         }
 
         adapter.setCompanyItemClickListener(new CompanyAdapter.OnCompanyItemClickListener() {
@@ -257,7 +256,6 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
             public void onCompanyItemClickListener(int position, ArrayList<CompanyBean> companyList) {
                 if(isEdittext){
                     // 正在编辑删除中
-                    Util.setToast(context, "选中 ");
                     CompanyBean bean = companyList.get(position);
                     boolean isSelect = bean.isSelected();
                     if (!isSelect) {
@@ -377,7 +375,7 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                         }
                     });
                 }else{
-                    Util.setToast(context, "你没有选择公司");
+                    Util.setToast(context, "你没有选择");
                 }
                 break;
         }
