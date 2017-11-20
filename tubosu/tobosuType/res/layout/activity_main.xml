@@ -80,8 +80,8 @@
                     android:layout_weight="1.0">
                     <ImageView
                         android:id="@+id/img_home"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_centerHorizontal="true"/>
                     <TextView
                         android:id="@+id/tv_home_textview"
@@ -97,8 +97,8 @@
                     android:layout_weight="1.0">
                     <ImageView
                         android:id="@+id/img_image"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_centerHorizontal="true"/>
                     <TextView
                         android:id="@+id/tv_image_textview"
@@ -114,8 +114,8 @@
                     android:layout_weight="1.0">
                     <ImageView
                         android:id="@+id/img_decorate"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_centerHorizontal="true"/>
                     <TextView
                         android:id="@+id/tv_decorate_textview"
@@ -131,8 +131,8 @@
                     android:layout_weight="1.0">
                     <ImageView
                         android:id="@+id/img_my"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
                         android:layout_centerHorizontal="true"/>
                     <TextView
                         android:id="@+id/tv_my_textview"

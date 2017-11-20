@@ -186,13 +186,19 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
         tv_gender.setText(gender);
 
         wechatCheck = bundle.getString("wechat_check");
-        if (wechatCheck.equals("1")) {
-            tv_weixin.setTextColor(getResources().getColor(R.color.color_neutralgrey));
-            tv_weixin.setText("已绑定");
-        } else {
+        if(wechatCheck!=null){
+            if (wechatCheck.equals("1")) {
+                tv_weixin.setTextColor(getResources().getColor(R.color.color_neutralgrey));
+                tv_weixin.setText("已绑定");
+            } else {
+                tv_weixin.setTextColor(getResources().getColor(R.color.color_red));
+                tv_weixin.setText("未绑定");
+            }
+        }else {
             tv_weixin.setTextColor(getResources().getColor(R.color.color_red));
             tv_weixin.setText("未绑定");
         }
+
 
         cellphone = bundle.getString("cellphone");
         if (TextUtils.isEmpty(cellphone) || "未绑定".equals(cellphone)) {
@@ -232,36 +238,40 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
                 finish();
                 break;
             case R.id.rl_weixin:
-                if (wechatCheck.equals("1")) {
-                    Toast.makeText(mContext, "您已经绑定过了！", Toast.LENGTH_SHORT).show();
-                } else {
-                    //新的微信绑定
-                    umShareAPI.getPlatformInfo(MyOwnerAccountManagerActivity.this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
-                        @Override
-                        public void onStart(SHARE_MEDIA share_media) {
 
-                        }
+                if(wechatCheck!=null){
+                    if (wechatCheck.equals("1")) {
+                        Toast.makeText(mContext, "您已经绑定过了！", Toast.LENGTH_SHORT).show();
+                    } else {
+                        //新的微信绑定
+                        umShareAPI.getPlatformInfo(MyOwnerAccountManagerActivity.this, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
+                            @Override
+                            public void onStart(SHARE_MEDIA share_media) {
 
-                        @Override
-                        public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
-                            weiXinUserName = map.get("name");//微信的昵称
-                            weiXinImageUrl = map.get("iconurl");//微信的头像
-                            weiXinUserId = map.get("openid");//微信的openid
-                            operBindThirdParty();
-                        }
+                            }
 
-                        @Override
-                        public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
-                            Log.e(TAG, "授权出错=====" + throwable.getMessage());
-                            Toast.makeText(mContext, "授权出错！", Toast.LENGTH_SHORT).show();
-                        }
+                            @Override
+                            public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                                weiXinUserName = map.get("name");//微信的昵称
+                                weiXinImageUrl = map.get("iconurl");//微信的头像
+                                weiXinUserId = map.get("openid");//微信的openid
+                                operBindThirdParty();
+                            }
 
-                        @Override
-                        public void onCancel(SHARE_MEDIA share_media, int i) {
-                            Toast.makeText(mContext, "取消微信登录！", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                            @Override
+                            public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
+                                Log.e(TAG, "授权出错=====" + throwable.getMessage());
+                                Toast.makeText(mContext, "授权出错！", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onCancel(SHARE_MEDIA share_media, int i) {
+                                Toast.makeText(mContext, "取消微信登录！", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 }
+
                 break;
             case R.id.tv_btn_exit:
                 operExit();
