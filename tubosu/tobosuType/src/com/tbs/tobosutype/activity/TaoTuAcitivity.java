@@ -50,8 +50,8 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
     private String TAG = "TaoTuAcitivity";
     @BindView(R.id.tvEditTaotu)
     TextView tvEditTaotu;
-    @BindView(R.id.tvDelelteTaotu)
-    TextView tvDelelteTaotu;
+    @BindView(R.id.relDeleteTaotu)
+    RelativeLayout relDeleteTaotu;
     @BindView(R.id.taotuSwipe)
     SwipeRefreshLayout taotuSwipe;
     private boolean isEditTaoTu = false;
@@ -310,7 +310,7 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                 if(isEditTaoTu){
                     isEditTaoTu = !isEditTaoTu;
                     tvEditTaotu.setText("编辑");
-                    tvDelelteTaotu.setVisibility(View.GONE);
+                    relDeleteTaotu.setVisibility(View.GONE);
                     isDeletingTaotu = false;
                     setDeleteFlag(isDeletingTaotu);
                 }else {
@@ -362,7 +362,7 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                                     }
 
                                     tvEditTaotu.setText("编辑");
-                                    tvDelelteTaotu.setVisibility(View.GONE);
+                                    relDeleteTaotu.setVisibility(View.GONE);
                                     isDeletingTaotu = false;
                                     setDeleteFlag(isDeletingTaotu);
                                     isEditTaoTu = !isEditTaoTu;
@@ -393,12 +393,12 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
             case R.id.tvEditTaotu:
                 if (isEditTaoTu){
                     tvEditTaotu.setText("编辑");
-                    tvDelelteTaotu.setVisibility(View.GONE);
+                    relDeleteTaotu.setVisibility(View.GONE);
                     isDeletingTaotu = false;
                     setDeleteFlag(isDeletingTaotu);
                 }else {
                     tvEditTaotu.setText("取消");
-                    tvDelelteTaotu.setVisibility(View.VISIBLE);
+                    relDeleteTaotu.setVisibility(View.VISIBLE);
                     isDeletingTaotu = true;
                     setDeleteFlag(isDeletingTaotu);
                 }
@@ -430,7 +430,7 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(isEditTaoTu){
             isEditTaoTu = !isEditTaoTu;
-            tvDelelteTaotu.setVisibility(View.GONE);
+            relDeleteTaotu.setVisibility(View.GONE);
             tvEditTaotu.setText("编辑");
             isDeletingTaotu = false;
             setDeleteFlag(isDeletingTaotu);

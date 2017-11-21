@@ -86,6 +86,7 @@ public class NewHomeActivity extends BaseActivity {
         mGson = new Gson();
         home_view = (ImageView) findViewById(R.id.home_view);
         ivYingying = (ImageView) findViewById(R.id.ivYingying);
+        ivYingying.setVisibility(View.GONE);
         home_view.setFocusable(true);
         home_view.setFocusableInTouchMode(true);
         home_view.requestFocus();
@@ -114,13 +115,16 @@ public class NewHomeActivity extends BaseActivity {
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
         swipeRefreshLayout.setOnRefreshListener(swipeLister);
         swipeRefreshLayout.setOnTouchListener(onTouchListener);
+
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 
                 //得到当前显示的最后一个item的view
                 int lastPosition = linearLayoutManager.findLastVisibleItemPosition();
                 if (!isLoading && lastPosition + 2 >= recyclerView.getLayoutManager().getItemCount()) {
+
                     if (newHomeAdapter != null) {
                         newHomeAdapter.setLoadMoreFlag(true);
                         page++;
@@ -138,7 +142,8 @@ public class NewHomeActivity extends BaseActivity {
                     alpha = 1;
                 } else {
                     alpha = scollYHeight / (baseHeight * 1.0f);
-                    if (alpha > 0.34) {
+                    if (alpha > 0.44) {
+                        ivYingying.setVisibility(View.VISIBLE);
                         home_view.setVisibility(View.INVISIBLE);// 白色渐变 隐藏
                         rel_newhomebar.setVisibility(View.VISIBLE);
                         iv_sanjiaoxing.setBackgroundResource(R.drawable.tt);
@@ -148,6 +153,8 @@ public class NewHomeActivity extends BaseActivity {
                         app_title_text.setTextColor(Color.parseColor("#000000"));
                         rel_newhomebar.setBackgroundColor(Color.parseColor("#FFFFFF"));
                     }else {
+
+                        ivYingying.setVisibility(View.GONE);
                         home_view.setVisibility(View.VISIBLE);
                         rel_newhomebar.setVisibility(View.INVISIBLE);
                         iv_sanjiaoxing.setBackgroundResource(R.drawable.sanjiaoxing);
@@ -158,13 +165,9 @@ public class NewHomeActivity extends BaseActivity {
                         rel_newhomebar.setBackgroundColor(Color.parseColor("#00FFFFFF"));
                     }
 
-                    if(alpha >= 1){
-                        ivYingying.setVisibility(View.VISIBLE);
-                    }else {
-                        ivYingying.setVisibility(View.GONE);
-                    }
                 }
                 rel_newhomebar.setAlpha(alpha);
+//                Util.setErrorLog(TAG, "====>>>" + alpha);
             }
         });
 

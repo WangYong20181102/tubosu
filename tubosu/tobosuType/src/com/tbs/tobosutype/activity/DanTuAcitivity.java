@@ -48,8 +48,8 @@ public class DanTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
     @BindView(R.id.tvEditDantu)
     TextView tvEditDantu;
     private boolean isEditting =  false;
-    @BindView(R.id.tvDelelteDantu)
-    TextView tvDelelteDantu;
+    @BindView(R.id.relDeleteDatu)
+    RelativeLayout relDeleteDatu;
     @BindView(R.id.dantuRefreshLayout)
     SwipeRefreshLayout dantuRefreshLayout;
     @BindView(R.id.rel_no_dantu)
@@ -314,7 +314,7 @@ public class DanTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
             case R.id.relBackDantu:
                 if(isEditting){
                     isEditting = !isEditting;
-                    tvDelelteDantu.setVisibility(View.GONE);
+                    relDeleteDatu.setVisibility(View.GONE);
                     tvEditDantu.setText("编辑");
                     isDeletingDantu = false;
                     setDeleteFlag(isDeletingDantu);
@@ -325,13 +325,13 @@ public class DanTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
             case R.id.tvEditDantu:
                 if(isEditting){
                     // 关闭编辑状态
-                    tvDelelteDantu.setVisibility(View.GONE);
+                    relDeleteDatu.setVisibility(View.GONE);
                     tvEditDantu.setText("编辑");
                     isDeletingDantu = false;
                     setDeleteFlag(isDeletingDantu);
                 }else {
                     // 开启编辑状态
-                    tvDelelteDantu.setVisibility(View.VISIBLE);
+                    relDeleteDatu.setVisibility(View.VISIBLE);
                     tvEditDantu.setText("取消");
                     isDeletingDantu = true;
                     setDeleteFlag(isDeletingDantu);
@@ -384,7 +384,7 @@ public class DanTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                                     }
 
                                     tvEditDantu.setText("编辑");
-                                    tvDelelteDantu.setVisibility(View.GONE);
+                                    relDeleteDatu.setVisibility(View.GONE);
                                     isDeletingDantu = false;
                                     setDeleteFlag(isDeletingDantu);
                                     isEditting = !isEditting;
@@ -441,7 +441,7 @@ public class DanTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(!isEditting){
             isEditting = true;
-            tvDelelteDantu.setVisibility(View.GONE);
+            relDeleteDatu.setVisibility(View.GONE);
             tvEditDantu.setText("编辑");
             isDeletingDantu = false;
             setDeleteFlag(isDeletingDantu);

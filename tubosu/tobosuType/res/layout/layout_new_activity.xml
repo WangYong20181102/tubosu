@@ -6,7 +6,6 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/newhome_swiprefreshlayout"
         android:layout_width="match_parent"
-        android:layout_below="@+id/rel_newhomebar"
         android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/newhome_recyclerview"
@@ -22,7 +21,7 @@
             android:id="@+id/home_view"
             android:layout_width="match_parent"
             android:layout_height="49dp"
-            android:background="@drawable/drawable_hdpi"/>
+            android:background="#00000000"/>
         <ImageView
             android:id="@+id/ivYingying"
             android:layout_width="match_parent"
@@ -40,6 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"/>
+
             <TextView
                 android:id="@+id/app_title_text"
                 android:layout_width="wrap_content"
