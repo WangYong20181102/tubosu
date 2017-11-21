@@ -15,7 +15,7 @@ import java.util.List;
 public class ShoucangAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
-    private int[] iconIdArr = new int[]{R.drawable.dan, R.drawable.tao, R.drawable.gongsi};
+    private int[] iconIdArr = new int[]{R.drawable.tao, R.drawable.dan, R.drawable.gongsi};
     private List<ShoucangItem> dataList;
 
     public ShoucangAdapter(Context context, List<ShoucangItem> dataList){

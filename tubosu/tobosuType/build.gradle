@@ -159,10 +159,10 @@ android.applicationVariants.all { variant ->
             def fileName
             if (variant.buildType.name == "release") {
 //                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_${variant.productFlavors[0].name}.apk"
-                fileName = "tobosuType_v3.4_${variant.productFlavors[0].name}.apk"
+                fileName = "tobosuType_v3.5_${variant.productFlavors[0].name}.apk"
             } else {
 //                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_beta.apk"
-                fileName = "tobosuType_v3.4_${variant.productFlavors[0].name}_beta.apk"
+                fileName = "tobosuType_v3.5_${variant.productFlavors[0].name}_beta.apk"
             }
 //            output.outputFile = new File(outputDirectory, fileName)
 //            outputFileName="${variant.applicationId}-${ buildType.name}-${variant.productFlavors[0].name}.apk"

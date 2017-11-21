@@ -210,6 +210,7 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
                                 JSONObject data = jsonObject.getJSONObject("data");
                                 icon = data.getString("icon");
                                 nickname = data.getString("name");
+                                my_owner_name.setText(nickname);
                                 gender = data.getString("gender");
                                 icommunity = data.getString("icommunity");
                                 province = data.getString("province");
@@ -255,7 +256,7 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
     }
     private void operView() {
         MyApplication.imageLoader.displayImage(icon, my_owner_pic, MyApplication.options);
-        my_owner_name.setText(nickname);
+
         if (TextUtils.isEmpty(cityname)) {
             tv_location.setTextColor(getResources().getColor(R.color.color_red));
             tv_location.setText("城市未设置");

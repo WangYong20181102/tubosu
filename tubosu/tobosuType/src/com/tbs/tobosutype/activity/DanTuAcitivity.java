@@ -429,7 +429,7 @@ public class DanTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
             case EC.EventCode.DELETE_DANTU_LIST_CODE:
                 int pos = (int) event.getData();
                 if(danTuAdapter!=null){
-                    dantuArrayList.get(pos).setIs_collect("0");
+                    dantuArrayList.remove(pos);
                     danTuAdapter.notifyDataSetChanged();
                     EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_TAOTU_CODE));
                 }
