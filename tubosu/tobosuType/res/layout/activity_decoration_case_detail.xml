@@ -40,6 +40,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:ems="13"
+            android:gravity="center"
+            android:singleLine="true"
             android:text="案例详情"
             android:textColor="#000000"
             android:textSize="17sp" />
