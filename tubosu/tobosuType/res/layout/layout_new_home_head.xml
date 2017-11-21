@@ -6,9 +6,11 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="180dp">
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="180dp">
@@ -27,6 +29,12 @@
             android:orientation="horizontal"
             android:padding="10dp" >
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/meng_ceng_bg">
+        </RelativeLayout>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"

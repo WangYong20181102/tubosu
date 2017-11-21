@@ -54,18 +54,25 @@
                 </android.support.v7.widget.RecyclerView>
             </android.support.v4.widget.SwipeRefreshLayout>
 
-            <TextView
-                android:id="@+id/tvDelelteTaotu"
-                android:layout_width="150dp"
-                android:layout_height="40dp"
-                android:background="@drawable/edit_textview_bg"
-                android:layout_alignParentBottom="true"
-                android:gravity="center"
-                android:textColor="#ff8214"
-                android:layout_margin="16dp"
+            <RelativeLayout
+                android:id="@+id/relDeleteTaotu"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
                 android:visibility="gone"
-                android:layout_centerHorizontal="true"
-                android:text="删除"/>
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/meng_ceng">
+                <TextView
+                    android:id="@+id/tvDelelteTaotu"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/edit_textview_bg"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:textColor="#ff8214"
+                    android:layout_margin="16dp"
+                    android:layout_centerHorizontal="true"
+                    android:text="删除"/>
+            </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
 

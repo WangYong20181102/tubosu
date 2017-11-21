@@ -45,8 +45,8 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
     RecyclerView reclerviewGongsi;
     @BindView(R.id.gongsiRefreshLayout)
     SwipeRefreshLayout gongsiRefreshLayout;
-    @BindView(R.id.tvDelelteZhuangxiuGongsi)
-    TextView tvDelelteZhuangxiuGongsi;
+    @BindView(R.id.relDeleteCompany)
+    RelativeLayout relDeleteCompany;
     @BindView(R.id.tvEditZhuangxiuGongsi)
     TextView tvEditZhuangxiuGongsi;
     @BindView(R.id.rel_no_company)
@@ -295,7 +295,7 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                 if(isEdittext){
                     isDeletingCompany = false;
                     setDeleteFlag(isDeletingCompany);
-                    tvDelelteZhuangxiuGongsi.setVisibility(View.GONE);
+                    relDeleteCompany.setVisibility(View.GONE);
                     tvEditZhuangxiuGongsi.setText("编辑");
                     isEdittext = !isEdittext;
                 }else {
@@ -306,13 +306,13 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                 if(isEdittext){
                     // 正在编辑中
                     tvEditZhuangxiuGongsi.setText("编辑");
-                    tvDelelteZhuangxiuGongsi.setVisibility(View.GONE);
+                    relDeleteCompany.setVisibility(View.GONE);
                     isDeletingCompany = false;
                     setDeleteFlag(isDeletingCompany);
                 }else {
                     // 没有编辑
                     tvEditZhuangxiuGongsi.setText("取消");
-                    tvDelelteZhuangxiuGongsi.setVisibility(View.VISIBLE);
+                    relDeleteCompany.setVisibility(View.VISIBLE);
                     isDeletingCompany = true;
                     setDeleteFlag(isDeletingCompany);
                 }
@@ -401,7 +401,7 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
             setDeleteFlag(isDeletingCompany);
             isEdittext = !isEdittext;
             tvEditZhuangxiuGongsi.setText("编辑");
-            tvDelelteZhuangxiuGongsi.setVisibility(View.GONE);
+            relDeleteCompany.setVisibility(View.GONE);
             return true;
         }else {
             if(keyCode == KeyEvent.KEYCODE_BACK){
