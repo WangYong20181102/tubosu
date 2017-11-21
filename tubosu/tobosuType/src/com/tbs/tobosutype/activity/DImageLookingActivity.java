@@ -418,7 +418,7 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             R.id.d_img_look_shoucan_ll, R.id.d_img_look_share,
             R.id.d_img_look_share_ll, R.id.d_img_look_btn_fadan,
             R.id.d_img_look_i_know, R.id.d_img_look_fadan_img,
-            R.id.d_img_look_fadan_close})
+            R.id.d_img_look_fadan_close, R.id.d_img_look_frist_into_rl})
     public void onViewClickedInDImageLookActivity(View view) {
         switch (view.getId()) {
             case R.id.d_img_look_title_back:
@@ -471,6 +471,9 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             case R.id.d_img_look_fadan_close:
                 //发单弹窗关闭按钮
                 dImgLookFadanRl.setVisibility(View.GONE);
+                break;
+            case R.id.d_img_look_frist_into_rl:
+                //防止层级间事件透传
                 break;
         }
     }
@@ -557,7 +560,7 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                                     dImgLookShoucan.setImageResource(R.drawable.shoucang_after);
                                     mImageDArrayList.get(mArrayListPosition).setIs_collect("1");
                                     Toast.makeText(mContext, "收藏成功", Toast.LENGTH_SHORT).show();
-                                    if(mWhereFrom.equals("NewImageDFragment")){
+                                    if (mWhereFrom.equals("NewImageDFragment")) {
                                         EventBusUtil.sendEvent(new Event(EC.EventCode.NOTIF_D_SHOUCANG_DATA_CHANGE_IS_COLLECT, mArrayListPosition));
                                     }
                                 } else {
@@ -565,9 +568,9 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                                     dImgLookShoucan.setImageResource(R.drawable.shoucang_detail_befor);
                                     mImageDArrayList.get(mArrayListPosition).setIs_collect("0");
                                     Toast.makeText(mContext, "取消收藏成功", Toast.LENGTH_SHORT).show();
-                                    if(mWhereFrom.equals("NewImageDFragment")){
+                                    if (mWhereFrom.equals("NewImageDFragment")) {
                                         EventBusUtil.sendEvent(new Event(EC.EventCode.NOTIF_D_SHOUCANG_DATA_CHANGE_IS_NOT_COLLECT, mArrayListPosition));
-                                    }else if(mWhereFrom.equals("TaotuActivity")){
+                                    } else if (mWhereFrom.equals("TaotuActivity")) {
                                         // TODO: 2017/11/20
                                         EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_TAOTU_LIST_CODE, mArrayListPosition));
                                     }
