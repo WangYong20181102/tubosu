@@ -105,4 +105,10 @@ public class SImageLookFragment extends BaseFragment {
         Glide.clear(mTouchImageView);
         unbinder.unbind();
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Glide.clear(mTouchImageView);
+    }
 }

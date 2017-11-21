@@ -162,11 +162,11 @@
     </RelativeLayout>
     <!--发单的弹窗-->
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/s_img_look_fadan_rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#8c000000">
+        android:background="#8c000000"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="wrap_content"
