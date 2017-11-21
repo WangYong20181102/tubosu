@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="70dp">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/shoucang_item_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="18dp"
         android:layout_marginLeft="16dp"
-        android:background="@drawable/dan"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:background="@drawable/tao"/>
 
     <TextView
         android:id="@+id/shoucang_item_num"
@@ -20,7 +20,8 @@
         android:layout_toRightOf="@+id/shoucang_item_iv"
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:text="00"
         android:textSize="16sp"
         android:textColor="#333333"/>
@@ -30,8 +31,11 @@
         android:layout_width="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="18dp"
         android:layout_marginRight="13dp"
         android:layout_height="wrap_content" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

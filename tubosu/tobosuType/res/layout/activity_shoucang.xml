@@ -6,26 +6,35 @@
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:background="@drawable/white_bg">
+        android:layout_height="49dp">
         <RelativeLayout
-            android:id="@+id/relBackShoucang"
-            android:layout_width="49dp"
-            android:layout_height="49dp">
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="17dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/activity_back"/>
-        </RelativeLayout>
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:background="@drawable/white_bg">
+            <RelativeLayout
+                android:id="@+id/relBackShoucang"
+                android:layout_width="39dp"
+                android:layout_height="39dp">
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="17dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/activity_back"/>
+            </RelativeLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="我的收藏"
-            android:textColor="@color/color_black"
-            android:layout_centerInParent="true"
-            android:textSize="14sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的收藏"
+                android:textColor="@color/color_black"
+                android:layout_centerInParent="true"
+                android:textSize="14sp"/>
+        </RelativeLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="6dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/yinying4"/>
     </RelativeLayout>
 
     <RelativeLayout
