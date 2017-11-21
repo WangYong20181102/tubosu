@@ -40,7 +40,6 @@
                 style="@style/radiobutton_style"
                 android:checked="true"
                 android:drawableTop="@drawable/selector_frist_icon"
-                android:onClick="MainViewOnClick"
                 android:text="效果图"
                 android:textColor="@drawable/selector_main_btn"
                 android:textSize="@dimen/text_size_20px" />
@@ -50,7 +49,6 @@
                 style="@style/radiobutton_style"
                 android:checked="false"
                 android:drawableTop="@drawable/selector_second_icon"
-                android:onClick="MainViewOnClick"
                 android:text="案例"
                 android:textColor="@drawable/selector_main_btn"
                 android:textSize="@dimen/text_size_20px" />
@@ -60,7 +58,6 @@
                 style="@style/radiobutton_style"
                 android:checked="false"
                 android:drawableTop="@drawable/selector_third_icon"
-                android:onClick="MainViewOnClick"
                 android:text="以图会友"
                 android:textColor="@drawable/selector_main_btn"
                 android:textSize="@dimen/text_size_20px" />
@@ -70,7 +67,6 @@
                 style="@style/radiobutton_style"
                 android:checked="false"
                 android:drawableTop="@drawable/selector_fourth_icon"
-                android:onClick="MainViewOnClick"
                 android:text="我的"
                 android:textColor="@drawable/selector_main_btn"
                 android:textSize="@dimen/text_size_20px" />

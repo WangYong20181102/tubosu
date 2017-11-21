@@ -418,7 +418,7 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             R.id.d_img_look_shoucan_ll, R.id.d_img_look_share,
             R.id.d_img_look_share_ll, R.id.d_img_look_btn_fadan,
             R.id.d_img_look_i_know, R.id.d_img_look_fadan_img,
-            R.id.d_img_look_fadan_close, R.id.d_img_look_frist_into_rl})
+            R.id.d_img_look_fadan_close, R.id.d_img_look_frist_into_rl,R.id.d_img_look_fadan_rl})
     public void onViewClickedInDImageLookActivity(View view) {
         switch (view.getId()) {
             case R.id.d_img_look_title_back:
@@ -473,6 +473,9 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                 dImgLookFadanRl.setVisibility(View.GONE);
                 break;
             case R.id.d_img_look_frist_into_rl:
+                //防止层级间事件透传
+                break;
+            case R.id.d_img_look_fadan_rl:
                 //防止层级间事件透传
                 break;
         }

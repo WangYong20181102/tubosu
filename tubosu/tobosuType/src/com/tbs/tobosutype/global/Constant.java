@@ -103,11 +103,11 @@ public class Constant {
     /**
      * M站 发单跳转 线上环境
      */
-//    public static final String M_TOBOSU_URL = "http://m.tobosu.com/";
+    public static final String M_TOBOSU_URL = "http://m.tobosu.com/";
     /**
      * M站 发单跳转 dev环境
      */
-    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
+    //public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
 
     public static final String SUMMIT_BUDGET_URL = TOBOSU_URL + "mapp/RenovateExpense/expense_bookkeep";
 
