@@ -30,7 +30,7 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_width="18dp"
+                android:layout_width="16dp"
                 android:layout_height="18dp"
                 android:src="@drawable/back_white" />
         </LinearLayout>

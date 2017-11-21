@@ -496,7 +496,7 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                                     }
                                 } else {
                                     //取消收藏  同时通知外部的数据改变
-                                    sImgLookShoucan.setImageResource(R.drawable.shoucang_before);
+                                    sImgLookShoucan.setImageResource(R.drawable.shoucang_detail_befor);
                                     mImageSArrayList.get(mPosition).setIs_collect("0");
                                     Toast.makeText(mContext, "取消收藏成功", Toast.LENGTH_SHORT).show();
                                     if(mWhereFrom.equals("NewImageSFragment")){
