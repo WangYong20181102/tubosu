@@ -8,10 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.bean.NewHomeDataItem;
 import com.tbs.tobosutype.utils.TRoundView;
 import com.tbs.tobosutype.utils.Util;
-import java.util.List;
+import java.util.ArrayList;
+import com.tbs.tobosutype.bean._ImageD;
 
 /**
  * Created by Lie on 2017/10/26.
@@ -20,13 +20,13 @@ import java.util.List;
 public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
     private Context context;
     private LayoutInflater inflater;
-    private List<NewHomeDataItem.NewhomeDataBean.ImpressionBean> dataList;
+    private ArrayList<_ImageD> dataList;
     private final int ITEM_ITEM = 4;
     private final int ITEM_RIGHT_FOOT = 6;
     private boolean loadmore = true;
 
 
-    public NewhomeShejiAdapter(Context context, List<NewHomeDataItem.NewhomeDataBean.ImpressionBean> dataList){
+    public NewhomeShejiAdapter(Context context, ArrayList<_ImageD> dataList){
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.dataList = dataList;
@@ -69,7 +69,7 @@ public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ShejiHolder shejiHolder = (ShejiHolder) holder;
                 shejiHolder.iv.setType(1);
                 Glide.with(context).load(dataList.get(position).getCover_url()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(shejiHolder.iv);
-                shejiHolder.tvTitle.setText(dataList.get(position).getSub_title());
+                shejiHolder.tvTitle.setText(dataList.get(position).getTitle());
                 shejiHolder.tvDesc.setText(dataList.get(position).getDesigner_name());
 
                 if(position == 0){ // 左边
@@ -88,8 +88,6 @@ public class NewhomeShejiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     shejiHolder.sright_six.setVisibility(View.GONE);      //    10
                     shejiHolder.srights1ix.setVisibility(View.GONE);      //    6
                 }
-
-
 
                 shejiHolder.itemView.setTag(position);
             }

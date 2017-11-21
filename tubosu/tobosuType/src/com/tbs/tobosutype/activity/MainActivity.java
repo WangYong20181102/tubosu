@@ -176,9 +176,9 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         tabHost.addTab(spec);
 
 		/* ------------------------------------
-         * 根据情况不同，显示不同   FOUR.未登录，显示登陆界面；
-		 *                        FOUR2.登陆的是装修公司界面
-		 *                        FOUR3.登陆的是业主界面
+         * 根据情况不同，显示不同   FOUR.未登录，显示登陆界面
+		 *                         FOUR2.登陆的是装修公司界面
+		 *                         FOUR3.登陆的是业主界面
 		 **/
         intent = new Intent().setClass(this, MyActivity.class);
         spec = tabHost.newTabSpec("FOUR").setIndicator("我").setContent(intent);

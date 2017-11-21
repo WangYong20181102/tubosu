@@ -18,7 +18,9 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.activity.DImageLookingActivity;
 import com.tbs.tobosutype.activity.DecorationCaseActivity;
 import com.tbs.tobosutype.activity.DecorationCaseDetailActivity;
 import com.tbs.tobosutype.activity.ImageDetailNewActivity;
@@ -36,6 +38,7 @@ import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.EndlessRecyclerOnScrollListener;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.tbs.tobosutype.utils.Utils;
 import java.io.IOException;
@@ -49,6 +52,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import com.tbs.tobosutype.bean._ImageD;
 
 /**
  * Created by Lie on 2017/04/23.
@@ -76,21 +80,20 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private View adapterItemViewZhuanti;
     private View adapterFootView;
 
+    private ArrayList<_ImageD> shejiList;
+
 
     private boolean zhuantiMore = false;
     private List<NewHomeDataItem.NewhomeDataBean.TopicBean> topicList = new ArrayList<NewHomeDataItem.NewhomeDataBean.TopicBean>();
 
-//    public NewHomeAdapter(Context context, NewHomeDataItem.NewhomeDataBean dataSource) {
-//        this.context = context;
-//        this.inflater = LayoutInflater.from(context);
-//        this.dataSource = dataSource;
-//        this.topicList = dataSource.getTopic();
-//    }
-
-    public NewHomeAdapter(Context context, NewHomeDataItem.NewhomeDataBean dataSource, List<NewHomeDataItem.NewhomeDataBean.TopicBean> topList) {
+    public NewHomeAdapter(Context context, NewHomeDataItem.NewhomeDataBean dataSource, ArrayList<_ImageD> shejiList, List<NewHomeDataItem.NewhomeDataBean.TopicBean> topList) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.dataSource = dataSource;
+        if(shejiList!=null && shejiList.size()>0){
+            this.shejiList = shejiList;
+        }
+
         if(topList!=null && topList.size()>0){
             this.topicList.addAll(topList);
         }else {
@@ -271,7 +274,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             headHolder.rvSheji.setFocusableInTouchMode(false);
             headHolder.rvSheji.clearFocus();
             headHolder.rvSheji.setLayoutManager(linearLayoutManager);
-            final NewhomeShejiAdapter shejiAdapter = new NewhomeShejiAdapter(context, dataSource.getImpression());
+            final NewhomeShejiAdapter shejiAdapter = new NewhomeShejiAdapter(context, shejiList);
             headHolder.rvSheji.setAdapter(shejiAdapter);
             shejiAdapter.notifyDataSetChanged();
             shejiAdapter.setOnItemClickListener(new NewhomeShejiAdapter.OnRecyclerViewItemClickListener() {
@@ -279,9 +282,20 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onRecyclerViewItemClick(View view, int position) {
 
-                    Intent intent = new Intent(context, ImageDetailNewActivity.class);
-                    intent.putExtra("id", dataSource.getImpression().get(position).getId());
+                    // 3.4版本
+//                    Intent intent = new Intent(context, ImageDetailNewActivity.class);
+//                    intent.putExtra("id", dataSource.getImpression().get(position).getId());
+//                    context.startActivity(intent);
+
+                    // 3.5版本
+                    String DImageJson = new Gson().toJson(shejiList);
+                    Util.setErrorLog(TAG, DImageJson);
+                    SpUtil.setDoubleImageListJson(context, DImageJson);
+                    Intent intent = new Intent(context, DImageLookingActivity.class);
+                    intent.putExtra("mPosition", position);
+                    intent.putExtra("mWhereFrom", "TaotuActivity"); //NewhomeActivity
                     context.startActivity(intent);
+
                 }
             });
             headHolder.rvSheji.addOnScrollListener(new EndlessRecyclerOnScrollListener() {
@@ -316,6 +330,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             headHolder.newhomeRecyclerviewClass.setAdapter(classAdapter);
             classAdapter.notifyDataSetChanged();
             classAdapter.setOnItemClickListener(new NewhomeDecorationClassAdapter.OnRecyclerViewItemClickListener() {
+                
                 @Override
                 public void onRecyclerViewItemClick(View view, int position) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);

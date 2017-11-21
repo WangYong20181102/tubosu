@@ -6,13 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.bean.TaotuEntity;
 import com.tbs.tobosutype.bean._ImageD;
-
 import java.util.ArrayList;
 
 /**

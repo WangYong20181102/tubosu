@@ -202,7 +202,7 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                                                 Intent intent = new Intent(mContext, DImageLookingActivity.class);
                                                 intent.putExtra("mPosition", position);
                                                 intent.putExtra("mWhereFrom", "TaotuActivity");
-                                                mContext.startActivity(intent);
+                                                startActivity(intent);
 
                                             }
                                         }
@@ -418,7 +418,7 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
             case EC.EventCode.DELETE_TAOTU_LIST_CODE:
                 int pos = (int) event.getData();
                 if(taoTuAdapter!=null){
-                    taotuEntityArrayList.get(pos).setIs_collect("0");
+                    taotuEntityArrayList.remove(0);
                     taoTuAdapter.notifyDataSetChanged();
                     EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_TAOTU_CODE));
                 }

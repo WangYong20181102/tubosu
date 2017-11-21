@@ -41,6 +41,7 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import com.tbs.tobosutype.bean._ImageD;
 
 /**
  * Created by Lie on 2017/08/23.
@@ -67,6 +68,7 @@ public class NewHomeActivity extends BaseActivity {
     private boolean isSheji = true;
     private Gson mGson;
     private ArrayList<NewHomeDataItem.NewhomeDataBean.TopicBean> topicBeansList = new ArrayList<NewHomeDataItem.NewhomeDataBean.TopicBean>();
+    private ArrayList<_ImageD> shejiArrayList = new ArrayList<_ImageD>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -352,6 +354,10 @@ public class NewHomeActivity extends BaseActivity {
     private HashMap<String, Object> getParam(int num) {
         HashMap<String, Object> param = new HashMap<String, Object>();
         param.put("token", Util.getDateToken());
+        String uid = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("userid", "");
+        String user_type = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("mark", "");
+        param.put("uid", uid);
+        param.put("user_type", user_type);
         String city = newhomeCity.getText().toString();
         if (num == 0) {
             param.put("city_id", "0");
@@ -413,26 +419,10 @@ public class NewHomeActivity extends BaseActivity {
                                             JSONArray arr = zhuantiObject.getJSONArray("data");
                                             for (int i = 0; i < arr.length(); i++) {
                                                 NewHomeDataItem.NewhomeDataBean.TopicBean bean = mGson.fromJson(arr.get(i).toString(), NewHomeDataItem.NewhomeDataBean.TopicBean.class);
-//                                        NewHomeDataItem.NewhomeDataBean.TopicBean bean = new NewHomeDataItem.NewhomeDataBean.TopicBean();
-//                                        bean.setAdd_time(arr.getJSONObject(i).getString("add_time"));
-//                                        bean.setDesc(arr.getJSONObject(i).getString("desc"));
-//                                        bean.setId(arr.getJSONObject(i).getString("id"));
-//                                        bean.setCover_url(arr.getJSONObject(i).getString("cover_url"));
-//                                        bean.setTitle(arr.getJSONObject(i).getString("title"));o
                                                 zhuantiList.add(bean);
                                             }
-
                                             topicBeansList.addAll(zhuantiList);
-//                                        // TODO: 2017/11/2
-//                                        if(newHomeAdapter1==null){
-//                                            newHomeAdapter1 = new NewHomeAdapter(mContext, bigData, topicBeansList);
-//                                            recyclerView.setAdapter(newHomeAdapter1);
-//                                            newHomeAdapter1.notifyDataSetChanged();
-//                                        }else {
-//                                            newHomeAdapter1.notifyDataSetChanged();
-//                                        }
                                             initData();
-
                                         } else if (status == 0) {
                                             Util.setToast(mContext, msg);
                                         } else if (status == 201) {
@@ -454,6 +444,7 @@ public class NewHomeActivity extends BaseActivity {
             }else {
                 newHomeAdapter = null;
                 bigData = null;
+
                 // 第一次加载
                 OKHttpUtil.post(Constant.NEWHOME_URL, getParam(start), new Callback() {
 
@@ -473,6 +464,22 @@ public class NewHomeActivity extends BaseActivity {
                             final NewHomeDataItem dataItem = gson.fromJson(result, NewHomeDataItem.class);
                             final String msg = dataItem.getMsg();
                             Util.setErrorLog(TAG, dataItem.getMsg());
+
+                            try {
+                                JSONObject resultJson = new JSONObject(result);
+                                JSONObject shejiObject = resultJson.getJSONObject("data");
+                                JSONArray shejiArr = shejiObject.getJSONArray("impression");
+//                                if(shejiArrayList.size()>0){
+//                                    shejiArrayList.clear();
+//                                }
+                                for(int i=0; i <shejiArr.length(); i++){
+                                    _ImageD shejiImg = gson.fromJson(shejiArr.getJSONObject(i).toString(), _ImageD.class);
+                                    shejiArrayList.add(shejiImg);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
                             if (dataItem.getStatus() == 200) {
                                 bigData = dataItem.getData();
                                 initData();
@@ -502,7 +509,6 @@ public class NewHomeActivity extends BaseActivity {
                     }
                 });
             }
-
         }else {
             Util.setErrorLog(TAG, "无网络");
         }
@@ -518,7 +524,7 @@ public class NewHomeActivity extends BaseActivity {
             public void run() {
                 isLoading = false;
                 if(newHomeAdapter==null){
-                    newHomeAdapter = new NewHomeAdapter(mContext, bigData, topicBeansList);
+                    newHomeAdapter = new NewHomeAdapter(mContext, bigData, shejiArrayList, topicBeansList);
                     recyclerView.setAdapter(newHomeAdapter);
                     newHomeAdapter.notifyDataSetChanged();
                 }else {
@@ -530,15 +536,6 @@ public class NewHomeActivity extends BaseActivity {
                 if (swipeRefreshLayout.isRefreshing()) {
                     swipeRefreshLayout.setRefreshing(false);
                 }
-
-//                newHomeAdapter.setmListener(new NewHomeAdapter.OnZhuantiItemClickListener() {
-//                    @Override
-//                    public void onZhuantiItemClickListener(int position) {
-//                        Intent it = new Intent(mContext, TopicDetailActivity.class);
-//                        it.putExtra("mTopicId", topicBeansList.get(position).getId());
-//                        startActivity(it);
-//                    }
-//                });
             }
         });
     }
