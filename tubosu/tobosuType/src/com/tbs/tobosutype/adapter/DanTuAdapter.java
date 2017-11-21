@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.bean.DantuEntity;
 import java.util.ArrayList;
 import com.tbs.tobosutype.bean._ImageS;
 /**
