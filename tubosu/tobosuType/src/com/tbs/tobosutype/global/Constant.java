@@ -97,6 +97,11 @@ public class Constant {
      */
     public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
+    // 测试发单url
+    private static final String TOBOSU_TEST_URL = "http://www.m.dev.tobosu.com/";
+    // 正式发单url
+    private static final String TOBOSU_NORMAL_URL = "http://www.m.tobosu.com/";
+
     /**
      * 正式环境
      */
@@ -349,27 +354,28 @@ public class Constant {
 //    专题-详情-设计	                   zt-xq-sheji	         http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=zt-xq-sheji
 
     //案例列表发单
-    public static final String ANLI_LIST_FADAN = "http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    public static final String ANLI_LIST_FADAN = TOBOSU_TEST_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
     //案例详情（看图页）
-    public static final String ANLI_XIANGQING_FADAN = "http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    public static final String ANLI_XIANGQING_FADAN = TOBOSU_TEST_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
     //专题详情
-    public static final String ZHUANTI_XIANGQING_FADAN = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    public static final String ZHUANTI_XIANGQING_FADAN = TOBOSU_TEST_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
     //找他设计
-    public static final String ZHAO_TA_SHEJI = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    public static final String ZHAO_TA_SHEJI = TOBOSU_TEST_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
     //发单地址
-    public static final String LINK_HOME_MIANFEI_LIANGFANG = "http://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    public static final String LINK_HOME_MIANMFEI_BAOJIA = "http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    public static final String LINK_HOME_MIANFEI_SHEJI = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    public static final String LINK_HOME_ZHUANYE_TUIJIAN = "http://m.tobosu.com/rec_company?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    public static final String LINK_HOME_DALIBAO = "http://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    public static final String LINK_HOME_MIANFEI_LIANGFANG = TOBOSU_TEST_URL + "company_gift?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    public static final String LINK_HOME_MIANMFEI_BAOJIA = TOBOSU_TEST_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    public static final String LINK_HOME_MIANFEI_SHEJI = TOBOSU_TEST_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    public static final String LINK_HOME_ZHUANYE_TUIJIAN = TOBOSU_TEST_URL + "rec_company?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    public static final String LINK_HOME_DALIBAO = TOBOSU_TEST_URL + "company_gift?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
     //逛图库 列表弹窗发单地址
-    public static final String IAMGE_LIST_DIALOG = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    public static final String IAMGE_LIST_DIALOG = TOBOSU_TEST_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
     //逛图库 右侧悬浮窗发单地址
-    public static final String IAMGE_LIST_RIGHT_GIF = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    public static final String IAMGE_LIST_RIGHT_GIF = TOBOSU_TEST_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
     //图库详情 弹窗发单地址
-    public static final String IAMGE_DETAIL_DIALOG = "http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    public static final String IAMGE_DETAIL_DIALOG = TOBOSU_TEST_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
     //图库详情 底部发单地址
-    public static final String IAMGE_DETAIL_BUTTON = "http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    public static final String IAMGE_DETAIL_BUTTON = TOBOSU_TEST_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+
 
 
     //新的逛图库 套图 3.5版本 add time 20171111
