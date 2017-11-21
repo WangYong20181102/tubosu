@@ -6,8 +6,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.base.BaseFragment;
 import com.tbs.tobosutype.bean.EC;
@@ -100,6 +102,7 @@ public class SImageLookFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        Glide.clear(mTouchImageView);
         unbinder.unbind();
     }
 }
