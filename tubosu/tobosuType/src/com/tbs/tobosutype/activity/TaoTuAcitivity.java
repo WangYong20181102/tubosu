@@ -41,7 +41,6 @@ import okhttp3.Response;
 /**
  * 套图页
  */
-
 public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
     @BindView(R.id.relBackTao)
     RelativeLayout relBackTao;
@@ -78,6 +77,7 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
     private void initViews(){
         taotuSwipe.setColorSchemeColors(Color.RED, Color.BLUE);
         taotuSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
             @Override
             public void onRefresh() {
                 if(!isEditTaoTu){
@@ -144,12 +144,6 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                             JSONArray array = object.getJSONArray("data");
                             for(int i=0;i<array.length();i++){
                                 _ImageD entity = gson.fromJson(array.getJSONObject(i).toString(), _ImageD.class);
-//                                entity.setId(array.getJSONObject(i).getString("id"));
-//                                entity.setCollect_id(array.getJSONObject(i).getString("collect_id"));
-//                                entity.setCover_url(array.getJSONObject(i).getString("cover_url"));
-//                                entity.setImage_width(array.getJSONObject(i).getInt("image_width"));
-//                                entity.setImage_height(array.getJSONObject(i).getInt("image_height"));
-//                                entity.setTitle(array.getJSONObject(i).getString("title"));
                                 entity.setSeleteStatus(false);
                                 taotuEntityArrayList.add(entity);
                             }

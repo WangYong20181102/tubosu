@@ -330,7 +330,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             headHolder.newhomeRecyclerviewClass.setAdapter(classAdapter);
             classAdapter.notifyDataSetChanged();
             classAdapter.setOnItemClickListener(new NewhomeDecorationClassAdapter.OnRecyclerViewItemClickListener() {
-                
+
                 @Override
                 public void onRecyclerViewItemClick(View view, int position) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
