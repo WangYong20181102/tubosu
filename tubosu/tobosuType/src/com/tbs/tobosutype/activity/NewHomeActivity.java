@@ -48,6 +48,7 @@ import okhttp3.Response;
 
 public class NewHomeActivity extends BaseActivity {
     private ImageView home_view;
+    private ImageView ivYingying;
     private View rel_newhomebar;
     private ImageView iv_sanjiaoxing;
     private ImageView iv_add;
@@ -84,6 +85,7 @@ public class NewHomeActivity extends BaseActivity {
     private void initView() {
         mGson = new Gson();
         home_view = (ImageView) findViewById(R.id.home_view);
+        ivYingying = (ImageView) findViewById(R.id.ivYingying);
         home_view.setFocusable(true);
         home_view.setFocusableInTouchMode(true);
         home_view.requestFocus();
@@ -154,6 +156,12 @@ public class NewHomeActivity extends BaseActivity {
                         newhomeCity.setTextColor(Color.parseColor("#FFFFFF"));
                         app_title_text.setTextColor(Color.parseColor("#FFFFFF"));
                         rel_newhomebar.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+                    }
+
+                    if(alpha >= 1){
+                        ivYingying.setVisibility(View.VISIBLE);
+                    }else {
+                        ivYingying.setVisibility(View.GONE);
                     }
                 }
                 rel_newhomebar.setAlpha(alpha);

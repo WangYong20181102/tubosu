@@ -24,9 +24,11 @@
             android:layout_height="49dp"
             android:background="@drawable/drawable_hdpi"/>
         <ImageView
+            android:id="@+id/ivYingying"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/home_view"
+            android:visibility="gone"
             android:background="@drawable/dfgying"/>
 
         <RelativeLayout
