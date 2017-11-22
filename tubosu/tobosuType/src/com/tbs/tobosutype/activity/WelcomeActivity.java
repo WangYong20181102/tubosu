@@ -105,7 +105,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         if("appxiaomi".equals(AppInfoUtil.getChannType(MyApplication.getContext()))){
             Glide.with(mContext).load(R.drawable.wel_xiaomi).placeholder(R.drawable.wel_xiaomi).error(R.drawable.wel_xiaomi).into(welcomeImage);
         }else if("ali".equals(AppInfoUtil.getChannType(MyApplication.getContext()))){
-            Glide.with(mContext).load(R.drawable.wel_ali_green).placeholder(R.drawable.wel_xiaomi).error(R.drawable.wel_xiaomi).into(welcomeImage);
+            Glide.with(mContext).load(R.drawable.wel_new_ali_img).placeholder(R.drawable.wel_new_ali_img).error(R.drawable.wel_new_ali_img).into(welcomeImage);
         }else{
             Glide.with(mContext).load(R.drawable.welcome_image).placeholder(R.drawable.welcome_image).error(R.drawable.welcome_image).into(welcomeImage);
         }

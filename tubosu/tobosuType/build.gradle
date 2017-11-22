@@ -12,10 +12,8 @@ apply plugin: 'android'
 
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
-    //    compile files('libs/locSDK_6.11.jar')
     compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/org.apache.http.legacy.jar')
-    //    compile files('libs/httpmime-4.1.3.jar')
     compile files('libs/SocialSDK_QQ_Simplify.jar')
     compile files('libs/SocialSDK_WeChat_Simplify.jar')
     compile files('libs/umeng_shareboard_widget.jar')
@@ -39,10 +37,13 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.1'
     compile 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-    implementation files('libs/jpush-android-3.0.9.jar')
-    implementation files('libs/jcore-android-1.1.7.jar')
+//    implementation files('libs/jpush-android-3.0.9.jar')
+//    implementation files('libs/jcore-android-1.1.7.jar')
     implementation files('libs/httpmime-4.1.2.jar')
     implementation files('libs/IndoorscapeAlbumPlugin.jar')
+
+    compile 'cn.jiguang.sdk:jpush:3.0.9'  // 此处以JPush 3.0.9 版本为例。
+    compile 'cn.jiguang.sdk:jcore:1.1.7'  // 此处以JCore 1.1.7 版本为例。
 
 }
 
@@ -75,6 +76,18 @@ android {
         flavorDimensions "versionCode"
         multiDexEnabled true  // 消去重复的jar 引用
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "aisi"]//多渠道打包标识 默认爱思
+
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : "com.tbs.tobosutype",
+                JPUSH_APPKEY : "296b86ca9ffe1bfd4f43b655", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
     }
 
     useLibrary 'org.apache.http.legacy'

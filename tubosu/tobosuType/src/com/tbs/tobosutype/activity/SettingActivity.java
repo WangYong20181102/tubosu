@@ -32,9 +32,6 @@ import com.tbs.tobosutype.utils.CheckUpdateUtils;
 import com.tbs.tobosutype.utils.DataCleanManager;
 import com.tbs.tobosutype.utils.ShareUtil;
 import com.tbs.tobosutype.utils.ToastUtil;
-import com.tencent.android.tpush.XGIOperateCallback;
-import com.tencent.android.tpush.XGPushConfig;
-import com.tencent.android.tpush.XGPushManager;
 /**
  * 个人中心设置页面
  * @author dec
@@ -215,7 +212,6 @@ public class SettingActivity extends Activity {
 				if(isPush){
 					isPush = false;
 					Log.d("pushMSG", "点击后是" + (isPush ? "开启的":"关闭的"));
-					XGPushConfig.enableDebug(getApplicationContext(), false);// 关闭debug开关
 //					XGPushManager.unregisterPush(getApplicationContext(), new XGIOperateCallback() {
 //
 //						@Override
@@ -228,7 +224,6 @@ public class SettingActivity extends Activity {
 //							 Log.e(TAG, "手动注销失败, code - " + i + " message - " + obj.toString());
 //						}
 //					});
-					XGPushManager.unregisterPush(getApplicationContext());
 //					Log.d(TAG, "手动注销成功, token - " + obj.toString());
 					if(pushSharedPreferences==null){
 						pushSharedPreferences =  getSharedPreferences("Push_Config", MODE_PRIVATE);
@@ -241,24 +236,6 @@ public class SettingActivity extends Activity {
 				}else{
 					isPush = true;
 					Log.d("pushMSG", "点击后是" + (isPush ? "开启的":"关闭的"));
-					XGPushConfig.enableDebug(getApplicationContext(), true);// 打开debug开关
-					XGPushManager.registerPush(getApplicationContext(), new XGIOperateCallback() {
-			            @Override
-			            public void onSuccess(Object o, int i) {
-			                Log.d(TAG, "手动设置推送注册成功, token是" + o);
-			                if(pushSharedPreferences==null){
-			                	pushSharedPreferences =  getSharedPreferences("Push_Config", MODE_PRIVATE);
-			                }
-			                Editor editor = pushSharedPreferences.edit();
-			                editor.putBoolean("Is_Push_Message", true);
-			                editor.commit();
-			            }
-
-			            @Override
-			            public void onFail(Object o, int i, String s) {
-			                Log.e(TAG, "手动设置推送注册失败, code - " + i + " 失败信息是 - " + s);
-			            }
-			        });
 					iv_push_flag.setBackgroundResource(R.drawable.icon_push_yes);
 				}
 			}

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.tbs.tobosutype"
     android:versionCode="24"
-    android:versionName="3.5"> <!-- 2017-11-16 修改成  24  &  3.5 -->
+    android:versionName="3.5">
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="25" />
@@ -439,6 +440,7 @@
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
             android:name="cn.jpush.android.service.PushService"
+            tools:replace="android:process"
             android:exported="false"
             android:process=":mult">
             <intent-filter>
@@ -462,7 +464,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.DaemonService" />
-
                 <category android:name="com.tbs.tobosutype" />
             </intent-filter>
         </service>
@@ -472,8 +473,9 @@
             android:name="cn.jpush.android.service.PushReceiver"
             android:enabled="true"
             android:exported="false">
-            <intent-filter android:priority="1000">
-                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" /> <!-- Required  显示通知栏 -->
+            <intent-filter
+                android:priority="1000">
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
                 <category android:name="com.tbs.tobosutype" />
             </intent-filter>
             <intent-filter>
@@ -484,7 +486,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
-
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>

@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.customview.RoundImageView;
@@ -26,20 +25,15 @@ import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.Util;
-import com.tencent.android.tpush.XGPushManager;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -439,7 +433,6 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
                 getSharedPreferences("userInfo", 0).edit().clear().commit();
                 AppInfoUtil.ISJUSTLOGIN = true;
                 getSharedPreferences("userInfo", 0).edit().clear().commit();
-                XGPushManager.unregisterPush(getApplicationContext());
                 dialog.cancel();
                 umShareAPI.deleteOauth(MyOwnerAccountManagerActivity.this, SHARE_MEDIA.WEIXIN, null);
 //                Intent i = new Intent();

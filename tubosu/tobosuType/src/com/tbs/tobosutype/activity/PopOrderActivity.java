@@ -1376,6 +1376,7 @@ public class PopOrderActivity extends Activity {
                             Util.setToast(mContext, "领取失败 请稍后再试");
                             hideLoadingView();
                             notNow();
+                            Util.setErrorLog(TAG, "===引导发单结果失败了");
                         }
                     });
                 }
@@ -1383,6 +1384,7 @@ public class PopOrderActivity extends Activity {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     final String s = response.body().string();
+                    Util.setErrorLog(TAG, "===引导发单结果=>>>"+s);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
