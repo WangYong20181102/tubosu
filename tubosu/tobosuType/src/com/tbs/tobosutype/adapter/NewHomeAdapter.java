@@ -293,11 +293,12 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     SpUtil.setDoubleImageListJson(context, DImageJson);
                     Intent intent = new Intent(context, DImageLookingActivity.class);
                     intent.putExtra("mPosition", position);
-                    intent.putExtra("mWhereFrom", "TaotuActivity"); //NewhomeActivity
+                    intent.putExtra("mWhereFrom", "NewhomeActivity");
                     context.startActivity(intent);
 
                 }
             });
+
             headHolder.rvSheji.addOnScrollListener(new EndlessRecyclerOnScrollListener() {
                 @Override
                 public void onLoadMore() {
