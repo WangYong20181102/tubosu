@@ -1,11 +1,9 @@
 package com.tbs.tobosutype.global;
-
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
 import android.widget.Toast;
-
 import com.tbs.tobosutype.utils.AppInfoUtil;
 
 
@@ -15,7 +13,7 @@ public class Constant {
     public static final String DESCRIPTOR_SHARE = "com.umeng.share";
 
     public static final String UMENG_KEY = "5657b48a67e58ed2b30040bc";
-    private static final String TIPS = "请移步官方网站 ";
+    private static final String TIPS = "请移步官方网站";
 
     private static final String END_TIPS = ", 查看相关说明.";
 

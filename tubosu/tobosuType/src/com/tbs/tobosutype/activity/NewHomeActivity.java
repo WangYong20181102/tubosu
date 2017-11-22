@@ -469,9 +469,9 @@ public class NewHomeActivity extends BaseActivity {
                                 JSONObject resultJson = new JSONObject(result);
                                 JSONObject shejiObject = resultJson.getJSONObject("data");
                                 JSONArray shejiArr = shejiObject.getJSONArray("impression");
-//                                if(shejiArrayList.size()>0){
-//                                    shejiArrayList.clear();
-//                                }
+                                if(shejiArrayList.size()>0){
+                                    shejiArrayList.clear();
+                                }
                                 for(int i=0; i <shejiArr.length(); i++){
                                     _ImageD shejiImg = gson.fromJson(shejiArr.getJSONObject(i).toString(), _ImageD.class);
                                     shejiArrayList.add(shejiImg);
