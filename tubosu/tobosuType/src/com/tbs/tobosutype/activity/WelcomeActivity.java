@@ -75,26 +75,15 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         new Thread() {
             @Override
             public void run() {
-                SystemClock.sleep(3000);
                 countDownloadNum();
                 if ("".equals(getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("encode_pass", ""))) {
-                    // 没有登录
-                    Util.setErrorLog(TAG, ">>>>>>>没有登录<<<<<");
+
                 } else {
                     // 登录
                     check_password();
                     Util.setErrorLog(TAG, ">>>>>>>登录<<<<<");
                     SystemClock.sleep(2000);
                 }
-
-                // AB测试
-//                if ("0".equals(getSharedPreferences("AB_TEST", Context.MODE_PRIVATE).getString("status", "0"))) {
-//                    get_ABTest();
-//                } else {
-//                    Util.setErrorLog(TAG,"-- 你已经选择过ab测试 --");
-//                }
-
-
                 runOnUiThread(new IntentTask());
             }
         }.start();
@@ -109,18 +98,6 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         }else{
             Glide.with(mContext).load(R.drawable.welcome_image).placeholder(R.drawable.welcome_image).error(R.drawable.welcome_image).into(welcomeImage);
         }
-
-//        appbaidu
-//        apphuawei
-//        applenovo
-//        appmeizu
-//        appoppo
-//        appqihu
-//        appttt
-//        appvivo
-//        appwdj
-//        appyyb
-
     }
 
     private String MAC_CODE = "";
@@ -167,13 +144,13 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         OKHttpUtil.post(SURVIVAL_URL, map, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Util.setLog(TAG, "onFailure >>>" + e.getMessage());
+//                Util.setLog(TAG, "onFailure >>>" + e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String json = response.body().string();
-                Util.setLog(TAG, "onResponse >>>" + json);
+//                Util.setLog(TAG, "onResponse >>>" + json);
             }
         });
     }
