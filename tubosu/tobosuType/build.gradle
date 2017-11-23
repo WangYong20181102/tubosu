@@ -30,7 +30,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.1'
     compile 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-    implementation files('libs/BaiduLBS_Android.jar')
     compile 'cn.jiguang.sdk:jpush:3.0.9'  // 此处以JPush 3.0.9 版本为例。
     compile 'cn.jiguang.sdk:jcore:1.1.7'  // 此处以JCore 1.1.7 版本为例。
 }
@@ -63,7 +62,7 @@ android {
         versionName "3.5"
         flavorDimensions "versionCode"
         multiDexEnabled true  // 消去重复的jar 引用
-        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "aisi"]//多渠道打包标识 默认爱思
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "ali"]//多渠道打包标识 默认爱思
 
         ndk {
             //选择要添加的对应cpu类型的.so库。
@@ -84,7 +83,6 @@ android {
 
 
     productFlavors {
-        aisi {}
         ali {}
         anzhi {}
         appbaidu {}
@@ -100,13 +98,9 @@ android {
         appyyb {}
         gaoqu {}
         itools {}
-        jifeng {}
         jinli {}
         kuaiyong {}
-        kupai {}
         leshi {}
-        liqu {}
-        mumayi {}
         nduo {}
         nineonezhushou {}
         pingguoyuan {}
@@ -114,15 +108,8 @@ android {
         sumsung {}
         taobao {}
         threeMarket {}
-        tongbu {}
-        ucmarket {}
-        xy {}
-        yingyonghui {}
         youyi {}
-        zhongxin {}
-        zuimei {}
         kuan {}
-        tobosu1 {}
         zhuanghaojia {}
         tbspc {}
     }

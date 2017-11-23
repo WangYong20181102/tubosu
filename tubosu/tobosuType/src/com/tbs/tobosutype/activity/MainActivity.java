@@ -169,11 +169,11 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         Intent intent = new Intent().setClass(this, NewHomeActivity.class);
         spec = tabHost.newTabSpec("ONE").setIndicator("首页").setContent(intent);
         tabHost.addTab(spec);
-//        if (Build.VERSION.SDK_INT >= 21) {
+        if (Build.VERSION.SDK_INT >= 21) {
             intent = new Intent().setClass(this, NewImageActivity.class);
-//        }else {
-//            intent = new Intent().setClass(this, ImageNewActivity.class);
-//        }
+        }else {
+            intent = new Intent().setClass(this, ImageNewActivity.class);
+        }
 
         spec = tabHost.newTabSpec("TWO").setIndicator("效果图").setContent(intent);
         tabHost.addTab(spec);
