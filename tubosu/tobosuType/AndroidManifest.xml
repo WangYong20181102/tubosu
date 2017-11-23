@@ -432,8 +432,7 @@
         <activity android:name=".activity.NewImageActivity" />
         <activity android:name=".activity.SImageLookingActivity" />
         <activity android:name=".activity.DImageLookingActivity" />
-		<activity android:name=".activity.SImageLookingActivity" />
-        <activity android:name=".activity.DImageLookingActivity" />
+
 
 		
         <service android:name="cn.jpush.android.service.PushService"
