@@ -4,15 +4,9 @@ buildscript {
     }
 }
 
-
-
-
-
 apply plugin: 'android'
-
 dependencies {
     compile fileTree(include: '*.jar', dir: 'libs')
-    compile files('libs/BaiduLBS_Android.jar')
     compile files('libs/org.apache.http.legacy.jar')
     compile files('libs/SocialSDK_QQ_Simplify.jar')
     compile files('libs/SocialSDK_WeChat_Simplify.jar')
@@ -37,11 +31,9 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.1'
     compile 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-//    implementation files('libs/jpush-android-3.0.9.jar')
-//    implementation files('libs/jcore-android-1.1.7.jar')
-    implementation files('libs/httpmime-4.1.2.jar')
-    implementation files('libs/IndoorscapeAlbumPlugin.jar')
-
+//    implementation files('libs/httpmime-4.1.2.jar')
+//    implementation files('libs/IndoorscapeAlbumPlugin.jar')
+    compile files('libs/BaiduLBS_Android.jar')
     compile 'cn.jiguang.sdk:jpush:3.0.9'  // 此处以JPush 3.0.9 版本为例。
     compile 'cn.jiguang.sdk:jcore:1.1.7'  // 此处以JCore 1.1.7 版本为例。
 

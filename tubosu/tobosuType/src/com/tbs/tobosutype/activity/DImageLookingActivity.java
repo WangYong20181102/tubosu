@@ -535,10 +535,11 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
     //收藏事件
     private void HttpShouCang(String id, String state) {
         HashMap<String, Object> param = new HashMap<>();
+        String _id = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("id", "");
         param.put("token", Util.getDateToken());
         param.put("state", state);
-        param.put("id", id);
-        param.put("uid", AppInfoUtil.getUserid(mContext));
+        param.put("id", id);// id
+        param.put("uid", _id);// 以前是AppInfoUtil.getUserid(mContext)  昭仲要求改成 _id
         param.put("user_type", AppInfoUtil.getTypeid(mContext));
         param.put("type", "2");
         OKHttpUtil.post(Constant.IMAGE_COLLECT, param, new Callback() {
@@ -550,6 +551,7 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String json = new String(response.body().string());
+                Util.setErrorLog(TAG, json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     int status = jsonObject.optInt("status");

@@ -1,10 +1,8 @@
 package com.tbs.tobosutype.activity;
-
+import java.io.IOException;
 import java.util.HashMap;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,21 +13,24 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.os.SystemClock;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.http.HttpPost;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.HintInput;
 import com.tbs.tobosutype.utils.MD5Util;
+import com.tbs.tobosutype.utils.Util;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 /**
  * 找回密码 2页面
  */
@@ -81,14 +82,19 @@ public class FindPwdActivity2 extends Activity implements OnClickListener {
 			finish();
 			break;
 		case R.id.findpwd_two_obtain:
+
 			if ("重新获取".equals(findpwd_two_obtain.getText().toString()) || "获取验证码".equals(findpwd_two_obtain.getText().toString())) {
-				GetVerificationPopupwindow popupwindow = new GetVerificationPopupwindow(FindPwdActivity2.this);
-				popupwindow.phone = mobile;
-				popupwindow.version = getAppVersionName(FindPwdActivity2.this);
-				popupwindow.showAtLocation(findViewById(R.id.findpwd_two_submit), Gravity.CENTER, 0, 0);
-			} else {
-				Toast.makeText(mContext, "您已经获取过了!", Toast.LENGTH_SHORT).show();
+				getMSMCode();
 			}
+
+//			if ("重新获取".equals(findpwd_two_obtain.getText().toString()) || "获取验证码".equals(findpwd_two_obtain.getText().toString())) {
+//				GetVerificationPopupwindow popupwindow = new GetVerificationPopupwindow(FindPwdActivity2.this);
+//				popupwindow.phone = mobile;
+//				popupwindow.version = getAppVersionName(FindPwdActivity2.this);
+//				popupwindow.showAtLocation(findViewById(R.id.findpwd_two_submit), Gravity.CENTER, 0, 0);
+//			} else {
+//				Toast.makeText(mContext, "您已经获取过了!", Toast.LENGTH_SHORT).show();
+//			}
 			break;
 		case R.id.findpwd_two_submit:
 			smsVerif = findpwd_two_inputverif.getText().toString().trim();
@@ -107,12 +113,57 @@ public class FindPwdActivity2 extends Activity implements OnClickListener {
 			map.put("pass", MD5Util.md5(newPwd));
 			map.put("msg_code", smsVerif);
 			new SendFindPwdThread(map).start();
-			
+//			Util.setErrorLog("", "电话="+mobile + "   新密码="+MD5Util);
 			break;
 		default:
 			break;
 		}
 
+	}
+
+
+
+	private void getMSMCode(){
+		if(Util.isNetAvailable(mContext)){
+			OKHttpUtil okHttpUtil = new OKHttpUtil();
+			HashMap<String, Object> hashMap = new HashMap<String, Object>();
+			String token = Util.getDateToken();
+			Util.setErrorLog("找回密码", "==========" +token + "=============" + mobile);
+			hashMap.put("token", token);
+			hashMap.put("cellphone", mobile);
+
+			okHttpUtil.post(Constant.DUANXIN_URL, hashMap, new Callback() {
+				@Override
+				public void onFailure(Call call, IOException e) {
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							Util.setToast(mContext, "网络繁忙，请稍后再试");
+						}
+					});
+				}
+
+				@Override
+				public void onResponse(Call call, Response response) throws IOException {
+					final String json = response.body().string();
+					Util.setErrorLog("找回密码", json);
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							try {
+								JSONObject jsonObject = new JSONObject(json);
+								if(jsonObject.getInt("status") == 200){
+									Util.setToast(mContext, jsonObject.getString("msg"));
+								}
+								startCount();
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+						}
+					});
+				}
+			});
+		}
 	}
 
 	/***
@@ -132,6 +183,7 @@ public class FindPwdActivity2 extends Activity implements OnClickListener {
 			Looper.prepare();
 			// 设置新密码接口
 			String result = HttpPost.doPost(Constant.TOBOSU_URL + "tapp/passport/app_reset_password?", map, "utf-8");
+			Util.setErrorLog("找回密码======>>>", result);
 			try {
 				if (result != null) {
 					JSONObject object = new JSONObject(result);
@@ -164,7 +216,7 @@ public class FindPwdActivity2 extends Activity implements OnClickListener {
 		                //把返回数据存入Intent
 		                intent.putExtra("resultData", "password has been changed");
 		                setResult(RESULT_OK, intent);
-		                finish();
+//		                finish();
 					} else {
 						Toast.makeText(mContext, msgData, Toast.LENGTH_SHORT).show();
 					}

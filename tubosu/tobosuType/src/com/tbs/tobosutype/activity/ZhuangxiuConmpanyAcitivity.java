@@ -14,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.tbs.tobosutype.R;
@@ -147,21 +146,17 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
         }
     };
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        getNetData();
-//    }
-
     public void getNetData() {
         if (Util.isNetAvailable(context)) {
             SharedPreferences sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
             String type = sp.getString("typeid", "1");
             String userid = sp.getString("userid", "272286");
+            String _id = sp.getString("id", "");
+            Util.setErrorLog(TAG, "===公司页面 = "+_id);
             OKHttpUtil okHttpUtil = new OKHttpUtil();
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("token", Util.getDateToken());
-            hashMap.put("uid", userid);
+            hashMap.put("uid", _id);
             hashMap.put("user_type", type); //type
             hashMap.put("page_size", "10");
             hashMap.put("page", page);
@@ -170,6 +165,7 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     runOnUiThread(new Runnable() {
+
                         @Override
                         public void run() {
                             Util.setToast(context, "系统繁忙，请稍后再试。");
@@ -320,6 +316,10 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                 break;
             case R.id.tvDelelteZhuangxiuGongsi:
                 // 删除请求
+                tvEditZhuangxiuGongsi.setText("编辑");
+                relDeleteCompany.setVisibility(View.GONE);
+                isDeletingCompany = false;
+                setDeleteFlag(isDeletingCompany);
                 int size = deletComannaySelectIdList.size();
                 if(size>0){
                     String idString = "";

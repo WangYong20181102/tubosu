@@ -354,6 +354,7 @@ public class NewHomeActivity extends BaseActivity {
     private HashMap<String, Object> getParam(int num) {
         HashMap<String, Object> param = new HashMap<String, Object>();
         param.put("token", Util.getDateToken());
+        Util.setErrorLog("-zengzhaozhong要的token-", "token = " + Util.getDateToken());
         String uid = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("userid", "");
         String user_type = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("mark", "");
         param.put("uid", uid);

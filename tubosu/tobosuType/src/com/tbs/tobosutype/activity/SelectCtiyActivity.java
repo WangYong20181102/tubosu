@@ -49,6 +49,9 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.model.LatLng;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.CityAdapter;
+import com.tbs.tobosutype.base.*;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.customview.BladeView;
 import com.tbs.tobosutype.customview.BladeView.OnItemClickListener;
 import com.tbs.tobosutype.customview.FirstGridView;
@@ -60,6 +63,7 @@ import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.model.City;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
+import com.tbs.tobosutype.utils.EventBusUtil;
 import com.tbs.tobosutype.utils.LogUtil;
 import com.tbs.tobosutype.utils.MD5Util;
 import com.tbs.tobosutype.utils.NetUtil;
@@ -87,7 +91,7 @@ import okhttp3.Response;
  *
  * @author dec
  */
-public class SelectCtiyActivity extends Activity implements OnClickListener, MyApplication.EventHandler {
+public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity implements OnClickListener, MyApplication.EventHandler {
     private static final String TAG = SelectCtiyActivity.class.getSimpleName();
     private String DOWNLOAD_COUNT_URL = Constant.TOBOSU_URL + "tapp/DataCount/download_count";
     /**
@@ -106,7 +110,6 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
 
     /***右边字母列表view*/
     private BladeView mLetter;
-
     private ListView mSearchListView;
     private List<City> mCities;
     private CityAdapter mCityAdapter;
@@ -222,6 +225,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
     private String fromFindDecorateCompany = "";
     private String fromFreeDesign = "";
     private String fromGetPrice = "";
+    private String fromAccount = "";
     private int from = -1;
 
     private String fromHome = "";
@@ -265,6 +269,12 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             city_title_back.setVisibility(View.VISIBLE);
         }
 
+        if (getIntent() != null && getIntent().getBundleExtra("accountBundle") != null) {
+            Bundle b = getIntent().getBundleExtra("accountBundle");
+            fromAccount = b.getString("fromMyOwenerAccountManager");
+            city_title_back = (ImageView) findViewById(R.id.city_title_back);
+            city_title_back.setVisibility(View.VISIBLE);
+        }
 
         if (getIntent() != null && getIntent().getBundleExtra("findDecorateCompanySelectcityBundle") != null) {
             Bundle b = getIntent().getBundleExtra("findDecorateCompanySelectcityBundle");
@@ -583,8 +593,13 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
         }
 
 
-        if (fromHome.equals("101")) {
+        if(fromAccount.equals("464")){
+            EventBusUtil.sendEvent(new Event(EC.EventCode.SELECT_CITY_CODE, cityName));
+            finish();
+        }
 
+
+        if (fromHome.equals("101")) {
             Intent it = new Intent();
             Bundle b = new Bundle();
             b.putString("ci", cityName);
@@ -593,7 +608,7 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
             setResult(104, it);
             System.gc();
             finish();
-        } else {
+        }else {
 
             // 首次安装
             if (FIRST_INSTALL.equals(getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).getString("go_poporder_string", "0"))) {
@@ -609,6 +624,16 @@ public class SelectCtiyActivity extends Activity implements OnClickListener, MyA
         }
     }
 
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        super.receiveEvent(event);
+    }
 
     /***
      * 首次安装调用

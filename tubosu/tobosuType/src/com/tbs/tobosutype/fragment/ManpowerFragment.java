@@ -106,11 +106,31 @@ public class ManpowerFragment  extends Fragment {
     }
 
     private void setTextMessage(String cache){
+//        Util.setErrorLog("邝俊", "===>>" + cache);
         String[] pieces = cache.split("#");
-        etCostManpower.setText(pieces[1]);
-        etCostMoney.setText(pieces[2]);
-        tvCostTime.setText(pieces[3]);
-        etCostContent.setText(pieces[4]);
+        int len = pieces.length;
+//        for(int i =0;i<len;i++){
+//            Util.setErrorLog("邝俊", "===n>>" + pieces[i]);
+//        }
+
+        if(len <= 1){
+
+        }else if(len == 2){
+            etCostManpower.setText(pieces[1]);
+        }else if(len == 3){
+            etCostManpower.setText(pieces[1]);
+            etCostMoney.setText(pieces[2]);
+        }else if(len == 4){
+            etCostManpower.setText(pieces[1]);
+            etCostMoney.setText(pieces[2]);
+            tvCostTime.setText(pieces[3]);
+        }else {
+            etCostManpower.setText(pieces[1]);
+            etCostMoney.setText(pieces[2]);
+            tvCostTime.setText(pieces[3]);
+            etCostContent.setText(pieces[4]);
+        }
+
     }
 
     private void setClick(){

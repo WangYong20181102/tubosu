@@ -26,6 +26,7 @@ import com.tbs.tobosutype.adapter.SImageLookingAdapter;
 import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean.EC;
 import com.tbs.tobosutype.bean.Event;
+import com.tbs.tobosutype.bean.TaotuEntity;
 import com.tbs.tobosutype.bean._ImageS;
 import com.tbs.tobosutype.fragment.SImageLookFragment;
 import com.tbs.tobosutype.global.Constant;
@@ -463,12 +464,16 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
     //收藏事件
     private void HttpShouCang(String id, String state) {
         HashMap<String, Object> param = new HashMap<>();
+        String _id = mContext.getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("id", "");
         param.put("token", Util.getDateToken());
         param.put("state", state);
         param.put("id", id);
-        param.put("uid", AppInfoUtil.getUserid(mContext));
+        param.put("uid", _id); // 以前是AppInfoUtil.getUserid(mContext) 昭仲要求改成
         param.put("user_type", AppInfoUtil.getTypeid(mContext));
         param.put("type", "1");
+
+
+        Util.setErrorLog(TAG, "传递的参数 state=" + state + "   id=" + id + "   uid=" +_id + "  user_type=" + AppInfoUtil.getTypeid(mContext) + " type=1");
         OKHttpUtil.post(Constant.IMAGE_COLLECT, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -478,6 +483,7 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String json = new String(response.body().string());
+                Util.setErrorLog(TAG, json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     int status = jsonObject.optInt("status");

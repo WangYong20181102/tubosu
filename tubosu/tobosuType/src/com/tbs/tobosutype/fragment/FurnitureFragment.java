@@ -97,13 +97,24 @@ public class FurnitureFragment extends Fragment{
     }
 
     private void setTextMessage(String cache){
-//        #电视#1.00#2017-07-01#
         String[] pieces = cache.split("#");
-        etCostFurniture.setText(pieces[1]);
-        etCostMoney.setText(pieces[2]);
-        tvCostTime.setText(pieces[3]);
-        etCostContent.setText(pieces[4]);
-        Util.setErrorLog("接收广播3>", cache);
+        int len = pieces.length;
+        if(len <= 1){
+        }else if(len == 2){
+            etCostFurniture.setText(pieces[1]);
+        }else if(len == 3){
+            etCostFurniture.setText(pieces[1]);
+            etCostMoney.setText(pieces[2]);
+        }else if(len == 4){
+            etCostFurniture.setText(pieces[1]);
+            etCostMoney.setText(pieces[2]);
+            tvCostTime.setText(pieces[3]);
+        }else {
+            etCostFurniture.setText(pieces[1]);
+            etCostMoney.setText(pieces[2]);
+            tvCostTime.setText(pieces[3]);
+            etCostContent.setText(pieces[4]);
+        }
     }
 
 

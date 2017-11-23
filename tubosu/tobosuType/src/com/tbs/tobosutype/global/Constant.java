@@ -121,6 +121,7 @@ public class Constant {
      */
     public static final String GET_LOADING_AD_URL = TOBOSU_URL + "tapp/Advert/get_advert";
 
+
     /**
      * 编辑装修开支
      */
@@ -220,6 +221,7 @@ public class Constant {
 
     public static final String ANDROID_SHARE = "&channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "&tbsfrom=share";
 
+    // 公司收藏
     public static final String GONGSI_URL = TOBOSU_URL + "mapp/collect/collect_company_list";
 
     public static final String SHANCHU_URL1 = TOBOSU_URL + "mapp/collect/batch_quit_collect";

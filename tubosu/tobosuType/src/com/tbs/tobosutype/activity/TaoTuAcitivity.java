@@ -107,10 +107,11 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
             SharedPreferences sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
             String type = sp.getString("typeid", "1");
             String userid = sp.getString("userid", Constant.DEFAULT_USER_ID);
+            String _id = sp.getString("id", "");
             OKHttpUtil okHttpUtil = new OKHttpUtil();
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("token", Util.getDateToken());
-            hashMap.put("uid", userid);
+            hashMap.put("uid", _id);
             hashMap.put("type", "1");
             hashMap.put("user_type", type);
             hashMap.put("page_size", pageSize);

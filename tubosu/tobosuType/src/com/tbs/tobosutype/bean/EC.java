@@ -23,6 +23,8 @@ public class EC {
         public static final int DELETE_TAOTU_CODE = 0x100000;//删除收藏
         public static final int DELETE_TAOTU_LIST_CODE = 0x100001;//删除收藏套图
         public static final int DELETE_DANTU_LIST_CODE = 0x100002;//删除收藏单图
+        public static final int SELECT_CITY_CODE = 0x100003;//选择城市
+        public static final int DELETE_COMPANY_CODE = 0x100004;//选择城市
     }
 
 }

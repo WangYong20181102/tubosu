@@ -517,6 +517,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
             String nickname = data.getString("name"); //帝霸哥
             mark = data.getString("mark");
             token = data.getString("token");
+            String id = data.getString("id");
             String userid = data.getString("uid");
             String cityname = data.getString("cityname");
             String cellphone = data.getString("cellphone");
@@ -527,6 +528,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
             SharedPreferences saveInfo = getActivity().getSharedPreferences("userInfo", Context.MODE_PRIVATE); // 登录成功后 存储用户标记mark
             SharedPreferences.Editor editor = saveInfo.edit();
             editor.putString("nickname", nickname);
+            editor.putString("id", id);
             editor.putString("icon", icon);
             editor.putString("mark", mark);
             editor.putString("userid", userid);

@@ -16,15 +16,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.base.*;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.customview.RoundImageView;
-import com.tbs.tobosutype.customview.SelectCityDialog;
-import com.tbs.tobosutype.customview.SelectCityDialog.Builder;
 import com.tbs.tobosutype.customview.SelectSexPopupWindow;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -43,7 +45,7 @@ import okhttp3.Response;
  *
  * @author dec
  */
-public class MyOwnerAccountManagerActivity extends Activity implements OnClickListener {
+public class MyOwnerAccountManagerActivity extends com.tbs.tobosutype.base.BaseActivity implements OnClickListener {
     private static final String TAG = MyOwnerAccountManagerActivity.class.getSimpleName();
 
     /**
@@ -137,6 +139,7 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
     private String weiXinUserId;
     private UMShareAPI umShareAPI;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,6 +173,11 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
     }
 
     private void initData() {
+
+        changeInfoParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
+        bindThirdPartyParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
+
+
         Bundle bundle = getIntent().getBundleExtra("data");
         nickname = bundle.getString("nickname");
         tv_nickname.setText(nickname);
@@ -223,6 +231,12 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
         rl_weixin.setOnClickListener(this);
         rl_place.setOnClickListener(this);
         rl_gender.setOnClickListener(this);
+    }
+
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
     }
 
     @Override
@@ -281,24 +295,14 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
                 startActivityForResult(intent, MODIFY_COMMUNITY_REQUEST_CODE);
                 break;
             case R.id.rl_place:
-                Builder builder = new SelectCityDialog.Builder(this);
-
-                builder.setPositiveButton("继续", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent selectCityIntent = new Intent(mContext, SelectCtiyActivity.class);
-                        selectCityIntent.putExtra("isSelectCity", true); // FIXME 要检查
-                        startActivityForResult(selectCityIntent, MODIFY_CITY_REQUEST_CODE);
-                        dialog.cancel();
-                    }
-                });
-
-                builder.create().show();
-
+                // 修改城市
+                Intent selectCityIntent = new Intent(mContext, SelectCtiyActivity.class);
+                Bundle b = new Bundle();
+                b.putString("fromMyOwenerAccountManager", "464");
+                selectCityIntent.putExtra("accountBundle", b);
+                startActivityForResult(selectCityIntent, MODIFY_CITY_REQUEST_CODE);
                 break;
             case R.id.rl_gender:
-
                 operSelectGender();
                 break;
             case R.id.rl_cellphone_myowner_personal_info:
@@ -311,6 +315,8 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
                 break;
         }
     }
+
+
 
     /***
      * 选择性别
@@ -338,7 +344,7 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
                     return;
                 }
 
-                changeInfoParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
+
                 changeInfoParams.put("token", token);
                 changeInfoParams.put("field", FIELD_GENDER + "");
                 changeInfoParams.put("new", genderFlage + "");
@@ -367,14 +373,6 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
                     tv_icommunity.setText(data.getStringExtra("result"));
                     requestChangeInfo();
                     break;
-                case MODIFY_CITY_REQUEST_CODE:
-                    changeInfoParams.put("field", FIELD_CITY + "");
-                    if (!TextUtils.isEmpty(data.getStringExtra("result"))) {
-                        changeInfoParams.put("new", data.getStringExtra("result"));  //  修改后的城市
-                        tv_place.setText(data.getStringExtra("result"));
-                        requestChangeInfo();
-                    }
-                    break;
                 case BIND_CELLPHONE_NUM_REQUEST_CODE:
                     tv_cellphone_myowner_account_info.setText(data.getStringExtra("result"));  //  修改后的电话号码
                     break;
@@ -385,11 +383,29 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
         }
     }
 
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()){
+            case EC.EventCode.SELECT_CITY_CODE:
+                String city = (String) event.getData();
+                changeInfoParams.put("field", FIELD_CITY + "");
+                Util.setErrorLog(TAG, "找到城市===>>" + city);
+                if (!TextUtils.isEmpty(city)) {
+                    changeInfoParams.put("new", city);  // 修改后的城市
+                    tv_place.setText(city);
+                    requestChangeInfo();
+                }
+                break;
+        }
+    }
+
     /**
      * 修改信息接口
      */
     private void requestChangeInfo() {
-
+        changeInfoParams.put("token", token);
+        Util.setErrorLog(TAG, changeInfoParams.toString());
         OKHttpUtil.post(Constant.USER_CHANGE_INFO_URL, changeInfoParams, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -404,7 +420,9 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String json = response.body().string();
+                Util.setErrorLog(TAG, json);
                 runOnUiThread(new Runnable() {
+
                     @Override
                     public void run() {
                         try {
@@ -454,12 +472,13 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
 
 
     private void operBindThirdParty() {
-        bindThirdPartyParams = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
+
         bindThirdPartyParams.put("token", token);
         bindThirdPartyParams.put("kind", "weixin");
         bindThirdPartyParams.put("icon", weiXinImageUrl);
         bindThirdPartyParams.put("nickname", weiXinUserName);
         bindThirdPartyParams.put("account", weiXinUserId);
+
         OKHttpUtil.post(Constant.BIND_THIRD_PARTY_URL, bindThirdPartyParams, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -470,6 +489,7 @@ public class MyOwnerAccountManagerActivity extends Activity implements OnClickLi
             public void onResponse(Call call, Response response) throws IOException {
                 final String json = response.body().string();
                 runOnUiThread(new Runnable() {
+
                     @Override
                     public void run() {
                         try {

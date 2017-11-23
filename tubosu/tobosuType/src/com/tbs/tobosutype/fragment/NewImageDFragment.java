@@ -680,10 +680,11 @@ public class NewImageDFragment extends BaseFragment {
     //收藏或者取消收藏请求
     private void HttpCollection(String id, String uid, String user_type, final int position) {
         HashMap<String, Object> param = new HashMap<>();
+        String _id = mContext.getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("id", "");
         param.put("token", Util.getDateToken());
         param.put("state", mImageDArrayList.get(position).getIs_collect());
         param.put("id", id);//套图或者单图的id
-        param.put("uid", uid);//用户id
+        param.put("uid", _id);//用户id  以前是uid， 昭仲要求改成_id
         param.put("user_type", user_type);//用户类型
         Log.e(TAG, "用户的类型================" + user_type);
         param.put("type", 2);//收藏图片的类型

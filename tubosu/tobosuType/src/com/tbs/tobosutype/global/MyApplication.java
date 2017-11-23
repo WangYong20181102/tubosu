@@ -93,7 +93,7 @@ public class MyApplication extends android.app.Application {
         mMyLocationListener = new MyLocationListener();
         context = getApplicationContext();
         try {
-            mLocationClient.registerLocationListener(mMyLocationListener);    //注册监听函数
+            mLocationClient.registerLocationListener(mMyLocationListener); //注册监听函数
         } catch (Exception e) {
             e.printStackTrace();
         }

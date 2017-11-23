@@ -156,11 +156,11 @@ public class DanTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
             SharedPreferences sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
             String type = sp.getString("typeid", "1");
             String userid = sp.getString("userid", Constant.DEFAULT_USER_ID);
-
+            String _id = sp.getString("id", "");
             OKHttpUtil okHttpUtil = new OKHttpUtil();
             HashMap<String, Object> h = new HashMap<String, Object>();
             h.put("token", Util.getDateToken());
-            h.put("uid", userid);
+            h.put("uid", _id);
             h.put("user_type", type);
             h.put("page_size", pageSize);
             h.put("page", page);

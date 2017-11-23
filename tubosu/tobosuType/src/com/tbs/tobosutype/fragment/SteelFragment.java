@@ -95,10 +95,23 @@ public class SteelFragment extends Fragment {
 
     private void setTextMessage(String cache){
         String[] pieces = cache.split("#");
-        etCostSteel.setText(pieces[1]);
-        etCostMoney.setText(pieces[2]);
-        tvCostTime.setText(pieces[3]);
-        etCostContent.setText(pieces[4]);
+        int len = pieces.length;
+        if(len <= 1){
+        }else if(len == 2){
+            etCostSteel.setText(pieces[1]);
+        }else if(len == 3){
+            etCostSteel.setText(pieces[1]);
+            etCostMoney.setText(pieces[2]);
+        }else if(len == 4){
+            etCostSteel.setText(pieces[1]);
+            etCostMoney.setText(pieces[2]);
+            tvCostTime.setText(pieces[3]);
+        }else {
+            etCostSteel.setText(pieces[1]);
+            etCostMoney.setText(pieces[2]);
+            tvCostTime.setText(pieces[3]);
+            etCostContent.setText(pieces[4]);
+        }
 
     }
 

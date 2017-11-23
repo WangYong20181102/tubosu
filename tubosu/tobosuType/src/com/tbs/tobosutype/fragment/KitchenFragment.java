@@ -94,10 +94,23 @@ public class KitchenFragment extends Fragment {
 
     private void setTextMessage(String cache){
         String[] pieces = cache.split("#");
-        etCostKitchen.setText(pieces[1]);
-        etCostMoney.setText(pieces[2]);
-        tvCostTime.setText(pieces[3]);
-        etCostContent.setText(pieces[4]);
+        int len = pieces.length;
+        if(len <= 1){
+        }else if(len == 2){
+            etCostKitchen.setText(pieces[1]);
+        }else if(len == 3){
+            etCostKitchen.setText(pieces[1]);
+            etCostMoney.setText(pieces[2]);
+        }else if(len == 4){
+            etCostKitchen.setText(pieces[1]);
+            etCostMoney.setText(pieces[2]);
+            tvCostTime.setText(pieces[3]);
+        }else {
+            etCostKitchen.setText(pieces[1]);
+            etCostMoney.setText(pieces[2]);
+            tvCostTime.setText(pieces[3]);
+            etCostContent.setText(pieces[4]);
+        }
     }
 
     private void initView(View view) {

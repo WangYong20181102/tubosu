@@ -59,14 +59,14 @@ public class ShoucangAcitivity extends com.tbs.tobosutype.base.BaseActivity {
         SharedPreferences sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         String type = sp.getString("typeid", "1");
         String userid = sp.getString("userid", Constant.DEFAULT_USER_ID);
-
-        Util.setErrorLog(TAG,type +  "=======type收藏id=====" + userid);
+        String _id = sp.getString("id", "");
+        Util.setErrorLog(TAG,type +  "=======type收藏id=====" + _id);
         if(Util.isNetAvailable(context)){
             OKHttpUtil okHttpUtil = new OKHttpUtil();
             HashMap<String, Object> ha = new HashMap<>();
             ha.put("token", Util.getDateToken());
             ha.put("user_type", type);
-            ha.put("uid", userid);
+            ha.put("uid", _id);
             okHttpUtil.post(Constant.MYFAV_URL, ha, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {

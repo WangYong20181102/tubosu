@@ -370,6 +370,7 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
         try {
             JSONObject data = jsonObject.getJSONObject("data");
             String icon = data.getString("icon");
+            String id = data.getString("id");
             String nickname = data.getString("name");
             mark = data.getString("mark");
             token = data.getString("token");
@@ -385,6 +386,7 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
             SharedPreferences.Editor editor = saveInfo.edit();
             editor.putString("nickname", nickname);
             editor.putString("icon", icon);
+            editor.putString("id", id);
             editor.putString("mark", mark);
             editor.putString("encode_pass", encode_pass);
             editor.putString("userid", userid);
