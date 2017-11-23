@@ -6,7 +6,6 @@
 
     <LinearLayout
         android:gravity="center"
-        android:id="@+id/image_new_foot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

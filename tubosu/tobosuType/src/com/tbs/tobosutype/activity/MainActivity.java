@@ -27,7 +27,6 @@ import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.receiver.LocalBroadcastManager;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.ExampleUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
 import org.json.JSONException;
@@ -145,7 +144,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 
         initView();
         initReceiver();
-        registerMessageReceiver();
         initEvent();
         needPermissions();
     }
@@ -422,40 +420,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     }
 
 
-    private MessageReceiver mMessageReceiver;
-    public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
-    public static final String KEY_TITLE = "title";
-    public static final String KEY_MESSAGE = "message";
-    public static final String KEY_EXTRAS = "extras";
 
-    public void registerMessageReceiver() {
-        mMessageReceiver = new MessageReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
-        filter.addAction(MESSAGE_RECEIVED_ACTION);
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, filter);
-    }
-
-    public class MessageReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            try {
-                if (MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
-                    String messge = intent.getStringExtra(KEY_MESSAGE);
-                    String extras = intent.getStringExtra(KEY_EXTRAS);
-                    StringBuilder showMsg = new StringBuilder();
-                    showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
-                    if (!ExampleUtil.isEmpty(extras)) {
-                        showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
-                    }
-//                    setCostomMsg(showMsg.toString());
-                    Util.setToast(context, "MainActivity 这里 ["+showMsg.toString() + "]");
-                }
-            } catch (Exception e){
-            }
-        }
-    }
 
 //    private void setCostomMsg(String msg){
 //        if (null != msgText) {

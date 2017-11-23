@@ -37,7 +37,6 @@
         android:textSize="16sp" />
 
     <Button
-        android:id="@+id/bt_want_decorate "
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="20dp"

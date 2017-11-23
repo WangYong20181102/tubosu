@@ -19,7 +19,6 @@
             android:src="@drawable/back_up" />
 
         <TextView
-            android:id="@+id/reg_one_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -34,7 +33,6 @@
         android:background="@color/dividing_line_bg" />
 
     <TextView
-        android:id="@+id/reg_one_inputbundlephone_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -71,7 +69,6 @@
         android:textSize="22sp" />
 
     <TextView
-        android:id="@+id/reg_one_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"

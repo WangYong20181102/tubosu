@@ -6,7 +6,6 @@
     android:orientation="vertical" >
 
     <RelativeLayout
-        android:id="@+id/rl_classroom"
         android:layout_width="match_parent"
         android:layout_height="26dp"
         android:gravity="bottom" >

@@ -467,7 +467,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/wall_brick_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -908,7 +907,6 @@
                     android:textSize="17sp" />
 
                 <TextView
-                    android:id="@+id/tv_wall_recalculate"
                     android:layout_width="wrap_content"
                     android:layout_height="34dp"
                     android:layout_marginLeft="44dp"

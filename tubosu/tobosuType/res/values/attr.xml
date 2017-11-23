@@ -44,11 +44,6 @@
     </declare-styleable>
 
 
-
-    <style name="recyclerview_divider" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:listDivider">@drawable/divider</item>
-    </style>
-
     <declare-styleable name="MarqueeViewStyle">
         <attr name="mvInterval" format="integer|reference"/>
         <attr name="mvAnimDuration" format="integer|reference"/>

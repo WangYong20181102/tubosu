@@ -20,7 +20,6 @@
             android:src="@drawable/back_up" />
 
         <TextView
-            android:id="@+id/preferential_applyfor_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

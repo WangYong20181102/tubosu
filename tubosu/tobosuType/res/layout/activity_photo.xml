@@ -31,7 +31,6 @@
             android:textColor="@color/white" />
 
         <TextView
-            android:id="@+id/tv_photo_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv_photo_title"
@@ -51,7 +50,6 @@
         android:weightSum="9" >
 
         <TextView
-            android:id="@+id/tv_photo_store"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
@@ -63,7 +61,6 @@
             android:textColor="@color/white" />
 
         <TextView
-            android:id="@+id/tv_photo_download"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
@@ -75,7 +72,6 @@
             android:textColor="@color/white" />
 
         <TextView
-            android:id="@+id/tv_photo_designforme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"

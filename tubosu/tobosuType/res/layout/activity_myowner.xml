@@ -182,7 +182,6 @@
                         android:textSize="13sp" />
 
                     <ImageView
-                        android:id="@+id/iv_line"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_marginLeft="10dp"
@@ -466,7 +465,6 @@
                         <!-- 第二行第三个格  装修开支-->
 
                         <LinearLayout
-                            android:id="@+id/my_layout_ower_outcome0000"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"

@@ -6,7 +6,6 @@
     android:background="#b4353332">
 
     <RelativeLayout
-        android:id="@+id/pop_zixun_ll"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_centerInParent="true"

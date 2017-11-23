@@ -20,7 +20,6 @@
             android:src="@drawable/back_up" />
 
         <TextView
-            android:id="@+id/findpwd_two_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -36,7 +35,6 @@
         android:background="@color/dividing_line_bg" />
 
     <TextView
-        android:id="@+id/findpwd_two_inputverif_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -74,7 +72,6 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/findpwd_two_setnewpwd_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"

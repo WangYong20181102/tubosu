@@ -15,7 +15,6 @@
         android:scaleType="centerCrop"/>
 
     <RelativeLayout
-        android:id="@+id/layout_newhome_anli"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/newhome_anli_item_img"
