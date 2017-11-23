@@ -83,7 +83,7 @@ public class MyApplication extends android.app.Application {
         super.onCreate();
 
         SDKInitializer.initialize(this);
-        //初始化友盟
+//        初始化友盟
         UMShareAPI.get(this);
 
         JPushInterface.setDebugMode(true);

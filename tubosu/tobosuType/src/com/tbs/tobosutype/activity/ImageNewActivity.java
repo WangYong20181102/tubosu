@@ -30,6 +30,7 @@ import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.ImageNewActivityAdapter;
 import com.tbs.tobosutype.adapter.MyGridViewAdapter;
+import com.tbs.tobosutype.adapter.MyGridViewAdapters;
 import com.tbs.tobosutype.bean._ImageItem;
 import com.tbs.tobosutype.bean._Style;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
@@ -57,6 +58,20 @@ public class ImageNewActivity extends BaseActivity {
      */
     private String getListUrl = Constant.TOBOSU_URL + "tapp/impression/get_list";
 
+    /**
+     * 逛图库顶部广告位接口
+     */
+    private String adsenseUrl = Constant.TOBOSU_URL + "tapp/util/adsense";
+
+    /**
+     * 上个月冠亚季军三个公司
+     */
+    private String getLastMonthCompanyListUrl = Constant.TOBOSU_URL + "tapp/impression/getLastMonthCompanyList";
+
+    /**
+     * 搜索逛图库 ，输入小区名称
+     */
+    private String searchCommunityUrl = Constant.TOBOSU_URL + "tapp/impression/searchCommunity";
     /**
      * 获取风格户型面积
      */
@@ -88,9 +103,9 @@ public class ImageNewActivity extends BaseActivity {
     private PopupWindow popupWindow;//显示菜单的泡泡window
     private View popView;//承载pop自定义样式的布局
     private GridView mGridView;//显示的网格布局
-    private MyGridViewAdapter myGridViewAdapterFg;//网格布局的适配器
-    private MyGridViewAdapter myGridViewAdapterHx;//网格布局的适配器
-    private MyGridViewAdapter myGridViewAdapterMj;//网格布局的适配器
+    private MyGridViewAdapters myGridViewAdapterFg;//网格布局的适配器
+    private MyGridViewAdapters myGridViewAdapterHx;//网格布局的适配器
+    private MyGridViewAdapters myGridViewAdapterMj;//网格布局的适配器
     //显示咨询的popwindows
     private PopupWindow zixunPopupWindow;
     private View zixunPopView;
@@ -650,7 +665,7 @@ public class ImageNewActivity extends BaseActivity {
                 imgNewFengge_jt.setVisibility(View.VISIBLE);
                 imgNewHuxing_jt.setVisibility(View.GONE);
                 imgNewMianji_jt.setVisibility(View.GONE);
-//                myGridViewAdapterFg = new MyGridViewAdapter(mContext, popBtnListFg);
+                myGridViewAdapterFg = new MyGridViewAdapters(mContext, popBtnListFg);
                 mGridView.setAdapter(myGridViewAdapterFg);
                 mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -685,7 +700,7 @@ public class ImageNewActivity extends BaseActivity {
                 imgNewHuxing_jt.setVisibility(View.VISIBLE);
                 imgNewMianji_jt.setVisibility(View.GONE);
                 imgNewFengge_jt.setVisibility(View.GONE);
-//                myGridViewAdapterHx = new MyGridViewAdapter(mContext, popBtnListHx);
+                myGridViewAdapterHx = new MyGridViewAdapters(mContext, popBtnListHx);
                 mGridView.setAdapter(myGridViewAdapterHx);
                 mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
@@ -719,7 +734,7 @@ public class ImageNewActivity extends BaseActivity {
                 imgNewMianji_jt.setVisibility(View.VISIBLE);
                 imgNewHuxing_jt.setVisibility(View.GONE);
                 imgNewFengge_jt.setVisibility(View.GONE);
-//                myGridViewAdapterMj = new MyGridViewAdapter(mContext, popBtnListMj);
+                myGridViewAdapterMj = new MyGridViewAdapters(mContext, popBtnListMj);
                 mGridView.setAdapter(myGridViewAdapterMj);
                 mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
