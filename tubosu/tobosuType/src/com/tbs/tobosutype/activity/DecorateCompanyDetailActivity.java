@@ -1,6 +1,5 @@
 package com.tbs.tobosutype.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -22,6 +20,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.customview.BaoPopupWindow;
 import com.tbs.tobosutype.customview.BusinessLicensePopupWindow;
 import com.tbs.tobosutype.customview.CallDialogCompany;
@@ -34,6 +34,7 @@ import com.tbs.tobosutype.customview.VouchersPopupWindow;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.EventBusUtil;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
 import com.tbs.tobosutype.utils.ShareUtil;
 import com.tbs.tobosutype.utils.Util;
@@ -43,7 +44,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +52,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 
-public class DecorateCompanyDetailActivity extends Activity implements OnClickListener {
+public class DecorateCompanyDetailActivity extends com.tbs.tobosutype.base.BaseActivity implements OnClickListener {
 	private Context mContext;
 	private TextView tv_designer_num;
 	private TextView tv_images_num;
@@ -732,6 +732,7 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 									Toast.makeText(getApplicationContext(), "收藏成功!", Toast.LENGTH_SHORT).show();
 								} else {
 									Toast.makeText(getApplicationContext(), "取消收藏成功!", Toast.LENGTH_SHORT).show();
+									EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_COMPANY_CODE));
 								}
 							} else {
 								Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
@@ -743,5 +744,15 @@ public class DecorateCompanyDetailActivity extends Activity implements OnClickLi
 				});
 			}
 		});
+	}
+
+	@Override
+	protected boolean isRegisterEventBus() {
+		return true;
+	}
+
+	@Override
+	protected void receiveEvent(Event event) {
+		super.receiveEvent(event);
 	}
 }

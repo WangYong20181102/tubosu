@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean.CompanyBean;
+import com.tbs.tobosutype.bean._ImageS;
+
 import java.util.ArrayList;
 
 /**
@@ -120,6 +122,13 @@ public class CompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
 
+
+    public ArrayList<CompanyBean> getCompanyEntityList() {
+        if (dataList == null) {
+            dataList = new ArrayList<CompanyBean>();
+        }
+        return dataList;
+    }
 
     class CompanyHolder extends RecyclerView.ViewHolder{
         ImageView comapanyIcop;

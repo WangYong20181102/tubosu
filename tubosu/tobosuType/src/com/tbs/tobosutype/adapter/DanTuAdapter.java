@@ -121,5 +121,6 @@ public class DanTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void setDantuItemClickListener(OnDantuItemClickListener dantuItemClickListener) {
         this.dantuItemClickListener = dantuItemClickListener;
     }
+
     private OnDantuItemClickListener dantuItemClickListener;
 }

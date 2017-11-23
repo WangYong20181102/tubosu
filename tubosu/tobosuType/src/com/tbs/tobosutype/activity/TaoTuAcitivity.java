@@ -203,11 +203,7 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                                         }
                                     });
 
-                                    if(taotuEntityArrayList.size()>0){
-                                        rel_no_taotu.setVisibility(View.GONE);
-                                    }else {
-                                        rel_no_taotu.setVisibility(View.VISIBLE);
-                                    }
+                                    showNoData();
                                 }
                             });
                         }else if(object.getInt("status") == 201 || object.getInt("status") == 0){
@@ -313,6 +309,12 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                 }
                 break;
             case R.id.tvDelelteTaotu:
+                tvEditTaotu.setText("编辑");
+                relDeleteTaotu.setVisibility(View.GONE);
+                isDeletingTaotu = false;
+                setDeleteFlag(isDeletingTaotu);
+                isEditTaoTu = !isEditTaoTu;
+
                  // 删除套图的请求
                 int size = deletTaotuSelectIdList.size();
                 if(size>0){
@@ -352,31 +354,24 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                                 @Override
                                 public void run() {
 
-                                    for(int i=0; i<deletingEntity.size();i++){
-                                        taoTuAdapter.getTaotuEntityList().remove(deletingEntity.get(i));
-                                    }
-
-                                    tvEditTaotu.setText("编辑");
-                                    relDeleteTaotu.setVisibility(View.GONE);
-                                    isDeletingTaotu = false;
-                                    setDeleteFlag(isDeletingTaotu);
-                                    isEditTaoTu = !isEditTaoTu;
-
-                                    EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_TAOTU_CODE));
-
                                     try {
                                         JSONObject object = new JSONObject(json);
                                         String msg = object.getString("msg");
 
                                         if(object.getInt("status") == 200){
+                                            for(int i=0; i<deletingEntity.size();i++){
+                                                taoTuAdapter.getTaotuEntityList().remove(deletingEntity.get(i));
+                                            }
                                             taoTuAdapter.setDeletingStutas(false);
                                             Util.setToast(mContext, "取消收藏!");
+                                            EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_TAOTU_CODE));
                                         }else {
                                             Util.setToast(mContext, msg);
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
+                                    showNoData();
                                 }
                             });
                         }
@@ -413,13 +408,25 @@ public class TaoTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
             case EC.EventCode.DELETE_TAOTU_LIST_CODE:
                 int pos = (int) event.getData();
                 if(taoTuAdapter!=null){
-                    taotuEntityArrayList.remove(0);
+                    taotuEntityArrayList.remove(pos);
                     taoTuAdapter.notifyDataSetChanged();
                     EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_TAOTU_CODE));
                 }
+                showNoData();
                 break;
         }
     }
+
+    private void showNoData(){
+        if(taoTuAdapter!=null){
+            if(taotuEntityArrayList.size()==0){
+                rel_no_taotu.setVisibility(View.VISIBLE);
+            }else {
+                rel_no_taotu.setVisibility(View.GONE);
+            }
+        }
+    }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

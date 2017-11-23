@@ -195,21 +195,13 @@ public class DanTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                                     _ImageS img = gson.fromJson(array.getJSONObject(i).toString(), _ImageS.class);
                                     img.setSeleteStatus(false);
                                     dantuArrayList.add(img);
-//                                    DantuEntity entity = new DantuEntity();
-//                                    entity.setId(array.getJSONObject(i).getString("id"));
-//                                    entity.setCollect_id(array.getJSONObject(i).getString("collect_id"));
-//                                    entity.setCover_url(array.getJSONObject(i).getString("cover_url"));
-//                                    entity.setImage_width(array.getJSONObject(i).getInt("image_width"));
-//                                    entity.setImage_height(array.getJSONObject(i).getInt("image_height"));
-//                                    entity.setId(array.getJSONObject(i).getString("id"));
-//                                    dantuArrayList.add(entity);
                                 }
 
 
                                 runOnUiThread(new Runnable() {
+
                                     @Override
                                     public void run() {
-
                                         dantuRefreshLayout.setRefreshing(false);
                                         if(danTuAdapter!=null){
                                             danTuAdapter.loadMoreData(false);
@@ -259,11 +251,7 @@ public class DanTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                                             }
                                         });
 
-                                        if(dantuArrayList.size()>0){
-                                            rel_no_dantu.setVisibility(View.GONE);
-                                        }else {
-                                            rel_no_dantu.setVisibility(View.VISIBLE);
-                                        }
+                                        showNoData();
 
                                     }
                                 });
@@ -340,6 +328,14 @@ public class DanTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                 break;
 
             case R.id.tvDelelteDantu:
+
+                tvEditDantu.setText("编辑");
+                relDeleteDatu.setVisibility(View.GONE);
+                isDeletingDantu = false;
+                setDeleteFlag(isDeletingDantu);
+                isEditting = !isEditting;
+
+
                 //  删除套图的请求
                 int size = deletDantuSelectIdList.size();
                 if(size>0){
@@ -379,31 +375,24 @@ public class DanTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                                 @Override
                                 public void run() {
 
-                                    for(int i=0; i<deletingEntity.size();i++){
-                                        danTuAdapter.getDantuEntityList().remove(deletingEntity.get(i));
-                                    }
-
-                                    tvEditDantu.setText("编辑");
-                                    relDeleteDatu.setVisibility(View.GONE);
-                                    isDeletingDantu = false;
-                                    setDeleteFlag(isDeletingDantu);
-                                    isEditting = !isEditting;
-
-                                    EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_TAOTU_CODE));
-
                                     try {
                                         JSONObject object = new JSONObject(json);
                                         String msg = object.getString("msg");
 
                                         if(object.getInt("status") == 200){
+                                            for(int i=0; i<deletingEntity.size();i++){
+                                                danTuAdapter.getDantuEntityList().remove(deletingEntity.get(i));
+                                            }
                                             danTuAdapter.setDeletingStutas(false);
                                             Util.setToast(mContext, "取消收藏!");
+                                            EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_TAOTU_CODE));
                                         }else {
                                             Util.setToast(mContext, msg);
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
+                                    showNoData();
                                 }
                             });
                         }
@@ -411,10 +400,21 @@ public class DanTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                 }else{
                     Util.setToast(mContext, "你没有选择套图");
                 }
-
                 break;
         }
     }
+
+
+    private void showNoData(){
+        if(danTuAdapter!=null){
+            if(dantuArrayList.size()==0){
+                rel_no_dantu.setVisibility(View.VISIBLE);
+            }else {
+                rel_no_dantu.setVisibility(View.GONE);
+            }
+        }
+    }
+
 
 
     @Override
@@ -435,6 +435,7 @@ public class DanTuAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                 }
                 break;
         }
+        showNoData();
     }
 
     @Override

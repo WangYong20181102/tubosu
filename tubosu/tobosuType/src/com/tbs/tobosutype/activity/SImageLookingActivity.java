@@ -473,7 +473,7 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
         param.put("type", "1");
 
 
-        Util.setErrorLog(TAG, "传递的参数 state=" + state + "   id=" + id + "   uid=" +_id + "  user_type=" + AppInfoUtil.getTypeid(mContext) + " type=1");
+        Util.setErrorLog(TAG, "昭仲要传的参数 state=" + state + "   id=" + id + "   uid=" +_id + "  user_type=" + AppInfoUtil.getTypeid(mContext) + " type=1");
         OKHttpUtil.post(Constant.IMAGE_COLLECT, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -483,7 +483,7 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String json = new String(response.body().string());
-                Util.setErrorLog(TAG, json);
+                Util.setErrorLog(TAG, "昭仲返回的结果："+json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     int status = jsonObject.optInt("status");

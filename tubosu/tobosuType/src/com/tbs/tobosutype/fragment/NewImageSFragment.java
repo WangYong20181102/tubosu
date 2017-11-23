@@ -1,5 +1,4 @@
 package com.tbs.tobosutype.fragment;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -24,7 +23,6 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
@@ -41,15 +39,12 @@ import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -559,10 +554,18 @@ public class NewImageSFragment extends BaseFragment {
             Log.e(TAG, "获取请求参数==空间==mColorParam====" + mColorParam);
             param.put("color_id", mColorParam);
         }
-        if (!TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {
-            //传入UID
-            param.put("uid", AppInfoUtil.getUserid(mContext));
+
+
+//        if (!TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {
+//            //传入UID
+//            param.put("uid", AppInfoUtil.getUserid(mContext));
+//        }
+        // 昭仲要求改成如下
+        String _id = mContext.getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("id", "");
+        if (!TextUtils.isEmpty(_id)) {
+            param.put("uid", _id);
         }
+
         param.put("page", mPage);
         param.put("page_size", mPageSize);
         OKHttpUtil.post(Constant.SINGLE_MAP_LIST, param, new Callback() {

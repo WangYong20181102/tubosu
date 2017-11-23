@@ -422,6 +422,7 @@
             android:noHistory="true"
             android:theme="@style/Theme.UMDialog"
             android:windowSoftInputMode="stateVisible|adjustResize" />
+
         <activity android:name=".activity.TopicDetailActivity" />
         <activity android:name=".activity.TestActivity" />
         <activity android:name=".activity.DecorationCaseActivity" />

@@ -138,6 +138,7 @@ public class ShoucangAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                 favList.clear();
                 adapter = null;
                 getDataFromNet();
+                Util.setToast(mContext, "刷新啦");
                 break;
         }
     }

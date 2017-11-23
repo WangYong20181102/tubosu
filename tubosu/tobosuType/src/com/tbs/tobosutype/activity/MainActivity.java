@@ -133,20 +133,16 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//        AppInfoUtil.setActivityTheme(MainActivity.this);   //注释时间20171031
-//		AppInfoUtil.setActivityTheme(this, R.color.whole_color_theme);
         setContentView(R.layout.activity_main);
-//        AppInfoUtil.setTranslucentStatus(this);
         mContext = MainActivity.this;
-
         userInfo = getSharedPreferences("userInfo", 0);
-
         initView();
         initReceiver();
         initEvent();
         needPermissions();
     }
+
+
 
 
     /***
@@ -160,7 +156,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         tabHost = this.getTabHost();
         TabHost.TabSpec spec;
 
-//        Intent intent = new Intent().setClass(this, HomeActivity.class);
         Intent intent = new Intent().setClass(this, NewHomeActivity.class);
         spec = tabHost.newTabSpec("ONE").setIndicator("首页").setContent(intent);
         tabHost.addTab(spec);

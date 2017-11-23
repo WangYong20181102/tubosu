@@ -335,8 +335,13 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
                 }
                 break;
             case R.id.myowner_layout_store_pic:
-                Intent storeIntent = new Intent(mContext, ShoucangAcitivity.class);
-                startActivity(storeIntent);
+                Intent it = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    it = new Intent(mContext, ShoucangAcitivity.class);
+                }else{
+                    it = new Intent(mContext, MyFavActivity.class);
+                }
+                startActivity(it);
                 break;
             case R.id.iv_myowner_set:
                 Intent setIntent = new Intent(mContext, SettingActivity.class);

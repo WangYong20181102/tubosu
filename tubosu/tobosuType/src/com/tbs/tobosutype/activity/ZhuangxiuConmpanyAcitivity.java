@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -19,9 +18,13 @@ import android.widget.TextView;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.CompanyAdapter;
 import com.tbs.tobosutype.bean.CompanyBean;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
+import com.tbs.tobosutype.bean._ImageS;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.DividerItemDecoration;
+import com.tbs.tobosutype.utils.EventBusUtil;
 import com.tbs.tobosutype.utils.Util;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +39,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
+public class ZhuangxiuConmpanyAcitivity extends com.tbs.tobosutype.base.BaseActivity {
 
     @BindView(R.id.relBackGongsi)
     RelativeLayout relBackGongsi;
@@ -51,7 +54,6 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
     @BindView(R.id.rel_no_company)
     RelativeLayout rel_no_company;
     private LinearLayoutManager linearLayoutManager;
-    private Context context;
     private String TAG = "ZhuangxiuConmpanyAcitivity";
     private int page = 1;
     private boolean isEdittext = false;
@@ -59,19 +61,20 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
     private ArrayList<CompanyBean> companyBeanArrayList = new ArrayList<CompanyBean>();
     private boolean isDeletingCompany = false;
     private ArrayList<String> deletComannaySelectIdList = new ArrayList<>();
-
+    private ArrayList<CompanyBean> deletingEntity = new ArrayList<CompanyBean>();
+    private int deletePosition;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zhuangxiu_gongsi);
-        context = ZhuangxiuConmpanyAcitivity.this;
+        mContext = ZhuangxiuConmpanyAcitivity.this;
         ButterKnife.bind(this);
         initView();
     }
 
     private void initView(){
-        linearLayoutManager = new LinearLayoutManager(context);
+        linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         reclerviewGongsi.setLayoutManager(linearLayoutManager);
         DividerItemDecoration itemDecorationHeader = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
@@ -147,7 +150,7 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
     };
 
     public void getNetData() {
-        if (Util.isNetAvailable(context)) {
+        if (Util.isNetAvailable(mContext)) {
             SharedPreferences sp = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
             String type = sp.getString("typeid", "1");
             String userid = sp.getString("userid", "272286");
@@ -168,7 +171,7 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
 
                         @Override
                         public void run() {
-                            Util.setToast(context, "系统繁忙，请稍后再试。");
+                            Util.setToast(mContext, "系统繁忙，请稍后再试。");
                             gongsiRefreshLayout.setRefreshing(false);
                             if(adapter!=null){
                                 adapter.loadMoreData(false);
@@ -190,6 +193,7 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                                 adapter.loadMoreData(false);
                             }
                             gongsiRefreshLayout.setRefreshing(false);
+
                             if (json.contains("data")) {
                                 try {
                                     JSONObject object = new JSONObject(json);
@@ -210,9 +214,61 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                                             bean.setSelected(false);
                                             companyBeanArrayList.add(bean);
                                         }
-                                        initAdapter();
+
+
+                                        if(companyBeanArrayList.size()>0){
+                                            tvEditZhuangxiuGongsi.setVisibility(View.VISIBLE);
+                                        }else {
+                                            tvEditZhuangxiuGongsi.setVisibility(View.GONE);
+                                        }
+
+                                        if(adapter == null){
+                                            adapter = new CompanyAdapter(mContext, companyBeanArrayList);
+                                            reclerviewGongsi.setAdapter(adapter);
+                                            adapter.notifyDataSetChanged();
+                                        }else {
+                                            adapter.notifyDataSetChanged();
+                                        }
+
+                                        showNoData();
+
+                                        adapter.setCompanyItemClickListener(new CompanyAdapter.OnCompanyItemClickListener() {
+
+                                            @Override
+                                            public void onCompanyItemClickListener(int position, ArrayList<CompanyBean> companyList) {
+                                                if(isEdittext){
+                                                    // 正在编辑删除中
+                                                    CompanyBean bean = companyList.get(position);
+                                                    boolean isSelect = bean.isSelected();
+                                                    if (!isSelect) {
+                                                        bean.setSelected(true);
+                                                        deletComannaySelectIdList.add(bean.getCollect_id());
+                                                        deletingEntity.add(bean);
+                                                    } else {
+                                                        deletComannaySelectIdList.remove(bean.getCollect_id());
+                                                        deletingEntity.remove(bean);
+                                                        bean.setSelected(false);
+                                                    }
+                                                    adapter.notifyDataSetChanged();
+                                                }else {
+                                                    // 没有编辑删除中
+                                                    String comid = companyBeanArrayList.get(position).getId(); //comid
+                                                    deletePosition = position;
+                                                    Util.setLog(TAG, "收藏公司 传过去" + comid);
+                                                    Intent detailIntent = new Intent(mContext, DecorateCompanyDetailActivity.class);
+                                                    Bundle bundle = new Bundle();
+                                                    // 从列表带过去的公司id
+                                                    bundle.putString("comid", comid);
+                                                    detailIntent.putExtras(bundle);
+                                                    startActivity(detailIntent);
+                                                }
+                                            }
+                                        });
+
+
+
                                     }else if(object.getInt("status") == 201 || object.getInt("status") == 0){
-                                        Util.setToast(context, msg);
+                                        Util.setToast(mContext, msg);
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -225,58 +281,6 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
         }
     }
 
-    private void initAdapter(){
-        if(companyBeanArrayList.size()>0){
-            tvEditZhuangxiuGongsi.setVisibility(View.VISIBLE);
-        }else {
-            tvEditZhuangxiuGongsi.setVisibility(View.GONE);
-        }
-
-        if(adapter == null){
-            adapter = new CompanyAdapter(context, companyBeanArrayList);
-            reclerviewGongsi.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-        }else {
-            adapter.notifyDataSetChanged();
-        }
-
-        if(adapter.getItemCount()>1){
-            rel_no_company.setVisibility(View.GONE);
-        }else {
-            rel_no_company.setVisibility(View.VISIBLE);
-        }
-
-        adapter.setCompanyItemClickListener(new CompanyAdapter.OnCompanyItemClickListener() {
-
-            @Override
-            public void onCompanyItemClickListener(int position, ArrayList<CompanyBean> companyList) {
-                if(isEdittext){
-                    // 正在编辑删除中
-                    CompanyBean bean = companyList.get(position);
-                    boolean isSelect = bean.isSelected();
-                    if (!isSelect) {
-                        bean.setSelected(true);
-                        deletComannaySelectIdList.add(bean.getCollect_id());
-                    } else {
-                        deletComannaySelectIdList.remove(bean.getCollect_id());
-                        bean.setSelected(false);
-                    }
-                    adapter.notifyDataSetChanged();
-                }else {
-                    // 没有编辑删除中
-                    String comid = companyBeanArrayList.get(position).getId(); //comid
-                    Util.setLog(TAG, "收藏公司 传过去" + comid);
-                    Intent detailIntent = new Intent(context, DecorateCompanyDetailActivity.class);
-                    Bundle bundle = new Bundle();
-                    // 从列表带过去的公司id
-                    bundle.putString("comid", comid);
-                    detailIntent.putExtras(bundle);
-                    startActivity(detailIntent);
-
-                }
-            }
-        });
-    }
 
     @Override
     protected void onDestroy() {
@@ -315,6 +319,7 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                 isEdittext = !isEdittext;
                 break;
             case R.id.tvDelelteZhuangxiuGongsi:
+                isDeletingCompany = false;
                 // 删除请求
                 tvEditZhuangxiuGongsi.setText("编辑");
                 relDeleteCompany.setVisibility(View.GONE);
@@ -342,7 +347,7 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Util.setToast(context, "删除失败");
+                                    Util.setToast(mContext, "删除失败");
                                 }
                             });
                             e.printStackTrace();
@@ -357,29 +362,71 @@ public class ZhuangxiuConmpanyAcitivity extends AppCompatActivity {
 
                                 @Override
                                 public void run() {
+
                                     try {
                                         JSONObject object = new JSONObject(json);
                                         String msg = object.getString("msg");
-                                        Util.setToast(context, msg);
+                                        Util.setToast(mContext, msg);
                                         if(object.getInt("status") == 200){
-                                            adapter.setDeletingStutas(false);
-                                            adapter.notifyDataSetChanged();
-                                        }else {
+                                            for(int i=0; i<deletingEntity.size();i++){
+                                                adapter.getCompanyEntityList().remove(deletingEntity.get(i));
+                                            }
 
+                                            adapter.setDeletingStutas(false);
+                                            Util.setToast(mContext, msg);
+                                            adapter.notifyDataSetChanged();
+                                            EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_TAOTU_CODE));
+                                        }else {
+                                            Util.setToast(mContext, msg);
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
+
+                                    showNoData();
                                 }
                             });
                         }
                     });
                 }else{
-                    Util.setToast(context, "你没有选择");
+                    Util.setToast(mContext, "你没有选择");
                 }
                 break;
         }
     }
+
+
+    private void showNoData(){
+        if(adapter!=null){
+            if(companyBeanArrayList.size()==0){
+                rel_no_company.setVisibility(View.VISIBLE);
+            }else {
+                rel_no_company.setVisibility(View.GONE);
+            }
+        }
+    }
+
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()){
+            case EC.EventCode.DELETE_COMPANY_CODE:
+                // 在详情那边取消收藏了
+                if(adapter!=null){
+                    companyBeanArrayList.remove(deletePosition);
+                    adapter.notifyDataSetChanged();
+                    EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_TAOTU_CODE));
+                }
+                showNoData();
+                break;
+        }
+    }
+
 
 
     private void setDeleteFlag(boolean flag){
