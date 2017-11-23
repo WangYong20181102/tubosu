@@ -48,7 +48,7 @@ public class MyFavActivity extends FragmentActivity {
      * 右上角 -- 编辑和取消
      */
     private TextView tv_myfav_edit;
-    //banner
+
     private RelativeLayout rl_banner;
     /**
      * 装修图库 装修公司 的tab

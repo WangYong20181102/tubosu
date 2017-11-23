@@ -153,7 +153,7 @@ public class MyFavImageFragment extends Fragment {
 		favImageAdapter.notifyDataSetChanged();
 		
 		gridview_store.setSelector(new ColorDrawable(Color.TRANSPARENT));
-		if(favImageAdapter!=null){
+		/*if(favImageAdapter!=null){
 			gridview_store.setOnItemClickListener(new OnItemClickListener() {
 				
 				@Override
@@ -166,7 +166,7 @@ public class MyFavImageFragment extends Fragment {
 					startActivity(intent);
 				}
 			});
-		}
+		}*/
 		
 		return storeView;
 	}
