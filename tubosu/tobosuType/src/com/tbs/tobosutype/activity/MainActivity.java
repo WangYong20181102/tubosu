@@ -1,4 +1,5 @@
 package com.tbs.tobosutype.activity;
+
 import android.Manifest;
 import android.app.TabActivity;
 import android.content.BroadcastReceiver;
@@ -22,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
+
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
@@ -29,12 +31,15 @@ import com.tbs.tobosutype.receiver.LocalBroadcastManager;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -164,8 +169,12 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         Intent intent = new Intent().setClass(this, NewHomeActivity.class);
         spec = tabHost.newTabSpec("ONE").setIndicator("首页").setContent(intent);
         tabHost.addTab(spec);
+//        if (Build.VERSION.SDK_INT >= 21) {
+            intent = new Intent().setClass(this, NewImageActivity.class);
+//        }else {
+//            intent = new Intent().setClass(this, ImageNewActivity.class);
+//        }
 
-        intent = new Intent().setClass(this, NewImageActivity.class);
         spec = tabHost.newTabSpec("TWO").setIndicator("效果图").setContent(intent);
         tabHost.addTab(spec);
 
@@ -420,8 +429,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     }
 
 
-
-
 //    private void setCostomMsg(String msg){
 //        if (null != msgText) {
 //            msgText.setText(msg);
@@ -616,12 +623,12 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                 netStateHandler.sendMessage(m);
             }
 
-            if(intent.getAction().equals("goto_activity_zhuangxiu")){
+            if (intent.getAction().equals("goto_activity_zhuangxiu")) {
                 int position = intent.getIntExtra("position", -1);
                 setFragmentPosition(position);
             }
 
-            if(intent.getAction().equals("goto_activity_xiaoguotu")){
+            if (intent.getAction().equals("goto_activity_xiaoguotu")) {
                 int position = intent.getIntExtra("position", -1);
                 setFragmentPosition(position);
             }

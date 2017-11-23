@@ -4,6 +4,7 @@
     package="com.tbs.tobosutype"
     android:versionCode="24"
     android:versionName="3.5">
+
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="26" />
@@ -429,19 +430,20 @@
         <activity android:name=".activity.SubjectActivity" />
         <activity android:name=".activity.DecorationCaseDetailActivity" />
         <activity android:name=".activity.NewWebViewActivity" />
-        <activity android:name=".activity.NewImageActivity" />
+        <activity
+            android:name=".activity.NewImageActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
         <activity android:name=".activity.SImageLookingActivity" />
         <activity android:name=".activity.DImageLookingActivity" />
 
-
-		
         <service android:name="cn.jpush.android.service.PushService"
             android:process=":multiprocess"
             tools:node="replace" >
 
         </service>
 
-        
+
     </application>
 
 </manifest>

@@ -15,6 +15,7 @@ dependencies {
     compile files('libs/umeng_social_shareboard.jar')
     compile files('libs/umeng_social_net.jar')
     compile files('libs/umeng_social_tool.jar')
+    compile files('libs/BaiduLBS_Android.jar')
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.3.0'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
@@ -25,15 +26,13 @@ dependencies {
     compile 'com.facebook.rebound:rebound:0.3.8'
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'org.greenrobot:eventbus:3.0.0'
-    compile 'com.android.support:support-v4:27.0.1'
     compile 'com.umeng.analytics:analytics:latest.integration'
     compile 'com.google.code.gson:gson:2.8.1'
     compile 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-    compile files('libs/BaiduLBS_Android.jar')
+    implementation files('libs/BaiduLBS_Android.jar')
     compile 'cn.jiguang.sdk:jpush:3.0.9'  // 此处以JPush 3.0.9 版本为例。
     compile 'cn.jiguang.sdk:jcore:1.1.7'  // 此处以JCore 1.1.7 版本为例。
-
 }
 
 
@@ -77,6 +76,8 @@ android {
                 JPUSH_APPKEY : "296b86ca9ffe1bfd4f43b655", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
         ]
+
+
     }
 
     useLibrary 'org.apache.http.legacy'
