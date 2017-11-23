@@ -9,15 +9,11 @@
     <color name="bg_fd_title">#ff882e</color>
     <!-- 背景颜色 -->
     <color name="bg_fd_bai">#f5f3f2</color>
-    <color name="bg_fdp_bg">#f5f5f5</color>
     <color name="bg_gray">#f7f7f7</color>
-    <color name="bg_huang">#f5f3f2</color>
     <color name="bg_white">#ffffff</color>
     <color name="white">#ffffff</color>
-    <color name="img_new_bg">#f7f6f5</color>
     <color name="line">#e5e5e5</color>
     <!-- 背景线条颜色 -->
-    <color name="actionbar_separator">#A71717</color>
     <!-- 分隔线 -->
     <color name="dividing_line_bg">#e5e5e5</color>
     <color name="mycolor">#666666</color>
@@ -35,34 +31,23 @@
     <color name="color_weixi">#bbebb5</color>
     <color name="color_icon_bg_normal">#fff</color>
     <color name="color_icon_bg_pressed">#e9ebec</color>
-    <color name="color_icon_bg_black">#000000</color>
 
     <color name="color_yellow_chamption">#F4BE14</color>
 
     <!-- 按钮和图标背景色-橙色 -->
-    <color name="color_hover">#ff500b</color>
     <!-- 按钮和图标背景色-红色 -->
-    <color name="color_unclickable">#ff6c81</color>
     <!-- 按钮和图标背景色-不可点击-红色 -->
 
 
     <!-- 用户登陆成功后的状态选择色彩 -->
     <color name="userinfopressnomal">#fff</color>
     <color name="userinfopressdown">#ffe</color>
-    <color name="color_area">#f4f4f4</color>
     <!-- 选择性别的色 -->
     <color name="select_sex_bg_normal">#fff</color>
     <color name="select_sex_bg_selector">#C3C3C3</color>
 
-    <color name="gender_selected_color">#FF9C00</color>
-    <color name="gender_normal_color">#8B8888</color>
-
-    <color name="rb_text_color">#666666</color>
-
 
     <color name="whole_color_theme">#FFBD25</color>
-    <color name="full_selected_image">#1a1a1a</color>
-    <color name="welcome_activity_color">#FFFFFF</color>
 
     <color name="up_pressed_color">#B2B2B2</color>
     <color name="up_normal_color">#1B1B1B</color>
@@ -80,24 +65,16 @@
 
 
     <color name="budget_green">#12dc8b</color>
-    <color name="budget_green_right">#58e085</color>
     <color name="budget_blue">#00c5ef</color>
-    <color name="budget_blue_right">#21dede</color>
     <color name="budget_orange">#ed7626</color>
-    <color name="budget_orange_right">#f59527</color>
     <color name="budget_yellow">#ffbb00</color>
-    <color name="budget_yellow_right">#ffd400</color>
     <color name="budget_red">#f75128</color>
-    <color name="budget_red_right">#f56c27</color>
     <color name="budget_normal_color">#40ed7626</color>
 
     <color name="topbar_3">#339EFE</color>
     <color name="text_10">#333333</color>
     <color name="text_11">#999999</color>
     <color name="text_gray">#b7b8ba</color>
-
-    <color name="blur_bg">#FFFAF0</color>
-    <color name="right_bg">#696969</color>
 
     <color name="edit_outcome_bg">#FE892D</color>
 </resources>

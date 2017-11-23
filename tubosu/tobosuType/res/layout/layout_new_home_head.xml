@@ -486,7 +486,6 @@
         </RelativeLayout>
 
         <com.tbs.tobosutype.customview.MySwipeRefreshLayout
-            android:id="@+id/swipe_newhome_class"
             android:layout_width="match_parent"
             android:layout_height="100dp">
             <com.tbs.tobosutype.customview.BetterRecyclerView

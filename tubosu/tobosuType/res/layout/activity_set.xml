@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -27,8 +26,7 @@
 				android:src="@drawable/back_up" />
 
 			<TextView
-				android:id="@+id/myset_title"
-				android:layout_width="wrap_content"
+                android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_centerHorizontal="true"
 				android:layout_centerVertical="true"
@@ -47,8 +45,7 @@
 			android:orientation="vertical" >
 
 			<ImageView
-				android:id="@+id/myset_logo"
-				android:layout_width="wrap_content"
+                android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:padding="10dp"
 				android:src="@drawable/myset_logo" />
@@ -141,8 +138,7 @@
 			android:background="@color/bg_gray" />
 
 		<RelativeLayout
-			android:id="@+id/rel_push"
-			android:layout_width="match_parent"
+            android:layout_width="match_parent"
 			android:layout_height="47dp"
 			android:background="@drawable/userinfoselector" >
 
@@ -179,8 +175,7 @@
 			android:background="@drawable/userinfoselector" >
 
 			<TextView
-				android:id="@+id/myset_version_upgrade_name"
-				android:layout_width="wrap_content"
+                android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_alignParentLeft="true"
 				android:layout_alignParentTop="true"
@@ -209,8 +204,7 @@
 		</RelativeLayout>
 
 		<View
-			android:id="@+id/v_line4"
-			android:layout_width="match_parent"
+            android:layout_width="match_parent"
 			android:layout_height="10dp"
 			android:background="@color/bg_gray" />
 
@@ -257,8 +251,7 @@
 			android:background="@drawable/userinfoselector" >
 
 			<TextView
-				android:id="@+id/myset_tbs_weixin_name"
-				android:layout_width="wrap_content"
+                android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginLeft="14dp"
 				android:layout_centerVertical="true"
@@ -267,8 +260,7 @@
 				android:textSize="15sp" />
 
 			<TextView
-				android:id="@+id/myset_tbs_weixin"
-				android:layout_width="wrap_content"
+                android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_alignParentRight="true"
 				android:layout_centerVertical="true"
@@ -351,8 +343,7 @@
 			android:background="@color/bg_gray" />
 
 		<RelativeLayout
-			android:id="@+id/myset_layout_service_tel"
-			android:layout_width="match_parent"
+            android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:background="#E4E4E4">
 
@@ -362,8 +353,7 @@
 				android:layout_centerInParent="true" >
 
 				<TextView
-					android:id="@+id/myset_foot_company"
-					android:layout_width="wrap_content"
+                    android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_above="@+id/myset_foot_url"
 					android:layout_centerHorizontal="true"

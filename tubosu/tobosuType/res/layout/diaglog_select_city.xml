@@ -8,7 +8,6 @@
         android:layout_height="210dp" >
 
         <com.tbs.tobosutype.customview.RoundAngleImageView
-            android:id="@+id/first_imageview_firstcheckness"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"

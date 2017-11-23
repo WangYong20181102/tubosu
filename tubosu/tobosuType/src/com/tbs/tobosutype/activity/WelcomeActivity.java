@@ -75,6 +75,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         new Thread() {
             @Override
             public void run() {
+                SystemClock.sleep(3000);
                 countDownloadNum();
                 if ("".equals(getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("encode_pass", ""))) {
 

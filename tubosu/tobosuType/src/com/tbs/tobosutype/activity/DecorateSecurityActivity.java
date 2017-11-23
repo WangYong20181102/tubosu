@@ -46,7 +46,7 @@ public class DecorateSecurityActivity extends Activity implements OnClickListene
         headfree_banner = (RelativeLayout) findViewById(R.id.headfree_banner);
         title_name = (TextView) findViewById(R.id.title_name);
         iv_back = (ImageView) findViewById(R.id.free_activity_back);
-        bt_want_decorate = (Button) findViewById(R.id.bt_want_decorate);
+//        bt_want_decorate = (Button) findViewById(R.id.bt_want_decorate);
         bt_cell = (Button) findViewById(R.id.bt_cell);
         title_name.setText("装修保障");
         ivShare = (ImageView) findViewById(R.id.head_right_image_share);
@@ -66,9 +66,9 @@ public class DecorateSecurityActivity extends Activity implements OnClickListene
             case R.id.free_activity_back:
                 finish();
                 break;
-            case R.id.bt_want_decorate:
-                startActivity(new Intent(this, FreeYuyueActivity.class));
-                break;
+//            case R.id.bt_want_decorate:
+//                startActivity(new Intent(this, FreeYuyueActivity.class));
+//                break;
             case R.id.bt_cell:
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 Uri data = Uri.parse("tel:" + "400-606-2221");

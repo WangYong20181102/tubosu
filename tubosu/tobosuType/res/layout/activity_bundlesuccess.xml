@@ -12,7 +12,6 @@
         android:background="@color/color_icon">
 
         <TextView
-            android:id="@+id/bundlesuccess_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -45,13 +44,11 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/bundlesuccess_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/applyfor_success" />
 
         <TextView
-            android:id="@+id/bundlesuccess_logo_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="5dp"
@@ -59,7 +56,6 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/bundlesuccess_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="20dp"

@@ -13,7 +13,6 @@
         android:background="@color/white">
         <!--返回键-->
         <LinearLayout
-            android:id="@+id/subject_back"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentLeft="true"

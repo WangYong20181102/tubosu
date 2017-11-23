@@ -23,7 +23,6 @@
                 android:src="@drawable/back" />
 
             <TextView
-                android:id="@+id/image_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -51,7 +50,6 @@
             </com.tbs.tobosutype.xlistview.XListView>
 
             <TextView
-                android:id="@+id/image_listView_empty"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"

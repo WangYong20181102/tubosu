@@ -47,7 +47,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" >
             <ImageView
-                android:id="@+id/becon"
                 android:layout_width="67dp"
                 android:layout_height="wrap_content"
                 android:scaleType="center"

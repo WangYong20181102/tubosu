@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -12,7 +11,6 @@
         layout="@layout/layout_loading_data" />
 
     <com.tbs.tobosutype.customview.ScrollViewExtend
-        android:id="@+id/scroll_view_d"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none" >
@@ -135,7 +133,6 @@
             
 			<!-- 相关图册 开始 -->
             <RelativeLayout
-                android:id="@+id/rel_relative_images_layout"
                 android:layout_width="match_parent"
                 android:layout_height="0dip"
                 android:layout_weight="2"

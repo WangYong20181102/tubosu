@@ -42,7 +42,6 @@
             android:visibility="gone" />
 
         <ImageView
-            android:id="@+id/image_item_bao"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentTop="true"
@@ -118,7 +117,6 @@
             android:src="@drawable/first_checkness" />
 
         <ImageView
-            android:id="@+id/iv_image_item_fav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"

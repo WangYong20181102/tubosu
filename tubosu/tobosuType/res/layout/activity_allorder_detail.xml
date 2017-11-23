@@ -101,13 +101,11 @@
                 android:layout_height="wrap_content" >
 
                 <TableRow
-                    android:id="@+id/tableRow1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp" >
 
                     <TextView
-                        android:id="@+id/detail_allorder_owner_tag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
@@ -126,7 +124,6 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/detail_allorder_district_tag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="50dp"
@@ -150,13 +147,11 @@
                 </TableRow>
 
                 <TableRow
-                    android:id="@+id/tableRow2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp" >
 
                     <TextView
-                        android:id="@+id/detail_allorder_type_tag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
@@ -175,7 +170,6 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/detail_allorder_area_tag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="50dp"
@@ -196,13 +190,11 @@
                 </TableRow>
 
                 <TableRow
-                    android:id="@+id/tableRow3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp" >
 
                     <TextView
-                        android:id="@+id/detail_allorder_style_tag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
@@ -220,7 +212,6 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/detail_allorder_budget_tag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="50dp"
@@ -252,13 +243,11 @@
                 android:layout_height="wrap_content" >
 
                 <TableRow
-                    android:id="@+id/tableRow4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp" >
 
                     <TextView
-                        android:id="@+id/detail_allorder_zxmode_tag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
@@ -277,7 +266,6 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/detail_allorder_hxstructure_tag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="50dp"
@@ -297,13 +285,11 @@
                 </TableRow>
 
                 <TableRow
-                    android:id="@+id/tableRow5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp" >
 
                     <TextView
-                        android:id="@+id/detail_allorder_oldreform_tag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
@@ -322,7 +308,6 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/detail_allorder_takekey_tag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="50dp"
@@ -342,13 +327,11 @@
                 </TableRow>
 
                 <TableRow
-                    android:id="@+id/tableRow6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp" >
 
                     <TextView
-                        android:id="@+id/detail_allorder_zxtype_tag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
@@ -368,13 +351,11 @@
                 </TableRow>
 
                 <TableRow
-                    android:id="@+id/tableRow7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp" >
 
                     <TextView
-                        android:id="@+id/detail_allorder_addressqu_tag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
@@ -395,13 +376,11 @@
                 </TableRow>
 
                 <TableRow
-                    android:id="@+id/tableRow8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp" >
 
                     <TextView
-                        android:id="@+id/detail_allorder_other_tag"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"

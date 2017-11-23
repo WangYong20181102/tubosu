@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_free_design"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_fd_bai"
@@ -91,7 +90,6 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/fd_my_home_area"
                     android:layout_width="300dp"
                     android:layout_height="45dp"
                     android:layout_gravity="center"
@@ -137,7 +135,6 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/fd_my_home_room"
                     android:layout_width="300dp"
                     android:layout_height="45dp"
                     android:layout_gravity="center"
@@ -209,7 +206,6 @@
                     android:orientation="horizontal">
 
                     <RelativeLayout
-                        android:id="@+id/fd_my_home_ting"
                         android:layout_width="0dp"
                         android:layout_height="45dp"
                         android:layout_gravity="center"
@@ -274,7 +270,6 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/fd_my_home_chu"
                         android:layout_width="0dp"
                         android:layout_height="45dp"
                         android:layout_gravity="center"
@@ -348,7 +343,6 @@
                     android:orientation="horizontal">
 
                     <RelativeLayout
-                        android:id="@+id/fd_my_home_wei"
                         android:layout_width="0dp"
                         android:layout_height="45dp"
                         android:layout_gravity="center"
@@ -413,7 +407,6 @@
                     </RelativeLayout>
 
                     <RelativeLayout
-                        android:id="@+id/fd_my_home_yangtai"
                         android:layout_width="0dp"
                         android:layout_height="45dp"
                         android:layout_gravity="center"
@@ -480,7 +473,6 @@
                 </LinearLayout>
 
                 <RelativeLayout
-                    android:id="@+id/fd_phone_num"
                     android:layout_width="300dp"
                     android:layout_height="45dp"
                     android:layout_gravity="center"

@@ -44,7 +44,6 @@
                     android:orientation="vertical" >
 
                     <ImageView
-                        android:id="@+id/imageView6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dip"
@@ -119,8 +118,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/icon_calculater04"
                         android:paddingLeft="11dp"
-                        android:paddingRight="11dp"
-                        android:id="@+id/imageView" />
+                        android:paddingRight="11dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -193,7 +191,6 @@
                         android:background="@drawable/firstcheckness_flag" />
 
                     <TextView
-                        android:id="@+id/first_firstcheckness_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -227,7 +224,6 @@
 
                 <!-- 不需要了 -->
                 <RelativeLayout
-                    android:id="@+id/layout_firstcheckness"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
                     android:visibility="gone"

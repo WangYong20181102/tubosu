@@ -10,7 +10,6 @@
         android:background="@color/color_icon" >
 
         <TextView
-            android:id="@+id/free_yuyue_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -57,7 +56,6 @@
         android:visibility="gone" >
 
         <TextView
-            android:id="@+id/tv_district"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -93,7 +91,6 @@
             android:textColor="@color/color_darkgray" />
 
         <TextView
-            android:id="@+id/tv_unit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tv_area"
@@ -172,7 +169,6 @@
         android:contentDescription="@string/descr_image" />
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -235,7 +231,6 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/freeyuyue_bottom"
         android:layout_width="280dp"
         android:layout_height="90dp"
         android:layout_alignParentBottom="true"

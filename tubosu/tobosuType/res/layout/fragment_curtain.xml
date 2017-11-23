@@ -507,7 +507,6 @@
                     android:gravity="center"
                     android:text="立即分享"/>
                 <TextView
-                    android:id="@+id/tv_curtain_recalculate"
                     android:layout_width="wrap_content"
                     android:layout_height="34dp"
                     android:textColor="#406A80"

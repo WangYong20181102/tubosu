@@ -23,7 +23,6 @@
             android:src="@drawable/back_up" />
 
         <TextView
-            android:id="@+id/networkset_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -201,9 +200,8 @@
 			        android:layout_centerVertical="true"
 			        android:layout_marginLeft="12dip"
 			        android:background="#FCC21E"/>
-			    <TextView 
-			        android:id="@+id/textview"
-			        android:layout_width="wrap_content"
+			    <TextView
+                    android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
 			        android:layout_marginLeft="12dip"
 			        android:text="联系方式(选填)"

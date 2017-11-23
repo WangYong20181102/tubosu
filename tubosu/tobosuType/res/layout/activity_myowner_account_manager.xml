@@ -21,7 +21,6 @@
             android:src="@drawable/back_up" />
 
         <TextView
-            android:id="@+id/personal_data_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -41,7 +40,6 @@
         android:background="@color/white">
 
         <TextView
-            android:id="@+id/personal_data_icon_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -142,7 +140,6 @@
         android:background="@color/white">
 
         <TextView
-            android:id="@+id/personal_data_sex_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

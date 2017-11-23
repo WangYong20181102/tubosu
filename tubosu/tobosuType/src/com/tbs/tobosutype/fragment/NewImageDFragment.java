@@ -195,7 +195,7 @@ public class NewImageDFragment extends BaseFragment {
         fragNewImgRecycler.setLayoutManager(mStaggeredGridLayoutManager);
         ((SimpleItemAnimator) fragNewImgRecycler.getItemAnimator()).setSupportsChangeAnimations(false);
         fragNewImgRecycler.setOnTouchListener(onTouchListener);
-        fragNewImgRecycler.addOnScrollListener(onScrollListener);//上拉加载更多
+        fragNewImgRecycler.setOnScrollListener(onScrollListener);//上拉加载更多
         //初始化popview
         popView = getActivity().getLayoutInflater().inflate(R.layout.pop_window_layout, null);
         mGridView = (GridView) popView.findViewById(R.id.pop_window_show);
@@ -203,7 +203,6 @@ public class NewImageDFragment extends BaseFragment {
         HttpGetSelectData();
         //请求数据
         HttpGetImageList(mPage);
-
     }
 
     //上拉加载更多
@@ -534,6 +533,7 @@ public class NewImageDFragment extends BaseFragment {
 
     //网络获取数据列表
     private void HttpGetImageList(int mPage) {
+        Log.e(TAG,"获取列表数据===============HttpGetImageList============！！！！");
         //正在加载数据
         isLoadingData = true;
         //隐藏没有数据的蒙层
@@ -600,6 +600,7 @@ public class NewImageDFragment extends BaseFragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                Log.e(TAG,"适配器适配=========！！！！");
                                 if (mNewImageDAdapter == null) {
                                     mNewImageDAdapter = new NewImageDAdapter(mContext, mImageDArrayList);
                                     mNewImageDAdapter.setOnNewImageAdapterClickLister(onNewImageAdapterClickLister);

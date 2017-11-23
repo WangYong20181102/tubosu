@@ -9,7 +9,6 @@
         android:layout_height="match_parent" >
 
         <LinearLayout
-            android:id="@+id/myfav_content_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" >
@@ -29,7 +28,6 @@
                     android:src="@drawable/back_up" />
 
                 <TextView
-                    android:id="@+id/tv_myfav_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -65,7 +63,6 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:id="@+id/tv_myfav_images_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -75,7 +72,6 @@
                     android:textColor="@color/color_icon" />
 
                 <TextView
-                    android:id="@+id/tv_myfav_company_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -93,7 +89,6 @@
                 android:orientation="horizontal" >
 
                 <ImageView
-                    android:id="@+id/myfav_images_underline"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_weight="1"
@@ -101,7 +96,6 @@
                     android:contentDescription="@string/descr_image" />
 
                 <ImageView
-                    android:id="@+id/myfav_decorates_underline"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_weight="1"
@@ -147,7 +141,6 @@
         android:visibility="gone" >
 
         <ProgressBar
-            android:id="@+id/img"
             android:layout_width="107dp"
             android:layout_height="70dp"
             android:indeterminateDrawable="@drawable/page_loading" />

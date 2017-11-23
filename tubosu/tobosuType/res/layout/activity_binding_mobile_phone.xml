@@ -35,7 +35,6 @@
         android:background="@color/dividing_line_bg" />
 
     <TextView
-        android:id="@+id/fast_logging_input_bundlephone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"

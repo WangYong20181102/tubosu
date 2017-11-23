@@ -9,7 +9,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.protocol.JpyProtocol;
 
-import cn.jpush.android.api.InstrumentedActivity;
 
 public class BaseActivity extends Activity implements JpyProtocol.MDataUpdateNotify {
 	protected String TAG = BaseActivity.class.getSimpleName();

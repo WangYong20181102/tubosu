@@ -22,7 +22,6 @@
             android:src="@drawable/back_up" />
 
         <TextView
-            android:id="@+id/applyfor_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -41,7 +40,6 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:id="@+id/applyfor_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -50,7 +48,6 @@
             android:src="@drawable/applyfor_success" />
 
         <TextView
-            android:id="@+id/applyfor_logo_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -59,7 +56,6 @@
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/applyfor_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

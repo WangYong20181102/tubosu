@@ -88,6 +88,13 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
     private void initViewEvent() {
+
+        newImageTab.post(new Runnable() {
+            @Override
+            public void run() {
+                setIndicator(newImageTab, 70, 70);
+            }
+        });
         //初始化ViewPager
         fragmentArrayList.add(new NewImageDFragment());
         fragmentArrayList.add(new NewImageSFragment());
@@ -98,13 +105,6 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
         //关联之后设置tab的名称在这之前要完成Viewpager的实例化不然会报空指针异常
         newImageTab.getTabAt(0).setText("套图");
         newImageTab.getTabAt(1).setText("单图");
-
-        newImageTab.post(new Runnable() {
-            @Override
-            public void run() {
-                setIndicator(newImageTab, 70, 70);
-            }
-        });
     }
     //通过反射 改变tab的指示器的长度
     public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {

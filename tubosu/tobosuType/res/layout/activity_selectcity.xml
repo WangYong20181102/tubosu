@@ -26,8 +26,7 @@
 	            android:src="@drawable/back_up" />
 	
 	        <TextView
-	            android:id="@+id/city_title_name"
-	            android:layout_width="wrap_content"
+                android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_centerHorizontal="true"
 	            android:layout_centerVertical="true"
@@ -60,8 +59,7 @@
 	            android:background="@android:color/white" >
 	
 	            <RelativeLayout
-	                android:id="@+id/city_content_container"
-	                android:layout_width="match_parent"
+                    android:layout_width="match_parent"
 	                android:layout_height="match_parent" >
 	
 	                <com.tbs.tobosutype.customview.PinnedHeaderListView

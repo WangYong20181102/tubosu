@@ -1,36 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">土拨鼠装修</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
     <string name="net_err">网络不给力</string>
     <!-- 首页 -->
-    <string name="free_title">免费设计与报价</string>
     <!-- 免费设计与报价 -->
-    <string name="free_editname">您的称呼</string>
-    <string name="free_editphone">联系电话</string>
-    <string name="free_obtain">免费获得设计与报价</string>
-    <string name="free_marquee">刘先生 1860222**** 已获得3份设计与报价</string>
     <!-- 申请成功 -->
     <string name="applyfor_title">申请成功</string>
     <string name="applyfor_desc">请留意手机，我们会尽快以0574开头座机联系您</string>
-    <string name="applyfor_tag">完成手机验证，您的信息即可保存到个人账户中</string>
-    <string name="applyfor_obtain_verif">获取验证码</string>
-    <string name="applyfor_hint">输入手机获取到的验证码</string>
-    <string name="applyfor_submit">为我家设计</string>
     <!-- 手机绑定成功 -->
     <string name="bundlesuccess_title">手机绑定成功</string>
     <string name="bundlesuccess_desc">13349990042这个手机号码将可用于登录</string>
 
     <!-- 逛图库 -->
-    <string name="textView_huxing">户型</string>
-    <string name="textView_fengge">风格</string>
-    <string name="textView_square">面积</string>
-    <string name="textView_new">最新</string>
     <string name="arrow">箭头</string>
 
     <!-- 效果图详情页 -->
-    <string name="image_detail_designforme">为我设计</string>
     <string name="image_detail_designforme_dialog_title">免费预约设计</string>
     <string name="image_detail_designforme_dialog_subtitle">该服务完全免费，您不需要支付任何费用。</string>
     <string name="image_detail_designforme_dialog_hint">输入您的联系电话</string>
@@ -45,59 +29,35 @@
     <string name="image_detail_share_qq">QQ</string>
     <string name="image_detail_share_cancel">取消</string>
     <!-- 装修公司 -->
-    <string name="decorate_title">找装修</string>
-    <string name="decorate_recommend">推荐品牌</string>
     <string name="decorate_textView_area">全部区域</string>
     <string name="decorate_textView_type">全部类型</string>
     <string name="decorate_textView_sort">默认排序</string>
-    <string name="decorate_business_license">营业执照</string>
-    <string name="decorate_bao">装修保</string>
-    <string name="decorate_yuyue">预约</string>
     <!-- 装修公司详情 -->
     <string name="decorate_detail_title">公司介绍</string>
     <string name="decorate_detail_project">服务项目</string>
     <string name="decorate_detail_family">家装</string>
     <string name="decorate_detail_factory">工装</string>
     <string name="decorate_detail_certification_services">土拨鼠认证服务</string>
-    <string name="decorate_detail_measure">量房</string>
-    <string name="decorate_detail_price">预算报价</string>
-    <string name="decorate_detail_service_security">服务保障</string>
-    <string name="decorate_detail_free">完全免费</string>
-    <string name="decorate_detail_describe">该公司已获得土拨鼠认证，业主使用免费预约，土拨鼠为您提供专业客服跟进保障服务。</string>
     <string name="decorate_detail_freeyuyue">免费预约</string>
     <string name="decorate_detail_design_freeyuyue">预约免费设计</string>
-    <string name="decorate_detail_phone">电话联系</string>
 
     <!-- 免费预约 -->
-    <string name="free_yuyue_ad">10秒钟发布，就可免费挑方案</string>
-    <string name="free_yuyue_desc">提交后，土拨鼠将精选4家优质公司为您免费量房报价；该服务完全免费，您不需要支付任何费用。</string>
     <string name="free_yuyue_district">区域</string>
-    <string name="free_yuyue_spinner_district">选择</string>
     <string name="free_yuyue_area">建筑面积</string>
     <string name="free_yuyue_input_area">请输入您的房屋面积！</string>
     <string name="free_yuyue_unit">㎡</string>
     <string name="free_yuyue_budget">装修预算</string>
     <string name="free_yuyue_phone">手机号码</string>
-    <string name="free_yuyue_obtain">获取验证码</string>
     <string name="free_yuyue_inputphone">请输入您的手机号码！</string>
     <string name="free_yuyue_input_obtainphone">输入手机获取到的验证码</string>
     <string name="free_yuyue_submit">确认预约</string>
 
     <!-- 我 -装修公司 -->
-    <string name="my_notyet_order">未量房</string>
-    <string name="my_yet_order">已量房</string>
     <string name="my_all_order">全部订单</string>
-    <string name="my_network_set">网店设置</string>
-    <string name="my_company_first">公司首页</string>
-    <string name="my_subsidiary">资金明细</string>
     <string name="my_store">收藏</string>
     <string name="my_edit">编辑</string>
     <string name="my_set">设置</string>
-    <string name="my_exit">退出</string>
     <!-- 我 -业主 -->
-    <string name="myowner_fitmentorder">我的订单</string>
-    <string name="myowner_fitmentorder_two">装修订单02</string>
-    <string name="myowner_personal_data">个人资料</string>
 
     <!-- 个人资料 -->
     <string name="personal_data_title">账户管理</string>
@@ -105,27 +65,14 @@
     <string name="personal_data_nickname_tag">昵称</string>
     <string name="personal_data_sex_tag">性别</string>
     <string name="personal_data_sex_man">男</string>
-    <string name="personal_data_city_tag">所在城市</string>
-    <string name="personal_data_city">广东深圳福田区</string>
-    <string name="personal_data_cell_tag">我的小区</string>
-    <string name="personal_data_cell">世界之窗</string>
     <!-- 修改昵称 -->
     <string name="changenickname_cancel">取消</string>
     <string name="changenickname_title">修改昵称</string>
     <string name="changenickname_save">保存</string>
-    <string name="changenickname_hint">土拨鼠001</string>
 
     <!-- 我-选择页面 -->
-    <string name="my_decorate">装修公司</string>
-    <string name="my_owner">业主</string>
-    <string name="my_notlogin">未登录</string>
     <!-- 全部业主订单列表 -->
     <string name="myownerorder_title">我的订单</string>
-    <string name="myownerorder_owner">称呼:</string>
-    <string name="item_myownerorder_city">城市:</string>
-    <string name="item_myownerorder_cellphone">手机:</string>
-    <string name="item_myownerorder_qu">小区:</string>
-    <string name="item_myownerorder_check">查看</string>
 
     <!-- 全部装修公司订单列表 -->
     <string name="allorder_title">全部订单</string>
@@ -135,11 +82,9 @@
     <string name="allorder_area">面积:</string>
     <string name="allorder_confirm">确认量房</string>
     <string name="allorder_phone">电话沟通</string>
-    <string name="allorder_house">已量房</string>
     <string name="allorder_subsidiary">资金明细</string>
     <!-- 全部装修公司订单列表详情 -->
     <string name="detail_allorder_title">订单详情</string>
-    <string name="detail_order_feedbac">反馈</string>
     <string name="detail_allorder_owner">业主:</string>
     <string name="detail_allorder_district">小区:</string>
     <string name="detail_allorder_type">类型:</string>
@@ -155,9 +100,6 @@
     <string name="detail_allorder_other">其他需求:</string>
 
     <!-- 选择量房日期 -->
-    <string name="fitmentdate_title">选择量房日期</string>
-    <string name="fitmentdate_cancel">取消</string>
-    <string name="fitmentdate_submit">确认</string>
 
     <!-- 网店设置 -->
     <string name="networkset_title">网店设置</string>
@@ -167,23 +109,15 @@
     <string name="networkset_mapmarker">地图标记</string>
 
     <!-- 收藏 -->
-    <string name="stroe_cancel">编辑</string>
     <string name="stroe_images">装修图库</string>
     <string name="stroe_decorates">装修公司</string>
     <!-- 系统消息 -->
     <string name="sysmessage_title">系统消息</string>
-    <string name="sysmessage_subject">土拨鼠推送的系统消息</string>
-    <string name="sysmessage_seedetails">查看详情</string>
     <!-- 设置 -->
-    <string name="myset_title">土拨鼠装修  v </string>
-    <string name="myset_sys_message">系统消息</string>
     <string name="myset_push_message">消息推送通知</string>
     <string name="myset_clear_cache">清理缓存</string>
     <string name="myset_version_upgrade">版本升级</string>
-    <string name="myset_version_upgrade_new">有新版本</string>
-    <string name="myset_feedback">反馈与建议</string>
     <string name="myset_goodraise">评价APP</string>
-    <string name="myset_service_tel">客服电话</string>
     <string name="myset_service_tels">400-606-2221</string>
     <string name="myset_tbs_weixin">土拨鼠微信</string>
     <string name="myset_share">分享给好友</string>
@@ -191,33 +125,12 @@
     <string name="myset_foot_url">www.tobosu.com</string>
 
     <!-- 登录 -->
-    <string name="login_title">登录</string>
-    <string name="login_reg">注册</string>
-    <string name="login_username">账号:</string>
-    <string name="login_hint_username">用户名或手机</string>
-    <string name="login_pwd">密码:</string>
-    <string name="login_hint_inputpwd">请输入密码</string>
-    <string name="login_dologin">登录</string>
-    <string name="login_phone">手机号快速登录</string>
-    <string name="login_frogetPwd">找回密码</string>
-    <string name="login_weixin">微信快速登录</string>
-    <string name="login_sina">微博快速登录</string>
-    <string name="login_toast">用户名或密码不能为空</string>
 
     <!-- 未登录 -->
-    <string name="notlogin_title">未登录</string>
 
     <!-- 手机快速登录 -->
-    <string name="fast_logging_title">手机快速登录</string>
     <string name="fast_logging_input_bundlephone">输入手机号</string>
-    <string name="fast_logging_bundlephone_text">手机号</string>
-    <string name="fast_logging_input_verifphone">请输入手机验证码</string>
-    <string name="fast_logging_input_verifphone1">请输入验证码</string>
-    <string name="tv_input_account_or_cellphone"> 输入用户名或手机号</string>
     <string name="fast_logging_obtain_verif">获取验证码</string>
-    <string name="inputpassword_verif">请输入密码</string>
-    <string name="fast_logging_obtain_imageverif">请输入图形验证码</string>
-    <string name="fast_logging_toast">手机号或图形验证码不能为空</string>
     <string name="fast_logging_toast_all">手机号或短信验证码不能为空</string>
     <!-- 找回密码 -->
     <string name="findpwd_title">找回密码</string>
@@ -243,7 +156,6 @@
     <!-- Content descriptions -->
     <string name="descr_image">Image</string>
     <!-- 版本更新，服务器上的配置地址 -->
-    <string name="url_server">http://i.tbscache.com/res/android/version.xml</string>
     <string name="business_license_desc">\t\t拥有该标识表示是通过实体认证的装修公司！土拨鼠网会首先通过线下实体考察企业办公场所，对营业执照、施工资质等检查，确保该公司的真实性专业性，装修公司还要与土拔鼠网签订协议，确保业主装修过程及售后能得到双重保障！
 </string>
     <string name="first_look_decorat_desc">\t\t营业执照+线下实体考察双重认证，所有认证公司都可以放心挑，装修全程土拨鼠为您免费服务！</string>
@@ -262,15 +174,5 @@
     <string name="preferential_applyfor_text">优惠报名</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <string name="cheat_text">武汉的周先生已经获取4份报价 1分钟前  上海的李先生已经获取2份报价 1分钟前
-			 北京的何女士已经获取2份报价 3分钟前  深圳的高先生已经获取2份报价 1分钟前
-			 南昌的张女士已经获取1份报价 2分钟前  厦门的刘先生已经获取1份报价 1分钟前
-			 湖南的于女士已经获取1份报价 6分钟前  武汉的阎先生已经获取1份报价 2分钟前
-			 广州的刘女士已经获取1份报价 8分钟前  合肥的曾先生已经获取1份报价 3分钟前
-			 上海的陈女士已经获取1份报价 6分钟前  南京的谢先生已经获取1份报价 2分钟前
-			 南宁的徐女士已经获取1份报价 6分钟前  石家庄的袁先生已经获取1份报价 2分钟前
-			 天津的方女士已经获取1份报价 6分钟前  重庆的胡先生已经获取1份报价 2分钟前</string>
 
 </resources>
