@@ -19,14 +19,10 @@ import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tencent.android.tpush.XGPushManager;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
-
-
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -213,7 +209,6 @@ public class MyCompanyAccountManagerActivity extends Activity implements OnClick
                 getSharedPreferences("userInfo", 0).edit().clear().commit();
                 AppInfoUtil.ISJUSTLOGIN = true;
                 getSharedPreferences("userInfo", 0).edit().clear().commit();
-                XGPushManager.unregisterPush(getApplicationContext());
                 dialog.cancel();
                 //退出之后清除微信相关的信息
                 umShareAPI.deleteOauth(MyCompanyAccountManagerActivity.this, SHARE_MEDIA.WEIXIN, null);

@@ -28,8 +28,6 @@ import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tencent.android.tpush.XGPushManager;
-import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -312,7 +310,6 @@ public class MyCompanyChangeInfoActivity extends Activity implements OnClickList
 						AppInfoUtil.ISJUSTLOGIN = true;
 						getSharedPreferences("userInfo", 0).edit().clear()
 								.commit();
-						XGPushManager.unregisterPush(getApplicationContext());
 						dialog.cancel();
 						finish();
 					}

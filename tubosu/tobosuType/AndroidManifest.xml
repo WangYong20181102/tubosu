@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.tbs.tobosutype"
     android:versionCode="24"
-    android:versionName="3.5"> <!-- 2017-11-16 修改成  24  &  3.5 -->
+    android:versionName="3.5">
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="26" />
@@ -430,7 +431,6 @@
         <activity android:name=".activity.DecorationCaseDetailActivity" />
         <activity android:name=".activity.NewWebViewActivity" />
         <activity android:name=".activity.NewImageActivity" />
-
 
         <activity android:name=".activity.SImageLookingActivity" />
         <activity android:name=".activity.DImageLookingActivity" />
