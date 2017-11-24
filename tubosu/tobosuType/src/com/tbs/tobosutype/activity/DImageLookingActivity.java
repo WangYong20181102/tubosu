@@ -369,7 +369,7 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                 dImgLookImgPosition.setText("" + mItemPosition + "/");//当前子项所处的位置
 
                 currentPosition = position + 1;
-            } else if (position + 1 < currentPosition) {
+            } else if (position + 1 <= currentPosition) {
                 Log.e(TAG,"===右划===");
                 //右划  (n->n-1)
                 mItemPosition--;
