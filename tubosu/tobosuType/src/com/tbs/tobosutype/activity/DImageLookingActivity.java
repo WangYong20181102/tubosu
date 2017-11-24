@@ -119,6 +119,7 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
     //判断viewpager滑动情况
     private int lastValue = -1;
     private boolean isLeft = true;
+    private int currentPosition = 0;
 
     private boolean isShowingBanner = true;//是否显示banner  默认显示
     private PopupWindow mDownLoadImagePopWindow;//长按显示下载的pop
@@ -310,8 +311,10 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
 
     //页面滑动监听事件
     private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
+
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//            Log.e(TAG, "滑动==========position=========" + position);
             if (positionOffset != 0) {
                 if (lastValue >= positionOffsetPixels) {
                     //右滑
@@ -322,12 +325,22 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                 }
             }
             lastValue = positionOffsetPixels;
+//            Log.e(TAG, "==============lastValue=============" + lastValue);
+            //另一种加载方式
+//            if (position > currentPosition) {
+//                isLeft = false;
+//                currentPosition = position;
+//            } else if (position < currentPosition) {
+//                isLeft = true;
+//                currentPosition = position;
+//            }
         }
 
         @Override
         public void onPageSelected(int position) {
-            if (isLeft) {
-                Log.e(TAG, "--->左划===============" + position);
+            Log.e(TAG, "onPageSelected==================" + position);
+            if (position + 1 > currentPosition) {
+                Log.e(TAG,"===左划===");
                 mItemPosition++;
                 if (mItemPosition > mItemSize) {
                     //套图的位置向后移动 n->n+1
@@ -354,8 +367,11 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                     mShareUrl = mImageDArrayList.get(mArrayListPosition).getShare_url();
                 }
                 dImgLookImgPosition.setText("" + mItemPosition + "/");//当前子项所处的位置
-            } else {
-                Log.e(TAG, "--->右划===============" + position);
+
+                currentPosition = position + 1;
+            } else if (position + 1 <= currentPosition) {
+                Log.e(TAG,"===右划===");
+                //右划  (n->n-1)
                 mItemPosition--;
                 if (mItemPosition < 1) {
                     //套图位置向前移动 n->n-1
@@ -382,13 +398,51 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                     mShareUrl = mImageDArrayList.get(mArrayListPosition).getShare_url();
                 }
                 dImgLookImgPosition.setText("" + mItemPosition + "/");//当前子项所处的位置
+                currentPosition = position + 1;
             }
-
         }
 
         @Override
         public void onPageScrollStateChanged(int state) {
+//            Log.e(TAG, "状态========state======" + state);
+            if (state == 2) {
+                if (isLeft) {
 
+                } else {
+//                    mItemPosition--;
+//                    if (mItemPosition < 1) {
+//                        //套图位置向前移动 n->n-1
+//                        mArrayListPosition = mArrayListPosition - 1;
+//                        //套图子项所在位置重新赋值
+//                        if (mArrayListPosition <= -1) {
+//                            //滑动太快引起的问题
+//                            Log.e(TAG, "出现了位置变化========" + mArrayListPosition);
+//                            mArrayListPosition = 0;
+//                        } else {
+//                            mItemPosition = mImageDArrayList.get(mArrayListPosition).getSub_images().size();
+//                            //套图子项长度重新赋值
+//                            mItemSize = mImageDArrayList.get(mArrayListPosition).getSub_images().size();
+//                            //套图的标题
+//                            mItemTitle = mImageDArrayList.get(mArrayListPosition).getTitle();
+//                            //设置到对应的位置
+//                            dImgLookTitle.setText("" + mItemTitle);//标题
+//                            dImgLookImgListSize.setText("" + mItemSize);//子项的总长
+//                            dImgLookImgPosition.setText("" + mItemPosition + "/");//当前子项所处的位置
+//                            //用户的收藏状态
+//                            if (mImageDArrayList.get(mArrayListPosition).getIs_collect().equals("1")) {
+//                                //已收藏
+//                                dImgLookShoucan.setImageResource(R.drawable.shoucang_after);
+//                            } else {
+//                                //未收藏
+//                                dImgLookShoucan.setImageResource(R.drawable.shoucang_detail_befor);
+//                            }
+//                            //分享的Url
+//                            mShareUrl = mImageDArrayList.get(mArrayListPosition).getShare_url();
+//                        }
+//                    }
+//                    dImgLookImgPosition.setText("" + mItemPosition + "/");//当前子项所处的位置
+                }
+            }
         }
     };
 
@@ -410,6 +464,8 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
         for (int i = 0; i < mArrayListPosition; i++) {
             mViewPagerPosition = mViewPagerPosition + mImageDArrayList.get(i).getSub_images().size();
         }
+        //判断滑动方向的数据
+        currentPosition = mViewPagerPosition;
         //当前套图子项长度
         mItemSize = mImageDArrayList.get(mArrayListPosition).getSub_images().size();
     }
@@ -418,7 +474,7 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             R.id.d_img_look_shoucan_ll, R.id.d_img_look_share,
             R.id.d_img_look_share_ll, R.id.d_img_look_btn_fadan,
             R.id.d_img_look_i_know, R.id.d_img_look_fadan_img,
-            R.id.d_img_look_fadan_close, R.id.d_img_look_frist_into_rl,R.id.d_img_look_fadan_rl})
+            R.id.d_img_look_fadan_close, R.id.d_img_look_frist_into_rl, R.id.d_img_look_fadan_rl})
     public void onViewClickedInDImageLookActivity(View view) {
         switch (view.getId()) {
             case R.id.d_img_look_title_back:
@@ -542,7 +598,7 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
         param.put("uid", _id);// 以前是AppInfoUtil.getUserid(mContext)  昭仲要求改成 _id
         param.put("user_type", AppInfoUtil.getTypeid(mContext));
         param.put("type", "2");
-        Util.setErrorLog(TAG, "昭仲要传的参数： state=" + state +"   图的id=" + id + "   人的id=" + _id + " user_type=" + AppInfoUtil.getTypeid(mContext) + " type=2");
+        Util.setErrorLog(TAG, "昭仲要传的参数： state=" + state + "   图的id=" + id + "   人的id=" + _id + " user_type=" + AppInfoUtil.getTypeid(mContext) + " type=2");
 
         OKHttpUtil.post(Constant.IMAGE_COLLECT, param, new Callback() {
             @Override
@@ -553,7 +609,7 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String json = new String(response.body().string());
-                Util.setErrorLog(TAG, "昭仲返回的结果："+json);
+                Util.setErrorLog(TAG, "昭仲返回的结果：" + json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     int status = jsonObject.optInt("status");
