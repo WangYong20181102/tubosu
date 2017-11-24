@@ -23,7 +23,6 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.DImageLookingActivity;
 import com.tbs.tobosutype.activity.DecorationCaseActivity;
 import com.tbs.tobosutype.activity.DecorationCaseDetailActivity;
-import com.tbs.tobosutype.activity.ImageDetailNewActivity;
 import com.tbs.tobosutype.activity.NewWebViewActivity;
 import com.tbs.tobosutype.activity.TopicDetailActivity;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
