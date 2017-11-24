@@ -25,7 +25,7 @@
                         android:id="@+id/rel_mycompany_msg_set"
                         android:layout_width="match_parent"
                         android:layout_height="49dp"
-                        android:background="@drawable/drawable_hdpi">
+                        android:background="#FFFFFF">
 
                         <ImageView
                             android:id="@+id/iv_system_message_company"
@@ -33,7 +33,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_marginRight="15dp"
-                            android:background="@drawable/app_alarm"
+                            android:background="@drawable/xiaoxii_icon"
                             android:layout_centerVertical="true" />
                         <TextView
                             android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
                             android:layout_centerInParent="true"
                             android:textSize="16sp"
                             android:visibility="gone"
-                            android:textColor="@color/white"
+                            android:textColor="#EEE"
                             android:text="我的" />
                         <TextView
                             android:id="@+id/tv_not_see_sysmsg"
@@ -63,7 +63,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginRight="15dp"
                             android:layout_toLeftOf="@+id/iv_system_message_company"
-                            android:background="@drawable/app_setting" />
+                            android:background="@drawable/shezhi_icon" />
                     </RelativeLayout>
                     <ImageView
                         android:layout_width="match_parent"
