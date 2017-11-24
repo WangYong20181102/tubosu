@@ -79,7 +79,7 @@
                 android:textColor="#666666"
                 android:layout_marginTop="13dp"
                 android:layout_centerHorizontal="true"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:text="免费量房"/>
         </RelativeLayout>
 
@@ -102,7 +102,7 @@
                 android:textColor="#666666"
                 android:layout_marginTop="13dp"
                 android:layout_centerHorizontal="true"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:text="选设计"/>
         </RelativeLayout>
 
@@ -117,7 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/newkananli"/>
+                android:background="@drawable/kananli_icon"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
                 android:textColor="#666666"
                 android:layout_marginTop="13dp"
                 android:layout_centerHorizontal="true"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:text="看案例"/>
         </RelativeLayout>
 
@@ -148,7 +148,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="13dp"
                 android:textColor="#666666"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:text="找装修"/>
         </RelativeLayout>
         <RelativeLayout
@@ -170,7 +170,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="13dp"
                 android:textColor="#666666"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:text="装修课堂"/>
         </RelativeLayout>
     </LinearLayout>

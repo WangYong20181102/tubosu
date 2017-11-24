@@ -104,6 +104,8 @@ public class Constant {
      * M站 发单跳转 线上环境
      */
     public static final String M_TOBOSU_URL = "http://m.tobosu.com/";
+
+
     /**
      * M站 发单跳转 dev环境
      */

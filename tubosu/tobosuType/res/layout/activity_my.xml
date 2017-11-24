@@ -17,7 +17,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="49dp"
-                    android:background="@drawable/drawable_hdpi">
+                    android:background="@drawable/white_bg">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                             android:gravity="center"
                             android:layout_centerInParent="true"
                             android:text="我的"
-                            android:textColor="@color/white"
+                            android:textColor="#333"
                             android:textSize="16sp" />
 
                         <ImageView
@@ -37,7 +37,7 @@
                             android:layout_height="wrap_content"
                             android:layout_toLeftOf="@+id/iv_unlogin_system_message"
                             android:layout_centerVertical="true"
-                            android:background="@drawable/app_setting" />
+                            android:background="@drawable/shezhi_icon" />
 
                         <!-- 系统消息提示 -->
                         <ImageView
@@ -45,7 +45,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:background="@drawable/app_alarm"
+                            android:background="@drawable/xiaoxii_icon"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="14dp"
                             android:layout_marginRight="20dp" />

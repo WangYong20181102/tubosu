@@ -13,12 +13,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical" >
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:visibility="gone"
-                    android:background="@color/white">
-                </RelativeLayout>
+
 
                 <!-- 顶部用户信息布局 start -->
                 <RelativeLayout
@@ -32,7 +27,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="46dp"
-                            android:background="@drawable/drawable_hdpi"/>
+                            android:background="@drawable/white_bg"/>
                         <ImageView
                             android:id="@+id/iv_system_message_user"
                             android:layout_width="wrap_content"
@@ -40,7 +35,7 @@
                             android:layout_alignParentRight="true"
                             android:layout_marginRight="13dp"
                             android:layout_centerVertical="true"
-                            android:background="@drawable/app_alarm"/>
+                            android:background="@drawable/xiaoxii_icon"/>
                         <ImageView
                             android:id="@+id/iv_myowner_set"
                             android:layout_width="wrap_content"
@@ -48,7 +43,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginRight="15dp"
                             android:layout_toLeftOf="@+id/iv_system_message_user"
-                            android:background="@drawable/app_setting" />
+                            android:background="@drawable/shezhi_icon" />
 
                         <TextView
                             android:layout_width="wrap_content"

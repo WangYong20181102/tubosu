@@ -216,7 +216,7 @@ public class FindPwdActivity2 extends Activity implements OnClickListener {
 		                //把返回数据存入Intent
 		                intent.putExtra("resultData", "password has been changed");
 		                setResult(RESULT_OK, intent);
-//		                finish();
+		                finish();
 					} else {
 						Toast.makeText(mContext, msgData, Toast.LENGTH_SHORT).show();
 					}
