@@ -53,14 +53,10 @@ public class FindPwdActivity2 extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		AppInfoUtil.setActivityTheme(this, R.color.color_icon);
 		AppInfoUtil.setTranslucentStatus(this);
 		setContentView(R.layout.activity_findpwdtwo);
-		
 		mContext = FindPwdActivity2.this;
-				
 		urlBase = urlBase + getAppVersionName(this) + "&device=android";
-		
 		findpwd_two_back = (ImageView) findViewById(R.id.findpwd_two_back);
 		findpwd_two_inputverif = (EditText) findViewById(R.id.findpwd_two_inputverif);
 		new HintInput(4, findpwd_two_inputverif, this);
@@ -86,15 +82,6 @@ public class FindPwdActivity2 extends Activity implements OnClickListener {
 			if ("重新获取".equals(findpwd_two_obtain.getText().toString()) || "获取验证码".equals(findpwd_two_obtain.getText().toString())) {
 				getMSMCode();
 			}
-
-//			if ("重新获取".equals(findpwd_two_obtain.getText().toString()) || "获取验证码".equals(findpwd_two_obtain.getText().toString())) {
-//				GetVerificationPopupwindow popupwindow = new GetVerificationPopupwindow(FindPwdActivity2.this);
-//				popupwindow.phone = mobile;
-//				popupwindow.version = getAppVersionName(FindPwdActivity2.this);
-//				popupwindow.showAtLocation(findViewById(R.id.findpwd_two_submit), Gravity.CENTER, 0, 0);
-//			} else {
-//				Toast.makeText(mContext, "您已经获取过了!", Toast.LENGTH_SHORT).show();
-//			}
 			break;
 		case R.id.findpwd_two_submit:
 			smsVerif = findpwd_two_inputverif.getText().toString().trim();
@@ -113,7 +100,6 @@ public class FindPwdActivity2 extends Activity implements OnClickListener {
 			map.put("pass", MD5Util.md5(newPwd));
 			map.put("msg_code", smsVerif);
 			new SendFindPwdThread(map).start();
-//			Util.setErrorLog("", "电话="+mobile + "   新密码="+MD5Util);
 			break;
 		default:
 			break;
@@ -183,7 +169,7 @@ public class FindPwdActivity2 extends Activity implements OnClickListener {
 			Looper.prepare();
 			// 设置新密码接口
 			String result = HttpPost.doPost(Constant.TOBOSU_URL + "tapp/passport/app_reset_password?", map, "utf-8");
-			Util.setErrorLog("找回密码======>>>", result);
+			Util.setErrorLog("===FindPwdActivity2===>>>", result);
 			try {
 				if (result != null) {
 					JSONObject object = new JSONObject(result);
@@ -210,7 +196,7 @@ public class FindPwdActivity2 extends Activity implements OnClickListener {
 					int result = (Integer) resultObject.get("error_code");
 					String msgData = resultObject.getString("msg");
 					if (result == 0) {
-						startCount();
+//						startCount();
 						Toast.makeText(mContext, msgData, Toast.LENGTH_SHORT).show();
 						Intent intent = new Intent();
 		                //把返回数据存入Intent
