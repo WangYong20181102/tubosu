@@ -1,6 +1,8 @@
 package com.tbs.tobosutype.activity;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -10,10 +12,13 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -22,6 +27,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.NewHomeAdapter;
@@ -35,7 +41,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import okhttp3.Call;
@@ -82,6 +90,7 @@ public class NewHomeActivity extends BaseActivity {
         setClick();
         getDataFromNet(false);
         initReceiver();
+        getHuoDongPicture();
     }
 
     private void initView() {
@@ -675,6 +684,62 @@ public class NewHomeActivity extends BaseActivity {
 
     }
 
+    private String activityId;
+    private String activityImg_url;
+    private String activityH5_url;
+    private String activityType;
+    private String activityName;
+    private void getHuoDongPicture() {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        final String date = sdf.format(new Date());
+
+        if (!"".equals(CacheManager.getLoadingHUODONG(mContext)) && date.equals(CacheManager.getLoadingHUODONG(mContext))) {
+            // 已经保存过当天日期
+
+        } else {
+            // 这是当天第一次
+            if (Util.isNetAvailable(NewHomeActivity.this)) {
+                final Dialog dialog = new Dialog(NewHomeActivity.this, R.style.popupDialog);
+                HashMap<String, Object> hashMap = new HashMap<String, Object>();
+                OKHttpUtil.post(Constant.ACTIVITY_URL, hashMap, new Callback() {
+
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        showTap(null, "", "");
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        final String json = response.body().string();
+                        Util.setErrorLog(TAG, json);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(json);
+                                    if (jsonObject.getInt("error_code") == 0) {
+                                        JSONObject data = jsonObject.getJSONObject("data");
+                                        activityId = data.getString("id");
+                                        activityImg_url = data.getString("img_url");
+                                        activityH5_url = data.getString("h5_url");
+                                        activityType = data.getString("type");
+                                        activityName = data.getString("name");
+//                                        picUrl = activityImg_url.replace("\\/\\/", "\\");
+                                        CacheManager.setLoadingHUODONG(mContext, date);
+                                        showTap(dialog, activityImg_url, activityH5_url);
+
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    }
 
     private void initReceiver() {
         anliReceiver = new AnliReceiver();
@@ -697,4 +762,78 @@ public class NewHomeActivity extends BaseActivity {
             }
         }
     }
+
+
+    /**
+     * 显示蒙层wel
+     *
+     * @param adUrl 是否显示蒙层
+     */
+    private void showTap(final Dialog dialog, String adUrl, final String h5Url) {
+        if (dialog == null) {
+            return;
+        }
+
+        if (!"".equals(adUrl)) {
+            View view = LayoutInflater.from(NewHomeActivity.this).inflate(R.layout.layout_home_tab_layout, null);
+            Display display = this.getWindowManager().getDefaultDisplay();
+            int width = display.getWidth();
+            int height = display.getHeight();
+            //设置dialog的宽高为屏幕的宽高
+            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(width, height);
+            dialog.setContentView(view, layoutParams);
+            dialog.setCanceledOnTouchOutside(true);
+            dialog.setCancelable(true);
+            FrameLayout layout = (FrameLayout) dialog.findViewById(R.id.fr_dialog_layout);
+            ImageView adIv = (ImageView) dialog.findViewById(R.id.iv_main_ad);
+            ImageView adIvClose = (ImageView) dialog.findViewById(R.id.iv_main_ad_close);
+            Glide.with(NewHomeActivity.this).load(adUrl).into(adIv);
+            Util.setErrorLog(TAG, adUrl);
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (dialog != null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            });
+            adIvClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (dialog != null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            });
+
+            adIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent it = null;
+                    if (!"".equals(h5Url)) {
+                        Bundle b = new Bundle();
+                        b.putString("link", h5Url);
+                        it.putExtras(b);
+                        it = new Intent(mContext, WebViewActivity.class);
+                    } else {
+                        it = new Intent(mContext, GetPriceActivity.class);
+                    }
+
+                    startActivity(it);
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    dialog.dismiss();
+                }
+            });
+            if (dialog != null && !dialog.isShowing()) {
+                dialog.show();
+            }
+        }
+    }
+
 }
