@@ -40,12 +40,15 @@
                 android:layout_marginTop="22dp">
                 <!--名字-->
                 <TextView
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:maxEms="4"
                     android:id="@+id/item_designer_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="李子柒"
+                    android:text="李子柒我爱你"
                     android:textColor="#000000"
                     android:textSize="15sp" />
                 <!--头衔-->

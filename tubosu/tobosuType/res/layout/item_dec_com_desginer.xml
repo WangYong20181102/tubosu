@@ -34,6 +34,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:ellipsize="marquee"
+            android:maxEms="4"
+            android:singleLine="true"
             android:text="李子柒"
             android:textColor="#333232"
             android:textSize="12sp" />
@@ -50,9 +53,9 @@
     </LinearLayout>
     <!--右侧分割线-->
     <View
-        android:background="#e5e5e5"
         android:layout_width="0.7dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
         android:layout_marginBottom="18dp"
-        android:layout_height="match_parent"/>
+        android:layout_marginTop="10dp"
+        android:background="#e5e5e5" />
 </LinearLayout>
