@@ -105,7 +105,15 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
         //关联之后设置tab的名称在这之前要完成Viewpager的实例化不然会报空指针异常
         newImageTab.getTabAt(0).setText("套图");
         newImageTab.getTabAt(1).setText("单图");
+        //长按事件
+        newImageGif.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });
     }
+
     //通过反射 改变tab的指示器的长度
     public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
         Class<?> tabLayout = tabs.getClass();
@@ -131,8 +139,8 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
             View child = llTab.getChildAt(i);
             child.setPadding(0, 0, 0, 0);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-            params.leftMargin = left/3;
-            params.rightMargin = right/3;
+            params.leftMargin = left / 3;
+            params.rightMargin = right / 3;
             child.setLayoutParams(params);
             child.invalidate();
         }

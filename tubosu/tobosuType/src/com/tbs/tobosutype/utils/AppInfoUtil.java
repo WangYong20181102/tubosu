@@ -131,7 +131,13 @@ public class AppInfoUtil {
     public static void setToken(Context context, String token) {
         context.getSharedPreferences("userInfo", 0).edit().putString("token", token).commit();
     }
+    public static String getUuid(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("id", "");
+    }
 
+    public static void setUuid(Context context, String id) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("id", id).commit();
+    }
     public static String getTypeid(Context context) {
         return context.getSharedPreferences("userInfo", 0).getString("typeid", "");
     }

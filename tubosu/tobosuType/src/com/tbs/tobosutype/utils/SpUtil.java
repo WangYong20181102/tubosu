@@ -48,4 +48,40 @@ public class SpUtil {
     public static String getImageDetailDataToken(Context context) {
         return context.getSharedPreferences("ImageDetailDataToken", 0).getString("mImageDetailDataToken", "");
     }
+
+    //存储纬度信息
+    public static void setLatitude(Context context, String mLatitude) {
+        context.getSharedPreferences("mlLatitude", 0).edit().putString("mLatitude", mLatitude).commit();
+    }
+    //获取纬度信息
+    public static String getLatitude(Context context) {
+        return context.getSharedPreferences("mlLatitude", 0).getString("mLatitude", "");
+    }
+
+    //存储经度信息
+    public static void setLongitude(Context context, String mLongitude) {
+        context.getSharedPreferences("mlLongitude", 0).edit().putString("mLongitude", mLongitude).commit();
+    }
+    //获取经度信息
+    public static String getLongitude(Context context) {
+        return context.getSharedPreferences("mlLongitude", 0).getString("mLongitude", "");
+    }
+
+    //存储城市信息
+    public static void setCity(Context context, String City) {
+        context.getSharedPreferences("mlCity", 0).edit().putString("mCity", City).commit();
+    }
+    //获取城市信息
+    public static String getCity(Context context) {
+        return context.getSharedPreferences("mlCity", 0).getString("mCity", "");
+    }
+
+    //存储城市信息
+    public static void setRadius(Context context, String Radius) {
+        context.getSharedPreferences("mlRadius", 0).edit().putString("mRadius", Radius).commit();
+    }
+    //获取城市信息
+    public static String getRadius(Context context) {
+        return context.getSharedPreferences("mlRadius", 0).getString("mRadius", "");
+    }
 }

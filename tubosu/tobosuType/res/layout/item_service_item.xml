@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:orientation="vertical">
+        <!--标题-->
+        <TextView
+            android:id="@+id/item_servic_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="服务项目"
+            android:textColor="#333333"
+            android:textSize="13sp" />
+        <!--内容-->
+        <TextView
+            android:id="@+id/item_servic_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:lineSpacingExtra="5dp"
+            android:text="货架上的看法和广东省反馈结果和副驾驶的客户更健康水电费和国际化第三方接口会受到很舒服金卡和看风景的哈萨克交话费达康书记回复闪电发货数据库浩丰科技撒"
+            android:textColor="#666666"
+            android:textSize="12sp" />
+    </LinearLayout>
+    <!--分割线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_marginTop="20dp"
+        android:background="#e5e5e5" />
+</LinearLayout>

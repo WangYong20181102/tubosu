@@ -192,13 +192,13 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
 
     }
 
-    private void getMSMCode(){
-        if(Util.isNetAvailable(getActivity())){
+    private void getMSMCode() {
+        if (Util.isNetAvailable(getActivity())) {
             OKHttpUtil okHttpUtil = new OKHttpUtil();
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             String token = Util.getDateToken();
             String number = et_login_userphone.getText().toString().trim();
-            Util.setErrorLog(TAG, "==========" +token + "=============" + number);
+            Util.setErrorLog(TAG, "==========" + token + "=============" + number);
             hashMap.put("token", token);
             hashMap.put("cellphone", number);
 
@@ -222,7 +222,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
                         public void run() {
                             try {
                                 JSONObject jsonObject = new JSONObject(json);
-                                if(jsonObject.getInt("status") == 200){
+                                if (jsonObject.getInt("status") == 200) {
                                     Util.setToast(getActivity(), jsonObject.getString("msg"));
                                 }
                                 startCount();
@@ -540,6 +540,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
             editor.commit();
 
             AppInfoUtil.setToken(getActivity(), token);
+            AppInfoUtil.setUuid(getActivity(), id);
 
         } catch (Exception e) {
             e.printStackTrace();

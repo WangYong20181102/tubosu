@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.MainActivity;
 import com.tbs.tobosutype.customview.LoadingWindow;
@@ -32,10 +33,12 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -399,6 +402,7 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
 
             editor.commit();
             AppInfoUtil.setToken(getActivity(), token);
+            AppInfoUtil.setUuid(getActivity(), id);
 
 
         } catch (Exception e) {

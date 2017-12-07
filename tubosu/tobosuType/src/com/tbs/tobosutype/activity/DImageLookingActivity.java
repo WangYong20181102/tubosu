@@ -625,6 +625,10 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                                     Toast.makeText(mContext, "收藏成功", Toast.LENGTH_SHORT).show();
                                     if (mWhereFrom.equals("NewImageDFragment")) {
                                         EventBusUtil.sendEvent(new Event(EC.EventCode.NOTIF_D_SHOUCANG_DATA_CHANGE_IS_COLLECT, mArrayListPosition));
+                                    }else if(mWhereFrom.equals("DesignCaseActivity")){
+                                        EventBusUtil.sendEvent(new Event(EC.EventCode.NOTIF_DESIGN_CASE_ACTIVITY_MODE_IS_COLLECT, mArrayListPosition));
+                                    }else if(mWhereFrom.equals("DecComActivity")){
+                                        EventBusUtil.sendEvent(new Event(EC.EventCode.NOTIF_DECCOMACTIVITY_MODE_IS_COLLECT, mArrayListPosition));
                                     }
                                 } else {
                                     //取消收藏  同时通知外部的数据改变
@@ -636,6 +640,10 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                                     } else if (mWhereFrom.equals("TaotuActivity")) {
                                         // TODO: 2017/11/20
                                         EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_TAOTU_LIST_CODE, mArrayListPosition));
+                                    }else if(mWhereFrom.equals("DesignCaseActivity")){
+                                        EventBusUtil.sendEvent(new Event(EC.EventCode.NOTIF_DESIGN_CASE_ACTIVITY_MODE_IS_NOT_COLLECT, mArrayListPosition));
+                                    }else if(mWhereFrom.equals("DecComActivity")){
+                                        EventBusUtil.sendEvent(new Event(EC.EventCode.NOTIF_DECCOMACTIVITY_MODE_IS_NOT_COLLECT, mArrayListPosition));
                                     }
                                 }
                             }

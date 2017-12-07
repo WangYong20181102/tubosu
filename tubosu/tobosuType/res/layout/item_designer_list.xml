@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="112dp"
+    android:background="@color/white">
+    <!--设计师列表子项-->
+    <LinearLayout
+        android:id="@+id/item_designer_item_ll"
+        android:layout_width="match_parent"
+        android:layout_height="104dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15sp"
+        android:layout_marginRight="15dp"
+        android:orientation="horizontal">
+        <!--头像-->
+        <LinearLayout
+            android:id="@+id/item_designer_icon_ll"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/item_designer_icon"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/def_icon" />
+        </LinearLayout>
+
+        <!--右侧部分  包含设计师名字设计师-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="9dp"
+            android:orientation="vertical">
+            <!--设计师名字 头衔 以及找他设计-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:layout_marginTop="22dp">
+                <!--名字-->
+                <TextView
+                    android:id="@+id/item_designer_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:text="李子柒"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
+                <!--头衔-->
+                <TextView
+                    android:id="@+id/item_designer_title"
+                    android:layout_width="58dp"
+                    android:layout_height="17dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="7dp"
+                    android:layout_toRightOf="@+id/item_designer_name"
+                    android:background="@drawable/shape_designer_title"
+                    android:gravity="center"
+                    android:text="首席设计师"
+                    android:textColor="#ff6666"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/item_designer_find_he_design"
+                    android:layout_width="100dp"
+                    android:layout_height="27dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/shape_designer_find_he_design"
+                    android:gravity="center"
+                    android:text="找TA免费设计"
+                    android:textColor="#ff5a00"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+            <!--风格相关-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="风格:"
+                    android:textColor="#999999"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/item_designer_fenge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="marquee"
+                    android:maxEms="10"
+                    android:singleLine="true"
+                    android:text="现代、简欧、中式"
+                    android:textColor="#333333"
+                    android:textSize="12sp" />
+            </LinearLayout>
+            <!--领域相关-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="领域:"
+                    android:textColor="#999999"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/item_designer_lingyu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:ellipsize="marquee"
+                    android:maxEms="12"
+                    android:singleLine="true"
+                    android:text="小户型、别墅、公寓、局部"
+                    android:textColor="#333333"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_alignParentBottom="true"
+        android:background="#f7f7f7" />
+</RelativeLayout>
