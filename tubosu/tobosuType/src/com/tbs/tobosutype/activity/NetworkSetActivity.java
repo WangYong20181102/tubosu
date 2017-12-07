@@ -156,11 +156,15 @@ public class NetworkSetActivity extends Activity implements OnClickListener {
 
         switch (v.getId()) {
             case R.id.rel_check_home_page:
-                Intent detailIntent = new Intent(this, DecorateCompanyDetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("comid", id);
-                detailIntent.putExtras(bundle);
-                startActivity(detailIntent);
+//                Intent detailIntent = new Intent(this, DecorateCompanyDetailActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("comid", id);
+//                detailIntent.putExtras(bundle);
+//                startActivity(detailIntent);
+                //*****装修公司主页 3.6版本修改
+                Intent intent2 = new Intent(this, DecComActivity.class);
+                intent2.putExtra("mCompanyId", id);
+                startActivity(intent2);
                 break;
             case R.id.networkset_back:
                 finish();

@@ -31,7 +31,7 @@
         android:maxEms="14"
         android:singleLine="true"
         android:text="95m/现代/大户型装修设计和是"
-        android:textColor="#010101"
+        android:textColor="#333333"
         android:textSize="12sp" />
     <!--描述-->
     <TextView

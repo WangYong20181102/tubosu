@@ -2,11 +2,11 @@ package com.tbs.tobosutype.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -99,6 +99,8 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
     ImageView dImgLookFadanClose;
     @BindView(R.id.d_img_look_fadan_rl)
     RelativeLayout dImgLookFadanRl;
+    @BindView(R.id.d_img_look_btn_fadan_rl)
+    RelativeLayout dImgLookBtnFadanRl;
 
     private String TAG = "DImageLookingActivity";
     private Context mContext;
@@ -257,6 +259,7 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
         //获取上一个界面传来的位置信息
         mArrayListPosition = mIntent.getIntExtra("mPosition", 0);
         mWhereFrom = mIntent.getStringExtra("mWhereFrom");
+        dImgLookBtnFadanRl.setBackgroundColor(Color.parseColor("#ffffff"));
         //根据json处理数据
         if (TextUtils.isEmpty(mDImageListJson)) {
             Toast.makeText(mContext, "数据获取失败！", Toast.LENGTH_SHORT).show();
@@ -340,7 +343,7 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
         public void onPageSelected(int position) {
             Log.e(TAG, "onPageSelected==================" + position);
             if (position + 1 > currentPosition) {
-                Log.e(TAG,"===左划===");
+                Log.e(TAG, "===左划===");
                 mItemPosition++;
                 if (mItemPosition > mItemSize) {
                     //套图的位置向后移动 n->n+1
@@ -370,7 +373,7 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
 
                 currentPosition = position + 1;
             } else if (position + 1 <= currentPosition) {
-                Log.e(TAG,"===右划===");
+                Log.e(TAG, "===右划===");
                 //右划  (n->n-1)
                 mItemPosition--;
                 if (mItemPosition < 1) {
@@ -625,9 +628,9 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                                     Toast.makeText(mContext, "收藏成功", Toast.LENGTH_SHORT).show();
                                     if (mWhereFrom.equals("NewImageDFragment")) {
                                         EventBusUtil.sendEvent(new Event(EC.EventCode.NOTIF_D_SHOUCANG_DATA_CHANGE_IS_COLLECT, mArrayListPosition));
-                                    }else if(mWhereFrom.equals("DesignCaseActivity")){
+                                    } else if (mWhereFrom.equals("DesignCaseActivity")) {
                                         EventBusUtil.sendEvent(new Event(EC.EventCode.NOTIF_DESIGN_CASE_ACTIVITY_MODE_IS_COLLECT, mArrayListPosition));
-                                    }else if(mWhereFrom.equals("DecComActivity")){
+                                    } else if (mWhereFrom.equals("DecComActivity")) {
                                         EventBusUtil.sendEvent(new Event(EC.EventCode.NOTIF_DECCOMACTIVITY_MODE_IS_COLLECT, mArrayListPosition));
                                     }
                                 } else {
@@ -640,9 +643,9 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                                     } else if (mWhereFrom.equals("TaotuActivity")) {
                                         // TODO: 2017/11/20
                                         EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_TAOTU_LIST_CODE, mArrayListPosition));
-                                    }else if(mWhereFrom.equals("DesignCaseActivity")){
+                                    } else if (mWhereFrom.equals("DesignCaseActivity")) {
                                         EventBusUtil.sendEvent(new Event(EC.EventCode.NOTIF_DESIGN_CASE_ACTIVITY_MODE_IS_NOT_COLLECT, mArrayListPosition));
-                                    }else if(mWhereFrom.equals("DecComActivity")){
+                                    } else if (mWhereFrom.equals("DecComActivity")) {
                                         EventBusUtil.sendEvent(new Event(EC.EventCode.NOTIF_DECCOMACTIVITY_MODE_IS_NOT_COLLECT, mArrayListPosition));
                                     }
                                 }
