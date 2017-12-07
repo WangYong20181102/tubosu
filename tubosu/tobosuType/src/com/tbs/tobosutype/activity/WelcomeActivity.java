@@ -91,11 +91,11 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
     private void initView() {
-        Glide.with(mContext).load(R.drawable.welcome_image).placeholder(R.drawable.welcome_image).error(R.drawable.welcome_image).into(welcomeImage);
+//        Glide.with(mContext).load(R.drawable.welcome_image).placeholder(R.drawable.welcome_image).error(R.drawable.welcome_image).into(welcomeImage);
 //        if("appxiaomi".equals(AppInfoUtil.getChannType(MyApplication.getContext()))){
 //            Glide.with(mContext).load(R.drawable.wel_xiaomi).placeholder(R.drawable.wel_xiaomi).error(R.drawable.wel_xiaomi).into(welcomeImage);
 //        }else if("ali".equals(AppInfoUtil.getChannType(MyApplication.getContext()))){
-//            Glide.with(mContext).load(R.drawable.wel_new_ali_img).placeholder(R.drawable.wel_new_ali_img).error(R.drawable.wel_new_ali_img).into(welcomeImage);
+            Glide.with(mContext).load(R.drawable.wel_new_ali_img).placeholder(R.drawable.wel_new_ali_img).error(R.drawable.wel_new_ali_img).into(welcomeImage);
 //        }else{
 //            Glide.with(mContext).load(R.drawable.welcome_image).placeholder(R.drawable.welcome_image).error(R.drawable.welcome_image).into(welcomeImage);
 //        }
@@ -162,6 +162,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         hashMap.put("uid", getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("userid", ""));
         hashMap.put("pass", getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("encode_pass", ""));
         OKHttpUtil.post(check_password, hashMap, new Callback() {
+
             @Override
             public void onFailure(Call call, IOException e) {
 

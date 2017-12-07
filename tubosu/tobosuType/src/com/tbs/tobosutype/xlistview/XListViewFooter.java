@@ -120,6 +120,8 @@ public class XListViewFooter extends LinearLayout {
 		mContentView.setLayoutParams(lp);
 	}
 
-	
+
+
+
 
 }
