@@ -56,7 +56,6 @@ import com.tbs.tobosutype.bean.GongsiItem;
 import com.tbs.tobosutype.bean.RCompanyBean;
 import com.tbs.tobosutype.bean.ShaixuanBean;
 import com.tbs.tobosutype.customview.CustomDialog;
-import com.tbs.tobosutype.customview.CustomGridView;
 import com.tbs.tobosutype.customview.MyListView;
 import com.tbs.tobosutype.customview.ShaixuanDialog;
 import com.tbs.tobosutype.global.Constant;
@@ -68,9 +67,7 @@ import com.tbs.tobosutype.utils.Util;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
