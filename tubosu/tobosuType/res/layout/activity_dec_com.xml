@@ -259,13 +259,25 @@
                     android:layout_centerVertical="true"
                     android:src="@drawable/co_tehui" />
                 <!--轮播-->
-                <com.tbs.tobosutype.customview.VerticalTextview
-                    android:id="@+id/dec_com_youhui_lunbo_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginLeft="40dp"
+                    android:orientation="vertical"
                     android:layout_centerInParent="true"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"></com.tbs.tobosutype.customview.VerticalTextview>
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <com.tbs.tobosutype.customview.VerticalTextview
+                        android:layout_gravity="center"
+                        android:id="@+id/dec_com_youhui_lunbo_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp">
+
+                    </com.tbs.tobosutype.customview.VerticalTextview>
+                </LinearLayout>
+
 
                 <ImageView
                     android:layout_width="wrap_content"

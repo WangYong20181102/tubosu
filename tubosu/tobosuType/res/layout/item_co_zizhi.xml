@@ -21,6 +21,9 @@
             android:src="@drawable/b_home_style" />
         <!--名称-->
         <TextView
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:maxEms="10"
             android:id="@+id/item_co_zizhi_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

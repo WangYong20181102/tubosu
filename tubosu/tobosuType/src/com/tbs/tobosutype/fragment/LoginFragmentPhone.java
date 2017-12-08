@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +65,7 @@ import okhttp3.Response;
  */
 public class LoginFragmentPhone extends Fragment implements OnClickListener, OnKeyListener {
     private static final String TAG = LoginFragmentPhone.class.getSimpleName();
+    private RelativeLayout phone_login_rl;
     /**
      * 本页页面
      */
@@ -150,6 +153,8 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
         tv_phonelogin.setOnClickListener(this);
         ll_obtain_weixin_login2 = (LinearLayout) view.findViewById(R.id.ll_obtain_weixin_login2);
         ll_obtain_weixin_login2.setOnClickListener(this);
+        phone_login_rl = view.findViewById(R.id.phone_login_rl);
+        phone_login_rl.setBackgroundColor(Color.parseColor("#ffffff"));
     }
 
     @Override
