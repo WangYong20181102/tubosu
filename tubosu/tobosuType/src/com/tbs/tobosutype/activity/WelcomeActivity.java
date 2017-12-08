@@ -77,6 +77,8 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
             public void run() {
                 SystemClock.sleep(3000);
                 countDownloadNum();
+                CacheManager.setChentaoFlag(mContext, 0);
+                getCityJson();
                 if ("".equals(getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("encode_pass", ""))) {
 
                 } else {
@@ -145,17 +147,42 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         OKHttpUtil.post(SURVIVAL_URL, map, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-//                Util.setLog(TAG, "onFailure >>>" + e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String json = response.body().string();
-//                Util.setLog(TAG, "onResponse >>>" + json);
             }
         });
     }
 
+
+    private void getCityJson(){
+        if("".equals(CacheManager.getSaveCityFlag(mContext))){
+            if(Util.isNetAvailable(mContext)){
+                HashMap<String, Object> cityMap = new HashMap<String, Object>();
+                cityMap.put("token", Util.getDateToken());
+                OKHttpUtil.post(Constant.CITY_JSON, cityMap, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String cityjson = response.body().string();
+                        try {
+                            JSONObject object = new JSONObject(cityjson);
+                            if(object.getInt("status") == 200){
+                                CacheManager.setSaveCityFlag(mContext, cityjson);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        }
+    }
 
     private void check_password() {
         HashMap<String, Object> hashMap = new HashMap<String, Object>();

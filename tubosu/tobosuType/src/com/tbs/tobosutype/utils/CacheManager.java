@@ -454,4 +454,34 @@ public class CacheManager {
         context.getSharedPreferences(APP_START_PRE, Context.MODE_PRIVATE).edit().putInt(APP_START_STRING, fag).commit();
     }
 
+
+    private static final String APP_CHENG_TAO_PRE = "app_cheng_tao_pre";
+    private static final String APP_CHENG_TAO_STRING = "app_cheng_tao_string";
+    public static int getChentaoFlag(Context context){
+        return context.getSharedPreferences(APP_CHENG_TAO_PRE, Context.MODE_PRIVATE).getInt(APP_CHENG_TAO_STRING, 0);
+    }
+    public static void setChentaoFlag(Context context, int chentao){
+        context.getSharedPreferences(APP_CHENG_TAO_PRE, Context.MODE_PRIVATE).edit().putInt(APP_CHENG_TAO_STRING, chentao).commit();
+    }
+
+
+    private static final String APP_PROVINCE_CITY_PRE = "app_province_city_pre";
+    private static final String APP_PROVINCE_CITY_STRING = "app_province_city_string";
+    public static String getSaveCityFlag(Context context){
+        return context.getSharedPreferences(APP_PROVINCE_CITY_PRE, Context.MODE_PRIVATE).getString(APP_PROVINCE_CITY_STRING, "");
+    }
+    public static void setSaveCityFlag(Context context, String chentao){
+        context.getSharedPreferences(APP_PROVINCE_CITY_PRE, Context.MODE_PRIVATE).edit().putString(APP_PROVINCE_CITY_STRING, chentao).commit();
+    }
+
+
+    private static final String APP_TOOL_PRE = "app_tool_pre";
+    private static final String APP_TOOL_STRING = "app_tool_string";
+    public static String getToolFlag(Context context){
+        return context.getSharedPreferences(APP_TOOL_PRE, Context.MODE_PRIVATE).getString(APP_TOOL_STRING, "");
+    }
+    public static void setToolFlag(Context context, String chentao){
+        context.getSharedPreferences(APP_TOOL_PRE, Context.MODE_PRIVATE).edit().putString(APP_TOOL_STRING, chentao).commit();
+    }
+
 }

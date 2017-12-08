@@ -167,7 +167,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         spec = tabHost.newTabSpec("TWO").setIndicator("效果图").setContent(intent);
         tabHost.addTab(spec);
 
-        intent = new Intent().setClass(this, FindDecorateActivity.class);
+        intent = new Intent().setClass(this, NewGongSiAcitivity.class);
         spec = tabHost.newTabSpec("THREE").setIndicator("装修公司").setContent(intent);
         tabHost.addTab(spec);
 
@@ -189,13 +189,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         tabHost.addTab(spec);
         /*---------------------------------------*/
 
-
-        // 默认显示第一个页面--首页
-//        tabHost.setCurrentTab(0);
-
-
-        // 底部控件
-//        radioGroup = (RadioGroup) this.findViewById(R.id.main_tab_group);
         main_tab_home = (RelativeLayout) this.findViewById(R.id.main_tab_first);
         main_tab_home.setOnClickListener(this);
         main_tab_image = (RelativeLayout) this.findViewById(R.id.main_tab_image);

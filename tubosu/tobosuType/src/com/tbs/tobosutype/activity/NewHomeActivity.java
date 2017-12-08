@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,7 +32,10 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.NewHomeAdapter;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
+import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
@@ -55,7 +59,7 @@ import com.tbs.tobosutype.bean._ImageD;
  * Created by Lie on 2017/08/23.
  */
 
-public class NewHomeActivity extends BaseActivity {
+public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     private ImageView home_view;
     private ImageView ivYingying;
     private View rel_newhomebar;
@@ -98,9 +102,14 @@ public class NewHomeActivity extends BaseActivity {
         home_view = (ImageView) findViewById(R.id.home_view);
         ivYingying = (ImageView) findViewById(R.id.ivYingying);
         ivYingying.setVisibility(View.GONE);
-        home_view.setFocusable(true);
-        home_view.setFocusableInTouchMode(true);
-        home_view.requestFocus();
+
+//        if(CacheManager.getChentaoFlag(mContext) == 0){
+//
+//        }
+//        home_view.setFocusable(true);
+//        home_view.setFocusableInTouchMode(true);
+//        home_view.requestFocus();
+
         home_view.setVisibility(View.VISIBLE);
         tubosu = (TextView) findViewById(R.id.app_title_text);
         rel_newhomebar = (View) findViewById(R.id.newhomeView);
@@ -178,7 +187,7 @@ public class NewHomeActivity extends BaseActivity {
 
                 }
                 rel_newhomebar.setAlpha(alpha);
-//                Util.setErrorLog(TAG, "====>>>" + alpha);
+                CacheManager.setChentaoFlag(mContext, 44);
             }
         });
 
@@ -188,6 +197,16 @@ public class NewHomeActivity extends BaseActivity {
                 showZixunPopwindow();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Util.setToast(mContext, "onresume");
+        if(CacheManager.getChentaoFlag(mContext) != 0){
+            // 不用回到顶部
+
+        }
     }
 
     private View zixunPopView;
@@ -832,8 +851,57 @@ public class NewHomeActivity extends BaseActivity {
             });
             if (dialog != null && !dialog.isShowing()) {
                 dialog.show();
+
             }
         }
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()){
+            case EC.EventCode.HOMEACTIVITY_CITY_CODE:
+                newhomeCity.setText((String)event.getData());
+                getDataFromNet(false);
+                break;
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+            CustomDialog.Builder builder = new CustomDialog.Builder(this);
+            builder.setMessage("你确定退出吗？")
+                    .setPositiveButton("确定",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                    finish();
+                                    System.exit(0);
+                                }
+                            })
+                    .setNegativeButton("再看看",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int id) {
+                                    dialog.cancel();
+                                }
+                            });
+            builder.create().show();
+
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
 }
