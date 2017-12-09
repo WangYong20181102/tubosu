@@ -25,7 +25,7 @@ import butterknife.OnClick;
 
 /**
  * create by lin
- * 从装修公司主页进入
+ * 从装修公司主页进入 3.6版本新增
  * 服务项目列表
  */
 public class ServiceItemActivity extends AppCompatActivity {

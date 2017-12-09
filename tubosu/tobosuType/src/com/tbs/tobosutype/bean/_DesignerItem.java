@@ -15,7 +15,7 @@ public class _DesignerItem {
      * icon : https://back.tobosu.com/company_logo/2017-05-16/thumb_591ac7f1b55f4.jpg
      */
 
-    private String desid;
+    private String designer_id;
     private String name;
     private String position;
     private String style_name;
@@ -23,11 +23,11 @@ public class _DesignerItem {
     private String icon;
 
     public String getDesid() {
-        return desid;
+        return designer_id;
     }
 
     public void setDesid(String desid) {
-        this.desid = desid;
+        this.designer_id = desid;
     }
 
     public String getName() {

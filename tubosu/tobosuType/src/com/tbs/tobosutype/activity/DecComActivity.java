@@ -724,6 +724,9 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
         @Override
         public void onItemClick(View view, int position) {
             /// TODO: 2017/12/4 点击跳转到设计师主页
+            Intent it = new Intent(mContext, SheJiShiActivity.class);
+            it.putExtra("designer_id", mCompanyDetail.getDesigners().get(position).getDesignerId());
+            startActivity(it);
         }
     };
     //公司介绍的子项点击事件

@@ -114,12 +114,14 @@
                     android:orientation="horizontal">
                     <!--认证图标-->
                     <ImageView
+                        android:visibility="gone"
                         android:id="@+id/dec_com_renzheng_iv"
                         android:layout_width="41dp"
                         android:layout_height="14dp"
                         android:src="@drawable/decorate_ren_zheng" />
-                    <!--推荐-->
+                    <!--推荐图标-->
                     <ImageView
+                        android:visibility="gone"
                         android:id="@+id/dec_com_tuijian_iv"
                         android:layout_width="30dp"
                         android:layout_height="14dp"
