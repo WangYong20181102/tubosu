@@ -1,0 +1,808 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tbs.tobosutype.activity.DecComActivity">
+    <!--整个滑动页面-->
+    <com.tbs.tobosutype.customview.MyScrollView
+        android:id="@+id/dec_com_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:scrollbars="none">
+        <!--包裹滑动层的层级-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="166dp">
+                <!--背景-->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="134dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginBottom="1dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/decorate_co_bg" />
+
+                <LinearLayout
+                    android:layout_width="88dp"
+                    android:layout_height="64dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="16dp"
+                    android:background="@drawable/shape_dec_icon"
+                    android:gravity="center">
+                    <!--装修公司头像-->
+                    <ImageView
+                        android:id="@+id/dec_com_icon_iv"
+                        android:layout_width="84dp"
+                        android:layout_height="60dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/b_home_style" />
+                </LinearLayout>
+                <!--返回按钮-->
+                <LinearLayout
+                    android:id="@+id/dec_com_back_ll"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/back_white" />
+                </LinearLayout>
+                <!--分享按钮-->
+                <LinearLayout
+                    android:id="@+id/dec_com_share_ll"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="17dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/img_detail_share" />
+                </LinearLayout>
+                <!--收藏按钮-->
+                <LinearLayout
+                    android:id="@+id/dec_com_shoucang_ll"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="56dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/dec_com_shoucang_iv"
+                        android:layout_width="18dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/shoucang_detail_befor" />
+                </LinearLayout>
+            </RelativeLayout>
+            <!--头像以下的布局 整个偏移量为16dp-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:orientation="vertical">
+                <!--公司的名称-->
+                <TextView
+                    android:id="@+id/dec_com_name_tv"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:maxLines="2"
+                    android:text="深圳市千叶装饰工程有限公司"
+                    android:textColor="#333232"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+                <!--公司的认证、推荐、星级相关-->
+                <LinearLayout
+                    android:id="@+id/dec_com_about_renzheng_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+                    <!--认证图标-->
+                    <ImageView
+                        android:id="@+id/dec_com_renzheng_iv"
+                        android:layout_width="41dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/decorate_ren_zheng" />
+                    <!--推荐-->
+                    <ImageView
+                        android:id="@+id/dec_com_tuijian_iv"
+                        android:layout_width="30dp"
+                        android:layout_height="14dp"
+                        android:layout_marginLeft="6dp"
+                        android:src="@drawable/decorate_tuijian" />
+                    <!--星级-->
+                    <LinearLayout
+                        android:id="@+id/dec_com_star_ll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="9dp"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="horizontal">
+                        <!--一星-->
+                        <ImageView
+                            android:id="@+id/dec_com_star_iv_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/decorate_start" />
+
+                        <ImageView
+                            android:id="@+id/dec_com_star_iv_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="3dp"
+                            android:src="@drawable/decorate_start" />
+
+                        <ImageView
+                            android:id="@+id/dec_com_star_iv_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="3dp"
+                            android:src="@drawable/decorate_start" />
+
+                        <ImageView
+                            android:id="@+id/dec_com_star_iv_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="3dp"
+                            android:src="@drawable/decorate_start" />
+
+                        <ImageView
+                            android:id="@+id/dec_com_star_iv_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="3dp"
+                            android:src="@drawable/decorate_start_none" />
+                    </LinearLayout>
+                    <!--咨询人数-->
+                    <TextView
+                        android:id="@+id/dec_com_zixun_num_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="（16398咨询）"
+                        android:textColor="#6e6e6e"
+                        android:textSize="10sp" />
+                </LinearLayout>
+                <!--细分割线-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.8dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="13dp"
+                    android:background="#e5e5e5" />
+                <!--装修公司地址-->
+                <LinearLayout
+                    android:id="@+id/dec_com_address_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:gravity="center_vertical">
+                    <!--位置图标-->
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/co_address_sign" />
+                    <!--具体地址-->
+                    <TextView
+                        android:id="@+id/dec_com_address_tv"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:ellipsize="marquee"
+                        android:maxEms="13"
+                        android:singleLine="true"
+                        android:text="南山区世纪百货万达家居广场三楼办公室独守空房挥洒的空间裂缝更换水电费空间撒浩丰科技"
+                        android:textColor="#666666"
+                        android:textSize="12sp" />
+                    <!--显示的箭头-->
+                    <ImageView
+                        android:id="@+id/dec_com_address_jiantou_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:src="@drawable/address_right" />
+                    <!--和装修公司联系-->
+                    <LinearLayout
+                        android:id="@+id/dec_com_cone_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <!--电话联系-->
+                        <ImageView
+                            android:id="@+id/dec_com_phone_iv"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/co_phone" />
+                        <!--QQ联系-->
+                        <ImageView
+                            android:id="@+id/dec_com_qq_iv"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_marginLeft="25dp"
+                            android:src="@drawable/co_qq"
+                            android:visibility="visible" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+            <!--大分割线-->
+            <View
+                android:id="@+id/dec_com_youhui_fenge"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#f7f7f7" />
+            <!--轮播活动-->
+            <RelativeLayout
+                android:id="@+id/dec_com_youhui_rl"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_marginLeft="15dp">
+                <!--特惠图标-->
+                <ImageView
+                    android:layout_width="34dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/co_tehui" />
+                <!--轮播-->
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginLeft="40dp"
+                    android:orientation="vertical"
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <com.tbs.tobosutype.customview.VerticalTextview
+                        android:layout_gravity="center"
+                        android:id="@+id/dec_com_youhui_lunbo_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp">
+
+                    </com.tbs.tobosutype.customview.VerticalTextview>
+                </LinearLayout>
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/address_right" />
+            </RelativeLayout>
+            <!--粗分割线-->
+            <View
+                android:id="@+id/dec_com_shejifangan_fenge"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#f7f7f7" />
+            <!--设计方案-->
+            <LinearLayout
+                android:id="@+id/dec_com_shejifangan_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical">
+                <!--设计方案的标题-->
+                <RelativeLayout
+                    android:id="@+id/dec_com_shejifangan_more_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="设计方案"
+                        android:textColor="#000000"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/dec_com_shejifangan_more_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="33dp"
+                        android:text="更多"
+                        android:textColor="#aeb1b4"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/address_right" />
+                </RelativeLayout>
+                <!--设计方案横向列表-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/dec_com_shejifangan_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+            <!--粗分割线-->
+            <View
+                android:id="@+id/dec_com_zhuangxiu_anli_fenge"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#f7f7f7" />
+            <!--装修案例-->
+            <LinearLayout
+                android:id="@+id/dec_com_zhuangxiu_anli_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!--设计方案的标题-->
+                <RelativeLayout
+                    android:id="@+id/dec_com_zhuangxiu_anli_more_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="装修案例"
+                        android:textColor="#000000"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/dec_com_zhuangxiu_anli_more_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="33dp"
+                        android:text="更多"
+                        android:textColor="#aeb1b4"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/address_right" />
+                </RelativeLayout>
+                <!--装修案例横向列表-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/dec_com_zhuangxiu_anli_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+            <!--设计师团队粗分割线-->
+            <View
+                android:id="@+id/dec_com_shejishi_fenge"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#f7f7f7" />
+            <!--设计团队-->
+            <LinearLayout
+                android:id="@+id/dec_com_shejishi_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!--设计师团队的标题-->
+                <RelativeLayout
+                    android:id="@+id/dec_com_shejishi_more_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="设计团队"
+                        android:textColor="#000000"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/dec_com_shejishi_more_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="33dp"
+                        android:text="更多"
+                        android:textColor="#aeb1b4"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/address_right" />
+                </RelativeLayout>
+                <!--设计团队横向列表-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/dec_com_shejishi_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+            <!--公司介绍-->
+            <!--粗分割线-->
+            <View
+                android:id="@+id/dec_com_jieshao_fenge"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#f7f7f7" />
+            <!--公司介绍-->
+            <LinearLayout
+                android:id="@+id/dec_com_jieshao_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!--公司介绍的标题-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="公司介绍"
+                        android:textColor="#000000"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+                <!--公司介绍信息折叠-->
+                <com.tbs.tobosutype.customview.ExpandableTextView
+                    android:id="@+id/dec_com_jieshao_expend_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    app:animDuration="200"
+                    app:collapseDrawable="@drawable/co_dec_up"
+                    app:collapseExpandGrarity="right"
+                    app:collapseExpandTextColor="#aeb1b4"
+                    app:collapseExpandTextSize="12sp"
+                    app:contentTextColor="#666666"
+                    app:contentTextSize="12sp"
+                    app:expandDrawable="@drawable/co_dec_expend"
+                    app:maxCollapsedLines="2"
+                    app:textExpand="萨芬第三方框架更换撒健身房客观世界福建省地方"></com.tbs.tobosutype.customview.ExpandableTextView>
+                <!--公司介绍横向列表-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/dec_com_jieshao_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp">
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+            <!--粗分割线-->
+            <View
+                android:id="@+id/dec_com_zizhi_fenge"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#f7f7f7" />
+            <!--公司资质-->
+            <LinearLayout
+                android:id="@+id/dec_com_zizhi_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:orientation="vertical">
+                <!--公司资质的标题-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="公司资质"
+                        android:textColor="#000000"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/address_right" />
+                </RelativeLayout>
+            </LinearLayout>
+            <!--粗分割线-->
+            <View
+                android:id="@+id/dec_com_fuwu_xiangmu_fenge"
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#f7f7f7" />
+            <!--服务项目-->
+            <LinearLayout
+                android:id="@+id/dec_com_fuwu_xiangmu_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:orientation="vertical">
+                <!--服务项目的标题-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="服务项目"
+                        android:textColor="#000000"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="20dp"
+                        android:src="@drawable/address_right" />
+                </RelativeLayout>
+            </LinearLayout>
+            <!--土拨鼠认证服务-->
+            <!--粗分割线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#f7f7f7" />
+            <!--土拨鼠认证服务-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:orientation="vertical">
+                <!--土拨鼠认证服务的标题-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="土拨鼠认证服务"
+                        android:textColor="#000000"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+                <!--认证相关介绍-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="69dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+                    <!--项目1-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/co_liangfang" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="9dp"
+                            android:text="免费量房"
+                            android:textColor="#000000"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                    <!--项目2-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/co_baojia" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="9dp"
+                            android:text="免费报价"
+                            android:textColor="#000000"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                    <!--项目3-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/co_renzheng" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="9dp"
+                            android:text="企业认证"
+                            android:textColor="#000000"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                    <!--项目4-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/co_baozhang" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="9dp"
+                            android:text="业主保障"
+                            android:textColor="#000000"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.tbs.tobosutype.customview.MyScrollView>
+    <!--底部发单按钮-->
+    <RelativeLayout
+        android:id="@+id/dec_com_find_price_rl"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#cc1d1919">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_gravity="center"
+                android:src="@drawable/baseqianbi" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:text="找TA免费设计"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="95dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/shape_decoration_case_price"
+            android:gravity="center"
+            android:text="立即申请"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+    </RelativeLayout>
+    <!--顶部固定的banner 可以变化透明度-->
+    <!--顶部有一个随着列表向上滑动而渐渐显示的banner  以relative包裹  暂时gone-->
+    <RelativeLayout
+        android:id="@+id/dec_com_banner"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:visibility="visible">
+        <!--返回键-->
+        <LinearLayout
+            android:id="@+id/dec_com_banner_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/activity_back" />
+        </LinearLayout>
+        <!--分享按钮-->
+        <LinearLayout
+            android:id="@+id/dec_com_banner_share"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/zhuanfa" />
+        </LinearLayout>
+        <!--收藏按钮-->
+        <LinearLayout
+            android:id="@+id/dec_com_banner_shoucang"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="56dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/dec_com_banner_shoucang_iv"
+                android:layout_width="18dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/shoucang_start_black" />
+        </LinearLayout>
+    </RelativeLayout>
+    <!--上拉时显示的部分阴影-->
+    <View
+        android:id="@+id/banner_dever"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/yinying4"
+        android:visibility="visible" />
+</RelativeLayout>

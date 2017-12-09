@@ -3,6 +3,7 @@ package com.tbs.tobosutype.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -14,8 +15,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.MainActivity;
 import com.tbs.tobosutype.customview.LoadingWindow;
@@ -32,10 +35,12 @@ import com.umeng.socialize.bean.SHARE_MEDIA;
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -48,6 +53,7 @@ import okhttp3.Response;
 public class LoginFragmentAccount extends Fragment implements OnClickListener {
     private static final String TAG = LoginFragmentAccount.class.getSimpleName();
     private Context mContext;
+    private RelativeLayout account_login_rl;
 
     /**
      * 账号
@@ -118,6 +124,8 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
         tv_accountlogin.setOnClickListener(this);
         ll_obtain_weixin_login_account = (LinearLayout) view.findViewById(R.id.ll_obtain_weixin_login_account);
         ll_obtain_weixin_login_account.setOnClickListener(this);
+        account_login_rl = view.findViewById(R.id.account_login_rl);
+        account_login_rl.setBackgroundColor(Color.parseColor("#ffffff"));
     }
 
 
@@ -399,6 +407,7 @@ public class LoginFragmentAccount extends Fragment implements OnClickListener {
 
             editor.commit();
             AppInfoUtil.setToken(getActivity(), token);
+            AppInfoUtil.setUuid(getActivity(), id);
 
 
         } catch (Exception e) {

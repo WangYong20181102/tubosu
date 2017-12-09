@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.tbs.tobosutype.activity.BaiduMapActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/baidu_map_back_ll"
+            android:gravity="center"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true">
+            <ImageView
+                android:src="@drawable/activity_back"
+                android:layout_width="18sp"
+                android:layout_height="18sp" />
+        </LinearLayout>
+        <TextView
+            android:textSize="17sp"
+            android:layout_centerInParent="true"
+            android:textColor="#000000"
+            android:text="地图信息"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <com.baidu.mapapi.map.TextureMapView
+        android:id="@+id/baidu_map_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true">
+
+    </com.baidu.mapapi.map.TextureMapView>
+</LinearLayout>

@@ -394,6 +394,9 @@ public class MyOwnerActivity extends BaseActivity implements OnClickListener {
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 // 授权
 //                Toast.makeText(this, " user Permission" , Toast.LENGTH_SHORT).show();
+                Intent takeIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                takeIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.getExternalStorageDirectory(), IMAGE_FILE_NAME)));
+                startActivityForResult(takeIntent, REQUESTCODE_TAKE);
             } else {
                 //拒绝
                 Toast.makeText(this, "你拒绝了相机权限" , Toast.LENGTH_SHORT).show();

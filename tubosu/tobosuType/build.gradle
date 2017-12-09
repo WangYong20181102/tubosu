@@ -32,6 +32,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     compile 'cn.jiguang.sdk:jpush:3.0.9'  // 此处以JPush 3.0.9 版本为例。
     compile 'cn.jiguang.sdk:jcore:1.1.7'  // 此处以JCore 1.1.7 版本为例。
+    implementation 'com.jaydenxiao:ExpandableTextView:1.0.0'
 }
 
 
@@ -57,7 +58,7 @@ android {
     buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.tbs.tobosutype" // 程序的包名
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 26
         versionCode 26
         versionName "3.6"
@@ -72,9 +73,9 @@ android {
         }
 
         manifestPlaceholders = [
-                JPUSH_PKGNAME : "com.tbs.tobosutype",
+                JPUSH_PKGNAME: "com.tbs.tobosutype",
                 JPUSH_APPKEY : "296b86ca9ffe1bfd4f43b655", //JPush上注册的包名对应的appkey.
-                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
 
 

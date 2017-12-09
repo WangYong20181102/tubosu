@@ -1,4 +1,5 @@
 package com.tbs.tobosutype.activity;
+
 import android.Manifest;
 import android.app.TabActivity;
 import android.content.BroadcastReceiver;
@@ -22,18 +23,22 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
+
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -142,8 +147,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     }
 
 
-
-
     /***
      * 初始化页面和底部按钮
      */
@@ -160,7 +163,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         tabHost.addTab(spec);
         if (Build.VERSION.SDK_INT >= 21) {
             intent = new Intent().setClass(this, NewImageActivity.class);
-        }else {
+        } else {
             intent = new Intent().setClass(this, ImageNewActivity.class);
         }
 
@@ -193,6 +196,16 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         main_tab_home.setOnClickListener(this);
         main_tab_image = (RelativeLayout) this.findViewById(R.id.main_tab_image);
         main_tab_image.setOnClickListener(this);
+        main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+//                startActivity(new Intent(mContext, BaiduMapActivity.class));//地图测试
+                Intent intent1 = new Intent(mContext, DecComActivity.class);
+                intent1.putExtra("mCompanyId", "270621");
+                startActivity(intent1);
+                return true;
+            }
+        });
         main_tab_decorate = (RelativeLayout) this.findViewById(R.id.main_tab_decorate);
         main_tab_decorate.setOnClickListener(this);
         main_tab_my = (RelativeLayout) this.findViewById(R.id.main_tab_my);

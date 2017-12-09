@@ -19,6 +19,11 @@ public class EC {
         public static final int NOTIF_D_SHOUCANG_DATA_CHANGE_IS_NOT_COLLECT = 0x000010;//单图查看详情中改变了收藏的状态（未收藏）通知列表的数据更新
         public static final int CLICK_DIMAGE_IN_LOOK_PHOTO = 0x000011;//点击查看套图传递事件
         public static final int LOOG_CLICK_DIMAGE_IN_LOOK_PHOTO = 0x000012;//长按套图传递事件
+        public static final int NOTIF_DESIGN_CASE_ACTIVITY_MODE_IS_COLLECT = 0x000013;//通知设计方案列表页修改数据模型（已收藏）
+        public static final int NOTIF_DESIGN_CASE_ACTIVITY_MODE_IS_NOT_COLLECT = 0x000014;//通知设计方案列表页修改数据模型（未收藏）
+        public static final int NOTIF_DECCOMACTIVITY_MODE_IS_COLLECT = 0x000015;//通知装修公司主页修改数据模型（已收藏）
+        public static final int NOTIF_DECCOMACTIVITY_MODE_IS_NOT_COLLECT = 0x000016;//通知装修公司主页修改数据模型（未收藏）
+
 
         public static final int DELETE_TAOTU_CODE = 0x100000;//删除收藏
         public static final int DELETE_TAOTU_LIST_CODE = 0x100001;//删除收藏套图

@@ -21,9 +21,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -40,19 +42,24 @@ import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+
 import com.tbs.tobosutype.bean._ImageD;
 
 /**
@@ -118,10 +125,10 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         relSelectCity = (RelativeLayout) findViewById(R.id.relSelectCity);
         newhomeCity = (TextView) findViewById(R.id.newhomeCity);
 
-        iv_sanjiaoxing = (ImageView) findViewById(R.id.iv_sanjiaoxing );
-        iv_add = (ImageView) findViewById(R.id.iv_add );
-        home_kefu = (ImageView) findViewById(R.id.home_kefu );
-        app_title_text = (TextView) findViewById(R.id.app_title_text );
+        iv_sanjiaoxing = (ImageView) findViewById(R.id.iv_sanjiaoxing);
+        iv_add = (ImageView) findViewById(R.id.iv_add);
+        home_kefu = (ImageView) findViewById(R.id.home_kefu);
+        app_title_text = (TextView) findViewById(R.id.app_title_text);
 
         recyclerView = (RecyclerView) findViewById(R.id.newhome_recyclerview);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.newhome_swiprefreshlayout);
@@ -173,7 +180,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                         newhomeCity.setTextColor(Color.parseColor("#000000"));
                         app_title_text.setTextColor(Color.parseColor("#000000"));
                         rel_newhomebar.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                    }else {
+                    } else {
 
                         ivYingying.setVisibility(View.GONE);
                         home_view.setVisibility(View.VISIBLE);
@@ -212,11 +219,14 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
 
     private View zixunPopView;
     private PopupWindow zixunPopupWindow;
+
     private void showZixunPopwindow() {
         zixunPopView = View.inflate(mContext, R.layout.popwindow_zixun, null);
+        RelativeLayout popwindow_zixun_rl = zixunPopView.findViewById(R.id.popwindow_zixun_rl);
         TextView qq_lianxi = (TextView) zixunPopView.findViewById(R.id.qq_lianxi);
         TextView dianhua_lianxi = (TextView) zixunPopView.findViewById(R.id.dianhua_lianxi);
         RelativeLayout pop_zixun_rl = (RelativeLayout) zixunPopView.findViewById(R.id.pop_zixun_rl);
+        popwindow_zixun_rl.setBackgroundColor(Color.parseColor("#ffffff"));
         zixunPopupWindow = new PopupWindow(zixunPopView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         zixunPopupWindow.setFocusable(true);
         zixunPopupWindow.setOutsideTouchable(true);
@@ -257,6 +267,8 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         TextView quxiao_phone = (TextView) popview.findViewById(R.id.quxiao_phone);
         TextView open_phone = (TextView) popview.findViewById(R.id.open_phone);
         RelativeLayout pop_phone_zixun = (RelativeLayout) popview.findViewById(R.id.pop_phone_zixun);
+        LinearLayout phone_pop_window_ll = popview.findViewById(R.id.phone_pop_window_ll);
+        phone_pop_window_ll.setBackgroundColor(Color.parseColor("#ffffff"));
         final PopupWindow popupWindow = new PopupWindow(popview, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
@@ -290,6 +302,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
 
     private int page = 1;
     private boolean isLoading = false;//是否正在加载数据
+
     private int getScollYHeight(boolean hasHead, int headerHeight) {
         LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         //获取到第一个可见的position,其添加的头部不算其position当中
@@ -376,7 +389,6 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
 
 
     /**
-     *
      * @param num
      * @return
      */
@@ -410,7 +422,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
             // start 1 选择过城市，  start 0 未选择过城市
             int start = CacheManager.getStartFlag(NewHomeActivity.this);
             Util.setErrorLog(TAG, "---zengzhaozhong--start>>" + start);
-            if(more){
+            if (more) {
                 // 加载更多
                 HashMap<String, Object> hashMap = new HashMap<String, Object>();
                 hashMap.put("token", Util.getDateToken());
@@ -436,7 +448,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                         final String json = new String(response.body().string());
                         Util.setErrorLog(TAG, json);
                         // 有数据 这样处理是不至于无数据的时候出现app闪退
-                        if(json.contains("data")){
+                        if (json.contains("data")) {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -465,13 +477,13 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                                     }
                                 }
                             });
-                        }else {
+                        } else {
                             // 无数据 这样处理是不至于无数据的时候出现app闪退
-                            Util.setErrorLog(TAG, "后台无数据返回给我===1===如下：" +json);
+                            Util.setErrorLog(TAG, "后台无数据返回给我===1===如下：" + json);
                         }
                     }
                 });
-            }else {
+            } else {
                 newHomeAdapter = null;
                 bigData = null;
 
@@ -488,7 +500,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
 
                         String result = new String(response.body().string());
                         // 有数据 这样处理是不至于无数据的时候出现app闪退
-                        if(result.contains("data")){
+                        if (result.contains("data")) {
                             Util.setErrorLog(TAG, "---zengzhaozhong-->>" + result);
                             CacheManager.setNewhomeJson(mContext, result);
                             Gson gson = new Gson();
@@ -500,10 +512,10 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                                 JSONObject resultJson = new JSONObject(result);
                                 JSONObject shejiObject = resultJson.getJSONObject("data");
                                 JSONArray shejiArr = shejiObject.getJSONArray("impression");
-                                if(shejiArrayList.size()>0){
+                                if (shejiArrayList.size() > 0) {
                                     shejiArrayList.clear();
                                 }
-                                for(int i=0; i <shejiArr.length(); i++){
+                                for (int i = 0; i < shejiArr.length(); i++) {
                                     _ImageD shejiImg = gson.fromJson(shejiArr.getJSONObject(i).toString(), _ImageD.class);
                                     shejiArrayList.add(shejiImg);
                                 }
@@ -514,7 +526,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                             if (dataItem.getStatus() == 200) {
                                 bigData = dataItem.getData();
                                 initData();
-                            }else if (dataItem.getStatus() == 0) {
+                            } else if (dataItem.getStatus() == 0) {
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -533,14 +545,14 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                             if (swipeRefreshLayout.isRefreshing()) {
                                 swipeRefreshLayout.setRefreshing(false);
                             }
-                        }else {
+                        } else {
                             // 无数据 这样处理是不至于无数据的时候出现app闪退
                             Util.setErrorLog(TAG, "后台无数据返回给我===2===如下：" + result);
                         }
                     }
                 });
             }
-        }else {
+        } else {
             Util.setErrorLog(TAG, "无网络");
         }
 
@@ -548,18 +560,19 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
 
 
     private NewHomeDataItem.NewhomeDataBean bigData;
+
     private void initData() {
         runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
                 isLoading = false;
-                if(newHomeAdapter==null){
+                if (newHomeAdapter == null) {
                     newHomeAdapter = new NewHomeAdapter(mContext, bigData, shejiArrayList, topicBeansList);
                     recyclerView.setAdapter(newHomeAdapter);
                     newHomeAdapter.notifyDataSetChanged();
-                }else {
-                    if(topicBeansList.size()>0){
+                } else {
+                    if (topicBeansList.size() > 0) {
                         newHomeAdapter.setTopicData(topicBeansList);
                     }
                     newHomeAdapter.notifyDataSetChanged();
@@ -639,6 +652,12 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
             AppInfoUtil.setLng(mContext, location.getLongitude() + "");
             sb.append("\nradius : ");
             cityName = location.getCity();
+            //存储地理位置  create by lin 土拨鼠App3.6版本↓↓↓
+            SpUtil.setLatitude(mContext, location.getLatitude() + "");//设置纬度
+            SpUtil.setLongitude(mContext, location.getLongitude() + "");//设置经度
+            SpUtil.setCity(mContext, location.getCity() + "");//设置城市
+            SpUtil.setRadius(mContext, location.getRadius() + "");
+            //存储地理位置  create by lin 土拨鼠App3.6版本↑↑↑
             if (CacheManager.getStartFlag(NewHomeActivity.this) == 0) {
                 if (cityName != null) {
                     if (cityName.contains("市") || cityName.contains("县")) {

@@ -533,7 +533,7 @@ public class NewImageDFragment extends BaseFragment {
 
     //网络获取数据列表
     private void HttpGetImageList(int mPage) {
-        Log.e(TAG,"获取列表数据===============HttpGetImageList============！！！！");
+        Log.e(TAG, "获取列表数据===============HttpGetImageList============！！！！");
         //正在加载数据
         isLoadingData = true;
         //隐藏没有数据的蒙层
@@ -609,7 +609,7 @@ public class NewImageDFragment extends BaseFragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Log.e(TAG,"适配器适配=========！！！！");
+                                Log.e(TAG, "适配器适配=========！！！！");
                                 if (mNewImageDAdapter == null) {
                                     mNewImageDAdapter = new NewImageDAdapter(mContext, mImageDArrayList);
                                     mNewImageDAdapter.setOnNewImageAdapterClickLister(onNewImageAdapterClickLister);
@@ -696,9 +696,8 @@ public class NewImageDFragment extends BaseFragment {
         param.put("id", id);//套图或者单图的id
         param.put("uid", _id);//用户id  以前是uid， 昭仲要求改成_id
         param.put("user_type", user_type);//用户类型
-        Log.e(TAG, "用户的类型================" + user_type);
         param.put("type", 2);//收藏图片的类型
-        Util.setErrorLog(TAG, "昭仲要传的参数： state=" + mImageDArrayList.get(position).getIs_collect() +"   图的id=" + id + "   人的id=" + _id + " user_type=" + AppInfoUtil.getTypeid(mContext) + " type=2");
+        Util.setErrorLog(TAG, "昭仲要传的参数： state=" + mImageDArrayList.get(position).getIs_collect() + "   图的id=" + id + "   人的id=" + _id + " user_type=" + AppInfoUtil.getTypeid(mContext) + " type=2");
         OKHttpUtil.post(Constant.IMAGE_COLLECT, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -709,7 +708,7 @@ public class NewImageDFragment extends BaseFragment {
             public void onResponse(Call call, Response response) throws IOException {
                 String json = new String(response.body().string());
                 Log.e(TAG, "点赞成功=============" + json);
-                Util.setErrorLog(TAG, "昭仲返回的结果"+ json);
+                Util.setErrorLog(TAG, "昭仲返回的结果" + json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     int status = jsonObject.optInt("status");

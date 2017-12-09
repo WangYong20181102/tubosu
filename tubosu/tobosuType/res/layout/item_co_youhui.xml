@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#f5f5f5">
+    <!--整个优惠层级-->
+    <RelativeLayout
+        android:id="@+id/item_co_you_hui_rl"
+        android:layout_width="match_parent"
+        android:layout_height="215dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_youhui_item">
+        <!--进行中的标识-->
+        <TextView
+            android:layout_width="54dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_jinxingzhong"
+            android:gravity="center"
+            android:text="进行中"
+            android:textColor="#ffffff"
+            android:textSize="13sp" />
+        <!--优惠说明-->
+        <TextView
+            android:id="@+id/item_co_you_hui_title"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="45dp"
+            android:ellipsize="end"
+            android:lineSpacingExtra="6dp"
+            android:lines="3"
+            android:text="李子柒我爱你，李子柒我爱你，李子柒我爱你，李子柒我爱你，李子柒我爱你，李子柒我爱你，李子柒我爱你，李子柒我爱你，李子柒我爱你，李子柒我爱你，"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+        <!--活动时间-->
+        <TextView
+            android:id="@+id/item_co_you_hui_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="76dp"
+            android:layout_marginRight="15dp"
+            android:text="活动时间：2017.10.08-2017.10.8"
+            android:textColor="#999999"
+            android:textSize="12sp" />
+        <!--虚线-->
+        <!--<ImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="10dp"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_marginBottom="60dp"-->
+            <!--android:background="@drawable/shape_xu_xian" />-->
+        <TextView
+            android:textSize="17sp"
+            android:textColor="#cfcfcf"
+            android:text=" -  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - "
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="55dp" />
+        <!--左半圆-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="56dp"
+            android:src="@drawable/lift_ban_yuan" />
+        <!--右半圆-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="56dp"
+            android:src="@drawable/right_ban_yuan" />
+        <!--领取优惠按钮-->
+        <TextView
+            android:id="@+id/item_co_you_hui_fadan"
+            android:layout_width="125dp"
+            android:layout_height="32dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_lingqu_youhui"
+            android:gravity="center"
+            android:text="领取优惠"
+            android:textColor="#ffffff"
+            android:textSize="13sp" />
+    </RelativeLayout>
+</RelativeLayout>

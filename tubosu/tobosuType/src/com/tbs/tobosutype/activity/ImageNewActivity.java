@@ -581,9 +581,11 @@ public class ImageNewActivity extends BaseActivity {
     //显示联系的popwindow
     private void showZixunPopwindow() {
         zixunPopView = View.inflate(mContext, R.layout.popwindow_zixun, null);
+        RelativeLayout popwindow_zixun_rl = zixunPopView.findViewById(R.id.popwindow_zixun_rl);
         TextView qq_lianxi = (TextView) zixunPopView.findViewById(R.id.qq_lianxi);
         TextView dianhua_lianxi = (TextView) zixunPopView.findViewById(R.id.dianhua_lianxi);
         RelativeLayout pop_zixun_rl = (RelativeLayout) zixunPopView.findViewById(R.id.pop_zixun_rl);
+        popwindow_zixun_rl.setBackgroundColor(Color.parseColor("#ffffff"));
         zixunPopupWindow = new PopupWindow(zixunPopView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         zixunPopupWindow.setFocusable(true);
         zixunPopupWindow.setOutsideTouchable(true);
@@ -625,6 +627,8 @@ public class ImageNewActivity extends BaseActivity {
         TextView quxiao_phone = (TextView) popview.findViewById(R.id.quxiao_phone);
         TextView open_phone = (TextView) popview.findViewById(R.id.open_phone);
         RelativeLayout pop_phone_zixun = (RelativeLayout) popview.findViewById(R.id.pop_phone_zixun);
+        LinearLayout phone_pop_window_ll = popview.findViewById(R.id.phone_pop_window_ll);
+        phone_pop_window_ll.setBackgroundColor(Color.parseColor("#ffffff"));
         final PopupWindow popupWindow = new PopupWindow(popview, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
