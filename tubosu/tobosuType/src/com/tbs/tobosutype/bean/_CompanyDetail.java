@@ -23,7 +23,7 @@ public class _CompanyDetail {
      * lng : 119.949185
      * address : 武进区常州市武进区星河国际6区39-40（麦德龙西门隔壁）
      * introduction :  常州天叶设计作为常州本土资深的家装设计公司，为住宅、别墅、商业、办公空间提供室内设计、软装设计等服务。公司秉承“服务至上、品质至上、设计至上、信用至上”的经营理念。我们介导绿色装饰新概念，始终坚持“以人为本”，实用、美观、品位，以质量求生存、以信誉求发展、以团结高效的工作热情为宗旨、以完善的服务创企业信誉。拥有设计优良、施工完善的优秀团队，主要承接家居、商业、办公、展览、别墅、豪宅、家居住宅、娱乐场所、酒吧、展示空间等装饰工程。空间设计、装修施工、材料配送、主材联盟等众多项目为一体的大型装饰企业。 公司决心格守“高品质、更环保”的经营宗旨，公司拥有优秀的设计师、施工管理人员及长期稳定专业的施工人员，加上精心设计、精选的材料，精细的做工，优质的服务，取得了良好的社会效益，文明标准的施工工艺，科学环保的装饰材料，严格专业的施工监理，无忧的质量保障以及真实无欺诈的装修价格，深受广大客户的好评和信赖，并形成了公司的“回头客”为主，以旧带新的多渠道客户关系。公司全体员工本着“，诚心诚意”的做人精益求精做事为原则完善的高标准服务，为客户提供专业化、人性化、个性化的装修服务，别具匠心的设计风格，精湛独特的施工工艺，为客户创造了舒适满意的生活环境是我们共同的心愿。
-     我们的地址：常州市湖塘吾悦广场1号楼3001-3016室（武进中医院对面）
+     * 我们的地址：常州市湖塘吾悦广场1号楼3001-3016室（武进中医院对面）
      * telephone : 18605192204
      * qq_account : 819336799
      * promotions_title : ["林老板说要测试一下优惠活动2","林老板说要测试一下优惠活动"]
@@ -230,7 +230,7 @@ public class _CompanyDetail {
     public static class QualificationBean implements Serializable {
         /**
          * id : 103800
-         * introduction : 
+         * introduction :
          * img_url : http://back.tobosu.com/zhihao_img/2016-04-21/thumb_57189093c0614.jpg
          */
 
@@ -355,6 +355,15 @@ public class _CompanyDetail {
         private String community_name;
         private String owner_name;
         private String sub_title;
+        private String title;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
 
         public String getId() {
             return id;

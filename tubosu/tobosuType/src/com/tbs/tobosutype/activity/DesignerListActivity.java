@@ -176,9 +176,11 @@ public class DesignerListActivity extends com.tbs.tobosutype.base.BaseActivity {
         public void onItemClickLister(View view, int position) {
             switch (view.getId()) {
                 case R.id.item_designer_icon_ll:
+                case R.id.item_designer_into_detail:
+                case R.id.item_designer_item_ll:
                     /// TODO: 2017/12/6  跳转到设计师主页
                     Intent it = new Intent(mContext, SheJiShiActivity.class);
-                    it.putExtra("designer_id",designerItemArrayList.get(position).getDesid());
+                    it.putExtra("designer_id", designerItemArrayList.get(position).getDesid());
                     startActivity(it);
                     break;
                 case R.id.item_designer_find_he_design:

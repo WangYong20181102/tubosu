@@ -595,7 +595,7 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
                     decComYouhuiLunboTv.setTextList(mCompanyDetail.getPromotions_title());
                     decComYouhuiLunboTv.setText(12, 2, Color.parseColor("#cc333333"));//设置属性
                     decComYouhuiLunboTv.setTextStillTime(3000);//设置停留时长间隔
-                    decComYouhuiLunboTv.setAnimTime(300);//设置进入和退出的时间间隔
+                    decComYouhuiLunboTv.setAnimTime(700);//设置进入和退出的时间间隔
                     decComYouhuiLunboTv.setOnItemClickListener(new VerticalTextview.OnItemClickListener() {
                         @Override
                         public void onItemClick(int var1) {

@@ -59,6 +59,8 @@ public class DesignerListAdapter
             DesignerViewHolder holder = new DesignerViewHolder(view);
             holder.item_designer_icon_ll.setOnClickListener(this);
             holder.item_designer_find_he_design.setOnClickListener(this);
+            holder.item_designer_into_detail.setOnClickListener(this);
+            holder.item_designer_item_ll.setOnClickListener(this);
             return holder;
         } else {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_recycler_list_foot, parent, false);
@@ -74,6 +76,8 @@ public class DesignerListAdapter
             //设置tag
             ((DesignerViewHolder) holder).item_designer_icon_ll.setTag(position);
             ((DesignerViewHolder) holder).item_designer_find_he_design.setTag(position);
+            ((DesignerViewHolder) holder).item_designer_into_detail.setTag(position);
+            ((DesignerViewHolder) holder).item_designer_item_ll.setTag(position);
             //设置数据
             //头像
             GlideUtils.glideLoader(mContext, designerItemArrayList.get(position).getIcon(),
@@ -104,6 +108,7 @@ public class DesignerListAdapter
 
     private class DesignerViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout item_designer_item_ll;//整个可点击界面
+        private ImageView item_designer_into_detail;//点击进入设计师详情
         private ImageView item_designer_icon;//设计师头像
         private LinearLayout item_designer_icon_ll;//设计师头像 套层
         private TextView item_designer_name;//设计师的名字
@@ -115,6 +120,7 @@ public class DesignerListAdapter
         public DesignerViewHolder(View itemView) {
             super(itemView);
             item_designer_item_ll = itemView.findViewById(R.id.item_designer_item_ll);
+            item_designer_into_detail = itemView.findViewById(R.id.item_designer_into_detail);
             item_designer_icon = itemView.findViewById(R.id.item_designer_icon);
             item_designer_icon_ll = itemView.findViewById(R.id.item_designer_icon_ll);
             item_designer_name = itemView.findViewById(R.id.item_designer_name);

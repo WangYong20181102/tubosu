@@ -57,9 +57,9 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:src="@drawable/new_share" />
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/zhuanfa" />
         </LinearLayout>
     </RelativeLayout>
     <!--上拉时显示的部分阴影-->
