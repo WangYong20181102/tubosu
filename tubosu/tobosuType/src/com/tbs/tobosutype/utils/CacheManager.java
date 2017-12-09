@@ -484,4 +484,15 @@ public class CacheManager {
         context.getSharedPreferences(APP_TOOL_PRE, Context.MODE_PRIVATE).edit().putString(APP_TOOL_STRING, chentao).commit();
     }
 
+
+
+    private static final String APP_COMPANY_FADAN_PRE = "app_company_fadan_pre";
+    private static final String APP_COMPANY_FADAN_STRING = "app_company_fadan_string";
+    public static int getCompanyFlag(Context context){
+        return context.getSharedPreferences(APP_COMPANY_FADAN_PRE, Context.MODE_PRIVATE).getInt(APP_COMPANY_FADAN_STRING, 0);
+    }
+    public static void setCompanyFlag(Context context, int company){
+        context.getSharedPreferences(APP_COMPANY_FADAN_PRE, Context.MODE_PRIVATE).edit().putInt(APP_COMPANY_FADAN_STRING, company).commit();
+    }
+
 }

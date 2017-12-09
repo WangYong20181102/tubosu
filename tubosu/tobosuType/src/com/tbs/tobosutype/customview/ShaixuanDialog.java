@@ -27,10 +27,10 @@ public class ShaixuanDialog extends Dialog {
     private CustomGridView gvJiating;
     private CustomGridView gvShangye;
 
-    private ArrayList<CompanyDistrictBean> areaDataList;
+    private ArrayList<CompanyDistrictBean> areaDataList = new ArrayList<CompanyDistrictBean>();
     private ComDisctrictAdapter area;
-    private ArrayList<ShaixuanBean> jiatingList;
-    private ArrayList<ShaixuanBean> shangyeList;
+    private ArrayList<ShaixuanBean> jiatingList =  new ArrayList<ShaixuanBean>();
+    private ArrayList<ShaixuanBean> shangyeList = new ArrayList<ShaixuanBean>();
 
     private String cityName;
 
@@ -49,24 +49,21 @@ public class ShaixuanDialog extends Dialog {
 
     //更新服务区域数据
     public void updateServiceAreaData(ArrayList<CompanyDistrictBean> dataList){
+        this.areaDataList.clear();
         this.areaDataList.addAll(dataList);
         area.clearPosition();
     }
 
-    public void refreshServiceAreaData(){
-        area.notifyDataSetChanged();
+    public void setAreaData(ArrayList<CompanyDistrictBean> _areaDataList){
+        this.areaDataList.addAll(_areaDataList);
     }
 
-    public void setAreaData(ArrayList<CompanyDistrictBean> areaDataList){
-        this.areaDataList = areaDataList;
+    public void setJiatingData(ArrayList<ShaixuanBean> _jiatingList){
+        this.jiatingList.addAll(_jiatingList);
     }
 
-    public void setJiatingData(ArrayList<ShaixuanBean> jiatingList){
-        this.jiatingList = jiatingList;
-    }
-
-    public void setShangyeData(ArrayList<ShaixuanBean> shangyeList){
-        this.shangyeList = shangyeList;
+    public void setShangyeData(ArrayList<ShaixuanBean> _shangyeList){
+        this.shangyeList.addAll(_shangyeList);
     }
 
     public void setCity(String city){

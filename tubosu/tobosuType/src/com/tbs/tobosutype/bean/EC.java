@@ -31,6 +31,7 @@ public class EC {
         public static final int QUEDING_SHAIXUAN_CITY_CODE = 0x100008;//确定筛选城市
         public static final int HOMEACTIVITY_CITY_CODE = 0x100009;//确定首页城市
         public static final int CHOOSE_PROVINCE_CODE = 0x100010;//确定首页城市
+        public static final int CHOOSE_PROVINCE_CODE1 = 0x100014;//选择城市
     }
 
 }

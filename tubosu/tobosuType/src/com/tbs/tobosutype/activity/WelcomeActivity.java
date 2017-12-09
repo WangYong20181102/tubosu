@@ -78,6 +78,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                 SystemClock.sleep(3000);
                 countDownloadNum();
                 CacheManager.setChentaoFlag(mContext, 0);
+                CacheManager.setCompanyFlag(mContext, 0);
                 getCityJson();
                 if ("".equals(getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("encode_pass", ""))) {
 

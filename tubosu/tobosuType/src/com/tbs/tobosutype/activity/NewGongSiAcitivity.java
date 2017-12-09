@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -113,6 +114,9 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     private List<GongsiItem> searchGongsiList = new ArrayList<>();
     private SearchGongSiAdapter searchCompanyAdapter;
 
+    private ImageView findComIcon;
+    private ImageView cancelFindComIcon;
+    private RelativeLayout relfindComLayout;
 
     private List<GongsiItem> youxuanSearchGongsiList = new ArrayList<>();
     private Gson gson;
@@ -177,7 +181,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         bindViews();
         initViews();
         getCityJson();
-
+        showFadan();
     }
 
 
@@ -202,7 +206,9 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         tvAnlizuiduo = (TextView) findViewById(R.id.tvAnlizuiduo);
         tvLiwozuijin = (TextView) findViewById(R.id.tvLiwozuijin);
         nothingData = (RelativeLayout) findViewById(R.id.nothingData);
-
+        findComIcon = (ImageView) findViewById(R.id.findComIcon);
+        cancelFindComIcon = (ImageView) findViewById(R.id.cancelFindComIcon);
+        relfindComLayout = (RelativeLayout) findViewById(R.id.relfindComLayout);
 
         shitirenzheng = (TextView) findViewById(R.id.shitirenzheng);
         ctuijian = (TextView) findViewById(R.id.ctuijian);
@@ -233,6 +239,10 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         reSearvice.setOnClickListener(this);
         tvGongsiCity.setOnClickListener(this);
         relShaiXuan.setOnClickListener(this);
+
+        findComIcon.setOnClickListener(this);
+        cancelFindComIcon.setOnClickListener(this);
+
         ivGongSiDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -380,9 +390,9 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int lastPosition = linearLayoutManager1.findLastVisibleItemPosition();
-                Util.setErrorLog(TAG, "总共有" +recyclerView.getLayoutManager().getItemCount()+ "     最后一个的位置是" + lastPosition);
+//                Util.setErrorLog(TAG, "总共有" +recyclerView.getLayoutManager().getItemCount()+ "     最后一个的位置是" + lastPosition);
                 if (lastPosition + 1 >= recyclerView.getLayoutManager().getItemCount() && normalData && !isSearchLoading) {
-                    Util.setErrorLog(TAG, "总 进入 ");
+//                    Util.setErrorLog(TAG, "总 进入 ");
                     if (searchCompanyAdapter != null) {
                         searchCompanyAdapter.loadMoreGongsi(true);
                         pageS++;
@@ -468,6 +478,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
             }
         });
 
+        findComIcon.setVisibility(View.VISIBLE);
+        findComIcon.setVisibility(View.GONE);
         getData();
         getNetData();
     }
@@ -475,6 +487,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
     //下拉刷新监听事件
     private SwipeRefreshLayout.OnRefreshListener swipeLister = new SwipeRefreshLayout.OnRefreshListener() {
+
         @Override
         public void onRefresh() {
             //下拉刷新数据 重新初始化各种数据
@@ -632,6 +645,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                             try {
                                 jsonObject = new JSONObject(json);
                                 String msg = jsonObject.getString("msg");
+
                                 if(jsonObject.getInt("status") == 200){
 
                                     JSONArray gongsiArr = jsonObject.getJSONArray("data");
@@ -729,38 +743,47 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 break;
 
             case EC.EventCode.SHAIXUAN_CITY_CODE:
-                // 点击 筛选的城市
+                // 点击 筛选的城市  还没有确定
                 shaixuanCity = (String)event.getData();
-                Util.setToast(mContext, "筛选城市是 " + shaixuanCity);
-                discList.clear();
-                sortDistrict(shaixuanCity);
                 break;
             case EC.EventCode.QUEDING_SHAIXUAN_CITY_CODE:
                 // 确定 需要 修改外面的dialog的
-                gongsiCity = shaixuanCity;
-//                sortDistrict(shaixuanCity);
-                shaixuanDialog.updateServiceAreaData(discList); // discList
+                discList.clear();
+                sortDistrict(shaixuanCity);
+
+
+
+                if(discList.size() != 0){
+                    shaixuanDialog.updateServiceAreaData(discList);
+                }else{
+                    Util.setErrorLog(TAG,"discList的长度为000000");
+                }
                 shaixuanDialog.setCity(shaixuanCity);
-                tvGongsiCity.setText(gongsiCity); // 找公司页面的左上角
                 if(!"".equals(shaixuanCity)){
                     // 确定是筛选了城市
                     fuwuquyu.setText("服务区域");
                     getNetData();
                     // 其他页面也要改
-                    EventBusUtil.sendEvent(new Event(EC.EventCode.HOMEACTIVITY_CITY_CODE, gongsiCity));
+
                 }else{
                     Util.setErrorLog(TAG, "你没有筛选城市");
                 }
-                shaixuanDialog.refreshServiceAreaData();
                 break;
-
             case EC.EventCode.CHOOSE_PROVINCE_CODE:
                 clickProvince = 1;
                 break;
+            case EC.EventCode.CHOOSE_PROVINCE_CODE1:
+                String city = (String) event.getData();
+                city_name = city;
+                tvGongsiCity.setText(city_name);
+                getNetData();
+                break;
+
         }
     }
 
     private void sortDistrict(String _city){
+//        _city = _city.substring(0, _city.length() > 2 ? 1 : _city.length()-1);
         if(companyCityBeanArrayList!=null && companyCityBeanArrayList.size()!=0){
             for(int i=0;i<companyCityBeanArrayList.size();i++){
                 if(discList.size()==0){
@@ -792,9 +815,23 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 startActivityForResult(selectCityIntent, 3);
                 break;
             case R.id.ivGoFadan:
-                Util.setToast(mContext, "跳转发单");
+                Util.setToast(mContext, "1111跳转发单");
+
+                break;
+            case R.id.findComIcon:
+                Util.setToast(mContext, "还没跳转发单");
+                // 跳转发单  relfindComLayout 消失
+                relfindComLayout.setVisibility(View.GONE);
+                CacheManager.setCompanyFlag(mContext, 1);
+                break;
+            case R.id.cancelFindComIcon:
+                // 直接relfindComLayout 消失
+                relfindComLayout.setVisibility(View.GONE);
+                CacheManager.setCompanyFlag(mContext, 1);
                 break;
             case R.id.relShaiXuan:
+                // 点击 筛选 二字
+                discList.clear();
                 sortDistrict(tvGongsiCity.getText().toString().trim());
                 getToolNetData();
                 showOutDialog(tvGongsiCity.getText().toString().trim());
@@ -957,6 +994,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
                 if(searchCompanyAdapter != null){
                     searchGongsiList.clear();
+                    searchCompanyAdapter.loadMoreGongsi(false);
                     searchCompanyAdapter.notifyDataSetChanged();
                     searchCompanyAdapter = null;
 
@@ -974,9 +1012,9 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                     // 搜索适配器， 优选适配器置空  均清除列表 返回正常页面
                     if(searchCompanyAdapter != null){
                         searchGongsiList.clear();
+                        searchCompanyAdapter.loadMoreGongsi(false);
                         searchCompanyAdapter.notifyDataSetChanged();
                         searchCompanyAdapter = null;
-                        Util.setToast(mContext, "你已经清除了搜索列表了，为何还出现搜索列表  111");
                     }
 
                     if(youxuanCompanyAdapter!=null){
@@ -1014,6 +1052,35 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         }
     }
 
+
+    private void showFadan(){
+        if(CacheManager.getCompanyFlag(mContext) == 0){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(10000);
+                        uihandler.sendEmptyMessage(4);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
+    }
+
+    private Handler uihandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 4:
+                    relfindComLayout.setVisibility(View.VISIBLE);
+                    findComIcon.setImageResource(R.drawable.gongsifree);
+                    findComIcon.setVisibility(View.VISIBLE);
+                    break;
+            }
+        }
+    };
 
     private ShaixuanDialog shaixuanDialog;
     // 筛选弹框数据
@@ -1064,6 +1131,12 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         shaixuanDialog.setOnOkListener(new ShaixuanDialog.OnOkListener() {
             @Override
             public void OnOkListener() {
+
+                gongsiCity = shaixuanCity;
+                tvGongsiCity.setText(gongsiCity); // 找公司页面的左上角
+                EventBusUtil.sendEvent(new Event(EC.EventCode.HOMEACTIVITY_CITY_CODE, gongsiCity));
+
+
                 fuwuquyu.setText("服务区域");
                 gongsiList.clear();
                 companyAdapter.notifyDataSetChanged();
@@ -1228,6 +1301,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                 if(jsonObject.getInt("status") == 200){
                                     JSONArray gongsiArr = jsonObject.getJSONArray("data");
                                     gson = new Gson();
+
                                     List<GongsiItem> tempSearchGongsiList = new ArrayList<GongsiItem>();
                                     for(int i=0;i<gongsiArr.length();i++){
                                         GongsiItem item = gson.fromJson(gongsiArr.getJSONObject(i).toString(), GongsiItem.class);
@@ -1240,16 +1314,15 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                     relYouxuan.setVisibility(View.GONE);
                                     searchSwip.setVisibility(View.VISIBLE);
                                     searchList.setVisibility(View.VISIBLE);
-                                    Util.setToast(mContext, page++ + "页");
                                     if (searchCompanyAdapter == null) {
                                         searchCompanyAdapter = new SearchGongSiAdapter(mContext, searchGongsiList);
-                                        searchList.setAdapter(companyAdapter);
+                                        searchList.setAdapter(searchCompanyAdapter);
                                         searchCompanyAdapter.notifyDataSetChanged();
                                     }else {
                                         searchCompanyAdapter.notifyDataSetChanged();
                                     }
 
-                                    Util.setErrorLog(TAG, "打印page=" + pageS + " 目前有多少数据呢= " +searchCompanyAdapter.getItemCount());
+//                                    Util.setErrorLog(TAG, "打印page=" + pageS + " 目前有多少数据呢= " +searchCompanyAdapter.getItemCount());
                                     searchCompanyAdapter.setOnCompanyItemClickListener(new SearchGongSiAdapter.OnCompanyItemClickListener() {
                                         @Override
                                         public void onCompanyItemClickListener(int position) {
@@ -1386,8 +1459,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 JSONArray shangyeArr = data.getJSONArray("tool_improvement");
                 for(int i=0;i<shangyeArr.length();i++){
                     ShaixuanBean shangye = new ShaixuanBean();
-                    shangye.setId(jiatingArr.getJSONObject(i).getString("id")); // FIXME: 2017/12/8 这里有问题？
-                    shangye.setName(jiatingArr.getJSONObject(i).getString("name"));
+                    shangye.setId(shangyeArr.getJSONObject(i).getString("id"));
+                    shangye.setName(shangyeArr.getJSONObject(i).getString("name"));
                     shangyeList.add(shangye);
                 }
             } catch (JSONException e) {
@@ -1411,7 +1484,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Util.setToast(mContext, "获取城市市区信息");
+                                Util.setToast(mContext, "获取城市市区信息失败");
                             }
                         });
                         Util.setErrorLog(TAG, "--获取城市市区信息失败--");

@@ -67,6 +67,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     private ImageView iv_add;
     private ImageView home_kefu;
     private TextView newhomeCity;
+    private String findCompanyChosenCity;
     private TextView app_title_text;
     private RelativeLayout relSelectCity;
     private String choose;
@@ -484,6 +485,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
+
                         String result = new String(response.body().string());
                         // 有数据 这样处理是不至于无数据的时候出现app闪退
                         if(result.contains("data")){
@@ -865,7 +867,15 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     protected void receiveEvent(Event event) {
         switch (event.getCode()){
             case EC.EventCode.HOMEACTIVITY_CITY_CODE:
-                newhomeCity.setText((String)event.getData());
+                findCompanyChosenCity = (String) event.getData();
+                newhomeCity.setText(findCompanyChosenCity);
+                CacheManager.setStartFlag(NewHomeActivity.this, 1);
+                getDataFromNet(false);
+                break;
+            case EC.EventCode.CHOOSE_CITY_CODE:
+                findCompanyChosenCity = (String) event.getData();
+                newhomeCity.setText(findCompanyChosenCity);
+                CacheManager.setStartFlag(NewHomeActivity.this, 1);
                 getDataFromNet(false);
                 break;
         }
