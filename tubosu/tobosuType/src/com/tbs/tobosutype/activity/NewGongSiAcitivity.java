@@ -250,7 +250,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         });
         tvCancelSearch.setOnClickListener(this);
         relGoClick.setOnClickListener(this);
-
+        relfindComLayout.setOnClickListener(this);
         etSearchGongsi.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -831,6 +831,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
             case R.id.cancelFindComIcon:
                 relfindComLayout.setVisibility(View.GONE);
                 CacheManager.setCompanyFlag(mContext, 1);
+                break;
+            case R.id.relfindComLayout:
                 break;
             case R.id.relShaiXuan:
                 // 点击 筛选 二字
