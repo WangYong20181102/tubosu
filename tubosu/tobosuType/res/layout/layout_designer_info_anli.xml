@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.tbs.tobosutype.utils.TRoundView
+        android:id="@+id/anliPic"
+        android:layout_width="match_parent"
+        android:layout_height="164dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:scaleType="centerCrop"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginRight="14dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/anliInfoTextDes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:text="简欧 三居室 古典"/>
+
+
+            <TextView
+                android:id="@+id/anliInfotest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#363636"
+                android:layout_marginTop="20dp"
+                android:textSize="14sp"
+                android:text="广东xxx"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/anliGetThis"
+            android:layout_width="92dp"
+            android:layout_height="28dp"
+            android:gravity="center"
+            android:textColor="#FF6F20"
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/selected_servicearea_textview_bg"
+            android:textSize="14sp"
+            android:layout_gravity="center_horizontal"
+            android:text="免费获取报价"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

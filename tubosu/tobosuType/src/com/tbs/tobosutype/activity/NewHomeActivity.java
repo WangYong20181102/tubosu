@@ -25,7 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -44,27 +43,20 @@ import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-
 import com.tbs.tobosutype.bean._ImageD;
 
-/**
- * Created by Lie on 2017/08/23.
- */
 
 public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     private ImageView home_view;
@@ -110,14 +102,6 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         home_view = (ImageView) findViewById(R.id.home_view);
         ivYingying = (ImageView) findViewById(R.id.ivYingying);
         ivYingying.setVisibility(View.GONE);
-
-//        if(CacheManager.getChentaoFlag(mContext) == 0){
-//
-//        }
-//        home_view.setFocusable(true);
-//        home_view.setFocusableInTouchMode(true);
-//        home_view.requestFocus();
-
         home_view.setVisibility(View.VISIBLE);
         tubosu = (TextView) findViewById(R.id.app_title_text);
         rel_newhomebar = (View) findViewById(R.id.newhomeView);
