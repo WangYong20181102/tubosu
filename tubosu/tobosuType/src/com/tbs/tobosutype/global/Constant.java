@@ -132,7 +132,7 @@ public class Constant {
     public static final String EDIT_DECORATE_OUTCOME_URL = TOBOSU_URL + "mapp/RenovateExpense/add_renovate_expense";
 
     public static final String OUTCOME_DETAIL_URL = TOBOSU_URL + "mapp/RenovateExpense/renovate_expense_detail";
-    public static final String SHEJISHI_URL = TOBOSU_URL + "mapp/Designer/designer_info";
+    public static final String SHEJISHI_URL = TOBOSU_URL + "mapp/designer/designer_info";
     /**
      * 修改记录
      */
@@ -352,6 +352,11 @@ public class Constant {
 //    案例-列表-报价                    al-lb-baojia	         http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=al-lb-baojia
 //    案例-详情-报价（包括看图）        al-xq-baojia	         http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=al-xq-baojia
 //    专题-详情-设计	                   zt-xq-sheji	         http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=zt-xq-sheji
+
+
+    public static final String getSheJiUrl = M_TOBOSU_URL + "quote";
+    public static final String GETANLIURL = M_TOBOSU_URL + "free_price_page";
+
 
     //案例列表发单
     public static final String ANLI_LIST_FADAN = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
