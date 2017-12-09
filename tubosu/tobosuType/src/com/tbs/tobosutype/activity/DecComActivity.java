@@ -241,6 +241,8 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
         decComShejishiRecyclerview.setLayoutManager(mLinearLayoutManager3);
         //装修案例
         decComZhuangxiuAnliRecyclerview.setLayoutManager(mLinearLayoutManager4);
+        //设置页面的颜色
+        decComScrollView.setBackgroundColor(Color.parseColor("#ffffff"));
         //页面滑动监听
         decComScrollView.setOnScrollListener(onScrollLister);
     }

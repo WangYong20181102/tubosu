@@ -27,7 +27,6 @@
         <!--优惠说明-->
         <TextView
             android:id="@+id/item_co_you_hui_title"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:layout_marginLeft="15dp"
@@ -53,19 +52,19 @@
             android:textSize="12sp" />
         <!--虚线-->
         <!--<ImageView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="10dp"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_marginBottom="60dp"-->
-            <!--android:background="@drawable/shape_xu_xian" />-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="10dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginBottom="60dp"-->
+        <!--android:background="@drawable/shape_xu_xian" />-->
         <TextView
-            android:textSize="17sp"
-            android:textColor="#cfcfcf"
-            android:text=" -  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - "
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="55dp" />
+            android:layout_marginBottom="55dp"
+            android:text=" -  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - "
+            android:textColor="#cfcfcf"
+            android:textSize="17sp" />
         <!--左半圆-->
         <ImageView
             android:layout_width="wrap_content"

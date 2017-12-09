@@ -73,7 +73,7 @@ public class DecorationCaseAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             String city_name = decorationCaseItemArrayList.get(position).getCity_name();//城市的名称
             String community_name = decorationCaseItemArrayList.get(position).getCommunity_name();//小区的名称
             String owner_name = decorationCaseItemArrayList.get(position).getOwner_name();//拥有者的名称
-            ((ItemCaseViewHolder) holder).itemCaseUserDesc.setText("" + city_name + " " + community_name + " " + owner_name);
+            ((ItemCaseViewHolder) holder).itemCaseUserDesc.setText("" + city_name + "" + community_name + "" + owner_name);
             //设置面积相关
             ((ItemCaseViewHolder) holder).itemCaseHomeDesc.setText("" + decorationCaseItemArrayList.get(position).getSub_title());
             //点击整个子项进入详情

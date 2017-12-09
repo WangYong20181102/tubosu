@@ -260,18 +260,19 @@
                     android:src="@drawable/co_tehui" />
                 <!--轮播-->
                 <LinearLayout
-                    android:gravity="center"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginLeft="40dp"
-                    android:orientation="vertical"
-                    android:layout_centerInParent="true"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
                     <com.tbs.tobosutype.customview.VerticalTextview
-                        android:layout_gravity="center"
                         android:id="@+id/dec_com_youhui_lunbo_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
                         android:layout_marginTop="5dp">
 
@@ -759,6 +760,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:gravity="center">
 
             <ImageView
@@ -772,6 +774,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
             android:gravity="center">
 
@@ -786,6 +789,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="56dp"
             android:gravity="center">
@@ -799,10 +803,15 @@
     </RelativeLayout>
     <!--上拉时显示的部分阴影-->
     <View
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+    <View
         android:id="@+id/banner_dever"
         android:layout_width="match_parent"
         android:layout_height="12dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="49dp"
         android:background="@drawable/yinying4"
         android:visibility="visible" />
 </RelativeLayout>
