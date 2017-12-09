@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.tbs.tobosutype.activity.DesignerListActivity">
 
     <RelativeLayout
@@ -37,14 +38,16 @@
         android:id="@+id/designer_list_case_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="48dp">
+        android:layout_marginTop="48dp"
+        android:background="@color/white">
 
     </android.support.v7.widget.RecyclerView>
+
     <View
-        android:layout_marginTop="48dp"
         android:id="@+id/banner_dever"
         android:layout_width="match_parent"
         android:layout_height="12dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/yinying4"
         android:visibility="visible" />
     <!--底部发单按钮-->

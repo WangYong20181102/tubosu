@@ -137,4 +137,13 @@
         android:layout_height="8dp"
         android:layout_alignParentBottom="true"
         android:background="#f7f7f7" />
+    <ImageView
+        android:id="@+id/item_designer_into_detail"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/address_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

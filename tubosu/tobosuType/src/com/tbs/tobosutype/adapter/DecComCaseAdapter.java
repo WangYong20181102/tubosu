@@ -77,11 +77,9 @@ public class DecComCaseAdapter
             //设置tag
             ((DCCaseViewHolder) holder).item_dec_com_image_ll.setTag(position);
             //设置标题
-            ((DCCaseViewHolder) holder).item_dec_com_title.setText(casesBeanArrayList.get(position).getSub_title());
+            ((DCCaseViewHolder) holder).item_dec_com_title.setText(casesBeanArrayList.get(position).getTitle());
             //设置子标题
-            ((DCCaseViewHolder) holder).item_dec_com_desc.setText(casesBeanArrayList.get(position).getCity_name()
-                    + casesBeanArrayList.get(position).getCommunity_name()
-                    + casesBeanArrayList.get(position).getOwner_name() + "家");
+            ((DCCaseViewHolder) holder).item_dec_com_desc.setText(""+casesBeanArrayList.get(position).getSub_title());
         }
     }
 

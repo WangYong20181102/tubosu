@@ -595,7 +595,7 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
                     decComYouhuiLunboTv.setTextList(mCompanyDetail.getPromotions_title());
                     decComYouhuiLunboTv.setText(12, 2, Color.parseColor("#cc333333"));//设置属性
                     decComYouhuiLunboTv.setTextStillTime(3000);//设置停留时长间隔
-                    decComYouhuiLunboTv.setAnimTime(300);//设置进入和退出的时间间隔
+                    decComYouhuiLunboTv.setAnimTime(700);//设置进入和退出的时间间隔
                     decComYouhuiLunboTv.setOnItemClickListener(new VerticalTextview.OnItemClickListener() {
                         @Override
                         public void onItemClick(int var1) {
@@ -724,6 +724,9 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
         @Override
         public void onItemClick(View view, int position) {
             /// TODO: 2017/12/4 点击跳转到设计师主页
+            Intent it = new Intent(mContext, SheJiShiActivity.class);
+            it.putExtra("designer_id", mCompanyDetail.getDesigners().get(position).getDesignerId());
+            startActivity(it);
         }
     };
     //公司介绍的子项点击事件

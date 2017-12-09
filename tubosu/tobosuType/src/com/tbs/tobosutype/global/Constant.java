@@ -403,7 +403,7 @@ public class Constant {
     //装修公司案例列表
     public static final String COMPANY_CASE_LIST = TOBOSU_URL + "mapp/company/case_list";
     //装修公司的设计师列表
-    public static final String DESIGNER_LIST = TOBOSU_URL + "mapp/Designer/designer_list";
+    public static final String DESIGNER_LIST = TOBOSU_URL + "mapp/designer/designer_list";
     //装修公司主页 底部发单按钮 3.6版本新增
     public static final String DEC_COOM_BUTTON = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
     //装修公司主页 优惠活动发单按钮 3.6版本新增
