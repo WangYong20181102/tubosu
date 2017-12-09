@@ -1,6 +1,7 @@
 package com.tbs.tobosutype.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.activity.DecComActivity;
 import com.tbs.tobosutype.bean.RCompanyBean;
 import com.tbs.tobosutype.utils.Util;
 
@@ -49,7 +51,9 @@ public class RCompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             rcomHolder.layoutGongsiR.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Util.setToast(context, "推荐公司   position= " + position);
+                    Intent it = new Intent(context, DecComActivity.class);
+                    it.putExtra("mCompanyId", dataList.get(position).getId());
+                    context.startActivity(it);
                 }
             });
         }

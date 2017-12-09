@@ -418,32 +418,6 @@
     </RelativeLayout>
 
 
-
-    <RelativeLayout
-        android:id="@+id/relfindComLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_centerInParent="true">
-
-
-
-        <ImageView
-            android:id="@+id/findComIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/gongsifree"/>
-
-        <ImageView
-            android:id="@+id/cancelFindComIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/findComIcon"
-            android:src="@drawable/delete_cancel"/>
-    </RelativeLayout>
-
-
-
     <RelativeLayout
         android:id="@+id/searchLayout"
         android:layout_width="match_parent"
@@ -607,5 +581,27 @@
         </RelativeLayout>
     </RelativeLayout>
 
+
+
+    <RelativeLayout
+        android:id="@+id/relfindComLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:id="@+id/findComIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/gongsifree"/>
+
+        <ImageView
+            android:id="@+id/cancelFindComIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/findComIcon"
+            android:src="@drawable/delete_cancel"/>
+    </RelativeLayout>
 
 </RelativeLayout>

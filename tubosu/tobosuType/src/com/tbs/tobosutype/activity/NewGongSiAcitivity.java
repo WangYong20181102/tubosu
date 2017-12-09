@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -64,6 +63,7 @@ import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppBarStateChangeListener;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.EventBusUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -167,9 +167,6 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     private RelativeLayout relShaiXuan;
     private ArrayList<ShaixuanBean> jiatingList = new ArrayList<ShaixuanBean>();
     private ArrayList<ShaixuanBean> shangyeList = new ArrayList<ShaixuanBean>();
-
-
-
 
 
 
@@ -611,6 +608,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
             gongsiMap.put("certification", certification);
             gongsiMap.put("recommend", recommend);
             gongsiMap.put("district_id", district_id);
+            gongsiMap.put("lat", SpUtil.getLatitude(mContext));
+            gongsiMap.put("lng", SpUtil.getLongitude(mContext));
 
 
             OKHttpUtil.post(Constant.GETGONGSIURL, gongsiMap, new Callback() {
@@ -663,15 +662,6 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                         companyAdapter.notifyDataSetChanged();
                                     }
 
-                                    companyAdapter.setOnCompanyItemClickListener(new GongSiAdapter.OnCompanyItemClickListener() {
-                                        @Override
-                                        public void onCompanyItemClickListener(int position) {
-                                            Util.setToast(mContext, "公司跳转== " + position);
-                                        }
-                                    });
-
-
-
                                 }else if(jsonObject.getInt("status") == 201){
                                     Util.setToast(mContext, msg);
                                     if(companyAdapter!=null){
@@ -686,6 +676,17 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                 }else {
                                     reCompanDataEmpty.setVisibility(View.GONE);
                                 }
+
+                                companyAdapter.setOnCompanyItemClickListener(new GongSiAdapter.OnCompanyItemClickListener() {
+
+                                    @Override
+                                    public void onCompanyItemClickListener(int position) {
+                                        Intent it = new Intent(mContext, DecComActivity.class);
+                                        it.putExtra("mCompanyId", gongsiList.get(position).getId());
+                                        startActivity(it);
+                                    }
+                                });
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -783,7 +784,6 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     }
 
     private void sortDistrict(String _city){
-//        _city = _city.substring(0, _city.length() > 2 ? 1 : _city.length()-1);
         if(companyCityBeanArrayList!=null && companyCityBeanArrayList.size()!=0){
             for(int i=0;i<companyCityBeanArrayList.size();i++){
                 if(discList.size()==0){
@@ -815,17 +815,20 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 startActivityForResult(selectCityIntent, 3);
                 break;
             case R.id.ivGoFadan:
-                Util.setToast(mContext, "1111跳转发单");
-
+                relfindComLayout.setVisibility(View.GONE);
+                CacheManager.setCompanyFlag(mContext, 1);
+                Intent webIntent = new Intent(mContext, NewWebViewActivity.class);
+                webIntent.putExtra("mLoadingUrl", Constant.COMPANY_FADAN_URL);
+                startActivity(webIntent);
                 break;
             case R.id.findComIcon:
-                Util.setToast(mContext, "还没跳转发单");
-                // 跳转发单  relfindComLayout 消失
+                Intent web = new Intent(mContext, NewWebViewActivity.class);
+                web.putExtra("mLoadingUrl", Constant.COMPANY_TANKUANG_URL);
+                startActivity(web);
                 relfindComLayout.setVisibility(View.GONE);
                 CacheManager.setCompanyFlag(mContext, 1);
                 break;
             case R.id.cancelFindComIcon:
-                // 直接relfindComLayout 消失
                 relfindComLayout.setVisibility(View.GONE);
                 CacheManager.setCompanyFlag(mContext, 1);
                 break;
@@ -1326,7 +1329,9 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                     searchCompanyAdapter.setOnCompanyItemClickListener(new SearchGongSiAdapter.OnCompanyItemClickListener() {
                                         @Override
                                         public void onCompanyItemClickListener(int position) {
-                                            Util.setToast(mContext, "公司跳转== " + position);
+                                            Intent it = new Intent(mContext, DecComActivity.class);
+                                            it.putExtra("mCompanyId", searchGongsiList.get(position).getId());
+                                            startActivity(it);
                                         }
                                     });
                                 }else if(jsonObject.getInt("status") == 201){
@@ -1382,7 +1387,9 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
                                         @Override
                                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                            Util.setErrorLog(TAG, "优选的跳转 = " + i);
+                                            Intent it = new Intent(mContext, DecComActivity.class);
+                                            it.putExtra("mCompanyId", searchGongsiList.get(i).getId());
+                                            startActivity(it);
                                         }
                                     });
                                 }

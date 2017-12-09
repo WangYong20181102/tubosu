@@ -1,5 +1,6 @@
 package com.tbs.tobosutype.adapter;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -7,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.tbs.tobosutype.activity.DecComActivity;
+import com.tbs.tobosutype.activity.NewWebViewActivity;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.Util;
@@ -47,12 +50,11 @@ public class GongsiAdViewpagerAdapter extends PagerAdapter {
 
             @Override
             public void onClick(View v) {
-                Util.setToast(context, "banner position = " + position);
                 setClickRequest(clickId.get(position));
-//                bannerClick(dataSource.getBanner().get(position).getId());
-//                Intent webIntent = new Intent(context, NewWebViewActivity.class);
-//                webIntent.putExtra("mLoadingUrl", urlStrings.get(position));
-//                context.startActivity(webIntent);
+                Intent webIntent = new Intent(context, NewWebViewActivity.class);
+                webIntent.putExtra("mLoadingUrl", urlStrings.get(position));
+                Util.setErrorLog("装修公司viewpagerAdapter", urlStrings.get(position));
+                context.startActivity(webIntent);
             }
         });
         return viewList.get(position);

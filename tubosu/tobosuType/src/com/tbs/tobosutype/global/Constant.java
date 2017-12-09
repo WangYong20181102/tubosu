@@ -41,9 +41,6 @@ public class Constant {
 
     public static final String CALCULATER_SHARE_URL = "http://m.tobosu.com/app/share_h5?";
 
-    /**
-     * 手机网络状态广播标记
-     */
     public static final String NET_STATE_ACTION = "com.tobosu.app.net_state";
 
     public static final String LOGOUT_ACTION = "logout_action";
@@ -110,15 +107,21 @@ public class Constant {
      */
     public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
 
+
+    public static final String COMPANY_FADAN_URL = M_TOBOSU_URL + "rec_company";
+
+    public static final String COMPANY_TANKUANG_URL = M_TOBOSU_URL + "free_price_page";
+
+
     public static final String SUMMIT_BUDGET_URL = TOBOSU_URL + "mapp/RenovateExpense/expense_bookkeep";
 
     /**
-     * 活动url
+     * activity_url
      */
     public static final String ACTIVITY_URL = TOBOSU_URL + "tapp/Activity/get_activity";
 
     /**
-     * loading页
+     * loading
      */
     public static final String GET_LOADING_AD_URL = TOBOSU_URL + "tapp/Advert/get_advert";
 

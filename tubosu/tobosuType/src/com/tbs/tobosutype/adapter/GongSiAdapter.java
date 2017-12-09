@@ -179,7 +179,6 @@ public class GongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
-
     class GongsiViewHodler extends RecyclerView.ViewHolder{
         ImageView iv;
         TextView name;
