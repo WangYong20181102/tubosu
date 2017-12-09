@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="134dp"
@@ -198,35 +201,90 @@
                 android:textSize="12sp"
                 android:text="简介"/>
 
-            <TextView
-                android:id="@+id/tvJianjie"
-                android:layout_width="wrap_content"
+            <com.tbs.tobosutype.customview.ExpandableTextView
+                android:id="@+id/dec_com_jieshao_expend_tv"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="14dp"
                 android:layout_marginRight="14dp"
                 android:layout_toRightOf="@+id/jianjies"
-                android:gravity="center"
-                android:textColor="#333333"
-                android:textSize="12sp"
-                android:layout_marginLeft="8dp"
-                android:text="简介简介简介简介简介简介"/>
-
-            <ImageView
-                android:id="@+id/moreJianjie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="14dp"
-                android:layout_alignParentBottom="true"
-                android:layout_gravity="center_vertical"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/gofuckdown"/>
+                app:animDuration="200"
+                app:collapseDrawable="@drawable/co_dec_up"
+                app:collapseExpandGrarity="right"
+                app:collapseExpandTextColor="#aeb1b4"
+                app:collapseExpandTextSize="12sp"
+                app:contentTextColor="#666666"
+                app:contentTextSize="12sp"
+                app:expandDrawable="@drawable/co_dec_expend"
+                app:maxCollapsedLines="2"
+                app:textExpand="xxxx">
+            </com.tbs.tobosutype.customview.ExpandableTextView>
 
         </RelativeLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
             android:layout_marginTop="23dp"
             android:background="#F7F7F7"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/desigText"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:textSize="13sp"
+                    android:gravity="center"
+                    android:textColor="#FF6F20"
+                    android:text="设计方案"/>
+                <View
+                    android:id="@+id/designTextBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginLeft="44dp"
+                    android:layout_marginRight="44dp"
+                    android:background="#FF6F20"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/caseText"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:textSize="13sp"
+                    android:gravity="center"
+                    android:textColor="#333333"
+                    android:text="设计方案"/>
+                <View
+                    android:id="@+id/caseTextBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginLeft="44dp"
+                    android:visibility="gone"
+                    android:layout_marginRight="44dp"
+                    android:background="#FF6F20"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="14dp"
+            android:background="#ECECEC"/>
+
     </LinearLayout>
+
+
+
 </LinearLayout>

@@ -131,9 +131,6 @@ public class Constant {
      */
     public static final String EDIT_DECORATE_OUTCOME_URL = TOBOSU_URL + "mapp/RenovateExpense/add_renovate_expense";
 
-    /**
-     * 装修开支详情
-     */
     public static final String OUTCOME_DETAIL_URL = TOBOSU_URL + "mapp/RenovateExpense/renovate_expense_detail";
     public static final String SHEJISHI_URL = TOBOSU_URL + "mapp/Designer/designer_info";
     /**
