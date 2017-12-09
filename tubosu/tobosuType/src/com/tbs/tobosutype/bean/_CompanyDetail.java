@@ -413,17 +413,17 @@ public class _CompanyDetail {
          * position : 设计师
          */
 
-        private String id;
+        private String designer_id;
         private String name;
         private String icon;
         private String position;
 
-        public String getId() {
-            return id;
+        public String getDesignerId() {
+            return designer_id;
         }
 
-        public void setId(String id) {
-            this.id = id;
+        public void setDesignerId(String designer_id) {
+            this.designer_id = designer_id;
         }
 
         public String getName() {
