@@ -7,4 +7,5 @@
     <color name="activity_bg_color">#ff882e</color>
     <color name="divider">#ffdddddd</color>
     <drawable name="color_first_head">#ff882e</drawable>
+    <drawable name="color_dra_white">#fff</drawable>
 </resources>

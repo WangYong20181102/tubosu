@@ -56,7 +56,7 @@ public class DecorateSecurityActivity extends Activity implements OnClickListene
 
     private void initEvent() {
         iv_back.setOnClickListener(this);
-        bt_want_decorate.setOnClickListener(this);
+//        bt_want_decorate.setOnClickListener(this);
         bt_cell.setOnClickListener(this);
     }
 

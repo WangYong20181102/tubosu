@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_recyclerview_bg">
+        <GridView
+            android:id="@+id/disctrictGrid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_centerHorizontal="true"
+            android:verticalSpacing="6dp"
+            android:horizontalSpacing="4dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="10dp"
+            android:numColumns="4">
+        </GridView>
+    </RelativeLayout>
+</RelativeLayout>

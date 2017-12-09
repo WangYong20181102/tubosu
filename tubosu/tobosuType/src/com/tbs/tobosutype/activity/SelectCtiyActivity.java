@@ -569,11 +569,12 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
 
         if (fromFindDecorateCompany.equals("64")) {
             // 来自找装修公司页面
-            Intent cityData = new Intent();
-            Bundle b = new Bundle();
-            b.putString("ci", cityName);
-            cityData.putExtra("city_bundle", b);
-            setResult(644, cityData);
+//            Intent cityData = new Intent();
+//            Bundle b = new Bundle();
+//            b.putString("ci", cityName);
+//            cityData.putExtra("city_bundle", b);
+//            setResult(644, cityData);
+            EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_CODE, cityName));
             System.gc();
             finish();
             return;
@@ -606,6 +607,7 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
             b.putString("cid", cid);
             it.putExtra("city_bundle", b);
             setResult(104, it);
+            EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_PROVINCE_CODE1, cityName));
             System.gc();
             finish();
         }else {

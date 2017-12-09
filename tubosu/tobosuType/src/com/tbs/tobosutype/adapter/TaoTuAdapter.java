@@ -73,7 +73,7 @@ public class TaoTuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         tao.tvTaoTextTitle.setText(dataList.get(position).getTitle());
 
         if(isDeleting){
-            // 在编辑状态下
+
             tao.tao_fav_img.setVisibility(View.VISIBLE);
             if(dataList.get(position).isSeleteStatus()){
                 tao.tao_fav_img.setBackgroundResource(R.drawable.d_selected);

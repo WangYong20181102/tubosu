@@ -39,9 +39,6 @@ public class Constant {
     public static final int FINISH_MAINACTIVITY = 0x0000030;
     public static final int FINISH_SAVE_EDIT_OUTCOME = 0x0000031;
 
-    /***标记推送*/
-    public static String app_push_flag = "0";
-
     public static final String CALCULATER_SHARE_URL = "http://m.tobosu.com/app/share_h5?";
 
     /**
@@ -135,7 +132,7 @@ public class Constant {
      * 装修开支详情
      */
     public static final String OUTCOME_DETAIL_URL = TOBOSU_URL + "mapp/RenovateExpense/renovate_expense_detail";
-
+    public static final String SHEJISHI_URL = TOBOSU_URL + "mapp/Designer/designer_info";
     /**
      * 修改记录
      */
@@ -151,6 +148,8 @@ public class Constant {
      */
     public static final String OUTCOME_RECORD_URL = TOBOSU_URL + "mapp/RenovateExpense/get_decorate_record";
 
+    public static final String CITY_JSON = TOBOSU_URL + "mapp/common/province_city_district_info";
+
     /**
      * 删除装修记录
      */
@@ -161,37 +160,29 @@ public class Constant {
      */
     public static final String DECORATION_COMPANY_PREFERENTIAL_APPLYFOR = TOBOSU_URL + "tapp/company/activitySignupList";
 
-    /**
+    public static final String clickUrl = TOBOSU_URL + "mapp/companyBanner/click_count";
+    /**-
      * 第三方绑定接口
      */
     public static String BIND_THIRD_PARTY_URL = TOBOSU_URL + "tapp/passport/bindThirdParty";
 
-    // 收藏
+
     public static String MYFAV_URL = TOBOSU_URL + "mapp/collect/my_collect";
 
-    public static String FIND_DECORATE_COMPANY_URL = Constant.TOBOSU_URL + "/tapp/company/company_list";
+    public static String FIND_DECORATE_COMPANY_URL = TOBOSU_URL + "/tapp/company/company_list";
+    public static String COMPANY_TOP_LIST = TOBOSU_URL + "mapp/company/company_top_list";
+    public static String GETGONGSIURL = TOBOSU_URL + "mapp/company/company_list";
+    public static String FADAN_CLICK_URL = TOBOSU_URL + "mapp/OrderPort/click_count";
 
+    public static String BANNER_CLICK_URL = TOBOSU_URL + "mapp/banner/click_count";
 
-    //发单页点击接口
-    public static String FADAN_CLICK_URL = Constant.TOBOSU_URL + "mapp/OrderPort/click_count";
+    public static String FAV_TU_URL = TOBOSU_URL + "mapp/collect/collect_single_list";
 
-    // 轮播图有效点击量
-    public static String BANNER_CLICK_URL = Constant.TOBOSU_URL + "mapp/banner/click_count";
+    public static String FAV_TAO_TU_URL = TOBOSU_URL + "mapp/collect/collect_suite_list";
 
-    //收藏单图url
-    public static String FAV_TU_URL = Constant.TOBOSU_URL + "mapp/collect/collect_single_list";
-
-    //收藏单图url
-    public static String FAV_TAO_TU_URL = Constant.TOBOSU_URL + "mapp/collect/collect_suite_list";
-
+    public static String GET_TOOL_URL = TOBOSU_URL + "mapp/company/get_home_tools";
     /**
      * 修改用户信息接口
-     * <br/> field  <br/>
-     * 1 昵称 <br/>
-     * 2 性别 <br/>
-     * 3 城市 <br/>
-     * 4 小区名id <br/>
-     * 5 头像
      */
     public static String USER_CHANGE_INFO_URL = TOBOSU_URL + "tapp/user/chage_user_info";
 

@@ -77,4 +77,9 @@
     <color name="text_gray">#b7b8ba</color>
 
     <color name="edit_outcome_bg">#FE892D</color>
+
+    <color name="gongsi_selected">#FF6F20</color>
+    <color name="gongsi_unselected">#1a1a1a</color>
+
+
 </resources>

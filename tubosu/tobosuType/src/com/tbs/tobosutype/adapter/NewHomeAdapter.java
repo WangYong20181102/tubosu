@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,6 +37,7 @@ import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.EndlessRecyclerOnScrollListener;
 import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
@@ -57,13 +59,12 @@ import com.tbs.tobosutype.bean._ImageD;
  * Created by Lie on 2017/04/23.
  */
 
-public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> /*implements View.OnClickListener*/{
+public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private final String TAG = NewHomeAdapter.class.getSimpleName();
     private NewHomeDataItem.NewhomeDataBean dataSource;
     private ViewPager newhomeViewPager;
     private Context context;
     private LayoutInflater inflater;
-    private OnZhuantiItemClickListener mListener;
 
     private static final int[] cheatImageArr = new int[]{R.drawable.cheat1, R.drawable.cheat2, R.drawable.cheat3, R.drawable.cheat4, R.drawable.cheat5, R.drawable.cheat6, R.drawable.cheat7, R.drawable.cheat8, R.drawable.cheat9, R.drawable.cheat10, R.drawable.cheat11, R.drawable.cheat12, R.drawable.cheat13, R.drawable.cheat14, R.drawable.cheat15, R.drawable.cheat16, R.drawable.cheat17, R.drawable.cheat18, R.drawable.cheat19, R.drawable.cheat20};
     private static String[] familyName = new String[]{"赵", "钱", "孙", "李", "周", "吴", "郑", "王", "冯", "陈", "褚", "卫", "蒋", "沈", "韩", "杨", "何", "吕", "施", "张", "孔", "曹", "严", "华", "金", "魏", "陶", "姜", "戚", "谢", "邹", "章", "苏", "潘", "葛", "奚", "范", "彭", "鲁", "韦", "昌", "马", "苗", "凤", "花", "方", "俞", "袁", "柳", "酆", "鲍", "史", "唐", "费", "廉", "岑", "薛", "雷", "贺", "倪", "汤", "滕", "殷", "罗", "毕", "郝", "邬", "安", "常", "乐", "于", "齐", "黄", "萧", "尹", "姚", "祁", "宋", "熊", "舒", "屈", "项", "祝", "董", "梁", "杜", "席", "贾", "江", "郭", "林", "钟", "徐", "邱", "高", "田", "胡", "邓"};
@@ -139,14 +140,23 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof NewHomeHead) {
             NewHomeHead headHolder = (NewHomeHead) holder;
-            newhomeViewPager.setFocusable(true);
-            newhomeViewPager.setFocusableInTouchMode(true);
-            newhomeViewPager.requestFocus();
+            if(CacheManager.getChentaoFlag(context) == 0){
+                newhomeViewPager.setFocusable(true);
+                newhomeViewPager.setFocusableInTouchMode(true);
+                newhomeViewPager.requestFocus();
+//                Util.setToast(context, "获得焦点");
+            }else {
+                newhomeViewPager.setFocusable(false);
+                newhomeViewPager.setFocusableInTouchMode(false);
+                newhomeViewPager.clearFocus();
+//                Util.setToast(context, "失去焦点");
+            }
             initBannerAdapter(newhomeViewPager, headHolder.layoutDot, dataSource.getBanner());
 
             initCheatText(headHolder.cheatText);
             Glide.with(context).load(R.drawable.price_gif).asGif().into(headHolder.priceBackgroud);
             headHolder.relFreeLiangFang.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
@@ -154,6 +164,12 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     context.startActivity(webIntent);
                 }
             });
+
+
+            headHolder.relXuanSheJi.setFocusable(false);
+            headHolder.relXuanSheJi.setFocusableInTouchMode(false);
+            headHolder.relXuanSheJi.clearFocus();
+
             headHolder.relXuanSheJi.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -232,16 +248,12 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     context.startActivity(new Intent(context, DecorationCaseActivity.class));
                 }
             });
-            headHolder.newhomeGvAnli.setFocusable(false);
-            headHolder.newhomeGvAnli.setFocusableInTouchMode(false);
-            headHolder.newhomeGvAnli.clearFocus();
+
             NewhomeCasesGridAdapter caseAdapter = null;
             if (caseAdapter == null) {
                 caseAdapter = new NewhomeCasesGridAdapter(context, dataSource.getCases());
                 headHolder.newhomeGvAnli.setAdapter(caseAdapter);
-                caseAdapter.notifyDataSetChanged();
-            } else {
-                caseAdapter.notifyDataSetChanged();
+//                caseAdapter.notifyDataSetChanged();
             }
 
             headHolder.newhomeGvAnli.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -254,7 +266,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             });
 
 
-            // ===============设计==============
+            // ===============设计==============league
             headHolder.relMoreSheji.setFocusable(false);
             headHolder.relMoreSheji.setFocusableInTouchMode(false);
             headHolder.relMoreSheji.clearFocus();
@@ -280,12 +292,6 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 @Override
                 public void onRecyclerViewItemClick(View view, int position) {
-
-                    // 3.4版本
-//                    Intent intent = new Intent(context, ImageDetailNewActivity.class);
-//                    intent.putExtra("id", dataSource.getImpression().get(position).getId());
-//                    context.startActivity(intent);
-
                     // 3.5版本
                     String DImageJson = new Gson().toJson(shejiList);
                     Util.setErrorLog(TAG, DImageJson);
@@ -396,26 +402,12 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
 
-    public interface OnZhuantiItemClickListener{
-        void onZhuantiItemClickListener(int position);
-    }
-
-
-    public OnZhuantiItemClickListener getmListener() {
-        return mListener;
-    }
-
-    public void setmListener(OnZhuantiItemClickListener mListener) {
-        this.mListener = mListener;
-    }
-
     /**
      * 头部类
      */
     class NewHomeHead extends RecyclerView.ViewHolder {
         // 上部
         LinearLayout layoutDot;
-        //        ImageView cheatIcon;
         MarqueeView cheatText;
         ImageView priceBackgroud;
         RelativeLayout relFreeLiangFang;
@@ -451,7 +443,6 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             super(itemView);
             newhomeViewPager = (ViewPager) itemView.findViewById(R.id.newhome_head_viewpager);
             layoutDot = (LinearLayout) itemView.findViewById(R.id.newHomeDotLayout);
-//            cheatIcon = (ImageView) itemView.findViewById(R.id.newhome_cheat_icon);
             cheatText = (MarqueeView) itemView.findViewById(R.id.newhome_cheat_text);
             priceBackgroud = (ImageView) itemView.findViewById(R.id.price_img);
             relFreeLiangFang = (RelativeLayout) itemView.findViewById(R.id.relFreeLiangFang);
@@ -494,17 +485,13 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         urlList.clear();
         if (bannerList != null && bannerList.size() > 0) {
             for (int i = 0; i < bannerList.size(); i++) {
-//                Util.setErrorLog(TAG, "===xxxx====>>>>" + bannerList.get(i).getContent_url() + "?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()));
                 urlList.add(bannerList.get(i).getContent_url() + "?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()));
                 ImageView view = new ImageView(context);
-//                view.setTag(bannerList.get(i).getImg_url());
                 view.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 Glide.with(context).load(bannerList.get(i).getImg_url()).into(view);
                 imageViewList.add(view);
                 ImageView dotView = new ImageView(context);
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                        DensityUtil.dip2px(context, 10),
-//                        DensityUtil.dip2px(context, 10));
                 params.leftMargin = 8;
                 params.rightMargin = 8;
                 dotLayout.addView(dotView, params);
@@ -515,36 +502,6 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             bannerPager.setOnPageChangeListener(new MyPageChangeListener(bannerPager));
         }
         startSlide();
-
-
-
-
-        // =====================以下是骗人的====================
-//        String[] fakeUrl = {"http://cdn111.dev.tobosu.com/mobile_banner_img/2017-11-02/59fabf771b89a.jpg", "https://pic.tbscache.com/head_file/2017-07-07/595f0eab1c23b.jpg"};
-//        dotLayout.removeAllViews();
-//        urlList.clear();
-//        if (bannerList != null && bannerList.size() > 0) {
-//            for (int i = 0; i < fakeUrl.length; i++) {
-//                urlList.add(fakeUrl[i]);
-//                ImageView view = new ImageView(context);
-//                view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//                Glide.with(context).load(fakeUrl[i]).into(view);
-//                imageViewList.add(view);
-//                ImageView dotView = new ImageView(context);
-//                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                params.leftMargin = 8;
-//                params.rightMargin = 8;
-//                dotLayout.addView(dotView, params);
-//                dotViewsList.add(dotView);
-//            }
-//            bannerPager.setFocusable(true);
-//            bannerPager.setAdapter(new MyPagerAdapter(imageViewList, urlList));
-//            bannerPager.setOnPageChangeListener(new MyPageChangeListener(bannerPager));
-//        }
-//        startSlide();
-        // =====================以上是骗人的====================
-
-
     }
 
     private int currentItem = 0;
@@ -594,7 +551,6 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             }
         }
-
     }
 
     private void startSlide() {
@@ -633,12 +589,13 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
 
         @Override
-        public void destroyItem(View container, int position, Object object) {
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
             ((ViewPager) container).removeView(viewList.get(position));
         }
 
+        @NonNull
         @Override
-        public Object instantiateItem(final View container, final int position) {
+        public Object instantiateItem(@NonNull ViewGroup container, final int position) {
             ((ViewPager) container).addView(viewList.get(position));
             viewList.get(position).setOnClickListener(new View.OnClickListener() {
 
@@ -666,13 +623,6 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private void initCheatText(final MarqueeView cheatView) {
-//        交互规则：播报内容固定位置显示，每3秒向上翻动一次。
-//        报告内容：“时间”+前，“城市”+“姓氏”+“性别”+“福利”
-//        时间：1到59秒，随机一个时间；
-//        城市：已开通的城市列表中随机一个城市；
-//        姓氏：赵、钱、孙、李、周、吴、郑、王、冯、陈、褚、卫、蒋、沈、韩、杨、何、吕、施、张、孔、曹、严、华、金、魏、陶、姜、戚、谢、邹、章、苏、潘、葛、奚、范、彭、鲁、韦、昌、马、苗、凤、花、方、俞、袁、柳、酆、鲍、史、唐、费、廉、岑、薛、雷、贺、倪、汤、滕、殷、罗、毕、郝、邬、安、常、乐、于、齐、黄、萧、尹、姚、祁、宋、熊、舒、屈、项、祝、董、梁、杜、席、贾、江、郭、林、钟、徐、邱、高、田、胡、邓，随机一个；
-//        性别：先生、女士，随机一个；
-//        福利：领取了免费设计、获得了免费报价、获得了专业推荐、领取了装修大礼包，随机一个。
         String[] datas = new String[64];
         for (int i = 0; i < datas.length; i++) {
             datas[i] = " " + getSecond() + "秒前," + getRandomText(citys) + getRandomText(familyName) + getLadyOrGentalman() + getBigBagText(fares, i) + "。";
@@ -720,50 +670,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return r.nextInt(59) + 1;
     }
 
-//    class NewHomeAnli extends RecyclerView.ViewHolder{
-//        RelativeLayout relMoreAnli;
-//        CustomGridView newhomeGvAnli;
-//        public NewHomeAnli(View itemView) {
-//            super(itemView);
-//            relMoreAnli = (RelativeLayout) itemView.findViewById(R.id.rel_more_anli);
-//            newhomeGvAnli = (CustomGridView) itemView.findViewById(R.id.newhome_gv_anli);
-//        }
-//    }
-//
-//    class NewHomeSheji extends RecyclerView.ViewHolder{
-//        RelativeLayout relMoreSheji;
-//        BetterRecyclerView rvSheji;
-//        MySwipeRefreshLayout shejiSwipeRefreshLayout;
-//        public NewHomeSheji(View itemView) {
-//            super(itemView);
-//            relMoreSheji = (RelativeLayout) itemView.findViewById(R.id.rel_more_sheji);
-//            rvSheji = (BetterRecyclerView) itemView.findViewById(R.id.newhome_recyclerview_sheji);
-//            shejiSwipeRefreshLayout = (MySwipeRefreshLayout) itemView.findViewById(R.id.swipe_newhome_sheji);
-//        }
-//    }
-//
-//    class NewHomeKetang extends RecyclerView.ViewHolder{
-//        RelativeLayout relMoreClass;
-//        BetterRecyclerView newhomeRecyclerviewClass;
-//        MyListView newhomeRecyclerviewKetang;
-//
-//        public NewHomeKetang(View itemView) {
-//            super(itemView);
-//            relMoreClass = (RelativeLayout) itemView.findViewById(R.id.rel_more_class);
-//            newhomeRecyclerviewClass = (BetterRecyclerView) itemView.findViewById(R.id.newhome_recyclerview_class);
-//            newhomeRecyclerviewKetang = (MyListView) itemView.findViewById(R.id.newhome_ketang_recyclerview);
-//        }
-//    }
-
     class NewHomeZhuanti extends RecyclerView.ViewHolder {
-//        RecyclerView zhuantiRecyclerView;
-////        SwipeRefreshLayout zhuantiSwipRefreshLayout;
-//
-//        public NewHomeZhuanti(View itemView) {
-//            super(itemView);
-//            zhuantiRecyclerView = (RecyclerView) itemView.findViewById(R.id.newhome_recyclerview_zhuanti);
-////            zhuantiSwipRefreshLayout = (SwipeRefreshLayout) itemView.findViewById(R.id.swipe_newhome_zhuanti);
-//        }
 
         ImageView iv;
         TextView tvZhuantiTime;
