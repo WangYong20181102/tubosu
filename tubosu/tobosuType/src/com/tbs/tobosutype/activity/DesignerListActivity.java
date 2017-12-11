@@ -180,6 +180,7 @@ public class DesignerListActivity extends com.tbs.tobosutype.base.BaseActivity {
                 case R.id.item_designer_item_ll:
                     /// TODO: 2017/12/6  跳转到设计师主页
                     Intent it = new Intent(mContext, SheJiShiActivity.class);
+                    Log.e(TAG, "获取id============" + designerItemArrayList.get(position).getDesid());
                     it.putExtra("designer_id", designerItemArrayList.get(position).getDesid());
                     startActivity(it);
                     break;
