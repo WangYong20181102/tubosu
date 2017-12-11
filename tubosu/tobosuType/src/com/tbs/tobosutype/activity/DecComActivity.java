@@ -668,14 +668,14 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
 //                    mDecComJieshaoAdapter.setOnDCJieshaoClickLister(onDCJieshaoClickLister);
 //                }
                 //公司资质
-                if (mCompanyDetail.getQualification().isEmpty()) {
-                    //没有公司资质数据 隐藏点击按钮
-                    decComZizhiLl.setVisibility(View.GONE);
-                    decComZizhiFenge.setVisibility(View.GONE);
-                } else {
-                    decComZizhiLl.setVisibility(View.VISIBLE);
-                    decComZizhiFenge.setVisibility(View.VISIBLE);
-                }
+//                if (mCompanyDetail.getQualification().isEmpty()) {
+//                    //没有公司资质数据 隐藏点击按钮
+//                    decComZizhiLl.setVisibility(View.GONE);
+//                    decComZizhiFenge.setVisibility(View.GONE);
+//                } else {
+                decComZizhiLl.setVisibility(View.VISIBLE);
+                decComZizhiFenge.setVisibility(View.VISIBLE);
+//                }
                 //服务项目
                 if (mCompanyDetail.getService().isEmpty()) {
                     //服务项目按钮隐藏

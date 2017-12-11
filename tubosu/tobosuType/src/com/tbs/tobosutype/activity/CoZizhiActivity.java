@@ -35,6 +35,8 @@ public class CoZizhiActivity extends AppCompatActivity {
     RecyclerView coZizhiRecycler;
     @BindView(R.id.banner_dever)
     View bannerDever;
+    @BindView(R.id.co_zizhi_none_data_ll)
+    LinearLayout coZizhiNoneDataLl;
     private String TAG = "CoZizhiActivity";
     private Context mContext;
     private Gson mGson;
@@ -67,11 +69,18 @@ public class CoZizhiActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
-        coZizhiRecycler.setLayoutManager(mLinearLayoutManager);
-        mCoZiZhiAdapter = new CoZiZhiAdapter(mContext, qualificationBeanArrayList);
-        coZizhiRecycler.setAdapter(mCoZiZhiAdapter);
-        mCoZiZhiAdapter.setOnZiZhiItemClickLister(onZiZhiItemClickLister);
+        //数据为空时要显示占位图
+        if (qualificationBeanArrayList.isEmpty()) {
+            //显示占位图
+            coZizhiNoneDataLl.setVisibility(View.VISIBLE);
+        } else {
+            coZizhiNoneDataLl.setVisibility(View.GONE);
+            mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+            coZizhiRecycler.setLayoutManager(mLinearLayoutManager);
+            mCoZiZhiAdapter = new CoZiZhiAdapter(mContext, qualificationBeanArrayList);
+            coZizhiRecycler.setAdapter(mCoZiZhiAdapter);
+            mCoZiZhiAdapter.setOnZiZhiItemClickLister(onZiZhiItemClickLister);
+        }
     }
 
     //适配器点击事件
@@ -81,7 +90,7 @@ public class CoZizhiActivity extends AppCompatActivity {
             Intent intent = new Intent(mContext, ZizhiPhotoLookingActivity.class);
             intent.putExtra("qualificationJson", qualificationJson);
             intent.putExtra("position", position);
-            intent.putExtra("positionDesc", "" + (position+1) + "/" + qualificationBeanArrayList.size());
+            intent.putExtra("positionDesc", "" + (position + 1) + "/" + qualificationBeanArrayList.size());
             mContext.startActivity(intent);
         }
     };

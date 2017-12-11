@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="7dp"
         android:ellipsize="marquee"
         android:maxEms="14"
         android:singleLine="true"
