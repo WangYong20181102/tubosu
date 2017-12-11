@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.tbs.tobosutype.activity.CoZizhiActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -33,18 +34,33 @@
     </RelativeLayout>
     <!--优惠列表-->
     <android.support.v7.widget.RecyclerView
-        android:background="@color/white"
         android:id="@+id/co_zizhi_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="48dp">
+        android:layout_marginTop="48dp"
+        android:background="@color/white">
 
     </android.support.v7.widget.RecyclerView>
+
     <View
-        android:layout_marginTop="48dp"
         android:id="@+id/banner_dever"
         android:layout_width="match_parent"
         android:layout_height="12dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/yinying4"
         android:visibility="visible" />
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/co_zizhi_none_data_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <ImageView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/zizhi" />
+    </LinearLayout>
 </RelativeLayout>
