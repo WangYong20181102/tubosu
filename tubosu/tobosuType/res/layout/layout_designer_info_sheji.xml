@@ -1,39 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
-    <com.tbs.tobosutype.utils.TRoundView
-        android:id="@+id/shejiPic"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="164dp"
-        android:layout_marginTop="14dp"
-        android:scaleType="centerCrop"/>
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.tbs.tobosutype.utils.TRoundView
+                android:id="@+id/shejiPic"
+                android:layout_width="match_parent"
+                android:layout_height="164dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="14dp"
+                android:scaleType="centerCrop"/>
 
-    <TextView
-        android:id="@+id/shejiInfoText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#363636"
-        android:layout_marginTop="20dp"
-        android:textSize="14sp"
-        android:layout_gravity="center_horizontal"
-        android:text="121212"/>
-
-
-    <TextView
-        android:id="@+id/shejiGetThis"
-        android:layout_width="111dp"
-        android:layout_height="34dp"
-        android:gravity="center"
-        android:textColor="#FF6F20"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="14dp"
-        android:background="@drawable/selected_servicearea_textview_bg"
-        android:textSize="14sp"
-        android:layout_gravity="center_horizontal"
-        android:text="获取此设计"/>
+            <TextView
+                android:id="@+id/shejiInfoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#363636"
+                android:layout_marginTop="20dp"
+                android:textSize="14sp"
+                android:layout_gravity="center_horizontal"
+                android:text="121212"/>
 
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/shejiGetThis"
+                android:layout_width="111dp"
+                android:layout_height="34dp"
+                android:gravity="center"
+                android:textColor="#FF6F20"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/selected_servicearea_textview_bg"
+                android:textSize="14sp"
+                android:layout_gravity="center_horizontal"
+                android:text="获取此设计"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

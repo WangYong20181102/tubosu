@@ -464,7 +464,7 @@
         <activity android:name=".activity.ServiceItemActivity" />
         <activity android:name=".activity.CoZizhiActivity" />
         <activity android:name=".activity.CoDecorationCaseActivity" />
-        <activity android:name=".activity.ZizhiPhotoLookingActivity"></activity>
+        <activity android:name=".activity.ZizhiPhotoLookingActivity" />
     </application>
 
 </manifest>
