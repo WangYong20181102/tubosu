@@ -54,7 +54,9 @@
                 <!--头衔-->
                 <TextView
                     android:id="@+id/item_designer_title"
-                    android:layout_width="58dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="17dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="7dp"
