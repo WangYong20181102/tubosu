@@ -223,20 +223,21 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="right"
                         android:layout_marginLeft="10dp"
-                        android:gravity="center"
+                        android:gravity="right|center"
                         android:orientation="horizontal">
                         <!--电话联系-->
                         <ImageView
+                            android:layout_marginRight="20dp"
                             android:id="@+id/dec_com_phone_iv"
                             android:layout_width="18dp"
                             android:layout_height="18dp"
                             android:src="@drawable/co_phone" />
                         <!--QQ联系-->
                         <ImageView
+                            android:layout_marginRight="20dp"
                             android:id="@+id/dec_com_qq_iv"
                             android:layout_width="18dp"
                             android:layout_height="18dp"
-                            android:layout_marginLeft="25dp"
                             android:src="@drawable/co_qq"
                             android:visibility="visible" />
                     </LinearLayout>
