@@ -16,6 +16,7 @@ import com.tbs.tobosutype.adapter.DesignerInfoAdapter;
 import com.tbs.tobosutype.bean.DesignerInfoBean;
 import com.tbs.tobosutype.bean.DesignerInfoCaseBean;
 import com.tbs.tobosutype.bean.DesignerInfoDesignBean;
+import com.tbs.tobosutype.customview.RecycleViewDivider;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.Util;
@@ -39,11 +40,14 @@ import okhttp3.Response;
 public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity implements View.OnClickListener {
     private Intent dataIntent;
     private String des_id;
+    private android.widget.RelativeLayout shejishiBar;
+    private View banner_bag, bannerbackgroud;
+    private android.widget.ImageView ivbacUpck, shejishiShare;
     private android.widget.RelativeLayout relShejishiBack;
-    private android.widget.ImageView shejishiShare;
     private android.support.v7.widget.RecyclerView shejishiRecyclerView;
     private android.support.v4.widget.SwipeRefreshLayout shejishiSwip;
     private LinearLayoutManager linearLayoutManager;
+
     private boolean isLoading = false;
     private int shejiPage = 2;
     private int anliPage = 2;
@@ -66,13 +70,19 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
     }
 
     private void bindViews(){
+        shejishiBar = (RelativeLayout) findViewById(R.id.shejishiBar);
+        banner_bag = (View) findViewById(R.id.banner_bag);
+        bannerbackgroud = (View) findViewById(R.id.bannerbackgroud);
+        relShejishiBack = (RelativeLayout) findViewById(R.id.relShejishiBack);
+        ivbacUpck = (ImageView) findViewById(R.id.ivbacUpck);
+        shejishiShare = (ImageView) findViewById(R.id.shejishiShare);
         shejishiSwip = (SwipeRefreshLayout) findViewById(R.id.shejishiSwip);
         shejishiRecyclerView = (RecyclerView) findViewById(R.id.shejishiRecyclerView);
-        shejishiShare = (ImageView) findViewById(R.id.shejishiShare);
-        relShejishiBack = (RelativeLayout) findViewById(R.id.relShejishiBack);
+
 
         shejishiShare.setOnClickListener(this);
         relShejishiBack.setOnClickListener(this);
+        ivbacUpck.setOnClickListener(this);
 
         dataIntent = getIntent();
         des_id = dataIntent.getStringExtra("designer_id");
@@ -92,7 +102,7 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
+                super.onScrolled(recyclerView, dx, dy);
                 if(shejishiAdapter != null && !shejishiAdapter.cantLoadMore()){
                     loadMoreDataType = shejishiAdapter.getClickType();
                     //得到当前显示的最后一个item的view
@@ -102,45 +112,50 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                         loadMoreData(loadMoreDataType);
                     }
                 }
-//
-//                //设置其透明度
-//                float alpha = 0;
-//                int scollYHeight = getScollYHeight(true, tubosu.getHeight());
-//
-//                int baseHeight = 574;
-//                if (scollYHeight >= baseHeight) {
-//                    alpha = 1;
-//                } else {
-//                    alpha = scollYHeight / (baseHeight * 1.0f);
-//                    if (alpha > 0.44) {
-//                        ivYingying.setVisibility(View.VISIBLE);
-//                        home_view.setVisibility(View.INVISIBLE);// 白色渐变 隐藏
-//                        rel_newhomebar.setVisibility(View.VISIBLE);
-//                        iv_sanjiaoxing.setBackgroundResource(R.drawable.tt);
-//                        iv_add.setBackgroundResource(R.drawable.sdf);
-//                        home_kefu.setBackgroundResource(R.drawable.kefu_black);
-//                        newhomeCity.setTextColor(Color.parseColor("#000000"));
-//                        app_title_text.setTextColor(Color.parseColor("#000000"));
-//                        rel_newhomebar.setBackgroundColor(Color.parseColor("#FFFFFF"));
-//                    } else {
-//
-//                        ivYingying.setVisibility(View.GONE);
-//                        home_view.setVisibility(View.VISIBLE);
-//                        rel_newhomebar.setVisibility(View.INVISIBLE);
-//                        iv_sanjiaoxing.setBackgroundResource(R.drawable.sanjiaoxing);
-//                        iv_add.setBackgroundResource(R.drawable.ad_icon);
-//                        home_kefu.setBackgroundResource(R.drawable.home_kefu);
-//                        newhomeCity.setTextColor(Color.parseColor("#FFFFFF"));
-//                        app_title_text.setTextColor(Color.parseColor("#FFFFFF"));
-//                        rel_newhomebar.setBackgroundColor(Color.parseColor("#00FFFFFF"));
-//                    }
-//
-//                }
-//                rel_newhomebar.setAlpha(alpha);
-//                CacheManager.setChentaoFlag(mContext, 44);
+
+                //设置其透明度
+                float alpha = 0F;
+                int scollYHeight = getScollYHeight(true, relShejishiBack.getHeight());
+                Util.setErrorLog(TAG, "====gao==>" + scollYHeight);
+                int baseHeight = 600;
+                if (scollYHeight >= baseHeight) {
+                    alpha = 1;
+                } else {
+                    alpha = scollYHeight / (baseHeight * 1.0f);
+                    if (alpha < 0.44) {
+                        ivbacUpck.setImageResource(R.drawable.back_white);
+                        shejishiShare.setBackgroundResource(R.drawable.out_white);
+                        banner_bag.setVisibility(View.GONE);
+                        bannerbackgroud.setVisibility(View.VISIBLE);
+                    } else {
+                        ivbacUpck.setImageResource(R.drawable.activity_back);
+                        shejishiShare.setBackgroundResource(R.drawable.zhuanfa);
+                        banner_bag.setVisibility(View.VISIBLE);
+                        bannerbackgroud.setVisibility(View.GONE);
+                    }
+                    banner_bag.setAlpha(alpha);
+                }
             }
         });
+        shejishiRecyclerView.addItemDecoration(new RecycleViewDivider(
+                mContext, LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color.divide_gray_color)));
         getData();
+    }
+
+    private int getScollYHeight(boolean hasHead, int headerHeight) {
+        LinearLayoutManager layoutManager = (LinearLayoutManager) shejishiRecyclerView.getLayoutManager();
+        //获取到第一个可见的position,其添加的头部不算其position当中
+        int position = layoutManager.findFirstVisibleItemPosition();
+        //通过position获取其管理器中的视图
+        View firstVisiableChildView = layoutManager.findViewByPosition(position);
+        //获取自身的高度
+        int itemHeight = firstVisiableChildView.getHeight();
+        //有头部
+        if (hasHead) {
+            return headerHeight + itemHeight * position - firstVisiableChildView.getTop();
+        } else {
+            return itemHeight * position - firstVisiableChildView.getTop();
+        }
     }
 
 

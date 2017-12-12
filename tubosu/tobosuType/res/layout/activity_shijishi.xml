@@ -18,15 +18,31 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <RelativeLayout
+        android:id="@+id/shejishiBar"
         android:layout_width="match_parent"
         android:layout_height="49dp"
-        android:background="@drawable/drawable_hdpi">
+        android:background="@color/white">
+
+        <View
+            android:id="@+id/banner_bag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="@color/white"/>
+
+        <View
+            android:id="@+id/bannerbackgroud"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:background="@drawable/drawable_hdpi"/>
 
         <RelativeLayout
             android:id="@+id/relShejishiBack"
             android:layout_width="49dp"
             android:layout_height="49dp">
             <ImageView
+                android:id="@+id/ivbacUpck"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_centerInParent="true"
@@ -35,11 +51,11 @@
 
         <ImageView
             android:id="@+id/shejishiShare"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="19dp"
+            android:layout_height="19dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="18dp"
-            android:background="@drawable/out_white"/>
+            android:background="@drawable/zhuanfa"/>
     </RelativeLayout>
 </RelativeLayout>
