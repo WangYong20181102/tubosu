@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="vertical">
 
 
@@ -19,16 +20,16 @@
         android:layout_marginLeft="20dp">
 
         <com.tbs.tobosutype.utils.TRoundView
+            android:id="@+id/roundOut"
+            android:layout_width="67dp"
+            android:layout_height="67dp"
+            android:layout_centerInParent="true"/>
+        <com.tbs.tobosutype.utils.TRoundView
             android:id="@+id/shejishiIcon"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/new_home_loading"/>
-        <com.tbs.tobosutype.utils.TRoundView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_centerInParent="true"
-            android:background="@color/white"/>
+            android:layout_centerInParent="true"/>
+
     </RelativeLayout>
 
     <LinearLayout
@@ -202,7 +203,7 @@
                 android:text="简介"/>
 
             <com.tbs.tobosutype.customview.ExpandableTextView
-                android:id="@+id/dec_com_jieshao_expend_tv"
+                android:id="@+id/shejishi_jianjie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="14dp"
@@ -229,6 +230,7 @@
             android:background="#F7F7F7"/>
 
         <LinearLayout
+            android:id="@+id/dataListBar"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal">
@@ -265,7 +267,7 @@
                     android:textSize="13sp"
                     android:gravity="center"
                     android:textColor="#333333"
-                    android:text="设计方案"/>
+                    android:text="装修案例"/>
                 <View
                     android:id="@+id/caseTextBar"
                     android:layout_width="match_parent"
@@ -282,6 +284,21 @@
             android:layout_height="1dp"
             android:layout_marginBottom="14dp"
             android:background="#ECECEC"/>
+
+
+
+        <RelativeLayout
+            android:id="@+id/relimgEmpty"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="300dp">
+            <ImageView
+                android:id="@+id/imgEmpty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/shejishi"/>
+        </RelativeLayout>
 
     </LinearLayout>
 

@@ -725,6 +725,7 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
         public void onItemClick(View view, int position) {
             /// TODO: 2017/12/4 点击跳转到设计师主页
             Intent it = new Intent(mContext, SheJiShiActivity.class);
+            Util.setErrorLog(TAG, "===================设计师id=========>>" + mCompanyDetail.getDesigners().get(position).getDesignerId());
             it.putExtra("designer_id", mCompanyDetail.getDesigners().get(position).getDesignerId());
             startActivity(it);
         }

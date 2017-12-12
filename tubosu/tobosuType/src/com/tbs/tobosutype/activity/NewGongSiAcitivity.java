@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -84,7 +83,6 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     private static final String TAG = NewGongSiAcitivity.class.getSimpleName();
     private Context mContext;
 
-
     private YouXuanGongSiAdapter youxuanCompanyAdapter;
     private TextView tvGongsiCity;
     private String gongsiCity = "深圳市";
@@ -148,7 +146,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     private float ComparedY;
 
     private int fixHeight = 0;
-
+    private boolean isChooseShiTiRenZheng = false;
+    private boolean isChooseTuijian = false;
 
     private ArrayList<CompanyDistrictBean> discList = new ArrayList<CompanyDistrictBean>();
 
@@ -171,7 +170,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = NewGongSiAcitivity.this;
         setContentView(R.layout.activity_gocompany1);
@@ -677,15 +676,17 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                     reCompanDataEmpty.setVisibility(View.GONE);
                                 }
 
-                                companyAdapter.setOnCompanyItemClickListener(new GongSiAdapter.OnCompanyItemClickListener() {
+                                if(companyAdapter!=null){
+                                    companyAdapter.setOnCompanyItemClickListener(new GongSiAdapter.OnCompanyItemClickListener() {
 
-                                    @Override
-                                    public void onCompanyItemClickListener(int position) {
-                                        Intent it = new Intent(mContext, DecComActivity.class);
-                                        it.putExtra("mCompanyId", gongsiList.get(position).getId());
-                                        startActivity(it);
-                                    }
-                                });
+                                        @Override
+                                        public void onCompanyItemClickListener(int position) {
+                                            Intent it = new Intent(mContext, DecComActivity.class);
+                                            it.putExtra("mCompanyId", gongsiList.get(position).getId());
+                                            startActivity(it);
+                                        }
+                                    });
+                                }
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -899,38 +900,44 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 break;
 
             case R.id.shitirenzheng:
-                shitirenzheng.setBackgroundResource(R.drawable.select_item_textview_bg_selected);
-                shitirenzheng.setTextColor(Color.parseColor("#FF6F20"));
-
-                ctuijian.setBackgroundResource(R.drawable.select_item_textview_bg);
-                ctuijian.setTextColor(Color.parseColor("#4D4D4D"));
-
+                if(!isChooseShiTiRenZheng){
+                    // 未选中， 就选中
+                    shitirenzheng.setBackgroundResource(R.drawable.select_item_textview_bg_selected);
+                    shitirenzheng.setTextColor(Color.parseColor("#FF6F20"));
+                    certification = "1";
+                }else{
+                    // 已选中， 就别选中
+                    shitirenzheng.setBackgroundResource(R.drawable.select_item_textview_bg);
+                    shitirenzheng.setTextColor(Color.parseColor("#4D4D4D"));
+                    certification = "0";
+                }
                 gongsiList.clear();
                 if(companyAdapter!=null){
                     companyAdapter.notifyDataSetChanged();
                     companyAdapter = null;
                 }
                 page = 1;
-                certification = "1";
-                recommend = "0";
                 getNetData();
+                isChooseShiTiRenZheng = !isChooseShiTiRenZheng;
                 break;
             case R.id.ctuijian:
-                shitirenzheng.setBackgroundResource(R.drawable.select_item_textview_bg);
-                shitirenzheng.setTextColor(Color.parseColor("#4D4D4D"));
-
-                ctuijian.setBackgroundResource(R.drawable.select_item_textview_bg_selected);
-                ctuijian.setTextColor(Color.parseColor("#FF6F20"));
-
+                if(!isChooseTuijian){
+                    ctuijian.setBackgroundResource(R.drawable.select_item_textview_bg_selected);
+                    ctuijian.setTextColor(Color.parseColor("#FF6F20"));
+                    recommend = "1";
+                }else {
+                    ctuijian.setBackgroundResource(R.drawable.select_item_textview_bg);
+                    ctuijian.setTextColor(Color.parseColor("#4D4D4D"));
+                    recommend = "0";
+                }
                 gongsiList.clear();
                 if(companyAdapter!=null){
                     companyAdapter.notifyDataSetChanged();
                     companyAdapter = null;
                 }
                 page = 1;
-                certification = "0";
-                recommend = "1";
                 getNetData();
+                isChooseTuijian = !isChooseTuijian;
                 break;
             case R.id.fuwuquyu:
             case R.id.reSearvice:

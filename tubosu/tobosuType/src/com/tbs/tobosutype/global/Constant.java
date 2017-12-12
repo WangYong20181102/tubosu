@@ -202,6 +202,8 @@ public class Constant {
     public static final String LNG = "114";
     public static final String LAT = "22";
 
+    public static final String MORE_SHEJI_URL = TOBOSU_URL + "mapp/designer/design_pic_list";
+    public static final String MORE_ANLI_URL = TOBOSU_URL + "mapp/designer/anli_list";
     /**
      * app_type 1是土拨鼠
      * 2是装好家
