@@ -37,7 +37,8 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int SHEJI_TYPE = 0;
     private final int ANLI_TYPE = 1;
     private final int ITEM_TYPE_HEAD = 2;
-    private final int ITEM_TYPE_BODY = 3;
+    private final int ITEM_TYPE_ANLI = 3;
+    private final int ITEM_TYPE_SHEJI = 6;
     private final int ITEM_TYPE_FOOT = 4;
     private boolean moreData = false;
     private boolean noShejiData = false;
@@ -133,21 +134,29 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return shejishiFoot;
         }
 
-        if(viewType == ITEM_TYPE_BODY){
-            if(clickType == SHEJI_TYPE){
+        if(viewType == ITEM_TYPE_SHEJI){
+//            if(clickType == SHEJI_TYPE){
                 // 显示左边 设计
                 View shejiView = inflater.inflate(R.layout.layout_designer_info_sheji, parent, false);
                 ShejiShiBodyHolder shejiShiBodyHolder = new ShejiShiBodyHolder(shejiView);
                 shejiView.setOnClickListener(this);
                 return shejiShiBodyHolder;
-            }else {
+        }/*else {
                 // 显示右边 案例
                 View anliView = inflater.inflate(R.layout.layout_designer_info_anli, parent, false);
                 AnliBodyHolder anliBodyHolder = new AnliBodyHolder(anliView);
                 anliView.setOnClickListener(this);
                 return anliBodyHolder;
-            }
+            }*/
+
+        if(viewType == ITEM_TYPE_ANLI){
+            // 显示右边 案例
+            View anliView = inflater.inflate(R.layout.layout_designer_info_anli, parent, false);
+            AnliBodyHolder anliBodyHolder = new AnliBodyHolder(anliView);
+            anliView.setOnClickListener(this);
+            return anliBodyHolder;
         }
+
         return null;
     }
 
@@ -170,6 +179,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             shejishiHeadHolder.desigText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+//                    onShowShejisDataListener.OnShowShejisDataListener();
                     shejishiHeadHolder.dataListBar.setVisibility(View.VISIBLE);
                     setClickType(0);
                     shejishiHeadHolder.desigText.setTextColor(Color.parseColor("#FF6F20"));
@@ -192,6 +202,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             shejishiHeadHolder.caseText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+//                    onshowAnliDataListener.OnshowAnliDataListener();
                     shejishiHeadHolder.dataListBar.setVisibility(View.VISIBLE);
                     setClickType(1);
                     shejishiHeadHolder.desigText.setTextColor(Color.parseColor("#333333"));
@@ -213,7 +224,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             if(noShejiData && noAnliData){
                 //  无设计，也无案例
-                shejishiHeadHolder.dataListBar.setVisibility(View.GONE);
+//                shejishiHeadHolder.dataListBar.setVisibility(View.GONE);
                 shejishiHeadHolder.relimgEmpty.setVisibility(View.VISIBLE);
                 shejishiHeadHolder.imgEmpty.setVisibility(View.VISIBLE);
                 this.moreData = false;
@@ -235,37 +246,40 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
         }
 
-        if(holder instanceof  ShejiShiBodyHolder){
-            ShejiShiBodyHolder shejiHolder = (ShejiShiBodyHolder) holder;
+        if(this.clickType == SHEJI_TYPE){
+            if(holder instanceof  ShejiShiBodyHolder){
+                ShejiShiBodyHolder shejiHolder = (ShejiShiBodyHolder) holder;
 
-            if(!noShejiData){
-                shejiHolder.shejiPic.setType(1);
-                Glide.with(context).load(shejiDataList.get(position-1).getCover_url()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(shejiHolder.shejiPic);
-                shejiHolder.shejiInfoText.setText(shejiDataList.get(position-1).getTitle());
-                shejiHolder.shejiGetThis.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                        webIntent.putExtra("mLoadingUrl", Constant.getSheJiUrl);
-                        context.startActivity(webIntent);
-                    }
-                });
+                if(!noShejiData){
+                    shejiHolder.shejiPic.setType(1);
+                    Glide.with(context).load(shejiDataList.get(position-1).getCover_url()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(shejiHolder.shejiPic);
+                    shejiHolder.shejiInfoText.setText(shejiDataList.get(position-1).getTitle());
+                    shejiHolder.shejiGetThis.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent webIntent = new Intent(context, NewWebViewActivity.class);
+                            webIntent.putExtra("mLoadingUrl", Constant.getSheJiUrl);
+                            context.startActivity(webIntent);
+                        }
+                    });
 
-                shejiHolder.itemView.setTag(position);
+                    shejiHolder.itemView.setTag(position);
+                }
+            }
+        }else{
+            if (holder instanceof AnliBodyHolder){
+                AnliBodyHolder anliHolder = (AnliBodyHolder) holder;
+                if(!noAnliData){
+                    anliHolder.anliPic.setType(1);
+                    Glide.with(context).load(anliDataList.get(position-1).getCover_url()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(anliHolder.anliPic);
+                    // 深圳  小区  先生
+                    anliHolder.anliInfoTextDes.setText(anliDataList.get(position-1).getCity_name() + " " + anliDataList.get(position-1).getCommunity_name()+ " " + anliDataList.get(position-1).getOwner_name());
+                    anliHolder.anliInfotest.setText(anliDataList.get(position-1).getSub_title());
+                }
+                anliHolder.itemView.setTag(position);
             }
         }
 
-        if (holder instanceof AnliBodyHolder){
-            AnliBodyHolder anliHolder = (AnliBodyHolder) holder;
-            if(!noAnliData){
-                anliHolder.anliPic.setType(1);
-                Glide.with(context).load(anliDataList.get(position-1).getCover_url()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(anliHolder.anliPic);
-                // 深圳  小区  先生
-                anliHolder.anliInfoTextDes.setText(anliDataList.get(position-1).getCity_name() + " " + anliDataList.get(position-1).getCommunity_name()+ " " + anliDataList.get(position-1).getOwner_name());
-                anliHolder.anliInfotest.setText(anliDataList.get(position-1).getSub_title());
-            }
-            anliHolder.itemView.setTag(position);
-        }
 
         if(holder instanceof ShejishiFoot) {
             ShejishiFoot footHolder = (ShejishiFoot) holder;
@@ -305,7 +319,12 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }else if(position + 1 == getItemCount()){
             return ITEM_TYPE_FOOT;
         }else{
-            return ITEM_TYPE_BODY;
+            if(this.clickType == SHEJI_TYPE){
+                return ITEM_TYPE_SHEJI;
+            }else {
+                return ITEM_TYPE_ANLI;
+            }
+
         }
     }
 

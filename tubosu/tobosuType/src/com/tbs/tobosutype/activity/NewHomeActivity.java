@@ -191,15 +191,15 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Util.setToast(mContext, "onresume");
-        if(CacheManager.getChentaoFlag(mContext) != 0){
-            // 不用回到顶部
-
-        }
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        Util.setToast(mContext, "onresume");
+//        if(CacheManager.getChentaoFlag(mContext) != 0){
+//            // 不用回到顶部
+//
+//        }
+//    }
 
     private View zixunPopView;
     private PopupWindow zixunPopupWindow;

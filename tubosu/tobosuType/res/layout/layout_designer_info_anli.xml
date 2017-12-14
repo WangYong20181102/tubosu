@@ -5,13 +5,15 @@
     android:background="@color/white">
 
     <LinearLayout
+        android:id="@+id/sdf4747"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <com.tbs.tobosutype.utils.TRoundView
             android:id="@+id/anliPic"
             android:layout_width="match_parent"
-            android:layout_height="164dp"
+            android:layout_height="196dp"
             android:layout_marginTop="14dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
@@ -21,9 +23,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:layout_marginLeft="14dp"
-            android:layout_marginBottom="24dp"
             android:layout_marginRight="14dp">
 
             <LinearLayout
@@ -35,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
-                    android:textSize="14sp"
+                    android:textSize="16sp"
                     android:text="简欧 三居室 古典"/>
 
 
@@ -43,10 +44,11 @@
                     android:id="@+id/anliInfotest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#363636"
-                    android:layout_marginTop="20dp"
-                    android:textSize="14sp"
-                    android:text="广东xxx"/>
+                    android:layout_marginBottom="26dp"
+                    android:layout_marginTop="7dp"
+                    android:text="80㎡/2局/6万/全包"
+                    android:textColor="#888888"
+                    android:textSize="13sp"/>
 
             </LinearLayout>
 
@@ -67,7 +69,11 @@
         </RelativeLayout>
     </LinearLayout>
 
-
+    <View
+        android:layout_below="@+id/sdf4747"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="@color/bg_gray" />
 
 
 </RelativeLayout>

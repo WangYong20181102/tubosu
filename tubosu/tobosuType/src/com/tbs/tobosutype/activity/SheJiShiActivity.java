@@ -92,6 +92,7 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
 
         dataIntent = getIntent();
         des_id = dataIntent.getStringExtra("designer_id");
+        Util.setErrorLog(TAG, ">>设计师id>>>>" + des_id);
         initViews();
     }
 
@@ -258,6 +259,13 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                                                     startActivity(intent);
                                                 }
                                             });
+
+//                                            shejishiAdapter.setOnShowShejisDataListener(new DesignerInfoAdapter.OnShowShejisDataListener() {
+//                                                @Override
+//                                                public void OnShowShejisDataListener() {
+//                                                    Util.setToast(mContext, "设计...");
+//                                                }
+//                                            });
                                         }
                                     }else{
                                         //  案例
@@ -280,6 +288,13 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                                                     startActivity(intent);
                                                 }
                                             });
+
+//                                            shejishiAdapter.setOnshowAnliDataListener(new DesignerInfoAdapter.OnshowAnliDataListener() {
+//                                                @Override
+//                                                public void OnshowAnliDataListener() {
+//                                                    Util.setToast(mContext, "我要显示案例列表啦");
+//                                                }
+//                                            });
                                         }
                                     }
                                 }else if(moreDataJson.getInt("status") == 201){
@@ -399,6 +414,19 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                                             startActivity(intent);
                                         }
                                     });
+
+//                                    shejishiAdapter.setOnshowAnliDataListener(new DesignerInfoAdapter.OnshowAnliDataListener() {
+//                                        @Override
+//                                        public void OnshowAnliDataListener() {
+//                                            Util.setToast(mContext, "我要显示案例列表啦1");
+//                                        }
+//                                    });
+//                                    shejishiAdapter.setOnShowShejisDataListener(new DesignerInfoAdapter.OnShowShejisDataListener() {
+//                                        @Override
+//                                        public void OnShowShejisDataListener() {
+//                                            Util.setToast(mContext, "设计1...");
+//                                        }
+//                                    });
 
                                 }else if(sheji.getInt("status") == 201){
                                     Util.setErrorLog(TAG, "设计师来了201");
