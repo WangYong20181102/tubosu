@@ -14,6 +14,8 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean.CompanyBannerItem;
 import com.tbs.tobosutype.bean.GongsiItem;
 import com.tbs.tobosutype.bean.RCompanyBean;
+import com.tbs.tobosutype.customview.MyRatingBar;
+
 import java.util.List;
 
 
@@ -58,7 +60,7 @@ public class YouXuanGongSiAdapter extends BaseAdapter{
             gongsiViewHodler.name = (TextView) itemView.findViewById(R.id.tvGongsiName);
             gongsiViewHodler.vGongsi = (ImageView) itemView.findViewById(R.id.vGongsi);
             gongsiViewHodler.tuijianGongsi = (ImageView) itemView.findViewById(R.id.tuijianGongsi);
-            gongsiViewHodler.ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
+            gongsiViewHodler.ratingBar = (MyRatingBar) itemView.findViewById(R.id.ratingBar);
             gongsiViewHodler.tvZixunNum = (TextView) itemView.findViewById(R.id.zixunNum);
             gongsiViewHodler.tvCaseAndCase = (TextView) itemView.findViewById(R.id.tvCaseAndCase);
             gongsiViewHodler.ccDistance = (TextView) itemView.findViewById(R.id.ccDistance);
@@ -85,7 +87,8 @@ public class YouXuanGongSiAdapter extends BaseAdapter{
 
         String rate = dataList.get(position).getGrade();
         if(rate!=null && !"".equals(rate)){
-            gongsiViewHodler.ratingBar.setRating(Float.parseFloat(rate));
+            gongsiViewHodler.ratingBar.setClickable(false);
+            gongsiViewHodler.ratingBar.setStar(Float.parseFloat(rate));
         }
 
         String shejiText = "";
@@ -124,7 +127,7 @@ public class YouXuanGongSiAdapter extends BaseAdapter{
         TextView name;
         ImageView vGongsi;
         ImageView tuijianGongsi;
-        RatingBar ratingBar;
+        MyRatingBar ratingBar;
         TextView tvZixunNum;
         TextView tvCaseAndCase;
         TextView ccDistance;

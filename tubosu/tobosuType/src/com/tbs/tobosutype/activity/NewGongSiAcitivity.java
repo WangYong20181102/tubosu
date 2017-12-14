@@ -82,9 +82,8 @@ import okhttp3.Response;
 public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity implements View.OnClickListener {
     private static final String TAG = NewGongSiAcitivity.class.getSimpleName();
     private Context mContext;
-
     private YouXuanGongSiAdapter youxuanCompanyAdapter;
-    private TextView tvGongsiCity;
+    private TextView tvGongsiCity, tvGongsiCity1;
     private String gongsiCity = "深圳市";
     private String shaixuanCity = "";
     private MyListView youxuanList;
@@ -92,8 +91,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     private ImageView ivGongSiDelete;
     private TextView tvCancelSearch;
     private RelativeLayout relTopSearch;
-    private RelativeLayout reUpSelectLayout;
-    private RelativeLayout relGoClick, nothingData;
+    private RelativeLayout relTopSearch1;// 顶部View
+    private RelativeLayout relGoClick,relGoClick1, nothingData;
     private ImageView ivGoFadan;
     private TextView tvZonghe, tvLiulanzuiduo, tvAnlizuiduo, tvLiwozuijin;
     private TextView shitirenzheng,ctuijian,fuwuquyu;
@@ -120,7 +119,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     private Gson gson;
     private boolean normalData = true;
 
-    private boolean isMoving = false;
+    private boolean isClose = true;
 
     private int topBarHeight;
     private int mCurrentPosition = 0;
@@ -138,35 +137,26 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     private String lat = "";                   // 经度lat
     private String lng = "";                   // 经度lng
 
-    private float X1;
-    private float X2;
-    private float Y1;
-    private float Y2;
-    private float ComparedX;
-    private float ComparedY;
 
-    private int fixHeight = 0;
     private boolean isChooseShiTiRenZheng = false;
     private boolean isChooseTuijian = false;
 
     private ArrayList<CompanyDistrictBean> discList = new ArrayList<CompanyDistrictBean>();
 
     private int pageState = 0;
-
     private String searchText = "";
 
     private RelativeLayout searchLayout, findCompanyLayout;
+    private View mengceng4;
     private SwipeRefreshLayout searchSwip;
     private RecyclerView searchList;
     private boolean youxuan = false;
-
 
 
     // 筛选
     private RelativeLayout relShaiXuan;
     private ArrayList<ShaixuanBean> jiatingList = new ArrayList<ShaixuanBean>();
     private ArrayList<ShaixuanBean> shangyeList = new ArrayList<ShaixuanBean>();
-
 
 
     @Override
@@ -186,15 +176,17 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         gognsiDotLayout = (LinearLayout) findViewById(R.id.gognsiDotLayout);
         gongsiRecyclerViewTuijian = (RecyclerView) findViewById(R.id.gongsiRecyclerViewTuijian);
         mainAppbar = (AppBarLayout) findViewById(R.id.mainAppbar);
+
         findcompanyswiperefresh = (SwipeRefreshLayout) findViewById(R.id.find_company_swipe_refresh);
         findcompanyrecycler = (RecyclerView) findViewById(R.id.find_company_recycler);
         relTopSearch = (RelativeLayout) findViewById(R.id.relTopSearch);
-        reUpSelectLayout = (RelativeLayout) findViewById(R.id.reUpSelectLayout);
+        relTopSearch1 = (RelativeLayout) findViewById(R.id.relTopSearch1);
         ivGongSiDelete = (ImageView) findViewById(R.id.ivGongSiDelete);
         etSearchGongsi = (EditText) findViewById(R.id.etSearchGongsi);
         tvCancelSearch = (TextView) findViewById(R.id.tvCancelSearch);
         youxuanList = (MyListView) findViewById(R.id.youxuanList);
         tvGongsiCity = (TextView) findViewById(R.id.tvGongsiCity);
+        tvGongsiCity1 = (TextView) findViewById(R.id.tvGongsiCity1);
         ivGoFadan = (ImageView) findViewById(R.id.ivGoFadan);
 
         tvZonghe = (TextView) findViewById(R.id.tvZonghe);
@@ -214,9 +206,11 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         relYouxuan = (RelativeLayout) findViewById(R.id.relYouxuan);
 
         searchLayout = (RelativeLayout) findViewById(R.id.searchLayout);
+        mengceng4 = (View) findViewById(R.id.mengceng4);
         searchSwip = (SwipeRefreshLayout) findViewById(R.id.searchSwip);
         searchList = (RecyclerView) findViewById(R.id.searchList);
         relGoClick = (RelativeLayout) findViewById(R.id.relGoClick);
+        relGoClick1 = (RelativeLayout) findViewById(R.id.relGoClick1);
         findCompanyLayout = (RelativeLayout) findViewById(R.id.findCompanyLayout);
         relShaiXuan = (RelativeLayout) findViewById(R.id.relShaiXuan);
 
@@ -234,6 +228,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         fuwuquyu.setOnClickListener(this);
         reSearvice.setOnClickListener(this);
         tvGongsiCity.setOnClickListener(this);
+        tvGongsiCity1.setOnClickListener(this);
         relShaiXuan.setOnClickListener(this);
 
         findComIcon.setOnClickListener(this);
@@ -249,7 +244,9 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         });
         tvCancelSearch.setOnClickListener(this);
         relGoClick.setOnClickListener(this);
+        relGoClick1.setOnClickListener(this);
         relfindComLayout.setOnClickListener(this);
+        mengceng4.setOnClickListener(this);
         etSearchGongsi.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -277,7 +274,6 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         findcompanyswiperefresh.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
         findcompanyswiperefresh.setOnRefreshListener(swipeLister);
 
-
         mainAppbar.addOnOffsetChangedListener(new AppBarStateChangeListener() {
 
             @Override
@@ -285,36 +281,29 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 if(state == State.EXPANDED ) {
 //                    Util.setToast(mContext, "展开");
                     pageState = 0;
-
-
-                    //展开状态
+                    relTopSearch.setVisibility(View.VISIBLE);
                 }else if(state == State.COLLAPSED){
                     pageState = 1;
-
 //                    Util.setToast(mContext, "折叠");
-                    //折叠状态
-
+                    relTopSearch.setVisibility(View.GONE);
                 }else {
                     pageState = 2;
-
-//                    Util.setToast(mContext, "中间");
-                    //中间状态
-
                 }
             }
         });
 
-
         findcompanyrecycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                topBarHeight = relTopSearch.getHeight();
-            }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                if(dy>0){
+                    // 向上
+                    relTopSearch1.setVisibility(View.GONE);
+                }else if(dy<0){
+                    // 向下
+                    relTopSearch1.setVisibility(View.VISIBLE);
+                }
 
                 //得到当前显示的最后一个item的view
                 int lastPosition = linearLayoutManager.findLastVisibleItemPosition();
@@ -386,97 +375,35 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int lastPosition = linearLayoutManager1.findLastVisibleItemPosition();
-//                Util.setErrorLog(TAG, "总共有" +recyclerView.getLayoutManager().getItemCount()+ "     最后一个的位置是" + lastPosition);
                 if (lastPosition + 1 >= recyclerView.getLayoutManager().getItemCount() && normalData && !isSearchLoading) {
-//                    Util.setErrorLog(TAG, "总 进入 ");
                     if (searchCompanyAdapter != null) {
                         searchCompanyAdapter.loadMoreGongsi(true);
                         pageS++;
+                        searchLayout.setBackgroundResource(R.color.white);
                         getSearchData(searchText);
+                        getBannerData(); // banner
                     }
                 }
             }
         });
 
+
         findcompanyrecycler.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                switch (motionEvent.getAction()){
-                    case MotionEvent.ACTION_DOWN:
-                        //当手指第一次按下的时候，执行的操作
-                        X1 = motionEvent.getX(); //获取刚按下屏幕位置的X坐标的值
-                        Y1 = motionEvent.getY(); //获取刚按下屏幕位置的Y坐标的值
-                        isMoving = true;
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        isMoving = false;
-                        //当手指抬起，离开屏幕的时候，执行的操作
-                        X2 = motionEvent.getX(); //当手指抬起时，再次获取屏幕位置的X值
-                        Y2 = motionEvent.getY(); //同理
-                        ComparedX = X2 - X1; //第二次的X坐标的位置减去第一次X坐标的位置，代表X坐标上的变化情况
-                        ComparedY = Y2 -Y1; //同理
-                        //当X坐标的变化量的绝对值大于Y坐标的变化量的绝对值，以X坐标的变化情况作为判断依据
-                        //上下左右的判断，都在一条直线上，但手指的操作不可能划直线，所有选择变化量大的方向上的量
-                        //作为判断依据
-                        if (Math.abs(ComparedX) >= Math.abs(ComparedY)){
-                            //leader X
-                            if (ComparedX>0){
-                                //手机屏幕的坐标值，从左上方到右下方增加，横为X轴，竖为Y轴
-//                                Toast.makeText(mContext,"向右滑动",Toast.LENGTH_SHORT).show();
-                            }else{
-//                                Toast.makeText(getApplicationContext(),"向左滑动",Toast.LENGTH_SHORT).show();
-                            }
-                        }else{
-                            // leader Y
-                            if (ComparedY>0){
-//                                Toast.makeText(mContext,"向下滑动",Toast.LENGTH_SHORT).show();
-                                if(pageState == 0){
-                                    // 展开
-
-                                }else if(pageState == 1){
-                                    // 折叠
-                                    relTopSearch.setVisibility(View.VISIBLE);
-                                    reUpSelectLayout.setVisibility(View.VISIBLE);
-                                }else {
-                                    // 中间
-                                }
-
-                            }else{
-//                                Toast.makeText(mContext,"向上滑动",Toast.LENGTH_SHORT).show();
-                                if(pageState == 0){
-                                    // 展开
-
-                                }else if(pageState == 1){
-                                    // 折叠
-                                    relTopSearch.setVisibility(View.GONE);
-                                    reUpSelectLayout.setVisibility(View.GONE);
-                                }else {
-                                    // 中间
-
-                                }
-                            }
-                        }
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        //当手指一直按在屏幕上，并且移动的时候执行的操作
-                        isMoving = true;
-                        break;
-                }
-
-                //处于下拉刷新时列表不允许点击  死锁问题
                 if (findcompanyswiperefresh.isRefreshing()) {
                     return true;
                 } else {
                     return false;
                 }
+
             }
         });
 
         findComIcon.setVisibility(View.VISIBLE);
         findComIcon.setVisibility(View.GONE);
-        getData();
+        getBannerData();
         getNetData();
     }
 
@@ -520,14 +447,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         }
     };
 
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return findcompanyrecycler.onTouchEvent(event);
-    }
-
-
-    private void getData(){
+    private void getBannerData(){
         if(Util.isNetAvailable(mContext)){
             HashMap<String, Object> dataMap = new HashMap<String, Object>();
             dataMap.put("token", Util.getDateToken());
@@ -549,7 +469,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     final String bannerJson = response.body().string();
-                    Util.setErrorLog(TAG, bannerJson);
+                    Util.setErrorLog(TAG, "bnner Json 数据："+bannerJson);
                     runOnUiThread(new Runnable() {
 
                         @Override
@@ -711,7 +631,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 gongsiCity = (String)event.getData();
                 city_name = gongsiCity;
                 tvGongsiCity.setText(gongsiCity);
-
+                tvGongsiCity1.setText(gongsiCity);
                 discList.clear();
                 fuwuquyu.setText("服务区域");
 
@@ -739,7 +659,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                     companyAdapter = null;
                 }
 
-                getData(); // banner
+                getBannerData(); // banner
                 getNetData(); // body
                 sortDistrict(gongsiCity);  // 选择区域
                 break;
@@ -753,8 +673,6 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 discList.clear();
                 sortDistrict(shaixuanCity);
 
-
-
                 if(discList.size() != 0){
                     shaixuanDialog.updateServiceAreaData(discList);
                 }else{
@@ -766,7 +684,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                     fuwuquyu.setText("服务区域");
                     getNetData();
                     // 其他页面也要改
-
+                    getBannerData();
                 }else{
                     Util.setErrorLog(TAG, "你没有筛选城市");
                 }
@@ -778,6 +696,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 String city = (String) event.getData();
                 city_name = city;
                 tvGongsiCity.setText(city_name);
+                tvGongsiCity1.setText(city_name);
                 getNetData();
                 break;
 
@@ -799,9 +718,6 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         }else {
             getCityJson();
         }
-        for(int i=0;i<discList.size();i++){
-            Util.setErrorLog(TAG, discList.get(i).getDistrict_name());
-        }
 
     }
 
@@ -809,6 +725,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tvGongsiCity:
+            case R.id.tvGongsiCity1:
                 Intent selectCityIntent = new Intent(mContext, SelectCtiyActivity.class);
                 Bundle b = new Bundle();
                 b.putString("fromFindCompany", "64");
@@ -942,52 +859,59 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
             case R.id.fuwuquyu:
             case R.id.reSearvice:
 
-                // 弹出 弹框
-                sortDistrict(gongsiCity);
-                View contentView = LayoutInflater.from(NewGongSiAcitivity.this).inflate(R.layout.popuplayout_district_layout, null);
-                final PopupWindow popWnd = new PopupWindow(NewGongSiAcitivity.this);
-                popWnd.setContentView(contentView);
-                popWnd.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-                popWnd.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-                popWnd.setOutsideTouchable(true);
-                popWnd.setTouchable(true);
-                popWnd.setBackgroundDrawable(getResources().getDrawable(R.drawable.color_dra_white));
+                if(isClose){
+                    // 弹出 弹框
+                    sortDistrict(gongsiCity);
+                    View contentView = LayoutInflater.from(NewGongSiAcitivity.this).inflate(R.layout.popuplayout_district_layout, null);
+                    final PopupWindow popWnd = new PopupWindow(NewGongSiAcitivity.this);
+                    popWnd.setContentView(contentView);
+                    popWnd.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+                    popWnd.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+                    popWnd.setOutsideTouchable(true);
+                    popWnd.setTouchable(true);
+                    popWnd.setBackgroundDrawable(getResources().getDrawable(R.drawable.color_dra_white));
 
-                GridView disctrictGrid = (GridView) contentView.findViewById(R.id.disctrictGrid);
+                    GridView disctrictGrid = (GridView) contentView.findViewById(R.id.disctrictGrid);
 
-                ComDisctrictAdapter adapter = new ComDisctrictAdapter(mContext, discList);
-                disctrictGrid.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-                disctrictGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    ComDisctrictAdapter adapter = new ComDisctrictAdapter(mContext, discList);
+                    disctrictGrid.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    disctrictGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        district_id = discList.get(i).getDistrict_id();
-                        fuwuquyu.setText(discList.get(i).getDistrict_name());
-                        gongsiList.clear();
-                        if(companyAdapter!=null){
-                            companyAdapter.notifyDataSetChanged();
-                            companyAdapter = null;
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            district_id = discList.get(i).getDistrict_id();
+                            fuwuquyu.setText(discList.get(i).getDistrict_name());
+                            gongsiList.clear();
+                            if(companyAdapter!=null){
+                                companyAdapter.notifyDataSetChanged();
+                                companyAdapter = null;
+                            }
+                            popWnd.dismiss();
+                            getNetData();
                         }
-                        popWnd.dismiss();
-                        getNetData();
-                    }
-                });
+                    });
 
-                for(int i=0;i<discList.size();i++){
-                    String tempText = fuwuquyu.getText().toString().trim();
-                    if(tempText.equals(discList.get(i).getDistrict_name())){
-                        adapter.setSelectedPosition(i);
+                    for(int i=0;i<discList.size();i++){
+                        String tempText = fuwuquyu.getText().toString().trim();
+                        if(tempText.equals(discList.get(i).getDistrict_name())){
+                            adapter.setSelectedPosition(i);
+                        }
                     }
+
+                    popWnd.showAsDropDown(reSearvice, 0, 10);
                 }
+                isClose = !isClose;
 
-                popWnd.showAsDropDown(reSearvice, 0, 10);
                 break;
             case R.id.relGoClick:
+            case R.id.relGoClick1:
+                searchLayout.setBackgroundResource(R.color.cal_pressed_color_trancspar);
+                relTopSearch1.setVisibility(View.GONE);
+                mengceng4.setVisibility(View.VISIBLE);
                 // 跳转到搜索页面
-
                 // 展开 虚拟键盘
-                ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(NewGongSiAcitivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.SHOW_FORCED);
+//                ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(NewGongSiAcitivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.SHOW_FORCED);
 
                 // 点击 跳转去搜索页面
                 etSearchGongsi.setText("");
@@ -995,7 +919,6 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 ivGongSiDelete.setVisibility(View.GONE);
                 nothingData.setVisibility(View.GONE);
                 relYouxuan.setVisibility(View.GONE);
-                findCompanyLayout.setVisibility(View.GONE);
                 searchLayout.setVisibility(View.VISIBLE);
 
                 if(youxuanCompanyAdapter!=null){
@@ -1012,15 +935,19 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
                 }
                 System.gc();
-
                 break;
             case R.id.ivGongSiDelete:
                 etSearchGongsi.setText("");
                 ivGongSiDelete.setVisibility(View.GONE);
                 tvCancelSearch.setText("取消");
                 break;
+            case R.id.mengceng4:
+                mengceng4.setVisibility(View.GONE);
+                searchLayout.setVisibility(View.GONE);
+                break;
             case R.id.tvCancelSearch:
                 if(tvCancelSearch.getText().toString().trim().equals("取消")){
+                    ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(NewGongSiAcitivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     // 搜索适配器， 优选适配器置空  均清除列表 返回正常页面
                     if(searchCompanyAdapter != null){
                         searchGongsiList.clear();
@@ -1039,8 +966,12 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                     relYouxuan.setVisibility(View.GONE);
                     searchLayout.setVisibility(View.GONE);
                     nothingData.setVisibility(View.GONE);
+                    mengceng4.setVisibility(View.GONE);
                     findCompanyLayout.setVisibility(View.VISIBLE); // 恢复到找装修公司页面
+                    relTopSearch1.setVisibility(View.VISIBLE);
                 }else if(tvCancelSearch.getText().toString().trim().equals("搜索")){
+                    mengceng4.setVisibility(View.GONE);
+                    searchLayout.setBackgroundResource(R.color.white);
                     ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(NewGongSiAcitivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     // 搜索，请求网络  在搜索页面
                     searchText = etSearchGongsi.getText().toString().trim();
@@ -1146,6 +1077,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
                 gongsiCity = shaixuanCity;
                 tvGongsiCity.setText(gongsiCity); // 找公司页面的左上角
+                tvGongsiCity1.setText(gongsiCity);
                 EventBusUtil.sendEvent(new Event(EC.EventCode.HOMEACTIVITY_CITY_CODE, gongsiCity));
 
 
@@ -1415,7 +1347,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
     /**
      * 获取 工装 家装 类型 接口
-      */
+     */
     private void getToolNetData(){
         String shaixuan = CacheManager.getToolFlag(mContext);
         if(!TextUtils.isEmpty(shaixuan)){
@@ -1653,8 +1585,10 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     }
 
     private void startSlide() {
-        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-        scheduledExecutorService.scheduleAtFixedRate(new ShowTask(), 1, 4, TimeUnit.SECONDS);
+        if(scheduledExecutorService==null){
+            scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+        }
+        scheduledExecutorService.scheduleAtFixedRate(new ShowTask(), 4, 6, TimeUnit.SECONDS);
     }
 
     private class ShowTask implements Runnable {

@@ -1,6 +1,7 @@
 package com.tbs.tobosutype.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,7 +13,9 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.activity.CoYouHuiActivity;
 import com.tbs.tobosutype.bean.GongsiItem;
+import com.tbs.tobosutype.customview.MyRatingBar;
 
 import java.util.List;
 
@@ -58,7 +61,7 @@ public class SearchGongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if(holder instanceof GongsiViewHodler){
             GongsiViewHodler gongsiViewHodler = (GongsiViewHodler) holder;
             gongsiViewHodler.name.setText(dataList.get(position).getName());
@@ -78,7 +81,8 @@ public class SearchGongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             String rate = dataList.get(position).getGrade();
             if(rate!=null && !"".equals(rate)){
-                gongsiViewHodler.ratingBar.setRating(Float.parseFloat(rate));
+                gongsiViewHodler.ratingBar.setClickable(false);
+                gongsiViewHodler.ratingBar.setStar(Float.parseFloat(rate));
             }
 
             String shejiText = "";
@@ -98,6 +102,15 @@ public class SearchGongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if(prop!=null && !"".equals(prop)){
                 gongsiViewHodler.tvYouhui.setText(" "+prop);
                 gongsiViewHodler.tvYouhui.setVisibility(View.VISIBLE);
+                gongsiViewHodler.tvYouhui.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, CoYouHuiActivity.class);
+                        intent.putExtra("mCompanyId", dataList.get(position).getId());
+                        context.startActivity(intent);
+                    }
+                });
             }else {
                 gongsiViewHodler.tvYouhui.setVisibility(View.GONE);
             }
@@ -161,7 +174,7 @@ public class SearchGongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView name;
         ImageView vGongsi;
         ImageView tuijianGongsi;
-        RatingBar ratingBar;
+        MyRatingBar ratingBar;
         TextView tvZixunNum;
         TextView tvCaseAndCase;
         TextView ccDistance;
@@ -173,7 +186,7 @@ public class SearchGongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             name = (TextView) itemView.findViewById(R.id.tvGongsiName);
             vGongsi = (ImageView) itemView.findViewById(R.id.vGongsi);
             tuijianGongsi = (ImageView) itemView.findViewById(R.id.tuijianGongsi);
-            ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
+            ratingBar = (MyRatingBar) itemView.findViewById(R.id.ratingBar);
             tvZixunNum = (TextView) itemView.findViewById(R.id.zixunNum);
             tvCaseAndCase = (TextView) itemView.findViewById(R.id.tvCaseAndCase);
             ccDistance = (TextView) itemView.findViewById(R.id.ccDistance);

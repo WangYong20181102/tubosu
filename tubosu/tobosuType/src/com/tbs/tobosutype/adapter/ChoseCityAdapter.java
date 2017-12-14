@@ -8,11 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean.CompanyCityBean;
-import com.tbs.tobosutype.bean.CompanyProvinceBean;
-
 import java.util.ArrayList;
 
 public class ChoseCityAdapter extends BaseAdapter {

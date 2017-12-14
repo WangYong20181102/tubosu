@@ -82,5 +82,5 @@
     <color name="gongsi_unselected">#1a1a1a</color>
 
     <color name="divide_gray_color">#F7F7F7</color>
-
+    <color name="cal_pressed_color_trancspar">#00000000</color>
 </resources>

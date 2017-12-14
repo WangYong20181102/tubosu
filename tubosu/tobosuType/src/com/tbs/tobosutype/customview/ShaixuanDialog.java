@@ -40,7 +40,7 @@ public class ShaixuanDialog extends Dialog {
     }
 
 
-    public ShaixuanDialog(Context context, int themeResId,String cityName) {
+    public ShaixuanDialog(Context context, int themeResId, String cityName) {
         super(context, themeResId);
         this.mContext = context;
         this.cityName = cityName;

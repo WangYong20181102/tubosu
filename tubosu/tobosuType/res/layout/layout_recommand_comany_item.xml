@@ -13,13 +13,13 @@
 
         <RelativeLayout
             android:layout_width="88dp"
-            android:layout_height="59dp"
+            android:layout_height="63dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/shape_image_bg">
             <ImageView
                 android:id="@+id/ivCompanyRCIcon"
                 android:layout_width="87dp"
-                android:layout_height="58dp"
+                android:layout_height="62dp"
                 android:layout_centerInParent="true" />
         </RelativeLayout>
 

@@ -4,10 +4,10 @@
     android:layout_height="match_parent" >
 
     <LinearLayout
+        android:id="@+id/prov2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
-
 
         <TextView
             android:id="@+id/cityTExt"
@@ -25,4 +25,10 @@
             android:layout_weight="1"
             android:layout_gravity="center" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/prov2"
+        android:background="#F2F2F2"/>
 </RelativeLayout>

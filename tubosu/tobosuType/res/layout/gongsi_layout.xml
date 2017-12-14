@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white">
 
-    <View
-        android:id="@+id/companygav"
-        android:background="#E5E5E5"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/companygav"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
+
         <RelativeLayout
+            android:id="@+id/yumingshi"
             android:layout_width="81dp"
             android:layout_height="61dp"
             android:layout_marginTop="18dp"
             android:layout_marginLeft="14dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/shape_image_bg">
 
             <ImageView
@@ -31,32 +28,37 @@
                 android:background="@drawable/new_home_loading"/>
         </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/sdfjil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_toRightOf="@+id/yumingshi"
+            android:layout_alignTop="@+id/yumingshi"
+            android:layout_alignBottom="@+id/yumingshi"
             android:layout_marginLeft="12dp"
-            android:layout_marginRight="16dp"
-            android:orientation="vertical">
+            android:layout_marginRight="16dp">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/tvGongsiName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:gravity="center"
+                    android:textSize="13sp"
                     android:layout_gravity="center_vertical"
                     android:text="阡陌装饰"
-                    android:textColor="@color/color_black"
-                    android:layout_marginLeft="14dp"/>
+                    android:textColor="@color/color_black"/>
 
                 <ImageView
                     android:id="@+id/vGongsi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="14dp"
+                    android:layout_marginLeft="6dp"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/renzheng"/>
 
@@ -64,35 +66,38 @@
                     android:id="@+id/tuijianGongsi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="14dp"
+                    android:layout_marginLeft="4dp"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/tuijian"/>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:gravity="center_vertical"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="4dp"
                 android:orientation="horizontal">
-                <RatingBar
+
+                <com.tbs.tobosutype.customview.MyRatingBar
                     android:id="@+id/ratingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:progressDrawable="@drawable/pinfen"
-                    android:stepSize="1"
-                    android:maxHeight="8.4dp"
-                    android:minHeight="8.4dp"
-                    android:isIndicator="false"
+                    app:starCount="5"
                     android:layout_gravity="center_vertical"
-                    android:numStars="5"
-                    android:layout_marginLeft="10dp"/>
+                    android:gravity="center_vertical"
+                    app:starEmpty="@drawable/nopingfen"
+                    app:starFill="@drawable/pinfen"
+                    app:starImageSize="10dp"
+                    app:starPadding="4dp"
+                    app:starStep="1"/>
 
                 <TextView
                     android:id="@+id/zixunNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="(4444咨询)"
+                    android:textSize="10sp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="6dp"
                     android:textColor="#8F8F8F"/>
@@ -101,16 +106,16 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
-                android:layout_marginTop="14dp"
-                android:layout_marginBottom="21dp"
-                android:layout_gravity="center_vertical">
+
+                android:layout_marginLeft="4dp"
+                android:layout_alignParentBottom="true">
 
                 <TextView
                     android:id="@+id/tvCaseAndCase"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:textSize="11sp"
                     android:text="设计：4      案例：44"
                     android:textColor="#8F8F8F"/>
 
@@ -119,26 +124,34 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:textSize="10sp"
+                    android:textColor="#999999"
                     android:layout_alignParentRight="true"
                     android:text="44km"/>
             </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tvYouhui"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="21dp"
-                android:text=" 这个是优惠哦"
-                android:maxLines="1"
-                android:maxEms="16"
-                android:ellipsize="end"
-                android:drawableLeft="@drawable/hui00"/>
-        </LinearLayout>
-    </LinearLayout>
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/tvYouhui"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sdfjil"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="13dp"
+            android:layout_alignLeft="@+id/sdfjil"
+            android:layout_marginLeft="4dp"
+            android:text=" 这个是优惠哦"
+            android:maxLines="1"
+            android:textSize="11sp"
+            android:maxEms="16"
+            android:ellipsize="end"
+            android:drawableLeft="@drawable/hui00"/>
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:background="#EEEEEE"/>
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="#F2F2F2"/>
 </RelativeLayout>

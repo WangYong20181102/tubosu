@@ -1,6 +1,9 @@
 package com.tbs.tobosutype.activity;
+import com.tbs.tobosutype.bean._CompanyDetail;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,11 +18,17 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.DesignerInfoAdapter;
 import com.tbs.tobosutype.bean.DesignerInfoBean;
 import com.tbs.tobosutype.bean.DesignerInfoCaseBean;
-import com.tbs.tobosutype.bean.DesignerInfoDesignBean;
 import com.tbs.tobosutype.customview.RecycleViewDivider;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,7 +50,6 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
     private Intent dataIntent;
     private String des_id;
     private android.widget.RelativeLayout shejishiBar;
-    private View banner_bag, bannerbackgroud;
     private android.widget.ImageView ivbacUpck, shejishiShare;
     private android.widget.RelativeLayout relShejishiBack;
     private android.support.v7.widget.RecyclerView shejishiRecyclerView;
@@ -55,7 +63,7 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
     private int page_size = 10;
     private DesignerInfoBean designerInfoBean;
     private List<DesignerInfoCaseBean> anliList = new ArrayList<DesignerInfoCaseBean>();
-    private List<DesignerInfoDesignBean> shejiList = new ArrayList<DesignerInfoDesignBean>();
+    private List<_CompanyDetail.SuitesBean> shejiList = new ArrayList<_CompanyDetail.SuitesBean>();
     private DesignerInfoAdapter shejishiAdapter;
     private String shareUrl;
     private int loadMoreDataType = 0;
@@ -71,8 +79,6 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
 
     private void bindViews(){
         shejishiBar = (RelativeLayout) findViewById(R.id.shejishiBar);
-        banner_bag = (View) findViewById(R.id.banner_bag);
-        bannerbackgroud = (View) findViewById(R.id.bannerbackgroud);
         relShejishiBack = (RelativeLayout) findViewById(R.id.relShejishiBack);
         ivbacUpck = (ImageView) findViewById(R.id.ivbacUpck);
         shejishiShare = (ImageView) findViewById(R.id.shejishiShare);
@@ -109,37 +115,37 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                     int lastPosition = linearLayoutManager.findLastVisibleItemPosition();
                     if (!isLoading && lastPosition + 2 >= recyclerView.getLayoutManager().getItemCount()) {
                         isLoading = true;
+                        shejishiAdapter.loadMore(true);
                         loadMoreData(loadMoreDataType);
                     }
                 }
 
-                //设置其透明度
-                float alpha = 0F;
+                int alpha = 0;
                 int scollYHeight = getScollYHeight(true, relShejishiBack.getHeight());
-                Util.setErrorLog(TAG, "====gao==>" + scollYHeight);
-                int baseHeight = 600;
+                int baseHeight = 402;
                 if (scollYHeight >= baseHeight) {
-                    alpha = 1;
+                    alpha = 255;
+                    scollYHeight = 402;
+                    shejishiBar.getBackground().setAlpha(255);
                 } else {
-                    alpha = scollYHeight / (baseHeight * 1.0f);
-                    if (alpha < 0.44) {
-                        ivbacUpck.setImageResource(R.drawable.back_white);
-                        shejishiShare.setBackgroundResource(R.drawable.out_white);
-                        banner_bag.setVisibility(View.GONE);
-                        bannerbackgroud.setVisibility(View.VISIBLE);
-                    } else {
-                        ivbacUpck.setImageResource(R.drawable.activity_back);
-                        shejishiShare.setBackgroundResource(R.drawable.zhuanfa);
-                        banner_bag.setVisibility(View.VISIBLE);
-                        bannerbackgroud.setVisibility(View.GONE);
-                    }
-                    banner_bag.setAlpha(alpha);
+                    alpha = (int)(255 - (baseHeight - scollYHeight));
+                }
+                shejishiBar.getBackground().setAlpha(alpha);
+                if (alpha < 69) {
+                    ivbacUpck.setImageResource(R.drawable.back_white);
+                    shejishiShare.setBackgroundResource(R.drawable.img_detail_share);
+                } else {
+                    ivbacUpck.setImageResource(R.drawable.activity_back);
+                    shejishiShare.setBackgroundResource(R.drawable.zh02);
                 }
             }
         });
-        shejishiRecyclerView.addItemDecoration(new RecycleViewDivider(
-                mContext, LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color.divide_gray_color)));
+
+//        shejishiRecyclerView.addItemDecoration(new RecycleViewDivider(
+//                mContext, LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color.divide_gray_color)));
         getData();
+
+
     }
 
     private int getScollYHeight(boolean hasHead, int headerHeight) {
@@ -170,12 +176,18 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
             // 设计
             shejiPage++;
             hashMap.put("page", shejiPage);
+            String userType = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("mark", "");
+            String uid = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("userid", "");
+            hashMap.put("user_type", userType);
+            hashMap.put("uid", uid);
             url = Constant.MORE_SHEJI_URL;
         }else {
             if(type == 1 && !shejishiAdapter.cantLoadMoreAnli()){
                 // 案例
                 anliPage++;
                 hashMap.put("page", anliPage);
+                hashMap.put("user_type", "");
+                hashMap.put("uid", "");
                 url = Constant.MORE_ANLI_URL;
             }else {
                 return;
@@ -191,6 +203,10 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            if(shejishiAdapter!=null){
+                                shejishiAdapter.loadMore(false);
+                            }
+
                             Util.setToast(mContext, "系统繁忙，稍后再试~");
                         }
                     });
@@ -208,6 +224,9 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                         @Override
                         public void run() {
                             isLoading = false;
+                            if(shejishiAdapter!=null){
+                                shejishiAdapter.loadMore(false);
+                            }
                             try {
                                 JSONObject moreDataJson = new JSONObject(json);
                                 String msg = moreDataJson.getString("msg");
@@ -216,15 +235,29 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                                     if(type == 0){
                                         // 设计
                                         JSONArray moreShejiArr = data.getJSONArray("designer_pic");
-                                        List<DesignerInfoDesignBean> tempMoreShejiList = new ArrayList<DesignerInfoDesignBean>();
+                                        List<_CompanyDetail.SuitesBean> tempMoreShejiList = new ArrayList<_CompanyDetail.SuitesBean>();
                                         for (int i = 0; i < moreShejiArr.length(); i++) {
                                             Gson shejiGson = new Gson();
-                                            DesignerInfoDesignBean designBean = shejiGson.fromJson(moreShejiArr.getJSONObject(i).toString(), DesignerInfoDesignBean.class);
+                                            _CompanyDetail.SuitesBean designBean = shejiGson.fromJson(moreShejiArr.getJSONObject(i).toString(), _CompanyDetail.SuitesBean.class);
                                             tempMoreShejiList.add(designBean);
                                         }
                                         if(shejishiAdapter != null){
                                             shejishiAdapter.setShejiDataList(tempMoreShejiList);
                                             shejishiAdapter.notifyDataSetChanged();
+
+                                            shejishiAdapter.setOnShejiDataListener(new DesignerInfoAdapter.OnShejiDataListener() {
+
+                                                @Override
+                                                public void OnShejiDataListener(View view, int shejiPosition) {
+                                                    //点击了整个图片层 进入图片查看器
+                                                    String DImageJson = new Gson().toJson(shejiList.get(shejiPosition));
+                                                    SpUtil.setDoubleImageListJson(mContext, DImageJson);
+                                                    Intent intent = new Intent(mContext, DImageLookingActivity.class);
+                                                    intent.putExtra("mPosition", shejiPosition);
+                                                    intent.putExtra("mWhereFrom", "ShejishiAcitity");
+                                                    startActivity(intent);
+                                                }
+                                            });
                                         }
                                     }else{
                                         //  案例
@@ -238,6 +271,15 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                                         if(shejishiAdapter != null){
                                             shejishiAdapter.setAnliDataList(tempMoreAnliList);
                                             shejishiAdapter.notifyDataSetChanged();
+
+                                            shejishiAdapter.setOnAnliDataListener(new DesignerInfoAdapter.OnAnliDataListener() {
+                                                @Override
+                                                public void OnAnliDataListener(View view, int anliPosition) {
+                                                    Intent intent = new Intent(mContext, DecorationCaseDetailActivity.class);
+                                                    intent.putExtra("deco_case_id", anliList.get(anliPosition).getId());
+                                                    startActivity(intent);
+                                                }
+                                            });
                                         }
                                     }
                                 }else if(moreDataJson.getInt("status") == 201){
@@ -254,19 +296,22 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                     });
                 }
             });
-
-
         }
     }
 
 
+
     private void getData(){
         if(Util.isNetAvailable(mContext)){
+            String userType = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("mark", "");
+            String uid = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("userid", "");
             HashMap<String, Object> hashMap = new HashMap<String,Object>();
             hashMap.put("token", Util.getDateToken());
             hashMap.put("des_id", des_id);
             hashMap.put("page",page);
             hashMap.put("page_size",page_size);
+            hashMap.put("user_type", userType);
+            hashMap.put("uid", uid);
             OKHttpUtil.post(Constant.SHEJISHI_URL, hashMap, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -299,10 +344,10 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                                         shareUrl = designerInfoBean.getShare();
                                     }
                                     JSONArray shejiArr = data.getJSONArray("designer_pic");
-                                    List<DesignerInfoDesignBean> tempShejiList = new ArrayList<>();
+                                    List<_CompanyDetail.SuitesBean> tempShejiList = new ArrayList<_CompanyDetail.SuitesBean>();
                                     for (int i = 0; i < shejiArr.length(); i++) {
                                         Gson shejiGson = new Gson();
-                                        DesignerInfoDesignBean designBean = shejiGson.fromJson(shejiArr.getJSONObject(i).toString(), DesignerInfoDesignBean.class);
+                                        _CompanyDetail.SuitesBean designBean = shejiGson.fromJson(shejiArr.getJSONObject(i).toString(), _CompanyDetail.SuitesBean.class);
                                         tempShejiList.add(designBean);
                                     }
                                     shejiList.addAll(tempShejiList);
@@ -332,9 +377,31 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                                     }else {
                                         shejishiAdapter.notifyDataSetChanged();
                                     }
+
+                                    shejishiAdapter.setOnShejiDataListener(new DesignerInfoAdapter.OnShejiDataListener() {
+                                        @Override
+                                        public void OnShejiDataListener(View view, int shejiPosition) {
+                                            //点击了整个图片层 进入图片查看器
+                                            String DImageJson = new Gson().toJson(shejiList);
+                                            SpUtil.setDoubleImageListJson(mContext, DImageJson);
+                                            Intent intent = new Intent(mContext, DImageLookingActivity.class);
+                                            intent.putExtra("mPosition", shejiPosition);
+                                            intent.putExtra("mWhereFrom", "ShejishiAcitity");
+                                            startActivity(intent);
+                                        }
+                                    });
+
+                                    shejishiAdapter.setOnAnliDataListener(new DesignerInfoAdapter.OnAnliDataListener() {
+                                        @Override
+                                        public void OnAnliDataListener(View view, int anliPosition) {
+                                            Intent intent = new Intent(mContext, DecorationCaseDetailActivity.class);
+                                            intent.putExtra("deco_case_id", anliList.get(anliPosition).getId());
+                                            startActivity(intent);
+                                        }
+                                    });
+
                                 }else if(sheji.getInt("status") == 201){
                                     Util.setErrorLog(TAG, "设计师来了201");
-
                                 }else if(sheji.getInt("status") == 0){
                                     Util.setErrorLog(TAG, "设计师来了0");
                                 }
@@ -383,7 +450,13 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.shejishiShare:
-                Util.setToast(mContext,"分享啦链接是" + shareUrl);
+                UMWeb umWeb = new UMWeb(shareUrl + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(mContext));
+//                umWeb.setDescription("我在土拨鼠看到一家靠谱的装修公司，现在0元设计家装费用立省一半");
+//                umWeb.setTitle("土拨鼠—" + mCompanyDetail.getName());
+                umWeb.setThumb(new UMImage(mContext, designerInfoBean.getIcon()));
+                new ShareAction(SheJiShiActivity.this)
+                        .setDisplayList(SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.QQ)
+                        .withMedia(umWeb).open();
                 break;
             case R.id.relShejishiBack:
                 finish();

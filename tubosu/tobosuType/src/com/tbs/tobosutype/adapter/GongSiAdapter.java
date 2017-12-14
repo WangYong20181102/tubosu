@@ -15,6 +15,8 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean.CompanyBannerItem;
 import com.tbs.tobosutype.bean.GongsiItem;
 import com.tbs.tobosutype.bean.RCompanyBean;
+import com.tbs.tobosutype.customview.MyRatingBar;
+
 import java.util.List;
 
 
@@ -86,7 +88,8 @@ public class GongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             String rate = dataList.get(position).getGrade();
             if(rate!=null && !"".equals(rate)){
-                gongsiViewHodler.ratingBar.setRating(Float.parseFloat(rate));
+                gongsiViewHodler.ratingBar.setClickable(false);
+                gongsiViewHodler.ratingBar.setStar(Float.parseFloat(rate));
             }
 
             String shejiText = "";
@@ -104,7 +107,7 @@ public class GongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             gongsiViewHodler.tvZixunNum.setText("("+zxNum+")");
             String prop = dataList.get(position).getPromotion_title();
             if(prop!=null && !"".equals(prop)){
-                gongsiViewHodler.tvYouhui.setText(" "+prop);
+                gongsiViewHodler.tvYouhui.setText("   "+prop);
                 gongsiViewHodler.tvYouhui.setVisibility(View.VISIBLE);
             }else {
                 gongsiViewHodler.tvYouhui.setVisibility(View.GONE);
@@ -184,7 +187,7 @@ public class GongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         TextView name;
         ImageView vGongsi;
         ImageView tuijianGongsi;
-        RatingBar ratingBar;
+        MyRatingBar ratingBar;
         TextView tvZixunNum;
         TextView tvCaseAndCase;
         TextView ccDistance;
@@ -196,7 +199,7 @@ public class GongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             name = (TextView) itemView.findViewById(R.id.tvGongsiName);
             vGongsi = (ImageView) itemView.findViewById(R.id.vGongsi);
             tuijianGongsi = (ImageView) itemView.findViewById(R.id.tuijianGongsi);
-            ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
+            ratingBar = (MyRatingBar) itemView.findViewById(R.id.ratingBar);
             tvZixunNum = (TextView) itemView.findViewById(R.id.zixunNum);
             tvCaseAndCase = (TextView) itemView.findViewById(R.id.tvCaseAndCase);
             ccDistance = (TextView) itemView.findViewById(R.id.ccDistance);

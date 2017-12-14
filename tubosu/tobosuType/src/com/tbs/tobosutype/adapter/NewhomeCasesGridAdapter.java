@@ -5,19 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
 import com.tbs.tobosutype.utils.GlideUtils;
 import com.tbs.tobosutype.utils.TRoundView;
-
 import java.util.List;
-/**
- * Created by Lie on 2017/10/28.
- */
-
 public class NewhomeCasesGridAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;

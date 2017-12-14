@@ -50,11 +50,14 @@ public class GongsiAdViewpagerAdapter extends PagerAdapter {
 
             @Override
             public void onClick(View v) {
-                setClickRequest(clickId.get(position));
-                Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                webIntent.putExtra("mLoadingUrl", urlStrings.get(position));
-                Util.setErrorLog("装修公司viewpagerAdapter", urlStrings.get(position));
-                context.startActivity(webIntent);
+                if(position<urlStrings.size()){
+                    setClickRequest(clickId.get(position));
+                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
+                    webIntent.putExtra("mLoadingUrl", urlStrings.get(position));
+                    Util.setErrorLog("装修公司viewpagerAdapter", urlStrings.get(position));
+                    context.startActivity(webIntent);
+                }
+
             }
         });
         return viewList.get(position);

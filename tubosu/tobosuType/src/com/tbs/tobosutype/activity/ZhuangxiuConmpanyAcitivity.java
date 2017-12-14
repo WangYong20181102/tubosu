@@ -123,7 +123,8 @@ public class ZhuangxiuConmpanyAcitivity extends com.tbs.tobosutype.base.BaseActi
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
             int lastVisiableItems = linearLayoutManager.findLastVisibleItemPosition();
-            if (newState == RecyclerView.SCROLL_STATE_IDLE
+
+            if (adapter!=null && newState == RecyclerView.SCROLL_STATE_IDLE
                     && lastVisiableItems + 2 >= adapter.getItemCount()) {
                 LoadMore();
             }

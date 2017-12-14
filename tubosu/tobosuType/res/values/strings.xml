@@ -173,5 +173,6 @@
     <!-- 优惠报名页面 -->
     <string name="preferential_applyfor_text">优惠报名</string>
 
+    <string name="my_behavior">com.tbs.tobosutype.customview.DownSelectBarBehavior</string>
 
 </resources>

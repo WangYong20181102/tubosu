@@ -4,6 +4,7 @@
     android:layout_height="match_parent" >
 
     <LinearLayout
+        android:id="@+id/prov1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -23,4 +24,9 @@
             android:layout_weight="1"
             android:layout_gravity="center" />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/prov1"
+        android:background="#F2F2F2"/>
 </RelativeLayout>

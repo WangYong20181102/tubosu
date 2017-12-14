@@ -1,5 +1,4 @@
 package com.tbs.tobosutype.adapter;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,7 +16,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.NewWebViewActivity;
 import com.tbs.tobosutype.bean.DesignerInfoBean;
 import com.tbs.tobosutype.bean.DesignerInfoCaseBean;
-import com.tbs.tobosutype.bean.DesignerInfoDesignBean;
+import com.tbs.tobosutype.bean._CompanyDetail;
 import com.tbs.tobosutype.customview.ExpandableTextView;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.TRoundView;
@@ -26,13 +25,13 @@ import com.tbs.tobosutype.utils.Util;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener{
     private final String TAG = DesignerInfoAdapter.class.getSimpleName();
     private Context context;
     private LayoutInflater inflater;
     private int clickType = 0;
     private DesignerInfoBean designerInfoBean;
-    private List<DesignerInfoDesignBean> shejiDataList = new ArrayList<DesignerInfoDesignBean>();
+    private List<_CompanyDetail.SuitesBean> shejiDataList = new ArrayList<_CompanyDetail.SuitesBean>();
     private List<DesignerInfoCaseBean> anliDataList = new ArrayList<DesignerInfoCaseBean>();
 
     private final int SHEJI_TYPE = 0;
@@ -43,8 +42,9 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private boolean moreData = false;
     private boolean noShejiData = false;
     private boolean noAnliData = false;
-
     private boolean nothing = false;
+
+
 
     public DesignerInfoAdapter(Context context, DesignerInfoBean designerInfoBean) {
         this.context = context;
@@ -55,9 +55,8 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         nothing = true;
     }
 
-
     // 设计
-    public DesignerInfoAdapter(Context context, DesignerInfoBean designerInfoBean, List<DesignerInfoDesignBean> shejiDataList) {
+    public DesignerInfoAdapter(Context context, DesignerInfoBean designerInfoBean, List<_CompanyDetail.SuitesBean> shejiDataList) {
         this.context = context;
         this.designerInfoBean = designerInfoBean;
         this.inflater = LayoutInflater.from(context);
@@ -80,7 +79,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     // 设计 and 案例
-    public DesignerInfoAdapter(Context context, DesignerInfoBean designerInfoBean, List<DesignerInfoDesignBean> shejiDataList, List<DesignerInfoCaseBean> anliDataList) {
+    public DesignerInfoAdapter(Context context, DesignerInfoBean designerInfoBean, List<_CompanyDetail.SuitesBean> shejiDataList, List<DesignerInfoCaseBean> anliDataList) {
         this.context = context;
         this.designerInfoBean = designerInfoBean;
         this.inflater = LayoutInflater.from(context);
@@ -92,7 +91,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
-    public void setShejiDataList(List<DesignerInfoDesignBean> shejiDataList){
+    public void setShejiDataList(List<_CompanyDetail.SuitesBean> shejiDataList){
         this.shejiDataList.addAll(shejiDataList);
     }
 
@@ -139,11 +138,13 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 // 显示左边 设计
                 View shejiView = inflater.inflate(R.layout.layout_designer_info_sheji, parent, false);
                 ShejiShiBodyHolder shejiShiBodyHolder = new ShejiShiBodyHolder(shejiView);
+                shejiView.setOnClickListener(this);
                 return shejiShiBodyHolder;
             }else {
                 // 显示右边 案例
                 View anliView = inflater.inflate(R.layout.layout_designer_info_anli, parent, false);
                 AnliBodyHolder anliBodyHolder = new AnliBodyHolder(anliView);
+                anliView.setOnClickListener(this);
                 return anliBodyHolder;
             }
         }
@@ -175,7 +176,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     shejishiHeadHolder.designTextBar.setVisibility(View.VISIBLE);
                     shejishiHeadHolder.caseText.setTextColor(Color.parseColor("#333333"));
                     shejishiHeadHolder.caseTextBar.setVisibility(View.GONE);
-                    notifyDataSetChanged();
+                    moreData = false;
                     if(clickType == SHEJI_TYPE && noShejiData){
                         // 看设计  设计无数据
                         shejishiHeadHolder.relimgEmpty.setVisibility(View.VISIBLE);
@@ -184,6 +185,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         shejishiHeadHolder.relimgEmpty.setVisibility(View.GONE);
                         shejishiHeadHolder.imgEmpty.setVisibility(View.GONE);
                     }
+                    notifyDataSetChanged();
                 }
             });
 
@@ -196,7 +198,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     shejishiHeadHolder.designTextBar.setVisibility(View.GONE);
                     shejishiHeadHolder.caseText.setTextColor(Color.parseColor("#FF6F20"));
                     shejishiHeadHolder.caseTextBar.setVisibility(View.VISIBLE);
-                    notifyDataSetChanged();
+                    moreData = false;
                     if(clickType != SHEJI_TYPE && noAnliData){
                         // 看案例  案例无数据
                         shejishiHeadHolder.relimgEmpty.setVisibility(View.VISIBLE);
@@ -205,6 +207,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         shejishiHeadHolder.relimgEmpty.setVisibility(View.GONE);
                         shejishiHeadHolder.imgEmpty.setVisibility(View.GONE);
                     }
+                    notifyDataSetChanged();
                 }
             });
 
@@ -213,6 +216,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 shejishiHeadHolder.dataListBar.setVisibility(View.GONE);
                 shejishiHeadHolder.relimgEmpty.setVisibility(View.VISIBLE);
                 shejishiHeadHolder.imgEmpty.setVisibility(View.VISIBLE);
+                this.moreData = false;
             }else if(noShejiData){
                 shejishiHeadHolder.dataListBar.setVisibility(View.VISIBLE);
                 //  无设计，显示案例
@@ -237,12 +241,6 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if(!noShejiData){
                 shejiHolder.shejiPic.setType(1);
                 Glide.with(context).load(shejiDataList.get(position-1).getCover_url()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(shejiHolder.shejiPic);
-                shejiHolder.shejiPic.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Util.setToast(context, "设计跳转哦...");
-                    }
-                });
                 shejiHolder.shejiInfoText.setText(shejiDataList.get(position-1).getTitle());
                 shejiHolder.shejiGetThis.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -252,6 +250,8 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         context.startActivity(webIntent);
                     }
                 });
+
+                shejiHolder.itemView.setTag(position);
             }
         }
 
@@ -260,16 +260,11 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if(!noAnliData){
                 anliHolder.anliPic.setType(1);
                 Glide.with(context).load(anliDataList.get(position-1).getCover_url()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(anliHolder.anliPic);
-                anliHolder.anliPic.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Util.setToast(context, "案例跳转哦...");
-                    }
-                });
                 // 深圳  小区  先生
                 anliHolder.anliInfoTextDes.setText(anliDataList.get(position-1).getCity_name() + " " + anliDataList.get(position-1).getCommunity_name()+ " " + anliDataList.get(position-1).getOwner_name());
                 anliHolder.anliInfotest.setText(anliDataList.get(position-1).getSub_title());
             }
+            anliHolder.itemView.setTag(position);
         }
 
         if(holder instanceof ShejishiFoot) {
@@ -282,13 +277,13 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 footHolder.bar.setVisibility(View.GONE);
                 footHolder.textLoadMore.setVisibility(View.GONE);
             }
-
         }
     }
 
 
-    public void getMoreData(boolean moreData){
-        this.moreData = moreData;
+    public void loadMore(boolean more){
+        this.moreData = more;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -302,6 +297,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
+
     @Override
     public int getItemViewType(int position) {
         if(position == 0){
@@ -310,6 +306,21 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return ITEM_TYPE_FOOT;
         }else{
             return ITEM_TYPE_BODY;
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(onShejiDataListener!=null && clickType == 0){
+            onShejiDataListener.OnShejiDataListener(view, (int)view.getTag());
+        }else {
+//            Util.setToast(context, "==========4646===");
+        }
+
+        if(onAnliDataListener!=null && clickType == 1){
+            onAnliDataListener.OnAnliDataListener(view, (int)view.getTag());
+        }else {
+//            Util.setToast(context, "====47447===");
         }
     }
 
@@ -330,8 +341,6 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView anliInfoTextDes;
         TextView anliInfotest;
         TextView anliGetThis;
-//        RelativeLayout relimgEmptyAnli;
-//        ImageView imgEmptyAnli;
         public AnliBodyHolder(View itemView) {
             super(itemView);
             anliGetThis = (TextView) itemView.findViewById(R.id.anliGetThis);
@@ -393,32 +402,31 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
 
-//    public interface NoDataListener{
-//        void NoDataListener();
-//    }
-//
-//    private NoDataListener noDataListener;
-//
-//    public NoDataListener getNoDataListener() {
-//        return noDataListener;
-//    }
-//
-//    public void setNoDataListener(NoDataListener noDataListener) {
-//        this.noDataListener = noDataListener;
-//    }
-//
-//
-//    public interface HasDatalistener{
-//        void HasDatalistener();
-//    }
-//
-//    private HasDatalistener hasDatalistener;
-//
-//    public HasDatalistener getHasDatalistener() {
-//        return hasDatalistener;
-//    }
-//
-//    public void setHasDatalistener(HasDatalistener hasDatalistener) {
-//        this.hasDatalistener = hasDatalistener;
-//    }
+    public interface OnShejiDataListener{
+        void OnShejiDataListener(View view, int shejiPosition);
+    }
+
+    private OnShejiDataListener onShejiDataListener;
+
+    public DesignerInfoAdapter.OnShejiDataListener getOnShejiDataListener() {
+        return onShejiDataListener;
+    }
+
+    public void setOnShejiDataListener(DesignerInfoAdapter.OnShejiDataListener onShejiDataListener) {
+        this.onShejiDataListener = onShejiDataListener;
+    }
+
+    public interface OnAnliDataListener{
+        void OnAnliDataListener(View view, int anliPosition);
+    }
+
+    private OnAnliDataListener onAnliDataListener;
+
+    public DesignerInfoAdapter.OnAnliDataListener getOnAnliDataListener() {
+        return onAnliDataListener;
+    }
+
+    public void setOnAnliDataListener(DesignerInfoAdapter.OnAnliDataListener onAnliDataListener) {
+        this.onAnliDataListener = onAnliDataListener;
+    }
 }

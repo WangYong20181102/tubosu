@@ -23,19 +23,6 @@
         android:layout_height="49dp"
         android:background="@color/white">
 
-        <View
-            android:id="@+id/banner_bag"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:background="@color/white"/>
-
-        <View
-            android:id="@+id/bannerbackgroud"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:background="@drawable/drawable_hdpi"/>
 
         <RelativeLayout
             android:id="@+id/relShejishiBack"
@@ -56,6 +43,6 @@
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="18dp"
-            android:background="@drawable/zhuanfa"/>
+            android:background="@drawable/zh02"/>
     </RelativeLayout>
 </RelativeLayout>
