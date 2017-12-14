@@ -49,7 +49,7 @@ import okhttp3.Response;
 public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity implements View.OnClickListener {
     private Intent dataIntent;
     private String des_id;
-    private android.widget.RelativeLayout shejishiBar;
+    private android.widget.RelativeLayout shejishiBar, get_designe_layout;
     private android.widget.ImageView ivbacUpck, shejishiShare;
     private android.widget.RelativeLayout relShejishiBack;
     private android.support.v7.widget.RecyclerView shejishiRecyclerView;
@@ -84,11 +84,13 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
         shejishiShare = (ImageView) findViewById(R.id.shejishiShare);
         shejishiSwip = (SwipeRefreshLayout) findViewById(R.id.shejishiSwip);
         shejishiRecyclerView = (RecyclerView) findViewById(R.id.shejishiRecyclerView);
-
+        get_designe_layout = (RelativeLayout) findViewById(R.id.get_designe_layout);
 
         shejishiShare.setOnClickListener(this);
         relShejishiBack.setOnClickListener(this);
         ivbacUpck.setOnClickListener(this);
+        get_designe_layout.setOnClickListener(this);
+
 
         dataIntent = getIntent();
         des_id = dataIntent.getStringExtra("designer_id");
@@ -488,6 +490,12 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                 break;
             case R.id.relShejishiBack:
                 finish();
+                break;
+
+            case R.id.get_designe_layout:
+                Intent webIntent = new Intent(mContext, NewWebViewActivity.class);
+                webIntent.putExtra("mLoadingUrl", Constant.getSheJiUrl + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(mContext));
+                startActivity(webIntent);
                 break;
         }
     }

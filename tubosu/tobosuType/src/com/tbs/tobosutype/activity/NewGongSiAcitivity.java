@@ -303,6 +303,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 }else if(dy<0){
                     // 向下
                     relTopSearch1.setVisibility(View.VISIBLE);
+                    relTopSearch1.setBackgroundResource(R.drawable.wht);
                 }
 
                 //得到当前显示的最后一个item的view
@@ -515,6 +516,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         }
     }
 
+    // body
     private void getNetData(){
         if(Util.isNetAvailable(mContext)){
             isLoading = true;
@@ -591,6 +593,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                 }
 
                                 if(gongsiList.size()==0){
+                                    relTopSearch1.setVisibility(View.GONE);
+                                    mainAppbar.setExpanded(false);
                                     reCompanDataEmpty.setVisibility(View.VISIBLE);
                                 }else {
                                     reCompanDataEmpty.setVisibility(View.GONE);
@@ -969,6 +973,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                     mengceng4.setVisibility(View.GONE);
                     findCompanyLayout.setVisibility(View.VISIBLE); // 恢复到找装修公司页面
                     relTopSearch1.setVisibility(View.VISIBLE);
+                    relTopSearch1.setBackgroundResource(R.drawable.wht);
                 }else if(tvCancelSearch.getText().toString().trim().equals("搜索")){
                     mengceng4.setVisibility(View.GONE);
                     searchLayout.setBackgroundResource(R.color.white);

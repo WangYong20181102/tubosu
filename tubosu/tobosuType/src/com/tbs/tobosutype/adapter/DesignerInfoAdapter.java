@@ -275,6 +275,14 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     // 深圳  小区  先生
                     anliHolder.anliInfoTextDes.setText(anliDataList.get(position-1).getCity_name() + " " + anliDataList.get(position-1).getCommunity_name()+ " " + anliDataList.get(position-1).getOwner_name());
                     anliHolder.anliInfotest.setText(anliDataList.get(position-1).getSub_title());
+                    anliHolder.anliGetThis.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent webIntent = new Intent(context, NewWebViewActivity.class);
+                            webIntent.putExtra("mLoadingUrl", Constant.GETANLIURL);
+                            context.startActivity(webIntent);
+                        }
+                    });
                 }
                 anliHolder.itemView.setTag(position);
             }

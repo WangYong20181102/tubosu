@@ -218,6 +218,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
 
         //打开QQ
         qq_lianxi.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 //弹窗  尝试打开QQ
