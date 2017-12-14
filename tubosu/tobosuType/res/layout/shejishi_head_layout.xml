@@ -216,7 +216,7 @@
                 app:animDuration="200"
                 app:collapseDrawable="@drawable/co_dec_up"
                 app:collapseExpandGrarity="right"
-                app:collapseExpandTextColor="#aeb1b4"
+                app:collapseExpandTextColor="#00aeb1b4"
                 app:collapseExpandTextSize="12sp"
                 app:contentTextColor="#333333"
                 app:contentTextSize="12sp"
