@@ -243,6 +243,8 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         });
         //窗口显示的位置
         zixunPopupWindow.showAtLocation(zixunPopView, Gravity.CENTER, 0, 0);
+
+        
     }
 
 
