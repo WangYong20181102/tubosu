@@ -150,14 +150,18 @@ public class ShaixuanDialog extends Dialog {
             @Override
             public void onClick(View view) {
                 dismiss();
-                onOkListener.OnOkListener();
+                if(onOkListener!=null){
+                    onOkListener.OnOkListener();
+                }
             }
         });
 
         relChooseCitys.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onChooseCityListener.OnChooseCityListener();
+                if(onChooseCityListener!=null){
+                    onChooseCityListener.OnChooseCityListener();
+                }
             }
         });
         Window dialogWindow = this.getWindow();

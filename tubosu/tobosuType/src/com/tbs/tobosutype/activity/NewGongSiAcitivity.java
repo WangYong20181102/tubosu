@@ -99,6 +99,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     private RelativeLayout reSearvice;
     private RelativeLayout reCompanDataEmpty, relYouxuan;
     private AppBarLayout mainAppbar;
+    private RelativeLayout slideRelayout;
     private LinearLayoutManager linearLayoutManager1, linearLayoutManager;
     private boolean isLoading = false;
     private boolean isSearchLoading = false;
@@ -121,8 +122,6 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
     private boolean isClose = true;
 
-    private int topBarHeight;
-    private int mCurrentPosition = 0;
     private int page = 1;
     private int page_size = 10;
     private int pageS = 1;
@@ -143,7 +142,6 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
     private ArrayList<CompanyDistrictBean> discList = new ArrayList<CompanyDistrictBean>();
 
-    private int pageState = 0;
     private String searchText = "";
 
     private RelativeLayout searchLayout, findCompanyLayout;
@@ -213,7 +211,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         relGoClick1 = (RelativeLayout) findViewById(R.id.relGoClick1);
         findCompanyLayout = (RelativeLayout) findViewById(R.id.findCompanyLayout);
         relShaiXuan = (RelativeLayout) findViewById(R.id.relShaiXuan);
-
+        slideRelayout = (RelativeLayout) findViewById(R.id.slideRelayout);
     }
 
     private void initViews(){
@@ -280,14 +278,10 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
                 if(state == State.EXPANDED ) {
 //                    Util.setToast(mContext, "展开");
-                    pageState = 0;
                     relTopSearch.setVisibility(View.VISIBLE);
                 }else if(state == State.COLLAPSED){
-                    pageState = 1;
 //                    Util.setToast(mContext, "折叠");
                     relTopSearch.setVisibility(View.GONE);
-                }else {
-                    pageState = 2;
                 }
             }
         });
@@ -494,12 +488,18 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                         companysItemList.add(item);
                                     }
 
+
                                     initBannerAdapter(gongsiViewpager, gognsiDotLayout, bannerList);
-                                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-                                    linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                                    gongsiRecyclerViewTuijian.setLayoutManager(linearLayoutManager);
-                                    RCompanyAdapter adapter = new RCompanyAdapter(mContext, companysItemList);
-                                    gongsiRecyclerViewTuijian.setAdapter(adapter);
+                                    if(companysItemList.size() == 0){
+                                        slideRelayout.setVisibility(View.GONE);
+                                    }else {
+                                        slideRelayout.setVisibility(View.VISIBLE);
+                                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+                                        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                                        gongsiRecyclerViewTuijian.setLayoutManager(linearLayoutManager);
+                                        RCompanyAdapter adapter = new RCompanyAdapter(mContext, companysItemList);
+                                        gongsiRecyclerViewTuijian.setAdapter(adapter);
+                                    }
 
                                 }else if(bannerObject.getInt("status") == 201){
                                     Util.setToast(mContext, msg);
@@ -528,10 +528,11 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
             gongsiMap.put("sort_type", sort_type);
             gongsiMap.put("certification", certification);
             gongsiMap.put("recommend", recommend);
+            gongsiMap.put("home_id", home_id);
+            gongsiMap.put("tool_id", tool_id);
             gongsiMap.put("district_id", district_id);
             gongsiMap.put("lat", SpUtil.getLatitude(mContext));
             gongsiMap.put("lng", SpUtil.getLongitude(mContext));
-
 
             OKHttpUtil.post(Constant.GETGONGSIURL, gongsiMap, new Callback() {
 
@@ -675,23 +676,26 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
             case EC.EventCode.QUEDING_SHAIXUAN_CITY_CODE:
                 // 确定 需要 修改外面的dialog的
                 discList.clear();
-                sortDistrict(shaixuanCity);
-
-                if(discList.size() != 0){
-                    shaixuanDialog.updateServiceAreaData(discList);
+                if("".equals(shaixuanCity)){
+                    // 没有选择城市
+                    Util.setErrorLog(TAG, "你没有筛选城市");
                 }else{
-                    Util.setErrorLog(TAG,"discList的长度为000000");
-                }
-                shaixuanDialog.setCity(shaixuanCity);
-                if(!"".equals(shaixuanCity)){
+                    sortDistrict(shaixuanCity);
+                    shaixuanDialog.setCity(shaixuanCity);
+
+                    if(discList.size() != 0){
+                        shaixuanDialog.updateServiceAreaData(discList);
+                    }else{
+                        Util.setErrorLog(TAG,"discList的长度为000000");
+                    }
+
                     // 确定是筛选了城市
                     fuwuquyu.setText("服务区域");
                     getNetData();
                     // 其他页面也要改
                     getBannerData();
-                }else{
-                    Util.setErrorLog(TAG, "你没有筛选城市");
                 }
+
                 break;
             case EC.EventCode.CHOOSE_PROVINCE_CODE:
                 clickProvince = 1;
@@ -1080,11 +1084,14 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
             @Override
             public void OnOkListener() {
 
-                gongsiCity = shaixuanCity;
-                tvGongsiCity.setText(gongsiCity); // 找公司页面的左上角
-                tvGongsiCity1.setText(gongsiCity);
-                EventBusUtil.sendEvent(new Event(EC.EventCode.HOMEACTIVITY_CITY_CODE, gongsiCity));
-
+                if("".equals(shaixuanCity)){
+                    // 没有筛选城市
+                }else{
+                    gongsiCity = shaixuanCity;
+                    tvGongsiCity.setText(gongsiCity); // 找公司页面的左上角
+                    tvGongsiCity1.setText(gongsiCity);
+                    EventBusUtil.sendEvent(new Event(EC.EventCode.HOMEACTIVITY_CITY_CODE, gongsiCity));
+                }
 
                 fuwuquyu.setText("服务区域");
                 gongsiList.clear();

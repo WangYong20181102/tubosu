@@ -31,11 +31,6 @@ public class GongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private boolean gongsiMore = false;
     private boolean hideMore = false;
 
-    private int headViewTopUp = 0;
-    private int headViewTopDown = 0;
-    private int headViewHeight = 0;
-    private List<RCompanyBean> rCompanyBeanList;
-
     public GongSiAdapter(Context context, List<GongsiItem> dataList) {
         this.context = context;
         this.dataList = dataList;
@@ -144,17 +139,6 @@ public class GongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    public int getSelectItemHeadViewTopUpHeight(){
-        return headViewTopUp;
-    }
-
-    public int getSelectItemHeadViewTopDownHeight(){
-        return headViewTopDown;
-    }
-
-    public int getHeadViewHeight(){
-        return headViewHeight;
-    }
 
     @Override
     public int getItemCount() {
