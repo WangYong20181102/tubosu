@@ -215,6 +215,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         zixunPopupWindow.setFocusable(true);
         zixunPopupWindow.setOutsideTouchable(true);
         zixunPopupWindow.update();
+
         //打开QQ
         qq_lianxi.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,8 +226,10 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                 zixunPopupWindow.dismiss();
             }
         });
+
         //打开电话联系
         dianhua_lianxi.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 //弹出窗口电话联系
@@ -234,8 +237,10 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                 zixunPopupWindow.dismiss();
             }
         });
+
         //界面消失
         pop_zixun_rl.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 zixunPopupWindow.dismiss();
@@ -244,7 +249,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         //窗口显示的位置
         zixunPopupWindow.showAtLocation(zixunPopView, Gravity.CENTER, 0, 0);
 
-        
+
     }
 
 
