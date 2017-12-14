@@ -730,6 +730,7 @@ public class DecorateCompanyDetailActivity extends com.tbs.tobosutype.base.BaseA
 							if (msg.equals("操作成功")) {
 								if (oper_type.equals("0")) {
 									Toast.makeText(getApplicationContext(), "收藏成功!", Toast.LENGTH_SHORT).show();
+									EventBusUtil.sendEvent(new Event(EC.EventCode.COLLECT_COMPANY_CODE));
 								} else {
 									Toast.makeText(getApplicationContext(), "取消收藏成功!", Toast.LENGTH_SHORT).show();
 									EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_COMPANY_CODE));

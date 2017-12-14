@@ -425,6 +425,11 @@ public class ZhuangxiuConmpanyAcitivity extends com.tbs.tobosutype.base.BaseActi
                 }
                 showNoData();
                 break;
+            case EC.EventCode.COLLECT_COMPANY_CODE:
+//                companyBeanArrayList.remove(deletePosition);
+                EventBusUtil.sendEvent(new Event(EC.EventCode.COLLECT_COMPANY_CODE));
+                getNetData();
+                break;
         }
     }
 

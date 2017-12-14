@@ -200,6 +200,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             });
 
             shejishiHeadHolder.caseText.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View view) {
 //                    onshowAnliDataListener.OnshowAnliDataListener();
@@ -263,7 +264,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         }
                     });
 
-                    shejiHolder.itemView.setTag(position);
+                    shejiHolder.itemView.setTag(position-1);
                 }
             }
         }else{
@@ -284,7 +285,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         }
                     });
                 }
-                anliHolder.itemView.setTag(position);
+                anliHolder.itemView.setTag(position-1);
             }
         }
 

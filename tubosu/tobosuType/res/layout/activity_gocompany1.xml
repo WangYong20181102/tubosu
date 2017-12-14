@@ -431,7 +431,7 @@
         <RelativeLayout
             android:id="@+id/topSearch"
             android:layout_width="match_parent"
-            android:background="@color/white"
+            android:background="@drawable/wht"
             android:layout_height="49dp">
 
             <RelativeLayout
@@ -456,6 +456,8 @@
                         android:layout_height="match_parent"
                         android:layout_centerVertical="true"
                         android:hint="请输入装修公司关键字"
+                        android:maxLines="1"
+                        android:layout_alignParentBottom="true"
                         android:background="@color/transparent"
                         android:textColorHint="#999999"
                         android:textSize="12sp" />

@@ -3,7 +3,6 @@ import com.tbs.tobosutype.bean._CompanyDetail;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,7 +17,6 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.DesignerInfoAdapter;
 import com.tbs.tobosutype.bean.DesignerInfoBean;
 import com.tbs.tobosutype.bean.DesignerInfoCaseBean;
-import com.tbs.tobosutype.customview.RecycleViewDivider;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
@@ -28,7 +26,6 @@ import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -481,8 +478,8 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
         switch (view.getId()){
             case R.id.shejishiShare:
                 UMWeb umWeb = new UMWeb(shareUrl + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(mContext));
-//                umWeb.setDescription("我在土拨鼠看到一家靠谱的装修公司，现在0元设计家装费用立省一半");
-//                umWeb.setTitle("土拨鼠—" + mCompanyDetail.getName());
+                umWeb.setDescription("我是来着土拨鼠-"+designerInfoBean.getCom_name()+"的"+ designerInfoBean.getName()+"，专注品质家装设计，提前遇见您未来的家");
+                umWeb.setTitle("设计师-" + designerInfoBean.getName() + "-" + designerInfoBean.getCom_name());
                 umWeb.setThumb(new UMImage(mContext, designerInfoBean.getIcon()));
                 new ShareAction(SheJiShiActivity.this)
                         .setDisplayList(SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.QQ)

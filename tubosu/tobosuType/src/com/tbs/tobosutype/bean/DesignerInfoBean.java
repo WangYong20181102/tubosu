@@ -12,6 +12,7 @@ public class DesignerInfoBean {
     private String area_name;        //": "其他,住宅公寓,写字楼,别墅,酒店宾馆,餐饮酒吧",
     private String intro;
     private String share;
+    private String com_name;
 
 
     public String getIcon() {
@@ -84,5 +85,13 @@ public class DesignerInfoBean {
 
     public void setShare(String share) {
         this.share = share;
+    }
+
+    public String getCom_name() {
+        return com_name;
+    }
+
+    public void setCom_name(String com_name) {
+        this.com_name = com_name;
     }
 }

@@ -149,8 +149,9 @@
                 android:layout_marginTop="13dp"
                 android:textColor="#666666"
                 android:textSize="12sp"
-                android:text="找装修"/>
+                android:text="装修公司"/>
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/relZhuangXiuKetang"
             android:layout_width="match_parent"

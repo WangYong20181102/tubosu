@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import com.tbs.tobosutype.R;
@@ -17,6 +15,7 @@ import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.bean.ShoucangItem;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.EventBusUtil;
 import com.tbs.tobosutype.utils.Util;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -139,6 +138,9 @@ public class ShoucangAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                 adapter = null;
                 getDataFromNet();
 //                Util.setToast(mContext, "刷新啦");
+                break;
+            case EC.EventCode.COLLECT_COMPANY_CODE:
+                getDataFromNet();
                 break;
         }
     }

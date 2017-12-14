@@ -140,17 +140,17 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof NewHomeHead) {
             NewHomeHead headHolder = (NewHomeHead) holder;
-//            if(CacheManager.getChentaoFlag(context) == 0){
+            if(CacheManager.getChentaoFlag(context) == 0){
                 newhomeViewPager.setFocusable(true);
                 newhomeViewPager.setFocusableInTouchMode(true);
                 newhomeViewPager.requestFocus();
 //                Util.setToast(context, "获得焦点");
-//            }else {
-//                newhomeViewPager.setFocusable(false);
-//                newhomeViewPager.setFocusableInTouchMode(false);
-//                newhomeViewPager.clearFocus();
-////                Util.setToast(context, "失去焦点");
-//            }
+            }else {
+                newhomeViewPager.setFocusable(false);
+                newhomeViewPager.setFocusableInTouchMode(false);
+                newhomeViewPager.clearFocus();
+//                Util.setToast(context, "失去焦点");
+            }
             initBannerAdapter(newhomeViewPager, headHolder.layoutDot, dataSource.getBanner());
 
             initCheatText(headHolder.cheatText);
