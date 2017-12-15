@@ -13,7 +13,7 @@
         <RelativeLayout
             android:id="@+id/yumingshi"
             android:layout_width="81dp"
-            android:layout_height="61dp"
+            android:layout_height="62dp"
             android:layout_marginTop="18dp"
             android:layout_marginLeft="14dp"
             android:layout_marginBottom="16dp"
@@ -31,7 +31,7 @@
         <RelativeLayout
             android:id="@+id/sdfjil"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="62dp"
             android:layout_toRightOf="@+id/yumingshi"
             android:layout_alignTop="@+id/yumingshi"
             android:layout_alignBottom="@+id/yumingshi"
@@ -106,7 +106,6 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_marginLeft="4dp"
                 android:layout_alignParentBottom="true">
 
@@ -130,6 +129,8 @@
                     android:text="44km"/>
             </RelativeLayout>
         </RelativeLayout>
+
+
         <TextView
             android:id="@+id/tvYouhui"
             android:layout_width="wrap_content"
