@@ -50,6 +50,7 @@ public class ShaixuanDialog extends Dialog {
     //更新服务区域数据
     public void updateServiceAreaData(ArrayList<CompanyDistrictBean> dataList){
         this.areaDataList.clear();
+        this.areaDataList.add(new CompanyDistrictBean("0", "不限"));
         this.areaDataList.addAll(dataList);
         area.clearPosition();
     }
@@ -108,26 +109,31 @@ public class ShaixuanDialog extends Dialog {
         final ComJiatingAdapter jiating = new ComJiatingAdapter(mContext, jiatingList);
         gvJiating.setAdapter(jiating);
         jiating.notifyDataSetChanged();
+
+        final ComJiatingAdapter shangye = new ComJiatingAdapter(mContext, shangyeList);
+        gvShangye.setAdapter(shangye);
+        shangye.notifyDataSetChanged();
+
+
         gvJiating.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onJaitingClickListener.OnJaitingClickListener(jiatingList.get(i).getId());
                 jiating.setSelectedPosition(i);
+                shangye.clearPosition();
                 jiating.notifyDataSetChanged();
             }
         });
 
 
-        final ComJiatingAdapter shangye = new ComJiatingAdapter(mContext, shangyeList);
-        gvShangye.setAdapter(shangye);
-        shangye.notifyDataSetChanged();
         gvShangye.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onShangyeClickListener.OnShangyeClickListener(shangyeList.get(i).getId());
                 shangye.setSelectedPosition(i);
+                jiating.clearPosition();
                 shangye.notifyDataSetChanged();
             }
         });

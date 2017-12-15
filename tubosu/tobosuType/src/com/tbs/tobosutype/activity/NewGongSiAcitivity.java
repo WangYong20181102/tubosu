@@ -681,6 +681,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                     Util.setErrorLog(TAG, "你没有筛选城市");
                 }else{
                     sortDistrict(shaixuanCity);
+                    gongsiCity = shaixuanCity;
                     shaixuanDialog.setCity(shaixuanCity);
 
                     if(discList.size() != 0){
@@ -716,6 +717,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
             for(int i=0;i<companyCityBeanArrayList.size();i++){
                 if(discList.size()==0){
                     if(companyCityBeanArrayList.get(i).getCity_name().contains(_city)){
+                        discList.add(new CompanyDistrictBean("0", "不限"));
                         discList.addAll(companyCityBeanArrayList.get(i).getDisctBeanList());
                         break;
                     }
@@ -1094,8 +1096,10 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
                 fuwuquyu.setText("服务区域");
                 gongsiList.clear();
-                companyAdapter.notifyDataSetChanged();
-                companyAdapter = null;
+                if(companyAdapter!=null){
+                    companyAdapter.notifyDataSetChanged();
+                    companyAdapter = null;
+                }
                 page = 1;
                 getNetData();
             }
@@ -1408,6 +1412,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 JSONObject data = jsonObject.getJSONObject("data");
 
                 JSONArray jiatingArr = data.getJSONArray("home_improvement");
+                jiatingList.add(new ShaixuanBean("0","不限"));
                 for(int i=0;i<jiatingArr.length();i++){
                     ShaixuanBean jiating = new ShaixuanBean();
                     jiating.setId(jiatingArr.getJSONObject(i).getString("id"));
@@ -1416,6 +1421,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 }
 
                 JSONArray shangyeArr = data.getJSONArray("tool_improvement");
+                shangyeList.add(new ShaixuanBean("0","不限"));
                 for(int i=0;i<shangyeArr.length();i++){
                     ShaixuanBean shangye = new ShaixuanBean();
                     shangye.setId(shangyeArr.getJSONObject(i).getString("id"));

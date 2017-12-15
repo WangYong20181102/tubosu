@@ -5,6 +5,12 @@ public class ShaixuanBean {
     private String id;
     private String name;
 
+    public ShaixuanBean() {
+    }
+    public ShaixuanBean(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public String getId() {
         return id;

@@ -29,6 +29,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.loopj.android.http.RequestParams;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.activity.DecComActivity;
 import com.tbs.tobosutype.activity.DecorateCompanyDetailActivity;
 import com.tbs.tobosutype.activity.MyFavActivity;
 import com.tbs.tobosutype.global.Constant;
@@ -191,11 +192,10 @@ public class MyFavCompanyFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
 				String comid = dataList.get(position).get("comid").toString();
-				Intent detailIntent = new Intent(getActivity(), DecorateCompanyDetailActivity.class);
-				Bundle bundle = new Bundle();
-				bundle.putString("comid", comid);
-				detailIntent.putExtras(bundle);
-				startActivity(detailIntent);
+
+				Intent it = new Intent(getActivity(), DecComActivity.class);
+				it.putExtra("mCompanyId", comid);
+				startActivity(it);
 			}
 		});
 			

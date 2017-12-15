@@ -20,7 +20,6 @@ import com.tbs.tobosutype.adapter.CompanyAdapter;
 import com.tbs.tobosutype.bean.CompanyBean;
 import com.tbs.tobosutype.bean.EC;
 import com.tbs.tobosutype.bean.Event;
-import com.tbs.tobosutype.bean._ImageS;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.DividerItemDecoration;
@@ -256,12 +255,16 @@ public class ZhuangxiuConmpanyAcitivity extends com.tbs.tobosutype.base.BaseActi
                                                     String comid = companyBeanArrayList.get(position).getId(); //comid
                                                     deletePosition = position;
                                                     Util.setLog(TAG, "收藏公司 传过去" + comid);
-                                                    Intent detailIntent = new Intent(mContext, DecorateCompanyDetailActivity.class);
-                                                    Bundle bundle = new Bundle();
-                                                    // 从列表带过去的公司id
-                                                    bundle.putString("comid", comid);
-                                                    detailIntent.putExtras(bundle);
-                                                    startActivity(detailIntent);
+                                                    Intent it = new Intent(mContext, DecComActivity.class);
+                                                    it.putExtra("mCompanyId", comid);
+                                                    startActivity(it);
+
+//                                                    Intent detailIntent = new Intent(mContext, DecorateCompanyDetailActivity.class);
+//                                                    Bundle bundle = new Bundle();
+//                                                    // 从列表带过去的公司id
+//                                                    bundle.putString("comid", comid);
+//                                                    detailIntent.putExtras(bundle);
+//                                                    startActivity(detailIntent);
                                                 }
                                             }
                                         });
@@ -425,11 +428,10 @@ public class ZhuangxiuConmpanyAcitivity extends com.tbs.tobosutype.base.BaseActi
                 }
                 showNoData();
                 break;
-            case EC.EventCode.COLLECT_COMPANY_CODE:
-//                companyBeanArrayList.remove(deletePosition);
-                EventBusUtil.sendEvent(new Event(EC.EventCode.COLLECT_COMPANY_CODE));
-                getNetData();
-                break;
+//            case EC.EventCode.COLLECT_COMPANY_CODE:
+//                EventBusUtil.sendEvent(new Event(EC.EventCode.COLLECT_COMPANY_CODE));
+//                getNetData();
+//                break;
         }
     }
 

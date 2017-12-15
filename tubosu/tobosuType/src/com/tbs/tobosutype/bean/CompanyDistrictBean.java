@@ -6,6 +6,13 @@ public class CompanyDistrictBean {
     private String district_id;
     private String district_name;
 
+    public CompanyDistrictBean() {
+    }
+
+    public CompanyDistrictBean(String district_id, String district_name) {
+        this.district_id = district_id;
+        this.district_name = district_name;
+    }
 
     public String getDistrict_id() {
         return district_id;

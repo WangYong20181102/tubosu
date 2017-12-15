@@ -36,6 +36,7 @@ import com.tbs.tobosutype.customview.VerticalTextview;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.EventBusUtil;
 import com.tbs.tobosutype.utils.GlideUtils;
 import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
@@ -479,6 +480,7 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
                                     decComBannerShoucangIv.setImageResource(R.drawable.shoucang_after);
                                     mCompanyDetail.setIs_collect("1");
                                     Toast.makeText(mContext, "收藏成功！", Toast.LENGTH_SHORT).show();
+                                    EventBusUtil.sendEvent(new Event(EC.EventCode.COLLECT_COMPANY_CODE));
                                 }
                             });
                         } else {
@@ -490,6 +492,7 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
                                     decComBannerShoucangIv.setImageResource(R.drawable.shoucang_start_black);
                                     mCompanyDetail.setIs_collect("0");
                                     Toast.makeText(mContext, "取消收藏成功！", Toast.LENGTH_SHORT).show();
+                                    EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_COMPANY_CODE));
                                 }
                             });
                         }
@@ -507,10 +510,10 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
         param.put("token", Util.getDateToken());
         param.put("id", mCompanyId);
         if (!TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {
-            param.put("uid", AppInfoUtil.getUserid(mContext));
+            param.put("uid", AppInfoUtil.getUuid(mContext));
             param.put("user_type", AppInfoUtil.getTypeid(mContext));
         }
-        Log.e(TAG, "请求参数===token====" + Util.getDateToken() + "=====id=====" + mCompanyId);
+        Log.e(TAG, "请求参数===token====" + Util.getDateToken() + "=====id=====" + mCompanyId +  "======uid= " +AppInfoUtil.getUuid(mContext));
         OKHttpUtil.post(Constant.COMPANY_DETAIL, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -541,6 +544,15 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
                 String data = jsonObject.optString("data");
                 mCompanyDetail = mGson.fromJson(data, _CompanyDetail.class);
                 //布置数据
+                //用户是否收藏
+                if(mCompanyDetail.getIs_collect().equals("1")){
+                    //头部显示  以及滑动的头部显示
+                    decComBannerShoucangIv.setImageResource(R.drawable.shoucang_after);
+                    decComShoucangIv.setImageResource(R.drawable.shoucang_after);
+                }else {
+                    decComShoucangIv.setImageResource(R.drawable.shoucang_detail_befor);
+                    decComBannerShoucangIv.setImageResource(R.drawable.shoucang_start_black);
+                }
                 //公司头像
                 GlideUtils.glideLoader(mContext, mCompanyDetail.getImg_url(),
                         R.drawable.iamge_loading, R.drawable.iamge_loading, decComIconIv);
