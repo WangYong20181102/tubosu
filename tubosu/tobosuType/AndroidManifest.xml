@@ -456,7 +456,9 @@
         <service
             android:name="cn.jpush.android.service.PushService"
             android:process=":multiprocess"
-            tools:node="replace" />
+            tools:node="replace" >
+
+        </service>
 
         <activity android:name=".activity.DecComActivity" />
         <activity android:name=".activity.BaiduMapActivity" />

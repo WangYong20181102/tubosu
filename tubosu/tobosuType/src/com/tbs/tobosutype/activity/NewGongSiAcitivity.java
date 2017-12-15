@@ -116,7 +116,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     private ImageView cancelFindComIcon;
     private RelativeLayout relfindComLayout;
 
-    private List<GongsiItem> youxuanSearchGongsiList = new ArrayList<>();
+    private List<GongsiItem> youxuanSearchGongsiList = new ArrayList<GongsiItem>();
     private Gson gson;
     private boolean normalData = true;
 
@@ -502,9 +502,11 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                     }
 
                                 }else if(bannerObject.getInt("status") == 201){
-                                    Util.setToast(mContext, msg);
+//                                    Util.setToast(mContext, msg);
+                                    Util.setErrorLog(TAG, msg);
                                 }else if(bannerObject.getInt("status") == 0){
-                                    Util.setToast(mContext, msg);
+//                                    Util.setToast(mContext, msg);
+                                    Util.setErrorLog(TAG, msg);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -543,6 +545,9 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                         @Override
                         public void run() {
                             Util.setToast(mContext, "系统繁忙，稍后再试~");
+                            if(findcompanyswiperefresh.isRefreshing()){
+                                findcompanyswiperefresh.setRefreshing(false);
+                            }
                         }
                     });
                 }
@@ -556,6 +561,9 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
                         @Override
                         public void run() {
+                            if(findcompanyswiperefresh.isRefreshing()){
+                                findcompanyswiperefresh.setRefreshing(false);
+                            }
 
                             if (companyAdapter != null) {
                                 companyAdapter.loadMoreGongsi(false);
@@ -585,7 +593,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                     }
 
                                 }else if(jsonObject.getInt("status") == 201){
-                                    Util.setToast(mContext, msg);
+//                                    Util.setToast(mContext, msg);
+                                    Util.setErrorLog(TAG, "加载更多  " + msg);
                                     if(companyAdapter!=null){
                                         companyAdapter.setHideMore(true);
                                     }
@@ -892,7 +901,10 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                             district_id = discList.get(i).getDistrict_id();
                             page = 1;
-                            fuwuquyu.setText(discList.get(i).getDistrict_name());
+                            if(i>0){
+                                fuwuquyu.setText(discList.get(i).getDistrict_name());
+                            }
+
                             gongsiList.clear();
                             if(companyAdapter!=null){
                                 companyAdapter.notifyDataSetChanged();
