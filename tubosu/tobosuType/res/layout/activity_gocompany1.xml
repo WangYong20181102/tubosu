@@ -398,10 +398,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:background="@drawable/fuwushang"/>
+                        android:background="@drawable/wutiapojian"/>
                 </RelativeLayout>
             </RelativeLayout>
-
 
 
             <ImageView

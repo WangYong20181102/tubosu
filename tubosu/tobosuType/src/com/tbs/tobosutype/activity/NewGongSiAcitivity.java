@@ -889,6 +889,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                             district_id = discList.get(i).getDistrict_id();
+                            page = 1;
                             fuwuquyu.setText(discList.get(i).getDistrict_name());
                             gongsiList.clear();
                             if(companyAdapter!=null){
@@ -906,11 +907,9 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                             adapter.setSelectedPosition(i);
                         }
                     }
-
                     popWnd.showAsDropDown(reSearvice, 0, 10);
                 }
                 isClose = !isClose;
-
                 break;
             case R.id.relGoClick:
             case R.id.relGoClick1:

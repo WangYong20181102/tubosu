@@ -98,7 +98,7 @@
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SearchImageActivity"
@@ -244,6 +244,7 @@
         <activity
             android:name=".activity.NewGongSiAcitivity"
             android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.FreeYuyueActivity"
