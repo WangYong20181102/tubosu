@@ -16,7 +16,9 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.CoYouHuiAdapter;
 import com.tbs.tobosutype.bean._YouHui;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.Util;
 
 import org.json.JSONArray;
@@ -162,7 +164,7 @@ public class CoYouHuiActivity extends AppCompatActivity {
         public void onItemClick(View view, int position) {
             /// TODO: 2017/12/5 跳转到Web页面 进行发单处理
             Intent intent = new Intent(mContext, NewWebViewActivity.class);
-            intent.putExtra("mLoadingUrl", Constant.DEC_COOM_YOU_HUI);
+            intent.putExtra("mLoadingUrl", mYouHuiArrayList.get(position).getOrder_page_url() + "channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()));
             mContext.startActivity(intent);
         }
     };

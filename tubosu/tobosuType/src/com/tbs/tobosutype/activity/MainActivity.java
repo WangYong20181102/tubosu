@@ -196,16 +196,17 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         main_tab_home.setOnClickListener(this);
         main_tab_image = (RelativeLayout) this.findViewById(R.id.main_tab_image);
         main_tab_image.setOnClickListener(this);
-        main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-//                startActivity(new Intent(mContext, BaiduMapActivity.class));//地图测试
-                Intent intent1 = new Intent(mContext, DecComActivity.class);
-                intent1.putExtra("mCompanyId", "270621");
-                startActivity(intent1);
-                return true;
-            }
-        });
+        // TODO: 2017/12/16  专门用来做测试 
+//        main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+////                startActivity(new Intent(mContext, BaiduMapActivity.class));//地图测试
+//                Intent intent1 = new Intent(mContext, DecComActivity.class);
+//                intent1.putExtra("mCompanyId", "270621");
+//                startActivity(intent1);
+//                return true;
+//            }
+//        });
         main_tab_decorate = (RelativeLayout) this.findViewById(R.id.main_tab_decorate);
         main_tab_decorate.setOnClickListener(this);
         main_tab_my = (RelativeLayout) this.findViewById(R.id.main_tab_my);
