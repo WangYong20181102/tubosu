@@ -298,7 +298,7 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                                     }
                                 }else if(moreDataJson.getInt("status") == 201){
                                     Util.setErrorLog(TAG, "加载更多来了 status = 201");
-                                    Util.setToast(mContext, msg);
+//                                    Util.setToast(mContext, msg);
                                 }else if(moreDataJson.getInt("status") == 0){
                                     Util.setErrorLog(TAG, "设加载更多来了 status = 0");
                                     Util.setToast(mContext, msg);

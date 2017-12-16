@@ -92,6 +92,7 @@ public class ShoucangAcitivity extends com.tbs.tobosutype.base.BaseActivity {
                                 String msg = jsonObject.getString("msg");
                                 if(status==200){
                                     JSONArray dataArr = jsonObject.getJSONArray("data");
+                                    favList.clear();
                                     for(int i=0;i<dataArr.length();i++){
                                         ShoucangItem shoucangItem = new ShoucangItem();
                                         shoucangItem.setCount(dataArr.getJSONObject(i).getString("count"));

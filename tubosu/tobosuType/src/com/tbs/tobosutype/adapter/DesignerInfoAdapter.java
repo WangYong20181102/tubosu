@@ -274,7 +274,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     anliHolder.anliPic.setType(1);
                     Glide.with(context).load(anliDataList.get(position-1).getCover_url()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(anliHolder.anliPic);
                     // 深圳  小区  先生
-                    anliHolder.anliInfoTextDes.setText(anliDataList.get(position-1).getCity_name() + " " + anliDataList.get(position-1).getCommunity_name()+ " " + anliDataList.get(position-1).getOwner_name());
+                    anliHolder.anliInfoTextDes.setText(anliDataList.get(position-1).getTitle());
                     anliHolder.anliInfotest.setText(anliDataList.get(position-1).getSub_title());
                     anliHolder.anliGetThis.setOnClickListener(new View.OnClickListener() {
                         @Override

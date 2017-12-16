@@ -40,7 +40,10 @@ public class GongsiAdViewpagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        ((ViewPager) container).removeView(viewList.get(position));
+        if(position<viewList.size()){
+            ((ViewPager) container).removeView(viewList.get(position));
+        }
+
     }
 
     @Override
@@ -57,7 +60,6 @@ public class GongsiAdViewpagerAdapter extends PagerAdapter {
                     Util.setErrorLog("装修公司viewpagerAdapter", urlStrings.get(position));
                     context.startActivity(webIntent);
                 }
-
             }
         });
         return viewList.get(position);

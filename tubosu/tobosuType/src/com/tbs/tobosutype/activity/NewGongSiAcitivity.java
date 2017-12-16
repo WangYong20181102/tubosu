@@ -93,7 +93,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     private RelativeLayout relTopSearch;
     private RelativeLayout relTopSearch1;// 顶部View
     private RelativeLayout relGoClick,relGoClick1, nothingData;
-    private ImageView ivGoFadan;
+    private ImageView ivGoFadan, ivFuwuquyu;
     private TextView tvZonghe, tvLiulanzuiduo, tvAnlizuiduo, tvLiwozuijin;
     private TextView shitirenzheng,ctuijian,fuwuquyu;
     private RelativeLayout reSearvice;
@@ -186,6 +186,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         tvGongsiCity = (TextView) findViewById(R.id.tvGongsiCity);
         tvGongsiCity1 = (TextView) findViewById(R.id.tvGongsiCity1);
         ivGoFadan = (ImageView) findViewById(R.id.ivGoFadan);
+        ivFuwuquyu = (ImageView) findViewById(R.id.ivFuwuquyu);
 
         tvZonghe = (TextView) findViewById(R.id.tvZonghe);
         tvLiulanzuiduo = (TextView) findViewById(R.id.tvLiulanzuiduo);
@@ -442,11 +443,12 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         }
     };
 
+    // 头部 包括banner和优质推荐
     private void getBannerData(){
         if(Util.isNetAvailable(mContext)){
             HashMap<String, Object> dataMap = new HashMap<String, Object>();
             dataMap.put("token", Util.getDateToken());
-            dataMap.put("city_name", gongsiCity);
+            dataMap.put("city_name", tvGongsiCity.getText().toString().trim());
             dataMap.put("district_id", district_id);
             OKHttpUtil.post(Constant.COMPANY_TOP_LIST, dataMap, new Callback() {
                 @Override
@@ -478,6 +480,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                     JSONArray comArr = data.getJSONArray("companys");
                                     List<CompanyBannerItem> bannerList = new ArrayList<CompanyBannerItem>();
                                     List<RCompanyBean> companysItemList = new ArrayList<RCompanyBean>();
+                                    bannerList.clear();
                                     for (int i = 0; i < bannerArr.length(); i++) {
                                         CompanyBannerItem banner = new Gson().fromJson(bannerArr.getJSONObject(i).toString(), CompanyBannerItem.class);
                                         bannerList.add(banner);
@@ -526,7 +529,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
             gongsiMap.put("token", Util.getDateToken());
             gongsiMap.put("page", page);
             gongsiMap.put("page_size", page_size);
-            gongsiMap.put("city_name", city_name);
+            gongsiMap.put("city_name", tvGongsiCity.getText().toString().trim());
             gongsiMap.put("sort_type", sort_type);
             gongsiMap.put("certification", certification);
             gongsiMap.put("recommend", recommend);
@@ -683,12 +686,13 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 shaixuanCity = (String)event.getData();
                 break;
             case EC.EventCode.QUEDING_SHAIXUAN_CITY_CODE:
-                // 确定 需要 修改外面的dialog的
+                // 返回确定 还需要 修改外面的dialog的
                 discList.clear();
                 if("".equals(shaixuanCity)){
                     // 没有选择城市
                     Util.setErrorLog(TAG, "你没有筛选城市");
                 }else{
+//                    Util.setToast(mContext, "你筛选了城市，该城市是=" +shaixuanCity);
                     sortDistrict(shaixuanCity);
                     gongsiCity = shaixuanCity;
                     shaixuanDialog.setCity(shaixuanCity);
@@ -698,12 +702,6 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                     }else{
                         Util.setErrorLog(TAG,"discList的长度为000000");
                     }
-
-                    // 确定是筛选了城市
-                    fuwuquyu.setText("服务区域");
-                    getNetData();
-                    // 其他页面也要改
-                    getBannerData();
                 }
 
                 break;
@@ -903,6 +901,14 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                             page = 1;
                             if(i>0){
                                 fuwuquyu.setText(discList.get(i).getDistrict_name());
+                                fuwuquyu.setTextColor(Color.parseColor("#FF6F20"));
+                                reSearvice.setBackgroundResource(R.drawable.selected_servicearea_textview_bg);
+                                ivFuwuquyu.setBackgroundResource(R.drawable.sanjiaoxia34);
+                            }else {
+                                fuwuquyu.setText("服务区域");
+                                fuwuquyu.setTextColor(Color.parseColor("#666666"));
+                                reSearvice.setBackgroundResource(R.drawable.select_servicearea_textview_bg);
+                                ivFuwuquyu.setBackgroundResource(R.drawable.jiantou0);
                             }
 
                             gongsiList.clear();
@@ -1107,11 +1113,17 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 }
 
                 fuwuquyu.setText("服务区域");
+                fuwuquyu.setTextColor(Color.parseColor("#666666"));
+                reSearvice.setBackgroundResource(R.drawable.select_servicearea_textview_bg);
+                ivFuwuquyu.setBackgroundResource(R.drawable.jiantou0);
                 gongsiList.clear();
                 if(companyAdapter!=null){
                     companyAdapter.notifyDataSetChanged();
                     companyAdapter = null;
                 }
+
+                getBannerData();
+
                 page = 1;
                 getNetData();
             }
@@ -1540,9 +1552,12 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
         dotLayout.removeAllViews();
         urlList.clear();
+        dotViewsList.clear();
+        imageViewList.clear();
         List<String> clickId = new ArrayList<String>();
         if (banners != null && banners.size() > 0) {
             for (int i = 0; i < banners.size(); i++) {
+                Util.setErrorLog(TAG, "==bnn=>>>>" +banners.get(i).getContent_url());
                 urlList.add(banners.get(i).getContent_url());
                 ImageView view = new ImageView(mContext);
                 view.setScaleType(ImageView.ScaleType.CENTER_CROP);

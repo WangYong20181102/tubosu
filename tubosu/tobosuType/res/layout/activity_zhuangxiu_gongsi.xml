@@ -38,8 +38,16 @@
             android:text="编辑"/>
 
     </RelativeLayout>
-    <RelativeLayout
+
+    <ImageView
+        android:id="@+id/shoucangyinying"
         android:layout_below="@+id/gongsibar"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="@drawable/yinying4"/>
+
+    <RelativeLayout
+        android:layout_below="@+id/shoucangyinying"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <android.support.v4.widget.SwipeRefreshLayout

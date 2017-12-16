@@ -41,6 +41,9 @@ public class ShoucangAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        if(position<iconIdArr.length){
+
+        }
         ViewHolder viewHolder;
         if(convertView == null){
             viewHolder = new ViewHolder();
@@ -51,7 +54,7 @@ public class ShoucangAdapter extends BaseAdapter {
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.iv.setBackgroundResource(iconIdArr[position]);
+        viewHolder.iv.setBackgroundResource(iconIdArr[position<iconIdArr.length?position:iconIdArr.length-1]);
         viewHolder.nameNum.setText(dataList.get(position).getName() + "  (" + dataList.get(position).getCount() + ")");
         return convertView;
     }
