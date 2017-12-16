@@ -16,6 +16,8 @@ import com.tbs.tobosutype.bean.CompanyBannerItem;
 import com.tbs.tobosutype.bean.GongsiItem;
 import com.tbs.tobosutype.bean.RCompanyBean;
 import com.tbs.tobosutype.customview.MyRatingBar;
+import com.tbs.tobosutype.utils.DensityUtil;
+
 import java.util.List;
 
 public class YouXuanGongSiAdapter extends BaseAdapter{
@@ -69,6 +71,15 @@ public class YouXuanGongSiAdapter extends BaseAdapter{
         }
 
         gongsiViewHodler.name.setText(dataList.get(position).getName());
+
+//        int screenWidth = DensityUtil.dip2px(context, 80);
+//        ViewGroup.LayoutParams lp = gongsiViewHodler.iv.getLayoutParams();
+//        lp.width = screenWidth;
+//        lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+//        gongsiViewHodler.iv.setLayoutParams(lp);
+//        gongsiViewHodler.iv.setMaxWidth(screenWidth);
+//        gongsiViewHodler.iv.setMaxHeight(screenWidth * 4);
+
         Glide.with(context).load(dataList.get(position).getImg_url()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(gongsiViewHodler.iv);
 
         if(dataList.get(position).getRecommend()!=null && "1".equals(dataList.get(position).getRecommend())){
