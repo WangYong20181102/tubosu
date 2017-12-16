@@ -1,6 +1,13 @@
 {
     "data": [
         {
+            "cityid": "36",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "a",
+            "simpname": "阿拉善盟"
+        },
+        {
             "cityid": "39",
             "hot_flag": "0",
             "isopen": "1",
