@@ -513,7 +513,7 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
             param.put("uid", AppInfoUtil.getUuid(mContext));
             param.put("user_type", AppInfoUtil.getTypeid(mContext));
         }
-        Log.e(TAG, "请求参数===token====" + Util.getDateToken() + "=====id=====" + mCompanyId +  "======uid= " +AppInfoUtil.getUuid(mContext));
+        Log.e(TAG, "请求参数===token====" + Util.getDateToken() + "=====id=====" + mCompanyId + "======uid= " + AppInfoUtil.getUuid(mContext));
         OKHttpUtil.post(Constant.COMPANY_DETAIL, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -545,11 +545,11 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
                 mCompanyDetail = mGson.fromJson(data, _CompanyDetail.class);
                 //布置数据
                 //用户是否收藏
-                if(mCompanyDetail.getIs_collect().equals("1")){
+                if (mCompanyDetail.getIs_collect().equals("1")) {
                     //头部显示  以及滑动的头部显示
                     decComBannerShoucangIv.setImageResource(R.drawable.shoucang_after);
                     decComShoucangIv.setImageResource(R.drawable.shoucang_after);
-                }else {
+                } else {
                     decComShoucangIv.setImageResource(R.drawable.shoucang_detail_befor);
                     decComBannerShoucangIv.setImageResource(R.drawable.shoucang_start_black);
                 }
