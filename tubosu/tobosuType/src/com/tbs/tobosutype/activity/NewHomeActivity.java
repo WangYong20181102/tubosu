@@ -845,8 +845,8 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                     if (!"".equals(h5Url)) {
                         Bundle b = new Bundle();
                         b.putString("link", h5Url);
-                        it.putExtras(b);
                         it = new Intent(mContext, WebViewActivity.class);
+                        it.putExtras(b);
                     } else {
                         it = new Intent(mContext, GetPriceActivity.class);
                     }

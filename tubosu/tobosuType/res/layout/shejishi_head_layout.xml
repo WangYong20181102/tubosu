@@ -19,15 +19,16 @@
         android:layout_marginTop="-32dp"
         android:layout_marginLeft="20dp">
 
-        <com.tbs.tobosutype.utils.TRoundView
+        <ImageView
             android:id="@+id/roundOut"
             android:layout_width="67dp"
             android:layout_height="67dp"
             android:layout_centerInParent="true"/>
-        <com.tbs.tobosutype.utils.TRoundView
+        <ImageView
             android:id="@+id/shejishiIcon"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:scaleType="centerCrop"
             android:layout_centerInParent="true"/>
 
     </RelativeLayout>
