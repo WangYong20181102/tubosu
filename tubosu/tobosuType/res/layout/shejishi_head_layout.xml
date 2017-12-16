@@ -217,7 +217,6 @@
                 android:layout_toRightOf="@+id/jianjies"
                 app:animDuration="200"
                 app:collapseDrawable="@drawable/co_dec_up"
-                app:collapseExpandGrarity="right"
                 app:collapseExpandTextSize="12sp"
                 app:contentTextColor="#333333"
                 app:contentTextSize="12sp"
