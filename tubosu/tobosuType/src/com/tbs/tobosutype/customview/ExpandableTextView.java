@@ -183,7 +183,8 @@ public class ExpandableTextView extends LinearLayout implements View.OnClickList
         //        mTvExpandCollapse
         mTvExpandCollapse.setLineSpacing(1.0f, 1.5f);
         mTvExpandCollapse.setCompoundDrawablesWithIntrinsicBounds(null, null, mCollapsed ? mExpandDrawable : mCollapseDrawable, null);
-        mTvExpandCollapse.setText(mCollapsed ? getResources().getString(jaydenxiao.com.expandabletextview.R.string.expand) : getResources().getString(jaydenxiao.com.expandabletextview.R.string.collapse));
+//        mTvExpandCollapse.setText(mCollapsed ? getResources().getString(jaydenxiao.com.expandabletextview.R.string.expand) : getResources().getString(jaydenxiao.com.expandabletextview.R.string.collapse));
+        mTvExpandCollapse.setText(mCollapsed ? "" : "");
         mTvExpandCollapse.setOnClickListener(this);
 
         mTvContent.setTextColor(contentTextColor);
@@ -211,7 +212,8 @@ public class ExpandableTextView extends LinearLayout implements View.OnClickList
         mCollapsed = !mCollapsed;
         //修改收起/展开图标、文字
         mTvExpandCollapse.setCompoundDrawablesWithIntrinsicBounds(null, null, mCollapsed ? mExpandDrawable : mCollapseDrawable, null);
-        mTvExpandCollapse.setText(mCollapsed ? getResources().getString(jaydenxiao.com.expandabletextview.R.string.expand) : getResources().getString(jaydenxiao.com.expandabletextview.R.string.collapse));
+//        mTvExpandCollapse.setText(mCollapsed ? getResources().getString(jaydenxiao.com.expandabletextview.R.string.expand) : getResources().getString(jaydenxiao.com.expandabletextview.R.string.collapse));
+        mTvExpandCollapse.setText(mCollapsed ? "" : "");
         //保存位置状态
         if (mCollapsedStatus != null) {
             mCollapsedStatus.put(mPosition, mCollapsed);
@@ -372,7 +374,8 @@ public class ExpandableTextView extends LinearLayout implements View.OnClickList
         clearAnimation();
         //设置收起/展开图标和文字
         mTvExpandCollapse.setCompoundDrawablesWithIntrinsicBounds(null, null, mCollapsed ? mExpandDrawable : mCollapseDrawable, null);
-        mTvExpandCollapse.setText(mCollapsed ? getResources().getString(jaydenxiao.com.expandabletextview.R.string.expand) : getResources().getString(jaydenxiao.com.expandabletextview.R.string.collapse));
+//        mTvExpandCollapse.setText(mCollapsed ? getResources().getString(jaydenxiao.com.expandabletextview.R.string.expand) : getResources().getString(jaydenxiao.com.expandabletextview.R.string.collapse));
+        mTvExpandCollapse.setText(mCollapsed ? "" : "");
 
         setText(text);
         getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
