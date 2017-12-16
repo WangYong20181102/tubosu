@@ -30,13 +30,13 @@ public class EC {
         public static final int DELETE_DANTU_LIST_CODE = 0x100002;//删除收藏单图
         public static final int SELECT_CITY_CODE = 0x100003;//选择城市
         public static final int DELETE_COMPANY_CODE = 0x100004;//选择城市
-        public static final int COLLECT_COMPANY_CODE = 0x100016;//选择城市
+        public static final int COLLECT_COMPANY_CODE = 0x100005;//选择城市
         public static final int CHOOSE_CITY_CODE = 0x100006;//找装修公司选择城市
         public static final int SHAIXUAN_CITY_CODE = 0x100007;//选择城市
         public static final int QUEDING_SHAIXUAN_CITY_CODE = 0x100008;//确定筛选城市
         public static final int HOMEACTIVITY_CITY_CODE = 0x100009;//确定首页城市
         public static final int CHOOSE_PROVINCE_CODE = 0x100010;//确定首页城市
-        public static final int CHOOSE_PROVINCE_CODE1 = 0x100014;//选择城市
+        public static final int CHOOSE_PROVINCE_CODE1 = 0x100011;//选择城市
     }
 
 }
