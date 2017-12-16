@@ -19,6 +19,15 @@ public class _YouHui {
     private String title;
     private String start_time;
     private String end_time;
+    private String order_page_url;
+
+    public String getOrder_page_url() {
+        return order_page_url;
+    }
+
+    public void setOrder_page_url(String order_page_url) {
+        this.order_page_url = order_page_url;
+    }
 
     public String getId() {
         return id;
