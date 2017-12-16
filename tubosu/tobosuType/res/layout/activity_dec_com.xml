@@ -494,7 +494,6 @@
                     android:layout_marginRight="15dp"
                     app:animDuration="200"
                     app:collapseDrawable="@drawable/co_dec_up"
-                    app:collapseExpandTextColor="#00ffffff"
                     app:collapseExpandTextSize="12sp"
                     app:contentTextColor="#666666"
                     app:contentTextSize="12sp"
