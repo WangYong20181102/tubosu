@@ -19,6 +19,7 @@ import com.tbs.tobosutype.bean.DesignerInfoCaseBean;
 import com.tbs.tobosutype.bean._CompanyDetail;
 import com.tbs.tobosutype.customview.ExpandableTextView;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.utils.GlideUtils;
 import com.tbs.tobosutype.utils.TRoundView;
 import com.tbs.tobosutype.utils.Util;
 
@@ -164,10 +165,8 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof ShejishiInfoViewHolder){
             final ShejishiInfoViewHolder shejishiHeadHolder = (ShejishiInfoViewHolder) holder;
-            shejishiHeadHolder.shejishiIcon.setType(0);
-            Glide.with(context).load(designerInfoBean.getIcon()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(shejishiHeadHolder.shejishiIcon);
-            shejishiHeadHolder.roundOut.setType(0);
-            Glide.with(context).load(R.drawable.wht).placeholder(R.drawable.wht).error(R.drawable.wht).into(shejishiHeadHolder.roundOut);
+            GlideUtils.glideLoader(context,designerInfoBean.getIcon(), R.drawable.new_home_loading, R.drawable.new_home_loading,shejishiHeadHolder.shejishiIcon, 0);
+            GlideUtils.glideLoader(context,R.drawable.wht, R.drawable.new_home_loading, R.drawable.new_home_loading,shejishiHeadHolder.roundOut, 0);
             shejishiHeadHolder.shejishiName.setText(designerInfoBean.getName());
             shejishiHeadHolder.designGrade.setText(designerInfoBean.getPosition());
             shejishiHeadHolder.tvJingyan.setText(designerInfoBean.getWorktime());
@@ -391,8 +390,8 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     class ShejishiInfoViewHolder extends RecyclerView.ViewHolder{
-        TRoundView shejishiIcon;
-        TRoundView roundOut;
+        ImageView shejishiIcon;
+        ImageView roundOut;
         TextView shejishiName;
         TextView designGrade;
         TextView tvJingyan;
@@ -420,8 +419,8 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             tvJingyan = (TextView) itemView.findViewById(R.id.tvJingyan);
             designGrade = (TextView) itemView.findViewById(R.id.designGrade);
             shejishiName = (TextView) itemView.findViewById(R.id.shejishiName);
-            shejishiIcon = (TRoundView) itemView.findViewById(R.id.shejishiIcon);
-            roundOut = (TRoundView) itemView.findViewById(R.id.roundOut);
+            shejishiIcon = (ImageView) itemView.findViewById(R.id.shejishiIcon);
+            roundOut = (ImageView) itemView.findViewById(R.id.roundOut);
             dataListBar = (LinearLayout) itemView.findViewById(R.id.dataListBar);
             relimgEmpty = (RelativeLayout) itemView.findViewById(R.id.relimgEmpty);
             imgEmpty = (ImageView) itemView.findViewById(R.id.imgEmpty);

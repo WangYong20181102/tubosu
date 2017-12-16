@@ -55,4 +55,19 @@ public class GlideUtils {
             Glide.with(context).load(url).placeholder(emptyImg).error(erroImg).transform(new GlideRoundTransform(context, 6)).into(iv);
         }
     }
+
+    public static void glideLoader(final Context context, int drawableId, int erroImg, int emptyImg, final ImageView iv, int imageType) {
+        if (CIRCLE_IMAGE == imageType) {
+            Glide.with(context).load(drawableId).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv) {
+                @Override
+                protected void setResource(Bitmap resource) {
+                    RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                    circularBitmapDrawable.setCircular(true);
+                    iv.setImageDrawable(circularBitmapDrawable);
+                }
+            });
+        } else if (ROUND_IMAGE == imageType) {
+            Glide.with(context).load(drawableId).placeholder(emptyImg).error(erroImg).transform(new GlideRoundTransform(context, 6)).into(iv);
+        }
+    }
 }
