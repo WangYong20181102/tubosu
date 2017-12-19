@@ -16,8 +16,6 @@ import com.tbs.tobosutype.activity.CoYouHuiActivity;
 import com.tbs.tobosutype.bean.CompanyBannerItem;
 import com.tbs.tobosutype.bean.GongsiItem;
 import com.tbs.tobosutype.customview.MyRatingBar;
-import com.tbs.tobosutype.utils.DensityUtil;
-
 import java.util.List;
 
 

@@ -84,7 +84,7 @@ public class TRoundView extends AppCompatImageView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
     {
-        Log.e("TAG", "onMeasure");
+//        Log.e("TAG", "onMeasure");
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         /**
