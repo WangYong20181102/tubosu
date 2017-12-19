@@ -2,6 +2,7 @@ package com.tbs.tobosutype.customview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -10,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 import com.tbs.tobosutype.R;
@@ -18,12 +20,15 @@ import com.tbs.tobosutype.R;
 public class SelectPersonalPopupWindow extends PopupWindow {
 	private Button takePhotoBtn, pickPhotoBtn, cancelBtn;
 	private View mMenuView;
-
+	private LinearLayout pop_layout;
 	@SuppressLint("InflateParams")
 	public SelectPersonalPopupWindow(Context context, OnClickListener itemsOnClick) {
 		super(context);
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mMenuView = inflater.inflate(R.layout.popupwindow_setting_image, null);
+		pop_layout = mMenuView.findViewById(R.id.pop_layout);
+
+		pop_layout.setBackgroundColor(Color.parseColor("#FFFFFF"));
 		takePhotoBtn = (Button) mMenuView.findViewById(R.id.takePhotoBtn);
 		pickPhotoBtn = (Button) mMenuView.findViewById(R.id.pickPhotoBtn);
 		cancelBtn = (Button) mMenuView.findViewById(R.id.cancelBtn);
