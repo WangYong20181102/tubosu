@@ -65,7 +65,7 @@ public class NewWebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
         newWebviewWeb.getSettings().setGeolocationEnabled(true);
         newWebviewWeb.getSettings().setGeolocationEnabled(true);
         newWebviewWeb.getSettings().setDomStorageEnabled(true);
-        
+
         newWebviewWeb.setWebChromeClient(webChromeClient);
         newWebviewWeb.setWebViewClient(webViewClient);
         newWebviewWeb.loadUrl(mLoadingUrl);
