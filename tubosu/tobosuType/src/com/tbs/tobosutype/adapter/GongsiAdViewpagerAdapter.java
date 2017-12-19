@@ -25,7 +25,7 @@ import okhttp3.Response;
 
 
 public class GongsiAdViewpagerAdapter extends PagerAdapter {
-
+    private String TAG = "GongsiAdViewpagerAdapter";
     private ArrayList<ImageView> viewList;
     private ArrayList<String> urlStrings;
     private List<String> clickId;

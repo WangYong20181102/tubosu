@@ -58,8 +58,10 @@ import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.customview.MyListView;
 import com.tbs.tobosutype.customview.ShaixuanDialog;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppBarStateChangeListener;
+import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.EventBusUtil;
 import com.tbs.tobosutype.utils.SpUtil;
@@ -1557,8 +1559,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         List<String> clickId = new ArrayList<String>();
         if (banners != null && banners.size() > 0) {
             for (int i = 0; i < banners.size(); i++) {
-                Util.setErrorLog(TAG, "==bnn=>>>>" +banners.get(i).getContent_url());
-                urlList.add(banners.get(i).getContent_url());
+//                Util.setErrorLog(TAG, "==bnn=>>>>" +banners.get(i).getContent_url());
+                urlList.add(banners.get(i).getContent_url() + "?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()));
                 ImageView view = new ImageView(mContext);
                 view.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 Glide.with(mContext).load(banners.get(i).getImg_url()).into(view);

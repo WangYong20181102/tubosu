@@ -106,7 +106,7 @@ public class Constant {
      */
 //    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
 
-    public static final String COMPANY_FADAN_URL = M_TOBOSU_URL + "rec_company";
+
 
     public static final String COMPANY_TANKUANG_URL = M_TOBOSU_URL + "free_price_page";
 
@@ -353,9 +353,10 @@ public class Constant {
 //    专题-详情-设计	                   zt-xq-sheji	         http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=zt-xq-sheji
 
 
-    public static final String getSheJiUrl = M_TOBOSU_URL + "quote";
-    public static final String GETANLIURL = M_TOBOSU_URL + "free_price_page";
-
+    // 设计
+    public static final String getSheJiUrl = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    // 案例
+    public static final String GETANLIURL = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
 
     //案例列表发单
     public static final String ANLI_LIST_FADAN = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
@@ -380,6 +381,7 @@ public class Constant {
     //图库详情 底部发单地址
     public static final String IAMGE_DETAIL_BUTTON = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
 
+    public static final String COMPANY_FADAN_URL = M_TOBOSU_URL + "rec_company?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
 
     //新的逛图库 套图 3.5版本 add time 20171111
     public static final String SUITE_LIST = TOBOSU_URL + "mapp/impression/suite_list";

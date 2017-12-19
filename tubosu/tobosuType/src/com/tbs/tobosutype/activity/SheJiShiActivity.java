@@ -491,7 +491,7 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
 
             case R.id.get_designe_layout:
                 Intent webIntent = new Intent(mContext, NewWebViewActivity.class);
-                webIntent.putExtra("mLoadingUrl", Constant.getSheJiUrl + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(mContext));
+                webIntent.putExtra("mLoadingUrl", Constant.getSheJiUrl);
                 startActivity(webIntent);
                 break;
         }
