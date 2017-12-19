@@ -1,4 +1,5 @@
 package com.tbs.tobosutype.activity;
+
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,6 +26,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -43,18 +46,22 @@ import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+
 import com.tbs.tobosutype.bean._ImageD;
 
 
@@ -222,8 +229,20 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
             @Override
             public void onClick(View v) {
                 //弹窗  尝试打开QQ
-                String url = "http://wpa.b.qq.com/cgi/wpa.php?ln=2&uin=4006062221";
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                if(Util.checkApkExist(mContext, "com.tencent.mobileqq")){
+                    String url = "http://wpa.b.qq.com/cgi/wpa.php?ln=2&uin=4006062221";
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                }else {
+                    Toast.makeText(mContext, "本机未安装QQ", Toast.LENGTH_SHORT).show();
+                }
+
+                //通过webView
+//                Intent intentToQQ = new Intent(mContext, NewWebViewActivity.class);
+//                intentToQQ.putExtra("mLoadingUrl", "http://wpa.b.qq.com/cgi/wpa.php?ln=2&uin=4006062221");
+//                mContext.startActivity(intentToQQ);
+                //尝试另一种启动方式
+//                String url = "mqqwpa://im/chat?chat_type=crm&uin=4006062221&version=1&src_type=web&web_src=http:://wpa.b.qq.com";
+//                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                 zixunPopupWindow.dismiss();
             }
         });
@@ -721,6 +740,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     private String activityH5_url;
     private String activityType;
     private String activityName;
+
     private void getHuoDongPicture() {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -876,7 +896,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
 
     @Override
     protected void receiveEvent(Event event) {
-        switch (event.getCode()){
+        switch (event.getCode()) {
             case EC.EventCode.HOMEACTIVITY_CITY_CODE:
                 findCompanyChosenCity = (String) event.getData();
                 newhomeCity.setText(findCompanyChosenCity);
