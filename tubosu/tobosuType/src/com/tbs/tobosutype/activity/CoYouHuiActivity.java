@@ -164,7 +164,10 @@ public class CoYouHuiActivity extends AppCompatActivity {
         public void onItemClick(View view, int position) {
             /// TODO: 2017/12/5 跳转到Web页面 进行发单处理
             Intent intent = new Intent(mContext, NewWebViewActivity.class);
-            intent.putExtra("mLoadingUrl", mYouHuiArrayList.get(position).getOrder_page_url() + "channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()));
+//            String mUrl = "http://m.tobosu.com/free_price_page/";
+            String mUrl = mYouHuiArrayList.get(position).getOrder_page_url() + "channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+            Log.e(TAG, "返回的url========" + mUrl);
+            intent.putExtra("mLoadingUrl", mUrl);
             mContext.startActivity(intent);
         }
     };
