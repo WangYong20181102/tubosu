@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
@@ -55,6 +56,16 @@ public class NewWebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
         newWebviewBannerRl.setBackgroundColor(Color.parseColor("#ffffff"));
         mLoadingUrl = mIntent.getStringExtra("mLoadingUrl");
         newWebviewWeb.getSettings().setJavaScriptEnabled(true);
+        newWebviewWeb.getSettings().setBuiltInZoomControls(true);
+        newWebviewWeb.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        newWebviewWeb.getSettings().setUseWideViewPort(true);
+        newWebviewWeb.getSettings().setLoadWithOverviewMode(true);
+        newWebviewWeb.getSettings().setSavePassword(true);
+        newWebviewWeb.getSettings().setSaveFormData(true);
+        newWebviewWeb.getSettings().setGeolocationEnabled(true);
+        newWebviewWeb.getSettings().setGeolocationEnabled(true);
+        newWebviewWeb.getSettings().setDomStorageEnabled(true);
+        
         newWebviewWeb.setWebChromeClient(webChromeClient);
         newWebviewWeb.setWebViewClient(webViewClient);
         newWebviewWeb.loadUrl(mLoadingUrl);
