@@ -89,29 +89,26 @@ public class Constant {
     /**
      * 测试环境
      */
-//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
     /**
      * 正式环境
      */
-    public static final String TOBOSU_URL = "http://www.tobosu.com/";
+//    public static final String TOBOSU_URL = "http://www.tobosu.com/";
 
     /**
      * M站 发单跳转 线上环境
      */
-    public static final String M_TOBOSU_URL = "http://m.tobosu.com/";
-
+//    public static final String M_TOBOSU_URL = "http://m.tobosu.com/";
 
     /**
      * M站 发单跳转 dev环境
      */
-//    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
-
+    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
 
     public static final String COMPANY_FADAN_URL = M_TOBOSU_URL + "rec_company";
 
     public static final String COMPANY_TANKUANG_URL = M_TOBOSU_URL + "free_price_page";
-
 
     public static final String SUMMIT_BUDGET_URL = TOBOSU_URL + "mapp/RenovateExpense/expense_bookkeep";
 

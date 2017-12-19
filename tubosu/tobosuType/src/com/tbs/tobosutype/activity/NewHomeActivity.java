@@ -838,7 +838,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
             dialog.setCancelable(true);
             FrameLayout layout = (FrameLayout) dialog.findViewById(R.id.fr_dialog_layout);
             ImageView adIv = (ImageView) dialog.findViewById(R.id.iv_main_ad);
-            ImageView adIvClose = (ImageView) dialog.findViewById(R.id.iv_main_ad_close);
+            RelativeLayout adIvClose = (RelativeLayout) dialog.findViewById(R.id.iv_main_ad_close);
             Glide.with(NewHomeActivity.this).load(adUrl).into(adIv);
             Util.setErrorLog(TAG, adUrl);
             layout.setOnClickListener(new View.OnClickListener() {

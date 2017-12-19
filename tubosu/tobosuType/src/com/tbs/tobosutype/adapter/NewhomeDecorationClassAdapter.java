@@ -53,8 +53,8 @@ public class NewhomeDecorationClassAdapter extends RecyclerView.Adapter<NewhomeD
         }else{
             holder.left_six.setVisibility(View.GONE);           //    6
             holder.left.setVisibility(View.VISIBLE);            //    10
-            holder.right.setVisibility(View.GONE);           //    10
-            holder.right_six.setVisibility(View.GONE);           //    6
+            holder.right.setVisibility(View.GONE);              //    10
+            holder.right_six.setVisibility(View.GONE);          //    6
         }
         holder.itemView.setTag(position);
 
@@ -93,7 +93,6 @@ public class NewhomeDecorationClassAdapter extends RecyclerView.Adapter<NewhomeD
             left=(TextView) itemView.findViewById(R.id.left);
             right_six=(TextView) itemView.findViewById(R.id.right_six);
             left_six=(TextView) itemView.findViewById(R.id.left_six);
-
         }
     }
 }
