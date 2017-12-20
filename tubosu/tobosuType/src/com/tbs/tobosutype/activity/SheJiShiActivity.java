@@ -231,16 +231,16 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                                 JSONObject moreDataJson = new JSONObject(json);
                                 String msg = moreDataJson.getString("msg");
                                 if(moreDataJson.getInt("status") == 200){
-                                    JSONObject data = moreDataJson.getJSONObject("data");
+                                    JSONArray dataArr = moreDataJson.getJSONArray("data");
                                     if(type == 0){
                                         // 设计
-                                        JSONArray moreShejiArr = data.getJSONArray("designer_pic");
                                         List<_CompanyDetail.SuitesBean> tempMoreShejiList = new ArrayList<_CompanyDetail.SuitesBean>();
-                                        for (int i = 0; i < moreShejiArr.length(); i++) {
+                                        for(int i=0;i<dataArr.length();i++){
                                             Gson shejiGson = new Gson();
-                                            _CompanyDetail.SuitesBean designBean = shejiGson.fromJson(moreShejiArr.getJSONObject(i).toString(), _CompanyDetail.SuitesBean.class);
+                                            _CompanyDetail.SuitesBean designBean = shejiGson.fromJson(dataArr.getJSONObject(i).toString(), _CompanyDetail.SuitesBean.class);
                                             tempMoreShejiList.add(designBean);
                                         }
+
                                         if(shejishiAdapter != null){
                                             shejishiAdapter.setShejiDataList(tempMoreShejiList);
                                             shejishiAdapter.notifyDataSetChanged();
@@ -268,11 +268,10 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                                         }
                                     }else{
                                         //  案例
-                                        JSONArray moreAnliArr = data.getJSONArray("anli");
                                         List<DesignerInfoCaseBean> tempMoreAnliList = new ArrayList<>();
-                                        for (int i = 0; i < moreAnliArr.length(); i++) {
+                                        for (int i = 0; i < dataArr.length(); i++) {
                                             Gson anliGson = new Gson();
-                                            DesignerInfoCaseBean anliBean = anliGson.fromJson(moreAnliArr.getJSONObject(i).toString(), DesignerInfoCaseBean.class);
+                                            DesignerInfoCaseBean anliBean = anliGson.fromJson(dataArr.getJSONObject(i).toString(), DesignerInfoCaseBean.class);
                                             tempMoreAnliList.add(anliBean);
                                         }
                                         if(shejishiAdapter != null){
