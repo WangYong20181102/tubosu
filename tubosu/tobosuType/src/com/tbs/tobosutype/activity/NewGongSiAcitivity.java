@@ -123,7 +123,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     private boolean normalData = true;
 
     private boolean isClose = true;
-
+    private PopupWindow popWnd;
     private int page = 1;
     private int page_size = 10;
     private int pageS = 1;
@@ -882,7 +882,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                     // 弹出 弹框
                     sortDistrict(gongsiCity);
                     View contentView = LayoutInflater.from(NewGongSiAcitivity.this).inflate(R.layout.popuplayout_district_layout, null);
-                    final PopupWindow popWnd = new PopupWindow(NewGongSiAcitivity.this);
+                    popWnd = new PopupWindow(NewGongSiAcitivity.this);
                     popWnd.setContentView(contentView);
                     popWnd.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
                     popWnd.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1047,6 +1047,9 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case 4:
+                    if(popWnd != null){
+                        popWnd.dismiss();
+                    }
                     relfindComLayout.setVisibility(View.VISIBLE);
                     findComIcon.setImageResource(R.drawable.gongsifree);
                     findComIcon.setVisibility(View.VISIBLE);
