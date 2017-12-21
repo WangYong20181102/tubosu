@@ -1373,7 +1373,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                         @Override
                                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                             Intent it = new Intent(mContext, DecComActivity.class);
-                                            it.putExtra("mCompanyId", searchGongsiList.get(i).getId());
+                                            it.putExtra("mCompanyId", youxuanSearchGongsiList.get(i).getId());
                                             startActivity(it);
                                         }
                                     });
