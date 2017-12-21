@@ -581,8 +581,10 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                 if (newHomeAdapter == null) {
                     newHomeAdapter = new NewHomeAdapter(mContext, bigData, shejiArrayList, topicBeansList);
                     recyclerView.setAdapter(newHomeAdapter);
+//                    recyclerView.scrollToPosition(0);
                     newHomeAdapter.notifyDataSetChanged();
                 } else {
+//                    recyclerView.scrollToPosition(0);
                     if (topicBeansList.size() > 0) {
                         newHomeAdapter.setTopicData(topicBeansList);
                     }
