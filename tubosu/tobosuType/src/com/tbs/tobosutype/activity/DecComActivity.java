@@ -795,7 +795,10 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (mCompanyDetail != null && !mCompanyDetail.getPromotions_title().isEmpty() && decComYouhuiLunboTv != null) {
+        if (mCompanyDetail != null
+                && mCompanyDetail.getPromotions_title() != null
+                && !mCompanyDetail.getPromotions_title().isEmpty()
+                && decComYouhuiLunboTv != null) {
             decComYouhuiLunboTv.startAutoScroll();
         }
     }
@@ -803,7 +806,10 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (!mCompanyDetail.getPromotions_title().isEmpty()) {
+        if (mCompanyDetail != null
+                && mCompanyDetail.getPromotions_title() != null
+                && !mCompanyDetail.getPromotions_title().isEmpty()
+                && decComYouhuiLunboTv != null) {
             decComYouhuiLunboTv.stopAutoScroll();
         }
     }
@@ -811,7 +817,10 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (!mCompanyDetail.getPromotions_title().isEmpty()) {
+        if (mCompanyDetail != null
+                && mCompanyDetail.getPromotions_title() != null
+                && !mCompanyDetail.getPromotions_title().isEmpty()
+                && decComYouhuiLunboTv != null) {
             decComYouhuiLunboTv.stopAutoScroll();
         }
     }
