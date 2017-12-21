@@ -377,7 +377,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                     if (searchCompanyAdapter != null) {
                         searchCompanyAdapter.loadMoreGongsi(true);
                         pageS++;
-                        searchLayout.setBackgroundResource(R.color.white);
+                        searchLayout.setBackgroundResource(R.drawable.wht);
                         getSearchData(searchText);
                         getBannerData(); // banner
                     }
@@ -1001,7 +1001,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                     relTopSearch1.setBackgroundResource(R.drawable.wht);
                 }else if(tvCancelSearch.getText().toString().trim().equals("搜索")){
                     mengceng4.setVisibility(View.GONE);
-                    searchLayout.setBackgroundResource(R.color.white);
+                    searchLayout.setBackgroundResource(R.drawable.wht);
                     ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(NewGongSiAcitivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     // 搜索，请求网络  在搜索页面
                     searchText = etSearchGongsi.getText().toString().trim();
