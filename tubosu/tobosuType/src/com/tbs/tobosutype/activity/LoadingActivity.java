@@ -1,23 +1,27 @@
 package com.tbs.tobosutype.activity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.Util;
+
 import java.util.Timer;
 import java.util.TimerTask;
+
 /**
  * Created by Lie on 2017/9/21.
  */
 
 public class LoadingActivity extends BaseActivity {
-//    private String loadingUrl;
+    //    private String loadingUrl;
     private int stayTime = 0;
     private TextView tvCountDownText;
     private ImageView ivImg;
@@ -34,7 +38,7 @@ public class LoadingActivity extends BaseActivity {
         getIntentData();
     }
 
-    private void initView(){
+    private void initView() {
         tvCountDownText = (TextView) findViewById(R.id.tv_count_down_text);
         ivImg = (ImageView) findViewById(R.id.iv_loading_img);
     }
@@ -42,10 +46,10 @@ public class LoadingActivity extends BaseActivity {
     private void getIntentData() {
 
         Intent intent = getIntent();
-        if(intent!=null){
+        if (intent != null) {
             String url = intent.getStringExtra("loading_img_url");
             url = url.replace("\\/", "/");
-            if(url!=null && !"".equals(url)){
+            if (url != null && !"".equals(url)) {
                 stayTime = intent.getIntExtra("staytime", 4);
                 tvCountDownText.setText(stayTime + " 点击跳过");
                 Glide.with(mContext).load(url).into(ivImg);
@@ -55,6 +59,7 @@ public class LoadingActivity extends BaseActivity {
         tvCountDownText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                timer.cancel();
                 goMainActivity();
             }
         });
@@ -72,7 +77,7 @@ public class LoadingActivity extends BaseActivity {
                 public void run() {
                     stayTime--;
                     tvCountDownText.setText(stayTime + " 点击跳过");
-                    if(stayTime <= 0){
+                    if (stayTime <= 0) {
                         timer.cancel();
                         if ("".equals(CacheManager.getAppEntryOrderPre(mContext))) {
                             CacheManager.setAppEntryOrderPre(mContext, "abc"); // 标识已经进入过发单页面
@@ -93,7 +98,7 @@ public class LoadingActivity extends BaseActivity {
         }
     };
 
-    private void goMainActivity(){
+    private void goMainActivity() {
         startActivity(new Intent(mContext, MainActivity.class));
         finish();
         System.gc();

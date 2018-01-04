@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.receiver.MyJpushReceiver;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
@@ -39,6 +40,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -133,7 +135,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,7 +146,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         initEvent();
         needPermissions();
     }
-
 
     /***
      * 初始化页面和底部按钮
@@ -200,10 +200,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 //        main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
 //            @Override
 //            public boolean onLongClick(View v) {
-////                startActivity(new Intent(mContext, BaiduMapActivity.class));//地图测试
-//                Intent intent1 = new Intent(mContext, DecComActivity.class);
-//                intent1.putExtra("mCompanyId", "270621");
-//                startActivity(intent1);
+//                Intent gotoLearnActivity = new Intent(mContext, LearnRenovationActivity.class);
+//                mContext.startActivity(gotoLearnActivity);
 //                return true;
 //            }
 //        });

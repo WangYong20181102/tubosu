@@ -21,10 +21,10 @@ import java.util.List;
 public class KeTangAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
-    private List<NewHomeDataItem.NewhomeDataBean.CourseBean> dataList;
+    private List<NewHomeDataItem.NewhomeDataBean.ArticleBean> dataList;
 
 
-    public KeTangAdapter(Context context, List<NewHomeDataItem.NewhomeDataBean.CourseBean> dataList){
+    public KeTangAdapter(Context context, List<NewHomeDataItem.NewhomeDataBean.ArticleBean> dataList){
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.dataList = dataList;

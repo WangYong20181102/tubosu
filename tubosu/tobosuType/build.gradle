@@ -33,6 +33,7 @@ dependencies {
     compile 'cn.jiguang.sdk:jpush:3.0.9'  // 此处以JPush 3.0.9 版本为例。
     compile 'cn.jiguang.sdk:jcore:1.1.7'  // 此处以JCore 1.1.7 版本为例。
     implementation 'com.jaydenxiao:ExpandableTextView:1.0.0'
+    compile 'com.androidkun:XTabLayout:1.1.3'
 }
 
 
@@ -60,8 +61,8 @@ android {
         applicationId "com.tbs.tobosutype" // 程序的包名
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 26
-        versionName "3.6"
+        versionCode 27
+        versionName "3.7"
         flavorDimensions "versionCode"
         multiDexEnabled true  // 消去重复的jar 引用
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "ali"]//多渠道打包标识 默认爱思
@@ -74,7 +75,7 @@ android {
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME: "com.tbs.tobosutype",
-                JPUSH_APPKEY : "296b86ca9ffe1bfd4f43b655", //JPush上注册的包名对应的appkey.
+                JPUSH_APPKEY : "867c2106715593b757fde749", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
 
@@ -144,10 +145,10 @@ android.applicationVariants.all { variant ->
             def fileName
             if (variant.buildType.name == "release") {
 //                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_${variant.productFlavors[0].name}.apk"
-                fileName = "tobosuType_v3.6_${variant.productFlavors[0].name}.apk"
+                fileName = "tobosuType_v3.7_${variant.productFlavors[0].name}.apk"
             } else {
 //                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_beta.apk"
-                fileName = "tobosuType_v3.6_${variant.productFlavors[0].name}_beta.apk"
+                fileName = "tobosuType_v3.7_${variant.productFlavors[0].name}_beta.apk"
             }
 //            output.outputFile = new File(outputDirectory, fileName)
 //            outputFileName="${variant.applicationId}-${ buildType.name}-${variant.productFlavors[0].name}.apk"

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_height="23dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="装修课堂"
+                android:textColor="@color/color_black"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:id="@+id/rel_more_class"
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true">
+
+                <TextView
+                    android:id="@+id/tv_more_class"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:text="更多"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/tv_more_class"
+                    android:background="@drawable/fuck_more" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <com.tbs.tobosutype.customview.MySwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+            <com.tbs.tobosutype.customview.BetterRecyclerView
+                android:id="@+id/newhome_recyclerview_class"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+            </com.tbs.tobosutype.customview.BetterRecyclerView>
+        </com.tbs.tobosutype.customview.MySwipeRefreshLayout>
+
+        <com.tbs.tobosutype.customview.MyListView
+            android:id="@+id/newhome_ketang_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginRight="16dp"
+            android:divider="#F7F7F7"
+            android:dividerHeight="1dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="2dp"
+            android:listSelector="@color/transparent"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="8dp"
+            android:background="#F7F7F7"/>
+
+    </LinearLayout>
+</RelativeLayout>

@@ -28,7 +28,7 @@ public class GlideUtils {
      * @param imageView
      */
     public static void glideLoader(Context context, String imgUrl, int erroImg, int emptyImg, ImageView imageView) {
-        Glide.with(context).load(imgUrl).placeholder(emptyImg).error(erroImg).centerCrop().into(imageView);
+        Glide.with(context).load(imgUrl).asBitmap().placeholder(emptyImg).error(erroImg).centerCrop().into(imageView);
     }
 
     /**

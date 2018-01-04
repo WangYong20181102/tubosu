@@ -84,4 +84,13 @@ public class SpUtil {
     public static String getRadius(Context context) {
         return context.getSharedPreferences("mlRadius", 0).getString("mRadius", "");
     }
+
+    //存储学装修分类信息
+    public static void setArticleType(Context context, String ArticleType) {
+        context.getSharedPreferences("mlArticleType", 0).edit().putString("mArticleType", ArticleType).commit();
+    }
+    //获取学装修分类信息
+    public static String getArticleType(Context context) {
+        return context.getSharedPreferences("mlArticleType", 0).getString("mArticleType", "");
+    }
 }

@@ -406,7 +406,7 @@ public class LoginFragmentPhone extends Fragment implements OnClickListener, OnK
         weixinLoginParams.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
         weixinLoginParams.put("nickname", weiXinUserName);
         weixinLoginParams.put("account", weiXinUserId);
-
+//        Log.e(TAG, "微信登录获取头像========" + weiXinImageUrl);
         OKHttpUtil.post(weixinLoginUrl, weixinLoginParams, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

@@ -8,6 +8,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -49,7 +50,6 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     private static final String TAG = WelcomeActivity.class.getSimpleName();
     @BindView(R.id.welcome_image)
     ImageView welcomeImage;
-//    private CheckUpdateUtils updateUtils;
 
     private String check_password = Constant.TOBOSU_URL + "tapp/passport/isCheckPwdUp";
     private String check_ab_test = Constant.TOBOSU_URL + "tapp/spcailpic/get_ab";
@@ -61,7 +61,6 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        AppInfoUtil.setTranslucentStatus(this);
         setContentView(R.layout.activity_welcome_bg);
         ButterKnife.bind(this);
         mContext = WelcomeActivity.this;
@@ -69,32 +68,54 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         initView();
         needPermissions();
         CacheManager.setStartFlag(WelcomeActivity.this, 0);
-//        do_webpage();
         getSetting();
+        // TODO: 2018/1/3  welcome老的处理方式
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                SystemClock.sleep(3000);
+//                countDownloadNum();//新增用户的数据统计
+//                CacheManager.setChentaoFlag(mContext, 0);
+//                CacheManager.setCompanyFlag(mContext, 0);
+//                getCityJson();//获取城市的数据
+//                if ("".equals(getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("encode_pass", ""))) {
+//
+//                } else {
+//                    // 登录
+//                    check_password();
+//                    Util.setErrorLog(TAG, ">>>>>>>登录<<<<<");
+//                    SystemClock.sleep(2000);
+//                }
+//                // TODO: 2017/12/28  在这个节点处理推送消息  下面这个线程是进入Main的方法 在此之前要处理好推送相关的逻辑
+//                runOnUiThread(new IntentTask());
+//            }
+//        }.start();
 
-        new Thread() {
+        //todo 新的welcome处理逻辑 creat by lin  20180103
+        countDownloadNum();//新增用户的数据统计
+        CacheManager.setChentaoFlag(mContext, 0);
+        CacheManager.setCompanyFlag(mContext, 0);
+        getCityJson();//获取城市的数据
+        if ("".equals(getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("encode_pass", ""))) {
+
+        } else {
+            // 登录
+            check_password();
+            Util.setErrorLog(TAG, ">>>>>>>登录<<<<<");
+        }
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                SystemClock.sleep(3000);
-                countDownloadNum();
-                CacheManager.setChentaoFlag(mContext, 0);
-                CacheManager.setCompanyFlag(mContext, 0);
-                getCityJson();
-                if ("".equals(getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("encode_pass", ""))) {
-
-                } else {
-                    // 登录
-                    check_password();
-                    Util.setErrorLog(TAG, ">>>>>>>登录<<<<<");
-                    SystemClock.sleep(2000);
-                }
+                // TODO: 2017/12/28  在这个节点处理推送消息  下面这个线程是进入Main的方法 在此之前要处理好推送相关的逻辑
                 runOnUiThread(new IntentTask());
             }
-        }.start();
+        }, 3000);
     }
 
     private void initView() {
         Glide.with(mContext).load(R.drawable.welcome_image).placeholder(R.drawable.welcome_image).error(R.drawable.welcome_image).into(welcomeImage);
+        //区分市场
 //        if("appxiaomi".equals(AppInfoUtil.getChannType(MyApplication.getContext()))){
 //            Glide.with(mContext).load(R.drawable.wel_xiaomi).placeholder(R.drawable.wel_xiaomi).error(R.drawable.wel_xiaomi).into(welcomeImage);
 //        }else if("ali".equals(AppInfoUtil.getChannType(MyApplication.getContext()))){
@@ -157,9 +178,9 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
 
-    private void getCityJson(){
-        if("".equals(CacheManager.getSaveCityFlag(mContext))){
-            if(Util.isNetAvailable1(mContext)){
+    private void getCityJson() {
+        if ("".equals(CacheManager.getSaveCityFlag(mContext))) {
+            if (Util.isNetAvailable1(mContext)) {
                 HashMap<String, Object> cityMap = new HashMap<String, Object>();
                 cityMap.put("token", Util.getDateToken());
                 OKHttpUtil.post(Constant.CITY_JSON, cityMap, new Callback() {
@@ -173,7 +194,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                         String cityjson = response.body().string();
                         try {
                             JSONObject object = new JSONObject(cityjson);
-                            if(object.getInt("status") == 200){
+                            if (object.getInt("status") == 200) {
                                 CacheManager.setSaveCityFlag(mContext, cityjson);
                             }
                         } catch (JSONException e) {
@@ -260,14 +281,6 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                                 // 拿到了图片地址
                                 JSONObject data = jsonObject.getJSONObject("data");
                                 String url = data.getString("img_url");
-//                                String adId = data.getString("id");
-//                                if(CacheManager.getLoadingAdId(mContext).equals(adId)){
-//                                    // id相等 则不需要重新下载广告图片
-//                                }else {
-//                                    // 重新下载广告图片 重新设置广告id
-//                                    httpDownLoadImg(url);
-//                                    CacheManager.setLoadingAdId(mContext, adId);
-//                                }
                                 String time = data.getString("stay_time");
                                 Util.setErrorLog(TAG, "----33---有网络 有地址------");
                                 goLoadingActivity(url, Integer.parseInt(time));
@@ -290,21 +303,6 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
     /**
-     * 下载广告页面
-     *
-     * @param downloadUrl
-     */
-    private void httpDownLoadImg(String downloadUrl) {
-        //创建文件夹
-        File dirFile = new File(Constant.IMG_PATH);
-        if (!dirFile.exists()) {
-            dirFile.mkdir();
-        }
-        String fileName = "loadingAd.jpg";
-        OKHttpUtil.downFile(mContext, downloadUrl, dirFile.getPath(), fileName);
-    }
-
-    /**
      * 跳转
      *
      * @param time 广告停留时间
@@ -315,6 +313,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         if (time == -1) {
             // 没有图片下载
             if ("".equals(CacheManager.getAppEntryOrderPre(mContext))) {
+                //初次进入我们的App进入发单页面
                 CacheManager.setAppEntryOrderPre(mContext, "abc"); // 标识已经进入过发单页面
                 intent = new Intent(mContext, PopOrderActivity.class);
             } else {
@@ -338,7 +337,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                 }
             }
         }
-        if(intent!=null){
+        if (intent != null) {
             startActivity(intent);
             finish();
             System.gc();
@@ -437,7 +436,6 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
             permission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         return permission;
     }
-
 
 
 }

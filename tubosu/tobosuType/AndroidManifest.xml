@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.tbs.tobosutype"
-    android:versionCode="26"
-    android:versionName="3.6">
+    android:versionCode="27"
+    android:versionName="3.7">
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -96,10 +96,10 @@
         </activity>
         <activity
             android:name=".activity.MainActivity"
-            android:launchMode="singleTask"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.SearchImageActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -244,8 +244,8 @@
         <activity
             android:name=".activity.NewGongSiAcitivity"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <activity
             android:name=".activity.FreeYuyueActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -453,12 +453,57 @@
         <activity android:name=".activity.SImageLookingActivity" />
         <activity android:name=".activity.DImageLookingActivity" />
 
+        <!-- <service -->
+        <!-- android:name="cn.jpush.android.service.PushService" -->
+        <!-- android:process=":multiprocess" -->
+        <!-- tools:node="replace"> -->
+
+
+        <!-- </service> -->
+        <!-- 极光推送服务 create by lin   20171225 -->
+
+
+        <!-- Required SDK 核心功能 -->
+        <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
             android:name="cn.jpush.android.service.PushService"
-            android:process=":multiprocess"
-            tools:node="replace" >
-
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
         </service>
+
+        <!-- since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 -->
+        <!-- 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 -->
+        <service
+            android:name="cn.jpush.android.service.DaemonService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.DaemonService" />
+
+                <category android:name="com.tbs.tobosutype" />
+            </intent-filter>
+        </service>
+        <!-- 接收相关通知 极光  create by lin -->
+        <receiver
+            android:name=".receiver.MyJpushReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_CLICK_ACTION" />
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+
+                <category android:name="com.tbs.tobosutype" />
+            </intent-filter>
+        </receiver>
 
         <activity android:name=".activity.DecComActivity" />
         <activity android:name=".activity.BaiduMapActivity" />
@@ -469,6 +514,8 @@
         <activity android:name=".activity.CoZizhiActivity" />
         <activity android:name=".activity.CoDecorationCaseActivity" />
         <activity android:name=".activity.ZizhiPhotoLookingActivity" />
+        <activity android:name=".activity.LearnRenovationActivity" />
+        <activity android:name=".activity.ArticleWebViewActivity"></activity>
     </application>
 
 </manifest>

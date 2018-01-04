@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -88,6 +89,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     private Gson mGson;
     private ArrayList<NewHomeDataItem.NewhomeDataBean.TopicBean> topicBeansList = new ArrayList<NewHomeDataItem.NewhomeDataBean.TopicBean>();
     private ArrayList<_ImageD> shejiArrayList = new ArrayList<_ImageD>();
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,10 +101,46 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         initBaiduMap();
         chooseId = "0";
         setClick();
+        //获取学装修的分类  create by lin  3.7版本新增
+        HttpGetArticleType();
+        //获取网络数据
         getDataFromNet(false);
         initReceiver();
         getHuoDongPicture();
     }
+
+    //网络获取学装修的分类
+    private void HttpGetArticleType() {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Util.getDateToken());
+        OKHttpUtil.post(Constant.Z_ARTICLE_GET_TYPE, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                //获取学装修分类失败
+                Log.e(TAG, "获取数据失败===========" + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                //获取数据成功 将数据存储
+                String json = new String(response.body().string());
+                Log.e(TAG, "======获取分类数据成功=====" + json);
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.optString("status");
+                    if (status.equals("200")) {
+                        //数据请求成功将json数据存储本地
+                        String typeJson = jsonObject.optString("data");
+                        SpUtil.setArticleType(mContext, typeJson);
+                        Log.e(TAG, "======Sp获取数据=====" + SpUtil.getArticleType(mContext));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
 
     private void initView() {
         mGson = new Gson();
@@ -229,10 +267,10 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
             @Override
             public void onClick(View v) {
                 //弹窗  尝试打开QQ
-                if(Util.checkApkExist(mContext, "com.tencent.mobileqq")){
+                if (Util.checkApkExist(mContext, "com.tencent.mobileqq")) {
                     String url = "http://wpa.b.qq.com/cgi/wpa.php?ln=2&uin=4006062221";
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-                }else {
+                } else {
                     Toast.makeText(mContext, "本机未安装QQ", Toast.LENGTH_SHORT).show();
                 }
 

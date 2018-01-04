@@ -89,12 +89,12 @@ public class Constant {
     /**
      * 测试环境
      */
-//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
     /**
      * 正式环境
      */
-    public static final String TOBOSU_URL = "http://www.tobosu.com/";
+//    public static final String TOBOSU_URL = "https://www.tobosu.com/";
 
     /**
      * M站 发单跳转 线上环境
@@ -105,7 +105,6 @@ public class Constant {
      * M站 发单跳转 dev环境
      */
 //    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
-
 
 
     public static final String COMPANY_TANKUANG_URL = M_TOBOSU_URL + "free_price_page";
@@ -158,7 +157,8 @@ public class Constant {
     public static final String DECORATION_COMPANY_PREFERENTIAL_APPLYFOR = TOBOSU_URL + "tapp/company/activitySignupList";
 
     public static final String clickUrl = TOBOSU_URL + "mapp/companyBanner/click_count";
-    /**-
+    /**
+     * -
      * 第三方绑定接口
      */
     public static String BIND_THIRD_PARTY_URL = TOBOSU_URL + "tapp/passport/bindThirdParty";
@@ -188,7 +188,8 @@ public class Constant {
      */
     public static String MY_OWNER_ODER_URL = TOBOSU_URL + "tapp/order/user_order_list";
 
-    public static String NEWHOME_URL = TOBOSU_URL + "mapp/index/index";
+    //    public static String NEWHOME_URL = TOBOSU_URL + "mapp/index/index";
+    public static String NEWHOME_URL = TOBOSU_URL + "mapp/index/new_index";
 
     /**
      * 发单接口地址
@@ -405,6 +406,14 @@ public class Constant {
     public static final String COMPANY_CASE_LIST = TOBOSU_URL + "mapp/company/case_list";
     //装修公司的设计师列表
     public static final String DESIGNER_LIST = TOBOSU_URL + "mapp/designer/designer_list";
+    //获取学装修的分类  3.7版本新增
+    public static final String Z_ARTICLE_GET_TYPE = TOBOSU_URL + "mapp/ZArticle/get_type";
+    //获取学装修列表数据  3.7版本新增
+    public static final String Z_ARTICLE_LIST = TOBOSU_URL + "mapp/ZArticle/article_list";
+    //装修详情点击量  3.7版本新增
+    public static final String Z_ARTICLE_CLICK_COUNT = TOBOSU_URL + "mapp/ZArticle/click_count";
+
+
     //装修公司主页 底部发单按钮 3.6版本新增
     public static final String DEC_COOM_BUTTON = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
     //装修公司主页 优惠活动发单按钮 3.6版本新增
@@ -416,6 +425,6 @@ public class Constant {
     //装修公司主页 设计师团队 列表  获取此设计 3.6版本新增
     public static final String DEC_COOM_DESIGNER_GET_PRICE = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
     //装修公司主页 设计师团队找他免费设计 3.6版本新增
-    public static final String DEC_COOM_DESIGNER_FIND_DISIGN= M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    public static final String DEC_COOM_DESIGNER_FIND_DISIGN = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
 
 }

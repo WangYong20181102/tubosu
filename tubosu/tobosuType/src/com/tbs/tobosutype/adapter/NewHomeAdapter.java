@@ -18,12 +18,15 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.activity.ArticleWebViewActivity;
 import com.tbs.tobosutype.activity.DImageLookingActivity;
 import com.tbs.tobosutype.activity.DecorationCaseActivity;
 import com.tbs.tobosutype.activity.DecorationCaseDetailActivity;
+import com.tbs.tobosutype.activity.LearnRenovationActivity;
 import com.tbs.tobosutype.activity.NewWebViewActivity;
 import com.tbs.tobosutype.activity.TopicDetailActivity;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
@@ -42,6 +45,7 @@ import com.tbs.tobosutype.utils.EndlessRecyclerOnScrollListener;
 import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.tbs.tobosutype.utils.Utils;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,16 +54,18 @@ import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+
 import com.tbs.tobosutype.bean._ImageD;
 
 /**
  * Created by Lie on 2017/04/23.
  */
 
-public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final String TAG = NewHomeAdapter.class.getSimpleName();
     private NewHomeDataItem.NewhomeDataBean dataSource;
     private ViewPager newhomeViewPager;
@@ -90,20 +96,20 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.dataSource = dataSource;
-        if(shejiList!=null && shejiList.size()>0){
+        if (shejiList != null && shejiList.size() > 0) {
             this.shejiList = shejiList;
         }
 
-        if(topList!=null && topList.size()>0){
+        if (topList != null && topList.size() > 0) {
             this.topicList.addAll(topList);
-        }else {
+        } else {
             this.topicList = dataSource.getTopic();
         }
 
     }
 
     public void setTopicData(List<NewHomeDataItem.NewhomeDataBean.TopicBean> topList) {
-        if(topList!=null && topList.size()>0){
+        if (topList != null && topList.size() > 0) {
             this.topicList.addAll(topList);
         }
     }
@@ -141,9 +147,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (holder instanceof NewHomeHead) {
             NewHomeHead headHolder = (NewHomeHead) holder;
 //            if(CacheManager.getChentaoFlag(context) == 0){
-                newhomeViewPager.setFocusable(true);
-                newhomeViewPager.setFocusableInTouchMode(true);
-                newhomeViewPager.requestFocus();
+            newhomeViewPager.setFocusable(true);
+            newhomeViewPager.setFocusableInTouchMode(true);
+            newhomeViewPager.requestFocus();
 //                Util.setToast(context, "获得焦点");
 //            }else {
 //                newhomeViewPager.setFocusable(false);
@@ -192,13 +198,15 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     context.sendBroadcast(it);
                 }
             });
-
+            // TODO: 2017/12/29 这个跳转改为学装修  跳转到学装列表
             headHolder.relZhuangXiuKetang.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.POP_URL + Constant.M_POP_PARAM + Constant.WANGJIANLIN);
-                    context.startActivity(webIntent);
+//                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
+//                    webIntent.putExtra("mLoadingUrl", Constant.POP_URL + Constant.M_POP_PARAM + Constant.WANGJIANLIN);
+//                    context.startActivity(webIntent);
+                    Intent gotoLearnActivity = new Intent(context, LearnRenovationActivity.class);
+                    context.startActivity(gotoLearnActivity);
                 }
             });
 
@@ -320,12 +328,15 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             headHolder.relMoreClass.setFocusable(false);
             headHolder.relMoreClass.setFocusableInTouchMode(false);
             headHolder.relMoreClass.clearFocus();
+            // TODO: 2017/12/29  学装修更多按钮  点击进入学装修列表
             headHolder.relMoreClass.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", dataSource.getCourse_list_url());
-                    context.startActivity(webIntent);
+//                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
+//                    webIntent.putExtra("mLoadingUrl", dataSource.getCourse_list_url());
+//                    context.startActivity(webIntent);
+                    Intent gotoLearnActivity = new Intent(context, LearnRenovationActivity.class);
+                    context.startActivity(gotoLearnActivity);
                 }
             });
 
@@ -335,13 +346,18 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             NewhomeDecorationClassAdapter classAdapter = new NewhomeDecorationClassAdapter(context/*, dataSource.getCourseType()*/);
             headHolder.newhomeRecyclerviewClass.setAdapter(classAdapter);
             classAdapter.notifyDataSetChanged();
+            // TODO: 2017/12/29 首页的装修 学装修的选项卡 这个点击某一个选项进入学装修对应的页面 
             classAdapter.setOnItemClickListener(new NewhomeDecorationClassAdapter.OnRecyclerViewItemClickListener() {
 
                 @Override
                 public void onRecyclerViewItemClick(View view, int position) {
-                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", dataSource.getCourse_type().get(position).getJump_url());
-                    context.startActivity(webIntent);
+//                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
+//                    webIntent.putExtra("mLoadingUrl", dataSource.getCourse_type().get(position).getJump_url());
+//                    context.startActivity(webIntent);
+                    Util.HttpArticleClickCount(dataSource.getArticle_type().get(position).getId());
+                    Intent intent = new Intent(context, LearnRenovationActivity.class);
+                    intent.putExtra("mIndex", dataSource.getArticle_type().get(position).getIndex());
+                    context.startActivity(intent);
                 }
             });
 
@@ -352,8 +368,8 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", dataSource.getCourse().get(position).getJump_url());
+                    Intent webIntent = new Intent(context, ArticleWebViewActivity.class);
+                    webIntent.putExtra("mLoadingUrl", dataSource.getCourse().get(position).getJump_url() + "&app_type=1");
                     context.startActivity(webIntent);
                 }
             });
@@ -370,7 +386,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent it = new Intent(context, TopicDetailActivity.class);
-                    it.putExtra("mTopicId", topicList.get(position -1).getId());
+                    it.putExtra("mTopicId", topicList.get(position - 1).getId());
                     context.startActivity(it);
                 }
             });
@@ -688,7 +704,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
 
-    private void bannerClick(String id){
+    private void bannerClick(String id) {
         HashMap<String, Object> click = new HashMap<String, Object>();
         click.put("token", Util.getDateToken());
         click.put("id", id);
@@ -706,7 +722,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
 
-    private void fadanClick(String port_code, String ip){
+    private void fadanClick(String port_code, String ip) {
         HashMap<String, Object> click = new HashMap<String, Object>();
         click.put("token", Util.getDateToken());
         click.put("port_code", port_code);

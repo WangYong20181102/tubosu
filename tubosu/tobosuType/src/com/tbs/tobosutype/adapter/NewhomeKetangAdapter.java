@@ -21,9 +21,9 @@ import java.util.List;
 public class NewhomeKetangAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
     private Context context;
     private LayoutInflater inflater;
-    private List<NewHomeDataItem.NewhomeDataBean.CourseBean> dataList;
+    private List<NewHomeDataItem.NewhomeDataBean.ArticleBean> dataList;
 
-    public NewhomeKetangAdapter(Context context, List<NewHomeDataItem.NewhomeDataBean.CourseBean> dataList){
+    public NewhomeKetangAdapter(Context context, List<NewHomeDataItem.NewhomeDataBean.ArticleBean> dataList){
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.dataList = dataList;

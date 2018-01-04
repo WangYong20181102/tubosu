@@ -21,7 +21,7 @@ import java.util.List;
 public class NewhomeDecorationClassAdapter extends RecyclerView.Adapter<NewhomeDecorationClassAdapter.ClassHolder> implements View.OnClickListener {
     private Context context;
     private LayoutInflater inflater;
-    private int[] icons = new int[]{R.drawable.newzhuangqiuqian, R.drawable.newzhuangxiuzhong, R.drawable.newzhuangxiuhou,R.drawable.newxuancai, R.drawable.newsheji, R.drawable.newfengshui};
+    private int[] icons = new int[]{R.drawable.new_sheji, R.drawable.xuancai, R.drawable.fangshui,R.drawable.ruanzhuang, R.drawable.fengshui};
 
     public NewhomeDecorationClassAdapter(Context context){
         this.context = context;

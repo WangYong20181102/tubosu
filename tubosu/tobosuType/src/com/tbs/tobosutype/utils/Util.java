@@ -18,11 +18,16 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
+
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -30,26 +35,29 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
 /**
  * Created by dec on 2016/9/12.
  * 工具类
  */
 public class Util {
 
-    public static void setToast(Context context, String msg){
+    public static void setToast(Context context, String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
-    public static boolean isLogin(Context context){
+    public static boolean isLogin(Context context) {
         SharedPreferences sp = context.getSharedPreferences("User_Info_SP", Context.MODE_PRIVATE);
-        String token = sp.getString("token","");
+        String token = sp.getString("token", "");
         if ("".equals(token)) {
             return false;//未登录
-        }else {
+        } else {
             return true;//已登陆
         }
     }
-
 
 
     /**
@@ -88,6 +96,7 @@ public class Util {
 
     /**
      * 判断网络是否可用
+     *
      * @param context
      * @return
      */
@@ -126,8 +135,9 @@ public class Util {
 
     /**
      * 检测网络状态<br/>
+     *
      * @return true 连接网络
-     *         false 没有网络
+     * false 没有网络
      */
     public static boolean checkNetwork(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -146,8 +156,10 @@ public class Util {
         }
         return false;
     }
+
     /**
      * 无网提示
+     *
      * @param mContext
      */
     public static void toastNetOut(Context mContext) {
@@ -157,6 +169,7 @@ public class Util {
 
     /**
      * 判断是否有网络连接
+     *
      * @param context
      * @return
      */
@@ -173,6 +186,7 @@ public class Util {
 
     /**
      * 判断WIFI网络是否可用
+     *
      * @param context
      * @return
      */
@@ -188,10 +202,7 @@ public class Util {
     }
 
 
-
-
     /**
-     *
      * @param context
      * @return -1：没有网络  1：WIFI网络2：wap网络3：net网络
      */
@@ -199,22 +210,21 @@ public class Util {
         int netType = -1;
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if(networkInfo==null) {
+        if (networkInfo == null) {
             return netType;
         }
         int nType = networkInfo.getType();
-        if(nType== ConnectivityManager.TYPE_MOBILE) {
-            if(networkInfo.getExtraInfo().toLowerCase().equals("cmnet")) {
+        if (nType == ConnectivityManager.TYPE_MOBILE) {
+            if (networkInfo.getExtraInfo().toLowerCase().equals("cmnet")) {
                 netType = 3;
-            }else{
+            } else {
                 netType = 2;
             }
-        }else if(nType== ConnectivityManager.TYPE_WIFI){
+        } else if (nType == ConnectivityManager.TYPE_WIFI) {
             netType = 1;
         }
         return netType;
     }
-
 
 
     /***
@@ -224,17 +234,17 @@ public class Util {
      * @return
      */
     public static boolean judgePhone(Context mContext, String phoneNum) {
-        phoneNum = phoneNum.replaceAll("-","");
+        phoneNum = phoneNum.replaceAll("-", "");
 
-        if("".equals(phoneNum)){
+        if ("".equals(phoneNum)) {
             Toast.makeText(mContext, "请输入手机号", Toast.LENGTH_SHORT).show();
             return false;
-        }else{
+        } else {
             String MOBILE = "^1(3[0-9]|5[0-35-9]|7[0136-8]|8[0-9])\\d{8}$";
             Pattern pattern = Pattern.compile(MOBILE);
             Matcher matcher = pattern.matcher(phoneNum);
             boolean flag = matcher.matches();
-            if(!flag){
+            if (!flag) {
                 Toast.makeText(mContext, "请输入合法电话号码", Toast.LENGTH_SHORT).show();
             }
             return matcher.matches();
@@ -243,40 +253,40 @@ public class Util {
 
 
     /**
-     *
      * @param loadingView 加载视图
-     * @param isLoading 正在加载中
-     * @param isNet 是否有网络
+     * @param isLoading   正在加载中
+     * @param isNet       是否有网络
      */
-    public static void showDataAmin(View loadingView, boolean isLoading, boolean isNet){
-        if(isLoading&&isNet){
+    public static void showDataAmin(View loadingView, boolean isLoading, boolean isNet) {
+        if (isLoading && isNet) {
             loadingView.setVisibility(View.VISIBLE);
-        }else if(isLoading==false&&isNet) {
+        } else if (isLoading == false && isNet) {
             loadingView.setVisibility(View.GONE);
-        }else{
+        } else {
 
         }
     }
 
 
     private static boolean printLog = true;
-    public static void setLog(String tag, String log){
-        if(printLog){
+
+    public static void setLog(String tag, String log) {
+        if (printLog) {
             Log.e("---当前页面是" + tag + "-->>>", "--打印信息>>>" + log + "<<");
         }
 
     }
 
-    public static void setErrorLog(String tag, String log){
-        if(printLog){
+    public static void setErrorLog(String tag, String log) {
+        if (printLog) {
             Log.e("---当前页面是" + tag + "-->>>", "--打印信息>>>" + log + "<<");
         }
     }
 
 
-    public static void setActivityStatusColor(Activity context){
+    public static void setActivityStatusColor(Activity context) {
         context.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = context.getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
                     | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
@@ -360,5 +370,23 @@ public class Util {
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
+    }
+
+    //学装修页面点击进查看文章看详情
+    public static void HttpArticleClickCount(String id) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Util.getDateToken());
+        param.put("id", id);
+        OKHttpUtil.post(Constant.Z_ARTICLE_CLICK_COUNT, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+            }
+        });
     }
 }
