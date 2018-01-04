@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -24,6 +23,7 @@ import com.tbs.tobosutype.activity.ArticleWebViewActivity;
 import com.tbs.tobosutype.adapter.ArticleTypeAdapter;
 import com.tbs.tobosutype.base.BaseFragment;
 import com.tbs.tobosutype.bean._ArticleTypeItem;
+import com.tbs.tobosutype.customview.MyLinearLayoutManager;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.Util;
@@ -38,6 +38,7 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -119,8 +120,8 @@ public class ArticleTypeFragment extends BaseFragment {
         //设置RecycleView相关事务
         mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         fragArticleRecycler.setLayoutManager(mLinearLayoutManager);
+        fragArticleRecycler.addOnScrollListener(onScrollListener);
         fragArticleRecycler.setOnTouchListener(onTouchListener);
-        fragArticleRecycler.setOnScrollListener(onScrollListener);
         //请求网络获取数据
         HttpGetArticleTypeList(mPage);
     }
@@ -129,7 +130,7 @@ public class ArticleTypeFragment extends BaseFragment {
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            if (fragArticleSwipeLayout.isRefreshing()) {
+            if (fragArticleSwipeLayout.isRefreshing() || isLoading) {
                 return true;
             } else {
                 return false;
@@ -163,13 +164,18 @@ public class ArticleTypeFragment extends BaseFragment {
         @Override
         public void onRefresh() {
             //下拉刷新数据  重置页码 清空数据集合 重新请求数据
-            isDownRefresh = true;
-            mPage = 1;
-            if (!mArticleTypeItemArrayList.isEmpty()) {
-                mArticleTypeItemArrayList.clear();
+            if (!isLoading) {
+//                fragArticleClickView.setVisibility(View.VISIBLE);
+                mPage = 1;
+                if (!mArticleTypeItemArrayList.isEmpty()) {
+                    mArticleTypeItemArrayList.clear();
+                }
+                //重新获取数据
+                HttpGetArticleTypeList(mPage);
+            } else {
+                //停止刷新
+                fragArticleSwipeLayout.setRefreshing(false);
             }
-            //重新获取数据
-            HttpGetArticleTypeList(mPage);
         }
     };
 
@@ -187,8 +193,7 @@ public class ArticleTypeFragment extends BaseFragment {
 
     //请求列表数据
     private void HttpGetArticleTypeList(int mPage) {
-        //停止刷新
-        fragArticleSwipeLayout.setRefreshing(false);
+        isLoading = true;
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         param.put("type_id", mArticleTypeId);
@@ -197,7 +202,16 @@ public class ArticleTypeFragment extends BaseFragment {
         OKHttpUtil.post(Constant.Z_ARTICLE_LIST, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+
                 Log.e(TAG, "获取数据失败=====" + e.getMessage());
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        fragArticleSwipeLayout.setRefreshing(false);
+//                        fragArticleClickView.setVisibility(View.GONE);
+                        isLoading = false;
+                    }
+                });
             }
 
             @Override
@@ -225,15 +239,23 @@ public class ArticleTypeFragment extends BaseFragment {
                                     fragArticleRecycler.setAdapter(mArticleTypeAdapter);
                                     mArticleTypeAdapter.setOnArticleTypeItemClickLister(onArticleTypeItemClickLister);
                                     mArticleTypeAdapter.notifyDataSetChanged();
+//                                    fragArticleClickView.setVisibility(View.GONE);
+                                    fragArticleSwipeLayout.setRefreshing(false);
+                                    isLoading = false;
                                 } else {
-                                    if (isDownRefresh) {
-                                        isDownRefresh = false;
-                                        fragArticleRecycler.scrollToPosition(0);
-                                        mArticleTypeAdapter.notifyDataSetChanged();
-                                    } else {
-                                        mArticleTypeAdapter.notifyItemInserted(mArticleTypeItemArrayList.size() - mPageSize);
-                                    }
+//                                    if (isDownRefresh) {
+//                                        isDownRefresh = false;
+//                                        fragArticleRecycler.scrollToPosition(0);
+//                                        mArticleTypeAdapter.notifyDataSetChanged();
+//                                    } else {
+//                                        mArticleTypeAdapter.notifyItemInserted(mArticleTypeItemArrayList.size() - mPageSize);
+//                                    }
+                                    mArticleTypeAdapter.notifyDataSetChanged();
+//                                    fragArticleClickView.setVisibility(View.GONE);
+                                    fragArticleSwipeLayout.setRefreshing(false);
+                                    isLoading = false;
                                 }
+
                             }
                         });
                     } else {
@@ -243,15 +265,23 @@ public class ArticleTypeFragment extends BaseFragment {
                             public void run() {
                                 if (!mArticleTypeItemArrayList.isEmpty()) {
                                     Toast.makeText(mContext, "当前没有更多数据~", Toast.LENGTH_SHORT).show();
+//                                    fragArticleClickView.setVisibility(View.GONE);
+                                    fragArticleSwipeLayout.setRefreshing(false);
+                                    isLoading = false;
                                 } else {
                                     //显示数据为空的时候的占位图
                                     fragArticleNoneDataRl.setVisibility(View.VISIBLE);
+//                                    fragArticleClickView.setVisibility(View.GONE);
+                                    fragArticleSwipeLayout.setRefreshing(false);
+                                    isLoading = false;
                                 }
+
                             }
                         });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    isLoading = false;
                 }
             }
         });
@@ -262,4 +292,5 @@ public class ArticleTypeFragment extends BaseFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
 }
