@@ -34,7 +34,6 @@ import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.MD5Util;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;

@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -28,11 +30,13 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DensityUtil;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -257,6 +261,7 @@ public class MyOwnerOrderActivity extends Activity {
                             if (temDataList.size() == 0) {
                                 Toast.makeText(mContext, "没有更多订单了", Toast.LENGTH_SHORT).show();
                                 iv_myownerorder_empty.setVisibility(View.VISIBLE);
+                                myownerorder_loading.setVisibility(View.GONE);
                             } else {
                                 if (page == 1) {
                                     dataList.clear();

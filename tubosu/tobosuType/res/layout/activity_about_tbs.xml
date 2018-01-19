@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.tbs.tobosutype.activity.AboutTbsActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+            android:id="@+id/about_tbs_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/activity_back" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="关于我们"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+    </RelativeLayout>
+    <!--内容文案-->
+    <ScrollView
+        android:layout_marginTop="48dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="312dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:lineSpacingExtra="6dp"
+                android:text="     “土拨鼠”是中国领先的装修服务平台，于2008年成立
+至今10年，一直坚持为业主提供省心、更高品质且有保障
+的装修服务，通过线上监督、线下监理严格把控着装修全
+过程的服务品质。"
+                android:textColor="#4d4d4d"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="312dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="28dp"
+                android:lineSpacingExtra="6dp"
+                android:text="         覆盖全国近200多个城市，近6万家装修公司，所有的
+认证认证装修公司都是经过线下实地考察，营业执照、施
+工资质齐全，且在当地装修具有较高口碑的公司，土拨鼠
+汇合装修公司签订协议确保装修过程及售后都能得到保障。"
+                android:textColor="#4d4d4d"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="312dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="28dp"
+                android:lineSpacingExtra="6dp"
+                android:text="       所有认证公司在装修前也会 免费提供量房、设计、报
+价等基础服务。若装修过程中或装修后遇到任何问题，可以
+随时联系土拨鼠！"
+                android:textColor="#4d4d4d"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="312dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="28dp"
+                android:lineSpacingExtra="6dp"
+                android:text="       线上预约装修获得更多优先服务特权哦！"
+                android:textColor="#4d4d4d"
+                android:textSize="12sp" />
+            <ImageView
+                android:layout_marginTop="33dp"
+                android:layout_gravity="center"
+                android:src="@drawable/erweima"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:src="@drawable/zhuansghi"
+                android:layout_marginTop="38dp"
+                android:layout_gravity="center|bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+    <!--阴影-->
+    <View
+        android:id="@+id/banner_dever"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/yinying4"
+        android:visibility="visible" />
+</RelativeLayout>

@@ -411,8 +411,9 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                 if (TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {
                     //用户未登录 跳转到登录页面
                     Toast.makeText(mContext, "您还没有登陆,请登陆后再来收藏!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(mContext, LoginActivity.class);
-                    intent.putExtra("isFav", true);
+//                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    Intent intent = new Intent(mContext, NewLoginActivity.class);
+//                    intent.putExtra("isFav", true);
                     startActivityForResult(intent, 0);
                 } else {
                     HttpShouCang(mImageSArrayList.get(mPosition).getId(), mImageSArrayList.get(mPosition).getIs_collect());

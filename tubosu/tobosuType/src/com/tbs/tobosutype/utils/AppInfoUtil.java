@@ -124,6 +124,8 @@ public class AppInfoUtil {
         return context.getSharedPreferences("city", 0).getString("lng", "113");
     }
 
+    // TODO: 2018/1/10  用户的基本信息↓↓↓↓
+    //token
     public static String getToekn(Context context) {
         return context.getSharedPreferences("userInfo", 0).getString("token", "");
     }
@@ -131,6 +133,44 @@ public class AppInfoUtil {
     public static void setToken(Context context, String token) {
         context.getSharedPreferences("userInfo", 0).edit().putString("token", token).commit();
     }
+
+    //用户的昵称
+    public static String getUserNickname(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("nickname", "");
+    }
+
+    public static void setUserNickname(Context context, String nickname) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("nickname", nickname).commit();
+    }
+
+    //用户的头像
+    public static String getUserIcon(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("icon", "");
+    }
+
+    public static void setUserIcon(Context context, String icon) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("icon", icon).commit();
+    }
+
+    //用户所在的城市
+    public static String getUserCity(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("cityname", "");
+    }
+
+    public static void setUserCity(Context context, String cityname) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("cityname", cityname).commit();
+    }
+
+    //用户所在的省份
+    public static String getUserProvince(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("province", "");
+    }
+
+    public static void setUserProvince(Context context, String province) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("province", province).commit();
+    }
+
+    //用户的Uuid
     public static String getUuid(Context context) {
         return context.getSharedPreferences("userInfo", 0).getString("id", "");
     }
@@ -138,22 +178,80 @@ public class AppInfoUtil {
     public static void setUuid(Context context, String id) {
         context.getSharedPreferences("userInfo", 0).edit().putString("id", id).commit();
     }
+
+    //用户的id
+    public static String getId(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("id", "");
+    }
+
+    public static void setId(Context context, String id) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("id", id).commit();
+    }
+
+    //用户的type_id
     public static String getTypeid(Context context) {
         return context.getSharedPreferences("userInfo", 0).getString("typeid", "");
     }
 
+    public static void setTypeid(Context context, String typeid) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("typeid", typeid).commit();
+    }
+
+    //用户绑定的手机号码
     public static String getCellPhone(Context context) {
         return context.getSharedPreferences("userInfo", 0).getString("cellphone", "");
     }
 
+    public static void setCellPhone(Context context, String cellphone) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("cellphone", cellphone).commit();
+    }
+
+    //用户身份的标识  其效果和type id 一致
     public static String getMark(Context context) {
         return context.getSharedPreferences("userInfo", 0).getString("mark", "0");
     }
 
+    public static void setMark(Context context, String mark) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("mark", mark).commit();
+    }
+
+    //用户的Userid
     public static String getUserid(Context context) {
         return context.getSharedPreferences("userInfo", 0).getString("userid", "");
     }
 
+    public static void setUserid(Context context, String userid) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("userid", userid).commit();
+    }
+
+    //用户的会员等级
+    public static String getUserGrade(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("grade", "0");
+    }
+
+    public static void setUserGrade(Context context, String grade) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("grade", grade).commit();
+    }
+
+    //用户的是否绑定了手机号码
+    public static String getUserCellphone_check(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("cellphone_check", "0");
+    }
+
+    public static void setUserCellphone_check(Context context, String cellphone_check) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("cellphone_check", cellphone_check).commit();
+    }
+
+    //用户的订单数
+    public static String getUserOrder_count(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("order_count", "0");
+    }
+
+    public static void setUserOrder_count(Context context, String order_count) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("order_count", order_count).commit();
+    }
+
+    // TODO: 2018/1/10  用户的基本信息↑↑↑↑
     public static String getImageActivityCatch(Context context) {
         return context.getSharedPreferences("IsImageCache", 0).getString("result", "");
     }
@@ -247,47 +345,6 @@ public class AppInfoUtil {
 //            tintManager.setStatusBarTintResource(R.color.color_icon);
 //            activity.getWindow().getDecorView().setFitsSystemWindows(true);
 //        }
-    }
-
-    /***
-     * 设置沉浸式
-     *
-     * @param activity
-     */
-    public static void setActivityTheme1(Activity activity, int color) {
-//        if (AndtoidRomUtil.isMIUI() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            // 小米手机
-//            boolean sIsMiuiV6 = false;
-//            try {
-//                Class<?> sysClass = Class.forName("android.os.SystemProperties");
-//                Method getStringMethod = sysClass.getDeclaredMethod("get", String.class);
-//                sIsMiuiV6 = "V6".equals((String) getStringMethod.invoke(sysClass, "ro.miui.ui.version.name"));
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//
-//            if (sIsMiuiV6) {
-//                Class<? extends Window> clazz = activity.getWindow().getClass();
-//                try {
-//                    int darkModeFlag = 0;
-//                    Class<?> layoutParams = Class.forName("android.view.MiuiWindowManager$LayoutParams");
-//                    Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
-//                    darkModeFlag = field.getInt(layoutParams);
-//                    Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
-//                    extraFlagField.invoke(activity.getWindow(), true ? darkModeFlag : 0, darkModeFlag);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-//            SystemStatusManager tintManager = new SystemStatusManager(activity);
-//            tintManager.setStatusBarTintEnabled(true);
-//            tintManager.setStatusBarTintResource(color);
-//            activity.getWindow().getDecorView().setFitsSystemWindows(true);
-//        }
-
     }
 
 

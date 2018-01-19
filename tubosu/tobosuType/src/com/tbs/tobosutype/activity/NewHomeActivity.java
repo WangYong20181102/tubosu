@@ -10,9 +10,11 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -37,9 +39,11 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.NewHomeAdapter;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean.EC;
 import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
+import com.tbs.tobosutype.bean._ImageD;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
@@ -59,14 +63,21 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-import com.tbs.tobosutype.bean._ImageD;
-
 
 public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
+    @BindView(R.id.tuisong_kaiqi_tv)
+    TextView tuisongKaiqiTv;
+    @BindView(R.id.tuisong_guanbi_rl)
+    RelativeLayout tuisongGuanbiRl;
+    @BindView(R.id.tuisong_rl)
+    RelativeLayout tuisongRl;
     private ImageView home_view;
     private ImageView ivYingying;
     private View rel_newhomebar;
@@ -90,6 +101,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     private ArrayList<NewHomeDataItem.NewhomeDataBean.TopicBean> topicBeansList = new ArrayList<NewHomeDataItem.NewhomeDataBean.TopicBean>();
     private ArrayList<_ImageD> shejiArrayList = new ArrayList<_ImageD>();
     private Context mContext;
+    private String TAG = "NewHomeActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +109,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         mContext = NewHomeActivity.this;
         TAG = NewHomeActivity.class.getSimpleName();
         setContentView(R.layout.layout_new_activity);
+        ButterKnife.bind(this);
         initView();
         initBaiduMap();
         chooseId = "0";
@@ -107,6 +120,56 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         getDataFromNet(false);
         initReceiver();
         getHuoDongPicture();
+        //推送提示 3.7 新增
+        notifyOpenNotice();
+    }
+
+    //提示开启推送弹窗
+    private void notifyOpenNotice() {
+        if (Util.isNotificationEnabled(mContext)) {
+
+        } else {
+            Log.e(TAG, "当前用户是否开启推送通知====notifyOpenNotice===" + Util.isNotificationEnabled(mContext));
+            /**
+             * 用户未开启推送
+             * 通过时间的对比 7天
+             */
+            if (TextUtils.isEmpty(SpUtil.getNoticeTime(mContext))) {
+                //存储的时间为空 设置时间 并开启推送提示
+                Log.e(TAG, "当前用户是否开启推送通知====showNoticPopWindow===" + Util.isNotificationEnabled(mContext));
+                tuisongRl.setVisibility(View.VISIBLE);
+                SpUtil.setNoticeTime(mContext, Util.getNowTime());
+            } else {
+                Log.e(TAG, "当前用户是否开启推送通知====有存储时间===" + Util.isNotificationEnabled(mContext));
+                //有记录上一次的提示时间
+                if (Util.differentDays(SpUtil.getNoticeTime(mContext), Util.getNowTime()) >= 7) {
+                    //当前时间大于7天  开启推送提示
+                    SpUtil.setNoticeTime(mContext, Util.getNowTime());
+                    tuisongRl.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    }
+
+    //去设置界面开启
+    private void goToSet() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            Intent intent = new Intent();
+            intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+            intent.putExtra("android.provider.extra.APP_PACKAGE", getPackageName());
+            startActivity(intent);
+        } else if (Build.VERSION.SDK_INT >= 21 && Build.VERSION.SDK_INT < 26) {
+            Intent intent = new Intent();
+            intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+            intent.putExtra("app_package", getPackageName());
+            intent.putExtra("app_uid", getApplicationInfo().uid);
+            startActivity(intent);
+        } else if (Build.VERSION.SDK_INT < 21) {
+            Intent intent = new Intent();
+            intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+            intent.setData(Uri.fromParts("package", getPackageName(), null));
+            startActivity(intent);
+        }
     }
 
     //网络获取学装修的分类
@@ -236,16 +299,6 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         });
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        Util.setToast(mContext, "onresume");
-//        if(CacheManager.getChentaoFlag(mContext) != 0){
-//            // 不用回到顶部
-//
-//        }
-//    }
-
     private View zixunPopView;
     private PopupWindow zixunPopupWindow;
 
@@ -273,14 +326,6 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                 } else {
                     Toast.makeText(mContext, "本机未安装QQ", Toast.LENGTH_SHORT).show();
                 }
-
-                //通过webView
-//                Intent intentToQQ = new Intent(mContext, NewWebViewActivity.class);
-//                intentToQQ.putExtra("mLoadingUrl", "http://wpa.b.qq.com/cgi/wpa.php?ln=2&uin=4006062221");
-//                mContext.startActivity(intentToQQ);
-                //尝试另一种启动方式
-//                String url = "mqqwpa://im/chat?chat_type=crm&uin=4006062221&version=1&src_type=web&web_src=http:://wpa.b.qq.com";
-//                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                 zixunPopupWindow.dismiss();
             }
         });
@@ -684,6 +729,24 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         }
     }
 
+    @OnClick({R.id.tuisong_kaiqi_tv, R.id.tuisong_guanbi_rl, R.id.tuisong_rl})
+    public void onViewClickedInNewHomeActivity(View view) {
+        switch (view.getId()) {
+            case R.id.tuisong_kaiqi_tv:
+                //去开启推送通知
+                goToSet();
+                tuisongRl.setVisibility(View.GONE);
+                break;
+            case R.id.tuisong_guanbi_rl:
+                //去关闭推送通知
+                tuisongRl.setVisibility(View.GONE);
+                break;
+            case R.id.tuisong_rl:
+                //不做任何处理只是为了防点击事件穿透
+                break;
+        }
+    }
+
 
     public class MyLocationListener implements BDLocationListener {
 
@@ -721,56 +784,6 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                 }
             }
 
-//            sb.append(location.getRadius());
-//            if (location.getLocType() == BDLocation.TypeGpsLocation) {// GPS定位结果
-//                sb.append("\nspeed : ");
-//                sb.append(location.getSpeed());// 单位：公里每小时
-//                sb.append("\nsatellite : ");
-//                sb.append(location.getSatelliteNumber());
-//                sb.append("\nheight : ");
-//                sb.append(location.getAltitude());// 单位：米
-//                sb.append("\ndirection : ");
-//                sb.append(location.getDirection());// 单位度
-//                sb.append("\naddr : ");
-//                sb.append(location.getAddrStr());
-//                sb.append("\ndescribe : ");
-//                sb.append("gps定位成功");
-//
-//            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
-//                sb.append("\naddr : ");
-//                sb.append(location.getAddrStr());
-//                //运营商信息
-//                sb.append("\noperationers : ");
-//                sb.append(location.getOperators());
-//                sb.append("\ndescribe : ");
-//                sb.append("网络定位成功");
-//            } else if (location.getLocType() == BDLocation.TypeOffLineLocation) {// 离线定位结果
-//                sb.append("\ndescribe : ");
-//                sb.append("离线定位成功，离线定位结果也是有效的");
-//            } else if (location.getLocType() == BDLocation.TypeServerError) {
-//                sb.append("\ndescribe : ");
-//                sb.append("服务端网络定位失败，可以反馈IMEI号和大体定位时间到loc-bugs@baidu.com，会有人追查原因");
-//            } else if (location.getLocType() == BDLocation.TypeNetWorkException) {
-//                sb.append("\ndescribe : ");
-//                sb.append("网络不同导致定位失败，请检查网络是否通畅");
-//            } else if (location.getLocType() == BDLocation.TypeCriteriaException) {
-//                sb.append("\ndescribe : ");
-//                sb.append("无法获取有效定位依据导致定位失败，一般是由于手机的原因，处于飞行模式下一般会造成这种结果，可以试着重启手机");
-//            }
-//            sb.append("\nlocationdescribe : ");
-//            sb.append(location.getLocationDescribe());// 位置语义化信息
-//            List<Poi> list = location.getPoiList();// POI数据
-//            if (list != null) {
-//                sb.append("\npoilist size = : ");
-//                sb.append(list.size());
-//                for (Poi p : list) {
-//                    sb.append("\npoi= : ");
-//                    sb.append(p.getId() + " " + p.getName() + " " + p.getRank());
-//                }
-//            }
-
-
-//            Util.setErrorLog(TAG, ">>> " + sb.toString());
         }
 
     }
@@ -819,7 +832,10 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                                         activityName = data.getString("name");
 //                                        picUrl = activityImg_url.replace("\\/\\/", "\\");
                                         CacheManager.setLoadingHUODONG(mContext, date);
-                                        showTap(dialog, activityImg_url, activityH5_url);
+                                        Log.e(TAG, "获取的活动的图片==================" + activityImg_url);
+                                        if (!TextUtils.isEmpty(activityImg_url)) {
+                                            showTap(dialog, activityImg_url, activityH5_url);
+                                        }
 
                                     }
                                 } catch (JSONException e) {
@@ -853,6 +869,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                 }
             }
         }
+
     }
 
 

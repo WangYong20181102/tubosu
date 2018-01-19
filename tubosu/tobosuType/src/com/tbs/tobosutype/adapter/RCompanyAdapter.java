@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.DecComActivity;
@@ -44,10 +45,14 @@ public class RCompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        if(holder instanceof RCompanyViewHolder){
+        if (holder instanceof RCompanyViewHolder) {
             RCompanyViewHolder rcomHolder = (RCompanyViewHolder) holder;
             rcomHolder.name.setText(dataList.get(position).getName());
-            Glide.with(context).load(dataList.get(position).getImg_url()).error(R.drawable.new_home_loading).placeholder(R.drawable.new_home_loading).into(rcomHolder.iv);
+            Glide.with(context).load(dataList.get(position).getImg_url())
+                    .asBitmap()
+                    .error(R.drawable.new_home_loading)
+                    .placeholder(R.drawable.new_home_loading)
+                    .into(rcomHolder.iv);
             rcomHolder.layoutGongsiR.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -61,13 +66,14 @@ public class RCompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return dataList == null? 0:dataList.size();
+        return dataList == null ? 0 : dataList.size();
     }
 
-    class RCompanyViewHolder extends RecyclerView.ViewHolder{
+    class RCompanyViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         ImageView iv;
         LinearLayout layoutGongsiR;
+
         public RCompanyViewHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tvCompanyRCName);

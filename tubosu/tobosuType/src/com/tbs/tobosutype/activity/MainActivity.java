@@ -15,11 +15,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -29,6 +34,7 @@ import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.receiver.MyJpushReceiver;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
 
@@ -40,7 +46,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import cn.jpush.android.api.JPushInterface;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -70,7 +75,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     /**
      * 首页 按钮
      */
-    private RelativeLayout main_tab_home;
+    private static RelativeLayout main_tab_home;
 
     /**
      * 逛图库 按钮
@@ -179,15 +184,18 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 		 *                         FOUR2.登陆的是装修公司界面
 		 *                         FOUR3.登陆的是业主界面
 		 **/
-        intent = new Intent().setClass(this, MyActivity.class);
+//        intent = new Intent().setClass(this, MyActivity.class);
+        intent = new Intent().setClass(this, NoneLoginOfMineActivity.class);//3.7新增
         spec = tabHost.newTabSpec("FOUR").setIndicator("我").setContent(intent);
         tabHost.addTab(spec);
 
-        intent = new Intent().setClass(this, MyCompanyActivity.class);
+//        intent = new Intent().setClass(this, MyCompanyActivity.class);
+        intent = new Intent().setClass(this, CompanyOfMineActivity.class);//3.7新增
         spec = tabHost.newTabSpec("FOUR2").setIndicator("我").setContent(intent);
         tabHost.addTab(spec);
 
-        intent = new Intent().setClass(this, MyOwnerActivity.class);
+//        intent = new Intent().setClass(this, MyOwnerActivity.class);
+        intent = new Intent().setClass(this, CustomOfMineActivity.class);//3.7新增
         spec = tabHost.newTabSpec("FOUR3").setIndicator("我").setContent(intent);
         tabHost.addTab(spec);
         /*---------------------------------------*/
@@ -200,7 +208,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 //        main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
 //            @Override
 //            public boolean onLongClick(View v) {
-//                Intent gotoLearnActivity = new Intent(mContext, LearnRenovationActivity.class);
+//                Intent gotoLearnActivity = new Intent(mContext, NewLoginActivity.class);
 //                mContext.startActivity(gotoLearnActivity);
 //                return true;
 //            }
@@ -517,17 +525,20 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                                         Log.d(TAG, "--订单数目是[" + num + "]--");
                                         if (num > 0 && sys_message_flag >= 0) { // 订单有数目 有系统消息
                                             not_see_orders_count.setText(num + "");
-                                            not_see_orders_count.setVisibility(View.VISIBLE);
+//                                            not_see_orders_count.setVisibility(View.VISIBLE);
+                                            not_see_orders_count.setVisibility(View.GONE);
                                         } else if (num <= 0 && sys_message_flag > 0) {
                                             not_see_orders_count.setText("");
-                                            not_see_orders_count.setVisibility(View.VISIBLE);
+//                                            not_see_orders_count.setVisibility(View.VISIBLE);
+                                            not_see_orders_count.setVisibility(View.GONE);
                                         } else {
                                             not_see_orders_count.setVisibility(View.GONE);
                                         }
                                     } else if (mark.equals("1")) {
                                         sys_message_flag = jsonObject.getInt("sysmesscount");
                                         if (sys_message_flag > 0) {
-                                            not_see_orders_count.setVisibility(View.VISIBLE);
+//                                            not_see_orders_count.setVisibility(View.VISIBLE);
+                                            not_see_orders_count.setVisibility(View.GONE);
                                         } else {
                                             not_see_orders_count.setVisibility(View.GONE);
                                         }

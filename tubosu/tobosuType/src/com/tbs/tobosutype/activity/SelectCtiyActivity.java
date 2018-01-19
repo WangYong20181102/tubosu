@@ -64,7 +64,6 @@ import com.tbs.tobosutype.model.City;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.EventBusUtil;
-import com.tbs.tobosutype.utils.LogUtil;
 import com.tbs.tobosutype.utils.MD5Util;
 import com.tbs.tobosutype.utils.NetUtil;
 import com.tbs.tobosutype.utils.ToastUtil;
@@ -151,7 +150,10 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
     private Point mCenterPoint = null;
     private Double lat;
     private Double lng;
-
+    //3.7版本新增  获取从哪个页面跳转进来的↓↓↓
+    private String mWhereFrom = "";
+    private Intent mIntent;
+    //3.7版本新增  获取从哪个页面跳转进来的↑↑↑
     /**
      * 定位得到的真实城市地理地址
      */
@@ -212,7 +214,8 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = SelectCtiyActivity.this;
-
+        mIntent = getIntent();
+        mWhereFrom = mIntent.getStringExtra("mWhereFrom");
         initBaidu();
 
         getSetting();
@@ -400,58 +403,6 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
         });
     }
 
-//    /***
-//     * 请求所有城市的接口
-//     */
-//    private void requestSelectCity() {
-//        HashMap<String, Object> hashMap = new HashMap<String, Object>();
-//        OKHttpUtil.post(cityUrl, hashMap, new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                final String result = response.body().string();
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//						Log.d("--SelectCityActivity--", "A获取的城市列表数据【"+result+"】");
-//                        LogUtil.printDugLog("--SelectCityActivity--", result);
-//                        //缓存至本地
-//                        getSharedPreferences("selectCityCache", 0).edit().putString("result", result).commit();
-//                        prseSelectDataJson(result);
-//                    }
-//                });
-//            }
-//        });
-//    }
-
-//    /***
-//     * 解析所有城市
-//     * @param result
-//     */
-//    private void prseSelectDataJson(String result) {
-//        try {
-//            JSONObject object = new JSONObject(result);
-//            if (object.getInt("error_code") == 0) {
-//                JSONArray array = object.getJSONArray("data");
-//                for (int i = 0; i < array.length(); i++) {
-//                    JSONObject dataObject = array.getJSONObject(i);
-//                    String _cityName = dataObject.getString("simpname");
-//                    String hotFlag = dataObject.getString("hot_flag");
-//                    if (hotFlag.equals("1")) {
-//                        hotCityNames.add(_cityName);
-//                    }
-//                }
-//
-//
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     /****
      * 加载热门城市gridview
@@ -529,6 +480,13 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
         Log.e(TAG, "获取的选择的城市====================" + cityName);
         Log.e(TAG, "存储的城市位置=====================" + AppInfoUtil.getCityName(mContext));
         Log.e(TAG, "获取案例存储的城市位置=====================" + AppInfoUtil.getCityInAnli(mContext));
+        if (!TextUtils.isEmpty(mWhereFrom)&&mWhereFrom.equals("PresonerMsgActivity")) {
+            //来着PresonerMsgActivity页面
+            EventBusUtil.sendEvent(new Event(EC.EventCode.PRESONER_MSG_CHANGE_CITY, cityName));
+            Log.e(TAG, "进入修改城市的页面=======================");
+            finish();
+            return;
+        }
         if (from == 31) {
             // 来自poporder页面
             Intent cityData = new Intent();
@@ -594,7 +552,7 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
         }
 
 
-        if(fromAccount.equals("464")){
+        if (fromAccount.equals("464")) {
             EventBusUtil.sendEvent(new Event(EC.EventCode.SELECT_CITY_CODE, cityName));
             finish();
         }
@@ -610,7 +568,7 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
             EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_PROVINCE_CODE1, cityName));
             System.gc();
             finish();
-        }else {
+        } else {
 
             // 首次安装
             if (FIRST_INSTALL.equals(getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).getString("go_poporder_string", "0"))) {
@@ -663,7 +621,10 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.city_title_back:
-
+                if (mWhereFrom.equals("PresonerMsgActivity")) {
+                    finish();
+                    return;
+                }
                 if (fromFreeDesign.equals("66")) {
                     // 来自 智能报价
                     finish();

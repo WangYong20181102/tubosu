@@ -1,4 +1,5 @@
 package com.tbs.tobosutype.activity;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,6 +35,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
@@ -66,9 +68,11 @@ import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.EventBusUtil;
 import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -76,6 +80,7 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -94,10 +99,10 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     private TextView tvCancelSearch;
     private RelativeLayout relTopSearch;
     private RelativeLayout relTopSearch1;// 顶部View
-    private RelativeLayout relGoClick,relGoClick1, nothingData;
+    private RelativeLayout relGoClick, relGoClick1, nothingData;
     private ImageView ivGoFadan, ivFuwuquyu;
     private TextView tvZonghe, tvLiulanzuiduo, tvAnlizuiduo, tvLiwozuijin;
-    private TextView shitirenzheng,ctuijian,fuwuquyu;
+    private TextView shitirenzheng, ctuijian, fuwuquyu;
     private RelativeLayout reSearvice;
     private RelativeLayout reCompanDataEmpty, relYouxuan;
     private AppBarLayout mainAppbar;
@@ -117,6 +122,9 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     private ImageView findComIcon;
     private ImageView cancelFindComIcon;
     private RelativeLayout relfindComLayout;
+    private RelativeLayout gongsi_all_rl;
+    private RelativeLayout reUpSelectLayout;
+    private LinearLayout reDownSelectLayout;
 
     private List<GongsiItem> youxuanSearchGongsiList = new ArrayList<GongsiItem>();
     private Gson gson;
@@ -157,6 +165,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     private RelativeLayout relShaiXuan;
     private ArrayList<ShaixuanBean> jiatingList = new ArrayList<ShaixuanBean>();
     private ArrayList<ShaixuanBean> shangyeList = new ArrayList<ShaixuanBean>();
+    //是否显示键盘
+    private boolean isShowingInput = false;
 
 
     @Override
@@ -170,8 +180,17 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         showFadan();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        slideRelayout.setBackgroundColor(Color.parseColor("#ffffff"));
+        reUpSelectLayout.setBackgroundColor(Color.parseColor("#ffffff"));
+        reDownSelectLayout.setBackgroundColor(Color.parseColor("#ffffff"));
+    }
 
     private void bindViews() {
+        gongsi_all_rl = (RelativeLayout) findViewById(R.id.gongsi_all_rl);
+        gongsi_all_rl.setBackgroundColor(Color.parseColor("#ffffff"));
         gongsiViewpager = (ViewPager) findViewById(R.id.gongsiViewpager);
         gognsiDotLayout = (LinearLayout) findViewById(R.id.gognsiDotLayout);
         gongsiRecyclerViewTuijian = (RecyclerView) findViewById(R.id.gongsiRecyclerViewTuijian);
@@ -215,9 +234,11 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         findCompanyLayout = (RelativeLayout) findViewById(R.id.findCompanyLayout);
         relShaiXuan = (RelativeLayout) findViewById(R.id.relShaiXuan);
         slideRelayout = (RelativeLayout) findViewById(R.id.slideRelayout);
+        reUpSelectLayout = (RelativeLayout) findViewById(R.id.reUpSelectLayout);
+        reDownSelectLayout = (LinearLayout) findViewById(R.id.reDownSelectLayout);
     }
 
-    private void initViews(){
+    private void initViews() {
         ivGoFadan.setOnClickListener(this);
         tvZonghe.setOnClickListener(this);
         tvLiulanzuiduo.setOnClickListener(this);
@@ -261,10 +282,10 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if(etSearchGongsi.getText().toString().trim().length()>0){
+                if (etSearchGongsi.getText().toString().trim().length() > 0) {
                     ivGongSiDelete.setVisibility(View.VISIBLE);
                     tvCancelSearch.setText("搜索");
-                }else {
+                } else {
                     tvCancelSearch.setText("取消");
                     ivGongSiDelete.setVisibility(View.GONE);
                 }
@@ -279,10 +300,10 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                if(state == State.EXPANDED ) {
+                if (state == State.EXPANDED) {
 //                    Util.setToast(mContext, "展开");
                     relTopSearch.setVisibility(View.VISIBLE);
-                }else if(state == State.COLLAPSED){
+                } else if (state == State.COLLAPSED) {
 //                    Util.setToast(mContext, "折叠");
                     relTopSearch.setVisibility(View.GONE);
                 }
@@ -294,10 +315,10 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if(dy>0){
+                if (dy > 0) {
                     // 向上
                     relTopSearch1.setVisibility(View.GONE);
-                }else if(dy<0){
+                } else if (dy < 0) {
                     // 向下
                     relTopSearch1.setVisibility(View.VISIBLE);
                     relTopSearch1.setBackgroundResource(R.drawable.wht);
@@ -332,7 +353,6 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 //                }
 
 
-
 //                View view = linearLayoutManager.findViewByPosition(mCurrentPosition + 1);
 //                if (view != null) {
 //                    if (view.getTop() <= topBarHeight) {
@@ -353,18 +373,17 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         findcompanyrecycler.setLayoutManager(linearLayoutManager);
 
 
-
         searchSwip.setProgressBackgroundColorSchemeColor(Color.WHITE);
         searchSwip.setColorSchemeResources(R.color.colorAccent, R.color.colorPrimary, R.color.colorPrimaryDark);
-        if(normalData){
+        if (normalData) {
             searchSwip.setOnRefreshListener(searchSwipeLister);
         }
 
         linearLayoutManager1 = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         searchList.setLayoutManager(linearLayoutManager1);
-        if(youxuan){
+        if (youxuan) {
             searchList.setNestedScrollingEnabled(!youxuan);
-        }else {
+        } else {
             searchList.setNestedScrollingEnabled(youxuan);
         }
         searchList.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -413,7 +432,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         public void onRefresh() {
             //下拉刷新数据 重新初始化各种数据
             gongsiList.clear();
-            if(companyAdapter != null){
+            if (companyAdapter != null) {
                 companyAdapter.notifyDataSetChanged();
                 companyAdapter = null;
             }
@@ -425,7 +444,6 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     };
 
 
-
     //下拉刷新监听事件
     private SwipeRefreshLayout.OnRefreshListener searchSwipeLister = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
@@ -433,7 +451,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
             //下拉刷新数据 重新初始化各种数据
 
             searchGongsiList.clear();
-            if(searchCompanyAdapter != null){
+            if (searchCompanyAdapter != null) {
                 searchCompanyAdapter.notifyDataSetChanged();
                 searchCompanyAdapter = null;
             }
@@ -446,8 +464,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     };
 
     // 头部 包括banner和优质推荐
-    private void getBannerData(){
-        if(Util.isNetAvailable(mContext)){
+    private void getBannerData() {
+        if (Util.isNetAvailable(mContext)) {
             HashMap<String, Object> dataMap = new HashMap<String, Object>();
             dataMap.put("token", Util.getDateToken());
             dataMap.put("city_name", tvGongsiCity.getText().toString().trim());
@@ -468,7 +486,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     final String bannerJson = response.body().string();
-                    Util.setErrorLog(TAG, "bnner Json 数据："+bannerJson);
+                    Util.setErrorLog(TAG, "bnner Json 数据：" + bannerJson);
                     runOnUiThread(new Runnable() {
 
                         @Override
@@ -476,7 +494,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                             try {
                                 JSONObject bannerObject = new JSONObject(bannerJson);
                                 String msg = bannerObject.getString("msg");
-                                if(bannerObject.getInt("status") == 200){
+                                if (bannerObject.getInt("status") == 200) {
                                     JSONObject data = bannerObject.getJSONObject("data");
                                     JSONArray bannerArr = data.getJSONArray("company_banner");
                                     JSONArray comArr = data.getJSONArray("companys");
@@ -495,9 +513,9 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
 
                                     initBannerAdapter(gongsiViewpager, gognsiDotLayout, bannerList);
-                                    if(companysItemList.size() == 0){
+                                    if (companysItemList.size() == 0) {
                                         slideRelayout.setVisibility(View.GONE);
-                                    }else {
+                                    } else {
                                         slideRelayout.setVisibility(View.VISIBLE);
                                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
                                         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -506,10 +524,10 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                         gongsiRecyclerViewTuijian.setAdapter(adapter);
                                     }
 
-                                }else if(bannerObject.getInt("status") == 201){
+                                } else if (bannerObject.getInt("status") == 201) {
 //                                    Util.setToast(mContext, msg);
                                     Util.setErrorLog(TAG, msg);
-                                }else if(bannerObject.getInt("status") == 0){
+                                } else if (bannerObject.getInt("status") == 0) {
 //                                    Util.setToast(mContext, msg);
                                     Util.setErrorLog(TAG, msg);
                                 }
@@ -524,8 +542,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     }
 
     // body
-    private void getNetData(){
-        if(Util.isNetAvailable(mContext)){
+    private void getNetData() {
+        if (Util.isNetAvailable(mContext)) {
             isLoading = true;
             HashMap<String, Object> gongsiMap = new HashMap<String, Object>();
             gongsiMap.put("token", Util.getDateToken());
@@ -550,7 +568,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                         @Override
                         public void run() {
                             Util.setToast(mContext, "系统繁忙，稍后再试~");
-                            if(findcompanyswiperefresh.isRefreshing()){
+                            if (findcompanyswiperefresh.isRefreshing()) {
                                 findcompanyswiperefresh.setRefreshing(false);
                             }
                         }
@@ -566,7 +584,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
                         @Override
                         public void run() {
-                            if(findcompanyswiperefresh.isRefreshing()){
+                            if (findcompanyswiperefresh.isRefreshing()) {
                                 findcompanyswiperefresh.setRefreshing(false);
                             }
 
@@ -580,11 +598,11 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                 jsonObject = new JSONObject(json);
                                 String msg = jsonObject.getString("msg");
 
-                                if(jsonObject.getInt("status") == 200){
+                                if (jsonObject.getInt("status") == 200) {
 
                                     JSONArray gongsiArr = jsonObject.getJSONArray("data");
                                     gson = new Gson();
-                                    for(int i=0;i<gongsiArr.length();i++){
+                                    for (int i = 0; i < gongsiArr.length(); i++) {
                                         GongsiItem item = gson.fromJson(gongsiArr.getJSONObject(i).toString(), GongsiItem.class);
                                         gongsiList.add(item);
                                     }
@@ -593,29 +611,29 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                         companyAdapter = new GongSiAdapter(mContext, gongsiList);
                                         findcompanyrecycler.setAdapter(companyAdapter);
                                         companyAdapter.notifyDataSetChanged();
-                                    }else {
+                                    } else {
                                         companyAdapter.notifyDataSetChanged();
                                     }
 
-                                }else if(jsonObject.getInt("status") == 201){
+                                } else if (jsonObject.getInt("status") == 201) {
 //                                    Util.setToast(mContext, msg);
                                     Util.setErrorLog(TAG, "加载更多  " + msg);
-                                    if(companyAdapter!=null){
+                                    if (companyAdapter != null) {
                                         companyAdapter.setHideMore(true);
                                     }
-                                }else if(jsonObject.getInt("status") == 0){
+                                } else if (jsonObject.getInt("status") == 0) {
                                     Util.setToast(mContext, msg);
                                 }
 
-                                if(gongsiList.size()==0){
+                                if (gongsiList.size() == 0) {
                                     relTopSearch1.setVisibility(View.GONE);
                                     mainAppbar.setExpanded(false);
                                     reCompanDataEmpty.setVisibility(View.VISIBLE);
-                                }else {
+                                } else {
                                     reCompanDataEmpty.setVisibility(View.GONE);
                                 }
 
-                                if(companyAdapter!=null){
+                                if (companyAdapter != null) {
                                     companyAdapter.setOnCompanyItemClickListener(new GongSiAdapter.OnCompanyItemClickListener() {
 
                                         @Override
@@ -645,9 +663,9 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
     @Override
     protected void receiveEvent(Event event) {
-        switch (event.getCode()){
+        switch (event.getCode()) {
             case EC.EventCode.CHOOSE_CITY_CODE:
-                gongsiCity = (String)event.getData();
+                gongsiCity = (String) event.getData();
                 city_name = gongsiCity;
                 tvGongsiCity.setText(gongsiCity);
                 tvGongsiCity1.setText(gongsiCity);
@@ -673,7 +691,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 tool_id = "";
 
                 gongsiList.clear();
-                if(companyAdapter != null){
+                if (companyAdapter != null) {
                     companyAdapter.notifyDataSetChanged();
                     companyAdapter = null;
                 }
@@ -685,24 +703,24 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
             case EC.EventCode.SHAIXUAN_CITY_CODE:
                 // 点击 筛选的城市  还没有确定
-                shaixuanCity = (String)event.getData();
+                shaixuanCity = (String) event.getData();
                 break;
             case EC.EventCode.QUEDING_SHAIXUAN_CITY_CODE:
                 // 返回确定 还需要 修改外面的dialog的
                 discList.clear();
-                if("".equals(shaixuanCity)){
+                if ("".equals(shaixuanCity)) {
                     // 没有选择城市
                     Util.setErrorLog(TAG, "你没有筛选城市");
-                }else{
+                } else {
 //                    Util.setToast(mContext, "你筛选了城市，该城市是=" +shaixuanCity);
                     sortDistrict(shaixuanCity);
                     gongsiCity = shaixuanCity;
                     shaixuanDialog.setCity(shaixuanCity);
 
-                    if(discList.size() != 0){
+                    if (discList.size() != 0) {
                         shaixuanDialog.updateServiceAreaData(discList);
-                    }else{
-                        Util.setErrorLog(TAG,"discList的长度为000000");
+                    } else {
+                        Util.setErrorLog(TAG, "discList的长度为000000");
                     }
                 }
 
@@ -721,20 +739,20 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         }
     }
 
-    private void sortDistrict(String _city){
-        if(companyCityBeanArrayList!=null && companyCityBeanArrayList.size()!=0){
-            for(int i=0;i<companyCityBeanArrayList.size();i++){
-                if(discList.size()==0){
-                    if(companyCityBeanArrayList.get(i).getCity_name().contains(_city)){
+    private void sortDistrict(String _city) {
+        if (companyCityBeanArrayList != null && companyCityBeanArrayList.size() != 0) {
+            for (int i = 0; i < companyCityBeanArrayList.size(); i++) {
+                if (discList.size() == 0) {
+                    if (companyCityBeanArrayList.get(i).getCity_name().contains(_city)) {
                         discList.add(new CompanyDistrictBean("0", "不限"));
                         discList.addAll(companyCityBeanArrayList.get(i).getDisctBeanList());
                         break;
                     }
-                }else {
+                } else {
                     Log.d(TAG, "不包含该城市");
                 }
             }
-        }else {
+        } else {
             getCityJson();
         }
 
@@ -742,7 +760,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tvGongsiCity:
             case R.id.tvGongsiCity1:
                 Intent selectCityIntent = new Intent(mContext, SelectCtiyActivity.class);
@@ -784,7 +802,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 tvAnlizuiduo.setTextColor(getResources().getColor(R.color.gongsi_unselected));
                 tvLiwozuijin.setTextColor(getResources().getColor(R.color.gongsi_unselected));
                 gongsiList.clear();
-                if(companyAdapter!=null){
+                if (companyAdapter != null) {
                     companyAdapter.notifyDataSetChanged();
                     companyAdapter = null;
                 }
@@ -798,7 +816,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 tvAnlizuiduo.setTextColor(getResources().getColor(R.color.gongsi_unselected));
                 tvLiwozuijin.setTextColor(getResources().getColor(R.color.gongsi_unselected));
                 gongsiList.clear();
-                if(companyAdapter!=null){
+                if (companyAdapter != null) {
                     companyAdapter.notifyDataSetChanged();
                     companyAdapter = null;
                 }
@@ -812,7 +830,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 tvAnlizuiduo.setTextColor(getResources().getColor(R.color.gongsi_selected));
                 tvLiwozuijin.setTextColor(getResources().getColor(R.color.gongsi_unselected));
                 gongsiList.clear();
-                if(companyAdapter!=null){
+                if (companyAdapter != null) {
                     companyAdapter.notifyDataSetChanged();
                     companyAdapter = null;
                 }
@@ -826,7 +844,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 tvAnlizuiduo.setTextColor(getResources().getColor(R.color.gongsi_unselected));
                 tvLiwozuijin.setTextColor(getResources().getColor(R.color.gongsi_selected));
                 gongsiList.clear();
-                if(companyAdapter!=null){
+                if (companyAdapter != null) {
                     companyAdapter.notifyDataSetChanged();
                     companyAdapter = null;
                 }
@@ -836,19 +854,19 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 break;
 
             case R.id.shitirenzheng:
-                if(!isChooseShiTiRenZheng){
+                if (!isChooseShiTiRenZheng) {
                     // 未选中， 就选中
                     shitirenzheng.setBackgroundResource(R.drawable.select_item_textview_bg_selected);
                     shitirenzheng.setTextColor(Color.parseColor("#FF6F20"));
                     certification = "1";
-                }else{
+                } else {
                     // 已选中， 就别选中
                     shitirenzheng.setBackgroundResource(R.drawable.select_item_textview_bg);
                     shitirenzheng.setTextColor(Color.parseColor("#4D4D4D"));
                     certification = "0";
                 }
                 gongsiList.clear();
-                if(companyAdapter!=null){
+                if (companyAdapter != null) {
                     companyAdapter.notifyDataSetChanged();
                     companyAdapter = null;
                 }
@@ -857,17 +875,17 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 isChooseShiTiRenZheng = !isChooseShiTiRenZheng;
                 break;
             case R.id.ctuijian:
-                if(!isChooseTuijian){
+                if (!isChooseTuijian) {
                     ctuijian.setBackgroundResource(R.drawable.select_item_textview_bg_selected);
                     ctuijian.setTextColor(Color.parseColor("#FF6F20"));
                     recommend = "1";
-                }else {
+                } else {
                     ctuijian.setBackgroundResource(R.drawable.select_item_textview_bg);
                     ctuijian.setTextColor(Color.parseColor("#4D4D4D"));
                     recommend = "0";
                 }
                 gongsiList.clear();
-                if(companyAdapter!=null){
+                if (companyAdapter != null) {
                     companyAdapter.notifyDataSetChanged();
                     companyAdapter = null;
                 }
@@ -878,7 +896,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
             case R.id.fuwuquyu:
             case R.id.reSearvice:
 
-                if(isClose){
+                if (isClose) {
                     // 弹出 弹框
                     sortDistrict(gongsiCity);
                     View contentView = LayoutInflater.from(NewGongSiAcitivity.this).inflate(R.layout.popuplayout_district_layout, null);
@@ -901,12 +919,12 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                             district_id = discList.get(i).getDistrict_id();
                             page = 1;
-                            if(i>0){
+                            if (i > 0) {
                                 fuwuquyu.setText(discList.get(i).getDistrict_name());
                                 fuwuquyu.setTextColor(Color.parseColor("#FF6F20"));
                                 reSearvice.setBackgroundResource(R.drawable.selected_servicearea_textview_bg);
                                 ivFuwuquyu.setBackgroundResource(R.drawable.sanjiaoxia34);
-                            }else {
+                            } else {
                                 fuwuquyu.setText("服务区域");
                                 fuwuquyu.setTextColor(Color.parseColor("#666666"));
                                 reSearvice.setBackgroundResource(R.drawable.select_servicearea_textview_bg);
@@ -914,7 +932,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                             }
 
                             gongsiList.clear();
-                            if(companyAdapter!=null){
+                            if (companyAdapter != null) {
                                 companyAdapter.notifyDataSetChanged();
                                 companyAdapter = null;
                             }
@@ -923,9 +941,9 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                         }
                     });
 
-                    for(int i=0;i<discList.size();i++){
+                    for (int i = 0; i < discList.size(); i++) {
                         String tempText = fuwuquyu.getText().toString().trim();
-                        if(tempText.equals(discList.get(i).getDistrict_name())){
+                        if (tempText.equals(discList.get(i).getDistrict_name())) {
                             adapter.setSelectedPosition(i);
                         }
                     }
@@ -944,19 +962,27 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
                 // 点击 跳转去搜索页面
                 etSearchGongsi.setText("");
+                // TODO: 2018/1/6 creat by lin 点击该按钮弹出键盘↓
+                etSearchGongsi.setFocusable(true);
+                etSearchGongsi.setFocusableInTouchMode(true);
+                etSearchGongsi.requestFocus();
+                InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                isShowingInput = true;
+                // TODO: 2018/1/6 creat by lin ↑
                 tvCancelSearch.setText("取消");
                 ivGongSiDelete.setVisibility(View.GONE);
                 nothingData.setVisibility(View.GONE);
                 relYouxuan.setVisibility(View.GONE);
                 searchLayout.setVisibility(View.VISIBLE);
 
-                if(youxuanCompanyAdapter!=null){
+                if (youxuanCompanyAdapter != null) {
                     youxuanSearchGongsiList.clear();
                     youxuanCompanyAdapter.notifyDataSetChanged();
                     youxuanCompanyAdapter = null;
                 }
 
-                if(searchCompanyAdapter != null){
+                if (searchCompanyAdapter != null) {
                     searchGongsiList.clear();
                     searchCompanyAdapter.loadMoreGongsi(false);
                     searchCompanyAdapter.notifyDataSetChanged();
@@ -973,19 +999,23 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
             case R.id.mengceng4:
                 mengceng4.setVisibility(View.GONE);
                 searchLayout.setVisibility(View.GONE);
+                //todo   creat by lin 软键盘退出
+                isShowingInput = false;
+                InputMethodManager imm2 = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm2.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
                 break;
             case R.id.tvCancelSearch:
-                if(tvCancelSearch.getText().toString().trim().equals("取消")){
-                    ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(NewGongSiAcitivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                if (tvCancelSearch.getText().toString().trim().equals("取消")) {
+                    ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(NewGongSiAcitivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     // 搜索适配器， 优选适配器置空  均清除列表 返回正常页面
-                    if(searchCompanyAdapter != null){
+                    if (searchCompanyAdapter != null) {
                         searchGongsiList.clear();
                         searchCompanyAdapter.loadMoreGongsi(false);
                         searchCompanyAdapter.notifyDataSetChanged();
                         searchCompanyAdapter = null;
                     }
 
-                    if(youxuanCompanyAdapter!=null){
+                    if (youxuanCompanyAdapter != null) {
                         youxuanSearchGongsiList.clear();
                         youxuanCompanyAdapter.notifyDataSetChanged();
                         youxuanCompanyAdapter = null;
@@ -999,19 +1029,19 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                     findCompanyLayout.setVisibility(View.VISIBLE); // 恢复到找装修公司页面
                     relTopSearch1.setVisibility(View.VISIBLE);
                     relTopSearch1.setBackgroundResource(R.drawable.wht);
-                }else if(tvCancelSearch.getText().toString().trim().equals("搜索")){
+                } else if (tvCancelSearch.getText().toString().trim().equals("搜索")) {
                     mengceng4.setVisibility(View.GONE);
                     searchLayout.setBackgroundResource(R.drawable.wht);
-                    ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(NewGongSiAcitivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(NewGongSiAcitivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     // 搜索，请求网络  在搜索页面
                     searchText = etSearchGongsi.getText().toString().trim();
                     pageS = 1;
                     searchGongsiList.clear();
-                    if(searchCompanyAdapter != null){
+                    if (searchCompanyAdapter != null) {
                         searchCompanyAdapter.notifyDataSetChanged();
                         searchCompanyAdapter = null;
                     }
-                    if(youxuanCompanyAdapter!=null){
+                    if (youxuanCompanyAdapter != null) {
                         youxuanSearchGongsiList.clear();
                         youxuanCompanyAdapter.notifyDataSetChanged();
                         youxuanCompanyAdapter = null;
@@ -1026,8 +1056,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     }
 
 
-    private void showFadan(){
-        if(CacheManager.getCompanyFlag(mContext) == 0){
+    private void showFadan() {
+        if (CacheManager.getCompanyFlag(mContext) == 0) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -1042,27 +1072,32 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         }
     }
 
-    private Handler uihandler = new Handler(){
+    private Handler uihandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 4:
-                    if(popWnd != null){
+                    if (popWnd != null) {
                         popWnd.dismiss();
                     }
-                    relfindComLayout.setVisibility(View.VISIBLE);
-                    findComIcon.setImageResource(R.drawable.gongsifree);
-                    findComIcon.setVisibility(View.VISIBLE);
+                    //如果显示了蒙层则将不显示发单的弹窗
+                    if (!isShowingInput) {
+                        relfindComLayout.setVisibility(View.VISIBLE);
+                        findComIcon.setImageResource(R.drawable.gongsifree);
+                        findComIcon.setVisibility(View.VISIBLE);
+                    }
+
                     break;
             }
         }
     };
 
     private ShaixuanDialog shaixuanDialog;
-    // 筛选弹框数据
-    private void showOutDialog(String currentCity){
 
-        shaixuanDialog = new ShaixuanDialog(mContext,R.style.ActionSheetDialogStyle, currentCity);
+    // 筛选弹框数据
+    private void showOutDialog(String currentCity) {
+
+        shaixuanDialog = new ShaixuanDialog(mContext, R.style.ActionSheetDialogStyle, currentCity);
         shaixuanDialog.setAreaData(discList);
         shaixuanDialog.setJiatingData(jiatingList);
         shaixuanDialog.setShangyeData(shangyeList);
@@ -1108,9 +1143,9 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
             @Override
             public void OnOkListener() {
 
-                if("".equals(shaixuanCity)){
+                if ("".equals(shaixuanCity)) {
                     // 没有筛选城市
-                }else{
+                } else {
                     gongsiCity = shaixuanCity;
                     tvGongsiCity.setText(gongsiCity); // 找公司页面的左上角
                     tvGongsiCity1.setText(gongsiCity);
@@ -1122,7 +1157,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 reSearvice.setBackgroundResource(R.drawable.select_servicearea_textview_bg);
                 ivFuwuquyu.setBackgroundResource(R.drawable.jiantou0);
                 gongsiList.clear();
-                if(companyAdapter!=null){
+                if (companyAdapter != null) {
                     companyAdapter.notifyDataSetChanged();
                     companyAdapter = null;
                 }
@@ -1137,16 +1172,15 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     }
 
 
-
     private Dialog cityDialog;
     private int clickProvince = 0;
 
     /**
      * 第二层dialog
      */
-    private void showChooseCity(){
+    private void showChooseCity() {
         clickProvince = 0;
-        cityDialog = new Dialog(this,R.style.ActionSheetDialogStyle);
+        cityDialog = new Dialog(this, R.style.ActionSheetDialogStyle);
         //填充对话框的布局
         View view = LayoutInflater.from(NewGongSiAcitivity.this).inflate(R.layout.city_layout, null);
 
@@ -1203,14 +1237,14 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         chooseCity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(clickProvince > 0){
+                if (clickProvince > 0) {
                     provincedatalist.setVisibility(View.GONE);
                     citydatalist.setVisibility(View.VISIBLE);
                     chooseProvince.setTextColor(Color.parseColor("#999999"));
                     provincebar.setVisibility(View.GONE);
                     citybar.setVisibility(View.VISIBLE);
                     chooseCity.setTextColor(Color.parseColor("#FF6F20"));
-                }else {
+                } else {
                     Util.setToast(mContext, "请选择省份");
                 }
             }
@@ -1230,7 +1264,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         //获取当前Activity所在的窗体
         Window cityWindow = cityDialog.getWindow();
         //设置Dialog从窗体底部弹出
-        cityWindow.setGravity( Gravity.RIGHT);
+        cityWindow.setGravity(Gravity.RIGHT);
         //获得窗体的属性
         WindowManager.LayoutParams lp = cityWindow.getAttributes();
         lp.y = 20;//设置Dialog距离底部的距离
@@ -1239,8 +1273,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         cityDialog.show();//显示对话框
     }
 
-    private void getSearchData(String text){
-        if(Util.isNetAvailable(mContext)){
+    private void getSearchData(String text) {
+        if (Util.isNetAvailable(mContext)) {
             isSearchLoading = true;
             final HashMap<String, Object> searchMap = new HashMap<String, Object>();
             searchMap.put("token", Util.getDateToken());
@@ -1286,12 +1320,12 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                             try {
                                 final JSONObject jsonObject = new JSONObject(json);
                                 final String msg = jsonObject.getString("msg");
-                                if(jsonObject.getInt("status") == 200){
+                                if (jsonObject.getInt("status") == 200) {
                                     JSONArray gongsiArr = jsonObject.getJSONArray("data");
                                     gson = new Gson();
 
                                     List<GongsiItem> tempSearchGongsiList = new ArrayList<GongsiItem>();
-                                    for(int i=0;i<gongsiArr.length();i++){
+                                    for (int i = 0; i < gongsiArr.length(); i++) {
                                         GongsiItem item = gson.fromJson(gongsiArr.getJSONObject(i).toString(), GongsiItem.class);
                                         tempSearchGongsiList.add(item);
                                     }
@@ -1306,7 +1340,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                         searchCompanyAdapter = new SearchGongSiAdapter(mContext, searchGongsiList);
                                         searchList.setAdapter(searchCompanyAdapter);
                                         searchCompanyAdapter.notifyDataSetChanged();
-                                    }else {
+                                    } else {
                                         searchCompanyAdapter.notifyDataSetChanged();
                                     }
 
@@ -1319,35 +1353,35 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                             startActivity(it);
                                         }
                                     });
-                                }else if(jsonObject.getInt("status") == 201){
+                                } else if (jsonObject.getInt("status") == 201) {
 
                                     normalData = true;
                                     youxuan = false;
                                     youxuanSearchGongsiList.clear();
                                     Util.setErrorLog(TAG, "搜素 201");
                                     Util.setToast(mContext, msg);
-                                    if(searchCompanyAdapter!=null){
+                                    if (searchCompanyAdapter != null) {
                                         searchCompanyAdapter.setHideMore(true);
                                     }
 
-                                    if(searchCompanyAdapter==null && searchGongsiList.size() == 0){
+                                    if (searchCompanyAdapter == null && searchGongsiList.size() == 0) {
                                         // 一条数据都没有的情况
                                         nothingData.setVisibility(View.VISIBLE);
                                         relYouxuan.setVisibility(View.GONE);
                                         searchSwip.setVisibility(View.GONE);
                                         searchList.setVisibility(View.GONE);
                                         findCompanyLayout.setVisibility(View.GONE);
-                                    }else if(searchCompanyAdapter!=null){
+                                    } else if (searchCompanyAdapter != null) {
                                         searchCompanyAdapter.notifyDataSetChanged();
                                     }
 
-                                }else if(jsonObject.getInt("status") == 0){
+                                } else if (jsonObject.getInt("status") == 0) {
                                     normalData = false;
                                     youxuan = false;
                                     Util.setErrorLog(TAG, "搜素 0");
                                     searchSwip.setVisibility(View.GONE);
                                     Util.setToast(mContext, msg);
-                                }else if(jsonObject.getInt("status") == 204){
+                                } else if (jsonObject.getInt("status") == 204) {
                                     searchGongsiList.clear();
                                     youxuan = true;
                                     normalData = false;
@@ -1357,7 +1391,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                     JSONArray gongsiArr = jsonObject.getJSONArray("data");
                                     gson = new Gson();
                                     List<GongsiItem> tempYouxuanList = new ArrayList<GongsiItem>();
-                                    for(int i=0;i<gongsiArr.length();i++){
+                                    for (int i = 0; i < gongsiArr.length(); i++) {
                                         GongsiItem item = gson.fromJson(gongsiArr.getJSONObject(i).toString(), GongsiItem.class);
                                         tempYouxuanList.add(item);
                                     }
@@ -1392,12 +1426,12 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     /**
      * 获取 工装 家装 类型 接口
      */
-    private void getToolNetData(){
+    private void getToolNetData() {
         String shaixuan = CacheManager.getToolFlag(mContext);
-        if(!TextUtils.isEmpty(shaixuan)){
+        if (!TextUtils.isEmpty(shaixuan)) {
             getShaixuanTool(shaixuan);
-        }else {
-            if(Util.isNetAvailable(mContext)){
+        } else {
+            if (Util.isNetAvailable(mContext)) {
                 HashMap<String, Object> hashMap = new HashMap<String, Object>();
                 hashMap.put("token", Util.getDateToken());
                 OKHttpUtil.post(Constant.GET_TOOL_URL, hashMap, new Callback() {
@@ -1412,10 +1446,10 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                         String json = response.body().string();
                         try {
                             JSONObject jsonObject = new JSONObject(json);
-                            if(jsonObject.getInt("status") == 200){
-                                CacheManager.setToolFlag(mContext,json);
+                            if (jsonObject.getInt("status") == 200) {
+                                CacheManager.setToolFlag(mContext, json);
                                 getShaixuanTool(json);
-                            }else {
+                            } else {
                                 Util.setErrorLog(TAG, "获取筛选中的家庭商业数据失败  status = " + jsonObject.getInt("status"));
                             }
                         } catch (JSONException e) {
@@ -1432,17 +1466,18 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
     /**
      * 家庭 商业 类型
+     *
      * @param json
      */
-    private void getShaixuanTool(String json){
-        if(jiatingList.size() == 0 && shangyeList.size() == 0){
+    private void getShaixuanTool(String json) {
+        if (jiatingList.size() == 0 && shangyeList.size() == 0) {
             try {
                 JSONObject jsonObject = new JSONObject(json);
                 JSONObject data = jsonObject.getJSONObject("data");
 
                 JSONArray jiatingArr = data.getJSONArray("home_improvement");
-                jiatingList.add(new ShaixuanBean("0","不限"));
-                for(int i=0;i<jiatingArr.length();i++){
+                jiatingList.add(new ShaixuanBean("0", "不限"));
+                for (int i = 0; i < jiatingArr.length(); i++) {
                     ShaixuanBean jiating = new ShaixuanBean();
                     jiating.setId(jiatingArr.getJSONObject(i).getString("id"));
                     jiating.setName(jiatingArr.getJSONObject(i).getString("name"));
@@ -1450,8 +1485,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 }
 
                 JSONArray shangyeArr = data.getJSONArray("tool_improvement");
-                shangyeList.add(new ShaixuanBean("0","不限"));
-                for(int i=0;i<shangyeArr.length();i++){
+                shangyeList.add(new ShaixuanBean("0", "不限"));
+                for (int i = 0; i < shangyeArr.length(); i++) {
                     ShaixuanBean shangye = new ShaixuanBean();
                     shangye.setId(shangyeArr.getJSONObject(i).getString("id"));
                     shangye.setName(shangyeArr.getJSONObject(i).getString("name"));
@@ -1466,10 +1501,10 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     }
 
 
-    private void getCityJson(){
+    private void getCityJson() {
         String temp = CacheManager.getSaveCityFlag(mContext);
-        if("".equals(temp)){
-            if(Util.isNetAvailable(mContext)){
+        if ("".equals(temp)) {
+            if (Util.isNetAvailable(mContext)) {
                 HashMap<String, Object> cityMap = new HashMap<String, Object>();
                 cityMap.put("token", Util.getDateToken());
                 OKHttpUtil.post(Constant.CITY_JSON, cityMap, new Callback() {
@@ -1489,7 +1524,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                         String cityjson = response.body().string();
                         try {
                             JSONObject object = new JSONObject(cityjson);
-                            if(object.getInt("status") == 200){
+                            if (object.getInt("status") == 200) {
                                 CacheManager.setSaveCityFlag(mContext, cityjson);
                                 dealWithCityArr(cityjson);
                             }
@@ -1499,32 +1534,33 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                     }
                 });
             }
-        }else{
+        } else {
             dealWithCityArr(temp);
         }
     }
 
     private ArrayList<CompanyCityBean> companyCityBeanArrayList = new ArrayList<CompanyCityBean>(); // 全国所有城市都在这里了。
     private ArrayList<CompanyProvinceBean> companyProvinceBeanArrayList = new ArrayList<CompanyProvinceBean>();  // 省
-    private void dealWithCityArr(String json){
-        if(companyCityBeanArrayList!=null && companyCityBeanArrayList.size()==0){
+
+    private void dealWithCityArr(String json) {
+        if (companyCityBeanArrayList != null && companyCityBeanArrayList.size() == 0) {
             try {
                 JSONObject jsonObject = new JSONObject(json);
                 JSONArray provinceArr = jsonObject.getJSONArray("data"); // 省列表
 
-                for(int province =0;province<provinceArr.length();province++){
+                for (int province = 0; province < provinceArr.length(); province++) {
                     CompanyProvinceBean provinceBean = new CompanyProvinceBean();
                     provinceBean.setProvince_name(provinceArr.getJSONObject(province).getString("province_name"));
                     JSONArray cityArr = provinceArr.getJSONObject(province).getJSONArray("city");
                     ArrayList<CompanyCityBean> provinceCityList = new ArrayList<CompanyCityBean>();
-                    for(int city=0;city<cityArr.length();city++){
+                    for (int city = 0; city < cityArr.length(); city++) {
                         CompanyCityBean cityBean = new CompanyCityBean();
                         cityBean.setCity_id(cityArr.getJSONObject(city).getString("city_id"));
                         cityBean.setCity_name(cityArr.getJSONObject(city).getString("city_name"));
                         JSONArray disctritArr = cityArr.getJSONObject(city).getJSONArray("district");
 
                         ArrayList<CompanyDistrictBean> beanList = new ArrayList<CompanyDistrictBean>();
-                        for(int distr=0;distr<disctritArr.length();distr++){
+                        for (int distr = 0; distr < disctritArr.length(); distr++) {
                             CompanyDistrictBean dsBean = new CompanyDistrictBean();
                             dsBean.setDistrict_id(disctritArr.getJSONObject(distr).getString("district_id"));
                             dsBean.setDistrict_name(disctritArr.getJSONObject(distr).getString("district_name"));
@@ -1545,7 +1581,6 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     }
 
 
-
     private ViewPager gongsiViewpager;
     private LinearLayout gognsiDotLayout;
     private RecyclerView gongsiRecyclerViewTuijian;
@@ -1553,6 +1588,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     private ArrayList<View> dotViewsList = new ArrayList<View>();
     private ArrayList<String> urlList = new ArrayList<String>();
     private ScheduledExecutorService scheduledExecutorService;
+
     private void initBannerAdapter(ViewPager bannerPager, LinearLayout dotLayout, List<CompanyBannerItem> banners) {
 
         dotLayout.removeAllViews();
@@ -1584,6 +1620,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     }
 
     private int currentItem = 0;
+
     private class MyPageChangeListener implements ViewPager.OnPageChangeListener {
 
         ViewPager pager;
@@ -1634,7 +1671,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     }
 
     private void startSlide() {
-        if(scheduledExecutorService==null){
+        if (scheduledExecutorService == null) {
             scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
         }
         scheduledExecutorService.scheduleAtFixedRate(new ShowTask(), 4, 6, TimeUnit.SECONDS);

@@ -20,7 +20,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.DecorateCompanyDetailActivity;
 import com.tbs.tobosutype.activity.DesignChartAcitivity;
 import com.tbs.tobosutype.activity.ImageDetailActivity;
-import com.tbs.tobosutype.activity.LoginActivity;
+import com.tbs.tobosutype.activity.NewLoginActivity;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
@@ -227,8 +227,9 @@ public class ImageAdapter extends BaseAdapter {
 		
 		if (TextUtils.isEmpty(AppInfoUtil.getToekn(mContext))) {
 			Toast.makeText(mContext, "您还没有登陆,请登陆后再来收藏!", Toast.LENGTH_SHORT).show();
-			Intent intent = new Intent(mContext, LoginActivity.class);
-			intent.putExtra("isFav", true);
+//			Intent intent = new Intent(mContext, LoginActivity.class);
+			Intent intent = new Intent(mContext, NewLoginActivity.class);
+//			intent.putExtra("isFav", true);
 			((Activity) mContext).startActivityForResult(intent, 0);
 			return;
 		}

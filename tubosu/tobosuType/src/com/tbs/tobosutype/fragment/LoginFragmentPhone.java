@@ -38,7 +38,6 @@ import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
-import com.tbs.tobosutype.utils.HttpServer;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;

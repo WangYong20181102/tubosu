@@ -402,34 +402,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         }
     }
 
-//	/***
-//	 * 本地优惠请求网络获取数据  2017-01-13 要求删除
-//	 */
-//	private void requestLocalDiscountData() {
-//
-//
-//		HttpServer.getInstance().requestPOST(discountUrl, localDiscountParams, new AsyncHttpResponseHandler() {
-//
-//					@Override
-//					public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-//						String result = new String(body);
-////						Toast.makeText(mContext, !"".equals(result)? "再次请求成功":"再次请求失败", Toast.LENGTH_SHORT).show();
-//						try {
-//							JSONObject jsonObject = new JSONObject(result);
-//							if (jsonObject.getInt("error_code") == 0) {
-//								parseLocalDiscounts(result);
-//							}
-//						} catch (JSONException e) {
-//							e.printStackTrace();
-//						}
-//					}
-//
-//					@Override
-//					public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-//
-//					}
-//				});
-//	}
 
     /***
      * 解析本地优惠的json
@@ -835,50 +807,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         it.putExtra("JingXuanBundle", b);
         startActivity(it);
     }
-
-
-//	/**
-//	 * 精选图接口  【先保留  2017-01-07】
-//	 */
-//	private void operGetSpecial() {
-//		getSpecialParams = AppInfoUtil.getPublicParams(this);
-////		Log.d(TAG, "--HomeActivity--");
-//		HttpServer.getInstance().requestPOST(getSpecialUrl, getSpecialParams, new AsyncHttpResponseHandler() {
-//
-//					@Override
-//					public void onSuccess(int arg0, Header[] arg1, byte[] body) {
-//						String result = new String(body);
-//						getSharedPreferences("SpecialCache", 0).edit().putString("result", result).commit();
-//						parseData(result);
-//					}
-//
-//					@Override
-//					public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-//
-//					}
-//				});
-//	}
-//
-//	// 解析精选json
-//	private void parseData(String result) {
-//		try {
-//			JSONObject jsonObject = new JSONObject(result);
-//			if (jsonObject.getInt("error_code") == 0) {
-//				JSONArray data = jsonObject.getJSONArray("data");
-//				ivHomeFullySelectedImages.setScaleType(ScaleType.FIT_XY);
-//				//首页精选图一张
-//				ImageLoaderUtil.loadImage(this, ivHomeFullySelectedImages, data.getJSONObject(0).getString("thumb_img_url"));
-//				banner_title = data.getJSONObject(0).getString("banner_title");
-//				id = data.getJSONObject(0).getString("id");
-//				banner_textview_title.setText(banner_title);
-//				if (data.getJSONObject(0).getString("thumb_img_url") != null) {
-//					ivHomeFullySelectedImages.setClickable(true);
-//				}
-//			}
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
-//	}
 
 
     /***

@@ -6,12 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.ActivityManager;
+import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.os.Process;
+import android.support.multidex.MultiDexApplication;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
@@ -30,12 +35,14 @@ import com.tbs.tobosutype.utils.NetUtil;
 import com.tbs.tobosutype.utils.SharePreferenceUtil;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
+import com.xiaomi.channel.commonutils.logger.LoggerInterface;
+import com.xiaomi.mipush.sdk.Logger;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
-import cn.jpush.android.api.JPushInterface;
 
-
-public class MyApplication extends android.app.Application {
+public class MyApplication extends MultiDexApplication {
     public static String iconUrl;
+    private String TAG = "MyApplication";
     public LocationClient mLocationClient;
     public MyLocationListener mMyLocationListener;
     public TextView mLocationResult;
@@ -54,6 +61,7 @@ public class MyApplication extends android.app.Application {
     public static ArrayList<EventHandler> mListeners = new ArrayList<EventHandler>();
     public static int mNetWorkState;
     public static int urrentItemFragment = 0;
+    public static boolean IS_CHECK_COMPANY_ORDER_PASSWORD = false;//是否验证装修公司的查单密码
 
     private List<String> mSections;
     private Map<String, List<City>> mMap;
@@ -81,14 +89,15 @@ public class MyApplication extends android.app.Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
         SDKInitializer.initialize(this);
-//        初始化友盟
+        //初始化友盟
         UMShareAPI.get(this);
-
-        JPushInterface.setDebugMode(true);
-        JPushInterface.init(this);
-
+        //极光推送初始化
+//        JPushInterface.setDebugMode(true);
+//        JPushInterface.init(this);
+        //小米推送初始化
+        initXiaomiPush();
+        //百度定位相关
         mLocationClient = new LocationClient(this.getApplicationContext());
         mMyLocationListener = new MyLocationListener();
         context = getApplicationContext();
@@ -116,11 +125,55 @@ public class MyApplication extends android.app.Application {
                 .cacheInMemory().cacheOnDisc().build();
 
     }
+
+    //小米推送的初始化
+    private void initXiaomiPush() {
+        Log.e(TAG, "进入小米推送======================！！！！");
+        //初始化push推送服务
+        if (shouldInit()) {
+            Log.e(TAG, "初始化小米推送======================！！！！");
+            //AppID   AppKey
+            MiPushClient.registerPush(this, "2882303761517437446", "5821743785446");
+        }
+
+        LoggerInterface newLogger = new LoggerInterface() {
+            @Override
+            public void setTag(String tag) {
+                // ignore
+            }
+
+            @Override
+            public void log(String content, Throwable t) {
+                Log.e(TAG, content, t);
+            }
+
+            @Override
+            public void log(String content) {
+                Log.e(TAG, content);
+            }
+        };
+        Logger.setLogger(this, newLogger);
+    }
+
+    private boolean shouldInit() {
+        ActivityManager am = ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE));
+        List<ActivityManager.RunningAppProcessInfo> processInfos = am.getRunningAppProcesses();
+        String mainProcessName = getPackageName();
+        int myPid = Process.myPid();
+        for (ActivityManager.RunningAppProcessInfo info : processInfos) {
+            if (info.pid == myPid && mainProcessName.equals(info.processName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     //平台信息配置
     {
         PlatformConfig.setWeixin("wx20c4f4560dcd397a", "9b06e848d40bcb04205d75335df6b814");
         PlatformConfig.setQQZone("1104958391", "M0L4G2G3SEgFNP35");
     }
+
     public static Context getContext() {
         return context;
     }
@@ -197,8 +250,10 @@ public class MyApplication extends android.app.Application {
     }
 
     private void initData() {
+
         mApplication = this;
         mNetWorkState = NetUtil.getNetworkState(this);
+        IS_CHECK_COMPANY_ORDER_PASSWORD = false;//是否验证装修公司的查单密码
         initCityList();
         mSpUtil = new SharePreferenceUtil(this, SharePreferenceUtil.CITY_SHAREPRE_FILE);
         IntentFilter filter = new IntentFilter(NET_CHANGE_ACTION);
@@ -234,7 +289,7 @@ public class MyApplication extends android.app.Application {
         return mCityList;
     }
 
-    public List<City> getAllHotCity(){
+    public List<City> getAllHotCity() {
         return hotCityList;
     }
 
@@ -306,6 +361,4 @@ public class MyApplication extends android.app.Application {
         }
 
     }
-
-
 }

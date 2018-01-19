@@ -336,7 +336,6 @@ public class AllOrderDetailActivity extends Activity implements OnClickListener 
         orderDetailParams.put("order_id", order_id);
 
         if (MyApplication.ISPUSHLOOKORDER) {
-//            new CheckOrderUtils(detail_allorder_loading, AllOrderDetailActivity.this, token, "0");// 0-->> 全部订单
             requestHasOrderPwd();
         } else {
             requestOrderDetailPost();

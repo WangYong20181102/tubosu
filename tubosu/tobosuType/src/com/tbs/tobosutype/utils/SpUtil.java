@@ -93,4 +93,13 @@ public class SpUtil {
     public static String getArticleType(Context context) {
         return context.getSharedPreferences("mlArticleType", 0).getString("mArticleType", "");
     }
+
+    //存储推送提醒的时间
+    public static void setNoticeTime(Context context, String NoticeTime) {
+        context.getSharedPreferences("mNoticeTime", 0).edit().putString("mNoticeTime", NoticeTime).commit();
+    }
+    //获取推送提醒的时间
+    public static String getNoticeTime(Context context) {
+        return context.getSharedPreferences("mNoticeTime", 0).getString("mNoticeTime", "");
+    }
 }

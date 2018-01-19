@@ -180,7 +180,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
 
     private void getCityJson() {
         if ("".equals(CacheManager.getSaveCityFlag(mContext))) {
-            if (Util.isNetAvailable1(mContext)) {
+            if (Util.isNetAvailable(mContext)) {
                 HashMap<String, Object> cityMap = new HashMap<String, Object>();
                 cityMap.put("token", Util.getDateToken());
                 OKHttpUtil.post(Constant.CITY_JSON, cityMap, new Callback() {

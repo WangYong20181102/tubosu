@@ -685,8 +685,9 @@ public class DecorateCompanyDetailActivity extends com.tbs.tobosutype.base.BaseA
 		token = AppInfoUtil.getToekn(getApplicationContext());
 		if (TextUtils.isEmpty(token)) {
 			Util.setToast(mContext, "亲请先登陆后再来收藏！");
-			Intent intent = new Intent(mContext, LoginActivity.class);
-			intent.putExtra("isFav", true);
+//			Intent intent = new Intent(mContext, LoginActivity.class);
+			Intent intent = new Intent(mContext, NewLoginActivity.class);
+//			intent.putExtra("isFav", true);
 			startActivityForResult(intent, 0);
 			return;
 		}

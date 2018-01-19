@@ -11,17 +11,19 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.activity.NewArticleDetailActivity;
 import com.tobosu.mydecorate.activity.NewAuthorDetailActivity;
 import com.tobosu.mydecorate.entity._HomePage;
 import com.tobosu.mydecorate.util.GlideUtils;
 import com.tobosu.mydecorate.util.Util;
+
 import java.util.List;
 
 /**
  * 首页 作者 适配器
- *
+ * <p>
  * Created by Lie on 2017/8/7.
  */
 
@@ -31,7 +33,7 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
     private LayoutInflater inflater;
     private List<_HomePage.Author> dataList;
 
-    public AuthorAdapter(Context mContext, List dataList){
+    public AuthorAdapter(Context mContext, List dataList) {
         this.mContext = mContext;
         this.dataList = dataList;
         this.inflater = LayoutInflater.from(mContext);
@@ -48,17 +50,17 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
     public void onBindViewHolder(AuthorViewHolder holder, final int position) {
 
         String nickname = dataList.get(position).getNick();
-        if(nickname.length() < 4){
-            holder.item_author_name.setText(dataList.get(position).getNick());
-        }else {
-            holder.item_author_name.setText(dataList.get(position).getNick().substring(0, 4) + "...");
-        }
+//        if(nickname.length() < 4){
+        holder.item_author_name.setText(dataList.get(position).getNick());
+//        }else {
+//            holder.item_author_name.setText(dataList.get(position).getNick().substring(0, 4) + "...");
+//        }
 
         holder.item_wenzhang.setText(dataList.get(position).getArticle_count());
         holder.item_liulang.setText(dataList.get(position).getView_count());
 
         holder.frameLayout.bringToFront();
-        GlideUtils.glideLoader(mContext, dataList.get(position).getIcon(), 0, R.mipmap.jiazai_loading,holder.item_author_icon, 0);
+        GlideUtils.glideLoader(mContext, dataList.get(position).getIcon(), 0, R.mipmap.jiazai_loading, holder.item_author_icon, 0);
         holder.item_author_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,26 +71,26 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
                 mContext.startActivity(intent);
             }
         });
-        if(position == 0){
+        if (position == 0) {
             holder.iv_rank.setBackgroundResource(R.mipmap.gold);
-        }else if(position == 1){
+        } else if (position == 1) {
             holder.iv_rank.setBackgroundResource(R.mipmap.silver);
-        }else if(position == 2){
+        } else if (position == 2) {
             holder.iv_rank.setBackgroundResource(R.mipmap.brown);
-        }else if(position == 3){
+        } else if (position == 3) {
             holder.iv_rank.setBackgroundResource(R.mipmap.img4);
-        }else if(position == 4){
+        } else if (position == 4) {
             holder.iv_rank.setBackgroundResource(R.mipmap.img5);
-        }else if(position == 5){
+        } else if (position == 5) {
             holder.iv_rank.setBackgroundResource(R.mipmap.img6);
-        }else if(position == 6){
+        } else if (position == 6) {
             holder.iv_rank.setBackgroundResource(R.mipmap.img7);
-        }else if(position == 7){
+        } else if (position == 7) {
             holder.iv_rank.setBackgroundResource(R.mipmap.img8);
         }
 
 
-        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT_WATCH) {
 
         } else {
             holder.rel_shape.setBackgroundResource(R.drawable.nhf_wz_shape);
@@ -97,10 +99,10 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
 
     @Override
     public int getItemCount() {
-        return dataList==null ? 0 : dataList.size();
+        return dataList == null ? 0 : dataList.size();
     }
 
-    class AuthorViewHolder extends RecyclerView.ViewHolder{
+    class AuthorViewHolder extends RecyclerView.ViewHolder {
         private ImageView iv_rank;
         private ImageView item_author_icon;
         private TextView item_author_name;

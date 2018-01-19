@@ -18,17 +18,17 @@
 
         <TextView
             android:id="@+id/phone_num"
-            android:textColor="#ff601a"
-            android:textSize="17sp"
+            android:textColor="#000000"
+            android:textSize="14sp"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="400-606-2221" />
+            android:text="土拨鼠热线：400-606-2221" />
         <View
             android:background="@color/dividing_line_bg"
             android:layout_width="match_parent"
-            android:layout_height="1dp"/>
+            android:layout_height="0.8dp"/>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -46,10 +46,11 @@
                 android:layout_width="1dp"
                 android:layout_height="40dp"/>
             <TextView
+                android:background="#ff6f12"
                 android:id="@+id/open_phone"
-                android:textColor="#000000"
+                android:textColor="@color/white"
                 android:gravity="center"
-                android:text="呼叫"
+                android:text="拨打"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent" />

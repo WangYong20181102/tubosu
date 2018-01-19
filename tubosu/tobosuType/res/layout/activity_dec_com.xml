@@ -31,8 +31,8 @@
                     android:src="@drawable/decorate_co_bg" />
 
                 <LinearLayout
-                    android:layout_width="88dp"
-                    android:layout_height="64dp"
+                    android:layout_width="74dp"
+                    android:layout_height="74dp"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="16dp"
                     android:background="@drawable/shape_dec_icon"
@@ -40,9 +40,9 @@
                     <!--装修公司头像-->
                     <ImageView
                         android:id="@+id/dec_com_icon_iv"
-                        android:layout_width="84dp"
-                        android:layout_height="60dp"
-                        android:scaleType="fitXY"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/iamge_loading" />
                 </LinearLayout>
                 <!--返回按钮-->

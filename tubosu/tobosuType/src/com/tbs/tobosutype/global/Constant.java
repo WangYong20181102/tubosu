@@ -8,8 +8,31 @@ import android.widget.Toast;
 
 import com.tbs.tobosutype.utils.AppInfoUtil;
 
+/**
+ * 所有的接口链接都在这个页面
+ */
 
 public class Constant {
+    /**
+     * 测试环境
+     */
+    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+
+    /**
+     * 正式环境
+     */
+//    public static final String TOBOSU_URL = "https://www.tobosu.com/";
+
+    /**
+     * M站 发单跳转 线上环境
+     */
+    public static final String M_TOBOSU_URL = "http://m.tobosu.com/";
+
+    /**
+     * M站 发单跳转 dev环境
+     */
+//    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/"
+
     public static int LOADING_PIC = 0;
     public static final String DESCRIPTOR = "com.umeng.login";
     public static final String DESCRIPTOR_SHARE = "com.umeng.share";
@@ -55,6 +78,8 @@ public class Constant {
      * 广告页面
      */
     public static final String IMG_PATH = Environment.getExternalStorageDirectory() + "/tbs_adpic/";
+    //图片的地址
+    public static final String IMAGE_PATH = Environment.getExternalStorageDirectory() + "/tbs_temp_image/";
     //下载存储路径
     public static final String DOWNLOAD_IMG_PATH = Environment.getExternalStorageDirectory() + "/tbs_image/";
 
@@ -85,27 +110,6 @@ public class Constant {
      * 厨卫
      */
     public static final String ACTION_KITCHEN_FRAGMENT_DATA = "action_kitchen_fragment_data";
-
-    /**
-     * 测试环境
-     */
-    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
-
-    /**
-     * 正式环境
-     */
-//    public static final String TOBOSU_URL = "https://www.tobosu.com/";
-
-    /**
-     * M站 发单跳转 线上环境
-     */
-    public static final String M_TOBOSU_URL = "http://m.tobosu.com/";
-
-    /**
-     * M站 发单跳转 dev环境
-     */
-//    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
-
 
     public static final String COMPANY_TANKUANG_URL = M_TOBOSU_URL + "free_price_page";
 
@@ -412,6 +416,30 @@ public class Constant {
     public static final String Z_ARTICLE_LIST = TOBOSU_URL + "mapp/ZArticle/article_list";
     //装修详情点击量  3.7版本新增
     public static final String Z_ARTICLE_CLICK_COUNT = TOBOSU_URL + "mapp/ZArticle/click_count";
+    //短信验证码登录  3.7版本新增
+    public static final String SMS_CODE_LOGIN = TOBOSU_URL + "mapp/user/sms_code_login";
+    //微信登录  3.7版本新增
+    public static final String WECHAT_LOGIN = TOBOSU_URL + "mapp/user/wechat_login";
+    //账号密码登录  3.7版本新增
+    public static final String ACCOUNT_LOGIN = TOBOSU_URL + "mapp/user/login";
+    //校验手机号和验证码的正确性  3.7版本新增
+    public static final String VERIFY_SMS_CODE = TOBOSU_URL + "mapp/smsCode/verify_sms_code";
+    //忘记密码  3.7版本新增
+    public static final String FORGET_PASSWORD = TOBOSU_URL + "mapp/user/forget_password";
+    //图片上传的地址 3.7新增
+    public static final String UPLOAD_DYNAMIC_IMAGE = TOBOSU_URL + "cloud/upload/app_upload";
+    // 用户反馈 3.7新增
+    public static final String ADD_FEEDBACK = TOBOSU_URL + "mapp/feedback/add_feedback";
+    //用户信息 3.7新增
+    public static final String USER_INFO = TOBOSU_URL + "mapp/user/user_info";
+    //修改用户信息 3.7新增
+    public static final String MODIFY_USER_INFO = TOBOSU_URL + "mapp/user/modify_user_info";
+    //绑定手机号码 3.7新增
+    public static final String BIND_CELLPHONE = TOBOSU_URL + "mapp/user/bind_cellphone";
+    //绑定微信 3.7新增
+    public static final String BIND_WE_CHAT = TOBOSU_URL + "mapp/user/bind_wechat";
+    //绑定微信 3.7新增
+    public static final String CHECK_ORDER_PWD = TOBOSU_URL + "mapp/company/check_order_pwd";
 
 
     //装修公司主页 底部发单按钮 3.6版本新增

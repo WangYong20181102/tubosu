@@ -29,7 +29,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.DImageLookingActivity;
-import com.tbs.tobosutype.activity.LoginActivity;
+import com.tbs.tobosutype.activity.NewLoginActivity;
 import com.tbs.tobosutype.adapter.MyGridViewAdapter;
 import com.tbs.tobosutype.adapter.NewImageDAdapter;
 import com.tbs.tobosutype.base.BaseFragment;
@@ -662,8 +662,8 @@ public class NewImageDFragment extends BaseFragment {
                     if (TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {
                         //用户未登录 跳转到登录页面
                         Toast.makeText(mContext, "您还没有登陆,请登陆后再来收藏!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(mContext, LoginActivity.class);
-                        intent.putExtra("isFav", true);
+                        Intent intent = new Intent(mContext, NewLoginActivity.class);
+//                        intent.putExtra("isFav", true);
                         startActivityForResult(intent, 0);
                     } else {
                         HttpCollection(mImageDArrayList.get(position).getId(), AppInfoUtil.getUserid(mContext), AppInfoUtil.getTypeid(mContext), position);

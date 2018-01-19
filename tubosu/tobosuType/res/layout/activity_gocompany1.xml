@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/gongsi_all_rl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -12,12 +12,12 @@
     <RelativeLayout
         android:id="@+id/findCompanyLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
         <android.support.design.widget.CoordinatorLayout
             android:id="@+id/coordview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/mainAppbar"
@@ -36,32 +36,33 @@
                         android:id="@+id/gongsilayout"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal"
+                        android:layout_marginLeft="14dp"
                         android:gravity="center_vertical"
-                        android:layout_marginLeft="14dp">
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/sdf"
-                            android:layout_marginRight="6dp"/>
+                            android:layout_marginRight="6dp"
+                            android:background="@drawable/sdf" />
+
                         <TextView
                             android:id="@+id/tvGongsiCity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#333333"
-                            android:text="深圳"/>
+                            android:text="深圳"
+                            android:textColor="#333333" />
                     </LinearLayout>
 
                     <RelativeLayout
                         android:id="@+id/relGoClick"
                         android:layout_width="wrap_content"
                         android:layout_height="29dp"
-                        android:background="@drawable/shape_company_edittext_bg"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginLeft="11dp"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/gongsilayout">
+                        android:layout_marginLeft="11dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_toRightOf="@+id/gongsilayout"
+                        android:background="@drawable/shape_company_edittext_bg">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -72,9 +73,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:layout_centerVertical="true"
+                                android:background="@color/transparent"
                                 android:gravity="center_vertical"
                                 android:text="请输入装修公司关键字"
-                                android:background="@color/transparent"
                                 android:textColorHint="#999999"
                                 android:textSize="12sp" />
 
@@ -84,10 +85,10 @@
                             android:id="@+id/kiksezschdfa"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginLeft="9dp"
                             android:layout_centerVertical="true"
-                            android:background="@drawable/ssearch"/>
+                            android:layout_marginLeft="9dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/ssearch" />
                     </RelativeLayout>
                 </RelativeLayout>
                 <!--顶部-->
@@ -104,8 +105,8 @@
                     <RelativeLayout
                         android:id="@+id/showOrNotLayout"
                         android:layout_width="match_parent"
-                        android:background="@color/white"
-                        android:layout_height="wrap_content" >
+                        android:layout_height="wrap_content"
+                        android:background="@color/white">
 
                         <RelativeLayout
                             android:id="@+id/relgongisBanner"
@@ -119,8 +120,7 @@
                                 <android.support.v4.view.ViewPager
                                     android:id="@+id/gongsiViewpager"
                                     android:layout_width="match_parent"
-                                    android:layout_height="136dp">
-                                </android.support.v4.view.ViewPager>
+                                    android:layout_height="136dp"></android.support.v4.view.ViewPager>
                             </FrameLayout>
 
                             <LinearLayout
@@ -130,8 +130,7 @@
                                 android:layout_alignParentBottom="true"
                                 android:gravity="center"
                                 android:orientation="horizontal"
-                                android:padding="10dp" >
-                            </LinearLayout>
+                                android:padding="10dp"></LinearLayout>
                         </RelativeLayout>
 
 
@@ -139,9 +138,9 @@
                             android:id="@+id/slideRelayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_below="@+id/relgongisBanner"
                             android:layout_marginTop="16dp"
-                            android:layout_marginBottom="24dp"
-                            android:layout_below="@+id/relgongisBanner">
+                            android:background="@color/white">
 
                             <LinearLayout
                                 android:id="@+id/ivRecomandsficon"
@@ -152,34 +151,33 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="16dp"
                                     android:layout_gravity="center_vertical"
-                                    android:background="@drawable/diamond"/>
+                                    android:layout_marginLeft="16dp"
+                                    android:background="@drawable/diamond" />
 
                                 <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginLeft="10dp"
                                     android:layout_toRightOf="@+id/ivRecomandsficon"
                                     android:text="优质推荐"
-                                    android:layout_marginLeft="10dp"
                                     android:textColor="#333333"
-                                    android:textSize="14sp"
-                                    android:layout_gravity="center_vertical"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+                                    android:textSize="14sp" />
                             </LinearLayout>
 
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/gongsiRecyclerViewTuijian"
                                 android:layout_width="match_parent"
-                                android:layout_below="@+id/ivRecomandsficon"
-                                android:layout_height="wrap_content">
-                            </android.support.v7.widget.RecyclerView>
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/ivRecomandsficon"></android.support.v7.widget.RecyclerView>
                         </RelativeLayout>
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="10dp"
                             android:layout_below="@+id/slideRelayout"
-                            android:background="#F7F7F7"/>
+                            android:background="#F7F7F7" />
                     </RelativeLayout>
                 </android.support.design.widget.CollapsingToolbarLayout>
                 <!--中间栏-->
@@ -188,9 +186,9 @@
                 <RelativeLayout
                     android:id="@+id/reUpSelectLayout"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@color/white"
-                    app:layout_scrollFlags="scroll|enterAlways"
-                    android:layout_height="wrap_content">
+                    app:layout_scrollFlags="scroll|enterAlways">
 
                     <LinearLayout
                         android:id="@+id/headLayoutSelectUp"
@@ -206,78 +204,82 @@
                             <TextView
                                 android:id="@+id/tvZonghe"
                                 android:layout_width="match_parent"
-                                android:layout_weight="1"
                                 android:layout_height="43dp"
-                                android:text="综合"
-                                android:gravity="center"
                                 android:layout_gravity="center_vertical"
-                                android:textSize="12sp"
-                                android:textColor="@color/gongsi_selected"/>
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="综合"
+                                android:textColor="@color/gongsi_selected"
+                                android:textSize="12sp" />
 
                             <TextView
                                 android:id="@+id/tvLiulanzuiduo"
                                 android:layout_width="match_parent"
-                                android:layout_weight="1"
                                 android:layout_height="43dp"
-                                android:text="浏览量"
-                                android:gravity="center"
                                 android:layout_gravity="center_vertical"
-                                android:textSize="12sp"
-                                android:textColor="@color/gongsi_unselected"/>
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="浏览量"
+                                android:textColor="@color/gongsi_unselected"
+                                android:textSize="12sp" />
+
                             <TextView
                                 android:id="@+id/tvAnlizuiduo"
                                 android:layout_width="match_parent"
-                                android:layout_weight="1"
                                 android:layout_height="43dp"
-                                android:text="方案数"
-                                android:gravity="center"
                                 android:layout_gravity="center_vertical"
-                                android:textSize="12sp"
-                                android:textColor="@color/gongsi_unselected"/>
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="方案数"
+                                android:textColor="@color/gongsi_unselected"
+                                android:textSize="12sp" />
+
                             <TextView
                                 android:id="@+id/tvLiwozuijin"
                                 android:layout_width="match_parent"
-                                android:layout_weight="1"
                                 android:layout_height="43dp"
-                                android:text="离我最近"
-                                android:gravity="center"
                                 android:layout_gravity="center_vertical"
-                                android:textSize="12sp"
-                                android:textColor="@color/gongsi_unselected"/>
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="离我最近"
+                                android:textColor="@color/gongsi_unselected"
+                                android:textSize="12sp" />
 
                             <RelativeLayout
                                 android:id="@+id/relShaiXuan"
                                 android:layout_width="match_parent"
                                 android:layout_height="43dp"
-                                android:gravity="center"
-                                android:layout_weight="1">
+                                android:layout_weight="1"
+                                android:gravity="center">
 
                                 <TextView
                                     android:id="@+id/tvShaixuan"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="筛选"
-                                    android:gravity="center"
-                                    android:layout_marginRight="4dp"
                                     android:layout_centerVertical="true"
-                                    android:textSize="12sp"
-                                    android:textColor="#666666"/>
+                                    android:layout_marginRight="4dp"
+                                    android:gravity="center"
+                                    android:text="筛选"
+                                    android:textColor="#666666"
+                                    android:textSize="12sp" />
+
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
                                     android:layout_toRightOf="@+id/tvShaixuan"
-                                    android:background="@drawable/loudou"/>
+                                    android:background="@drawable/loudou" />
                             </RelativeLayout>
                         </LinearLayout>
 
                     </LinearLayout>
+
                     <View
                         android:id="@+id/vsdfaedfa"
-                        android:layout_below="@+id/headLayoutSelectUp"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#EBEBEB"/>
+                        android:layout_below="@+id/headLayoutSelectUp"
+                        android:background="#EBEBEB" />
 
                 </RelativeLayout>
                 <!--上选择项-->
@@ -287,9 +289,9 @@
                     android:id="@+id/reDownSelectLayout"
                     android:layout_width="match_parent"
                     android:layout_height="47dp"
-                    app:layout_scrollFlags="scroll|enterAlways"
                     android:background="@color/white"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    app:layout_scrollFlags="scroll|enterAlways">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -300,27 +302,29 @@
                             android:id="@+id/shitirenzheng"
                             android:layout_width="101dp"
                             android:layout_height="27dp"
+                            android:layout_centerInParent="true"
                             android:background="@drawable/select_item_textview_bg"
                             android:gravity="center"
+                            android:text="实体认证"
                             android:textColor="#4D4D4D"
-                            android:layout_centerInParent="true"
-                            android:textSize="11sp"
-                            android:text="实体认证"/>
+                            android:textSize="11sp" />
                     </RelativeLayout>
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1">
+
                         <TextView
                             android:id="@+id/ctuijian"
                             android:layout_width="101dp"
                             android:layout_height="27dp"
-                            android:gravity="center"
-                            android:textColor="#4D4D4D"
-                            android:background="@drawable/select_item_textview_bg"
                             android:layout_centerInParent="true"
-                            android:textSize="11sp"
-                            android:text="推荐"/>
+                            android:background="@drawable/select_item_textview_bg"
+                            android:gravity="center"
+                            android:text="推荐"
+                            android:textColor="#4D4D4D"
+                            android:textSize="11sp" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -332,30 +336,30 @@
                             android:id="@+id/reSearvice"
                             android:layout_width="101dp"
                             android:layout_height="27dp"
-                            android:gravity="center"
                             android:layout_centerInParent="true"
-                            android:background="@drawable/select_item_textview_bg">
+                            android:background="@drawable/select_item_textview_bg"
+                            android:gravity="center">
 
                             <TextView
                                 android:id="@+id/fuwuquyu"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="11sp"
                                 android:layout_centerVertical="true"
-                                android:textColor="#4D4D4D"
-                                android:maxEms="6"
                                 android:ellipsize="end"
                                 android:gravity="center"
-                                android:text="服务区域"/>
+                                android:maxEms="6"
+                                android:text="服务区域"
+                                android:textColor="#4D4D4D"
+                                android:textSize="11sp" />
 
                             <ImageView
                                 android:id="@+id/ivFuwuquyu"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="4dp"
                                 android:layout_centerVertical="true"
+                                android:layout_marginLeft="4dp"
                                 android:layout_toRightOf="@+id/fuwuquyu"
-                                android:background="@drawable/jiantou0"/>
+                                android:background="@drawable/jiantou0" />
                         </RelativeLayout>
                     </RelativeLayout>
 
@@ -364,11 +368,9 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#EEEEEE"/>
+                    android:background="#EEEEEE" />
 
             </android.support.design.widget.AppBarLayout>
-
-
 
 
             <!--列表开始啦-->
@@ -381,24 +383,25 @@
                     android:id="@+id/find_company_swipe_refresh"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/find_company_recycler"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
                 </android.support.v4.widget.SwipeRefreshLayout>
 
                 <RelativeLayout
                     android:id="@+id/reCompanDataEmpty"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:visibility="gone"
-                    android:layout_height="wrap_content">
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:background="@drawable/wutiapojian"/>
+                        android:background="@drawable/wutiapojian" />
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -407,17 +410,13 @@
                 android:id="@+id/ivGoFadan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_gravity="bottom|right"
                 android:layout_marginBottom="14dp"
-                android:layout_alignParentBottom="true"
-                android:background="@drawable/tuijian44"/>
+                android:background="@drawable/tuijian44" />
         </android.support.design.widget.CoordinatorLayout>
 
     </RelativeLayout>
-
-
-
-
 
 
     <!-- 搜索布局 -->
@@ -430,22 +429,22 @@
         <RelativeLayout
             android:id="@+id/topSearch"
             android:layout_width="match_parent"
-            android:background="@drawable/wht"
-            android:layout_height="49dp">
+            android:layout_height="43dp"
+            android:background="@drawable/wht">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginRight="14dp"
+                android:layout_height="28dp"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
                 android:layout_toLeftOf="@+id/tvCancelSearch"
-                android:background="@drawable/shape_company_edittext_bg"
-                android:layout_centerVertical="true">
+                android:background="@drawable/shape_company_edittext_bg">
 
                 <RelativeLayout
                     android:id="@+id/searche_bar"
                     android:layout_width="match_parent"
-                    android:layout_height="29dp"
+                    android:layout_height="27dp"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/kiksezchdfa">
 
@@ -453,11 +452,13 @@
                         android:id="@+id/etSearchGongsi"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_centerVertical="true"
-                        android:hint="请输入装修公司关键字"
-                        android:maxLines="1"
                         android:layout_alignParentBottom="true"
+                        android:layout_centerVertical="true"
                         android:background="@color/transparent"
+                        android:hint="请输入装修公司关键字"
+                        android:singleLine="true"
+                        android:lines="1"
+                        android:maxLines="1"
                         android:textColorHint="#999999"
                         android:textSize="12sp" />
 
@@ -465,11 +466,11 @@
                         android:id="@+id/ivGongSiDelete"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:visibility="gone"
                         android:layout_alignRight="@+id/etSearchGongsi"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/delete_cancel"/>
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/delete_cancel"
+                        android:visibility="gone" />
 
                 </RelativeLayout>
 
@@ -477,10 +478,10 @@
                     android:id="@+id/kiksezchdfa"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="9dp"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/ssearch"/>
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/ssearch" />
 
             </RelativeLayout>
 
@@ -489,27 +490,30 @@
                 android:id="@+id/tvCancelSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginRight="14dp"
-                android:textColor="#FF6F20"
-                android:text="取消"/>
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="#FF6F20" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/relYouxuan"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
+            android:layout_below="@+id/topSearch"
             android:background="@color/white"
-            android:layout_below="@+id/topSearch">
+            android:visibility="gone">
+
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <RelativeLayout
                         android:id="@+id/noSearchData1"
                         android:layout_width="match_parent"
@@ -519,44 +523,47 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
-                            android:background="@drawable/sousuo"/>
+                            android:background="@drawable/sousuo" />
                     </RelativeLayout>
+
                     <RelativeLayout
                         android:id="@+id/ifyouxuan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/noSearchData1">
-                        <View
-                            android:layout_width="120dp"
-                            android:layout_height="1dp"
-                            android:layout_centerVertical="true"
-                            android:layout_toLeftOf="@+id/sdfgddafsdaer"
-                            android:layout_marginRight="16dp"
-                            android:background="#dedede"/>
-                        <TextView
-                            android:id="@+id/sdfgddafsdaer"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:textColor="#060606"
-                            android:textSize="14sp"
-                            android:text="为你优选"/>
 
                         <View
                             android:layout_width="120dp"
                             android:layout_height="1dp"
                             android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/sdfgddafsdaer"
+                            android:layout_marginRight="16dp"
+                            android:layout_toLeftOf="@+id/sdfgddafsdaer"
+                            android:background="#dedede" />
+
+                        <TextView
+                            android:id="@+id/sdfgddafsdaer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:text="为你优选"
+                            android:textColor="#060606"
+                            android:textSize="14sp" />
+
+                        <View
+                            android:layout_width="120dp"
+                            android:layout_height="1dp"
+                            android:layout_centerVertical="true"
                             android:layout_marginLeft="16dp"
-                            android:background="#dedede"/>
+                            android:layout_toRightOf="@+id/sdfgddafsdaer"
+                            android:background="#dedede" />
                     </RelativeLayout>
+
                     <com.tbs.tobosutype.customview.MyListView
                         android:id="@+id/youxuanList"
-                        android:layout_below="@+id/ifyouxuan"
                         android:layout_width="match_parent"
-                        android:divider="@null"
-                        android:layout_height="wrap_content">
-                    </com.tbs.tobosutype.customview.MyListView>
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ifyouxuan"
+                        android:divider="@null"></com.tbs.tobosutype.customview.MyListView>
                 </RelativeLayout>
             </ScrollView>
         </RelativeLayout>
@@ -564,46 +571,46 @@
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/searchSwip"
             android:layout_width="match_parent"
-            android:layout_below="@+id/topSearch"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/topSearch">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/searchList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </android.support.v7.widget.RecyclerView>
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
 
         <RelativeLayout
             android:id="@+id/nothingData"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/topSearch"
             android:background="@color/white"
-            android:visibility="gone"
-            android:layout_below="@+id/topSearch">
+            android:visibility="gone">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:background="@drawable/sousuo"/>
+                android:background="@drawable/sousuo" />
         </RelativeLayout>
 
         <View
             android:id="@+id/mengceng4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/topSearch"
             android:background="#49767676"
-            android:visibility="gone"
-            android:layout_below="@+id/topSearch"/>
+            android:visibility="gone" />
     </RelativeLayout>
-
 
 
     <RelativeLayout
         android:id="@+id/relfindComLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:background="#64767676">
+        android:background="#64767676"
+        android:visibility="gone">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -614,22 +621,18 @@
                 android:id="@+id/findComIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/gongsifree"/>
+                android:src="@drawable/gongsifree" />
 
             <ImageView
                 android:id="@+id/cancelFindComIcon"
                 android:layout_width="27dp"
                 android:layout_height="27dp"
-                android:layout_marginTop="10sp"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@+id/findComIcon"
-                android:src="@drawable/home_close"/>
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10sp"
+                android:src="@drawable/home_close" />
         </RelativeLayout>
     </RelativeLayout>
-
-
-
-
 
 
     <!--顶部-->
@@ -644,32 +647,33 @@
             android:id="@+id/gongsilayout1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
+            android:layout_marginLeft="14dp"
             android:gravity="center_vertical"
-            android:layout_marginLeft="14dp">
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/sdf"
-                android:layout_marginRight="6dp"/>
+                android:layout_marginRight="6dp"
+                android:background="@drawable/sdf" />
+
             <TextView
                 android:id="@+id/tvGongsiCity1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#333333"
-                android:text="深圳"/>
+                android:text="深圳"
+                android:textColor="#333333" />
         </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/relGoClick1"
             android:layout_width="wrap_content"
             android:layout_height="29dp"
-            android:background="@drawable/shape_company_edittext_bg"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="11dp"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/gongsilayout1">
+            android:layout_marginLeft="11dp"
+            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@+id/gongsilayout1"
+            android:background="@drawable/shape_company_edittext_bg">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -680,9 +684,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
+                    android:background="@color/transparent"
                     android:gravity="center_vertical"
                     android:text="请输入装修公司关键字"
-                    android:background="@color/transparent"
                     android:textColor="#999999"
                     android:textSize="12sp" />
 
@@ -692,14 +696,12 @@
                 android:id="@+id/kiksezschdfa1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="9dp"
                 android:layout_centerVertical="true"
-                android:background="@drawable/ssearch"/>
+                android:layout_marginLeft="9dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/ssearch" />
         </RelativeLayout>
     </RelativeLayout>
-
-
 
 
 </RelativeLayout>

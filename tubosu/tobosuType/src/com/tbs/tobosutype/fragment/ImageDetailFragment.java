@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.ApplyforSuccessActivity;
 import com.tbs.tobosutype.activity.ImageDetailsFullScreenActivity;
-import com.tbs.tobosutype.activity.LoginActivity;
+import com.tbs.tobosutype.activity.NewLoginActivity;
 import com.tbs.tobosutype.bean._CardDataItem;
 import com.tbs.tobosutype.bean._ImageDetail;
 import com.tbs.tobosutype.customview.CardSlidePanel;
@@ -317,8 +317,9 @@ public class ImageDetailFragment extends Fragment {
         token = AppInfoUtil.getToekn(mContext);
         if (TextUtils.isEmpty(token)) {
             Toast.makeText(mContext, "您还没有登陆,请登陆后再来收藏!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(mContext, LoginActivity.class);
-            intent.putExtra("isFav", true);
+//            Intent intent = new Intent(mContext, LoginActivity.class);
+            Intent intent = new Intent(mContext, NewLoginActivity.class);
+//            intent.putExtra("isFav", true);
             startActivityForResult(intent, 0);
             return;
         }

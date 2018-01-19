@@ -3,20 +3,20 @@
     android:id="@android:id/tabhost"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white" >
+    android:background="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bg_gray"
         android:fitsSystemWindows="true"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/rl_checkNet"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:visibility="gone" >
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="20dp"
@@ -32,8 +32,7 @@
                 android:layout_marginLeft="35dp"
                 android:text="网络不给力，请检查网络设置"
                 android:textColor="#da3a3a"
-                android:textSize="15sp" >
-            </TextView>
+                android:textSize="15sp"></TextView>
 
             <ImageView
                 android:layout_width="8dp"
@@ -59,35 +58,37 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/dividing_line_bg" >
-        </View>
+            android:background="@color/dividing_line_bg"></View>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="57dp"
             android:layout_gravity="bottom"
             android:layout_weight="0"
-            android:background="@android:color/white" >
+            android:background="@android:color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentBottom="true"
                 android:orientation="horizontal">
+
                 <RelativeLayout
                     android:id="@+id/main_tab_first"
                     style="@style/MMTabButton"
                     android:layout_weight="1.0">
+
                     <ImageView
                         android:id="@+id/img_home"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
-                        android:layout_centerHorizontal="true"/>
+                        android:layout_centerHorizontal="true" />
+
                     <TextView
                         android:id="@+id/tv_home_textview"
                         style="@style/MMTabTextView"
                         android:layout_below="@+id/img_home"
-                        android:text="首页"/>
+                        android:text="首页" />
                 </RelativeLayout>
 
 
@@ -95,16 +96,18 @@
                     android:id="@+id/main_tab_image"
                     style="@style/MMTabButton"
                     android:layout_weight="1.0">
+
                     <ImageView
                         android:id="@+id/img_image"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
-                        android:layout_centerHorizontal="true"/>
+                        android:layout_centerHorizontal="true" />
+
                     <TextView
                         android:id="@+id/tv_image_textview"
                         style="@style/MMTabTextView"
                         android:layout_below="@+id/img_image"
-                        android:text="效果图"/>
+                        android:text="效果图" />
                 </RelativeLayout>
 
 
@@ -112,16 +115,18 @@
                     android:id="@+id/main_tab_decorate"
                     style="@style/MMTabButton"
                     android:layout_weight="1.0">
+
                     <ImageView
                         android:id="@+id/img_decorate"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
-                        android:layout_centerHorizontal="true"/>
+                        android:layout_centerHorizontal="true" />
+
                     <TextView
                         android:id="@+id/tv_decorate_textview"
                         style="@style/MMTabTextView"
                         android:layout_below="@+id/img_decorate"
-                        android:text="装修公司"/>
+                        android:text="装修公司" />
                 </RelativeLayout>
 
 
@@ -129,20 +134,21 @@
                     android:id="@+id/main_tab_my"
                     style="@style/MMTabButton"
                     android:layout_weight="1.0">
+
                     <ImageView
                         android:id="@+id/img_my"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
-                        android:layout_centerHorizontal="true"/>
+                        android:layout_centerHorizontal="true" />
+
                     <TextView
                         android:id="@+id/tv_my_textview"
                         style="@style/MMTabTextView"
                         android:layout_below="@+id/img_my"
-                        android:text="我的"/>
+                        android:text="我的" />
                 </RelativeLayout>
 
             </LinearLayout>
-
 
 
             <TextView
@@ -156,7 +162,7 @@
                 android:gravity="center"
                 android:textColor="@android:color/white"
                 android:textSize="6sp"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </RelativeLayout>
     </LinearLayout>
 

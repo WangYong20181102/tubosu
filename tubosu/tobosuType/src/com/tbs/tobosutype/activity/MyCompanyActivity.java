@@ -260,7 +260,7 @@ public class MyCompanyActivity extends BaseActivity implements OnClickListener {
                 break;
             case R.id.my_layout_network: // 网店设置
                 Intent networksetIntent = new Intent(mContext, NetworkSetActivity.class);
-                networksetIntent.putExtra("nickname", nickname);
+                networksetIntent.putExtra("nickname", nickname);//
                 networksetIntent.putExtra("id", id);
                 networksetIntent.putExtra("memberdegree", memberdegree);
                 networksetIntent.putExtra("cityname", cityname);

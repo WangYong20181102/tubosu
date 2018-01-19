@@ -23,7 +23,11 @@ public class EC {
         public static final int NOTIF_DESIGN_CASE_ACTIVITY_MODE_IS_NOT_COLLECT = 0x000014;//通知设计方案列表页修改数据模型（未收藏）
         public static final int NOTIF_DECCOMACTIVITY_MODE_IS_COLLECT = 0x000015;//通知装修公司主页修改数据模型（已收藏）
         public static final int NOTIF_DECCOMACTIVITY_MODE_IS_NOT_COLLECT = 0x000016;//通知装修公司主页修改数据模型（未收藏）
-
+        public static final int CLOSE_NEW_LOGIN_ACTIVITY = 0x000017;//在fragment中登录成功之后通知登录页面关闭
+        public static final int PRESONER_MSG_CHANGE_CITY = 0x000018;//用户的个人信息页修改用户的信息
+        public static final int CHANGE_COMMUNITY = 0x000019;//用户的个人信息修改城市区域
+        public static final int CHANGE_NICK_NAME = 0x000020;//用户的个人信息修改昵称
+        public static final int BAND_PHONE_SUCCESS = 0x000021;//用户绑定手机号码成功
 
         public static final int DELETE_TAOTU_CODE = 0x100000;//删除收藏
         public static final int DELETE_TAOTU_LIST_CODE = 0x100001;//删除收藏套图

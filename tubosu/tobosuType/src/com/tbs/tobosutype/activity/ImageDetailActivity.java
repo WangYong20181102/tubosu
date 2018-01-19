@@ -609,8 +609,9 @@ public class ImageDetailActivity extends Activity implements OnClickListener, On
         token = AppInfoUtil.getToekn(getApplicationContext());
         if (TextUtils.isEmpty(token)) {
             Toast.makeText(mContext, "您还没有登陆,请登陆后再来收藏!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(ImageDetailActivity.this, LoginActivity.class);
-            intent.putExtra("isFav", true);
+//            Intent intent = new Intent(ImageDetailActivity.this, LoginActivity.class);
+            Intent intent = new Intent(ImageDetailActivity.this, NewLoginActivity.class);
+//            intent.putExtra("isFav", true);
             startActivityForResult(intent, 0);
             return;
         }

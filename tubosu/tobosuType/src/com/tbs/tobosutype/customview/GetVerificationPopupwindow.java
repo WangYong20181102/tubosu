@@ -21,7 +21,6 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.BindingPhoneActivity;
 import com.tbs.tobosutype.activity.FindPwdActivity2;
 import com.tbs.tobosutype.activity.FreeDesignPrice;
-import com.tbs.tobosutype.activity.LoginActivity;
 import com.tbs.tobosutype.activity.RegisterActivity2;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
@@ -210,9 +209,11 @@ public class GetVerificationPopupwindow extends PopupWindow {
 
                     } else if (activity instanceof BindingPhoneActivity) {
                         ((BindingPhoneActivity) activity).startCount();
-                    } else if (activity instanceof LoginActivity) {
-                        ((LoginActivity) activity).startCount();
-                    } else if (activity instanceof FreeDesignPrice) {
+                    }
+//                    else if (activity instanceof LoginActivity) {
+//                        ((LoginActivity) activity).startCount();
+//                    }
+                    else if (activity instanceof FreeDesignPrice) {
 //						((ApplyforSuccessActivity) activity).startCount();
                         ((FreeDesignPrice) activity).startCount();
                     }

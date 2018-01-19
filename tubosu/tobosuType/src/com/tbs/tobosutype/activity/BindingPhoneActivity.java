@@ -56,7 +56,6 @@ public class BindingPhoneActivity extends Activity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        AppInfoUtil.setActivityTheme1(this, R.color.whole_color_theme);
 //		AppInfoUtil.setTranslucentStatus(this);
         setContentView(R.layout.activity_binding_mobile_phone);
 

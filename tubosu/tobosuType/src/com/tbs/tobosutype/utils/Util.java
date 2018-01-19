@@ -2,6 +2,8 @@ package com.tbs.tobosutype.utils;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
@@ -11,6 +13,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
@@ -22,7 +25,11 @@ import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -78,6 +85,29 @@ public class Util {
         return dataToken;
     }
 
+    //获取当前的时间
+    public static String getNowTime() {
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String mTime = format.format(date);
+        return mTime;
+    }
+
+    //对比两个日期的时间间隔
+    public static int differentDays(String time1, String time2) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        int days = 0;
+        try {
+            Date date1 = format.parse(time1);
+            Date date2 = format.parse(time2);
+            days = (int) ((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return days;
+    }
+
+    //获取App的版本
     public static String getAppVersionName(Context context) {
         String versionName = "";
         try {
@@ -112,23 +142,7 @@ public class Util {
                 }
             }
         }
-        Toast.makeText(context, "网络断开了,请设置~", Toast.LENGTH_SHORT).show();
-        return false;
-    }
-
-
-    public static boolean isNetAvailable1(Context context) {
-        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivity != null) {
-            NetworkInfo info = connectivity.getActiveNetworkInfo();
-            if (info != null && info.isConnected()) {
-                // 当前网络是连接的
-                if (info.getState() == NetworkInfo.State.CONNECTED) {
-                    // 当前所连接的网络可用
-                    return true;
-                }
-            }
-        }
+//        Toast.makeText(context, "网络断开了,请设置~", Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -388,5 +402,76 @@ public class Util {
 
             }
         });
+    }
+
+    /**
+     * 返回app运行状态
+     * 1:程序在前台运行
+     * 2:程序在后台运行
+     * 3:程序未启动
+     * 注意：需要配置权限<uses-permission android:name="android.permission.GET_TASKS" />
+     */
+    public static int getAppSatus(Context context, String pageName) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> list = am.getRunningTasks(20);
+
+        //判断程序是否在栈顶
+        if (list.get(0).topActivity.getPackageName().equals(pageName)) {
+            return 1;
+        } else {
+            //判断程序是否在栈里
+            for (ActivityManager.RunningTaskInfo info : list) {
+                if (info.topActivity.getPackageName().equals(pageName)) {
+                    return 2;
+                }
+            }
+            return 3;//栈里找不到，返回3
+        }
+    }
+
+    /**
+     * 用户是否开启推送通知
+     */
+    public static boolean isNotificationEnabled(Context context) {
+
+        String CHECK_OP_NO_THROW = "checkOpNoThrow";
+        String OP_POST_NOTIFICATION = "OP_POST_NOTIFICATION";
+
+        AppOpsManager mAppOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+        ApplicationInfo appInfo = context.getApplicationInfo();
+        String pkg = context.getApplicationContext().getPackageName();
+        int uid = appInfo.uid;
+
+        Class appOpsClass;
+     /* Context.APP_OPS_MANAGER */
+        try {
+            appOpsClass = Class.forName(AppOpsManager.class.getName());
+            Method checkOpNoThrowMethod = appOpsClass.getMethod(CHECK_OP_NO_THROW, Integer.TYPE, Integer.TYPE,
+                    String.class);
+            Field opPostNotificationValue = appOpsClass.getDeclaredField(OP_POST_NOTIFICATION);
+
+            int value = (Integer) opPostNotificationValue.get(Integer.class);
+            return ((Integer) checkOpNoThrowMethod.invoke(mAppOps, value, uid, pkg) == AppOpsManager.MODE_ALLOWED);
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * 判断是否有SD卡且是否可读写
+     * creat 0118
+     */
+    public static boolean hasSDCard() {
+        return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
     }
 }

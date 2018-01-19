@@ -2,6 +2,7 @@ package com.tbs.tobosutype.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.widget.ImageView;
@@ -53,6 +54,21 @@ public class GlideUtils {
             });
         } else if (ROUND_IMAGE == imageType) {
             Glide.with(context).load(url).placeholder(emptyImg).error(erroImg).transform(new GlideRoundTransform(context, 6)).into(iv);
+        }
+    }
+
+    public static void glideLoader(final Context context, Uri uri, int erroImg, int emptyImg, final ImageView iv, int imageType) {
+        if (CIRCLE_IMAGE == imageType) {
+            Glide.with(context).load(uri).asBitmap().centerCrop().into(new BitmapImageViewTarget(iv) {
+                @Override
+                protected void setResource(Bitmap resource) {
+                    RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                    circularBitmapDrawable.setCircular(true);
+                    iv.setImageDrawable(circularBitmapDrawable);
+                }
+            });
+        } else if (ROUND_IMAGE == imageType) {
+            Glide.with(context).load(uri).placeholder(emptyImg).error(erroImg).transform(new GlideRoundTransform(context, 6)).into(iv);
         }
     }
 

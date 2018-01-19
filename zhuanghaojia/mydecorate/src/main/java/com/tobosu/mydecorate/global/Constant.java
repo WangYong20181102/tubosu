@@ -12,7 +12,7 @@ public class Constant {
     /**
      * 正式环境
      */
-    public static final String ZHJ = "http://www.tobosu.com/";
+    public static final String ZHJ = "https://www.tobosu.com/";
     /**
      * 测试环境
      */

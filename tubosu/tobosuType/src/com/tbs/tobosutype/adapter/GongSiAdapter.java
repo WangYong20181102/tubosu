@@ -74,7 +74,10 @@ public class GongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //            gongsiViewHodler.iv.setLayoutParams(lp);
 //            gongsiViewHodler.iv.setMaxWidth(screenWidth);
 //            gongsiViewHodler.iv.setMaxHeight(screenWidth * 4);
-            Glide.with(context).load(dataList.get(position).getImg_url()).placeholder(R.drawable.new_home_loading).error(R.drawable.new_home_loading).into(gongsiViewHodler.iv);
+            Glide.with(context).load(dataList.get(position).getImg_url())
+                    .asBitmap()
+                    .placeholder(R.drawable.new_home_loading)
+                    .error(R.drawable.new_home_loading).into(gongsiViewHodler.iv);
 
             if(dataList.get(position).getRecommend()!=null && "1".equals(dataList.get(position).getRecommend())){
                 gongsiViewHodler.tuijianGongsi.setVisibility(View.VISIBLE);
