@@ -78,8 +78,6 @@ public class Constant {
      * 广告页面
      */
     public static final String IMG_PATH = Environment.getExternalStorageDirectory() + "/tbs_adpic/";
-    //图片的地址
-    public static final String IMAGE_PATH = Environment.getExternalStorageDirectory() + "/tbs_temp_image/";
     //下载存储路径
     public static final String DOWNLOAD_IMG_PATH = Environment.getExternalStorageDirectory() + "/tbs_image/";
 

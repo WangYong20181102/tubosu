@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.tbs.tobosutype.activity.CoPresonerMsgActivity">
     <!--顶部显示的标题-->
     <RelativeLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentTop="true">
@@ -60,7 +62,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:text="小狮子"
+                android:text=""
                 android:textColor="#999999"
                 android:textSize="12sp" />
 

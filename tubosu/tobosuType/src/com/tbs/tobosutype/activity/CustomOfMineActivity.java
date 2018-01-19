@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -85,6 +84,8 @@ public class CustomOfMineActivity extends com.tbs.tobosutype.base.BaseActivity {
     RelativeLayout customOfMineShareRl;
     @BindView(R.id.custom_of_mine_pingjia_rl)
     RelativeLayout customOfMinePingjiaRl;
+    @BindView(R.id.custom_of_mine_ll)
+    LinearLayout customOfMineLl;
 
     private Context mContext;
     private String TAG = "CustomOfMineActivity";
@@ -111,6 +112,7 @@ public class CustomOfMineActivity extends com.tbs.tobosutype.base.BaseActivity {
         super.onResume();
         //时时更新用户的信息
         Log.e(TAG, "数据更新==========onResume======");
+        customOfMineLl.setBackgroundColor(Color.parseColor("#ffffff"));
         if (Util.isNetAvailable(mContext)) {
             //有网
             HttpGetUserInfo();
@@ -375,7 +377,7 @@ public class CustomOfMineActivity extends com.tbs.tobosutype.base.BaseActivity {
     private void shareAppToFriend() {
 
         Log.e(TAG, "点击了分享按钮。。");
-        UMWeb web = new UMWeb("http://t.cn/R4p6kwr");
+        UMWeb web = new UMWeb("http://a.app.qq.com/o/simple.jsp?pkgname=com.tbs.tobosutype");
         web.setTitle("土拨鼠，用心装好家，专注做装修。");
         web.setThumb(new UMImage(mContext, R.drawable.app_icon));
         web.setDescription("一款装修神器App，轻松搞定装修大小事~");

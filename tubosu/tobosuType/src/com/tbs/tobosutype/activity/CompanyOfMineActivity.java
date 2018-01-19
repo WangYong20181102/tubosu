@@ -94,6 +94,8 @@ public class CompanyOfMineActivity extends com.tbs.tobosutype.base.BaseActivity 
     RelativeLayout companyOfMinePingjiaRl;
     @BindView(R.id.company_of_mine_all_dingdan_num_rl)
     RelativeLayout companyOfMineAllDingdanNumRl;
+    @BindView(R.id.company_of_mine_ll)
+    LinearLayout companyOfMineLl;
     private String TAG = "CompanyOfMineActivity";
     private Context mContext;
     private UMShareAPI umShareAPI;
@@ -113,6 +115,7 @@ public class CompanyOfMineActivity extends com.tbs.tobosutype.base.BaseActivity 
     protected void onResume() {
         super.onResume();
         //时时修改用户的信息
+        companyOfMineLl.setBackgroundColor(Color.parseColor("#ffffff"));
         if (Util.isNetAvailable(mContext)) {
             //有网络的情况下
             HttpGetUserInfo();
@@ -488,7 +491,7 @@ public class CompanyOfMineActivity extends com.tbs.tobosutype.base.BaseActivity 
     private void shareAppToFriend() {
 
         Log.e(TAG, "点击了分享按钮。。");
-        UMWeb web = new UMWeb("http://t.cn/R4p6kwr");
+        UMWeb web = new UMWeb("http://a.app.qq.com/o/simple.jsp?pkgname=com.tbs.tobosutype");
         web.setTitle("土拨鼠，用心装好家，专注做装修。");
         web.setThumb(new UMImage(mContext, R.drawable.app_icon));
         web.setDescription("一款装修神器App，轻松搞定装修大小事~");

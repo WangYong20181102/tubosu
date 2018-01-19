@@ -89,7 +89,10 @@ public class NewSettingActivity extends AppCompatActivity {
                 break;
             case R.id.new_setting_about_our:
                 //跳转到关于我们
-                startActivity(new Intent(mContext, AboutTbsActivity.class));
+//                startActivity(new Intent(mContext, AboutTbsActivity.class));
+                Intent intent = new Intent(mContext, NewWebViewActivity.class);
+                intent.putExtra("mLoadingUrl", "http://m.tobosu.com/introduce");
+                mContext.startActivity(intent);
                 break;
             case R.id.new_setting_version:
                 //版本信息

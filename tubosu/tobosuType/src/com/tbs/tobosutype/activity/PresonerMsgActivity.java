@@ -36,6 +36,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.utils.L;
 import com.tbs.tobosutype.BuildConfig;
@@ -71,6 +72,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -83,6 +86,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -132,17 +140,20 @@ public class PresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity {
     private Bitmap photo = null;
     private ProgressDialog pd;
     private String resultStr = "";
-    private static final String MCAMERAFILE_NAME = "mcamerafile_name.jpg";
-    private static final String MCROPFILE_NAME = "mcropfile_name.jpg";
-    private static final String MGALLERYFILE_NAME = "mgalleryfile_name.jpg";
+    private static final String MCAMERAFILE_NAME = Util.getNowTime() + "mcamerafile_name.jpg";
+    private static final String MCROPFILE_NAME = Util.getNowTime() + "mcropfile_name.jpg";
+    private static final String MGALLERYFILE_NAME = Util.getNowTime() + "mgalleryfile_name.jpg";
     private _PresonerInfo presonerInfo;
     //图片上传
     private File mCameraFile;//拍照路径
     private File mCropFile;//切图路径
     private File mGalleryFile;//相册路径
-    private Uri imageUri;
+    private Uri uritempFile;
+    private _ImageUpload mImageUpload;
     private final int CAMERA_REQUEST_CODE = 1;
     private final int RESULT_REQUEST_CODE = 2;
+    private final int SELECT_PIC_KITKAT = 3;
+    private final int IMAGE_REQUEST_CODE = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,9 +167,9 @@ public class PresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity {
     private void initViewEvent() {
         umShareAPI = UMShareAPI.get(mContext);//绑定微信用 以及退出登录用
         mGson = new Gson();
-        mCameraFile = new File(Constant.IMAGE_PATH, MCAMERAFILE_NAME);
-        mCropFile = new File(Constant.IMAGE_PATH, MCROPFILE_NAME);
-        mGalleryFile = new File(Constant.IMAGE_PATH, MGALLERYFILE_NAME);
+        mCameraFile = new File(Environment.getExternalStorageDirectory(), MCAMERAFILE_NAME);
+        mCropFile = new File(Environment.getExternalStorageDirectory(), MCROPFILE_NAME);
+        mGalleryFile = new File(Environment.getExternalStorageDirectory(), MGALLERYFILE_NAME);
         HttpGetUserMsg();
     }
 
@@ -173,9 +184,7 @@ public class PresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity {
         switch (event.getCode()) {
             case EC.EventCode.PRESONER_MSG_CHANGE_CITY:
                 //更改用户的城市信息
-                Log.e(TAG, "从返回的界面修改===========" + (String) event.getData());
                 if (!TextUtils.isEmpty((String) event.getData())) {
-                    Log.e(TAG, "从返回的界面修改===========" + (String) event.getData());
                     preMsgCity.setText("" + (String) event.getData());
                     HttpChangeUserMsg("", "", "", (String) event.getData(), "");
                 }
@@ -474,6 +483,7 @@ public class PresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity {
             @Override
             public void onClick(View v) {
                 // TODO: 2018/1/17 从相册中获取
+                getPhotoFormPictrue();
                 popupWindow.dismiss();
             }
         });
@@ -483,7 +493,18 @@ public class PresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity {
             public void onClick(View v) {
                 //判断当前系统是否高于或等于6.0
                 // TODO: 2018/1/17  拍照获取
-                takeCamerGetPhoto();
+                if (Build.VERSION.SDK_INT >= 23) {
+                    //6.0以上的系统进行权限获取
+                    if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(PresonerMsgActivity.this,
+                                new String[]{Manifest.permission.CAMERA},
+                                10086);
+                    } else {
+                        takeCamerGetPhoto();
+                    }
+                } else {
+                    takeCamerGetPhoto();
+                }
                 popupWindow.dismiss();
             }
         });
@@ -514,6 +535,40 @@ public class PresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity {
         popupWindow.showAtLocation(popview, Gravity.CENTER, 0, 0);
     }
 
+
+    //权限获取处理
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 10086) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //获取权限成功
+                takeCamerGetPhoto();
+            } else {
+                //获取权限失败
+                Toast.makeText(mContext, "你取消了相机授权~", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    //相册中获取照片
+    private void getPhotoFormPictrue() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//如果大于等于7.0使用FileProvider
+            Uri uriForFile = FileProvider.getUriForFile(mContext, "com.tbs.tobosutype.fileprovider", mGalleryFile);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uriForFile);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivityForResult(intent, SELECT_PIC_KITKAT);
+        } else {
+            startActivityForResult(intent, IMAGE_REQUEST_CODE);
+        }
+
+    }
+
+    //拍照获取照片
     private void takeCamerGetPhoto() {
         Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (Util.hasSDCard()) {
@@ -537,6 +592,10 @@ public class PresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity {
         }
         switch (requestCode) {
             case CAMERA_REQUEST_CODE:
+//                Log.e(TAG, "拍照完进入裁剪功能==============");
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    return;
+                }
                 if (Util.hasSDCard()) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         Uri inputUri = FileProvider.getUriForFile(mContext, "com.tbs.tobosutype.fileprovider", mCameraFile);//通过FileProvider创建一个content类型的Uri
@@ -550,9 +609,68 @@ public class PresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity {
                 }
                 break;
             case RESULT_REQUEST_CODE:
-
+//                Log.e(TAG, "裁剪成功===============");
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    return;
+                }
+                //设置数据
+                if (data != null) {
+                    GlideUtils.glideLoader(mContext, uritempFile, R.drawable.iamge_loading, R.drawable.iamge_loading, preMsgIcon, 0);
+                    File file = FileUtil.getFileByUri(uritempFile, mContext);
+//                    Log.e(TAG, "获取转换的File大小===========" + file.length());
+//                    Log.e(TAG, "获取转换的File路径===========" + file.getPath());
+//                    Log.e(TAG, "获取转换的File名字===========" + file.getName());
+                    //上传文件
+                    HttpUpLoadImage(file);
+                }
                 break;
+            case IMAGE_REQUEST_CODE://版本<7.0  图库后返回
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    return;
+                }
+                startPhotoZoom(data.getData());
+                break;
+            case SELECT_PIC_KITKAT://版本>= 7.0
+                if (resultCode == Activity.RESULT_CANCELED) {
+                    return;
+                }
+                File imgUri = new File(GetImagePath.getPath(mContext, data.getData()));
+                Uri dataUri = FileProvider.getUriForFile(mContext, "com.tbs.tobosutype.fileprovider", imgUri);
+                startPhotoZoom(dataUri);
+                break;
+
         }
+    }
+
+    //图片上传
+    private void HttpUpLoadImage(File mImageFile) {
+        OkHttpClient client = new OkHttpClient();
+        MediaType IMG_TYPE = MediaType.parse("image/*");
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        builder.addFormDataPart("filedata", mImageFile.getName(), RequestBody.create(IMG_TYPE, mImageFile));
+        builder.addFormDataPart("token", Util.getDateToken());
+        builder.addFormDataPart("app_type", "1");
+        MultipartBody requestBody = builder.build();
+        Request request = new Request.Builder()
+                .url(Constant.UPLOAD_DYNAMIC_IMAGE)
+                .post(requestBody)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "链接失败=====" + e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                Log.e(TAG, "上传图片链接成功======" + json);
+                mImageUpload = mGson.fromJson(json, _ImageUpload.class);
+                presonerInfo.setIcon(mImageUpload.getData().getUrl());
+                HttpChangeUserMsg(mImageUpload.getData().getUrl(),
+                        "", "", "", "");
+            }
+        });
     }
 
     //裁剪
@@ -592,7 +710,9 @@ public class PresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity {
         // outputX outputY 是裁剪图片宽高
         intent.putExtra("outputX", 200);
         intent.putExtra("outputY", 200);
-        intent.putExtra("return-data", false);
+//        intent.putExtra("return-data", true);
+        uritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + Util.getNowTime() + "small.jpg");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());// 图片格式
         startActivityForResult(intent, RESULT_REQUEST_CODE);//这里就将裁剪后的图片的Uri返回了
     }

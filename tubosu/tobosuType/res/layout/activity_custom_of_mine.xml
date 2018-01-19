@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/custom_of_mine_ll"
     tools:context="com.tbs.tobosutype.activity.CustomOfMineActivity">
 
     <ScrollView
@@ -368,10 +370,6 @@
                     android:background="#f7f7f7" />
             </RelativeLayout>
             <!--留白-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="#f7f7f7" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
