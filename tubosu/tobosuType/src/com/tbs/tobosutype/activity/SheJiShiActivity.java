@@ -141,8 +141,6 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
             }
         });
 
-//        shejishiRecyclerView.addItemDecoration(new RecycleViewDivider(
-//                mContext, LinearLayoutManager.VERTICAL, 10, getResources().getColor(R.color.divide_gray_color)));
         getData();
 
 

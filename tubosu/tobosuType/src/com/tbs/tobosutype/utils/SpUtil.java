@@ -53,6 +53,7 @@ public class SpUtil {
     public static void setLatitude(Context context, String mLatitude) {
         context.getSharedPreferences("mlLatitude", 0).edit().putString("mLatitude", mLatitude).commit();
     }
+
     //获取纬度信息
     public static String getLatitude(Context context) {
         return context.getSharedPreferences("mlLatitude", 0).getString("mLatitude", "");
@@ -62,6 +63,7 @@ public class SpUtil {
     public static void setLongitude(Context context, String mLongitude) {
         context.getSharedPreferences("mlLongitude", 0).edit().putString("mLongitude", mLongitude).commit();
     }
+
     //获取经度信息
     public static String getLongitude(Context context) {
         return context.getSharedPreferences("mlLongitude", 0).getString("mLongitude", "");
@@ -71,6 +73,7 @@ public class SpUtil {
     public static void setCity(Context context, String City) {
         context.getSharedPreferences("mlCity", 0).edit().putString("mCity", City).commit();
     }
+
     //获取城市信息
     public static String getCity(Context context) {
         return context.getSharedPreferences("mlCity", 0).getString("mCity", "");
@@ -80,6 +83,7 @@ public class SpUtil {
     public static void setRadius(Context context, String Radius) {
         context.getSharedPreferences("mlRadius", 0).edit().putString("mRadius", Radius).commit();
     }
+
     //获取城市信息
     public static String getRadius(Context context) {
         return context.getSharedPreferences("mlRadius", 0).getString("mRadius", "");
@@ -89,6 +93,7 @@ public class SpUtil {
     public static void setArticleType(Context context, String ArticleType) {
         context.getSharedPreferences("mlArticleType", 0).edit().putString("mArticleType", ArticleType).commit();
     }
+
     //获取学装修分类信息
     public static String getArticleType(Context context) {
         return context.getSharedPreferences("mlArticleType", 0).getString("mArticleType", "");
@@ -98,8 +103,30 @@ public class SpUtil {
     public static void setNoticeTime(Context context, String NoticeTime) {
         context.getSharedPreferences("mNoticeTime", 0).edit().putString("mNoticeTime", NoticeTime).commit();
     }
+
     //获取推送提醒的时间
     public static String getNoticeTime(Context context) {
         return context.getSharedPreferences("mNoticeTime", 0).getString("mNoticeTime", "");
+    }
+
+    //存储用户按的Tab
+    public static void setMainTabPosition(Context context, int mMainTabPosition) {
+        context.getSharedPreferences("mMainTabPosition", 0).edit().putInt("mMainTabPosition", mMainTabPosition).commit();
+    }
+
+    //获取用户按的Tab
+    public static int getMainTabPosition(Context context) {
+        return context.getSharedPreferences("mMainTabPosition", 0).getInt("mMainTabPosition", 0);
+    }
+
+
+    //存储网络端获取的手机正则校验
+    public static void setCellphonePartern(Context context, String mCellphonePartern) {
+        context.getSharedPreferences("mCellphonePartern", 0).edit().putString("mCellphonePartern", mCellphonePartern).commit();
+    }
+
+    //获取网络端获取的手机正则校验
+    public static String getCellphonePartern(Context context) {
+        return context.getSharedPreferences("mCellphonePartern", 0).getString("mCellphonePartern", "");
     }
 }

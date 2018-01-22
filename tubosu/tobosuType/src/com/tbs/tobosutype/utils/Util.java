@@ -15,6 +15,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -66,6 +67,19 @@ public class Util {
         }
     }
 
+    //正则手机号码
+    public static boolean isVerificationPhoneNum(String phoneNum, Context context) {
+        String temPhone = "";
+        if (!TextUtils.isEmpty(SpUtil.getCellphonePartern(context))) {
+            temPhone = Base64Util.getFromBase64(SpUtil.getCellphonePartern(context));
+        } else {
+            temPhone = "^((12[4,6])|(13[0-9])|(15[0-3])|(15[5-9])|(16[0-9])|(17[0-9])|(14[5,7])|(18[0-9])|(199))\\d{8}$";
+        }
+        Pattern p = Pattern.compile(temPhone);
+        Matcher m = p.matcher(phoneNum);
+        boolean isMatch = m.matches();
+        return isMatch;
+    }
 
     /**
      * 获取当天的加密token

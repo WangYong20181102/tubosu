@@ -9,17 +9,18 @@
 
         <ImageView
             android:id="@+id/item_suggestion_img"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_centerInParent="true"
             android:scaleType="centerCrop"
             android:src="@drawable/b_home_style" />
 
         <ImageView
-            android:layout_marginRight="3dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="2dp"
             android:id="@+id/item_suggestion_close"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_alignParentRight="true"
             android:src="@drawable/shanchutupian" />
     </RelativeLayout>

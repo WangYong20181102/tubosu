@@ -4,18 +4,35 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.bean._AppConfig;
+import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.Base64Util;
 import com.tbs.tobosutype.utils.DataCleanManager;
+import com.tbs.tobosutype.utils.SpUtil;
+import com.tbs.tobosutype.utils.Util;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class NewSettingActivity extends AppCompatActivity {
     @BindView(R.id.new_setting_back)
@@ -34,6 +51,8 @@ public class NewSettingActivity extends AppCompatActivity {
     TextView newSettingCache;
     private String TAG = "NewSettingActivity";
     private Context mContext;
+    private Gson mGson;
+    private _AppConfig mAppConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +64,49 @@ public class NewSettingActivity extends AppCompatActivity {
     }
 
     private void initViewEvent() {
+        mGson = new Gson();
         //显示当前的缓存大小
         showCache();
         //显示当前的版本
         showVersion();
+        HttpGetPhoneCheck();
     }
 
     private void showVersion() {
         newSettingVersion.setText("v " + AppInfoUtil.getAppVersionName(mContext));
+    }
+
+    //获取正则规则
+    private void HttpGetPhoneCheck() {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Util.getDateToken());
+        param.put("type", "1");
+        OKHttpUtil.post(Constant.GET_CONFIG, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.optString("status");
+                    if (status.equals("200")) {
+                        String data = jsonObject.optString("data");
+                        Log.e(TAG, "获取校验码=================" + data);
+                        //获取数据成功
+                        mAppConfig = mGson.fromJson(data, _AppConfig.class);
+                        Log.e(TAG, "获取解密的校验码=================" + Base64Util.getFromBase64(mAppConfig.getCellphone_partern()));
+
+                        SpUtil.setCellphonePartern(mContext, mAppConfig.getCellphone_partern());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void showCache() {

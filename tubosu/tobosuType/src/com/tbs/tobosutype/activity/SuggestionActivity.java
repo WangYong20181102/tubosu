@@ -35,6 +35,7 @@ import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.ImgCompressUtils;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.tbs.tobosutype.utils.Utils;
 import com.tbs.tobosutype.utils.WriteUtil;
@@ -191,7 +192,7 @@ public class SuggestionActivity extends com.tbs.tobosutype.base.BaseActivity {
             public void onClick(View v) {
                 // TODO: 2018/1/12  开启相册的选择器
                 MultiImageSelector.create(mContext)
-                        .showCamera(true)
+                        .showCamera(false)
                         .count(3)
                         .multi()
                         .origin(mImageUriArrayList)
@@ -219,11 +220,14 @@ public class SuggestionActivity extends com.tbs.tobosutype.base.BaseActivity {
                 //提交建议反馈
                 if (!TextUtils.isEmpty(suggestionInput.getText().toString())) {
                     if (!TextUtils.isEmpty(suggestionInputPhoneNum.getText().toString())
-                            && suggestionInputPhoneNum.length() != 11) {
+                            && suggestionInputPhoneNum.length() == 11
+                            && Util.isVerificationPhoneNum(suggestionInputPhoneNum.getText().toString(), mContext)) {
+                        sendImageAndContent();
+                    } else {
                         Toast.makeText(mContext, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    sendImageAndContent();
+
                 } else {
                     Toast.makeText(mContext, "请先输入内容", Toast.LENGTH_SHORT).show();
                 }
@@ -355,6 +359,7 @@ public class SuggestionActivity extends com.tbs.tobosutype.base.BaseActivity {
                                     try {
                                         JSONObject jsonObject = new JSONObject(json);
                                         String status = jsonObject.getString("status");
+                                        final String msg = jsonObject.getString("msg");
                                         if (status.equals("200")) {
                                             runOnUiThread(new Runnable() {
                                                 @Override
@@ -367,7 +372,7 @@ public class SuggestionActivity extends com.tbs.tobosutype.base.BaseActivity {
                                             runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    Toast.makeText(mContext, "反馈提交失败，请重新提交~", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
                                                 }
                                             });
                                         }

@@ -79,7 +79,7 @@ public class CheckPhoneNumActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(checkPhoneNum.getText().toString())) {
                     if (checkPhoneNum.getText().toString().length() == 11) {
                         //进行发送验证码
-                        HttpGetYanZhengCode(checkPhoneNum.getText().toString());
+                        HttpCheckThePhoneIsRegiest(checkPhoneNum.getText().toString());
                     } else {
                         Toast.makeText(mContext, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
                     }
@@ -101,6 +101,47 @@ public class CheckPhoneNumActivity extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    //校验手机号码是否注册过
+    private void HttpCheckThePhoneIsRegiest(String phoneNum) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Util.getDateToken());
+        param.put("cellphone", phoneNum);
+        OKHttpUtil.post(Constant.IS_EXIST_USER, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(mContext, "链接服务器失败~", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.optString("status");
+                    final String msg = jsonObject.optString("msg");
+                    if (status.equals("200")) {
+                        HttpGetYanZhengCode(checkPhoneNum.getText().toString());
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     //校验手机号码和验证码是否正确

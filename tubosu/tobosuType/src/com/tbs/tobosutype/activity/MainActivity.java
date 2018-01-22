@@ -229,6 +229,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         tv_my_textview = (TextView) findViewById(R.id.tv_my_textview);
 
         setFragmentPosition(0);
+        SpUtil.setMainTabPosition(mContext, 0);
     }
 
 
@@ -431,16 +432,9 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     }
 
 
-//    private void setCostomMsg(String msg){
-//        if (null != msgText) {
-//            msgText.setText(msg);
-//            msgText.setVisibility(android.view.View.VISIBLE);
-//        }
-//    }
-
-
     @Override
     protected void onResume() {
+        setFragmentPosition(SpUtil.getMainTabPosition(mContext));
         isForeground = true;
         super.onResume();
         initData();
@@ -572,18 +566,21 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                 MobclickAgent.onEvent(mContext, "click_app_index");
                 tabHost.setCurrentTabByTag("ONE");
                 setFragmentPosition(0);
+                SpUtil.setMainTabPosition(mContext, 0);
                 tabPosition = 0;
                 break;
             case R.id.main_tab_image:
                 MobclickAgent.onEvent(mContext, "click_app_pic_market");
                 tabHost.setCurrentTabByTag("TWO");
                 setFragmentPosition(1);
+                SpUtil.setMainTabPosition(mContext, 1);
                 tabPosition = 1;
                 break;
             case R.id.main_tab_decorate:
                 MobclickAgent.onEvent(mContext, "click_app_find_decoration");
                 tabHost.setCurrentTabByTag("THREE");
                 setFragmentPosition(2);
+                SpUtil.setMainTabPosition(mContext, 2);
                 tabPosition = 2;
                 break;
             case R.id.main_tab_my:
@@ -601,6 +598,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     tabPosition = 3;
                 }
                 setFragmentPosition(3);
+                SpUtil.setMainTabPosition(mContext, 3);
                 break;
             default:
                 break;

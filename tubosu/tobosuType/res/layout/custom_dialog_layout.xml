@@ -7,6 +7,8 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
         android:layout_width="match_parent"
         android:layout_height="140dp"
         android:layout_gravity="center"
@@ -43,8 +45,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#FFDEAC" />
+            android:layout_height="0.8dp"
+            android:background="#d9d9d9" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -59,13 +61,14 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:text="确定"
-                android:textColor="@color/color_icon"
+                android:textColor="#333333"
                 android:textSize="16sp" />
 
             <View
+                android:layout_gravity="center"
                 android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="#FFDEAC" />
+                android:layout_height="18dp"
+                android:background="#d9d9d9" />
 
             <Button
                 android:id="@+id/negativeButton"

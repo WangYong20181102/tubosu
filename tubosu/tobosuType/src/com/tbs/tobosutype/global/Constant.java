@@ -33,26 +33,6 @@ public class Constant {
      */
 //    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/"
 
-    public static int LOADING_PIC = 0;
-    public static final String DESCRIPTOR = "com.umeng.login";
-    public static final String DESCRIPTOR_SHARE = "com.umeng.share";
-
-    public static final String UMENG_KEY = "5657b48a67e58ed2b30040bc";
-    private static final String TIPS = "请移步官方网站";
-
-    private static final String END_TIPS = ", 查看相关说明.";
-
-    public static final String TENCENT_OPEN_URL = TIPS + "http://wiki.connect.qq.com/android_sdk使用说明" + END_TIPS;
-
-    public static final String PERMISSION_URL = TIPS + "http://wiki.connect.qq.com/openapi权限申请" + END_TIPS;
-
-    public static final String SOCIAL_LINK = "http://www.umeng.com/social";
-    public static final String SOCIAL_TITLE = "友盟社会化组件帮助应用快速整合分享功能";
-    public static final String SOCIAL_IMAGE = "http://www.umeng.com/images/pic/banner_module_social.png";
-
-    public static final String SOCIAL_CONTENT = "友盟社会化组件（SDK）让移动应用快速整合社交分享功能，我们简化了社交平台的接入，为开发者提供坚实的基础服务：（一）支持各大主流社交平台，"
-            + "（二）支持图片、文字、gif动图、音频、视频；@好友，关注官方微博等功能"
-            + "（三）提供详尽的后台用户社交行为分析。http://www.umeng.com/social";
 
 	/*----------以下是新增加的------------*/
 
@@ -60,7 +40,6 @@ public class Constant {
     public static final int POP_RESULTCODE = 0x0000027;
     public static final int HOMEFRAGMENT_REQUESTCODE = 0x0000028;
     public static final int FINISH_MAINACTIVITY = 0x0000030;
-    public static final int FINISH_SAVE_EDIT_OUTCOME = 0x0000031;
 
     public static final String CALCULATER_SHARE_URL = "http://m.tobosu.com/app/share_h5?";
 
@@ -68,7 +47,6 @@ public class Constant {
 
     public static final String LOGOUT_ACTION = "logout_action";
 
-    public static final String LOGIN_ACTION = "login_action";
 
     public static final String ACTION_HOME_SELECT_CITY = "action_home_select_city";
 
@@ -129,7 +107,6 @@ public class Constant {
      */
     public static final String EDIT_DECORATE_OUTCOME_URL = TOBOSU_URL + "mapp/RenovateExpense/add_renovate_expense";
 
-    public static final String OUTCOME_DETAIL_URL = TOBOSU_URL + "mapp/RenovateExpense/renovate_expense_detail";
     public static final String SHEJISHI_URL = TOBOSU_URL + "mapp/designer/designer_info";
     /**
      * 修改记录
@@ -144,7 +121,6 @@ public class Constant {
     /**
      * 装修公司开支记录  分页使用的
      */
-    public static final String OUTCOME_RECORD_URL = TOBOSU_URL + "mapp/RenovateExpense/get_decorate_record";
 
     public static final String CITY_JSON = TOBOSU_URL + "mapp/common/province_city_district_info";
 
@@ -163,44 +139,39 @@ public class Constant {
      * -
      * 第三方绑定接口
      */
-    public static String BIND_THIRD_PARTY_URL = TOBOSU_URL + "tapp/passport/bindThirdParty";
+    public static final String BIND_THIRD_PARTY_URL = TOBOSU_URL + "tapp/passport/bindThirdParty";
 
 
-    public static String MYFAV_URL = TOBOSU_URL + "mapp/collect/my_collect";
+    public static final String MYFAV_URL = TOBOSU_URL + "mapp/collect/my_collect";
 
-    public static String FIND_DECORATE_COMPANY_URL = TOBOSU_URL + "/tapp/company/company_list";
-    public static String COMPANY_TOP_LIST = TOBOSU_URL + "mapp/company/company_top_list";
-    public static String GETGONGSIURL = TOBOSU_URL + "mapp/company/company_list";
-    public static String FADAN_CLICK_URL = TOBOSU_URL + "mapp/OrderPort/click_count";
+    public static final String FIND_DECORATE_COMPANY_URL = TOBOSU_URL + "/tapp/company/company_list";
+    public static final String COMPANY_TOP_LIST = TOBOSU_URL + "mapp/company/company_top_list";
+    public static final String GETGONGSIURL = TOBOSU_URL + "mapp/company/company_list";
 
-    public static String BANNER_CLICK_URL = TOBOSU_URL + "mapp/banner/click_count";
+    public static final String BANNER_CLICK_URL = TOBOSU_URL + "mapp/banner/click_count";
 
-    public static String FAV_TU_URL = TOBOSU_URL + "mapp/collect/collect_single_list";
+    public static final String FAV_TU_URL = TOBOSU_URL + "mapp/collect/collect_single_list";
 
-    public static String FAV_TAO_TU_URL = TOBOSU_URL + "mapp/collect/collect_suite_list";
+    public static final String FAV_TAO_TU_URL = TOBOSU_URL + "mapp/collect/collect_suite_list";
 
-    public static String GET_TOOL_URL = TOBOSU_URL + "mapp/company/get_home_tools";
+    public static final String GET_TOOL_URL = TOBOSU_URL + "mapp/company/get_home_tools";
     /**
      * 修改用户信息接口
      */
-    public static String USER_CHANGE_INFO_URL = TOBOSU_URL + "tapp/user/chage_user_info";
+    public static final String USER_CHANGE_INFO_URL = TOBOSU_URL + "tapp/user/chage_user_info";
 
     /**
      * 业主订单列表接口
      */
-    public static String MY_OWNER_ODER_URL = TOBOSU_URL + "tapp/order/user_order_list";
+    public static final String MY_OWNER_ODER_URL = TOBOSU_URL + "tapp/order/user_order_list";
 
-    //    public static String NEWHOME_URL = TOBOSU_URL + "mapp/index/index";
-    public static String NEWHOME_URL = TOBOSU_URL + "mapp/index/new_index";
+    public static final String NEWHOME_URL = TOBOSU_URL + "mapp/index/new_index";
 
     /**
      * 发单接口地址
      */
     public static final String PUB_ORDERS = TOBOSU_URL + "tapi/order/pub_order";
-    //                              http://www.tobosu.com/tapi/order/pub_order
 
-    public static final String LNG = "114";
-    public static final String LAT = "22";
 
     public static final String MORE_SHEJI_URL = TOBOSU_URL + "mapp/designer/design_pic_list";
     public static final String MORE_ANLI_URL = TOBOSU_URL + "mapp/designer/anli_list";
@@ -258,83 +229,6 @@ public class Constant {
         Toast.makeText(mContext, "网络断开，请检查网络~", Toast.LENGTH_SHORT).show();
     }
 
-
-    /**
-     * 判断是否有网络连接
-     *
-     * @param context
-     * @return
-     */
-    public boolean isNetworkConnected(Context context) {
-        if (context != null) {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
-            if (mNetworkInfo != null) {
-                return mNetworkInfo.isAvailable();
-            }
-        }
-        return false;
-    }
-
-    /**
-     * 判断WIFI网络是否可用
-     *
-     * @param context
-     * @return
-     */
-    public boolean isWifiConnected(Context context) {
-        if (context != null) {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo mWiFiNetworkInfo = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-            if (mWiFiNetworkInfo != null) {
-                return mWiFiNetworkInfo.isAvailable();
-            }
-        }
-        return false;
-    }
-
-
-    /**
-     * 判断MOBILE网络是否可用
-     *
-     * @param context
-     * @return
-     */
-    public boolean isMobileConnected(Context context) {
-        if (context != null) {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo mMobileNetworkInfo = mConnectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-            if (mMobileNetworkInfo != null) {
-                return mMobileNetworkInfo.isAvailable();
-            }
-        }
-        return false;
-    }
-
-
-    /**
-     * @param context
-     * @return -1：没有网络  1：WIFI网络2：wap网络3：net网络
-     */
-    public static int GetNetype(Context context) {
-        int netType = -1;
-        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo == null) {
-            return netType;
-        }
-        int nType = networkInfo.getType();
-        if (nType == ConnectivityManager.TYPE_MOBILE) {
-            if (networkInfo.getExtraInfo().toLowerCase().equals("cmnet")) {
-                netType = 3;
-            } else {
-                netType = 2;
-            }
-        } else if (nType == ConnectivityManager.TYPE_WIFI) {
-            netType = 1;
-        }
-        return netType;
-    }
 
     //新的装修案例 获取案例列表
     public static final String CASE_LIST = TOBOSU_URL + "mapp/case/case_list";
@@ -438,6 +332,10 @@ public class Constant {
     public static final String BIND_WE_CHAT = TOBOSU_URL + "mapp/user/bind_wechat";
     //绑定微信 3.7新增
     public static final String CHECK_ORDER_PWD = TOBOSU_URL + "mapp/company/check_order_pwd";
+    //绑定微信 3.7新增
+    public static final String GET_CONFIG = TOBOSU_URL + "mapp/index/get_config";
+    //检查用户是否存在检查用户是否存在 3.7新增
+    public static final String IS_EXIST_USER = TOBOSU_URL + "mapp/user/is_exist_user";
 
 
     //装修公司主页 底部发单按钮 3.6版本新增
