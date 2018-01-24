@@ -143,7 +143,7 @@ public class NewLoginFragmentAccount extends BaseFragment {
     }
 
     //账号登录
-    private void HttpAccountLogin(String user_name, String Md5Password) {
+    private void HttpAccountLogin(String user_name, final String Md5Password) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         param.put("user_name", user_name);
@@ -171,6 +171,8 @@ public class NewLoginFragmentAccount extends BaseFragment {
                     String status = jsonObject.optString("status");
                     if (status.equals("200")) {
                         //登录成功
+                        //存储Md5密码
+                        AppInfoUtil.setUserMd5PassWord(mContext, Md5Password);
                         String data = jsonObject.optString("data");
                         saveUserInfo(data);
                     } else {

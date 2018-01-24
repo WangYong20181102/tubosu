@@ -480,7 +480,7 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
         Log.e(TAG, "获取的选择的城市====================" + cityName);
         Log.e(TAG, "存储的城市位置=====================" + AppInfoUtil.getCityName(mContext));
         Log.e(TAG, "获取案例存储的城市位置=====================" + AppInfoUtil.getCityInAnli(mContext));
-        if (!TextUtils.isEmpty(mWhereFrom)&&mWhereFrom.equals("PresonerMsgActivity")) {
+        if (!TextUtils.isEmpty(mWhereFrom) && mWhereFrom.equals("PresonerMsgActivity")) {
             //来着PresonerMsgActivity页面
             EventBusUtil.sendEvent(new Event(EC.EventCode.PRESONER_MSG_CHANGE_CITY, cityName));
             Log.e(TAG, "进入修改城市的页面=======================");
@@ -621,7 +621,7 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.city_title_back:
-                if (mWhereFrom.equals("PresonerMsgActivity")) {
+                if (!TextUtils.isEmpty(mWhereFrom) && mWhereFrom.equals("PresonerMsgActivity")) {
                     finish();
                     return;
                 }

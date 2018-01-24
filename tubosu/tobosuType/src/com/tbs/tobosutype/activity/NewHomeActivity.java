@@ -31,6 +31,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.allenliu.versionchecklib.v2.AllenVersionChecker;
+import com.allenliu.versionchecklib.v2.builder.DownloadBuilder;
+import com.allenliu.versionchecklib.v2.builder.NotificationBuilder;
+import com.allenliu.versionchecklib.v2.builder.UIData;
+import com.allenliu.versionchecklib.v2.callback.CustomVersionDialogListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -102,6 +107,8 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     private ArrayList<_ImageD> shejiArrayList = new ArrayList<_ImageD>();
     private Context mContext;
     private String TAG = "NewHomeActivity";
+    private TextView new_home_test;
+    private DownloadBuilder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +129,46 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         getHuoDongPicture();
         //推送提示 3.7 新增
         notifyOpenNotice();
+        //应用更新
+        HttpCheckAppUpdata();
+    }
+
+    //检测是否需要更新
+    private void HttpCheckAppUpdata() {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Util.getDateToken());
+        OKHttpUtil.post(Constant.CHECK_APP_IS_UPDATA, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+            }
+        });
+    }
+
+    //显示更新弹窗
+    private void showUpdateDialog() {
+        builder = AllenVersionChecker.getInstance().downloadOnly(UIData.create()
+                .setTitle("版本更新")
+                .setContent("有新版本更新了要不要来试试")
+                .setDownloadUrl("https://back.tobosu.com/app_version/2018-01-18/5a603f4eba5c2.apk"));
+        builder.setCustomVersionDialogListener(new CustomVersionDialogListener() {
+            @Override
+            public Dialog getCustomVersionDialog(Context context, UIData versionBundle) {
+                BaseDialog baseDialog = new BaseDialog(context, R.style.BaseDialog, R.layout.dialog_updata);
+                TextView textView = baseDialog.findViewById(R.id.base_conten);
+                textView.setText(versionBundle.getContent());
+                return baseDialog;
+            }
+        });
+        builder.setShowDownloadingDialog(false);
+        builder.setNotificationBuilder(NotificationBuilder.create().setRingtone(true)
+                .setIcon(R.drawable.app_icon).setContentTitle("土拨鼠装修").setContentText("正在下载最新土拨鼠安装包..."));
+        builder.excuteMission(mContext);
     }
 
     //提示开启推送弹窗
@@ -206,6 +253,13 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
 
 
     private void initView() {
+        new_home_test = findViewById(R.id.new_home_test);
+        new_home_test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showUpdateDialog();
+            }
+        });
         mGson = new Gson();
         home_view = (ImageView) findViewById(R.id.home_view);
         ivYingying = (ImageView) findViewById(R.id.ivYingying);

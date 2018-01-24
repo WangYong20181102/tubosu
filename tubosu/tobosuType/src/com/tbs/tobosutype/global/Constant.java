@@ -26,12 +26,12 @@ public class Constant {
     /**
      * M站 发单跳转 线上环境
      */
-    public static final String M_TOBOSU_URL = "http://m.tobosu.com/";
+//    public static final String M_TOBOSU_URL = "http://m.tobosu.com/";
 
     /**
      * M站 发单跳转 dev环境
      */
-//    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/"
+    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
 
 
 	/*----------以下是新增加的------------*/
@@ -334,8 +334,12 @@ public class Constant {
     public static final String CHECK_ORDER_PWD = TOBOSU_URL + "mapp/company/check_order_pwd";
     //绑定微信 3.7新增
     public static final String GET_CONFIG = TOBOSU_URL + "mapp/index/get_config";
-    //检查用户是否存在检查用户是否存在 3.7新增
+    //检查用户是否存在 3.7新增
     public static final String IS_EXIST_USER = TOBOSU_URL + "mapp/user/is_exist_user";
+    //检查当前App是否需要更新
+    public static final String CHECK_APP_IS_UPDATA = TOBOSU_URL + "mapp/user/is_exist_user";
+    //检查当前登录的用户是否修改了密码
+    public static final String CHECK_USER_PASSWORD_IS_CHANGE = TOBOSU_URL + "mapp/user/check_password";
 
 
     //装修公司主页 底部发单按钮 3.6版本新增

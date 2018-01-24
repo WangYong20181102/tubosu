@@ -219,13 +219,18 @@ public class SuggestionActivity extends com.tbs.tobosutype.base.BaseActivity {
             case R.id.suggestion_comite:
                 //提交建议反馈
                 if (!TextUtils.isEmpty(suggestionInput.getText().toString())) {
-                    if (!TextUtils.isEmpty(suggestionInputPhoneNum.getText().toString())
-                            && suggestionInputPhoneNum.length() == 11
-                            && Util.isVerificationPhoneNum(suggestionInputPhoneNum.getText().toString(), mContext)) {
-                        sendImageAndContent();
+                    if (!TextUtils.isEmpty(suggestionInputPhoneNum.getText().toString())) {
+                        //手机号码不为空的情况下校验手机号码
+                        if (suggestionInputPhoneNum.length() == 11
+                                && Util.isVerificationPhoneNum(suggestionInputPhoneNum.getText().toString(), mContext)) {
+                            sendImageAndContent();
+                        } else {
+                            Toast.makeText(mContext, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
+                        }
+
                     } else {
-                        Toast.makeText(mContext, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
-                        return;
+                        //手机号码为空 将数据上传
+                        sendImageAndContent();
                     }
 
                 } else {

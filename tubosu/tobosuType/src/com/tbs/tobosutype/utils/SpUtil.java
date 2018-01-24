@@ -129,4 +129,15 @@ public class SpUtil {
     public static String getCellphonePartern(Context context) {
         return context.getSharedPreferences("mCellphonePartern", 0).getString("mCellphonePartern", "");
     }
+
+
+    //存储用户在App升级是做的删除信息操作
+    public static void setCleanUserInfoFlag(Context context, String flag) {
+        context.getSharedPreferences("mCleanUserInfoFlag", 0).edit().putString("mCleanUserInfoFlag", flag).commit();
+    }
+
+    //获取用户在App升级是做的删除信息操作
+    public static String getCleanUserInfoFlag(Context context) {
+        return context.getSharedPreferences("mCleanUserInfoFlag", 0).getString("mCleanUserInfoFlag", "");
+    }
 }

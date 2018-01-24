@@ -251,6 +251,15 @@ public class AppInfoUtil {
         context.getSharedPreferences("userInfo", 0).edit().putString("order_count", order_count).commit();
     }
 
+    //用户的md5密码
+    public static String getUserMd5PassWord(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("user_md5_password", "");
+    }
+
+    public static void setUserMd5PassWord(Context context, String user_md5_password) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("user_md5_password", user_md5_password).commit();
+    }
+
     // TODO: 2018/1/10  用户的基本信息↑↑↑↑
     public static String getImageActivityCatch(Context context) {
         return context.getSharedPreferences("IsImageCache", 0).getString("result", "");

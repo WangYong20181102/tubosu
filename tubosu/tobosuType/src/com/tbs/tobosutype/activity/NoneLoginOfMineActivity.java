@@ -59,6 +59,8 @@ public class NoneLoginOfMineActivity extends AppCompatActivity {
     RelativeLayout noneLoginPingjiaRl;
     @BindView(R.id.none_login_setting_rl)
     RelativeLayout noneLoginSettingRl;
+    @BindView(R.id.none_login_company_of_mine_all_ll)
+    LinearLayout noneLoginCompanyOfMineAllLl;
     private String TAG = "NoneLoginOfMineActivity";
     private Context mContext;
     private UMShareAPI umShareAPI;
@@ -71,6 +73,12 @@ public class NoneLoginOfMineActivity extends AppCompatActivity {
         Log.e(TAG, "初始化================" + TAG);
         mContext = this;
         initViewEvent();
+    }
+
+    @Override
+    protected void onResume() {
+        noneLoginCompanyOfMineAllLl.setBackgroundColor(Color.parseColor("#ffffff"));
+        super.onResume();
     }
 
     private void initViewEvent() {
@@ -186,12 +194,12 @@ public class NoneLoginOfMineActivity extends AppCompatActivity {
     private void shareAppToFriend() {
 
         Log.e(TAG, "点击了分享按钮。。");
-        UMWeb web = new UMWeb("http://t.cn/R4p6kwr");
+        UMWeb web = new UMWeb("http://a.app.qq.com/o/simple.jsp?pkgname=com.tbs.tobosutype");
         web.setTitle("土拨鼠，用心装好家，专注做装修。");
         web.setThumb(new UMImage(mContext, R.drawable.app_icon));
         web.setDescription("一款装修神器App，轻松搞定装修大小事~");
         new ShareAction(this).withMedia(web)
-                .setDisplayList(SHARE_MEDIA.SINA, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
+                .setDisplayList(SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.QQ, SHARE_MEDIA.WEIXIN)
                 .setCallback(umShareListener).open();
     }
 

@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
+    android:id="@+id/none_login_company_of_mine_all_ll"
     tools:context="com.tbs.tobosutype.activity.NoneLoginOfMineActivity">
 
     <ScrollView
@@ -352,11 +354,6 @@
                     android:layout_marginLeft="30dp"
                     android:background="#f7f7f7" />
             </RelativeLayout>
-            <!--留白-->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="#f7f7f7" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -98,7 +98,7 @@
             android:layout_toRightOf="@+id/newhomeCity"
             android:background="@drawable/sanjiaoxing" />
     </RelativeLayout>
-    <!--推送-->
+    <!--推送3.7版本新增-->
     <RelativeLayout
         android:id="@+id/tuisong_rl"
         android:layout_width="match_parent"
@@ -146,4 +146,12 @@
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
+    <!--测试按钮-->
+    <TextView
+        android:id="@+id/new_home_test"
+        android:gravity="center"
+        android:text="测试按钮"
+        android:layout_centerInParent="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
 </RelativeLayout>

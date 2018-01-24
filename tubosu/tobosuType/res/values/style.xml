@@ -14,7 +14,14 @@
         <item name="android:textColor">#7F8E9C</item>
         <item name="android:background">@drawable/selector_brick_type</item>
     </style>
+    <style name="BaseDialog" parent="android:Theme.Light">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
 
+    </style>
 
     <!-- 计算器 数字 1-9 item -->
     <style name="calculaterButtonStyle">

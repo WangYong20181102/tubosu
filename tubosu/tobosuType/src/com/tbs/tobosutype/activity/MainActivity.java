@@ -150,7 +150,58 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         initReceiver();
         initEvent();
         needPermissions();
+        HttpUserIsChangePassWord();
+        clearUserInfoWithAppUpdata();
     }
+
+    //版本更新清除之前的用户信息
+    private void clearUserInfoWithAppUpdata() {
+        if (AppInfoUtil.getAppVersionName(mContext).equals("3.7")) {
+            if (TextUtils.isEmpty(SpUtil.getCleanUserInfoFlag(mContext))) {
+                getSharedPreferences("userInfo", 0).edit().clear().commit();
+                SpUtil.setCleanUserInfoFlag(mContext, "isClear");
+            }
+        }
+    }
+
+    //判断用户是否修改了密码
+    private void HttpUserIsChangePassWord() {
+        if (!TextUtils.isEmpty(AppInfoUtil.getUserMd5PassWord(mContext)) && !TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {
+            HashMap<String, Object> param = new HashMap<>();
+            param.put("token", Util.getDateToken());
+            param.put("uid", AppInfoUtil.getUserid(mContext));
+            param.put("password", AppInfoUtil.getUserMd5PassWord(mContext));
+            OKHttpUtil.post(Constant.CHECK_USER_PASSWORD_IS_CHANGE, param, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String json = new String(response.body().string());
+                    Log.e(TAG, "检测用户是否修改密码返回的结果================" + json);
+                    try {
+                        JSONObject jsonObject = new JSONObject(json);
+                        String ststus = jsonObject.optString("status");
+
+                        if (ststus.equals("200")) {
+                            //数据获取成功
+                            JSONObject data = jsonObject.getJSONObject("data");
+                            String result = data.optString("result");
+                            if (result.equals("1")) {
+                                //用户已经修改了账号的密码 清空用户的信息
+                                getSharedPreferences("userInfo", 0).edit().clear().commit();
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+    }
+
 
     /***
      * 初始化页面和底部按钮
@@ -559,10 +610,14 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         }
     }
 
+    //判读用户是否有修改密码
+
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.main_tab_first:
+                //点击首页按钮
                 MobclickAgent.onEvent(mContext, "click_app_index");
                 tabHost.setCurrentTabByTag("ONE");
                 setFragmentPosition(0);
@@ -570,6 +625,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                 tabPosition = 0;
                 break;
             case R.id.main_tab_image:
+                //点击了效果图
                 MobclickAgent.onEvent(mContext, "click_app_pic_market");
                 tabHost.setCurrentTabByTag("TWO");
                 setFragmentPosition(1);
@@ -577,6 +633,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                 tabPosition = 1;
                 break;
             case R.id.main_tab_decorate:
+                //点击了装修公司
                 MobclickAgent.onEvent(mContext, "click_app_find_decoration");
                 tabHost.setCurrentTabByTag("THREE");
                 setFragmentPosition(2);
@@ -584,6 +641,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                 tabPosition = 2;
                 break;
             case R.id.main_tab_my:
+                //点击了我的模块
                 MobclickAgent.onEvent(mContext, "click_app_preson_center");
                 if ("1".equals(mark)) {
                     tabHost.setCurrentTabByTag("FOUR3");
