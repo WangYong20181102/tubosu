@@ -521,8 +521,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     protected void onPause() {
         isForeground = false;
         super.onPause();
-//        XGPushManager.onActivityStoped(this);
-
         MobclickAgent.onPause(this);
     }
 

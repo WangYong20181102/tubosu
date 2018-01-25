@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.CoYouHuiActivity;
 import com.tbs.tobosutype.bean.CompanyBannerItem;
 import com.tbs.tobosutype.bean.GongsiItem;
 import com.tbs.tobosutype.customview.MyRatingBar;
+
 import java.util.List;
 
 
@@ -39,12 +41,12 @@ public class GongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType == BODY_ITEM_TYPE){
+        if (viewType == BODY_ITEM_TYPE) {
             View bodyView = inflater.inflate(R.layout.gongsi_layout, parent, false);
             GongsiViewHodler hodler = new GongsiViewHodler(bodyView);
             bodyView.setOnClickListener(this);
             return hodler;
-        }else {
+        } else {
             View footView = inflater.inflate(R.layout.layout_new_home_foot, parent, false);
             GongsiFoot foot = new GongsiFoot(footView);
             return foot;
@@ -53,9 +55,9 @@ public class GongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemViewType(int position) {
-        if(position == getItemCount() - 1){
+        if (position == getItemCount() - 1) {
             return FOOTER_ITEM_TYPE;
-        }else {
+        } else {
             return BODY_ITEM_TYPE;
         }
     }
@@ -63,7 +65,7 @@ public class GongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-        if(holder instanceof GongsiViewHodler){
+        if (holder instanceof GongsiViewHodler) {
             GongsiViewHodler gongsiViewHodler = (GongsiViewHodler) holder;
             gongsiViewHodler.name.setText(dataList.get(position).getName());
 
@@ -79,20 +81,20 @@ public class GongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     .placeholder(R.drawable.new_home_loading)
                     .error(R.drawable.new_home_loading).into(gongsiViewHodler.iv);
 
-            if(dataList.get(position).getRecommend()!=null && "1".equals(dataList.get(position).getRecommend())){
+            if (dataList.get(position).getRecommend() != null && "1".equals(dataList.get(position).getRecommend())) {
                 gongsiViewHodler.tuijianGongsi.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 gongsiViewHodler.tuijianGongsi.setVisibility(View.GONE);
             }
 
-            if(dataList.get(position).getCertification()!=null && "1".equals(dataList.get(position).getCertification())){
+            if (dataList.get(position).getCertification() != null && "1".equals(dataList.get(position).getCertification())) {
                 gongsiViewHodler.vGongsi.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 gongsiViewHodler.vGongsi.setVisibility(View.GONE);
             }
 
             String rate = dataList.get(position).getGrade();
-            if(rate!=null && !"".equals(rate)){
+            if (rate != null && !"".equals(rate)) {
                 gongsiViewHodler.ratingBar.setClickable(false);
                 gongsiViewHodler.ratingBar.setStar(Float.parseFloat(rate));
             }
@@ -101,18 +103,18 @@ public class GongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             String caseText = "";
             String shejiNum = dataList.get(position).getSuite_count();
             String caseNum = dataList.get(position).getCase_count();
-            if(!"".equals(shejiNum)){
-                shejiText = "设计: " + shejiNum;
+            if (!"".equals(shejiNum)) {
+                shejiText = "方案: " + shejiNum;
             }
-            if(!"".equals(caseNum)){
+            if (!"".equals(caseNum)) {
                 caseText = "案例: " + caseNum;
             }
             gongsiViewHodler.tvCaseAndCase.setText(shejiText + "    " + caseText);
             String zxNum = dataList.get(position).getView_count();
-            gongsiViewHodler.tvZixunNum.setText("("+zxNum+")");
+            gongsiViewHodler.tvZixunNum.setText("(" + zxNum + ")");
             String prop = dataList.get(position).getPromotion_title();
-            if(prop!=null && !"".equals(prop)){
-                gongsiViewHodler.tvYouhui.setText("   "+prop);
+            if (prop != null && !"".equals(prop)) {
+                gongsiViewHodler.tvYouhui.setText("   " + prop);
                 gongsiViewHodler.tvYouhui.setVisibility(View.VISIBLE);
                 gongsiViewHodler.tvYouhui.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -122,28 +124,28 @@ public class GongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         context.startActivity(intent);
                     }
                 });
-            }else {
+            } else {
                 gongsiViewHodler.tvYouhui.setVisibility(View.GONE);
             }
 
             String ds = dataList.get(position).getDistance();
-            if(!TextUtils.isEmpty(ds)){
+            if (!TextUtils.isEmpty(ds)) {
                 gongsiViewHodler.ccDistance.setText(dataList.get(position).getDistance());
                 gongsiViewHodler.ccDistance.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 gongsiViewHodler.ccDistance.setVisibility(View.GONE);
             }
             gongsiViewHodler.itemView.setTag(position);
         }
 
-        if(holder instanceof GongsiFoot){
+        if (holder instanceof GongsiFoot) {
             GongsiFoot gongsiFoot = (GongsiFoot) holder;
             if (this.gongsiMore) {
-                if(this.hideMore){
+                if (this.hideMore) {
                     gongsiFoot.bar.setVisibility(View.GONE);
                     gongsiFoot.textLoadMore.setVisibility(View.GONE);
                     gongsiFoot.textLoadMore.setText("--  我是有底线的  --");
-                }else {
+                } else {
                     gongsiFoot.bar.setVisibility(View.VISIBLE);
                     gongsiFoot.textLoadMore.setVisibility(View.VISIBLE);
                     gongsiFoot.textLoadMore.setText("加载更多...");
@@ -159,31 +161,31 @@ public class GongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return dataList == null ? 0 :dataList.size() + 1;
+        return dataList == null ? 0 : dataList.size() + 1;
     }
 
 
-    public void loadMoreGongsi(boolean gongsiMore){
+    public void loadMoreGongsi(boolean gongsiMore) {
         this.gongsiMore = gongsiMore;
         notifyDataSetChanged();
     }
 
 
-    public void setHideMore(boolean hideMore){
+    public void setHideMore(boolean hideMore) {
         this.hideMore = hideMore;
         notifyDataSetChanged();
     }
 
     @Override
     public void onClick(View view) {
-        if(onCompanyItemClickListener!=null){
-            onCompanyItemClickListener.onCompanyItemClickListener((int)view.getTag());
+        if (onCompanyItemClickListener != null) {
+            onCompanyItemClickListener.onCompanyItemClickListener((int) view.getTag());
         }
 
     }
 
 
-    class GongsiViewHodler extends RecyclerView.ViewHolder{
+    class GongsiViewHodler extends RecyclerView.ViewHolder {
         ImageView iv;
         TextView name;
         ImageView vGongsi;
@@ -220,8 +222,7 @@ public class GongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
-
-    public interface OnCompanyItemClickListener{
+    public interface OnCompanyItemClickListener {
         void onCompanyItemClickListener(int position);
     }
 

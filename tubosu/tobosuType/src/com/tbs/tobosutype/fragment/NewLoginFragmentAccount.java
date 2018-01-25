@@ -176,6 +176,7 @@ public class NewLoginFragmentAccount extends BaseFragment {
                         String data = jsonObject.optString("data");
                         saveUserInfo(data);
                     } else {
+                        umShareAPI.deleteOauth(getActivity(), SHARE_MEDIA.WEIXIN, null);
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

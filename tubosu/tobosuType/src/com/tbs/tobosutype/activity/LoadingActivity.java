@@ -88,7 +88,6 @@ public class LoadingActivity extends BaseActivity {
                             CacheManager.setPageFlag(mContext, "welcome");
                             Intent mianIntent = new Intent(mContext, MainActivity.class);
                             startActivity(mianIntent);
-                            Util.setErrorLog(TAG, "--进入 SelectCtiyActivity 页面--");
                         }
                         finish();
                         System.gc();
@@ -99,7 +98,15 @@ public class LoadingActivity extends BaseActivity {
     };
 
     private void goMainActivity() {
-        startActivity(new Intent(mContext, MainActivity.class));
+
+        if ("".equals(CacheManager.getAppEntryOrderPre(mContext))) {
+            //初次进入我们的App进入发单页面
+            CacheManager.setAppEntryOrderPre(mContext, "abc"); // 标识已经进入过发单页面
+            Intent intent = new Intent(mContext, PopOrderActivity.class);
+            startActivity(intent);
+        } else {
+            startActivity(new Intent(mContext, MainActivity.class));
+        }
         finish();
         System.gc();
     }

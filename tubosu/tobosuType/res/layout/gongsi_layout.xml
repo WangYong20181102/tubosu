@@ -115,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:textSize="11sp"
-                    android:text="设计：4      案例：44"
+                    android:text="方案：4      案例：44"
                     android:textColor="#8F8F8F"/>
 
                 <TextView

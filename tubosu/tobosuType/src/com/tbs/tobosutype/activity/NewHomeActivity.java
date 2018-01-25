@@ -54,6 +54,7 @@ import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
+import com.tbs.tobosutype.utils.EventBusUtil;
 import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 
@@ -126,15 +127,44 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         //获取网络数据
         getDataFromNet(false);
         initReceiver();
-        getHuoDongPicture();
-        //推送提示 3.7 新增
-        notifyOpenNotice();
-        //应用更新
-        HttpCheckAppUpdata();
+        // TODO: 2018/1/25 3.7版本新增 显示弹窗
+        showHomeDialog();
     }
+
+    //弹窗逻辑
+    private void showHomeDialog() {
+        //每天的时间判断
+        if (!SpUtil.getTodayToken(mContext).equals(Util.getDateToken())) {
+            //更新每天的数据
+            SpUtil.setTodayToken(mContext, Util.getDateToken());
+            SpUtil.cleanDialogInfo(mContext);
+        }
+        //应用更新 3.7新增
+        HttpCheckAppUpdata();
+        //弹窗规则
+        if (!TextUtils.isEmpty(SpUtil.getIsShowUpdataDialog(mContext))) {
+            // TODO: 2018/1/24 App更新提示的弹窗 先走HttpCheckAppUpdata()方法看看是否有更新 有更新的话将SpUtil中的更新弹窗信息填充
+            //已经弹过App更新弹窗
+            if (TextUtils.isEmpty(SpUtil.getIsShowActivityDialog(mContext))) {
+                //未展示运营弹窗  显示运营弹窗
+                SpUtil.setIsShowActivityDialog(mContext, "showing");
+                //运营弹窗
+                getHuoDongPicture();
+            } else {
+                //今天以经弹了运营弹窗
+                SpUtil.setIsShowPushDialog(mContext, "showing");
+                //推送提示 3.7 新增
+                notifyOpenNotice();
+            }
+        }
+
+    }
+
 
     //检测是否需要更新
     private void HttpCheckAppUpdata() {
+        // TODO: 2018/1/24 暂时写已弹过更新提示
+        SpUtil.setIsShowUpdataDialog(mContext, "showing");
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         OKHttpUtil.post(Constant.CHECK_APP_IS_UPDATA, param, new Callback() {
@@ -517,10 +547,11 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                 chooseId = data.getBundleExtra("city_bundle").getString("cid");
                 getSharedPreferences("Save_City_Info", MODE_PRIVATE).edit().putString("save_city_now", cityName).commit();
                 AppInfoUtil.setCityName(mContext, cityName);
-                Util.setErrorLog(TAG, chooseId + " <<#id == choose>>> " + choose);
                 newhomeCity.setText(choose);
+                //存储一个全局的城市信息  并通知装修公司页面更改数据 3.7版本修改
+                SpUtil.setHomeAndCompanyUsingCity(mContext, choose);
+                EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_CODE, choose));
                 CacheManager.setStartFlag(NewHomeActivity.this, 1);
-
                 getDataFromNet(false);
             }
 

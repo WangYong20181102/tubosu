@@ -69,40 +69,11 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         needPermissions();
         CacheManager.setStartFlag(WelcomeActivity.this, 0);
         getSetting();
-        // TODO: 2018/1/3  welcome老的处理方式
-//        new Thread() {
-//            @Override
-//            public void run() {
-//                SystemClock.sleep(3000);
-//                countDownloadNum();//新增用户的数据统计
-//                CacheManager.setChentaoFlag(mContext, 0);
-//                CacheManager.setCompanyFlag(mContext, 0);
-//                getCityJson();//获取城市的数据
-//                if ("".equals(getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("encode_pass", ""))) {
-//
-//                } else {
-//                    // 登录
-//                    check_password();
-//                    Util.setErrorLog(TAG, ">>>>>>>登录<<<<<");
-//                    SystemClock.sleep(2000);
-//                }
-//                // TODO: 2017/12/28  在这个节点处理推送消息  下面这个线程是进入Main的方法 在此之前要处理好推送相关的逻辑
-//                runOnUiThread(new IntentTask());
-//            }
-//        }.start();
-
         //todo 新的welcome处理逻辑 creat by lin  20180103
         countDownloadNum();//新增用户的数据统计
         CacheManager.setChentaoFlag(mContext, 0);
         CacheManager.setCompanyFlag(mContext, 0);
         getCityJson();//获取城市的数据
-        if ("".equals(getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("encode_pass", ""))) {
-
-        } else {
-            // 登录
-            check_password();
-            Util.setErrorLog(TAG, ">>>>>>>登录<<<<<");
-        }
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

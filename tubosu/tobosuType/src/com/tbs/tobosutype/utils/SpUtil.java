@@ -140,4 +140,56 @@ public class SpUtil {
     public static String getCleanUserInfoFlag(Context context) {
         return context.getSharedPreferences("mCleanUserInfoFlag", 0).getString("mCleanUserInfoFlag", "");
     }
+
+    //首页每天的弹窗逻辑
+    //设置每天的token标识
+    public static void setTodayToken(Context context, String mTodayToken) {
+        context.getSharedPreferences("mTodayToken", 0).edit().putString("mTodayToken", mTodayToken).commit();
+    }
+
+    //获取每天的token标识
+    public static String getTodayToken(Context context) {
+        return context.getSharedPreferences("mTodayToken", 0).getString("mTodayToken", "");
+    }
+
+    //弹窗数据
+    public static void cleanDialogInfo(Context context) {
+        context.getSharedPreferences("dialogInfo", 0).edit().clear().commit();
+    }
+
+    //是否弹更新弹窗
+    public static String getIsShowUpdataDialog(Context context) {
+        return context.getSharedPreferences("dialogInfo", 0).getString("updataDialog", "");
+    }
+
+    public static void setIsShowUpdataDialog(Context context, String updataDialog) {
+        context.getSharedPreferences("dialogInfo", 0).edit().putString("updataDialog", updataDialog).commit();
+    }
+
+    //是否弹运营活动弹窗
+    public static String getIsShowActivityDialog(Context context) {
+        return context.getSharedPreferences("dialogInfo", 0).getString("activityDialog", "");
+    }
+
+    public static void setIsShowActivityDialog(Context context, String activityDialog) {
+        context.getSharedPreferences("dialogInfo", 0).edit().putString("activityDialog", activityDialog).commit();
+    }
+
+    //是否弹推送弹窗
+    public static String getIsShowPushDialog(Context context) {
+        return context.getSharedPreferences("dialogInfo", 0).getString("pushDialog", "");
+    }
+
+    public static void setIsShowPushDialog(Context context, String pushDialog) {
+        context.getSharedPreferences("dialogInfo", 0).edit().putString("pushDialog", pushDialog).commit();
+    }
+
+    //首页 和装修公司主页用的城市信息  首页或者是装修公司页面修改了城市的信息得以同步
+    public static String getHomeAndCompanyUsingCity(Context context) {
+        return context.getSharedPreferences("mHomeAndCompanyUsingCity", 0).getString("mHomeAndCompanyUsingCity", "");
+    }
+
+    public static void setHomeAndCompanyUsingCity(Context context, String mHomeAndCompanyUsingCity) {
+        context.getSharedPreferences("mHomeAndCompanyUsingCity", 0).edit().putString("mHomeAndCompanyUsingCity", mHomeAndCompanyUsingCity).commit();
+    }
 }

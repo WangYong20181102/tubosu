@@ -91,7 +91,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     private Context mContext;
     private YouXuanGongSiAdapter youxuanCompanyAdapter;
     private TextView tvGongsiCity, tvGongsiCity1;
-    private String gongsiCity = "深圳市";
+    private String gongsiCity = "";
     private String shaixuanCity = "";
     private MyListView youxuanList;
     private EditText etSearchGongsi;
@@ -125,6 +125,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     private RelativeLayout gongsi_all_rl;
     private RelativeLayout reUpSelectLayout;
     private LinearLayout reDownSelectLayout;
+    private LinearLayout gongsilayout1;//选择公司的定位按钮
+    private LinearLayout gongsilayout;//选择公司的定位按钮
 
     private List<GongsiItem> youxuanSearchGongsiList = new ArrayList<GongsiItem>();
     private Gson gson;
@@ -189,6 +191,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     }
 
     private void bindViews() {
+        gongsilayout1 = findViewById(R.id.gongsilayout1);
+        gongsilayout = findViewById(R.id.gongsilayout);
         gongsi_all_rl = (RelativeLayout) findViewById(R.id.gongsi_all_rl);
         gongsi_all_rl.setBackgroundColor(Color.parseColor("#ffffff"));
         gongsiViewpager = (ViewPager) findViewById(R.id.gongsiViewpager);
@@ -239,6 +243,16 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     }
 
     private void initViews() {
+        //修改城市信息同步问题 3.7版本新增
+        gongsiCity = SpUtil.getHomeAndCompanyUsingCity(mContext);
+        Log.e(TAG, "装修公司页面获取的存储城市===============" + SpUtil.getHomeAndCompanyUsingCity(mContext));
+        if (TextUtils.isEmpty(SpUtil.getHomeAndCompanyUsingCity(mContext))) {
+            tvGongsiCity.setText("" + SpUtil.getCity(mContext));
+            tvGongsiCity1.setText("" + SpUtil.getCity(mContext));
+        } else {
+            tvGongsiCity.setText("" + SpUtil.getHomeAndCompanyUsingCity(mContext));
+            tvGongsiCity1.setText("" + SpUtil.getHomeAndCompanyUsingCity(mContext));
+        }
         ivGoFadan.setOnClickListener(this);
         tvZonghe.setOnClickListener(this);
         tvLiulanzuiduo.setOnClickListener(this);
@@ -251,6 +265,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         reSearvice.setOnClickListener(this);
         tvGongsiCity.setOnClickListener(this);
         tvGongsiCity1.setOnClickListener(this);
+        gongsilayout.setOnClickListener(this);
+        gongsilayout1.setOnClickListener(this);
         relShaiXuan.setOnClickListener(this);
 
         findComIcon.setOnClickListener(this);
@@ -335,37 +351,6 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                     }
                 }
 
-//                if(mCurrentPosition > 0){
-//                    View view = linearLayoutManager.findViewByPosition(mCurrentPosition+1); // 获取第一个item
-//                    if (view != null) {
-//                        if (view.getTop() <= topBarHeight) {
-//                            relTopSearch.setY(-(topBarHeight - view.getTop()));
-//                        } else {
-//                            relTopSearch.setY(0);
-//                        }
-//                    }
-//                }
-//
-//
-//                if (mCurrentPosition != linearLayoutManager.findFirstVisibleItemPosition()) {
-//                    mCurrentPosition = linearLayoutManager.findFirstVisibleItemPosition();
-//                    relTopSearch.setY(0);
-//                }
-
-
-//                View view = linearLayoutManager.findViewByPosition(mCurrentPosition + 1);
-//                if (view != null) {
-//                    if (view.getTop() <= topBarHeight) {
-//                        relTopSearch.setY(-(topBarHeight - view.getTop()));
-//                    } else {
-//                        relTopSearch.setY(0);
-//                    }
-//                }
-//
-//                if (mCurrentPosition != linearLayoutManager.findFirstVisibleItemPosition()) {
-//                    mCurrentPosition = linearLayoutManager.findFirstVisibleItemPosition();
-//                    relTopSearch.setY(0);
-//                }
             }
         });
 
@@ -763,6 +748,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         switch (view.getId()) {
             case R.id.tvGongsiCity:
             case R.id.tvGongsiCity1:
+            case R.id.gongsilayout:
+            case R.id.gongsilayout1:
                 Intent selectCityIntent = new Intent(mContext, SelectCtiyActivity.class);
                 Bundle b = new Bundle();
                 b.putString("fromFindCompany", "64");

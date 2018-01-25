@@ -804,7 +804,6 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
 
         @Override
         public void onReceiveLocation(BDLocation location) {
-            Util.setErrorLog(TAG, "定位码" + location.getLocType());
             StringBuffer sb = new StringBuffer(256);
             sb.append("time : ");
             sb.append(location.getTime());
@@ -819,14 +818,10 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
             sb.append("\nradius : ");
             realLocationCity = location.getCity();
             if (realLocationCity != null) {
-//                Util.setErrorLog(TAG, "==============定位出来的=========realLocationCity = " + realLocationCity);
-//                realLocationCity= realLocationCity.replaceAll("[^\u4E00-\u9FA5]", "");
-//                System.out.println("=============有没有city>>>" + locationCity +"<<<");
                 CacheManager.setCity(mContext, realLocationCity);
                 select_positioning.setText(realLocationCity);
             } else {
                 select_positioning.setText("定位中...");
-//                Util.setErrorLog(TAG, "==============定位中=========realLocationCity = " + realLocationCity);
             }
 
 

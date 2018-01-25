@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.NewLoginActivity;
+import com.tbs.tobosutype.activity.PresonerMsgActivity;
 import com.tbs.tobosutype.base.BaseFragment;
 import com.tbs.tobosutype.bean.EC;
 import com.tbs.tobosutype.bean.Event;
@@ -217,6 +218,7 @@ public class NewLoginFragmentPhone extends BaseFragment {
 
             @Override
             public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
+                Log.e(TAG, "");
                 String weiXinUserName = map.get("name");//微信的昵称
                 String weiXinImageUrl = map.get("iconurl");//微信的头像
                 String weiXinUserId = map.get("openid");//微信的openid
@@ -277,6 +279,7 @@ public class NewLoginFragmentPhone extends BaseFragment {
                             }
                         });
                     } else if (status.equals("0")) {
+                        umShareAPI.deleteOauth(getActivity(), SHARE_MEDIA.WEIXIN, null);
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
