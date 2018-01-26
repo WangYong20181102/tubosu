@@ -36,6 +36,7 @@ import com.allenliu.versionchecklib.v2.builder.DownloadBuilder;
 import com.allenliu.versionchecklib.v2.builder.NotificationBuilder;
 import com.allenliu.versionchecklib.v2.builder.UIData;
 import com.allenliu.versionchecklib.v2.callback.CustomVersionDialogListener;
+import com.allenliu.versionchecklib.v2.callback.ForceUpdateListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -44,11 +45,13 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.NewHomeAdapter;
+import com.tbs.tobosutype.adapter.UpdateDialogAdapter;
 import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean.EC;
 import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
 import com.tbs.tobosutype.bean._ImageD;
+import com.tbs.tobosutype.bean._UpdateInfo;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
@@ -110,6 +113,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     private String TAG = "NewHomeActivity";
     private TextView new_home_test;
     private DownloadBuilder builder;
+    private _UpdateInfo mUpdateInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,33 +135,53 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         showHomeDialog();
     }
 
+    /**
+     * 首页弹窗逻辑关系
+     * 1.有更新的情况下 弹出更新提示（非强更的情况设置更新的flag）
+     * 2.更新提示完成 弹运营弹窗（设置运营的flag）
+     * 3.运营弹窗完成 推送弹窗逻辑
+     */
     //弹窗逻辑
     private void showHomeDialog() {
         //每天的时间判断
         if (!SpUtil.getTodayToken(mContext).equals(Util.getDateToken())) {
-            //更新每天的数据
+            //更新每天的弹窗顺序数据
             SpUtil.setTodayToken(mContext, Util.getDateToken());
             SpUtil.cleanDialogInfo(mContext);
         }
-        //应用更新 3.7新增
-        HttpCheckAppUpdata();
-        //弹窗规则
-        if (!TextUtils.isEmpty(SpUtil.getIsShowUpdataDialog(mContext))) {
-            // TODO: 2018/1/24 App更新提示的弹窗 先走HttpCheckAppUpdata()方法看看是否有更新 有更新的话将SpUtil中的更新弹窗信息填充
-            //已经弹过App更新弹窗
-            if (TextUtils.isEmpty(SpUtil.getIsShowActivityDialog(mContext))) {
-                //未展示运营弹窗  显示运营弹窗
-                SpUtil.setIsShowActivityDialog(mContext, "showing");
-                //运营弹窗
-                getHuoDongPicture();
-            } else {
-                //今天以经弹了运营弹窗
-                SpUtil.setIsShowPushDialog(mContext, "showing");
-                //推送提示 3.7 新增
-                notifyOpenNotice();
-            }
+        if (TextUtils.isEmpty(SpUtil.getIsShowUpdataDialog(mContext))) {
+            //没有开启过更新提示
+            HttpCheckAppUpdata();//检测更新与否  在检测完成之后设置更新弹窗的flag（有强制更新的时候不设置flag） 如果没有更新提示 走 getHuoDongPicture()方法
+            return;
+        }
+        if (TextUtils.isEmpty(SpUtil.getIsShowActivityDialog(mContext))) {
+            //今天还没有开启过运营弹窗
+            getHuoDongPicture();//开启运营弹窗 有运营弹窗时设置flag 没有运营弹窗时 走  notifyOpenNotice() 方法
+            return;
+        }
+        if (TextUtils.isEmpty(SpUtil.getIsShowPushDialog(mContext))) {
+            notifyOpenNotice();
         }
 
+
+//        //应用更新 3.7新增
+//        HttpCheckAppUpdata();
+//        //弹窗规则
+//        if (!TextUtils.isEmpty(SpUtil.getIsShowUpdataDialog(mContext))) {
+//            // TODO: 2018/1/24 App更新提示的弹窗 先走HttpCheckAppUpdata()方法看看是否有更新 有更新的话将SpUtil中的更新弹窗信息填充
+//            //已经弹过App更新弹窗
+//            if (TextUtils.isEmpty(SpUtil.getIsShowActivityDialog(mContext))) {
+//                //未展示运营弹窗  显示运营弹窗
+//                SpUtil.setIsShowActivityDialog(mContext, "showing");
+//                //运营弹窗
+//                getHuoDongPicture();
+//            } else {
+//                //今天以经弹了运营弹窗
+//                SpUtil.setIsShowPushDialog(mContext, "showing");
+//                //推送提示 3.7 新增
+//                notifyOpenNotice();
+//            }
+//        }
     }
 
 
@@ -166,35 +190,88 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         // TODO: 2018/1/24 暂时写已弹过更新提示
         SpUtil.setIsShowUpdataDialog(mContext, "showing");
         HashMap<String, Object> param = new HashMap<>();
-        param.put("token", Util.getDateToken());
+        param.put("system_plat", "1");
+        param.put("chcode", AppInfoUtil.getChannType(mContext));
+        param.put("version", AppInfoUtil.getAppVersionName(mContext));
         OKHttpUtil.post(Constant.CHECK_APP_IS_UPDATA, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                Log.e(TAG, "数据获取失败===============" + e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                Log.e(TAG, "检测用户的更新数据==========" + json);
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.optString("status");
+                    if (status.equals("200")) {
+                        //数据获取成功
+                        String data = jsonObject.optString("data");
+                        mUpdateInfo = mGson.fromJson(data, _UpdateInfo.class);
+                        if (mUpdateInfo.getIs_update().equals("1")) {
+                            //有更新的情况
+                            if (mUpdateInfo.getType().equals("2")) {
+                                //非强制更新的情况下不设置更新的flag
+                                SpUtil.setIsShowUpdataDialog(mContext, "showing");
+                            } else {
+                                SpUtil.setIsShowUpdataDialog(mContext, "");
+                            }
+                            //有更新
+                            if (Util.isWifiConnected(mContext)) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        showUpdateDialog(mUpdateInfo);
+                                    }
+                                });
+                            }
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    getHuoDongPicture();
+                                }
+                            });
+                        }
+                    } else {
 
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
 
     //显示更新弹窗
-    private void showUpdateDialog() {
+    private void showUpdateDialog(final _UpdateInfo updateInfo) {
         builder = AllenVersionChecker.getInstance().downloadOnly(UIData.create()
-                .setTitle("版本更新")
-                .setContent("有新版本更新了要不要来试试")
-                .setDownloadUrl("https://back.tobosu.com/app_version/2018-01-18/5a603f4eba5c2.apk"));
+                .setDownloadUrl(updateInfo.getApk_url()));
         builder.setCustomVersionDialogListener(new CustomVersionDialogListener() {
             @Override
             public Dialog getCustomVersionDialog(Context context, UIData versionBundle) {
                 BaseDialog baseDialog = new BaseDialog(context, R.style.BaseDialog, R.layout.dialog_updata);
-                TextView textView = baseDialog.findViewById(R.id.base_conten);
-                textView.setText(versionBundle.getContent());
+                RecyclerView update_dialog_msg = baseDialog.findViewById(R.id.update_dialog_msg);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+                UpdateDialogAdapter updateDialogAdapter = new UpdateDialogAdapter(mContext, updateInfo.getContent());
+                update_dialog_msg.setLayoutManager(linearLayoutManager);
+                update_dialog_msg.setAdapter(updateDialogAdapter);
+                updateDialogAdapter.notifyDataSetChanged();
                 return baseDialog;
             }
         });
+        //设置是否得强制更新
+        if (updateInfo.getType().equals("1")) {
+            builder.setForceUpdateListener(new ForceUpdateListener() {
+                @Override
+                public void onShouldForceUpdate() {
+                    finish();
+                    System.exit(0);
+                }
+            });
+        }
         builder.setShowDownloadingDialog(false);
         builder.setNotificationBuilder(NotificationBuilder.create().setRingtone(true)
                 .setIcon(R.drawable.app_icon).setContentTitle("土拨鼠装修").setContentText("正在下载最新土拨鼠安装包..."));
@@ -204,7 +281,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     //提示开启推送弹窗
     private void notifyOpenNotice() {
         if (Util.isNotificationEnabled(mContext)) {
-
+            return;
         } else {
             Log.e(TAG, "当前用户是否开启推送通知====notifyOpenNotice===" + Util.isNotificationEnabled(mContext));
             /**
@@ -287,7 +364,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         new_home_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showUpdateDialog();
+//                showUpdateDialog();
             }
         });
         mGson = new Gson();
@@ -880,7 +957,6 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     private String activityName;
 
     private void getHuoDongPicture() {
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         final String date = sdf.format(new Date());
 
@@ -919,9 +995,16 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                                         CacheManager.setLoadingHUODONG(mContext, date);
                                         Log.e(TAG, "获取的活动的图片==================" + activityImg_url);
                                         if (!TextUtils.isEmpty(activityImg_url)) {
+                                            //已经弹了活动弹窗
+                                            SpUtil.setIsShowActivityDialog(mContext, "showing");
                                             showTap(dialog, activityImg_url, activityH5_url);
+                                        } else {
+                                            //没有弹活动弹窗
+                                            notifyOpenNotice();
                                         }
-
+                                    } else {
+                                        //没有弹活动弹窗
+                                        notifyOpenNotice();
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();

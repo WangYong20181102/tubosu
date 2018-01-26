@@ -337,7 +337,7 @@ public class Constant {
     //检查用户是否存在 3.7新增
     public static final String IS_EXIST_USER = TOBOSU_URL + "mapp/user/is_exist_user";
     //检查当前App是否需要更新
-    public static final String CHECK_APP_IS_UPDATA = TOBOSU_URL + "mapp/user/is_exist_user";
+    public static final String CHECK_APP_IS_UPDATA = TOBOSU_URL + "mapp/public/is_update_app";
     //检查当前登录的用户是否修改了密码
     public static final String CHECK_USER_PASSWORD_IS_CHANGE = TOBOSU_URL + "mapp/user/check_password";
 

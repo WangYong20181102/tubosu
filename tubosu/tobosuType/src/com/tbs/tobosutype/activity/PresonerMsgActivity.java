@@ -293,7 +293,7 @@ public class PresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity {
             });
         } else {
             //微信已经绑定
-            Toast.makeText(mContext, "您已绑定手机", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "您已绑定微信", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -285,15 +285,31 @@ public class CoPresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity 
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.optString(json);
-                    String msg = jsonObject.optString("msg");
+                    final String msg = jsonObject.optString("msg");
                     if (status.equals("200")) {
                         //微信绑定成功 修改绑定的状态
-                        coPreBindWechat.setText("已绑定");
-                        coPreBindWechat.setTextColor(Color.parseColor("#999999"));
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                coPreBindWechat.setText("已绑定");
+                                coPreBindWechat.setTextColor(Color.parseColor("#999999"));
+                            }
+                        });
                     } else if (status.equals("0")) {
-                        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     } else {
-                        Toast.makeText(mContext, "绑定失败", Toast.LENGTH_SHORT).show();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, "绑定失败", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
