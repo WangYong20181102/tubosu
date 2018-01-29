@@ -83,7 +83,6 @@ public class CheckPhoneNumActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(mContext, "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
                     }
-
                 } else {
                     Toast.makeText(mContext, "请输入您的手机号", Toast.LENGTH_SHORT).show();
                 }
@@ -92,7 +91,11 @@ public class CheckPhoneNumActivity extends AppCompatActivity {
                 //下一步 （在此之前校验手机号和验证码的正确性）
                 if (!TextUtils.isEmpty(checkPhoneNum.getText().toString())) {
                     if (!TextUtils.isEmpty(checkCodeNum.getText().toString())) {
-                        HttpCheckPhoneNumAndCode(checkPhoneNum.getText().toString(), checkCodeNum.getText().toString());
+                        if (checkCodeNum.getText().toString().length() == 6) {
+                            HttpCheckPhoneNumAndCode(checkPhoneNum.getText().toString(), checkCodeNum.getText().toString());
+                        } else {
+                            Toast.makeText(mContext, "请输入正确的验证码", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         Toast.makeText(mContext, "请输入验证码", Toast.LENGTH_SHORT).show();
                     }

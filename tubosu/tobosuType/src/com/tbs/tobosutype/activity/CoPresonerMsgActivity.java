@@ -306,7 +306,7 @@ public class CoPresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity 
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(mContext, "绑定失败", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
                             }
                         });
 
