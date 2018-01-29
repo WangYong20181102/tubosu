@@ -254,6 +254,10 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
             public Dialog getCustomVersionDialog(Context context, UIData versionBundle) {
                 BaseDialog baseDialog = new BaseDialog(context, R.style.BaseDialog, R.layout.dialog_updata);
                 RecyclerView update_dialog_msg = baseDialog.findViewById(R.id.update_dialog_msg);
+                TextView versionchecklib_version_dialog_cancel = baseDialog.findViewById(R.id.versionchecklib_version_dialog_cancel);
+                if (updateInfo.getType().equals("1")) {
+                    versionchecklib_version_dialog_cancel.setText("退出");
+                }
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
                 UpdateDialogAdapter updateDialogAdapter = new UpdateDialogAdapter(mContext, updateInfo.getContent());
                 update_dialog_msg.setLayoutManager(linearLayoutManager);
