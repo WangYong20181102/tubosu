@@ -111,6 +111,7 @@ public class ChangePassWordActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.optString("status");
+                    final String msg = jsonObject.optString("msg");
                     if (status.equals("200")) {
                         runOnUiThread(new Runnable() {
                             @Override
@@ -124,7 +125,7 @@ public class ChangePassWordActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(mContext, "密码修改失败！", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

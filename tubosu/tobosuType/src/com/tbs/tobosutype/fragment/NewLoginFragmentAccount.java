@@ -212,11 +212,13 @@ public class NewLoginFragmentAccount extends BaseFragment {
             public void onError(SHARE_MEDIA share_media, int i, Throwable throwable) {
                 Log.e(TAG, "授权出错=====" + throwable.getMessage());
                 Toast.makeText(mContext, "授权出错！", Toast.LENGTH_SHORT).show();
+                umShareAPI.deleteOauth(getActivity(), SHARE_MEDIA.WEIXIN, null);
             }
 
             @Override
             public void onCancel(SHARE_MEDIA share_media, int i) {
                 Toast.makeText(mContext, "取消微信登录！", Toast.LENGTH_SHORT).show();
+                umShareAPI.deleteOauth(getActivity(), SHARE_MEDIA.WEIXIN, null);
             }
         });
     }
