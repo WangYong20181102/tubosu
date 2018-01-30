@@ -188,25 +188,27 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <FrameLayout
+    <RelativeLayout
+        android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="155dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="4dp"
         android:background="@color/white">
 
         <ImageView
+            android:layout_centerInParent="true"
             android:id="@+id/price_img"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/price_gif"
-            android:scaleType="fitXY" />
+            android:layout_width="340dp"
+            android:layout_height="155dp"
+            android:background="@drawable/home_gif_01"
+            android:scaleType="centerCrop" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="340dp"
+            android:layout_height="155dp"
             android:orientation="horizontal">
 
             <RelativeLayout
@@ -235,7 +237,7 @@
             </LinearLayout>
         </LinearLayout>
 
-    </FrameLayout>
+    </RelativeLayout>
 
 
     <RelativeLayout

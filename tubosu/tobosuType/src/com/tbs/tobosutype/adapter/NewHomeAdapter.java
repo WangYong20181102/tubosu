@@ -2,6 +2,7 @@ package com.tbs.tobosutype.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -160,7 +161,12 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             initBannerAdapter(newhomeViewPager, headHolder.layoutDot, dataSource.getBanner());
 
             initCheatText(headHolder.cheatText);
-            Glide.with(context).load(R.drawable.price_gif).asGif().into(headHolder.priceBackgroud);
+//
+            //显示gif动画
+            ((NewHomeHead) holder).priceBackgroud.setImageResource(R.drawable.anim_home_gif);
+            AnimationDrawable animationDrawable = (AnimationDrawable) ((NewHomeHead) holder).priceBackgroud.getDrawable();
+            animationDrawable.start();
+
             headHolder.relFreeLiangFang.setOnClickListener(new View.OnClickListener() {
 
                 @Override
