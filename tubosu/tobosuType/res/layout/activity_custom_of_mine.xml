@@ -263,7 +263,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="33dp"
-                    android:text="土拨鼠服务号"
+                    android:text="土拨鼠公众号"
                     android:textColor="#333333"
                     android:textSize="14sp" />
                 <!--服务号-->

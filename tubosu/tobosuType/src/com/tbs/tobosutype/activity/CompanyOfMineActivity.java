@@ -471,7 +471,7 @@ public class CompanyOfMineActivity extends com.tbs.tobosutype.base.BaseActivity 
     private void copyWeChat() {
         ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         cmb.setText("土拨鼠查订单");
-        ToastUtil.showShort(this, "已复制微信号");
+        ToastUtil.showShort(this, "已复制，请到微信查看小程序");
     }
 
     //进行App的评价

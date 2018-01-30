@@ -298,7 +298,7 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
         mCityListView.addHeaderView(headView);
         mCityListView.setEmptyView(findViewById(R.id.citys_list_empty));
         rl_banner = (RelativeLayout) findViewById(R.id.rl_banner);
-        rl_banner.setBackgroundColor(Color.parseColor("#ff882e"));
+        rl_banner.setBackgroundColor(Color.parseColor("#ffffff"));
 
         select_city_layout = (LinearLayout) findViewById(R.id.select_city_layout);
         select_city_activity_netoutview = (LinearLayout) findViewById(R.id.select_city_activity_netoutview);
