@@ -79,7 +79,6 @@ public class NewSettingActivity extends AppCompatActivity {
     //获取正则规则
     private void HttpGetPhoneCheck() {
         HashMap<String, Object> param = new HashMap<>();
-        param.put("token", Util.getDateToken());
         param.put("type", "1");
         OKHttpUtil.post(Constant.GET_CONFIG, param, new Callback() {
             @Override

@@ -255,9 +255,12 @@ public class ZhuangxiuConmpanyAcitivity extends com.tbs.tobosutype.base.BaseActi
                                                     String comid = companyBeanArrayList.get(position).getId(); //comid
                                                     deletePosition = position;
                                                     Util.setLog(TAG, "收藏公司 传过去" + comid);
-                                                    Intent it = new Intent(mContext, DecComActivity.class);
-                                                    it.putExtra("mCompanyId", comid);
-                                                    startActivity(it);
+                                                    if(Util.isNetAvailable(mContext)){
+                                                        Intent it = new Intent(mContext, DecComActivity.class);
+                                                        it.putExtra("mCompanyId", comid);
+                                                        startActivity(it);
+                                                    }
+
 
 //                                                    Intent detailIntent = new Intent(mContext, DecorateCompanyDetailActivity.class);
 //                                                    Bundle bundle = new Bundle();

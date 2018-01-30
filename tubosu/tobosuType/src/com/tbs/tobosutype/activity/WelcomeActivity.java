@@ -85,8 +85,10 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
     private void initView() {
-//        Glide.with(mContext).load(R.drawable.welcome_image).placeholder(R.drawable.welcome_image).error(R.drawable.welcome_image).into(welcomeImage);
-        welcomeImage.setImageResource(R.drawable.welcome_image);
+        Glide.with(mContext).load(R.drawable.welcome_image)
+                .asBitmap().centerCrop().placeholder(R.drawable.welcome_image)
+                .error(R.drawable.welcome_image).into(welcomeImage);
+//        welcomeImage.setImageResource(R.drawable.welcome_image);
         //区分市场
 //        if("appxiaomi".equals(AppInfoUtil.getChannType(MyApplication.getContext()))){
 //            Glide.with(mContext).load(R.drawable.wel_xiaomi).placeholder(R.drawable.wel_xiaomi).error(R.drawable.wel_xiaomi).into(welcomeImage);

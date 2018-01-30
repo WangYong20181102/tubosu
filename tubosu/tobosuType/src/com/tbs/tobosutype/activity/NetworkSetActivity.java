@@ -1,6 +1,7 @@
 package com.tbs.tobosutype.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.SelectPicPopupWindow;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.ShareUtil;
+import com.tbs.tobosutype.utils.Util;
 
 /**
  * 装修公司的网店设置
@@ -44,6 +46,7 @@ public class NetworkSetActivity extends Activity implements OnClickListener {
     private String certification;
     private SelectPicPopupWindow popupWindow;
     private RelativeLayout rl_banner;
+    private Context mContext;
 
     private String title = "我在土拨鼠网发发现一家不错的装修公司，推荐给大家";
 
@@ -58,6 +61,7 @@ public class NetworkSetActivity extends Activity implements OnClickListener {
 
         AppInfoUtil.setTranslucentStatus(this);
         setContentView(R.layout.activity_networkset);
+        mContext = this;
         initView();
         initData();
         initEvent();
@@ -162,9 +166,11 @@ public class NetworkSetActivity extends Activity implements OnClickListener {
 //                detailIntent.putExtras(bundle);
 //                startActivity(detailIntent);
                 //*****装修公司主页 3.6版本修改
-                Intent intent2 = new Intent(this, DecComActivity.class);
-                intent2.putExtra("mCompanyId", id);
-                startActivity(intent2);
+                if (Util.isNetAvailable(mContext)) {
+                    Intent intent2 = new Intent(this, DecComActivity.class);
+                    intent2.putExtra("mCompanyId", id);
+                    startActivity(intent2);
+                }
                 break;
             case R.id.networkset_back:
                 finish();

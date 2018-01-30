@@ -56,9 +56,12 @@ public class RCompanyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             rcomHolder.layoutGongsiR.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent it = new Intent(context, DecComActivity.class);
-                    it.putExtra("mCompanyId", dataList.get(position).getId());
-                    context.startActivity(it);
+                    if(Util.isNetAvailable(context)){
+                        Intent it = new Intent(context, DecComActivity.class);
+                        it.putExtra("mCompanyId", dataList.get(position).getId());
+                        context.startActivity(it);
+                    }
+
                 }
             });
         }

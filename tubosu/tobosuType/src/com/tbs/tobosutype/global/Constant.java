@@ -13,25 +13,25 @@ import com.tbs.tobosutype.utils.AppInfoUtil;
  */
 
 public class Constant {
-    /**
-     * 测试环境
-     */
-    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+//    /**
+//     * 测试环境
+//     */
+//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
     /**
      * 正式环境
      */
-//    public static final String TOBOSU_URL = "https://www.tobosu.com/";
+    public static final String TOBOSU_URL = "https://www.tobosu.com/";
 
     /**
      * M站 发单跳转 线上环境
      */
-//    public static final String M_TOBOSU_URL = "http://m.tobosu.com/";
+    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
 
     /**
      * M站 发单跳转 dev环境
      */
-    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
+//    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
 
 
 	/*----------以下是新增加的------------*/
@@ -333,7 +333,7 @@ public class Constant {
     //绑定微信 3.7新增
     public static final String CHECK_ORDER_PWD = TOBOSU_URL + "mapp/company/check_order_pwd";
     //绑定微信 3.7新增
-    public static final String GET_CONFIG = TOBOSU_URL + "mapp/index/get_config";
+    public static final String GET_CONFIG = TOBOSU_URL + "mapp/public/get_config";
     //检查用户是否存在 3.7新增
     public static final String IS_EXIST_USER = TOBOSU_URL + "mapp/user/is_exist_user";
     //检查当前App是否需要更新

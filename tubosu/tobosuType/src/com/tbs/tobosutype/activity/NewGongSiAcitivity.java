@@ -623,9 +623,11 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
                                         @Override
                                         public void onCompanyItemClickListener(int position) {
-                                            Intent it = new Intent(mContext, DecComActivity.class);
-                                            it.putExtra("mCompanyId", gongsiList.get(position).getId());
-                                            startActivity(it);
+                                            if (Util.isNetAvailable(mContext)) {
+                                                Intent it = new Intent(mContext, DecComActivity.class);
+                                                it.putExtra("mCompanyId", gongsiList.get(position).getId());
+                                                startActivity(it);
+                                            }
                                         }
                                     });
                                 }
@@ -1335,9 +1337,11 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                     searchCompanyAdapter.setOnCompanyItemClickListener(new SearchGongSiAdapter.OnCompanyItemClickListener() {
                                         @Override
                                         public void onCompanyItemClickListener(int position) {
-                                            Intent it = new Intent(mContext, DecComActivity.class);
-                                            it.putExtra("mCompanyId", searchGongsiList.get(position).getId());
-                                            startActivity(it);
+                                            if (Util.isNetAvailable(mContext)) {
+                                                Intent it = new Intent(mContext, DecComActivity.class);
+                                                it.putExtra("mCompanyId", searchGongsiList.get(position).getId());
+                                                startActivity(it);
+                                            }
                                         }
                                     });
                                 } else if (jsonObject.getInt("status") == 201) {
@@ -1393,9 +1397,12 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
                                         @Override
                                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                            Intent it = new Intent(mContext, DecComActivity.class);
-                                            it.putExtra("mCompanyId", youxuanSearchGongsiList.get(i).getId());
-                                            startActivity(it);
+                                            if(Util.isNetAvailable(mContext)){
+                                                Intent it = new Intent(mContext, DecComActivity.class);
+                                                it.putExtra("mCompanyId", youxuanSearchGongsiList.get(i).getId());
+                                                startActivity(it);
+                                            }
+
                                         }
                                     });
                                 }
