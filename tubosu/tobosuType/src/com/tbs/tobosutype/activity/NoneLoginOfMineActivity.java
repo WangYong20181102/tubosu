@@ -173,7 +173,7 @@ public class NoneLoginOfMineActivity extends AppCompatActivity {
     private void copyWeChat() {
         ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         cmb.setText("itobosu");
-        ToastUtil.showShort(this, "已复制微信号");
+        ToastUtil.showShort(this, "已复制微信服务号");
     }
 
     //进行App的评价
