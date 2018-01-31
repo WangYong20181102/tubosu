@@ -244,7 +244,7 @@ public class NewLoginFragmentPhone extends BaseFragment {
                 Log.e(TAG, "");
                 String weiXinUserName = map.get("name");//微信的昵称
                 String weiXinImageUrl = map.get("iconurl");//微信的头像
-                String weiXinUserId = map.get("openid");//微信的openid
+                String weiXinUserId = map.get("unionid");//微信的openid
                 HttpWeixinLogin(weiXinUserId, weiXinUserName, weiXinImageUrl);
             }
 
