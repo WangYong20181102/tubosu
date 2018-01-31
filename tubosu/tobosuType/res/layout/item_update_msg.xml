@@ -8,7 +8,7 @@
         android:id="@+id/item_update_msg_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="12dp"
         android:text="更新内容"
         android:textColor="#757575"
         android:textSize="12sp" />

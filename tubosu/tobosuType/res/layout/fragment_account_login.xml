@@ -31,6 +31,7 @@
             android:textSize="13sp" />
         <!--删除按钮-->
         <ImageView
+            android:visibility="gone"
             android:id="@+id/fal_clean_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,6 +72,16 @@
             android:textColor="#333333"
             android:textColorHint="#b3b3b3"
             android:textSize="13sp" />
+        <!--删除按钮-->
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/fal_clean_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/login_close" />
         <!--底部的分割线-->
         <View
             android:layout_width="match_parent"

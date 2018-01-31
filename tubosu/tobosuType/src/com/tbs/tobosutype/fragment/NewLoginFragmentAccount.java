@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +20,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.activity.ChangePassWordActivity;
 import com.tbs.tobosutype.activity.CheckPhoneNumActivity;
 import com.tbs.tobosutype.activity.NewLoginActivity;
 import com.tbs.tobosutype.base.BaseFragment;
@@ -73,6 +74,8 @@ public class NewLoginFragmentAccount extends BaseFragment {
     @BindView(R.id.fal_weixin_login_btn)
     RelativeLayout falWeixinLoginBtn;
     Unbinder unbinder;
+    @BindView(R.id.fal_clean_password)
+    ImageView falCleanPassword;
     private String TAG = "NewLoginFragmentAccount";
     private Context mContext;
     private Gson mGson;
@@ -102,6 +105,48 @@ public class NewLoginFragmentAccount extends BaseFragment {
         mGson = new Gson();
         umShareAPI = UMShareAPI.get(mContext);
         newLoginActivity = new NewLoginActivity();
+        //密码输入监听
+        falPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 0) {
+                    falCleanPassword.setVisibility(View.GONE);
+                } else {
+                    falCleanPassword.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        //账号输入监听
+        falAccount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 0) {
+                    falCleanAccount.setVisibility(View.GONE);
+                } else {
+                    falCleanAccount.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -110,12 +155,18 @@ public class NewLoginFragmentAccount extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.fal_clean_account, R.id.fal_forget_password, R.id.fal_login_btn, R.id.fal_weixin_login_btn})
+    @OnClick({R.id.fal_clean_account, R.id.fal_forget_password,
+            R.id.fal_login_btn, R.id.fal_weixin_login_btn, R.id.fal_clean_password})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fal_clean_account:
                 //清除输入的账号
                 falAccount.setText("");
+                falCleanAccount.setVisibility(View.GONE);
+                break;
+            case R.id.fal_clean_password:
+                falPassword.setText("");
+                falCleanPassword.setVisibility(View.GONE);
                 break;
             case R.id.fal_forget_password:
                 //忘记密码  计入修改密码

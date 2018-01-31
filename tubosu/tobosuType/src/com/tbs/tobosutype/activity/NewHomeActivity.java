@@ -162,26 +162,6 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         if (TextUtils.isEmpty(SpUtil.getIsShowPushDialog(mContext))) {
             notifyOpenNotice();
         }
-
-
-//        //应用更新 3.7新增
-//        HttpCheckAppUpdata();
-//        //弹窗规则
-//        if (!TextUtils.isEmpty(SpUtil.getIsShowUpdataDialog(mContext))) {
-//            // TODO: 2018/1/24 App更新提示的弹窗 先走HttpCheckAppUpdata()方法看看是否有更新 有更新的话将SpUtil中的更新弹窗信息填充
-//            //已经弹过App更新弹窗
-//            if (TextUtils.isEmpty(SpUtil.getIsShowActivityDialog(mContext))) {
-//                //未展示运营弹窗  显示运营弹窗
-//                SpUtil.setIsShowActivityDialog(mContext, "showing");
-//                //运营弹窗
-//                getHuoDongPicture();
-//            } else {
-//                //今天以经弹了运营弹窗
-//                SpUtil.setIsShowPushDialog(mContext, "showing");
-//                //推送提示 3.7 新增
-//                notifyOpenNotice();
-//            }
-//        }
     }
 
 
