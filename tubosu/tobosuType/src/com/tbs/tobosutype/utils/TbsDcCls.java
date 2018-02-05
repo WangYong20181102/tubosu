@@ -2,12 +2,13 @@ package com.tbs.tobosutype.utils;
 
 /**
  * Created by Mr.Lin on 2018/1/22 11:48.
- * Android 端文 点击字节流获取工具
+ * Android 端 点击字节流获取工具
  */
 
 public class TbsDcCls {
-    //ct  生成数据的时间
+    // TODO: 2018/2/4 用户的属性 
 
+    //ct  生成数据的时间
     //uid  用户的UID
     //pn 产品的名称
     //pv 产品的版本
@@ -22,4 +23,15 @@ public class TbsDcCls {
     //imei	IMEI号	IMEI	string	=15(493002407599521)	未获取到置为空
     //ani	安卓ID	android ID	string	=16(9774d56d682e549c)	android api获得
     //no	网络运营商	network operate	string	<8(CMCC,CUCC,CTCC,WIFI)	未获取到置为空
+
+
+    // TODO: 2018/2/4 用户行为
+
+    // ref 访问来源页  refer URL string PC+H5：页面URL android+ios：页面view或class
+    // url 当前访问页  visit URL string
+    // pt  页面元素 page tag 事件类型为1记录
+    // et  事件类型 event type 事件的点击或者访问  0访问 1点击
+    // cp 自定义参数 custom parameters  采用Map的形式记录  {key1:value1,key2:value2}
+    // vt  访问页面时间 visit time  时间戳
+    // lt 离开页面的时间 leave time  时间戳
 }

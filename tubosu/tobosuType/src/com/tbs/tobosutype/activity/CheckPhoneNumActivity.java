@@ -291,9 +291,6 @@ public class CheckPhoneNumActivity extends AppCompatActivity {
         }.start();
     }
 
-    @OnClick(R.id.check_phone_num_back)
-    public void onViewClicked() {
-    }
 
     //计时任务
     private class MyTask implements Runnable {

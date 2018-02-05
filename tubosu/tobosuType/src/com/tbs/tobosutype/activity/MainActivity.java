@@ -125,6 +125,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     private RelativeLayout rl_checkNet;
 
     private NetStateReceiver receiver;
+    private int mTime = 1;
 
     private Handler netStateHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -152,6 +153,25 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         needPermissions();
         HttpUserIsChangePassWord();
         clearUserInfoWithAppUpdata();
+        timeKill();
+    }
+
+    //计时器
+    private void timeKill() {
+        new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(1000);
+                        mTime++;
+                        Log.e(TAG, "计时时间============" + mTime);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
     }
 
     //版本更新清除之前的用户信息
