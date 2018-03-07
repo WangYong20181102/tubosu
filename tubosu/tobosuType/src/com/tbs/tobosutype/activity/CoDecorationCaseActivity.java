@@ -18,9 +18,11 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.DecorationCaseAdapter;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean._DecorationCaseItem;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 
 import org.json.JSONArray;
@@ -38,7 +40,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class CoDecorationCaseActivity extends AppCompatActivity {
+public class CoDecorationCaseActivity extends com.tbs.tobosutype.base.BaseActivity {
 
     @BindView(R.id.co_deco_case_back)
     LinearLayout coDecoCaseBack;
@@ -74,11 +76,17 @@ public class CoDecorationCaseActivity extends AppCompatActivity {
         initViewEvet();
     }
 
+    @Override
+    protected boolean havePageId() {
+        return true;
+    }
+
     private void initViewEvet() {
         //实例化相关工具
         mGson = new Gson();
         mIntent = getIntent();
         mCompanyId = mIntent.getStringExtra("mCompanyId");
+        SpUtil.setStatisticsEventPageId(mContext, mCompanyId);
         coDecoCaseBannerRl.setBackgroundColor(Color.parseColor("#ffffff"));
         //设置RecycleView相关事务
         mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);

@@ -6,12 +6,13 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.base.*;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AboutTbsActivity extends AppCompatActivity {
+public class AboutTbsActivity extends com.tbs.tobosutype.base.BaseActivity {
 
     @BindView(R.id.about_tbs_back)
     RelativeLayout aboutTbsBack;

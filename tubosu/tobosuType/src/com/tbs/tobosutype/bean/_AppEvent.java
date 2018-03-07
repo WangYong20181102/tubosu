@@ -1,5 +1,13 @@
 package com.tbs.tobosutype.bean;
 
+import android.app.Application;
+
+import com.tbs.tobosutype.global.MyApplication;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.MacUtils;
+import com.tbs.tobosutype.utils.Util;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,23 +38,62 @@ public class _AppEvent {
      * ev : [{"ref":"","url":"","pt":"","et":"","cp":"","vt":"","lt":""}]
      */
 
-    private String ct;//生成数据的时间
+    private long ct;//生成数据的时间 unix时间戳
     private String uid;//用户的id
     private String pn;//产品的名称
     private String pv;//产品的版本
-    private String di;//设备的id
-    private String si;
-    private String sr;
-    private String dm;
-    private String sv;
-    private String lng;
-    private String lat;
-    private String mac;
-    private String imei;
-    private String ani;
-    private String no;
-    private List<EvBean> ev;
+    private String di;//设备的id   Android:md5(ani+imei+mac)
+    private String si;//会话id 生成规则：md5(di+current_time+random_str)
+    private String sr;//手机的分辨率
+    private String ip;//当前网络的ip
+    private String dm;//设备的型号
+    private String sv;//设备的系统版本
+    private String lng;//经度
+    private String lat;//纬度
+    private String mac;//MAC地址
+    private String imei;//手机的imei
+    private int ani;//Android id 等同于Api号码
+    private String no;//网络运营商
+    private ArrayList<EvBean> ev;
 
+    //初始化初始的信息
+    public _AppEvent(ArrayList<EvBean> evBeanArrayList) {
+        this.ct = Util.getUnixTime();
+        this.uid = AppInfoUtil.getUserid(MyApplication.getContext());
+        this.pn = "tbs_and==="+Util.getNowTime();
+        this.pv = AppInfoUtil.getAppVersionName(MyApplication.getContext());
+        this.di = Util.getDeviceID();
+        this.si = Util.getSessionID();
+        this.sr = Util.getPixels();
+        this.dm = Util.getDeviceModel();
+        this.sv = Util.getSystemVersion();
+        this.lng = AppInfoUtil.getLng(MyApplication.getContext());
+        this.lat = AppInfoUtil.getLat(MyApplication.getContext());
+        this.mac = MacUtils.getMobileMAC(MyApplication.getContext());
+        this.imei = Util.getIMEI();
+        this.ani = Util.getAni();
+        this.no = Util.getOperator();
+        this.ip = Util.getIp(MyApplication.getContext());
+        this.ev = evBeanArrayList;
+    }
+    public _AppEvent(){
+        this.ct = Util.getUnixTime();
+        this.uid = AppInfoUtil.getUserid(MyApplication.getContext());
+        this.pn = "tbs_and";
+        this.pv = AppInfoUtil.getAppVersionName(MyApplication.getContext());
+        this.di = Util.getDeviceID();
+        this.si = Util.getSessionID();
+        this.sr = Util.getPixels();
+        this.dm = Util.getDeviceModel();
+        this.sv = Util.getSystemVersion();
+        this.lng = AppInfoUtil.getLng(MyApplication.getContext());
+        this.lat = AppInfoUtil.getLat(MyApplication.getContext());
+        this.mac = MacUtils.getMobileMAC(MyApplication.getContext());
+        this.imei = Util.getIMEI();
+        this.ani = Util.getAni();
+        this.no = Util.getOperator();
+        this.ip = Util.getIp(MyApplication.getContext());
+    }
     public String getSv() {
         return sv;
     }
@@ -63,11 +110,11 @@ public class _AppEvent {
         this.no = no;
     }
 
-    public String getCt() {
+    public long getCt() {
         return ct;
     }
 
-    public void setCt(String ct) {
+    public void setCt(long ct) {
         this.ct = ct;
     }
 
@@ -160,20 +207,28 @@ public class _AppEvent {
         this.imei = imei;
     }
 
-    public String getAni() {
+    public int getAni() {
         return ani;
     }
 
-    public void setAni(String ani) {
+    public void setAni(int ani) {
         this.ani = ani;
     }
 
-    public List<EvBean> getEv() {
+    public ArrayList<EvBean> getEv() {
         return ev;
     }
 
-    public void setEv(List<EvBean> ev) {
+    public void setEv(ArrayList<EvBean> ev) {
         this.ev = ev;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public static class EvBean {
@@ -187,13 +242,24 @@ public class _AppEvent {
          * lt :
          */
 
-        private String ref;
-        private String url;
-        private String pt;
-        private String et;
-        private String cp;
-        private String vt;
-        private String lt;
+        private String ref;//访问来源
+        private String url;//当前的访问页面
+        private String pt;//页面的元素
+        private String et;//事件类型
+        private String cp;//自定义参数
+        private long vt;//访问页面的时间
+        private long lt;//离开页面的时间
+
+
+        public EvBean(String from, String nowActivity, String eventCode, long vistTime, long leaveTime, String eventType) {
+            this.ref = from;
+            this.url = nowActivity;
+            this.pt = eventCode;
+            this.vt = vistTime;
+            this.lt = leaveTime;
+            // TODO: 2018/3/1 事件处理的方式  0-访问（页面加载进入算一次访问事件）  1-点击（类似按钮的点击事件）
+            this.et = eventType;//传入事件的类型
+        }
 
         public String getRef() {
             return ref;
@@ -235,19 +301,19 @@ public class _AppEvent {
             this.cp = cp;
         }
 
-        public String getVt() {
+        public long getVt() {
             return vt;
         }
 
-        public void setVt(String vt) {
+        public void setVt(long vt) {
             this.vt = vt;
         }
 
-        public String getLt() {
+        public long getLt() {
             return lt;
         }
 
-        public void setLt(String lt) {
+        public void setLt(long lt) {
             this.lt = lt;
         }
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -45,9 +45,20 @@
         android:background="@color/bg_gray" />
 
     <WebView
+        android:layout_marginTop="50dp"
         android:id="@+id/pas_webview_web"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </WebView>
-</LinearLayout>
+    <!--右侧显示的弹出图片-->
+    <ImageView
+        android:id="@+id/push_start_fadan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="50dp"
+        android:src="@drawable/art_web_free_design"
+        android:visibility="gone" />
+</RelativeLayout>

@@ -28,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.customview.CallDialogCompany;
 import com.tbs.tobosutype.customview.CheckOrderPwdPopupWindow;
 import com.tbs.tobosutype.customview.InputWarnDialog;
@@ -50,7 +51,7 @@ import okhttp3.Response;
  * @author dec
  */
 @SuppressLint("SimpleDateFormat")
-public class AllOrderDetailActivity extends Activity implements OnClickListener {
+public class AllOrderDetailActivity extends com.tbs.tobosutype.base.BaseActivity implements OnClickListener {
     private static final String TAG = AllOrderDetailActivity.class.getSimpleName();
     private Context mContext;
 

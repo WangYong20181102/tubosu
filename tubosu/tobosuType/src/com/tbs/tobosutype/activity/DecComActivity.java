@@ -210,6 +210,11 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
     @Override
+    protected boolean havePageId() {
+        return true;
+    }
+
+    @Override
     protected void receiveEvent(Event event) {
         switch (event.getCode()) {
             case EC.EventCode.NOTIF_DECCOMACTIVITY_MODE_IS_COLLECT:
@@ -225,6 +230,7 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
         mIntent = getIntent();
         mGson = new Gson();
         mCompanyId = mIntent.getStringExtra("mCompanyId");
+        SpUtil.setStatisticsEventPageId(mContext, mCompanyId);
         //设置控件的透明度
         decComBanner.getBackground().setAlpha(0);
         decComBanner.setVisibility(View.GONE);

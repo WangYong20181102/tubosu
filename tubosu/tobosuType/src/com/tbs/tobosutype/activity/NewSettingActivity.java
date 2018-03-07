@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean._AppConfig;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
@@ -34,7 +35,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class NewSettingActivity extends AppCompatActivity {
+public class NewSettingActivity extends com.tbs.tobosutype.base.BaseActivity {
     @BindView(R.id.new_setting_back)
     RelativeLayout newSettingBack;
     @BindView(R.id.new_setting_clean_cache)

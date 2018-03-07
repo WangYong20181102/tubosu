@@ -79,6 +79,11 @@ public class DesignCaseActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
     @Override
+    protected boolean havePageId() {
+        return true;
+    }
+
+    @Override
     protected boolean isRegisterEventBus() {
         return true;
     }
@@ -102,6 +107,7 @@ public class DesignCaseActivity extends com.tbs.tobosutype.base.BaseActivity {
         mGson = new Gson();
         mIntent = getIntent();
         mCompanyId = mIntent.getStringExtra("mCompanyId");
+        SpUtil.setStatisticsEventPageId(mContext,mCompanyId);
         mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         designCaseRecycler.setLayoutManager(mLinearLayoutManager);
         designCaseRecycler.addOnScrollListener(onScrollListener);

@@ -51,6 +51,7 @@ import com.tbs.tobosutype.bean.EC;
 import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.bean.NewHomeDataItem;
 import com.tbs.tobosutype.bean._ImageD;
+import com.tbs.tobosutype.bean._SelectCity;
 import com.tbs.tobosutype.bean._UpdateInfo;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.global.Constant;
@@ -59,6 +60,7 @@ import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.EventBusUtil;
 import com.tbs.tobosutype.utils.SpUtil;
+import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
 
 import org.json.JSONArray;
@@ -123,7 +125,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         setContentView(R.layout.layout_new_activity);
         ButterKnife.bind(this);
         initView();
-        initBaiduMap();
+        needPermissions();
         chooseId = "0";
         setClick();
         //获取学装修的分类  create by lin  3.7版本新增
@@ -131,8 +133,20 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         //获取网络数据
         getDataFromNet(false);
         initReceiver();
-        // TODO: 2018/1/25 3.7版本新增 显示弹窗
+        // 3.7版本新增 显示弹窗
         showHomeDialog();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(TAG, "NewHomeActivity执行=========onResume===========");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(TAG, "NewHomeActivity执行=========onPause===========");
     }
 
     /**
@@ -167,7 +181,6 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
 
     //检测是否需要更新
     private void HttpCheckAppUpdata() {
-        // TODO: 2018/1/24 暂时写已弹过更新提示
         SpUtil.setIsShowUpdataDialog(mContext, "showing");
         HashMap<String, Object> param = new HashMap<>();
         param.put("system_plat", "1");
@@ -435,7 +448,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                 CacheManager.setChentaoFlag(mContext, 44);
             }
         });
-
+        newhomeCity.setText("" + SpUtil.getCity(mContext));
         home_kefu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -611,9 +624,10 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                 newhomeCity.setText(choose);
                 //存储一个全局的城市信息  并通知装修公司页面更改数据 3.7版本修改
                 SpUtil.setHomeAndCompanyUsingCity(mContext, choose);
-                EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_CODE, choose));
+                _SelectCity mSelectCity = new _SelectCity(choose, chooseId);
+                EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_CODE, mSelectCity));//通知装修公司修改城市定位信息 并且将数据刷新
                 CacheManager.setStartFlag(NewHomeActivity.this, 1);
-                getDataFromNet(false);
+//                getDataFromNet(false);
             }
 
 
@@ -635,17 +649,16 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     private HashMap<String, Object> getParam(int num) {
         HashMap<String, Object> param = new HashMap<String, Object>();
         param.put("token", Util.getDateToken());
-        Util.setErrorLog("-zengzhaozhong要的token-", "token = " + Util.getDateToken());
         String uid = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("userid", "");
         String user_type = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("mark", "");
         param.put("uid", uid);
         param.put("user_type", user_type);
         String city = newhomeCity.getText().toString();
+        Log.e(TAG, "切换城市后获取的城市名=====" + city + "============当所用的num==========" + num);
         if (num == 0) {
             param.put("city_id", "0");
             param.put("city_name", city);
             param.put("type", "1");
-            Util.setErrorLog("-zengzhaozhong-", "id = 0    cityname = " + city);
         } else {
             // 选择
             param.put("city_id", chooseId);
@@ -732,7 +745,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
 
                     @Override
                     public void onFailure(Call call, IOException e) {
-                        Util.setErrorLog(TAG, "---onFailure-->>首页请求网络失败--");
+
                     }
 
                     @Override
@@ -741,7 +754,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                         String result = new String(response.body().string());
                         // 有数据 这样处理是不至于无数据的时候出现app闪退
                         if (result.contains("data")) {
-                            Util.setErrorLog(TAG, "---zengzhaozhong-->>" + result);
+                            Log.e(TAG, "数据链接成功============" + result);
                             CacheManager.setNewhomeJson(mContext, result);
                             Gson gson = new Gson();
                             final NewHomeDataItem dataItem = gson.fromJson(result, NewHomeDataItem.class);
@@ -786,8 +799,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                                 swipeRefreshLayout.setRefreshing(false);
                             }
                         } else {
-                            // 无数据 这样处理是不至于无数据的时候出现app闪退
-                            Util.setErrorLog(TAG, "后台无数据返回给我===2===如下：" + result);
+
                         }
                     }
                 });
@@ -836,36 +848,6 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
 
-    private LocationClient mLocationClient;
-
-    private void initBaiduMap() {
-        try {
-            mLocationClient = new LocationClient(NewHomeActivity.this.getParent());     //声明LocationClient类
-            mLocationClient.start();
-
-            LocationClientOption option = new LocationClientOption();
-            option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
-            option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
-            int span = 1000;
-            option.setIsNeedAddress(true);
-            option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
-            option.setOpenGps(true);//可选，默认false,设置是否使用gps
-            option.setLocationNotify(true);//可选，默认false，设置是否当GPS有效时按照1S/1次频率输出GPS结果
-            option.setIsNeedLocationDescribe(true);//可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
-            option.setIsNeedLocationPoiList(true);//可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
-            option.setIgnoreKillProcess(false);//可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
-            option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
-            option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤GPS仿真结果，默认需要
-            mLocationClient.setLocOption(option);
-            mLocationClient.registerLocationListener(new MyLocationListener());    //注册监听函数
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        needPermissions();
-
-    }
-
     private void needPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
             List<String> permission = Util.getPermissionList(mContext);
@@ -893,46 +875,6 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         }
     }
 
-
-    public class MyLocationListener implements BDLocationListener {
-
-        @Override
-        public void onReceiveLocation(BDLocation location) {
-//            Util.setErrorLog(TAG, "定位码" + location.getLocType());
-            StringBuffer sb = new StringBuffer(256);
-            sb.append("time : ");
-            sb.append(location.getTime());
-            sb.append("\nerror code : ");
-            sb.append(location.getLocType());
-            sb.append("\nlatitude : ");
-            sb.append(location.getLatitude());
-            AppInfoUtil.setLat(mContext, location.getLatitude() + "");
-            sb.append("\nlontitude : ");
-            sb.append(location.getLongitude());
-            AppInfoUtil.setLng(mContext, location.getLongitude() + "");
-            sb.append("\nradius : ");
-            cityName = location.getCity();
-            //存储地理位置  create by lin 土拨鼠App3.6版本↓↓↓
-            SpUtil.setLatitude(mContext, location.getLatitude() + "");//设置纬度
-            SpUtil.setLongitude(mContext, location.getLongitude() + "");//设置经度
-            SpUtil.setCity(mContext, location.getCity() + "");//设置城市
-            SpUtil.setRadius(mContext, location.getRadius() + "");
-            //存储地理位置  create by lin 土拨鼠App3.6版本↑↑↑
-            if (CacheManager.getStartFlag(NewHomeActivity.this) == 0) {
-                if (cityName != null) {
-                    if (cityName.contains("市") || cityName.contains("县")) {
-                        cityName = cityName.substring(0, cityName.length() - 1);
-                    }
-                    CacheManager.setCity(mContext, cityName);
-                    newhomeCity.setText(cityName);
-                } else {
-                    newhomeCity.setText("深圳");
-                }
-            }
-
-        }
-
-    }
 
     private String activityId;
     private String activityImg_url;
@@ -1113,8 +1055,11 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                 getDataFromNet(false);
                 break;
             case EC.EventCode.CHOOSE_CITY_CODE:
-                findCompanyChosenCity = (String) event.getData();
+                _SelectCity selectCity = (_SelectCity) event.getData();
+                findCompanyChosenCity = selectCity.getCityName();
                 newhomeCity.setText(findCompanyChosenCity);
+                cityName = selectCity.getCityName();
+                chooseId = selectCity.getCityId();
                 CacheManager.setStartFlag(NewHomeActivity.this, 1);
                 getDataFromNet(false);
                 break;
@@ -1133,6 +1078,8 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
+                                    //关闭时上传数据
+                                    Util.HttpPostUserUseInfo();
                                     finish();
                                     System.exit(0);
                                 }

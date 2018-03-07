@@ -3,6 +3,7 @@ package com.tbs.tobosutype.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,12 @@ public class SImageLookFragment extends BaseFragment {
         mContext = getActivity();
         initView();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e(TAG, "SImageLookFragment执行onResume方法=======" + this.mImageS.getImage_url()+"====当前可见状态==="+getUserVisibleHint());
     }
 
     private void initView() {

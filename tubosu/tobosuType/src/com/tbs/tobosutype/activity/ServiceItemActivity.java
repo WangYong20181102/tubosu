@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.ServiceItemAdapter;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean._CompanyDetail;
 
 import org.json.JSONArray;
@@ -28,7 +29,7 @@ import butterknife.OnClick;
  * 从装修公司主页进入 3.6版本新增
  * 服务项目列表
  */
-public class ServiceItemActivity extends AppCompatActivity {
+public class ServiceItemActivity extends com.tbs.tobosutype.base.BaseActivity {
     @BindView(R.id.service_back_ll)
     LinearLayout serviceBackLl;
     @BindView(R.id.service_recycler)

@@ -18,6 +18,7 @@ import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean._DesignerItem;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 
 import org.json.JSONArray;
@@ -72,10 +73,21 @@ public class DesignerListActivity extends com.tbs.tobosutype.base.BaseActivity {
         initViewEvent();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected boolean havePageId() {
+        return true;
+    }
+
     private void initViewEvent() {
         mIntent = getIntent();
         mGson = new Gson();
         mCompanyId = mIntent.getStringExtra("mCompanyId");
+        SpUtil.setStatisticsEventPageId(mContext, mCompanyId);
         mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         designerListCaseRecycler.setLayoutManager(mLinearLayoutManager);
         designerListCaseRecycler.addOnScrollListener(onScrollListener);

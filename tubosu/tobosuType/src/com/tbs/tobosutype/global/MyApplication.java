@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.BroadcastReceiver;
@@ -13,9 +14,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Process;
 import android.support.multidex.MultiDexApplication;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -29,10 +33,13 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.bean._AppEvent;
 import com.tbs.tobosutype.model.City;
 import com.tbs.tobosutype.utils.CityData;
 import com.tbs.tobosutype.utils.NetUtil;
 import com.tbs.tobosutype.utils.SharePreferenceUtil;
+import com.tbs.tobosutype.utils.SpUtil;
+import com.tbs.tobosutype.utils.Util;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 import com.xiaomi.channel.commonutils.logger.LoggerInterface;
@@ -84,6 +91,8 @@ public class MyApplication extends MultiDexApplication {
             }
         }
     };
+    // TODO: 2018/2/27 事件统计的全局集合
+    public static ArrayList<_AppEvent.EvBean> evBeanArrayList;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -92,9 +101,6 @@ public class MyApplication extends MultiDexApplication {
         SDKInitializer.initialize(this);
         //初始化友盟
         UMShareAPI.get(this);
-        //极光推送初始化
-//        JPushInterface.setDebugMode(true);
-//        JPushInterface.init(this);
         //小米推送初始化
         initXiaomiPush();
         //百度定位相关
@@ -124,6 +130,13 @@ public class MyApplication extends MultiDexApplication {
                 .showImageOnFail(R.drawable.app_icon)
                 .cacheInMemory().cacheOnDisc().build();
 
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        //App被强行杀死 立马上传数据
+        Util.HttpPostUserUseInfo();
     }
 
     //小米推送的初始化
@@ -250,10 +263,11 @@ public class MyApplication extends MultiDexApplication {
     }
 
     private void initData() {
-
         mApplication = this;
         mNetWorkState = NetUtil.getNetworkState(this);
         IS_CHECK_COMPANY_ORDER_PASSWORD = false;//是否验证装修公司的查单密码
+        // TODO: 2018/2/27 初始化App事件的集合
+        evBeanArrayList = new ArrayList<>();
         initCityList();
         mSpUtil = new SharePreferenceUtil(this, SharePreferenceUtil.CITY_SHAREPRE_FILE);
         IntentFilter filter = new IntentFilter(NET_CHANGE_ACTION);

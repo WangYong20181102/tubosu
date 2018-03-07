@@ -16,13 +16,16 @@ public class Constant {
 //    /**
 //     * 测试环境
 //     */
-    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
     /**
      * 正式环境
      */
-//    public static final String TOBOSU_URL = "https://www.tobosu.com/";
-
+    public static final String TOBOSU_URL = "https://www.tobosu.com/";
+    /**
+     * 数据流上传接口
+     */
+    public static final String TBS_DATA_STREAM = "http://trace.dev.tobosu.com/";
     /**
      * M站 发单跳转 线上环境
      */

@@ -10,12 +10,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.base.*;
@@ -25,6 +31,8 @@ import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.MD5Util;
+import com.tbs.tobosutype.utils.SpUtil;
+import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
 
 import org.json.JSONArray;
@@ -35,6 +43,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -65,12 +74,37 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         ButterKnife.bind(this);
         mContext = WelcomeActivity.this;
         startapp_time = new Date().getTime();
+        initBaiduMap();
         initView();
+        //获取权限 执行下一步
         needPermissions();
+        Log.e(TAG, "WelcomeActivity执行的生命周期========onCreate()");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(TAG, "WelcomeActivity执行的生命周期========onResume()");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(TAG, "WelcomeActivity执行的生命周期========onPause()");
+    }
+
+    //欢迎页的初始化
+    private void welcomeInit() {
         CacheManager.setStartFlag(WelcomeActivity.this, 0);
         getSetting();
         //todo 新的welcome处理逻辑 creat by lin  20180103
         countDownloadNum();//新增用户的数据统计
+        // TODO: 2018/3/6 App点击流统计初始化
+        // TODO: 2018/3/5 初始化上报数据
+        initStatisticsEvent();
+        // TODO: 2018/2/27 开始倒计时传数据
+        Util.sendEventByTimeKill();
+
         CacheManager.setChentaoFlag(mContext, 0);
         CacheManager.setCompanyFlag(mContext, 0);
         getCityJson();//获取城市的数据
@@ -82,6 +116,72 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                 runOnUiThread(new IntentTask());
             }
         }, 3000);
+    }
+    /**
+     * 初始化App事件统计
+     * 1.清空之前存储的数据
+     * 2.上报一条数据
+     */
+
+    private void initStatisticsEvent() {
+        Log.e(TAG, "启动App时上传数据===========");
+        getSharedPreferences("StatisticsEvent", 0).edit().clear().commit();
+        Util.HttpPostUserUseInfo();
+    }
+
+    //百度定位
+    private void initBaiduMap() {
+        try {
+            LocationClient mLocationClient = new LocationClient(mContext);     //声明LocationClient类
+            mLocationClient.start();
+
+            LocationClientOption option = new LocationClientOption();
+            option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);//可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
+            option.setCoorType("bd09ll");//可选，默认gcj02，设置返回的定位结果坐标系
+            int span = 1000;
+            option.setIsNeedAddress(true);
+            option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
+            option.setOpenGps(false);//可选，默认false,设置是否使用gps
+            option.setLocationNotify(false);//可选，默认false，设置是否当GPS有效时按照1S/1次频率输出GPS结果
+            option.setIsNeedLocationDescribe(true);//可选，默认false，设置是否需要位置语义化结果，可以在BDLocation.getLocationDescribe里得到，结果类似于“在北京天安门附近”
+            option.setIsNeedLocationPoiList(true);//可选，默认false，设置是否需要POI结果，可以在BDLocation.getPoiList里得到
+            option.setIgnoreKillProcess(false);//可选，默认true，定位SDK内部是一个SERVICE，并放到了独立进程，设置是否在stop的时候杀死这个进程，默认不杀死
+            option.SetIgnoreCacheException(false);//可选，默认false，设置是否收集CRASH信息，默认收集
+            option.setEnableSimulateGps(false);//可选，默认false，设置是否需要过滤GPS仿真结果，默认需要
+            mLocationClient.setLocOption(option);
+            mLocationClient.registerLocationListener(new MyLocationListener());    //注册监听函数
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public class MyLocationListener implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+//            Util.setErrorLog(TAG, "定位码" + location.getLocType());
+            StringBuffer sb = new StringBuffer(256);
+            sb.append("time : ");
+            sb.append(location.getTime());
+            sb.append("\nerror code : ");
+            sb.append(location.getLocType());
+            sb.append("\nlatitude : ");
+            sb.append(location.getLatitude());
+            AppInfoUtil.setLat(mContext, location.getLatitude() + "");
+            sb.append("\nlontitude : ");
+            sb.append(location.getLongitude());
+            AppInfoUtil.setLng(mContext, location.getLongitude() + "");
+            sb.append("\nradius : ");
+            //设置真实的定位信息
+            SpUtil.setLatitude(mContext, location.getLatitude() + "");//设置纬度
+            SpUtil.setLongitude(mContext, location.getLongitude() + "");//设置经度
+            SpUtil.setCity(mContext, location.getCity() + "");//设置城市
+            SpUtil.setRadius(mContext, location.getRadius() + "");
+            SpUtil.setHomeAndCompanyUsingCity(mContext, "");
+//            ToastUtil.showShort(mContext, "触发百度定位=====" + location.getCity() + "获取的本地真实的存储定位信息====" + SpUtil.getCity(mContext));
+//            Log.e(TAG, "百度定位监听==========" + location.getCity());
+        }
+
     }
 
     private void initView() {
@@ -362,27 +462,31 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         });
     }
 
-
-//    private void do_webpage() {
-//        Intent i_getvalue = getIntent();
-//        String action = i_getvalue.getAction();
-//
-//        if (Intent.ACTION_VIEW.equals(action)) {
-//            Uri uri = i_getvalue.getData();
-//            if (uri != null) {
-//                Util.setErrorLog(TAG,"====涂蓉html>>" + uri + "<<<");
-////				String name = uri.getQueryParameter("name");
-////				String age= uri.getQueryParameter("age");
-//            }
-//        }
-//    }
-
+    //基于6.0以上系统动态获取权限问题
     private void needPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
-            List<String> permission = getPermissionList(mContext);
+            List<String> permission = getPermissionList(mContext);//需要获取动态权限的集合 总6个
+            Log.e(TAG, "获取权限的集合长度===========" + permission.size());
             if (permission.size() > 0) {
+                //未获取全部的权限 去获取相应的权限
                 requestPermissions(permission.toArray(new String[permission.size()]), 101);
+            } else {
+                //已经获取了全部的权限
+                welcomeInit();
             }
+        } else {
+            //低于6.0版本不需要动态获取权限
+            welcomeInit();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 101:
+                Log.e(TAG, "权限获取之后====permissions===" + Arrays.toString(permissions) + "====grantResults====" + Arrays.toString(permissions));
+                welcomeInit();
+                break;
         }
     }
 

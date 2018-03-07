@@ -145,6 +145,11 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
     }
 
     @Override
+    protected boolean havePageId() {
+        return true;
+    }
+
+    @Override
     protected void receiveEvent(Event event) {
         switch (event.getCode()) {
             case EC.EventCode.CLICK_DIMAGE_IN_LOOK_PHOTO:
@@ -282,6 +287,7 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                 //未收藏
                 dImgLookShoucan.setImageResource(R.drawable.shoucang_detail_befor);
             }
+            SpUtil.setStatisticsEventPageId(mContext, mImageDArrayList.get(mArrayListPosition).getId());
             //设置标题以及左侧的标签
             setTitleAndPosition();
             //展示动画

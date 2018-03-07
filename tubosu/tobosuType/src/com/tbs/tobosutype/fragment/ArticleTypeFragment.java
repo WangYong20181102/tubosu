@@ -186,7 +186,7 @@ public class ArticleTypeFragment extends BaseFragment {
             // TODO: 2018/1/2 点击子项跳转到文章详情的Web页面
             Util.HttpArticleClickCount(mArticleTypeItemArrayList.get(position).getId());
             Intent intent = new Intent(mContext, ArticleWebViewActivity.class);
-            intent.putExtra("mLoadingUrl", mArticleTypeItemArrayList.get(position).getJump_url() + "&app_type=1");
+            intent.putExtra("mLoadingUrl", mArticleTypeItemArrayList.get(position).getJump_url() + "?app_type=1");
             mContext.startActivity(intent);
         }
     };

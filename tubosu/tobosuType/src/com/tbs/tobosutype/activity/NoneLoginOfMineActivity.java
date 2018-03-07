@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -21,9 +22,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.base.*;
+import com.tbs.tobosutype.bean._AppEvent;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.ToastUtil;
+import com.tbs.tobosutype.utils.Util;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
@@ -40,7 +44,7 @@ import butterknife.OnClick;
  * 3.7版本新增
  * 整个页面纯展示
  */
-public class NoneLoginOfMineActivity extends AppCompatActivity {
+public class NoneLoginOfMineActivity extends com.tbs.tobosutype.base.BaseActivity {
     @BindView(R.id.none_login_setting)
     ImageView noneLoginSetting;
     @BindView(R.id.none_login_register_rl)
@@ -64,6 +68,10 @@ public class NoneLoginOfMineActivity extends AppCompatActivity {
     private String TAG = "NoneLoginOfMineActivity";
     private Context mContext;
     private UMShareAPI umShareAPI;
+    // TODO: 2018/2/27 点击流相关的属性
+    private String mFrom = "";// TODO: 2018/2/27  从那个界面进来的 这个属性在OnCreate方法里就得赋值初始化了，在onResume中会被mTo覆盖
+    private String mNowActivity = "NoneLoginOfMineActivity";//当前页面的名称
+    private String mTo = "";// TODO: 2018/2/27  要去的界面 作用：在另一个界面回退时 mTo转换成mFrom 使得回退时可以知道从哪回到这个界面的
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,12 +81,62 @@ public class NoneLoginOfMineActivity extends AppCompatActivity {
         Log.e(TAG, "初始化================" + TAG);
         mContext = this;
         initViewEvent();
+        Log.e(TAG, "执行onCreate========");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(TAG, "执行onStart========");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.e(TAG, "执行onRestart========");
     }
 
     @Override
     protected void onResume() {
         noneLoginCompanyOfMineAllLl.setBackgroundColor(Color.parseColor("#ffffff"));
         super.onResume();
+//        Log.e(TAG, "执行onResume========初始化事件");
+//        // TODO: 2018/2/27 点击流事件统计初始化
+//        mVistTime = Util.getUnixTime();//访问页面的时间
+//        // TODO: 2018/2/27 从该页面去到另一个页面返回时要做mFrom和mTo的位置交换
+//        if (!TextUtils.isEmpty(mTo)) {
+//            // TODO: 2018/2/27 表明从某个页面回退回来了 此时mEventCode置空
+//            mFrom = mTo;
+//            mEventCode = "";
+//        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(TAG, "执行onPause========存入事件");
+//        // TODO: 2018/2/27  页面离开时调用的方法 离开时要创建一次访问事件以及点击事件
+//        mLeaveTime = Util.getUnixTime();//离开页面的时间
+//        // TODO: 2018/3/1 点击事件
+//        if (!TextUtils.isEmpty(mEventCode)) {
+//            _AppEvent.EvBean evBean1 = new _AppEvent.EvBean(mFrom, mNowActivity, mEventCode, mLeaveTime, mLeaveTime, "1");
+//            Util.addAppEventCount(evBean1);
+//        }
+//        // TODO: 2018/3/1 访问事件
+//        _AppEvent.EvBean evBean0 = new _AppEvent.EvBean(mFrom, mNowActivity, "", mVistTime, mLeaveTime, "0");
+//        Util.addAppEventCount(evBean0);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(TAG, "执行onStop========");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(TAG, "执行onDestroy========");
     }
 
     private void initViewEvent() {
@@ -102,6 +160,7 @@ public class NoneLoginOfMineActivity extends AppCompatActivity {
                 //跳转到登录页面
                 Intent intentToRegister = new Intent(mContext, NewLoginActivity.class);
                 intentToRegister.putExtra("mWhereComeFrom", "NoneLoginOfMineActivity");
+                // TODO: 2018/2/27 设置将要去的页面  添加点击事件的事件码
                 mContext.startActivity(intentToRegister);
                 break;
             case R.id.none_login_dalibao_iv:
@@ -237,6 +296,8 @@ public class NoneLoginOfMineActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
+                                    //退出前将数据上传
+                                    Util.HttpPostUserUseInfo();
                                     finish();
                                     System.exit(0);
                                 }

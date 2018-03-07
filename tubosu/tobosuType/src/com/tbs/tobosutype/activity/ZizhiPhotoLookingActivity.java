@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.LookPhotoAdapter;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean._CompanyDetail;
 import com.tbs.tobosutype.fragment.CoLookPhotoFragment;
 import com.tbs.tobosutype.fragment.LookPhotoFragment;
@@ -31,7 +32,7 @@ import butterknife.OnClick;
  * creat by lin  作用于3.6版本的公司资质
  * 公司资质大图查看页面
  */
-public class ZizhiPhotoLookingActivity extends AppCompatActivity {
+public class ZizhiPhotoLookingActivity extends com.tbs.tobosutype.base.BaseActivity {
 
     @BindView(R.id.zizhi_look_photo_viewpager)
     ViewPager zizhiLookPhotoViewpager;

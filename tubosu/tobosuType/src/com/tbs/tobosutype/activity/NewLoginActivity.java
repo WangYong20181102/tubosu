@@ -2,6 +2,7 @@ package com.tbs.tobosutype.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -18,9 +19,11 @@ import com.tbs.tobosutype.adapter.MyFragmentPagerAdapter;
 import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean.EC;
 import com.tbs.tobosutype.bean.Event;
+import com.tbs.tobosutype.bean._AppEvent;
 import com.tbs.tobosutype.fragment.NewLoginFragmentAccount;
 import com.tbs.tobosutype.fragment.NewLoginFragmentPhone;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.Util;
 
 import java.util.ArrayList;
 
@@ -33,7 +36,7 @@ import butterknife.OnClick;
  * 宿主承载页面：承载账号登录以及微信快捷登录
  */
 
-public class NewLoginActivity extends com.tbs.tobosutype.base.BaseActivity {
+public class NewLoginActivity extends com.tbs.tobosutype.base.BaseActivity{
     @BindView(R.id.new_login_close)
     RelativeLayout newLoginClose;
     @BindView(R.id.new_login_left_sanjiao)
@@ -54,6 +57,12 @@ public class NewLoginActivity extends com.tbs.tobosutype.base.BaseActivity {
     private Intent mIntent;
     private String mWhereComeFrom = "";
 
+    // TODO: 2018/2/27 点击流相关的属性
+    private String mFrom = "";//从那个界面进来的
+    private String mNowActivity = "NewLoginActivity";//当前页面的名称
+    private String mTo = "";// TODO: 2018/2/27  要去的界面 作用：在另一个界面回退时 mTo转换成mFrom 使得回退时可以知道从哪回到这个界面的
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +70,64 @@ public class NewLoginActivity extends com.tbs.tobosutype.base.BaseActivity {
         ButterKnife.bind(this);
         mContext = this;
         initViewEvent();
+        Log.e(TAG, "执行onCreate========");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.e(TAG, "执行onStart========");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.e(TAG, "执行onRestart========");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(TAG, "执行onResume========");
+        // TODO: 2018/2/27  初始化 点击事件流
+//        mFrom = mWhereComeFrom;
+//        mVistTime = Util.getUnixTime();//访问页面的时间
+//        // TODO: 2018/2/27 从该页面去到另一个页面返回时要做mFrom和mTo的位置交换
+//        if (!TextUtils.isEmpty(mTo)) {
+//            // TODO: 2018/2/27 表明从某个页面回退回来了 此时mEventCode置空
+//            mFrom = mTo;
+//            mEventCode = "";
+//        }
+        //访问事件初始化
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.e(TAG, "执行onPause========");
+//        mLeaveTime = Util.getUnixTime();//离开页面的时间
+//        // TODO: 2018/3/1 点击事件
+//        if(!TextUtils.isEmpty(mEventCode)){
+//            _AppEvent.EvBean evBean1 = new _AppEvent.EvBean(mFrom, mNowActivity, mEventCode, mLeaveTime, mLeaveTime,"1");
+//            Util.addAppEventCount(evBean1);
+//        }
+//        // TODO: 2018/3/1 访问事件
+//        _AppEvent.EvBean evBean0 = new _AppEvent.EvBean(mFrom, mNowActivity, "", mVistTime, mLeaveTime, "0");
+//        Util.addAppEventCount(evBean0);
+        //访问事件统计
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(TAG, "执行onStop========");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(TAG, "执行onDestroy========");
     }
 
     @Override
@@ -134,6 +201,8 @@ public class NewLoginActivity extends com.tbs.tobosutype.base.BaseActivity {
                 newLoginViewpager.setCurrentItem(1);
                 break;
             case R.id.new_login_close:
+                Log.e(TAG, "执行==点击关闭按钮====");
+                // TODO: 2018/2/27 设置点击了关闭按钮事件码
                 finish();
                 break;
         }

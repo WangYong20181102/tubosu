@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.MD5Util;
@@ -32,7 +33,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class ChangePassWordActivity extends AppCompatActivity {
+public class ChangePassWordActivity extends com.tbs.tobosutype.base.BaseActivity {
     @BindView(R.id.banner_dever)
     View bannerDever;
     @BindView(R.id.change_pass_word)

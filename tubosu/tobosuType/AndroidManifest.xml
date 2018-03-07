@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.tbs.tobosutype"
-    android:versionCode="27"
-    android:versionName="3.7">
+    android:versionCode="28"
+    android:versionName="3.7.1">
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -516,63 +516,6 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activity.SImageLookingActivity" />
         <activity android:name=".activity.DImageLookingActivity" />
-        <!-- &lt;!&ndash;极光极光极光极光↓↓↓↓↓↓↓↓↓↓↓↓↓↓&ndash;&gt; -->
-        <!-- &lt;!&ndash; <service &ndash;&gt; -->
-        <!-- &lt;!&ndash; android:name="cn.jpush.android.service.PushService" &ndash;&gt; -->
-        <!-- &lt;!&ndash; android:process=":multiprocess" &ndash;&gt; -->
-        <!-- &lt;!&ndash; tools:node="replace"> &ndash;&gt; -->
-
-
-        <!-- &lt;!&ndash; </service> &ndash;&gt; -->
-        <!-- &lt;!&ndash; 极光推送服务 create by lin   20171225 &ndash;&gt; -->
-
-
-        <!-- &lt;!&ndash; Required SDK 核心功能 &ndash;&gt; -->
-        <!-- &lt;!&ndash; 可配置android:process参数将PushService放在其他进程中 &ndash;&gt; -->
-        <!-- <service -->
-        <!-- android:name="cn.jpush.android.service.PushService" -->
-        <!-- android:enabled="true" -->
-        <!-- android:exported="false"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="cn.jpush.android.intent.REGISTER" /> -->
-        <!-- <action android:name="cn.jpush.android.intent.REPORT" /> -->
-        <!-- <action android:name="cn.jpush.android.intent.PushService" /> -->
-        <!-- <action android:name="cn.jpush.android.intent.PUSH_TIME" /> -->
-        <!-- </intent-filter> -->
-        <!-- </service> -->
-
-
-        <!-- &lt;!&ndash; since 1.8.0 option 可选项。用于同一设备中不同应用的JPush服务相互拉起的功能。 &ndash;&gt; -->
-        <!-- &lt;!&ndash; 若不启用该功能可删除该组件，将不拉起其他应用也不能被其他应用拉起 &ndash;&gt; -->
-        <!-- <service -->
-        <!-- android:name="cn.jpush.android.service.DaemonService" -->
-        <!-- android:enabled="true" -->
-        <!-- android:exported="true"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="cn.jpush.android.intent.DaemonService" /> -->
-
-
-        <!-- <category android:name="com.tbs.tobosutype" /> -->
-        <!-- </intent-filter> -->
-        <!-- </service> -->
-        <!-- &lt;!&ndash; 接收相关通知 极光  create by lin &ndash;&gt; -->
-        <!-- <receiver -->
-        <!-- android:name=".receiver.MyJpushReceiver" -->
-        <!-- android:enabled="true"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="cn.jpush.android.intent.REGISTRATION" /> -->
-        <!-- <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> -->
-        <!-- <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> -->
-        <!-- <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> -->
-        <!-- <action android:name="cn.jpush.android.intent.NOTIFICATION_CLICK_ACTION" /> -->
-        <!-- <action android:name="cn.jpush.android.intent.CONNECTION" /> -->
-
-
-        <!-- <category android:name="com.tbs.tobosutype" /> -->
-        <!-- </intent-filter> -->
-        <!-- </receiver> -->
-        <!-- &lt;!&ndash; 接收相关通知 极光  create by lin &ndash;&gt; -->
-        <!-- &lt;!&ndash;极光极光极光极光↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑&ndash;&gt; -->
         <activity android:name=".activity.DecComActivity" />
         <activity android:name=".activity.BaiduMapActivity" />
         <activity android:name=".activity.DesignCaseActivity" />

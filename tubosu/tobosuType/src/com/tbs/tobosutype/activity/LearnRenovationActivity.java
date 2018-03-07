@@ -31,6 +31,7 @@ import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.MyFragmentPagerStateAdapter;
 import com.tbs.tobosutype.adapter.PopMoreStyleAdapter;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean._ArticleType;
 import com.tbs.tobosutype.fragment.ArticleTypeFragment;
 import com.tbs.tobosutype.global.Constant;
@@ -51,7 +52,7 @@ import butterknife.OnClick;
  * 包含发单动画 底部发单按钮
  * create by lin
  */
-public class LearnRenovationActivity extends AppCompatActivity {
+public class LearnRenovationActivity extends com.tbs.tobosutype.base.BaseActivity {
 
     @BindView(R.id.learn_rovat_back_ll)
     LinearLayout learnRovatBackLl;//返回按钮

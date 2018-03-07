@@ -19,14 +19,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.base.*;
+import com.tbs.tobosutype.bean._AppEvent;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.utils.SpUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ArticleWebViewActivity extends AppCompatActivity {
+public class ArticleWebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
 
 
     @BindView(R.id.art_webview_back)
@@ -45,6 +49,8 @@ public class ArticleWebViewActivity extends AppCompatActivity {
     private Intent mIntent;
     private String mLoadingUrl = "";//加载数据的URL
     private boolean isShowingFadan = false;
+    private Gson mGson;
+    private _AppEvent mAppEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +59,18 @@ public class ArticleWebViewActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mContext = this;
         initViewEvent();
+        SpUtil.setStatisticsEventPageId(mContext, mLoadingUrl);
+    }
+
+    @Override
+    protected boolean havePageId() {
+        return true;
     }
 
     private void initViewEvent() {
         mIntent = getIntent();
+        mGson = new Gson();
+        mAppEvent = new _AppEvent();
         artWebviewBannerRl.setBackgroundColor(Color.parseColor("#ffffff"));
         mLoadingUrl = mIntent.getStringExtra("mLoadingUrl");
         artWebviewWeb.getSettings().setJavaScriptEnabled(true);
@@ -72,7 +86,8 @@ public class ArticleWebViewActivity extends AppCompatActivity {
 
         artWebviewWeb.setWebChromeClient(webChromeClient);
         artWebviewWeb.setWebViewClient(webViewClient);
-        artWebviewWeb.loadUrl(mLoadingUrl);
+        artWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent));
+        Log.e(TAG, "统计传值=====" + mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent));
     }
 
     private WebViewClient webViewClient = new WebViewClient() {

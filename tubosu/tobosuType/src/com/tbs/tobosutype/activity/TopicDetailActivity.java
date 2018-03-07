@@ -19,6 +19,7 @@ import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean._TopicDetail;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -80,12 +81,18 @@ public class TopicDetailActivity extends com.tbs.tobosutype.base.BaseActivity {
         initViewEvent();
     }
 
+    @Override
+    protected boolean havePageId() {
+        return true;
+    }
+
     private void initViewEvent() {
         mIntent = getIntent();
         mGson = new Gson();
         topicDetailBanner.setBackgroundColor(Color.parseColor("#ffffff"));
         topicDetailAll.setBackgroundColor(Color.parseColor("#ffffff"));
         mTopicId = mIntent.getStringExtra("mTopicId");
+        SpUtil.setStatisticsEventPageId(mContext, mTopicId);
         mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         topicDetailRecycler.setLayoutManager(mLinearLayoutManager);
         //获取详情

@@ -121,6 +121,11 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
         initView();
     }
 
+    @Override
+    protected boolean havePageId() {
+        return true;
+    }
+
     private void initView() {
         mGson = new Gson();
         mIntent = getIntent();
@@ -151,6 +156,8 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                 //未收藏
                 sImgLookShoucan.setImageResource(R.drawable.shoucang_detail_befor);
             }
+            //设置统计的页面id
+            SpUtil.setStatisticsEventPageId(mContext,mImageSArrayList.get(mPosition).getId());
         }
         //展示动画
         ShowFristIntoAnim();

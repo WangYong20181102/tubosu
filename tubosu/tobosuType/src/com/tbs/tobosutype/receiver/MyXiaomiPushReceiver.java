@@ -60,6 +60,17 @@ public class MyXiaomiPushReceiver extends PushMessageReceiver {
             if (!TextUtils.isEmpty(message.getExtra().get("url"))) {
                 Intent intent = new Intent(context, PushAppNotStartWebActivity.class);
                 intent.putExtra("mLoadingUrl", message.getExtra().get("url"));
+                if (message.getExtra().containsKey("tag")) {
+                    //包含推送发单的key  传值通知下一个页面  展示发单的key
+                    if (message.getExtra().get("tag").equals("1")) {
+                        //显示发标按钮
+                        intent.putExtra("mShowing", "1");
+                    }else {
+                        intent.putExtra("mShowing", "0");
+                    }
+                } else {
+                    intent.putExtra("mShowing", "0");
+                }
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -68,6 +79,17 @@ public class MyXiaomiPushReceiver extends PushMessageReceiver {
             if (!TextUtils.isEmpty(message.getExtra().get("url"))) {
                 Intent intent = new Intent(context, PushAppStartWebActivity.class);
                 intent.putExtra("mLoadingUrl", message.getExtra().get("url"));
+                if (message.getExtra().containsKey("tag")) {
+                    //包含推送发单的key  传值通知下一个页面  展示发单的key
+                    if (message.getExtra().get("tag").equals("1")) {
+                        //显示发标按钮
+                        intent.putExtra("mShowing", "1");
+                    }else {
+                        intent.putExtra("mShowing", "0");
+                    }
+                } else {
+                    intent.putExtra("mShowing", "0");
+                }
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -92,6 +114,7 @@ public class MyXiaomiPushReceiver extends PushMessageReceiver {
         if (MiPushClient.COMMAND_REGISTER.equals(command)) {
             if (message.getResultCode() == ErrorCode.SUCCESS) {
                 mRegId = cmdArg1;
+                Log.e(TAG,"小米推送注册测Regid================="+mRegId);
             }
         }
     }

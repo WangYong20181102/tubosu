@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.Util;
@@ -36,7 +37,7 @@ import okhttp3.Response;
 /**
  * 手机验证
  */
-public class CheckPhoneNumActivity extends AppCompatActivity {
+public class CheckPhoneNumActivity extends com.tbs.tobosutype.base.BaseActivity {
     @BindView(R.id.banner_dever)
     View bannerDever;
     @BindView(R.id.check_phone_num)

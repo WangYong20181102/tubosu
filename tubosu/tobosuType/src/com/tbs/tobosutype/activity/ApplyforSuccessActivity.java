@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.customview.GetVerificationPopupwindow;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
@@ -35,7 +36,7 @@ import okhttp3.Response;
  *
  * @author dec
  */
-public class ApplyforSuccessActivity extends Activity implements OnClickListener {
+public class ApplyforSuccessActivity extends com.tbs.tobosutype.base.BaseActivity implements OnClickListener {
     private ImageView applyfor_back;
     private RelativeLayout rl_top;
     /***绑定手机布局*/

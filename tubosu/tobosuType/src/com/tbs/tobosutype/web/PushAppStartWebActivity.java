@@ -4,20 +4,27 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.activity.WelcomeActivity;
+import com.tbs.tobosutype.activity.BaseActivity;
+import com.tbs.tobosutype.activity.NewWebViewActivity;
+import com.tbs.tobosutype.bean._AppEvent;
+import com.tbs.tobosutype.global.Constant;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +35,7 @@ import butterknife.OnClick;
  * 在App启动的情况下查看的页面
  * create by lin
  */
-public class PushAppStartWebActivity extends AppCompatActivity {
+public class PushAppStartWebActivity extends BaseActivity {
     @BindView(R.id.pas_webview_back)
     LinearLayout pasWebviewBack;
     @BindView(R.id.pas_webview_title)
@@ -37,11 +44,16 @@ public class PushAppStartWebActivity extends AppCompatActivity {
     RelativeLayout pasWebviewBannerRl;
     @BindView(R.id.pas_webview_web)
     WebView pasWebviewWeb;
+    @BindView(R.id.push_start_fadan)
+    ImageView pushStartFadan;
 
     private String TAG = "PushAppStartWebActivity";
     private Context mContext;
     private Intent mIntent;
     private String mLoadingUrl = "";//加载数据的URL
+    private String mShowing = "";//是否显示发单按钮
+    private Gson mGson;
+    private _AppEvent mAppEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +67,18 @@ public class PushAppStartWebActivity extends AppCompatActivity {
     private void initViewEvent() {
         Log.e(TAG, "App正在前台运行当前启动的是===============" + TAG);
         mIntent = getIntent();
+        mGson = new Gson();
+        mAppEvent = new _AppEvent();
         pasWebviewBannerRl.setBackgroundColor(Color.parseColor("#ffffff"));
         mLoadingUrl = mIntent.getStringExtra("mLoadingUrl");
+        mShowing = mIntent.getStringExtra("mShowing");
+        if (mShowing.equals("1")) {
+            //显示
+            pushStartFadan.setVisibility(View.VISIBLE);
+            showAnim();
+        } else {
+            pushStartFadan.setVisibility(View.GONE);
+        }
         pasWebviewWeb.getSettings().setJavaScriptEnabled(true);
         pasWebviewWeb.getSettings().setBuiltInZoomControls(true);
         pasWebviewWeb.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
@@ -70,7 +92,7 @@ public class PushAppStartWebActivity extends AppCompatActivity {
 
         pasWebviewWeb.setWebChromeClient(webChromeClient);
         pasWebviewWeb.setWebViewClient(webViewClient);
-        pasWebviewWeb.loadUrl(mLoadingUrl);
+        pasWebviewWeb.loadUrl(mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent));
     }
 
     private WebViewClient webViewClient = new WebViewClient() {
@@ -96,6 +118,18 @@ public class PushAppStartWebActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    //展示动画
+    private void showAnim() {
+        pushStartFadan.setVisibility(View.VISIBLE);
+        TranslateAnimation mAnimShowGif = new TranslateAnimation(
+                Animation.RELATIVE_TO_SELF, 1.0f,
+                Animation.RELATIVE_TO_SELF, -0.3f,
+                Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f);
+        mAnimShowGif.setDuration(500);
+        pushStartFadan.startAnimation(mAnimShowGif);
+    }
+
     @Override
     protected void onDestroy() {
         if (pasWebviewWeb != null) {
@@ -110,8 +144,18 @@ public class PushAppStartWebActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.pas_webview_back)
-    public void onViewClickedInPASActivity() {
-        finish();
+    @OnClick({R.id.pas_webview_back, R.id.push_start_fadan})
+    public void onViewClickedInPASActivity(View view) {
+        switch (view.getId()) {
+            case R.id.pas_webview_back:
+                finish();
+                break;
+            case R.id.push_start_fadan:
+                //跳转到发单页面
+                Intent intent = new Intent(mContext, NewWebViewActivity.class);
+                intent.putExtra("mLoadingUrl", Constant.DEC_COOM_DESIGNER_FIND_DISIGN);
+                mContext.startActivity(intent);
+                break;
+        }
     }
 }

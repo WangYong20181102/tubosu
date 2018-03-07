@@ -192,4 +192,45 @@ public class SpUtil {
     public static void setHomeAndCompanyUsingCity(Context context, String mHomeAndCompanyUsingCity) {
         context.getSharedPreferences("mHomeAndCompanyUsingCity", 0).edit().putString("mHomeAndCompanyUsingCity", mHomeAndCompanyUsingCity).commit();
     }
+
+    // TODO: 2018/3/1  统计相关的数据
+    //存储统计的访问时间
+    public static long getStatisticsEventVistTime(Context context) {
+        return context.getSharedPreferences("StatisticsEvent", 0).getLong("m_vist_time", 0);
+    }
+
+    //获取统计的访问时间
+    public static void setStatisticsEventVistTime(Context context, long vist_time) {
+        context.getSharedPreferences("StatisticsEvent", 0).edit().putLong("m_vist_time", vist_time).commit();
+    }
+
+    //存储统计的离开时间
+    public static long getStatisticsEventLeaveTime(Context context) {
+        return context.getSharedPreferences("StatisticsEvent", 0).getLong("m_leave_time", 0);
+    }
+
+    //获取统计的离开时间
+    public static void setStatisticsEventLeaveTime(Context context, long leave_time) {
+        context.getSharedPreferences("StatisticsEvent", 0).edit().putLong("m_leave_time", leave_time).commit();
+    }
+
+    //存储统计的from_where
+    public static String getStatisticsEventFromWhere(Context context) {
+        return context.getSharedPreferences("StatisticsEvent", 0).getString("m_from_where", "");
+    }
+
+    //获取统计的from_where
+    public static void setStatisticsEventFromWhere(Context context, String from_where) {
+        context.getSharedPreferences("StatisticsEvent", 0).edit().putString("m_from_where", from_where).commit();
+    }
+
+    //存储统计的页面的pageId
+    public static String getStatisticsEventPageId(Context context) {
+        return context.getSharedPreferences("StatisticsEvent", 0).getString("m_page_id", "");
+    }
+
+    //获取统计的from_where
+    public static void setStatisticsEventPageId(Context context, String page_id) {
+        context.getSharedPreferences("StatisticsEvent", 0).edit().putString("m_page_id", page_id).commit();
+    }
 }

@@ -3,6 +3,7 @@ package com.tbs.tobosutype.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.tbs.tobosutype.bean._ImageD;
 import com.tbs.tobosutype.customview.TouchImageView;
 import com.tbs.tobosutype.utils.EventBusUtil;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +37,7 @@ public class DImageLookFragment extends BaseFragment {
     private Context mContext;
     private TouchImageView mTouchImageView;
     private String mImageUrl;
-    private String TAG = "SImageLookFragment";
+    private String TAG = "DImageLookFragment";
 
     public DImageLookFragment() {
 
@@ -43,6 +45,11 @@ public class DImageLookFragment extends BaseFragment {
 
     @Override
     protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected boolean havePageId() {
         return true;
     }
 
@@ -82,6 +89,8 @@ public class DImageLookFragment extends BaseFragment {
         mTouchImageView.setOnClickListener(onClickListener);
         mTouchImageView.setOnLongClickListener(onLongClickListener);
     }
+
+
 
     //点击事件  单击
     private View.OnClickListener onClickListener = new View.OnClickListener() {

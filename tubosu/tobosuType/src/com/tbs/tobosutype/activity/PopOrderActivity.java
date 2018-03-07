@@ -25,12 +25,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.PopAdapter;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.customview.TextSeekBar;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
 import org.json.JSONException;
@@ -45,7 +47,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 import static com.tbs.tobosutype.utils.CacheManager.getOngoingStyle;
 
-public class PopOrderActivity extends Activity {
+public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     private static final String TAG = PopOrderActivity.class.getSimpleName();
     private static final String popOrderUrl = Constant.TOBOSU_URL + "tapi/order/pub_order";
     private static final String pipe_code = Constant.PIPE; // 渠道代码
@@ -408,8 +410,8 @@ public class PopOrderActivity extends Activity {
 
         tvPrepareRightText = (TextView) findViewById(R.id.tv_prepare_right_text);
         tvCityLocation = (TextView) findViewById(R.id.tv_city_location);
-        if (!"".equals(CacheManager.getCity(mContext))) {
-            tvCityLocation.setText(" 当前位置 " + CacheManager.getCity(mContext));
+        if (!"".equals(SpUtil.getCity(mContext))) {
+            tvCityLocation.setText(" 当前位置 " + SpUtil.getCity(mContext));
         }else {
             tvCityLocation.setText("定位失败 点击选择城市");
         }
@@ -433,8 +435,8 @@ public class PopOrderActivity extends Activity {
         etCellphone1 = (EditText) findViewById(R.id.et_cellphone1);
         etCellphone1.clearFocus();
         tvCityLocation1 = (TextView) findViewById(R.id.tv_city_location1);
-        if (!"".equals(CacheManager.getCity(mContext))) {
-            tvCityLocation1.setText(" 当前位置 " + CacheManager.getCity(mContext));
+        if (!"".equals(SpUtil.getCity(mContext))) {
+            tvCityLocation1.setText(" 当前位置 " + SpUtil.getCity(mContext));
         }else{
             tvCityLocation1.setText("定位失败 点击选择城市");
         }
@@ -1363,7 +1365,7 @@ public class PopOrderActivity extends Activity {
             hashMap.put("style", style); // 风格
             hashMap.put("device", "android");
             hashMap.put("source", "942");
-            hashMap.put("city", CacheManager.getCity(mContext));
+            hashMap.put("city", SpUtil.getCity(mContext));
             hashMap.put("version", AppInfoUtil.getAppVersionName(mContext));
             hashMap.put("urlhistory", Constant.PIPE); // 渠道代码
             hashMap.put("comeurl", Constant.PIPE); //订单发布页面

@@ -77,7 +77,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="14dp"
             android:background="@drawable/ad_icon" />
-
+        <!--定位的城市-->
         <TextView
             android:id="@+id/newhomeCity"
             android:layout_width="wrap_content"
@@ -85,7 +85,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="6dp"
             android:layout_toRightOf="@+id/iv_add"
-            android:text="深圳"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="14sp" />
 

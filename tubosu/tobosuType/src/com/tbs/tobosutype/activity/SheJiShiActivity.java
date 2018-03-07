@@ -1,4 +1,5 @@
 package com.tbs.tobosutype.activity;
+
 import com.tbs.tobosutype.bean._CompanyDetail;
 
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.DesignerInfoAdapter;
@@ -26,13 +28,16 @@ import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -74,7 +79,12 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
         bindViews();
     }
 
-    private void bindViews(){
+    @Override
+    protected boolean havePageId() {
+        return true;
+    }
+
+    private void bindViews() {
         shejishiBar = (RelativeLayout) findViewById(R.id.shejishiBar);
         relShejishiBack = (RelativeLayout) findViewById(R.id.relShejishiBack);
         ivbacUpck = (ImageView) findViewById(R.id.ivbacUpck);
@@ -91,11 +101,12 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
 
         dataIntent = getIntent();
         des_id = dataIntent.getStringExtra("designer_id");
+        SpUtil.setStatisticsEventPageId(mContext, des_id);
         Util.setErrorLog(TAG, ">>设计师id>>>>" + des_id);
         initViews();
     }
 
-    private void initViews(){
+    private void initViews() {
         linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         shejishiRecyclerView.setLayoutManager(linearLayoutManager);
@@ -109,7 +120,7 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if(shejishiAdapter != null && !shejishiAdapter.cantLoadMore()){
+                if (shejishiAdapter != null && !shejishiAdapter.cantLoadMore()) {
                     loadMoreDataType = shejishiAdapter.getClickType();
                     //得到当前显示的最后一个item的view
                     int lastPosition = linearLayoutManager.findLastVisibleItemPosition();
@@ -128,7 +139,7 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                     scollYHeight = 402;
                     shejishiBar.getBackground().setAlpha(255);
                 } else {
-                    alpha = (int)(255 - (baseHeight - scollYHeight));
+                    alpha = (int) (255 - (baseHeight - scollYHeight));
                 }
                 shejishiBar.getBackground().setAlpha(alpha);
                 if (alpha < 69) {
@@ -163,14 +174,14 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
     }
 
 
-    private void loadMoreData(final int type){
+    private void loadMoreData(final int type) {
         String url = "";
-        HashMap<String, Object> hashMap = new HashMap<String,Object>();
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
         hashMap.put("token", Util.getDateToken());
         hashMap.put("des_id", des_id);
-        hashMap.put("page_size",page_size);
+        hashMap.put("page_size", page_size);
 
-        if(type == 0 && !shejishiAdapter.cantLoadMoreSheji()){
+        if (type == 0 && !shejishiAdapter.cantLoadMoreSheji()) {
             // 设计
             shejiPage++;
             hashMap.put("page", shejiPage);
@@ -179,19 +190,19 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
             hashMap.put("user_type", userType);
             hashMap.put("uid", uid);
             url = Constant.MORE_SHEJI_URL;
-        }else {
-            if(type == 1 && !shejishiAdapter.cantLoadMoreAnli()){
+        } else {
+            if (type == 1 && !shejishiAdapter.cantLoadMoreAnli()) {
                 // 案例
                 anliPage++;
                 hashMap.put("page", anliPage);
                 hashMap.put("user_type", "");
                 hashMap.put("uid", "");
                 url = Constant.MORE_ANLI_URL;
-            }else {
+            } else {
                 return;
             }
         }
-        if(Util.isNetAvailable(mContext)){
+        if (Util.isNetAvailable(mContext)) {
 
             OKHttpUtil.post(url, hashMap, new Callback() {
 
@@ -201,7 +212,7 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if(shejishiAdapter!=null){
+                            if (shejishiAdapter != null) {
                                 shejishiAdapter.loadMore(false);
                             }
 
@@ -222,24 +233,24 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                         @Override
                         public void run() {
                             isLoading = false;
-                            if(shejishiAdapter!=null){
+                            if (shejishiAdapter != null) {
                                 shejishiAdapter.loadMore(false);
                             }
                             try {
                                 JSONObject moreDataJson = new JSONObject(json);
                                 String msg = moreDataJson.getString("msg");
-                                if(moreDataJson.getInt("status") == 200){
+                                if (moreDataJson.getInt("status") == 200) {
                                     JSONArray dataArr = moreDataJson.getJSONArray("data");
-                                    if(type == 0){
+                                    if (type == 0) {
                                         // 设计
                                         List<_CompanyDetail.SuitesBean> tempMoreShejiList = new ArrayList<_CompanyDetail.SuitesBean>();
-                                        for(int i=0;i<dataArr.length();i++){
+                                        for (int i = 0; i < dataArr.length(); i++) {
                                             Gson shejiGson = new Gson();
                                             _CompanyDetail.SuitesBean designBean = shejiGson.fromJson(dataArr.getJSONObject(i).toString(), _CompanyDetail.SuitesBean.class);
                                             tempMoreShejiList.add(designBean);
                                         }
 
-                                        if(shejishiAdapter != null){
+                                        if (shejishiAdapter != null) {
                                             shejishiAdapter.setShejiDataList(tempMoreShejiList);
                                             shejishiAdapter.notifyDataSetChanged();
 
@@ -264,7 +275,7 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
 //                                                }
 //                                            });
                                         }
-                                    }else{
+                                    } else {
                                         //  案例
                                         List<DesignerInfoCaseBean> tempMoreAnliList = new ArrayList<>();
                                         for (int i = 0; i < dataArr.length(); i++) {
@@ -272,7 +283,7 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                                             DesignerInfoCaseBean anliBean = anliGson.fromJson(dataArr.getJSONObject(i).toString(), DesignerInfoCaseBean.class);
                                             tempMoreAnliList.add(anliBean);
                                         }
-                                        if(shejishiAdapter != null){
+                                        if (shejishiAdapter != null) {
                                             shejishiAdapter.setAnliDataList(tempMoreAnliList);
                                             shejishiAdapter.notifyDataSetChanged();
 
@@ -293,10 +304,10 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
 //                                            });
                                         }
                                     }
-                                }else if(moreDataJson.getInt("status") == 201){
+                                } else if (moreDataJson.getInt("status") == 201) {
                                     Util.setErrorLog(TAG, "加载更多来了 status = 201");
 //                                    Util.setToast(mContext, msg);
-                                }else if(moreDataJson.getInt("status") == 0){
+                                } else if (moreDataJson.getInt("status") == 0) {
                                     Util.setErrorLog(TAG, "设加载更多来了 status = 0");
                                     Util.setToast(mContext, msg);
                                 }
@@ -311,16 +322,15 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
     }
 
 
-
-    private void getData(){
-        if(Util.isNetAvailable(mContext)){
+    private void getData() {
+        if (Util.isNetAvailable(mContext)) {
             String userType = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("mark", "");
             String uid = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("userid", "");
-            HashMap<String, Object> hashMap = new HashMap<String,Object>();
+            HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("token", Util.getDateToken());
             hashMap.put("des_id", des_id);
-            hashMap.put("page",page);
-            hashMap.put("page_size",page_size);
+            hashMap.put("page", page);
+            hashMap.put("page_size", page_size);
             hashMap.put("user_type", userType);
             hashMap.put("uid", uid);
             OKHttpUtil.post(Constant.SHEJISHI_URL, hashMap, new Callback() {
@@ -346,10 +356,10 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                         public void run() {
                             try {
                                 JSONObject sheji = new JSONObject(json);
-                                if(sheji.getInt("status") == 200){
+                                if (sheji.getInt("status") == 200) {
                                     JSONObject data = sheji.getJSONObject("data");
                                     JSONObject designerInfo = data.getJSONObject("designer_info");
-                                    if(designerInfoBean == null){
+                                    if (designerInfoBean == null) {
                                         Gson infoGson = new Gson();
                                         designerInfoBean = infoGson.fromJson(designerInfo.toString(), DesignerInfoBean.class);
                                         shareUrl = designerInfoBean.getShare();
@@ -373,19 +383,19 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
                                     }
                                     anliList.addAll(tempAnliList);
 
-                                    if(shejishiAdapter == null){
-                                        if(shejiList.size() == 0 && anliList.size() == 0){
+                                    if (shejishiAdapter == null) {
+                                        if (shejiList.size() == 0 && anliList.size() == 0) {
                                             shejishiAdapter = new DesignerInfoAdapter(mContext, designerInfoBean);
-                                        }else if(shejiList.size()>0 && anliList.size() == 0){
+                                        } else if (shejiList.size() > 0 && anliList.size() == 0) {
                                             shejishiAdapter = new DesignerInfoAdapter(mContext, designerInfoBean, shejiList);
-                                        }else if(shejiList.size() == 0 && anliList.size() >0){
+                                        } else if (shejiList.size() == 0 && anliList.size() > 0) {
                                             shejishiAdapter = new DesignerInfoAdapter(mContext, designerInfoBean, anliList, 1);
-                                        }else if(shejiList.size() > 0 && anliList.size() >0){
+                                        } else if (shejiList.size() > 0 && anliList.size() > 0) {
                                             shejishiAdapter = new DesignerInfoAdapter(mContext, designerInfoBean, shejiList, anliList);
                                         }
                                         shejishiRecyclerView.setAdapter(shejishiAdapter);
                                         shejishiAdapter.notifyDataSetChanged();
-                                    }else {
+                                    } else {
                                         shejishiAdapter.notifyDataSetChanged();
                                     }
 
@@ -424,9 +434,9 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
 //                                        }
 //                                    });
 
-                                }else if(sheji.getInt("status") == 201){
+                                } else if (sheji.getInt("status") == 201) {
                                     Util.setErrorLog(TAG, "设计师来了201");
-                                }else if(sheji.getInt("status") == 0){
+                                } else if (sheji.getInt("status") == 0) {
                                     Util.setErrorLog(TAG, "设计师来了0");
                                 }
                             } catch (JSONException e) {
@@ -472,10 +482,10 @@ public class SheJiShiActivity extends com.tbs.tobosutype.base.BaseActivity imple
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.shejishiShare:
                 UMWeb umWeb = new UMWeb(shareUrl + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(mContext));
-                umWeb.setDescription("我是来着土拨鼠-"+designerInfoBean.getCom_name()+"的"+ designerInfoBean.getName()+"，专注品质家装设计，提前遇见您未来的家");
+                umWeb.setDescription("我是来着土拨鼠-" + designerInfoBean.getCom_name() + "的" + designerInfoBean.getName() + "，专注品质家装设计，提前遇见您未来的家");
                 umWeb.setTitle("设计师-" + designerInfoBean.getName() + "-" + designerInfoBean.getCom_name());
                 umWeb.setThumb(new UMImage(mContext, designerInfoBean.getIcon()));
                 new ShareAction(SheJiShiActivity.this)

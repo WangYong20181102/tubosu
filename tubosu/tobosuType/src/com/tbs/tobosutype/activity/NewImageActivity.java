@@ -158,6 +158,8 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
+                                    //退出前将数据上传
+                                    Util.HttpPostUserUseInfo();
                                     finish();
                                     System.exit(0);
                                 }

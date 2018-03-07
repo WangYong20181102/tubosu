@@ -33,6 +33,8 @@ public class AppInfoUtil {
      */
     public static boolean ISJUSTLOGIN = false;
 
+
+    //获取App的版本信息
     public static String getAppVersionName(Context context) {
         String versionName = "";
         try {

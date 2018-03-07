@@ -17,6 +17,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.SwipeAdapter;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean._DecorationExpent;
 import com.tbs.tobosutype.customview.MyChatView;
 import com.tbs.tobosutype.customview.MySeekBar;
@@ -40,7 +41,7 @@ import okhttp3.Response;
  * Created by Lie on 2017/5/31.
  */
 
-public class DecorateAccountActivity extends Activity {
+public class DecorateAccountActivity extends com.tbs.tobosutype.base.BaseActivity {
     private Context mContext;
     private _DecorationExpent decorationExpent;//整个页面的数据
     private static final String TAG = DecorateAccountActivity.class.getSimpleName();

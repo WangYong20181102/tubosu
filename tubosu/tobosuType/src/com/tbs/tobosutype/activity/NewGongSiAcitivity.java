@@ -56,6 +56,7 @@ import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.bean.GongsiItem;
 import com.tbs.tobosutype.bean.RCompanyBean;
 import com.tbs.tobosutype.bean.ShaixuanBean;
+import com.tbs.tobosutype.bean._SelectCity;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.customview.MyListView;
 import com.tbs.tobosutype.customview.ShaixuanDialog;
@@ -652,7 +653,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
     protected void receiveEvent(Event event) {
         switch (event.getCode()) {
             case EC.EventCode.CHOOSE_CITY_CODE:
-                gongsiCity = (String) event.getData();
+                _SelectCity selectCity = (_SelectCity) event.getData();
+                gongsiCity = selectCity.getCityName();
                 city_name = gongsiCity;
                 tvGongsiCity.setText(gongsiCity);
                 tvGongsiCity1.setText(gongsiCity);
@@ -720,6 +722,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 city_name = city;
                 tvGongsiCity.setText(city_name);
                 tvGongsiCity1.setText(city_name);
+                getBannerData(); // banner
                 getNetData();
                 break;
 
@@ -1115,7 +1118,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
         shaixuanDialog.setOnChooseCityListener(new ShaixuanDialog.OnChooseCityListener() {
             @Override
             public void OnChooseCityListener() {
-                showChooseCity();
+//                showChooseCity();
             }
         });
 
@@ -1397,7 +1400,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
 
                                         @Override
                                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                            if(Util.isNetAvailable(mContext)){
+                                            if (Util.isNetAvailable(mContext)) {
                                                 Intent it = new Intent(mContext, DecComActivity.class);
                                                 it.putExtra("mCompanyId", youxuanSearchGongsiList.get(i).getId());
                                                 startActivity(it);
@@ -1706,6 +1709,8 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
+                                    //退出前将数据上传
+                                    Util.HttpPostUserUseInfo();
                                     finish();
                                     System.exit(0);
                                 }

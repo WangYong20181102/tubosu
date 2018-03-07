@@ -34,6 +34,7 @@ import com.baidu.mapapi.search.route.RoutePlanSearch;
 import com.baidu.mapapi.search.route.TransitRouteResult;
 import com.baidu.mapapi.search.route.WalkingRouteResult;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.overlayutil.DrivingRouteOverlay;
 import com.tbs.tobosutype.utils.SpUtil;
 
@@ -41,7 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class BaiduMapActivity extends AppCompatActivity {
+public class BaiduMapActivity extends com.tbs.tobosutype.base.BaseActivity {
 
 
     @BindView(R.id.baidu_map_view)

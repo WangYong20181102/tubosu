@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.CoYouHuiAdapter;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean._YouHui;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
@@ -41,7 +42,7 @@ import okhttp3.Response;
  * 从装修公司主页进入
  * create by lin
  */
-public class CoYouHuiActivity extends AppCompatActivity {
+public class CoYouHuiActivity extends com.tbs.tobosutype.base.BaseActivity {
     @BindView(R.id.co_youhui_back_ll)
     LinearLayout coYouhuiBackLl;
     @BindView(R.id.co_youhui_recycler)

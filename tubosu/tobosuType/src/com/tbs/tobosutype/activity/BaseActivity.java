@@ -10,7 +10,7 @@ import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.protocol.JpyProtocol;
 
 
-public class BaseActivity extends Activity implements JpyProtocol.MDataUpdateNotify {
+public class BaseActivity extends com.tbs.tobosutype.base.BaseActivity implements JpyProtocol.MDataUpdateNotify {
 	protected String TAG = BaseActivity.class.getSimpleName();
 	protected Context mContext;
 

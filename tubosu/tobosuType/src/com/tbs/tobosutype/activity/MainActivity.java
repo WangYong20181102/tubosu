@@ -15,25 +15,26 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
+
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
+
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
+
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
+
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
-import com.tbs.tobosutype.receiver.MyJpushReceiver;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+
 import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
@@ -125,7 +126,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     private RelativeLayout rl_checkNet;
 
     private NetStateReceiver receiver;
-    private int mTime = 1;
+    private int mTime = 0;
 
     private Handler netStateHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -140,6 +141,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
             }
         }
     };
+    private Gson mGson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,31 +149,34 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         mContext = MainActivity.this;
         userInfo = getSharedPreferences("userInfo", 0);
-        initView();
+        mGson = new Gson();
+        needPermissions();//权限的遍历
         initReceiver();
+        initView();
         initEvent();
-        needPermissions();
         HttpUserIsChangePassWord();
         clearUserInfoWithAppUpdata();
-        timeKill();
     }
 
-    //计时器
-    private void timeKill() {
-        new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        Thread.sleep(1000);
-                        mTime++;
-                        Log.e(TAG, "计时时间============" + mTime);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }.start();
+    // TODO: 2018/2/27 点击事件流所需要的执行的操作
+    @Override
+    protected void onResume() {
+        setFragmentPosition(SpUtil.getMainTabPosition(mContext));
+        isForeground = true;
+        super.onResume();
+        initData();
+        if (AppInfoUtil.ISJUSTLOGIN) {
+            operTab();
+        }
+        MobclickAgent.onResume(this);
+        Log.e(TAG, "MainActivity执行的生命周期========onResume()");
+    }
+
+    protected void onPause() {
+        isForeground = false;
+        super.onPause();
+        MobclickAgent.onPause(this);
+        Log.e(TAG, "MainActivity执行的生命周期========onPause()");
     }
 
     //版本更新清除之前的用户信息
@@ -275,7 +280,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         main_tab_home.setOnClickListener(this);
         main_tab_image = (RelativeLayout) this.findViewById(R.id.main_tab_image);
         main_tab_image.setOnClickListener(this);
-        // TODO: 2017/12/16  专门用来做测试 
+        // TODO: 2017/12/16  专门用来做测试
 //        main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
 //            @Override
 //            public boolean onLongClick(View v) {
@@ -503,18 +508,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     }
 
 
-    @Override
-    protected void onResume() {
-        setFragmentPosition(SpUtil.getMainTabPosition(mContext));
-        isForeground = true;
-        super.onResume();
-        initData();
-        if (AppInfoUtil.ISJUSTLOGIN) {
-            operTab();
-        }
-        MobclickAgent.onResume(this);
-    }
-
     /**
      * 根据不同mark标记 显示不同的[我]页面
      */
@@ -537,13 +530,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         }
         initEvent();
     }
-
-    protected void onPause() {
-        isForeground = false;
-        super.onPause();
-        MobclickAgent.onPause(this);
-    }
-
 
     /***
      * 检测网络状况 ；若登陆 则获取订单数目

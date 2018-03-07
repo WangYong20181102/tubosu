@@ -1,9 +1,11 @@
 package com.tbs.tobosutype.utils;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AppOpsManager;
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
@@ -12,32 +14,45 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.tbs.tobosutype.bean._AppEvent;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -47,11 +62,18 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import static android.content.Context.ACTIVITY_SERVICE;
+import static android.content.Context.TELEPHONY_SERVICE;
+import static com.umeng.socialize.utils.DeviceConfig.context;
+
 /**
  * Created by dec on 2016/9/12.
  * 工具类
  */
 public class Util {
+    private static Gson mGson = new Gson();
+    private static String TAG = "Util_lin";
+    private static int mTime = 0;//上传用户信息流的倒计时时间
 
     public static void setToast(Context context, String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
@@ -426,7 +448,7 @@ public class Util {
      * 注意：需要配置权限<uses-permission android:name="android.permission.GET_TASKS" />
      */
     public static int getAppSatus(Context context, String pageName) {
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager am = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> list = am.getRunningTasks(20);
 
         //判断程序是否在栈顶
@@ -487,5 +509,256 @@ public class Util {
      */
     public static boolean hasSDCard() {
         return android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+    }
+
+    // TODO: 2018/2/24 统计流所需的数据 也可以作用于其他界面
+
+    //获取Unix时间戳
+    public static long getUnixTime() {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date d = new Date();
+        String t = df.format(d);
+        long epoch = 0;
+        try {
+            epoch = df.parse(t).getTime() / 1000;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return epoch;
+    }
+
+    //获取手机的IMEI
+    public static String getIMEI() {
+        TelephonyManager TelephonyMgr = (TelephonyManager) MyApplication.getContext().getSystemService(TELEPHONY_SERVICE);
+        @SuppressLint("MissingPermission") String szImei = TelephonyMgr.getDeviceId();
+        return szImei;
+    }
+
+    //获取Android的 api   数据流中的ani
+    public static int getAni() {
+        return Build.VERSION.SDK_INT;
+    }
+
+    //获取设备的id Android:md5(ani+imei+mac)
+    public static String getDeviceID() {
+        return MD5Util.md5(Util.getAni() + Util.getIMEI() + MacUtils.getMobileMAC(MyApplication.getContext()));
+    }
+
+    //生成大于6位的随机字符串
+    public static String getRandomString(int length) { //length表示生成字符串的长度
+        String base = "abcdefghijklmnopqrstuvwxyz0123456789";
+        Random random = new Random();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < length; i++) {
+            int number = random.nextInt(base.length());
+            sb.append(base.charAt(number));
+        }
+        return sb.toString();
+    }
+
+    //获取会话Id md5(di+current_time+random_str)
+    public static String getSessionID() {
+        return MD5Util.md5(Util.getDeviceID() + Util.getUnixTime() + Util.getRandomString(8));
+    }
+
+    //获取手机的分辨率
+    public static String getPixels() {
+        DisplayMetrics dm = new DisplayMetrics();
+        WindowManager wm = (WindowManager) MyApplication.getContext().getSystemService(Context.WINDOW_SERVICE);
+        wm.getDefaultDisplay().getMetrics(dm);
+        String s = dm.widthPixels + "*" + dm.heightPixels;
+        return s;
+    }
+
+    //获取设备的型号
+    public static String getDeviceModel() {
+        return android.os.Build.MODEL;
+    }
+
+    //获取手机的系统版本
+    public static String getSystemVersion() {
+        return "Android " + android.os.Build.VERSION.RELEASE;
+    }
+
+    //获取运营商 名称
+    public static String getOperator() {
+
+        String ProvidersName = "";
+        TelephonyManager telephonyManager = (TelephonyManager) MyApplication.getContext().getSystemService(Context.TELEPHONY_SERVICE);
+        @SuppressLint("MissingPermission") String IMSI = telephonyManager.getSubscriberId();
+        Log.i("qweqwes", "运营商代码" + IMSI);
+        if (IMSI != null) {
+            if (IMSI.startsWith("46000") || IMSI.startsWith("46002") || IMSI.startsWith("46007")) {
+                ProvidersName = "CMCC";
+            } else if (IMSI.startsWith("46001") || IMSI.startsWith("46006")) {
+                ProvidersName = "CUCC";
+            } else if (IMSI.startsWith("46003")) {
+                ProvidersName = "CTCC";
+            }
+            return ProvidersName;
+        } else {
+            return "WIFI";
+        }
+    }
+
+    //获取IP
+    public static String getIp(final Context context) {
+        String ip = null;
+        ConnectivityManager conMan = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // mobile 3G Data Network
+        android.net.NetworkInfo.State mobile = conMan.getNetworkInfo(
+                ConnectivityManager.TYPE_MOBILE).getState();
+        // wifi
+        android.net.NetworkInfo.State wifi = conMan.getNetworkInfo(
+                ConnectivityManager.TYPE_WIFI).getState();
+
+        // 如果3G网络和wifi网络都未连接，且不是处于正在连接状态 则进入Network Setting界面 由用户配置网络连接
+        if (mobile == android.net.NetworkInfo.State.CONNECTED
+                || mobile == android.net.NetworkInfo.State.CONNECTING) {
+            ip = getLocalIpAddress();
+        }
+        if (wifi == android.net.NetworkInfo.State.CONNECTED
+                || wifi == android.net.NetworkInfo.State.CONNECTING) {
+            //获取wifi服务
+            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            //判断wifi是否开启
+            if (!wifiManager.isWifiEnabled()) {
+                wifiManager.setWifiEnabled(true);
+            }
+            WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+            int ipAddress = wifiInfo.getIpAddress();
+            ip = (ipAddress & 0xFF) + "." +
+                    ((ipAddress >> 8) & 0xFF) + "." +
+                    ((ipAddress >> 16) & 0xFF) + "." +
+                    (ipAddress >> 24 & 0xFF);
+        }
+        return ip;
+
+    }
+
+    private static String getLocalIpAddress() {
+        try {
+            //Enumeration<NetworkInterface> en=NetworkInterface.getNetworkInterfaces();
+            for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {
+                NetworkInterface intf = en.nextElement();
+                for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements(); ) {
+                    InetAddress inetAddress = enumIpAddr.nextElement();
+                    if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {//获取IPv4的IP地址
+                        return inetAddress.getHostAddress();
+                    }
+                }
+            }
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+
+
+        return null;
+    }
+
+    // TODO: 2018/2/27 App点击流事件统计(添加事件到全局的集合中)
+    public static void addAppEventCount(_AppEvent.EvBean evBean) {
+        //添加事件
+        MyApplication.evBeanArrayList.add(evBean);
+        Log.e(TAG, "添加事件成功=========" + evBean.getLt());
+        if (MyApplication.evBeanArrayList.size() >= 50) {
+            //上传数据
+            mTime = 0;
+            HttpPostUserUseInfo();
+        }
+    }
+
+    // TODO: 2018/2/27 倒计时进行数据的上传
+    public static void sendEventByTimeKill() {
+        new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(1000);
+                        mTime++;
+                        Log.e(TAG, "计时时间============" + mTime + "===当前全局事件集合长度===" + MyApplication.evBeanArrayList.size());
+                        if (mTime >= 30) {
+                            //时间到了30秒进行数据的上传
+                            mTime = 0;
+                            if (!MyApplication.evBeanArrayList.isEmpty()) {
+                                //上传数据
+                                HttpPostUserUseInfo();
+                            }
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
+    }
+
+    // TODO: 2018/2/27 上传数据
+    public static void HttpPostUserUseInfo() {
+        //根据事件的集合生成要上传的对象
+        _AppEvent appEvent = new _AppEvent(MyApplication.evBeanArrayList);
+        Log.e(TAG, "上传事件集合长度==========" + appEvent.getEv().size());
+        //将对象转为json
+        String appEventJson = mGson.toJson(appEvent);
+        //生成对象后将集合清空
+        MyApplication.evBeanArrayList.clear();
+        //生成参数上传
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("data", appEventJson);
+        Log.e(TAG, "点击流上传的JSON数据==============" + appEventJson);
+        OKHttpUtil.post(Constant.TBS_DATA_STREAM, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "数据流链接数据失败=====" + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String result = new String(response.body().string());
+                Log.e(TAG, "数据流链接数据成功=====" + result);
+
+            }
+        });
+    }
+
+    /**
+     * @param is_init      是否进行初始化
+     * @param from_where   访问来源
+     * @param now_activity 当前页面
+     */
+    public static void useStatisticsEventVistEvent(boolean is_init,
+                                                   String from_where,
+                                                   String now_activity) {
+        if (is_init) {
+            //初始化
+            //设定访问时间
+            SpUtil.setStatisticsEventVistTime(MyApplication.getContext(), Util.getUnixTime());
+            SpUtil.setStatisticsEventFromWhere(MyApplication.getContext(), from_where);
+        } else {
+            //统计上传
+            SpUtil.setStatisticsEventLeaveTime(MyApplication.getContext(), Util.getUnixTime());
+            //访问事件
+            _AppEvent.EvBean evBean0 = new _AppEvent.EvBean(
+                    SpUtil.getStatisticsEventFromWhere(MyApplication.getContext()), now_activity, "",
+                    SpUtil.getStatisticsEventVistTime(MyApplication.getContext()),
+                    SpUtil.getStatisticsEventLeaveTime(MyApplication.getContext()), "0");
+            Util.addAppEventCount(evBean0);
+        }
+    }
+
+    //点击事件
+    public static void useStatisticsEventClickEvent(String event_code, String now_activity) {
+        if (!TextUtils.isEmpty(event_code)) {
+            //统计点击事件
+            _AppEvent.EvBean evBean1 = new _AppEvent.EvBean(
+                    SpUtil.getStatisticsEventFromWhere(MyApplication.getContext()),
+                    now_activity, event_code,
+                    Util.getUnixTime(),
+                    Util.getUnixTime(), "1");
+            Util.addAppEventCount(evBean1);
+        }
     }
 }

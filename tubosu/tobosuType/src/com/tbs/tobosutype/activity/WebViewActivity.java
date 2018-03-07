@@ -16,9 +16,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.base.*;
+import com.tbs.tobosutype.bean._AppEvent;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.ShareUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 
 /**
  * 用来加载h5页面
@@ -26,7 +30,7 @@ import com.tbs.tobosutype.utils.ShareUtil;
  *
  * @author dec
  */
-public class WebViewActivity extends Activity {
+public class WebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
     private static final String TAG = WebViewActivity.class.getSimpleName();
     private Context mContext;
 
@@ -39,7 +43,8 @@ public class WebViewActivity extends Activity {
     private String url;
     private String currentUrl = "";
     private RelativeLayout rl_banner;
-
+    private Gson mGson;
+    private _AppEvent mAppEvent;
 
 //	private ProgressDialog pbDialog;
 //	
@@ -71,8 +76,14 @@ public class WebViewActivity extends Activity {
         initEvent();
     }
 
-    private void initView() {
+    @Override
+    protected boolean havePageId() {
+        return true;
+    }
 
+    private void initView() {
+        mGson = new Gson();
+        mAppEvent = new _AppEvent();
         webView = (WebView) findViewById(R.id.my_webview);
         detailslideshow_title = (TextView) findViewById(R.id.detailslideshow_title);
         detail_share = (ImageView) findViewById(R.id.detail_share);
@@ -93,7 +104,8 @@ public class WebViewActivity extends Activity {
 //		webView.setWebViewClient(new WebViewClient());
 
         webView.setWebChromeClient(new WebChromeClient());
-        webView.loadUrl(url);
+        SpUtil.setStatisticsEventPageId(mContext, url);
+        webView.loadUrl(url + "?equipmentInfo=" + mGson.toJson(mAppEvent));
 //		webView_detailslideshow.addJavascriptInterface(object, name);
     }
 

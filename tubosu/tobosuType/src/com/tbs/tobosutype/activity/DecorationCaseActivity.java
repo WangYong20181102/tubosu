@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.DecorationCaseAdapter;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean._DecorationCaseItem;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
@@ -44,7 +45,7 @@ import okhttp3.Response;
  * 土拨鼠3.4版本 新增
  * 案例列表页 creat by lin
  */
-public class DecorationCaseActivity extends Activity {
+public class DecorationCaseActivity extends com.tbs.tobosutype.base.BaseActivity {
     @BindView(R.id.deco_case_back)
     LinearLayout decoCaseBack;
     @BindView(R.id.deco_case_recycler)

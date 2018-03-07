@@ -12,7 +12,9 @@ import android.widget.LinearLayout;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.CoZiZhiAdapter;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean._CompanyDetail;
+import com.tbs.tobosutype.utils.SpUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,7 +30,7 @@ import butterknife.OnClick;
  * create by lin
  */
 
-public class CoZizhiActivity extends AppCompatActivity {
+public class CoZizhiActivity extends com.tbs.tobosutype.base.BaseActivity {
     @BindView(R.id.co_zizhi_back_ll)
     LinearLayout coZizhiBackLl;
     @BindView(R.id.co_zizhi_recycler)

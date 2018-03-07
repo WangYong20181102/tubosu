@@ -7,13 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.utils.GlideUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class BigIconLookActivity extends AppCompatActivity {
+public class BigIconLookActivity extends com.tbs.tobosutype.base.BaseActivity {
     @BindView(R.id.big_icon_iamge)
     ImageView bigIconIamge;
     private Context mContext;

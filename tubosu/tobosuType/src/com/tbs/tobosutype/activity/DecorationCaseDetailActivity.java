@@ -17,9 +17,11 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.DecoCaseDetailAdapter;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean._DecoCaseDetail;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -45,7 +47,7 @@ import okhttp3.Response;
  * 从案例列表点击进入
  * 头部包含相关信息
  */
-public class DecorationCaseDetailActivity extends Activity {
+public class DecorationCaseDetailActivity extends com.tbs.tobosutype.base.BaseActivity {
 
     @BindView(R.id.deco_case_detail_back)
     LinearLayout decoCaseDetailBack;
@@ -85,10 +87,16 @@ public class DecorationCaseDetailActivity extends Activity {
         initViewEvent();
     }
 
+    @Override
+    protected boolean havePageId() {
+        return true;
+    }
+
     //初始化view事件
     private void initViewEvent() {
         mIntent = getIntent();
         deco_case_id = mIntent.getStringExtra("deco_case_id");
+        SpUtil.setStatisticsEventPageId(mContext, deco_case_id);
         //设置控件的透明度
         decoCaseDetailBanner.getBackground().setAlpha(0);
         decoCaseDetailBanner.setVisibility(View.GONE);

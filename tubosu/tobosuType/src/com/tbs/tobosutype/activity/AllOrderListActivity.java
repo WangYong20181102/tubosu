@@ -25,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.customview.CallDialogCompany;
 import com.tbs.tobosutype.customview.DropPopWindow;
 import com.tbs.tobosutype.customview.LfPwdPopupWindow;
@@ -53,7 +54,7 @@ import okhttp3.Response;
  * @author dec
  */
 
-public class AllOrderListActivity extends Activity implements IXListViewListener {
+public class AllOrderListActivity extends com.tbs.tobosutype.base.BaseActivity implements IXListViewListener {
     private static final String TAG = AllOrderListActivity.class.getSimpleName();
 
     /***

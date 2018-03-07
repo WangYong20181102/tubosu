@@ -52,6 +52,7 @@ import com.tbs.tobosutype.adapter.CityAdapter;
 import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean.EC;
 import com.tbs.tobosutype.bean.Event;
+import com.tbs.tobosutype.bean._SelectCity;
 import com.tbs.tobosutype.customview.BladeView;
 import com.tbs.tobosutype.customview.BladeView.OnItemClickListener;
 import com.tbs.tobosutype.customview.FirstGridView;
@@ -483,7 +484,6 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
         if (!TextUtils.isEmpty(mWhereFrom) && mWhereFrom.equals("PresonerMsgActivity")) {
             //来着PresonerMsgActivity页面
             EventBusUtil.sendEvent(new Event(EC.EventCode.PRESONER_MSG_CHANGE_CITY, cityName));
-            Log.e(TAG, "进入修改城市的页面=======================");
             finish();
             return;
         }
@@ -527,12 +527,8 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
 
         if (fromFindDecorateCompany.equals("64")) {
             // 来自找装修公司页面
-//            Intent cityData = new Intent();
-//            Bundle b = new Bundle();
-//            b.putString("ci", cityName);
-//            cityData.putExtra("city_bundle", b);
-//            setResult(644, cityData);
-            EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_CODE, cityName));
+            _SelectCity mSelectCity=new _SelectCity(cityName,cid);
+            EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_CODE, mSelectCity));
             System.gc();
             finish();
             return;

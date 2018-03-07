@@ -35,7 +35,7 @@ public class EC {
         public static final int SELECT_CITY_CODE = 0x100003;//选择城市
         public static final int DELETE_COMPANY_CODE = 0x100004;//
         public static final int COLLECT_COMPANY_CODE = 0x100005;
-        public static final int CHOOSE_CITY_CODE = 0x100006;//找装修公司选择城市
+        public static final int CHOOSE_CITY_CODE = 0x100006;//找装修公司选择城市 修改了城市信息将数据刷新
         public static final int SHAIXUAN_CITY_CODE = 0x100007;//选择城市
         public static final int QUEDING_SHAIXUAN_CITY_CODE = 0x100008;//确定筛选城市
         public static final int HOMEACTIVITY_CITY_CODE = 0x100009;//确定首页城市
