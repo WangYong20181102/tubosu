@@ -52,7 +52,7 @@ public class _AppEvent {
     private String lat;//纬度
     private String mac;//MAC地址
     private String imei;//手机的imei
-    private int ani;//Android id 等同于Api号码
+    private String ani;//Android id 等同于Api号码
     private String no;//网络运营商
     private ArrayList<EvBean> ev;
 
@@ -60,7 +60,7 @@ public class _AppEvent {
     public _AppEvent(ArrayList<EvBean> evBeanArrayList) {
         this.ct = Util.getUnixTime();
         this.uid = AppInfoUtil.getUserid(MyApplication.getContext());
-        this.pn = "tbs_and==="+Util.getNowTime();
+        this.pn = "tbs_and";
         this.pv = AppInfoUtil.getAppVersionName(MyApplication.getContext());
         this.di = Util.getDeviceID();
         this.si = Util.getSessionID();
@@ -207,11 +207,11 @@ public class _AppEvent {
         this.imei = imei;
     }
 
-    public int getAni() {
+    public String getAni() {
         return ani;
     }
 
-    public void setAni(int ani) {
+    public void setAni(String ani) {
         this.ani = ani;
     }
 

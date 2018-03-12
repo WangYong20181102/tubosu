@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.tbs.tobosutype.bean.Event;
+import com.tbs.tobosutype.global.HomeListener;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppManager;
 import com.tbs.tobosutype.utils.EventBusUtil;
@@ -29,13 +30,18 @@ import java.util.List;
 public class BaseActivity extends AppCompatActivity {
     protected static String TAG = BaseActivity.class.getSimpleName();
     protected Context mContext;
+    private HomeListener mHomeListener = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
         if (isRegisterEventBus()) {
             EventBusUtil.register(this);
         }
+        //监听home键事件
+        mHomeListener = new HomeListener(mContext);
+        mHomeListener.setInterface(keyFun);
 //        Log.e(TAG, "BaseActivity执行onCreate========");
     }
 
@@ -54,27 +60,25 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        mHomeListener.startListen();
         MobclickAgent.onResume(this);
         // TODO: 2018/3/5 用自己写的任务栈管理获取
         AppManager.addActivity(this);
         Log.e(TAG, "BaseActivity执行onResume====获取栈顶的Activity====" + AppManager.currentActivityName() + "===页面属性===" + SpUtil.getStatisticsEventPageId(MyApplication.getContext()) + "====上一个Activity====" + AppManager.lastSecoundActivityName());
-//        if (havePageId()) {
-//            //有页面属性
-//            Util.useStatisticsEventVistEvent(true, AppManager.lastSecoundActivityName(), AppManager.currentActivityName() + "/" + SpUtil.getStatisticsEventPageId(MyApplication.getContext()));
-//        } else {
-            Util.useStatisticsEventVistEvent(true, AppManager.lastSecoundActivityName(), AppManager.currentActivityName());
-//        }
+        Util.useStatisticsEventVistEvent(true, AppManager.lastSecoundActivityName(), AppManager.currentActivityName());
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        mHomeListener.stopListen();
         MobclickAgent.onPause(this);
-        Log.e(TAG, "BaseActivity执行onPause====获取栈顶的Activity====" + AppManager.currentActivityName() + "===页面属性===" + SpUtil.getStatisticsEventPageId(MyApplication.getContext()) +  "====上一个Activity====" + AppManager.lastSecoundActivityName());
+        Log.e(TAG, "BaseActivity执行onPause====获取栈顶的Activity====" + AppManager.currentActivityName() + "===页面属性===" + SpUtil.getStatisticsEventPageId(MyApplication.getContext()) + "====上一个Activity====" + AppManager.lastSecoundActivityName());
 //        Log.e(TAG, "BaseActivity执行onPause========");
         if (havePageId()) {
             //有页面属性
-            Util.useStatisticsEventVistEvent(false, AppManager.lastSecoundActivityName()+"/"+SpUtil.getStatisticsEventPageId(MyApplication.getContext()), AppManager.currentActivityName() + "/" + SpUtil.getStatisticsEventPageId(MyApplication.getContext()));
+            Util.useStatisticsEventVistEvent(false, AppManager.lastSecoundActivityName() + "/" + SpUtil.getStatisticsEventPageId(MyApplication.getContext()), AppManager.currentActivityName() + "/" + SpUtil.getStatisticsEventPageId(MyApplication.getContext()));
         } else {
             Util.useStatisticsEventVistEvent(false, AppManager.lastSecoundActivityName(), AppManager.currentActivityName());
         }
@@ -147,6 +151,30 @@ public class BaseActivity extends AppCompatActivity {
     protected void receiveStickyEvent(Event event) {
 
     }
+    //home键监听事件
+    private HomeListener.KeyFun keyFun = new HomeListener.KeyFun() {
+        @Override
+        public void home() {
+            Log.e(TAG,"按键监听_lin=======点击了home键");
+            if(!MyApplication.evBeanArrayList.isEmpty()){
+                Util.HttpPostUserUseInfo();
+            }
+        }
 
+        @Override
+        public void recent() {
+            Log.e(TAG,"按键监听_lin=======点击了任务键");
+            if(!MyApplication.evBeanArrayList.isEmpty()){
+                Util.HttpPostUserUseInfo();
+            }
+        }
 
+        @Override
+        public void longHome() {
+            Log.e(TAG,"按键监听_lin=======长按了home键");
+            if(!MyApplication.evBeanArrayList.isEmpty()){
+                Util.HttpPostUserUseInfo();
+            }
+        }
+    };
 }

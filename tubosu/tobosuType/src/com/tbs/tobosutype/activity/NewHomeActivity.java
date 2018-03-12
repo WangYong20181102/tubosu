@@ -120,6 +120,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e(TAG, "NewHomeActivity执行的生命周期========onCreate()");
         mContext = NewHomeActivity.this;
         TAG = NewHomeActivity.class.getSimpleName();
         setContentView(R.layout.layout_new_activity);
@@ -140,13 +141,13 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e(TAG, "NewHomeActivity执行=========onResume===========");
+        Log.e(TAG, "NewHomeActivity执行的生命周期========onResume()");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.e(TAG, "NewHomeActivity执行=========onPause===========");
+        Log.e(TAG, "NewHomeActivity执行的生命周期========onPause()");
     }
 
     /**
@@ -796,7 +797,12 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                                 });
                             }
                             if (swipeRefreshLayout.isRefreshing()) {
-                                swipeRefreshLayout.setRefreshing(false);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        swipeRefreshLayout.setRefreshing(false);
+                                    }
+                                });
                             }
                         } else {
 

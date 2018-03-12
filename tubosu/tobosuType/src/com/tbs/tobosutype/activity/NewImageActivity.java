@@ -76,6 +76,7 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e(TAG, "NewImageActivity执行的生命周期========onCreate()");
         setContentView(R.layout.activity_new_image);
         ButterKnife.bind(this);
         mContext = this;
@@ -316,7 +317,7 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
 
     @Override
     protected void onResume() {
-        Log.e(TAG, "===========onResume 开始 ====");
+        Log.e(TAG, "NewImageActivity执行的生命周期========onResume()");
         LoadingRightGifAnim();//加载动画
         if (AppInfoUtil.getImageListDateToken(mContext).equals(Util.getDateToken() + "list")) {
             //比对成功  1.显示Gif图  2.倒计时开关isAddtime=false
@@ -334,7 +335,7 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
 
     @Override
     protected void onPause() {
-        Log.e(TAG, "===========onPause 暂停 离开页面时");
+        Log.e(TAG, "NewImageActivity执行的生命周期========onPause()");
         if (isAddTime) {
             isAddTime = false;
             mTime = 0;

@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.tbs.tobosutype.activity.NewWebViewActivity;
-import com.tbs.tobosutype.activity.WelcomeActivity;
 import com.tbs.tobosutype.utils.Util;
 import com.tbs.tobosutype.web.PushAppNotStartWebActivity;
 import com.tbs.tobosutype.web.PushAppStartWebActivity;
@@ -60,12 +58,13 @@ public class MyXiaomiPushReceiver extends PushMessageReceiver {
             if (!TextUtils.isEmpty(message.getExtra().get("url"))) {
                 Intent intent = new Intent(context, PushAppNotStartWebActivity.class);
                 intent.putExtra("mLoadingUrl", message.getExtra().get("url"));
+                Log.e(TAG, "收到消息=========消息中包含的tag=====" + message.getExtra().get("tag"));
                 if (message.getExtra().containsKey("tag")) {
                     //包含推送发单的key  传值通知下一个页面  展示发单的key
                     if (message.getExtra().get("tag").equals("1")) {
                         //显示发标按钮
                         intent.putExtra("mShowing", "1");
-                    }else {
+                    } else {
                         intent.putExtra("mShowing", "0");
                     }
                 } else {
@@ -79,12 +78,13 @@ public class MyXiaomiPushReceiver extends PushMessageReceiver {
             if (!TextUtils.isEmpty(message.getExtra().get("url"))) {
                 Intent intent = new Intent(context, PushAppStartWebActivity.class);
                 intent.putExtra("mLoadingUrl", message.getExtra().get("url"));
+                Log.e(TAG, "收到消息=========消息中包含的tag=====" + message.getExtra().get("tag"));
                 if (message.getExtra().containsKey("tag")) {
                     //包含推送发单的key  传值通知下一个页面  展示发单的key
                     if (message.getExtra().get("tag").equals("1")) {
                         //显示发标按钮
                         intent.putExtra("mShowing", "1");
-                    }else {
+                    } else {
                         intent.putExtra("mShowing", "0");
                     }
                 } else {
@@ -114,7 +114,7 @@ public class MyXiaomiPushReceiver extends PushMessageReceiver {
         if (MiPushClient.COMMAND_REGISTER.equals(command)) {
             if (message.getResultCode() == ErrorCode.SUCCESS) {
                 mRegId = cmdArg1;
-                Log.e(TAG,"小米推送注册测Regid================="+mRegId);
+                Log.e(TAG, "小米推送注册测Regid=================" + mRegId);
             }
         }
     }

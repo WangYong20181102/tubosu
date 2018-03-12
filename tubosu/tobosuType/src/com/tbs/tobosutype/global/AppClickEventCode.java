@@ -6,6 +6,7 @@ package com.tbs.tobosutype.global;
  */
 
 public class AppClickEventCode {
+    public static final String X_EVENT_CODE_00 = "4_2_6_1_1";//引导发单的按钮事件码
     public static final String X_EVENT_CODE_01 = "4_1_1_1_0";//闪屏广告	广告页	跳过	点击
     public static final String X_EVENT_CODE_02 = "4_1_1_2_0";//闪屏广告	广告页	主体页面	点击
     public static final String X_EVENT_CODE_03 = "4_2_1_1_0";//新手引导	引导页	准备装修	点击
@@ -147,7 +148,6 @@ public class AppClickEventCode {
     public static final String X_EVENT_CODE_129 = "4_5_1_2_0";//		我的	顶部区	反馈与建议	点击
     public static final String X_EVENT_CODE_130 = "4_5_1_3_0";//		我的	顶部区	提交反馈	点击
     public static final String X_EVENT_CODE_131 = "4_5_1_4_0";//		我的	顶部区	拨打	点击
-
 
 
 }

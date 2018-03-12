@@ -16,7 +16,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -24,22 +23,17 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.MD5Util;
 import com.tbs.tobosutype.utils.SpUtil;
-import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -59,13 +53,9 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     private static final String TAG = WelcomeActivity.class.getSimpleName();
     @BindView(R.id.welcome_image)
     ImageView welcomeImage;
-
-    private String check_password = Constant.TOBOSU_URL + "tapp/passport/isCheckPwdUp";
-    private String check_ab_test = Constant.TOBOSU_URL + "tapp/spcailpic/get_ab";
     private String SURVIVAL_URL = Constant.TOBOSU_URL + "tapp/DataCount/survival_count";
 
     private Context mContext;
-    private long startapp_time = 0L;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,12 +63,10 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         setContentView(R.layout.activity_welcome_bg);
         ButterKnife.bind(this);
         mContext = WelcomeActivity.this;
-        startapp_time = new Date().getTime();
         initBaiduMap();
         initView();
         //获取权限 执行下一步
         needPermissions();
-        Log.e(TAG, "WelcomeActivity执行的生命周期========onCreate()");
     }
 
     @Override
@@ -280,48 +268,6 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         }
     }
 
-    private void check_password() {
-        HashMap<String, Object> hashMap = new HashMap<String, Object>();
-        hashMap.put("uid", getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("userid", ""));
-        hashMap.put("pass", getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("encode_pass", ""));
-        OKHttpUtil.post(check_password, hashMap, new Callback() {
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String json = response.body().string();
-                Util.setErrorLog(TAG, ">>>>>>>检查修改密码请求结果[" + json + "]<<<<<");
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject obj = new JSONObject(json);
-                            if (obj.getInt("error_code") == 0) {
-                                long gap = startapp_time - getSharedPreferences("userInfo", Context.MODE_PRIVATE).getLong("login_time", 0);
-                                int days = (int) (gap / 1000 / 3600 / 24);
-                                Util.setErrorLog(TAG, ">>>>>>>" + days + "<<<<<");
-                                if (days >= 30) {
-                                    getSharedPreferences("userInfo", Context.MODE_PRIVATE).edit().clear().commit();
-                                    Util.setErrorLog(TAG, ">>>>>>>有30天啦<<<<<");
-                                }
-                            } else if (obj.getInt("error_code") == 250) {
-                                getSharedPreferences("userInfo", Context.MODE_PRIVATE).edit().clear().commit();
-                                Toast.makeText(mContext, "密码已修改,请重新登录", Toast.LENGTH_LONG).show();
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        });
-    }
-
     /**
      * 获取 loading页的图片地址
      */
@@ -414,52 +360,9 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         if (intent != null) {
             startActivity(intent);
             finish();
-            System.gc();
+//            System.gc();
         }
 
-    }
-
-
-    private String status = "";
-
-    private void get_ABTest() {
-        OKHttpUtil.post(check_ab_test, null, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Util.setErrorLog(TAG, ">>>>>>>ab测试 请求结果6465415613153<<<<<");
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String json = response.body().string();
-                Util.setErrorLog(TAG, ">>>>>>>ab测试 请求结果[" + json + "]<<<<<");
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject obj = new JSONObject(json);
-                            if (obj.getInt("error_code") == 0) {
-                                JSONArray array = obj.getJSONArray("data");
-                                for (int i = 0; i < array.length(); i++) {
-                                    status = array.getJSONObject(i).getString("status");
-                                    // 保存 ab测的状态
-                                    getSharedPreferences("AB_TEST", Context.MODE_PRIVATE).edit().putString("status", status).commit();
-                                    Util.setErrorLog(TAG, "-- 已经存ab测的状态 --");
-                                    break;
-                                }
-
-                            } else if (obj.getInt("error_code") == 201) {
-                                Util.setErrorLog(TAG, "-- 获取ab测 状态失败 --");
-                            }
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        });
     }
 
     //基于6.0以上系统动态获取权限问题

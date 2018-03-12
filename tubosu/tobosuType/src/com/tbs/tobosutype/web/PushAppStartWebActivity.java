@@ -35,7 +35,7 @@ import butterknife.OnClick;
  * 在App启动的情况下查看的页面
  * create by lin
  */
-public class PushAppStartWebActivity extends BaseActivity {
+public class PushAppStartWebActivity extends com.tbs.tobosutype.base.BaseActivity {
     @BindView(R.id.pas_webview_back)
     LinearLayout pasWebviewBack;
     @BindView(R.id.pas_webview_title)

@@ -1,4 +1,5 @@
 package com.tbs.tobosutype.activity;
+
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.app.Activity;
@@ -21,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tbs.tobosutype.R;
@@ -28,23 +30,29 @@ import com.tbs.tobosutype.adapter.PopAdapter;
 import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.customview.CustomWaitDialog;
 import com.tbs.tobosutype.customview.TextSeekBar;
+import com.tbs.tobosutype.global.AppClickEventCode;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.AppManager;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+
 import static com.tbs.tobosutype.utils.CacheManager.getOngoingStyle;
 
 public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
@@ -131,7 +139,6 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     private RelativeLayout re_ongoing_direction;
 
 
-
     // 装修阶段
     private RelativeLayout rl_going_stage;
     private TextSeekBar stage_seekbar;
@@ -152,11 +159,13 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     private LinearLayout ll_location;
     private LinearLayout ll_location1;
 
-    /**先逛逛*/
+    /**
+     * 先逛逛
+     */
     private TextView tv_xgg;
 
 
-    private void initNewViews(){
+    private void initNewViews() {
 
         tv_question_title = (TextView) findViewById(R.id.tv_question_title);
         rel_left_gif = (RelativeLayout) findViewById(R.id.rel_left_gif);
@@ -241,28 +250,28 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
 
-    private void leftToMid(View view){
+    private void leftToMid(View view) {
         PropertyValuesHolder valuesHolderX = PropertyValuesHolder.ofFloat("translationX", 0.0f, 149.0f);
         PropertyValuesHolder valuesHolderY = PropertyValuesHolder.ofFloat("translationY", 0.0f, -130.0f);
         ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(view, valuesHolderX, valuesHolderY);
         objectAnimator.setDuration(813).start();
     }
 
-    private void midToLeft(View view){
+    private void midToLeft(View view) {
         PropertyValuesHolder valuesHolderX = PropertyValuesHolder.ofFloat("translationX", 149.0f, 0.0f);
         PropertyValuesHolder valuesHolderY = PropertyValuesHolder.ofFloat("translationY", -130.0f, 0.0f);
         ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(view, valuesHolderX, valuesHolderY);
         objectAnimator.setDuration(813).start();
     }
 
-    private void rightToMid(View view){
+    private void rightToMid(View view) {
         PropertyValuesHolder valuesHolderX = PropertyValuesHolder.ofFloat("translationX", 0.0f, -149.0f);
         PropertyValuesHolder valuesHolderY = PropertyValuesHolder.ofFloat("translationY", 0.0f, -130.0f);
         ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(view, valuesHolderX, valuesHolderY);
         objectAnimator.setDuration(813).start();
     }
 
-    private void midToRight(View view){
+    private void midToRight(View view) {
         PropertyValuesHolder valuesHolderX = PropertyValuesHolder.ofFloat("translationX", -149.0f, 0.0f);
         PropertyValuesHolder valuesHolderY = PropertyValuesHolder.ofFloat("translationY", -130.0f, 0.0f);
         ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(view, valuesHolderX, valuesHolderY);
@@ -366,7 +375,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
         tv_prsquare.setVisibility(View.INVISIBLE);
         tv_style = (TextView) findViewById(R.id.tv_style);
         tv_style.setVisibility(View.INVISIBLE);
-        tv_prbudget = (TextView)findViewById(R.id.tv_prbudget);
+        tv_prbudget = (TextView) findViewById(R.id.tv_prbudget);
         tv_prbudget.setVisibility(View.INVISIBLE);
 
         // 预算
@@ -412,7 +421,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
         tvCityLocation = (TextView) findViewById(R.id.tv_city_location);
         if (!"".equals(SpUtil.getCity(mContext))) {
             tvCityLocation.setText(" 当前位置 " + SpUtil.getCity(mContext));
-        }else {
+        } else {
             tvCityLocation.setText("定位失败 点击选择城市");
         }
         tvSummitOrder = (TextView) findViewById(R.id.tv_summit_order);
@@ -437,7 +446,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
         tvCityLocation1 = (TextView) findViewById(R.id.tv_city_location1);
         if (!"".equals(SpUtil.getCity(mContext))) {
             tvCityLocation1.setText(" 当前位置 " + SpUtil.getCity(mContext));
-        }else{
+        } else {
             tvCityLocation1.setText("定位失败 点击选择城市");
         }
 
@@ -445,8 +454,9 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
 
 
     private int gopoporder_code = -1;
+
     private void initNetData() {
-        if(getIntent()!=null && getIntent().getBundleExtra("home_go_pop_bundle")!=null){
+        if (getIntent() != null && getIntent().getBundleExtra("home_go_pop_bundle") != null) {
             gopoporder_code = getIntent().getBundleExtra("home_go_pop_bundle").getInt("gopoporder_code");
             CacheManager.setBecon(mContext, "0");
         }
@@ -459,10 +469,10 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
             // relBack1
             @Override
             public void onClick(View v) {
-                if(pressBack()){
+                if (pressBack()) {
                     int position = Integer.parseInt(CacheManager.getBecon(mContext));
 //                Util.setToast(mContext, "relBack1> " + position);
-                    switch (position){
+                    switch (position) {
                         case 4:
                             backShow(3);
                             break;
@@ -497,7 +507,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
                             tv_dont_care.setText("不透露");
                             rel_dont_care.setVisibility(View.VISIBLE);
 
-                            if(!"".equals(CacheManager.getStage(mContext))){
+                            if (!"".equals(CacheManager.getStage(mContext))) {
                                 tv_ongoing_title.setText(CacheManager.getStage(mContext));
                             }
                             rel_dont_care.setOnClickListener(new View.OnClickListener() {
@@ -510,7 +520,6 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
                                     tv_ongoing_title.setText("不限阶段");
                                 }
                             });
-
 
 
 //                        if(CacheManager.getStage(mContext).contains("不限")){
@@ -531,20 +540,20 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
                             rel_dont_care.setVisibility(View.VISIBLE);
                             CacheManager.setBecon(mContext, "-2");
 
-                            if(CacheManager.getOngoingStylePosition(mContext)==-1){
-                                if(ongoingStyleAdapter!=null){
+                            if (CacheManager.getOngoingStylePosition(mContext) == -1) {
+                                if (ongoingStyleAdapter != null) {
                                     ongoingStyleAdapter.setSelection(-1);
                                     ongoingStyleAdapter.notifyDataSetChanged();
                                     tv_ongoing_title.setText("不限风格");
-                                    CacheManager.setOngoingStyle(mContext,"不限风格",-1);
+                                    CacheManager.setOngoingStyle(mContext, "不限风格", -1);
                                 }
-                            }else{
+                            } else {
                                 tv_ongoing_title.setText(getOngoingStyle(mContext));
                             }
 
                             break;
                     }
-                }else{
+                } else {
                     return;
                 }
 
@@ -581,7 +590,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
 
             @Override
             public void onClick(View v) {
-                setAnimation(rel_left_gif,rel_right_gif,"left_mid");
+                setAnimation(rel_left_gif, rel_right_gif, "left_mid");
             }
         });
 
@@ -589,7 +598,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
 
             @Override
             public void onClick(View v) {
-                setAnimation(rel_left_gif,rel_right_gif,"right_mid");
+                setAnimation(rel_left_gif, rel_right_gif, "right_mid");
             }
         });
 
@@ -597,6 +606,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
         tvSummitOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Util.useStatisticsEventClickEvent(AppClickEventCode.X_EVENT_CODE_00, AppManager.currentActivityName());
                 if (!isCellPhone(etCellphone.getText().toString().trim())) {
 
                 } else {
@@ -608,6 +618,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
         tvSummitOrder1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Util.useStatisticsEventClickEvent(AppClickEventCode.X_EVENT_CODE_00, AppManager.currentActivityName());
                 if (!isCellPhone(etCellphone1.getText().toString().trim())) {
 
                 } else {
@@ -674,15 +685,15 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
 
-    private void hide(){
+    private void hide() {
 
     }
 
     /***
      * 跳过
      */
-    private void skip(){
-        if("5".equals(getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).getString("go_poporder_string", "0"))){
+    private void skip() {
+        if ("5".equals(getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).getString("go_poporder_string", "0"))) {
             startActivity(new Intent(PopOrderActivity.this, MainActivity.class));
 //            getSharedPreferences("Cancel_Get_Design", Context.MODE_PRIVATE).getInt("cancel_String", 10)==1
             getSharedPreferences("Cancel_Get_Design", Context.MODE_PRIVATE).edit().putInt("cancel_String", 1).commit(); // 1代表是skip
@@ -695,7 +706,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     /***
      * 暂时不领取
      */
-    private void notNow(){
+    private void notNow() {
         //现在无视获取，则标记为 1 ，即在首再次显示让用户获取
         getSharedPreferences("Cancel_Get_Design", Context.MODE_PRIVATE).edit().putInt("cancel_String", 1).commit();
         MobclickAgent.onEvent(mContext, "click_receive immediately_fail");
@@ -712,7 +723,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode){
+        switch (resultCode) {
             case 77:
                 String city = data.getBundleExtra("city_bundle").getString("ci");
                 CacheManager.setCity(mContext, city);
@@ -720,7 +731,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
                 tvCityLocation1.setText(" 当前位置 " + city);
                 break;
         }
-        if(Constant.HOMEFRAGMENT_REQUESTCODE==requestCode){
+        if (Constant.HOMEFRAGMENT_REQUESTCODE == requestCode) {
             fromActivity = 1;
             setResult(Constant.FINISH_MAINACTIVITY);
         }
@@ -744,7 +755,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
         }
     }
 
-    private void initOngoingStage(int becon){
+    private void initOngoingStage(int becon) {
         rel_left_gif.setVisibility(View.INVISIBLE);
         relBar.setVisibility(View.VISIBLE);
         re_prepare_direction.setVisibility(View.INVISIBLE);
@@ -784,7 +795,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
             @Override
             public void onClick(View v) {
 
-                if(Integer.parseInt(CacheManager.getBecon(mContext))==-1){
+                if (Integer.parseInt(CacheManager.getBecon(mContext)) == -1) {
                     // 退出动画
                     ongoingStageAnimationOut(rl_going_stage);
                     // 进入风格
@@ -793,7 +804,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
                     CacheManager.setStage(mContext, "不限阶段", 0);
                     tv_ongoing_title.setText("不限阶段"); // 还没选
 
-                }else{
+                } else {
                     // 进入 -3
                     ongoingFinal(-3);
                     rel_dont_care.setVisibility(View.GONE);
@@ -806,7 +817,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
 
     }
 
-    private void initDecorateStyle(int prepareStylePosition){
+    private void initDecorateStyle(int prepareStylePosition) {
         rel_right_gif.setVisibility(View.INVISIBLE);
         relBar.setVisibility(View.VISIBLE);
         re_prepare_direction.setVisibility(View.VISIBLE);
@@ -835,24 +846,24 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
 
             @Override
             public void onSelectItemListener(String style, int po) {
-                if(CacheManager.getStylePosition(mContext)==-1){
+                if (CacheManager.getStylePosition(mContext) == -1) {
                     tv_prepare_title.setText(style);
 
-                    CacheManager.setStylePosition(mContext,style , po); // 同时保存style
+                    CacheManager.setStylePosition(mContext, style, po); // 同时保存style
                     styleAdapter.clearSelection(po);
                     styleAdapter.notifyDataSetChanged();
 
                     // 显示 面积布局
                     initDecorateSquare(2);
-                }else{
+                } else {
 
-                    if(style.equals(CacheManager.getStyle(mContext))){
+                    if (style.equals(CacheManager.getStyle(mContext))) {
                         // 已经选择过的 取消选择
-                        CacheManager.setStylePosition(mContext, style , -1);  // 取消选择
+                        CacheManager.setStylePosition(mContext, style, -1);  // 取消选择
                         styleAdapter.setSelection(-1);
                         styleAdapter.notifyDataSetChanged();
                         tv_prepare_title.setText("不限风格");
-                    }else{
+                    } else {
                         tv_prepare_title.setText(style);
                         CacheManager.setStylePosition(mContext, style, po);  // 选择了   sdf
                         styleAdapter.clearSelection(po);
@@ -882,8 +893,8 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
                 tv_prepare_title.setVisibility(View.GONE);
                 tv_prepare_title.setVisibility(View.VISIBLE);
                 tv_prepare_title.setText("不限风格");
-                CacheManager.setStylePosition(mContext,"不限风格",-1);
-                if(styleAdapter!=null){
+                CacheManager.setStylePosition(mContext, "不限风格", -1);
+                if (styleAdapter != null) {
                     styleAdapter.setSelection(-1);
                     styleAdapter.notifyDataSetChanged();
                 }
@@ -899,7 +910,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
     // 显示面积
-    private void initDecorateSquare(int prepareSquarePosition){
+    private void initDecorateSquare(int prepareSquarePosition) {
         re_prepare_direction.setVisibility(View.VISIBLE);
         re_ongoing_direction.setVisibility(View.INVISIBLE);
         tv_prsquare.setVisibility(View.VISIBLE);
@@ -924,30 +935,29 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
         squareAdapter.setSelectStyleListener(new PopAdapter.SelectStyleListener() {
             @Override
             public void onSelectItemListener(String square, int po) {
-                if(CacheManager.getSquarePosition(mContext)==-1){
+                if (CacheManager.getSquarePosition(mContext) == -1) {
                     tv_prepare_title.setText("不小于" + square);
-                    CacheManager.setSquarePosition(mContext, "不小于"+square, po);
+                    CacheManager.setSquarePosition(mContext, "不小于" + square, po);
                     squareAdapter.clearSelection(po);
                     squareAdapter.notifyDataSetChanged();
 
                     // 装修预算动画
-                    initBudge(3,true);
-                }else{
+                    initBudge(3, true);
+                } else {
 
-                    if(("不小于"+square).equals(CacheManager.getSquare(mContext))){
+                    if (("不小于" + square).equals(CacheManager.getSquare(mContext))) {
                         // 已经选择过的 取消选择
                         CacheManager.setSquarePosition(mContext, "不限面积", -1);  // 取消选择
                         squareAdapter.setSelection(-1);
                         squareAdapter.notifyDataSetChanged();
                         tv_prepare_title.setText("不限面积");
-                    }else{
-                        tv_prepare_title.setText("不小于"+square);
-                        CacheManager.setSquarePosition(mContext, "不小于"+square, po);  // 选择了   sdf
+                    } else {
+                        tv_prepare_title.setText("不小于" + square);
+                        CacheManager.setSquarePosition(mContext, "不小于" + square, po);  // 选择了   sdf
                         squareAdapter.clearSelection(po);
                         squareAdapter.notifyDataSetChanged();
                         initBudge(3, true);
                     }
-
 
 
                 }
@@ -965,24 +975,24 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
         rel_dont_care.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initBudge(3,true);
-                if(squareAdapter!=null){
+                initBudge(3, true);
+                if (squareAdapter != null) {
                     squareAdapter.setSelection(-1);
                     squareAdapter.notifyDataSetChanged();
                     tv_prepare_title.setText("不限面积");
-                    CacheManager.setSquarePosition(mContext,"不限面积",-1);
+                    CacheManager.setSquarePosition(mContext, "不限面积", -1);
                 }
             }
         });
     }
 
 
-    private void initBudge(final int prepareBudgetPosition, boolean isShowBudge){
+    private void initBudge(final int prepareBudgetPosition, boolean isShowBudge) {
         re_prepare_direction.setVisibility(View.VISIBLE);
         re_ongoing_direction.setVisibility(View.INVISIBLE);
 
         tv_prbudget.setVisibility(View.VISIBLE);
-        if(isShowBudge){
+        if (isShowBudge) {
             prepareBudgeAnimation(rel_prbudget);
         }
 
@@ -1003,23 +1013,23 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
 
             @Override
             public void onSelectItemListener(String budget, int po) {
-                if(CacheManager.getBudgetPosition(mContext)==-1){
+                if (CacheManager.getBudgetPosition(mContext) == -1) {
                     tv_prepare_title.setText(budget + "预算");
-                    CacheManager.setBudgetPosition(mContext, budget + "预算",po);
+                    CacheManager.setBudgetPosition(mContext, budget + "预算", po);
                     budgetAdapter.clearSelection(po);
                     budgetAdapter.notifyDataSetChanged();
 
                     goFinal(4);
-                }else{
-                    if((budget + "预算").equals(CacheManager.getBudget(mContext))){
+                } else {
+                    if ((budget + "预算").equals(CacheManager.getBudget(mContext))) {
                         // 已经选择过的 取消选择
                         CacheManager.setBudgetPosition(mContext, "不限预算", -1);  // 取消选择
                         budgetAdapter.setSelection(-1);
                         budgetAdapter.notifyDataSetChanged();
                         tv_prepare_title.setText("不限预算");
-                    }else{
+                    } else {
                         tv_prepare_title.setText(budget + "预算");
-                        CacheManager.setBudgetPosition(mContext, budget + "预算",po);
+                        CacheManager.setBudgetPosition(mContext, budget + "预算", po);
                         budgetAdapter.clearSelection(po);
                         budgetAdapter.notifyDataSetChanged();
 
@@ -1045,7 +1055,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
                 rel_dont_care.setVisibility(View.GONE);
                 CacheManager.setBudgetPosition(mContext, "不限预算", -1);
                 tv_prepare_title.setText("不限预算");
-                if(budgetAdapter!=null){
+                if (budgetAdapter != null) {
                     budgetAdapter.setSelection(-1);
                     budgetAdapter.notifyDataSetChanged();
                 }
@@ -1055,7 +1065,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
 
-    private void goFinal(int prepareFinal){
+    private void goFinal(int prepareFinal) {
         rel_dont_care.setVisibility(View.GONE);
         rel_mid_layout.setVisibility(View.INVISIBLE);
         frameParepareFinal.setVisibility(View.VISIBLE);
@@ -1072,15 +1082,15 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
 //                + CacheManager.getBudget(mContext) + "--" + etCellphone.getText().toString().trim());
     }
 
-    private void ongoingFinal(int becon){
+    private void ongoingFinal(int becon) {
         rel_dont_care.setVisibility(View.GONE);
         rel_mid_layout.setVisibility(View.INVISIBLE);
         llayout_going_final.setVisibility(View.VISIBLE);
         rel_gif_layout.setVisibility(View.INVISIBLE);
 
-        if(!"".equals(getOngoingStyle(mContext))){
+        if (!"".equals(getOngoingStyle(mContext))) {
             tvOngoningFinalResult.setText(getOngoingStyle(mContext));
-        }else{
+        } else {
             tvOngoningFinalResult.setText("不限风格");
         }
 
@@ -1089,7 +1099,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
 
 
     // 显示-2
-    private void initOngoingStyle(int becon){
+    private void initOngoingStyle(int becon) {
         re_prepare_direction.setVisibility(View.INVISIBLE);
         re_ongoing_direction.setVisibility(View.VISIBLE);
 
@@ -1115,7 +1125,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
         ongoingStyleAdapter.setSelectStyleListener(new PopAdapter.SelectStyleListener() {
             @Override
             public void onSelectItemListener(String style, int po) {
-                if(CacheManager.getOngoingStylePosition(mContext)==-1){
+                if (CacheManager.getOngoingStylePosition(mContext) == -1) {
                     // 还没选择过的
                     tv_ongoing_title.setText(style);
                     CacheManager.setOngoingStyle(mContext, style, po);  // 选择了
@@ -1124,15 +1134,15 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
 
                     ongoingFinal(-3);
 
-                }else{
+                } else {
 
-                    if(style.equals(getOngoingStyle(mContext))){
+                    if (style.equals(getOngoingStyle(mContext))) {
                         // 已经选择过的 取消选择
                         CacheManager.setOngoingStyle(mContext, style, -1);  // 取消选择
                         ongoingStyleAdapter.setSelection(-1);
                         ongoingStyleAdapter.notifyDataSetChanged();
                         tv_ongoing_title.setText("不限风格");
-                    }else{
+                    } else {
                         tv_ongoing_title.setText(style);
                         CacheManager.setOngoingStyle(mContext, style, po);  // 选择了
                         ongoingStyleAdapter.clearSelection(po);
@@ -1157,11 +1167,11 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
             @Override
             public void onClick(View v) {
 
-                if(Integer.parseInt(CacheManager.getBecon(mContext))==-1){
+                if (Integer.parseInt(CacheManager.getBecon(mContext)) == -1) {
                     initOngoingStyle(-2);
                     CacheManager.setStage(mContext, "不限阶段", 0);
                     tv_ongoing_title.setText("不限阶段"); // 还没选
-                }else{
+                } else {
                     // 进入 -3
                     ongoingFinal(-3);
                     rel_dont_care.setVisibility(View.GONE);
@@ -1175,8 +1185,9 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
     private long exitTime = 0;
+
     public boolean pressBack() {
-        if(System.currentTimeMillis() - exitTime > 1000) {
+        if (System.currentTimeMillis() - exitTime > 1000) {
             exitTime = System.currentTimeMillis();
             return true;
         } else {
@@ -1196,45 +1207,45 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
             return true;
         }else */
 
-        if(pressBack()){
-            if(keyCode == KeyEvent.KEYCODE_BACK) {
+        if (pressBack()) {
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
                 int position = 0;
-                if("".equals(CacheManager.getBecon(mContext))){
+                if ("".equals(CacheManager.getBecon(mContext))) {
                     position = 0;
-                }else{
+                } else {
                     position = Integer.parseInt(CacheManager.getBecon(mContext));
                 }
 
 //            Util.setToast(mContext, "onKeyDown> " + position);
-                if(position==4){
+                if (position == 4) {
                     // 隐藏 最后一页
                     backShow(3);
                     relBar.setVisibility(View.VISIBLE);
                     return true;
-                }else if(position==3){
+                } else if (position == 3) {
                     // 预算布局 往下走 离开
                     budgetAnimationOut(rel_prbudget);
                     relBar.setVisibility(View.VISIBLE);
 
-                    if(CacheManager.getSquare(mContext).contains("不限")){
-                        if(squareAdapter!=null){
+                    if (CacheManager.getSquare(mContext).contains("不限")) {
+                        if (squareAdapter != null) {
                             squareAdapter.setSelection(-1);
                             squareAdapter.notifyDataSetChanged();
                         }
                     }
                     return true;
-                }else if(position==2){
+                } else if (position == 2) {
                     prepareSquareAnimationOut(relPrSquare);// 面积往下走 离开  风格进入
                     relBar.setVisibility(View.VISIBLE);
 
-                    if(CacheManager.getStyle(mContext).contains("不限")){
-                        if(styleAdapter!=null){
+                    if (CacheManager.getStyle(mContext).contains("不限")) {
+                        if (styleAdapter != null) {
                             styleAdapter.setSelection(-1);
                             styleAdapter.notifyDataSetChanged();
                         }
                     }
                     return true;
-                }else if(position==1){
+                } else if (position == 1) {
                     // 退出动画
                     prepareStyleAnimation_Out(rel_style);
                     rel_dont_care.setVisibility(View.INVISIBLE);
@@ -1242,15 +1253,15 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
                     tv_message.setVisibility(View.VISIBLE);
                     tv_question_title.setVisibility(View.VISIBLE);
                     tv_xgg.setVisibility(View.VISIBLE);
-                }else if(position==0){
-                    if(gopoporder_code==34){
+                } else if (position == 0) {
+                    if (gopoporder_code == 34) {
                         setResult(Constant.POP_RESULTCODE);
                         startActivity(new Intent(mContext, MainActivity.class));
                     }
 
-                    if(16==CacheManager.getPopFlag(mContext)){
+                    if (16 == CacheManager.getPopFlag(mContext)) {
                         // 已经发过单
-                    }else{
+                    } else {
                         // 默认==19 未发过单
                         // 保证首页能够出现发单按钮
                         getSharedPreferences("Cancel_Get_Design", Context.MODE_PRIVATE).edit().putInt("cancel_String", 1).commit();
@@ -1258,7 +1269,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
                     notNow();
                     finish();
                     return true;
-                }else if(position==-1){
+                } else if (position == -1) {
                     // 阶段退出
                     rel_dont_care.setVisibility(View.INVISIBLE);
                     stageAnimationOut1(rl_going_stage);
@@ -1266,12 +1277,12 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
                     tv_message.setVisibility(View.VISIBLE);
                     tv_question_title.setVisibility(View.VISIBLE);
                     tv_xgg.setVisibility(View.VISIBLE);
-                }else if(position==-2){
+                } else if (position == -2) {
                     //  风格出  阶段入
                     ongoingStyleOut(rl_going_style);
                     tv_dont_care.setText("不透露");
                     rel_dont_care.setVisibility(View.VISIBLE);
-                    if(!"".equals(CacheManager.getStage(mContext))){
+                    if (!"".equals(CacheManager.getStage(mContext))) {
                         tv_ongoing_title.setText(CacheManager.getStage(mContext));
                     }
 //                tv_ongoing_title.setText(setTextColor(0));
@@ -1287,7 +1298,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
                     });
                     relBar.setVisibility(View.VISIBLE);
                     return true;
-                }else if(position==-3){
+                } else if (position == -3) {
                     relBar.setVisibility(View.VISIBLE);
                     re_prepare_direction.setVisibility(View.INVISIBLE);
                     re_ongoing_direction.setVisibility(View.VISIBLE);
@@ -1301,14 +1312,14 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
 
                     CacheManager.setBecon(mContext, "-2");
 
-                    if(CacheManager.getOngoingStylePosition(mContext)==-1){
-                        if(ongoingStyleAdapter!=null){
+                    if (CacheManager.getOngoingStylePosition(mContext) == -1) {
+                        if (ongoingStyleAdapter != null) {
                             ongoingStyleAdapter.setSelection(-1);
                             ongoingStyleAdapter.notifyDataSetChanged();
                             tv_ongoing_title.setText("不限风格");
-                            CacheManager.setOngoingStyle(mContext,"不限风格",-1);
+                            CacheManager.setOngoingStyle(mContext, "不限风格", -1);
                         }
-                    }else{
+                    } else {
                         tv_ongoing_title.setText(getOngoingStyle(mContext));
                     }
 
@@ -1316,15 +1327,15 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
                 }
                 return true;
             }
-        }else{
+        } else {
             return true;
         }
         return super.onKeyDown(keyCode, event);
     }
 
 
-    private void backShow(int po){
-        switch (po){
+    private void backShow(int po) {
+        switch (po) {
             case 3:
                 frameParepareFinal.setVisibility(View.INVISIBLE);
                 rel_gif_layout.setVisibility(View.VISIBLE);
@@ -1338,14 +1349,14 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
                 tv_style.setVisibility(View.VISIBLE);
                 tv_prbudget.setVisibility(View.VISIBLE);
 
-                CacheManager.setBecon(mContext, po+"");
+                CacheManager.setBecon(mContext, po + "");
                 tv_dont_care.setText("有钱任性");
                 rel_dont_care.setVisibility(View.VISIBLE);
 
                 tv_prepare_title.setText(CacheManager.getBudget(mContext));
-                if(CacheManager.getBudget(mContext).contains("不限")){
+                if (CacheManager.getBudget(mContext).contains("不限")) {
 //                    tv_prepare_title.setText(CacheManager.getBudget(mContext));
-                    if(budgetAdapter!=null){
+                    if (budgetAdapter != null) {
                         budgetAdapter.setSelection(-1);
                         budgetAdapter.notifyDataSetChanged();
                     }
@@ -1357,7 +1368,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
 
     private void popOrder(final String cellphone, final String housearea, final String orderprice, final String style) {
         showLoadingView();
-        if(Util.isNetAvailable(mContext)){
+        if (Util.isNetAvailable(mContext)) {
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("cellphone", cellphone); // 电话号码
             hashMap.put("housearea", housearea); // 面积
@@ -1386,7 +1397,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     final String s = response.body().string();
-                    Util.setErrorLog(TAG, "===引导发单结果=>>>"+s);
+                    Util.setErrorLog(TAG, "===引导发单结果=>>>" + s);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -1397,7 +1408,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
                                     Util.setToast(mContext, "领取成功 我们会尽快以0574开头座机联系您");
 
 
-                                    if("5".equals(getSharedPreferences("Go_ChooseActivity_SP", Context.MODE_PRIVATE).getString("go_chooseStyle_string", "0"))){
+                                    if ("5".equals(getSharedPreferences("Go_ChooseActivity_SP", Context.MODE_PRIVATE).getString("go_chooseStyle_string", "0"))) {
                                         Intent intent = new Intent();
                                         intent.setClass(mContext, MainActivity.class);
                                         Bundle b = new Bundle();
@@ -1433,9 +1444,9 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
 
-    private void setAnimation(final View left, final View right, String flag){
+    private void setAnimation(final View left, final View right, String flag) {
 
-        if("left_mid".equals(flag)){
+        if ("left_mid".equals(flag)) {
             right.setAlpha(0);
             tv_message.setVisibility(View.INVISIBLE);
             rel_dont_care.setVisibility(View.VISIBLE);
@@ -1448,7 +1459,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
             initDecorateStyle(1);
 
 
-        }else if("right_mid".equals(flag)){
+        } else if ("right_mid".equals(flag)) {
             left.setAlpha(0);
             tv_message.setVisibility(View.INVISIBLE);
 //            tv_message.setAlpha(0.0f);
@@ -1461,7 +1472,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
             right.setClickable(false);
             initOngoingStage(-1);
 
-        }else if("left_back".equals(flag)){
+        } else if ("left_back".equals(flag)) {
             relBar.setVisibility(View.INVISIBLE);
             rel_dont_care.setVisibility(View.INVISIBLE);
 //            tv_message.setAlpha(1.0f);
@@ -1473,7 +1484,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
             tv_question_title.setVisibility(View.VISIBLE);
 
 
-        }else if("right_back".equals(flag)){
+        } else if ("right_back".equals(flag)) {
             relBar.setVisibility(View.INVISIBLE);
             rel_dont_care.setVisibility(View.INVISIBLE);
 //            tv_message.setAlpha(1.0f);
@@ -1487,7 +1498,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
     //装修类型进入动画
-    private void prepareStyleAnimation(final View view){
+    private void prepareStyleAnimation(final View view) {
         view.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.in_down_to_up);
         animation.setFillAfter(true);
@@ -1511,9 +1522,8 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
 
-
     //装修类型离开动画
-    private void prepareStyleAnimationOut(final View view){
+    private void prepareStyleAnimationOut(final View view) {
         view.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.out_down_to_up);
         animation.setFillAfter(true);
@@ -1538,10 +1548,8 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
 
-
-
     //装修面积进入动画
-    private void prepareSquareAnimation(final View view){
+    private void prepareSquareAnimation(final View view) {
         view.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.in_down_to_up);
         animation.setFillAfter(true);
@@ -1563,7 +1571,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
     //装修预算进入动画
-    private void prepareBudgeAnimation(final View view){
+    private void prepareBudgeAnimation(final View view) {
         view.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.in_down_to_up);
         animation.setFillAfter(true);
@@ -1586,7 +1594,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
 
 
     //装修阶段进入动画
-    private void ongoingStageAnimation(final View view){
+    private void ongoingStageAnimation(final View view) {
         view.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.in_down_to_up);
         animation.setFillAfter(true);
@@ -1608,7 +1616,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
     //装修类型离开动画
-    private void ongoingStageAnimationOut(final View view){
+    private void ongoingStageAnimationOut(final View view) {
         view.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.out_down_to_up);
         animation.setFillAfter(true);
@@ -1634,7 +1642,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
 
 
     //装修预算离开动画
-    private void budgetAnimationOut(final View view){ //keydown 3
+    private void budgetAnimationOut(final View view) { //keydown 3
         view.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.out_up_to_down);
         animation.setFillAfter(true);
@@ -1666,13 +1674,13 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
             @Override
             public void onClick(View v) {
                 // 预算出现
-                initBudge(3,true);
+                initBudge(3, true);
             }
         });
     }
 
 
-    private void prepareSquareAnimationOut(final View view){
+    private void prepareSquareAnimationOut(final View view) {
         view.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.out_up_to_down);
         animation.setFillAfter(true);
@@ -1710,7 +1718,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
 
 
     //装修面积离开动画
-    private void squareAnimationOut(final View view){
+    private void squareAnimationOut(final View view) {
         view.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.out_up_to_down);
         animation.setFillAfter(true);
@@ -1744,7 +1752,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
         goBackDecorateStyle();
     }
 
-    private void goBackDecorateStyle(){
+    private void goBackDecorateStyle() {
         styleDatalist = new ArrayList<String>();
         styleDatalist.add("现代简欧");
         styleDatalist.add("田园");
@@ -1773,7 +1781,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
 
             @Override
             public void onSelectItemListener(String style, int po) {
-                if(CacheManager.getStylePosition(mContext)==-1){
+                if (CacheManager.getStylePosition(mContext) == -1) {
                     tv_prepare_title.setText(style);
 //                CacheManager.setStyle(mContext, style+"风");
                     CacheManager.setStylePosition(mContext, style, po);
@@ -1781,14 +1789,14 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
                     styleAdapter.notifyDataSetChanged();
                     // 显示面积
                     initDecorateSquare(2);
-                }else{
-                    if(style.equals(CacheManager.getStyle(mContext))){
+                } else {
+                    if (style.equals(CacheManager.getStyle(mContext))) {
                         // 已经选择过的 取消选择
                         CacheManager.setStylePosition(mContext, "不限风格", -1);  // 取消选择
                         styleAdapter.setSelection(-1);
                         styleAdapter.notifyDataSetChanged();
                         tv_prepare_title.setText("不限风格");
-                    }else{
+                    } else {
                         tv_prepare_title.setText(style);
                         CacheManager.setStylePosition(mContext, style, po);  // 选择了   sdf
                         styleAdapter.clearSelection(po);
@@ -1802,7 +1810,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
         prepareStyleAnimationIn(rel_style);
     }
 
-    private void prepareStyleAnimation_Out(final View view){
+    private void prepareStyleAnimation_Out(final View view) {
         view.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.out_up_to_down);
         animation.setFillAfter(true);
@@ -1810,7 +1818,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
             @Override
             public void onAnimationStart(Animation animation) {
                 // 动态图恢复 FIXME
-                setAnimation(rel_left_gif,rel_right_gif,"left_back");
+                setAnimation(rel_left_gif, rel_right_gif, "left_back");
             }
 
             @Override
@@ -1829,7 +1837,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
         view.startAnimation(animation);
     }
 
-    private void prepareStyleAnimationIn(final View view){
+    private void prepareStyleAnimationIn(final View view) {
         view.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.in_up_to_down);
         animation.setFillAfter(true);
@@ -1854,14 +1862,14 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
 
-    private void stageAnimationOut(final View view){
+    private void stageAnimationOut(final View view) {
         view.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.out_up_to_down);
         animation.setFillAfter(true);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                setAnimation(rel_left_gif,rel_right_gif,"right_back");
+                setAnimation(rel_left_gif, rel_right_gif, "right_back");
             }
 
             @Override
@@ -1896,14 +1904,14 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
         CacheManager.setBecon(mContext, "0");
     }
 
-    private void stageAnimationOut1(final View view){
+    private void stageAnimationOut1(final View view) {
         view.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.out_up_to_down);
         animation.setFillAfter(true);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                setAnimation(rel_left_gif,rel_right_gif,"right_back");
+                setAnimation(rel_left_gif, rel_right_gif, "right_back");
             }
 
             @Override
@@ -1923,7 +1931,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
 
-    private void ongoingStyleOut(final View view){
+    private void ongoingStyleOut(final View view) {
         view.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.out_up_to_down);
         animation.setFillAfter(true);
@@ -1951,7 +1959,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
         CacheManager.setBecon(mContext, "-1");
     }
 
-    private void ongoingStyleIn(final View view){
+    private void ongoingStyleIn(final View view) {
         rl_going_stage.setVisibility(View.INVISIBLE);
         view.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.in_down_to_up);
@@ -1980,7 +1988,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
 
-    private void goingStageIn(final View view){
+    private void goingStageIn(final View view) {
         view.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.in_up_to_down);
         animation.setFillAfter(true);
@@ -2006,7 +2014,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
         CacheManager.setBecon(mContext, "-1");
     }
 
-    private void ongoingStyleAnimationIn(final View view){
+    private void ongoingStyleAnimationIn(final View view) {
         view.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.out_up_to_down);
         animation.setFillAfter(true);
@@ -2033,7 +2041,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
         view.startAnimation(animation);
     }
 
-    private void ongoingStageAnimationIn(final View view){
+    private void ongoingStageAnimationIn(final View view) {
         view.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.in_up_to_down);
         animation.setFillAfter(true);

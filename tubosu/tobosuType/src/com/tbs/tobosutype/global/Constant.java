@@ -29,7 +29,11 @@ public class Constant {
     /**
      * M站 发单跳转 线上环境
      */
-    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
+//    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
+    /**
+     * test 环境
+     */
+    public static final String M_TOBOSU_URL = "http://m.test.tobosu.com/szs/";
 
     /**
      * M站 发单跳转 dev环境

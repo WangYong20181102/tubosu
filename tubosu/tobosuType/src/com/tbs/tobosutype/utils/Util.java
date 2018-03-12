@@ -17,7 +17,8 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.os.Environment;
+
+import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -535,8 +536,8 @@ public class Util {
     }
 
     //获取Android的 api   数据流中的ani
-    public static int getAni() {
-        return Build.VERSION.SDK_INT;
+    public static String getAni() {
+        return Settings.System.getString(MyApplication.getContext().getContentResolver(),Settings.System.ANDROID_ID);
     }
 
     //获取设备的id Android:md5(ani+imei+mac)
@@ -700,6 +701,16 @@ public class Util {
     public static void HttpPostUserUseInfo() {
         //根据事件的集合生成要上传的对象
         _AppEvent appEvent = new _AppEvent(MyApplication.evBeanArrayList);
+        if (!appEvent.getEv().isEmpty()) {
+            if (appEvent.getEv().get(0).getRef().equals("activity.WelcomeActivity")
+                    && appEvent.getEv().get(0).getUrl().equals("activity.WelcomeActivity")) {
+                //修改数据
+                appEvent.getEv().get(0).setRef("activity.LauncherActivity");
+            } else if (appEvent.getEv().get(0).getRef().equals("")) {
+                //第一次启动上传的数据 不包含ev
+                appEvent.getEv().clear();
+            }
+        }
         Log.e(TAG, "上传事件集合长度==========" + appEvent.getEv().size());
         //将对象转为json
         String appEventJson = mGson.toJson(appEvent);

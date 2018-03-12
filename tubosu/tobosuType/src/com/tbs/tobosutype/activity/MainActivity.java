@@ -32,6 +32,7 @@ import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.HomeListener;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 
@@ -147,7 +148,9 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.e(TAG, "MainActivity执行的生命周期========onCreate()");
         mContext = MainActivity.this;
+
         userInfo = getSharedPreferences("userInfo", 0);
         mGson = new Gson();
         needPermissions();//权限的遍历
@@ -161,15 +164,16 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     // TODO: 2018/2/27 点击事件流所需要的执行的操作
     @Override
     protected void onResume() {
-        setFragmentPosition(SpUtil.getMainTabPosition(mContext));
-        isForeground = true;
         super.onResume();
+        Log.e(TAG, "MainActivity执行的生命周期========onResume()");
+//        setFragmentPosition(SpUtil.getMainTabPosition(mContext));
+        isForeground = true;
         initData();
         if (AppInfoUtil.ISJUSTLOGIN) {
             operTab();
         }
         MobclickAgent.onResume(this);
-        Log.e(TAG, "MainActivity执行的生命周期========onResume()");
+
     }
 
     protected void onPause() {
@@ -177,6 +181,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         super.onPause();
         MobclickAgent.onPause(this);
         Log.e(TAG, "MainActivity执行的生命周期========onPause()");
+
     }
 
     //版本更新清除之前的用户信息
@@ -240,6 +245,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         TabHost.TabSpec spec;
 
         Intent intent = new Intent().setClass(this, NewHomeActivity.class);
+
         spec = tabHost.newTabSpec("ONE").setIndicator("首页").setContent(intent);
         tabHost.addTab(spec);
         if (Build.VERSION.SDK_INT >= 21) {
@@ -325,7 +331,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
      * [我]页面的订单数目
      */
     private void initData() {
-
+        Log.e(TAG, "MainActivity=============执行========initData=====");
         token = AppInfoUtil.getToekn(getApplicationContext());
         mark = userInfo.getString("mark", "0");
         initNet();
@@ -462,8 +468,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     tv_decorate_textview.setTextColor(Color.parseColor("#A8AAAC"));
                     tv_my_textview.setTextColor(Color.parseColor("#ff9c00"));
                 }
-                break;
-            default:
                 break;
         }
     }
@@ -740,5 +744,4 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
             permission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         return permission;
     }
-
 }
