@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean._AppEvent;
+import com.tbs.tobosutype.utils.AppManager;
 import com.tbs.tobosutype.utils.SpUtil;
 
 import butterknife.BindView;
@@ -54,13 +55,13 @@ public class NewWebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
         setContentView(R.layout.activity_new_web_view);
         ButterKnife.bind(this);
         mContext = this;
-        initViewEvent();
-        SpUtil.setStatisticsEventPageId(mContext, mLoadingUrl);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        initViewEvent();
+        SpUtil.setStatisticsEventPageId(mContext, mLoadingUrl);
     }
 
     //该页面为复用页面  根据不同的属性生成不同的数据 用于数据的统计
@@ -90,7 +91,7 @@ public class NewWebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
         newWebviewWeb.setWebChromeClient(webChromeClient);
         newWebviewWeb.setWebViewClient(webViewClient);
         //统计用
-        newWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent));
+        newWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent)+ "&app_ref=" + AppManager.lastSecoundActivityName());
         Log.e(TAG, "统计传值=====" + mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent));
     }
 

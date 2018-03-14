@@ -537,7 +537,7 @@ public class Util {
 
     //获取Android的 api   数据流中的ani
     public static String getAni() {
-        return Settings.System.getString(MyApplication.getContext().getContentResolver(),Settings.System.ANDROID_ID);
+        return Settings.System.getString(MyApplication.getContext().getContentResolver(), Settings.System.ANDROID_ID);
     }
 
     //获取设备的id Android:md5(ani+imei+mac)
@@ -573,7 +573,7 @@ public class Util {
 
     //获取设备的型号
     public static String getDeviceModel() {
-        return android.os.Build.MODEL;
+        return Build.BRAND + "/" + android.os.Build.MODEL;
     }
 
     //获取手机的系统版本
@@ -702,13 +702,15 @@ public class Util {
         //根据事件的集合生成要上传的对象
         _AppEvent appEvent = new _AppEvent(MyApplication.evBeanArrayList);
         if (!appEvent.getEv().isEmpty()) {
-            if (appEvent.getEv().get(0).getRef().equals("activity.WelcomeActivity")
-                    && appEvent.getEv().get(0).getUrl().equals("activity.WelcomeActivity")) {
+            if (appEvent.getEv().size() >= 2
+                    && appEvent.getEv().get(1).getRef().equals("activity.WelcomeActivity")
+                    && appEvent.getEv().get(1).getUrl().equals("activity.WelcomeActivity")
+                    && appEvent.getEv().get(0).getRef().equals("")) {
                 //修改数据
-                appEvent.getEv().get(0).setRef("activity.LauncherActivity");
+                appEvent.getEv().get(1).setRef("activity.LauncherActivity");
+                appEvent.getEv().remove(0);
             } else if (appEvent.getEv().get(0).getRef().equals("")) {
-                //第一次启动上传的数据 不包含ev
-                appEvent.getEv().clear();
+                appEvent.getEv().get(0).setRef("activity.LauncherActivity");
             }
         }
         Log.e(TAG, "上传事件集合长度==========" + appEvent.getEv().size());
@@ -730,6 +732,31 @@ public class Util {
             public void onResponse(Call call, Response response) throws IOException {
                 String result = new String(response.body().string());
                 Log.e(TAG, "数据流链接数据成功=====" + result);
+
+            }
+        });
+    }
+
+    //第一次上传数据
+    public static void HttpFristPostUserUseInfo() {
+        //根据事件的集合生成要上传的对象
+        _AppEvent appEvent = new _AppEvent();
+        //将对象转为json
+        String appEventJson = mGson.toJson(appEvent);
+        //生成参数上传
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("data", appEventJson);
+        Log.e(TAG, "App启动第一次点击流上传的JSON数据==============" + appEventJson);
+        OKHttpUtil.post(Constant.TBS_DATA_STREAM, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "App启动第一次上传数据流链接数据失败=====" + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String result = new String(response.body().string());
+                Log.e(TAG, "App启动第一次上传数据流链接数据成功=====" + result);
 
             }
         });

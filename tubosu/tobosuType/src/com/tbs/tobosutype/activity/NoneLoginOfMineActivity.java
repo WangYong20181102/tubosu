@@ -100,31 +100,12 @@ public class NoneLoginOfMineActivity extends com.tbs.tobosutype.base.BaseActivit
     protected void onResume() {
         noneLoginCompanyOfMineAllLl.setBackgroundColor(Color.parseColor("#ffffff"));
         super.onResume();
-//        Log.e(TAG, "执行onResume========初始化事件");
-//        // TODO: 2018/2/27 点击流事件统计初始化
-//        mVistTime = Util.getUnixTime();//访问页面的时间
-//        // TODO: 2018/2/27 从该页面去到另一个页面返回时要做mFrom和mTo的位置交换
-//        if (!TextUtils.isEmpty(mTo)) {
-//            // TODO: 2018/2/27 表明从某个页面回退回来了 此时mEventCode置空
-//            mFrom = mTo;
-//            mEventCode = "";
-//        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         Log.e(TAG, "执行onPause========存入事件");
-//        // TODO: 2018/2/27  页面离开时调用的方法 离开时要创建一次访问事件以及点击事件
-//        mLeaveTime = Util.getUnixTime();//离开页面的时间
-//        // TODO: 2018/3/1 点击事件
-//        if (!TextUtils.isEmpty(mEventCode)) {
-//            _AppEvent.EvBean evBean1 = new _AppEvent.EvBean(mFrom, mNowActivity, mEventCode, mLeaveTime, mLeaveTime, "1");
-//            Util.addAppEventCount(evBean1);
-//        }
-//        // TODO: 2018/3/1 访问事件
-//        _AppEvent.EvBean evBean0 = new _AppEvent.EvBean(mFrom, mNowActivity, "", mVistTime, mLeaveTime, "0");
-//        Util.addAppEventCount(evBean0);
     }
 
     @Override

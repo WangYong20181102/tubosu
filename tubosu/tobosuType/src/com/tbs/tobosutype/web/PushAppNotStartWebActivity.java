@@ -26,6 +26,8 @@ import com.tbs.tobosutype.activity.WelcomeActivity;
 import com.tbs.tobosutype.base.BaseActivity;
 import com.tbs.tobosutype.bean._AppEvent;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.utils.AppManager;
+import com.tbs.tobosutype.utils.SpUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,7 +68,19 @@ public class PushAppNotStartWebActivity extends BaseActivity {
         setContentView(R.layout.activity_push_app_not_start_web);
         ButterKnife.bind(this);
         mContext = this;
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initViewEvent();
+        SpUtil.setStatisticsEventPageId(mContext, mLoadingUrl);
+    }
+
+    @Override
+    protected boolean havePageId() {
+        return true;
     }
 
     private void initViewEvent() {
@@ -97,7 +111,7 @@ public class PushAppNotStartWebActivity extends BaseActivity {
 
         pansWebviewWeb.setWebChromeClient(webChromeClient);
         pansWebviewWeb.setWebViewClient(webViewClient);
-        pansWebviewWeb.loadUrl(mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent));
+        pansWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
     }
 
     private WebViewClient webViewClient = new WebViewClient() {

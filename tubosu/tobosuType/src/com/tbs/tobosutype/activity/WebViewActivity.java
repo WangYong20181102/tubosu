@@ -21,6 +21,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean._AppEvent;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.AppManager;
 import com.tbs.tobosutype.utils.ShareUtil;
 import com.tbs.tobosutype.utils.SpUtil;
 
@@ -71,9 +72,16 @@ public class WebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
 
         mContext = WebViewActivity.this;
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initView();
         initData();
         initEvent();
+        SpUtil.setStatisticsEventPageId(mContext, url);
     }
 
     @Override
@@ -105,7 +113,7 @@ public class WebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
 
         webView.setWebChromeClient(new WebChromeClient());
         SpUtil.setStatisticsEventPageId(mContext, url);
-        webView.loadUrl(url + "?equipmentInfo=" + mGson.toJson(mAppEvent));
+        webView.loadUrl(url + "&equipmentInfo=" + mGson.toJson(mAppEvent)+ "&app_ref=" + AppManager.lastSecoundActivityName());
 //		webView_detailslideshow.addJavascriptInterface(object, name);
     }
 

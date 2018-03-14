@@ -166,14 +166,13 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         Log.e(TAG, "MainActivity执行的生命周期========onResume()");
-//        setFragmentPosition(SpUtil.getMainTabPosition(mContext));
+        setFragmentPosition(SpUtil.getMainTabPosition(mContext));
         isForeground = true;
         initData();
         if (AppInfoUtil.ISJUSTLOGIN) {
             operTab();
         }
         MobclickAgent.onResume(this);
-
     }
 
     protected void onPause() {
@@ -391,6 +390,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                 tv_image_textview.setTextColor(Color.parseColor("#A8AAAC"));
                 tv_decorate_textview.setTextColor(Color.parseColor("#A8AAAC"));
                 tv_my_textview.setTextColor(Color.parseColor("#A8AAAC"));
+                SpUtil.setMainTabPosition(mContext, 0);
                 break;
             case 1:
                 tabHost.setCurrentTab(fragmentPostion);
@@ -404,6 +404,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                 tv_image_textview.setTextColor(Color.parseColor("#ff9c00"));
                 tv_decorate_textview.setTextColor(Color.parseColor("#A8AAAC"));
                 tv_my_textview.setTextColor(Color.parseColor("#A8AAAC"));
+                SpUtil.setMainTabPosition(mContext, 1);
                 break;
             case 2:
                 tabHost.setCurrentTab(fragmentPostion);
@@ -417,6 +418,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                 tv_image_textview.setTextColor(Color.parseColor("#A8AAAC"));
                 tv_decorate_textview.setTextColor(Color.parseColor("#ff9c00"));
                 tv_my_textview.setTextColor(Color.parseColor("#A8AAAC"));
+                SpUtil.setMainTabPosition(mContext, 2);
                 break;
             case 3:
                 tabHost.setCurrentTab(fragmentPostion);
@@ -468,6 +470,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     tv_decorate_textview.setTextColor(Color.parseColor("#A8AAAC"));
                     tv_my_textview.setTextColor(Color.parseColor("#ff9c00"));
                 }
+                SpUtil.setMainTabPosition(mContext, 3);
                 break;
         }
     }

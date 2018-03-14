@@ -112,9 +112,9 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
      */
 
     private void initStatisticsEvent() {
-        Log.e(TAG, "启动App时上传数据===========");
+        Log.e(TAG, "_lin启动App时上传数据===========");
         getSharedPreferences("StatisticsEvent", 0).edit().clear().commit();
-        Util.HttpPostUserUseInfo();
+        Util.HttpFristPostUserUseInfo();
     }
 
     //百度定位

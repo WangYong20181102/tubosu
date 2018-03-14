@@ -24,6 +24,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean._AppEvent;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.utils.AppManager;
 import com.tbs.tobosutype.utils.SpUtil;
 
 import butterknife.BindView;
@@ -58,6 +59,12 @@ public class ArticleWebViewActivity extends com.tbs.tobosutype.base.BaseActivity
         setContentView(R.layout.activity_article_web_view);
         ButterKnife.bind(this);
         mContext = this;
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initViewEvent();
         SpUtil.setStatisticsEventPageId(mContext, mLoadingUrl);
     }
@@ -86,7 +93,7 @@ public class ArticleWebViewActivity extends com.tbs.tobosutype.base.BaseActivity
 
         artWebviewWeb.setWebChromeClient(webChromeClient);
         artWebviewWeb.setWebViewClient(webViewClient);
-        artWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent));
+        artWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent)+ "&app_ref=" + AppManager.lastSecoundActivityName());
         Log.e(TAG, "统计传值=====" + mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent));
     }
 

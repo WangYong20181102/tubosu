@@ -45,7 +45,7 @@ public class _AppEvent {
     private String di;//设备的id   Android:md5(ani+imei+mac)
     private String si;//会话id 生成规则：md5(di+current_time+random_str)
     private String sr;//手机的分辨率
-    private String ip;//当前网络的ip
+//    private String ip;//当前网络的ip
     private String dm;//设备的型号
     private String sv;//设备的系统版本
     private String lng;//经度
@@ -73,7 +73,7 @@ public class _AppEvent {
         this.imei = Util.getIMEI();
         this.ani = Util.getAni();
         this.no = Util.getOperator();
-        this.ip = Util.getIp(MyApplication.getContext());
+//        this.ip = Util.getIp(MyApplication.getContext());
         this.ev = evBeanArrayList;
     }
     public _AppEvent(){
@@ -92,7 +92,7 @@ public class _AppEvent {
         this.imei = Util.getIMEI();
         this.ani = Util.getAni();
         this.no = Util.getOperator();
-        this.ip = Util.getIp(MyApplication.getContext());
+//        this.ip = Util.getIp(MyApplication.getContext());
     }
     public String getSv() {
         return sv;
@@ -223,13 +223,13 @@ public class _AppEvent {
         this.ev = ev;
     }
 
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
+//    public String getIp() {
+//        return ip;
+//    }
+//
+//    public void setIp(String ip) {
+//        this.ip = ip;
+//    }
 
     public static class EvBean {
         /**

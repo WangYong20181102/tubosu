@@ -25,6 +25,8 @@ import com.tbs.tobosutype.activity.BaseActivity;
 import com.tbs.tobosutype.activity.NewWebViewActivity;
 import com.tbs.tobosutype.bean._AppEvent;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.utils.AppManager;
+import com.tbs.tobosutype.utils.SpUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +63,19 @@ public class PushAppStartWebActivity extends com.tbs.tobosutype.base.BaseActivit
         setContentView(R.layout.activity_push_app_start_web);
         ButterKnife.bind(this);
         mContext = this;
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initViewEvent();
+        SpUtil.setStatisticsEventPageId(mContext, mLoadingUrl);
+    }
+
+    @Override
+    protected boolean havePageId() {
+        return true;
     }
 
     private void initViewEvent() {
@@ -92,7 +106,8 @@ public class PushAppStartWebActivity extends com.tbs.tobosutype.base.BaseActivit
 
         pasWebviewWeb.setWebChromeClient(webChromeClient);
         pasWebviewWeb.setWebViewClient(webViewClient);
-        pasWebviewWeb.loadUrl(mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent));
+        pasWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+        Log.e(TAG, "测试传值和H5交互========" + mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
     }
 
     private WebViewClient webViewClient = new WebViewClient() {

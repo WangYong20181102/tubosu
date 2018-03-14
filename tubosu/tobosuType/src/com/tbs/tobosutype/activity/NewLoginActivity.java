@@ -89,16 +89,6 @@ public class NewLoginActivity extends com.tbs.tobosutype.base.BaseActivity{
     protected void onResume() {
         super.onResume();
         Log.e(TAG, "执行onResume========");
-        // TODO: 2018/2/27  初始化 点击事件流
-//        mFrom = mWhereComeFrom;
-//        mVistTime = Util.getUnixTime();//访问页面的时间
-//        // TODO: 2018/2/27 从该页面去到另一个页面返回时要做mFrom和mTo的位置交换
-//        if (!TextUtils.isEmpty(mTo)) {
-//            // TODO: 2018/2/27 表明从某个页面回退回来了 此时mEventCode置空
-//            mFrom = mTo;
-//            mEventCode = "";
-//        }
-        //访问事件初始化
     }
 
 
@@ -106,16 +96,6 @@ public class NewLoginActivity extends com.tbs.tobosutype.base.BaseActivity{
     protected void onPause() {
         super.onPause();
         Log.e(TAG, "执行onPause========");
-//        mLeaveTime = Util.getUnixTime();//离开页面的时间
-//        // TODO: 2018/3/1 点击事件
-//        if(!TextUtils.isEmpty(mEventCode)){
-//            _AppEvent.EvBean evBean1 = new _AppEvent.EvBean(mFrom, mNowActivity, mEventCode, mLeaveTime, mLeaveTime,"1");
-//            Util.addAppEventCount(evBean1);
-//        }
-//        // TODO: 2018/3/1 访问事件
-//        _AppEvent.EvBean evBean0 = new _AppEvent.EvBean(mFrom, mNowActivity, "", mVistTime, mLeaveTime, "0");
-//        Util.addAppEventCount(evBean0);
-        //访问事件统计
     }
 
     @Override
