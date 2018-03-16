@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -22,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.squareup.okhttp.Request;
@@ -34,8 +36,10 @@ import com.tobosu.mydecorate.util.CacheManager;
 import com.tobosu.mydecorate.util.Util;
 import com.tobosu.mydecorate.view.CustomWaitDialog;
 import com.tobosu.mydecorate.view.TextSeekBar;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -466,9 +470,9 @@ public class PopOrderActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int position = 0;
-                if("".equals(CacheManager.getBecon(mContext))){
+                if ("".equals(CacheManager.getBecon(mContext))) {
 
-                }else {
+                } else {
                     position = Integer.parseInt(CacheManager.getBecon(mContext));
                 }
 
@@ -666,6 +670,7 @@ public class PopOrderActivity extends AppCompatActivity {
     }
 
     private String chosenCity = "0";
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -1136,9 +1141,9 @@ public class PopOrderActivity extends AppCompatActivity {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             String becon = CacheManager.getBecon(mContext);
             int position = 0;
-            if("".equals(becon)){
+            if ("".equals(becon)) {
 
-            }else {
+            } else {
                 position = Integer.parseInt(becon);
             }
 
@@ -1184,7 +1189,7 @@ public class PopOrderActivity extends AppCompatActivity {
                 if (gopoporder_code == 34) {
 //                    setResult(Constant.POP_RESULTCODE);
                     startActivity(new Intent(mContext, MainActivity.class));
-                }else if(gopoporder_code == 134){
+                } else if (gopoporder_code == 134) {
                     setResult(Constant.BIBLE_POP_RESULTCODE);
                 }
                 finish();
@@ -1285,6 +1290,7 @@ public class PopOrderActivity extends AppCompatActivity {
 
 
     private void popOrder(final String cellphone, final String housearea, final String orderprice, final String style) {
+        Log.e(TAG, "发单按钮=========进行请求===");
         showLoadingView();
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
         hashMap.put("cellphone", cellphone); // 电话号码
@@ -1293,7 +1299,7 @@ public class PopOrderActivity extends AppCompatActivity {
         hashMap.put("style", style); // 风格
         hashMap.put("device", "android");
         hashMap.put("source", "1016");
-        hashMap.put("city", "0".equals(chosenCity) ? CacheManager.getCity(mContext):chosenCity);
+        hashMap.put("city", "0".equals(chosenCity) ? CacheManager.getCity(mContext) : chosenCity);
         hashMap.put("version", Util.getAppVersionName(mContext));
         hashMap.put("urlhistory", Constant.PIPE_CODE); // 渠道代码
         hashMap.put("comeurl", Constant.PIPE_CODE); //订单发布页面
@@ -1302,7 +1308,9 @@ public class PopOrderActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Response response, String s) {
                 try {
+
                     JSONObject orderObject = new JSONObject(s);
+                    Log.e(TAG, "发单按钮============" +response.body().toString());
                     if (orderObject.getInt("error_code") == 0) {
                         hideLoadingView();
                         Util.setToast(mContext, "领取成功 我们会尽快以0574开头座机联系您");

@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginBottom="14dp"
-    android:background="@color/white"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/white">
 
     <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="4dp"
-        app:cardBackgroundColor="#fffffc"
         android:layout_margin="10dp"
+        app:cardBackgroundColor="#fffffc"
+        app:cardCornerRadius="4dp"
         app:cardElevation="6dp">
 
         <RelativeLayout
@@ -20,6 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="14dp">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -34,35 +34,33 @@
                         android:id="@+id/frad"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/item_author_icon"
+                        android:layout_marginRight="14dp"
                         android:layout_marginTop="7dp"
-                        android:layout_marginRight="14dp">
-                    </FrameLayout>
-
-
+                        android:layout_toLeftOf="@+id/item_author_icon"></FrameLayout>
 
 
                     <ImageView
                         android:id="@+id/item_author_icon"
                         android:layout_width="66dp"
                         android:layout_height="66dp"
-                        android:layout_marginTop="4dp"
-                        android:layout_centerInParent="true"/>
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="4dp" />
+
                     <ImageView
                         android:id="@+id/iv_scircel"
                         android:layout_width="73dp"
                         android:layout_height="73dp"
+                        android:layout_centerInParent="true"
                         android:layout_marginTop="4dp"
-                        android:background="@mipmap/circle"
-                        android:layout_centerInParent="true"/>
+                        android:background="@mipmap/circle" />
 
                     <ImageView
                         android:id="@+id/iv_rank"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/iv_scircel"
-                        android:layout_marginTop="7dp"
                         android:layout_marginRight="16dp"
+                        android:layout_marginTop="7dp"
                         android:background="@mipmap/jin" />
 
                 </RelativeLayout>
@@ -70,9 +68,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -80,6 +78,9 @@
                         android:id="@+id/item_author_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:ellipsize="marquee"
+                        android:ems="4"
+                        android:singleLine="true"
                         android:text="第一名作者"
                         android:textColor="#5c5f66"
                         android:textSize="12sp" />
@@ -88,8 +89,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -105,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="128"
+                        android:text="0"
                         android:textColor="#8a8f99"
                         android:textSize="9sp" />
 
@@ -121,13 +122,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="162"
+                        android:text="0"
                         android:textColor="#8a8f99"
                         android:textSize="9sp" />
                 </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"/>
+                    android:layout_height="10dp" />
             </LinearLayout>
         </RelativeLayout>
 

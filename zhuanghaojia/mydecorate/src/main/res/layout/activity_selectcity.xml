@@ -65,6 +65,7 @@
 	                    android:focusableInTouchMode="true" />
 	
 	                <include
+						android:visibility="gone"
 	                    android:id="@+id/citys_list_empty"
 	                    android:layout_width="match_parent"
 	                    android:layout_height="match_parent"

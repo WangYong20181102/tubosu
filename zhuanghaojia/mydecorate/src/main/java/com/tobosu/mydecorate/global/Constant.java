@@ -3,11 +3,11 @@ package com.tobosu.mydecorate.global;
 import com.tobosu.mydecorate.application.MyApplication;
 import com.tobosu.mydecorate.util.Util;
 
-    /**
-     * Created by dec on 2016/9/12.
-     * <p>
-     * 常量类
-     */
+/**
+ * Created by dec on 2016/9/12.
+ * <p>
+ * 常量类
+ */
 public class Constant {
     /**
      * 正式环境
@@ -17,6 +17,29 @@ public class Constant {
      * 测试环境
      */
 //    public static final String ZHJ = "http://www.dev.tobosu.com/";
+
+    /**
+     * M站 发单跳转 线上环境
+     */
+    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
+    /**
+     * test 环境
+     */
+//    public static final String M_TOBOSU_URL = "http://m.test.tobosu.com/szs/";
+
+    /**
+     * M站 发单跳转 dev环境
+     */
+//        public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
+
+    /**
+     * 免费设计发单链接
+     */
+    public static final String FREE_DISIGN_FADAN = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + Util.getChannType(MyApplication.getContexts());
+    /**
+     * 免费报价链接
+     */
+    public static final String FREE_BAOJIA_FADAN = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + Util.getChannType(MyApplication.getContexts());
 
     public static final int CHANGE_USERNAME_RESULTCODE = 0x000014;
     public static final int CHANGE_USERNAME_REQUESTCODE = 0x000015;
@@ -96,7 +119,7 @@ public class Constant {
 
     /**
      * app_type 1是土拨鼠
-     *          2是装好家
+     * 2是装好家
      */
     public static final String PIPE_CODE = "http://m.tobosu.com/app/pub?channel=seo&subchannel=zhjandroid&chcode=" + Util.getChannType(MyApplication.getContexts()) + "&app_type=2";
     //****************************************************** creat by lin

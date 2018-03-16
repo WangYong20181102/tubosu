@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.activity.NewArticleDetailActivity;
 import com.tobosu.mydecorate.activity.NewAuthorDetailActivity;
 import com.tobosu.mydecorate.entity._HomePage;
+import com.tobosu.mydecorate.entity._NewHomePage;
 import com.tobosu.mydecorate.util.GlideUtils;
 import com.tobosu.mydecorate.util.Util;
 
@@ -31,9 +33,9 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
     private String TAG = "AuthorAdapter";
     private Context mContext;
     private LayoutInflater inflater;
-    private List<_HomePage.Author> dataList;
+    private List<_NewHomePage.AuthorBean> dataList;
 
-    public AuthorAdapter(Context mContext, List dataList) {
+    public AuthorAdapter(Context mContext, List<_NewHomePage.AuthorBean> dataList) {
         this.mContext = mContext;
         this.dataList = dataList;
         this.inflater = LayoutInflater.from(mContext);
@@ -49,18 +51,14 @@ public class AuthorAdapter extends RecyclerView.Adapter<AuthorAdapter.AuthorView
     @Override
     public void onBindViewHolder(AuthorViewHolder holder, final int position) {
 
-        String nickname = dataList.get(position).getNick();
-//        if(nickname.length() < 4){
-        holder.item_author_name.setText(dataList.get(position).getNick());
-//        }else {
-//            holder.item_author_name.setText(dataList.get(position).getNick().substring(0, 4) + "...");
-//        }
-
-        holder.item_wenzhang.setText(dataList.get(position).getArticle_count());
-        holder.item_liulang.setText(dataList.get(position).getView_count());
+        holder.item_author_name.setText(""+dataList.get(position).getNick());
+        holder.item_wenzhang.setText("" + dataList.get(position).getArticle_count());
+        holder.item_liulang.setText("" + dataList.get(position).getView_count());
 
         holder.frameLayout.bringToFront();
-        GlideUtils.glideLoader(mContext, dataList.get(position).getIcon(), 0, R.mipmap.jiazai_loading, holder.item_author_icon, 0);
+        GlideUtils.glideLoader(mContext, dataList.get(position).getIcon(),
+                R.mipmap.jiazai_loading, R.mipmap.jiazai_loading,
+                holder.item_author_icon, 0);
         holder.item_author_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

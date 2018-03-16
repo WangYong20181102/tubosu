@@ -1,6 +1,7 @@
 package com.tobosu.mydecorate.util;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 /**
  * 缓存工具类
@@ -311,8 +312,10 @@ public class CacheManager {
      * @param city
      */
     public static void setCity(Context context, String city) {
-        if(city.contains("市") || city.contains("县")){
-            city = city.substring(0, city.length()-1);
+        if(!TextUtils.isEmpty(city)){
+            if(city.contains("市") || city.contains("县")){
+                city = city.substring(0, city.length()-1);
+            }
         }
         context.getSharedPreferences(CITY_PREFERENCE, Context.MODE_PRIVATE).edit().putString(CITY, city).commit();
     }

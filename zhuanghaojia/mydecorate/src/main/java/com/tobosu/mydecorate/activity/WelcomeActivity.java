@@ -1,16 +1,22 @@
 package com.tobosu.mydecorate.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Window;
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -33,10 +39,13 @@ import com.tobosu.mydecorate.util.CacheManager;
 import com.tobosu.mydecorate.util.Util;
 import com.tobosu.mydecorate.view.CustomDialog;
 import com.umeng.analytics.MobclickAgent;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +61,7 @@ import java.util.Map;
 public class WelcomeActivity extends AppCompatActivity {
     private static final String TAG = WelcomeActivity.class.getSimpleName();
     private Context context;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,11 +70,66 @@ public class WelcomeActivity extends AppCompatActivity {
         context = WelcomeActivity.this;
 
         initBaidu();
+        needPermissions();
+    }
+
+    private void needPermissions() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            List<String> permission = getPermissionList(context);//需要获取动态权限的集合 总6个
+            if (permission.size() > 0) {
+                //未获取全部的权限 去获取相应的权限
+                requestPermissions(permission.toArray(new String[permission.size()]), 101);
+            } else {
+                //已经获取了全部的权限
+                allInit();
+            }
+        } else {
+            //低于6.0版本不需要动态获取权限
+            allInit();
+        }
+    }
+
+    public List<String> getPermissionList(Context activity) {
+        List<String> permission = new ArrayList<>();
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.READ_PHONE_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_WIFI_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_WIFI_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_NETWORK_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.ACCESS_NETWORK_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.INTERNET);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.CHANGE_WIFI_STATE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.CHANGE_WIFI_STATE);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS);
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            permission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        return permission;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case 101:
+                Log.e(TAG, "权限获取之后====permissions===" + Arrays.toString(permissions) + "====grantResults====" + Arrays.toString(permissions));
+                allInit();
+                break;
+        }
+    }
+    //检测权限问题之后初始化所有
+
+    private void allInit() {
         initUmemgSettings();
         initRegisterXinGe();
         initData();
     }
-
 
     private void initData() {
 
@@ -111,7 +176,6 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
 
-
     // 先保留 版本升级方法
 //    private void initHomeTypeData() {
 //        MobclickAgent.onProfileSignIn(Util.getUserId(this));
@@ -144,7 +208,7 @@ public class WelcomeActivity extends AppCompatActivity {
                         // 页面跳转
                         MyThread myThread = new MyThread();
                         myThread.start();
-                    }else{
+                    } else {
 
                     }
                 } catch (JSONException e) {
@@ -154,37 +218,47 @@ public class WelcomeActivity extends AppCompatActivity {
 
             @Override
             public void onFail(Request request, IOException e) {
-                Util.setErrorLog(TAG, "cao------请求失败->>" +request.toString());
+                Util.setErrorLog(TAG, "cao------请求失败->>" + request.toString());
             }
 
             @Override
             public void onError(Response response, int code) {
-                Util.setErrorLog(TAG, "cao-----请求错误->>" + response.message() );
+                Util.setErrorLog(TAG, "cao-----请求错误->>" + response.message());
             }
         });
     }
 
-    /** 请求网络返回栏目列表 */
+    /**
+     * 请求网络返回栏目列表
+     */
     private ArrayList<DecorateTitleEntity.ChannelItem> userNetChannelList = new ArrayList<DecorateTitleEntity.ChannelItem>();
 
-    /** 本地用户栏目列表 【显示】 */
+    /**
+     * 本地用户栏目列表 【显示】
+     */
     private ArrayList<DecorateTitleEntity.ChannelItem> userChannelList = new ArrayList<DecorateTitleEntity.ChannelItem>();
 
-    /** 本地用户栏目列表 【不显示】 */
+    /**
+     * 本地用户栏目列表 【不显示】
+     */
     private ArrayList<DecorateTitleEntity.ChannelItem> userUnShowChannelList = new ArrayList<DecorateTitleEntity.ChannelItem>();
 
-    /** 本地总 */
+    /**
+     * 本地总
+     */
     private ArrayList<DecorateTitleEntity.ChannelItem> localChannelList = new ArrayList<DecorateTitleEntity.ChannelItem>();
 
-    /**需要本地增加的列表*/
+    /**
+     * 需要本地增加的列表
+     */
     private ArrayList<DecorateTitleEntity.ChannelItem> addChannelList = new ArrayList<DecorateTitleEntity.ChannelItem>();
     private ChannelManage channelManager = ChannelManage.getManage(MyApplication.getApp().getSQLHelper());
-     private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
                     // 作比较
                     int netSize = userNetChannelList.size();
@@ -196,14 +270,14 @@ public class WelcomeActivity extends AppCompatActivity {
                     localChannelList.addAll(userChannelList);
                     localChannelList.addAll(userUnShowChannelList);
 
-                    if(netSize>=localSize){
+                    if (netSize >= localSize) {
                         // 增加 或不增加
-                        for(int i=0;i<netSize;i++){
-                            for(int j=0;j<localSize;j++){
-                                if(userNetChannelList.get(i).getName().equals(localChannelList.get(j).getName())){
+                        for (int i = 0; i < netSize; i++) {
+                            for (int j = 0; j < localSize; j++) {
+                                if (userNetChannelList.get(i).getName().equals(localChannelList.get(j).getName())) {
                                     // 在本地显示的title中有相同
                                     break;
-                                }else{
+                                } else {
                                     addChannelList.add(userNetChannelList.get(i));
                                 }
                             }
@@ -211,14 +285,14 @@ public class WelcomeActivity extends AppCompatActivity {
 
                         // 添加到 本地 userChannelList数据库
                         channelManager.setDefaultData(addChannelList);
-                    }else{
+                    } else {
                         // 服务端若删除了某个title
-                        for(int i=0;i<localSize;i++){
-                            for(int j=0;j<netSize;j++){
-                                if(localChannelList.get(i).getName().equals(userNetChannelList.get(j).getName())){
+                        for (int i = 0; i < localSize; i++) {
+                            for (int j = 0; j < netSize; j++) {
+                                if (localChannelList.get(i).getName().equals(userNetChannelList.get(j).getName())) {
                                     // 在本地显示的title中有相同 证明还存在
                                     break;
-                                }else{
+                                } else {
                                     channelManager.deleteAllChannel();
                                     getDecorateTitle();
                                 }
@@ -236,16 +310,18 @@ public class WelcomeActivity extends AppCompatActivity {
         }
     };
 
-    /**测试用*/
-    private void requestForIndext(){
+    /**
+     * 测试用
+     */
+    private void requestForIndext() {
         OKHttpUtil okHttpUtil = new OKHttpUtil();
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
         hashMap.put("token", Util.getDateToken());
-        Util.setErrorLog(TAG, "cao----有没有token->>" + Util.getDateToken() );
+        Util.setErrorLog(TAG, "cao----有没有token->>" + Util.getDateToken());
         okHttpUtil.post(Constant.HOME_FRAGMENT_URL, hashMap, new OKHttpUtil.BaseCallBack() {
             @Override
             public void onSuccess(Response response, String json) {
-                Util.setErrorLog(TAG, "--cao-->>"+json);
+                Util.setErrorLog(TAG, "--cao-->>" + json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.getString("status");
@@ -259,7 +335,7 @@ public class WelcomeActivity extends AppCompatActivity {
                         // 页面跳转
                         MyThread myThread = new MyThread();
                         myThread.start();
-                    }else{
+                    } else {
                         Util.setErrorLog(TAG, "cao---3---");
                     }
                 } catch (JSONException e) {
@@ -279,10 +355,6 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
-
 
 
     private void goNextActivity() {
@@ -365,9 +437,10 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private ArrayList<DecorateTitleEntity.ChannelItem> titleList = new ArrayList<DecorateTitleEntity.ChannelItem>();
-    private void getDecorateTitle(){
-        if(ChannelManage.getManage(MyApplication.getApp().getSQLHelper()).getUserChannel().size()==0){
-            if(Util.isNetAvailable(context)){
+
+    private void getDecorateTitle() {
+        if (ChannelManage.getManage(MyApplication.getApp().getSQLHelper()).getUserChannel().size() == 0) {
+            if (Util.isNetAvailable(context)) {
                 OKHttpUtil okHttpUtil = new OKHttpUtil();
                 HashMap<String, Object> titleParam = new HashMap<String, Object>();
                 titleParam.put("token", Util.getDateToken()); // 此token和用户登录后获得的token无关
@@ -378,15 +451,15 @@ public class WelcomeActivity extends AppCompatActivity {
 
                         Gson gson = new Gson();
                         DecorateTitleEntity titleEntity = gson.fromJson(json, DecorateTitleEntity.class);
-                        if(titleEntity.getStatus()==200){
+                        if (titleEntity.getStatus() == 200) {
                             int size = titleEntity.getData().size();
                             DecorateTitleEntity.ChannelItem item;
-                            if(size>0){
-                                titleList.add(new DecorateTitleEntity.ChannelItem(96,"推荐",96,1));
-                                titleList.add(new DecorateTitleEntity.ChannelItem(97,"本地",97,1));
-                                for(int i =0; i<size; i++){
+                            if (size > 0) {
+                                titleList.add(new DecorateTitleEntity.ChannelItem(96, "推荐", 96, 1));
+                                titleList.add(new DecorateTitleEntity.ChannelItem(97, "本地", 97, 1));
+                                for (int i = 0; i < size; i++) {
                                     item = new DecorateTitleEntity.ChannelItem(titleEntity.getData().get(i).getId(),
-                                            titleEntity.getData().get(i).getName(), i+1, 0);
+                                            titleEntity.getData().get(i).getName(), i + 1, 0);
                                     titleList.add(item);
                                 }
 
@@ -406,16 +479,16 @@ public class WelcomeActivity extends AppCompatActivity {
                         Util.setToast(context, "获取装修宝典标题失败");
                     }
                 });
-            }else{
+            } else {
                 Util.setToast(context, "网络不佳");
             }
-        }else {
+        } else {
             goNextStep();
         }
 
     }
 
-    private void goNextStep(){
+    private void goNextStep() {
         checkTitleChange();
     }
 
@@ -423,7 +496,7 @@ public class WelcomeActivity extends AppCompatActivity {
     /**
      * 检查有没有增加和减少标题
      */
-    private void checkTitleChange(){
+    private void checkTitleChange() {
         HashMap<String, Object> titleParam = new HashMap<String, Object>();
         titleParam.put("token", Util.getDateToken()); // 此token和用户登录后获得的token无关
         OKHttpUtil okHttpUtil = new OKHttpUtil();
@@ -433,13 +506,13 @@ public class WelcomeActivity extends AppCompatActivity {
                 Util.setLog(TAG, json);
                 Gson gson = new Gson();
                 DecorateTitleEntity titleEntity = gson.fromJson(json, DecorateTitleEntity.class);
-                if(titleEntity.getStatus()==200){
+                if (titleEntity.getStatus() == 200) {
                     int size = titleEntity.getData().size();
                     DecorateTitleEntity.ChannelItem item;
-                    if(size>0){
-                        for(int i =0; i<size; i++){
+                    if (size > 0) {
+                        for (int i = 0; i < size; i++) {
                             item = new DecorateTitleEntity.ChannelItem(titleEntity.getData().get(i).getId(),
-                                    titleEntity.getData().get(i).getName(), i+1, 0);
+                                    titleEntity.getData().get(i).getName(), i + 1, 0);
                             userNetChannelList.add(item);
                         }
                         handler.sendEmptyMessage(1);

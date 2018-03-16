@@ -157,7 +157,9 @@ public class NewArticleDetailActivity extends AppCompatActivity {
                     break;
                 case R.id.new_detail_need_zx:
                     //我要装修发单请求
-                    startActivity(new Intent(mContext, FreeActivity.class));
+                    Intent intent1 = new Intent(mContext, NewWebViewActivity.class);
+                    intent1.putExtra("mLoadingUrl", Constant.FREE_BAOJIA_FADAN);
+                    startActivity(intent1);
                     break;
                 case R.id.new_detail_collect:
                     Log.e(TAG, "点击了收藏按钮！");

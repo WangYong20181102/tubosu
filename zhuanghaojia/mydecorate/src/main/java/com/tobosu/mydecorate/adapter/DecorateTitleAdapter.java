@@ -13,9 +13,11 @@ import android.widget.TextView;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.activity.NewArticleDetailActivity;
 import com.tobosu.mydecorate.entity._HomePage;
+import com.tobosu.mydecorate.entity._NewHomePage;
 import com.tobosu.mydecorate.util.GlideUtils;
 import com.tobosu.mydecorate.util.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,9 +30,9 @@ public class DecorateTitleAdapter extends RecyclerView.Adapter<DecorateTitleAdap
     private String TAG = "DecorateTitleAdapter";
     private Context mContext;
     private LayoutInflater inflater;
-    private List<_HomePage.Article> dataList;
+    private List<_NewHomePage.ArticleBean> dataList;
 
-    public DecorateTitleAdapter(Context mContext, List dataList){
+    public DecorateTitleAdapter(Context mContext, List <_NewHomePage.ArticleBean>dataList){
         this.mContext = mContext;
         this.dataList = dataList;
         this.inflater = LayoutInflater.from(mContext);

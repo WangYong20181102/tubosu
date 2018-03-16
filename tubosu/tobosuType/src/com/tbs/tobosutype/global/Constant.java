@@ -16,12 +16,12 @@ public class Constant {
 //    /**
 //     * 测试环境
 //     */
-//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
     /**
      * 正式环境
      */
-    public static final String TOBOSU_URL = "https://www.tobosu.com/";
+//    public static final String TOBOSU_URL = "https://www.tobosu.com/";
     /**
      * 数据流上传接口 测试环境
      */
@@ -35,7 +35,7 @@ public class Constant {
     /**
      * M站 发单跳转 线上环境
      */
-    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
+//    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
     /**
      * test 环境
      */
@@ -44,7 +44,7 @@ public class Constant {
     /**
      * M站 发单跳转 dev环境
      */
-//    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
+    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
 
 
 	/*----------以下是新增加的------------*/

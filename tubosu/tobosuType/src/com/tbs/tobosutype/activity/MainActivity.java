@@ -286,14 +286,15 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         main_tab_image = (RelativeLayout) this.findViewById(R.id.main_tab_image);
         main_tab_image.setOnClickListener(this);
         // TODO: 2017/12/16  专门用来做测试
-//        main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                Intent gotoLearnActivity = new Intent(mContext, NewLoginActivity.class);
-//                mContext.startActivity(gotoLearnActivity);
-//                return true;
-//            }
-//        });
+        main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent gotoLearnActivity = new Intent(mContext, NewWebViewActivity.class);
+                gotoLearnActivity.putExtra("mLoadingUrl", "http://m.dev.tobosu.com/szs/zx/?app_type=1");
+                mContext.startActivity(gotoLearnActivity);
+                return true;
+            }
+        });
         main_tab_decorate = (RelativeLayout) this.findViewById(R.id.main_tab_decorate);
         main_tab_decorate.setOnClickListener(this);
         main_tab_my = (RelativeLayout) this.findViewById(R.id.main_tab_my);
