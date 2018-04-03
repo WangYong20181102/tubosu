@@ -262,6 +262,42 @@ public class AppInfoUtil {
         context.getSharedPreferences("userInfo", 0).edit().putString("user_md5_password", user_md5_password).commit();
     }
 
+    //用户的新订单数量
+    public static String getUserNewOrderCount(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("new_order_count", "0");
+    }
+
+    public static void setUserNewOrderCount(Context context, String new_order_count) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("new_order_count", new_order_count).commit();
+    }
+
+    //用户的未量房数量
+    public static String getUserNotLfOrderCount(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("not_lf_order_count", "0");
+    }
+
+    public static void setUserNotLfOrderCount(Context context, String not_lf_order_count) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("not_lf_order_count", not_lf_order_count).commit();
+    }
+
+    //用户的已量房数量
+    public static String getUserLfOrderCount(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("lf_order_count", "0");
+    }
+
+    public static void setUserLfOrderCount(Context context, String lf_order_count) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("lf_order_count", lf_order_count).commit();
+    }
+
+    //用户是否有新消息
+    public static String getUserIsNewSms(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("is_new_sms", "0");
+    }
+
+    public static void setUserIsNewSms(Context context, String is_new_sms) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("is_new_sms", is_new_sms).commit();
+    }
+
     // TODO: 2018/1/10  用户的基本信息↑↑↑↑
     public static String getImageActivityCatch(Context context) {
         return context.getSharedPreferences("IsImageCache", 0).getString("result", "");

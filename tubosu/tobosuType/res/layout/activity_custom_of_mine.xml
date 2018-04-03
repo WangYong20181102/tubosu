@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/custom_of_mine_ll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:id="@+id/custom_of_mine_ll"
     tools:context="com.tbs.tobosutype.activity.CustomOfMineActivity">
 
     <ScrollView
@@ -268,6 +268,7 @@
                     android:textSize="14sp" />
                 <!--服务号-->
                 <TextView
+                    android:id="@+id/custom_of_mine_fuwuhao_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

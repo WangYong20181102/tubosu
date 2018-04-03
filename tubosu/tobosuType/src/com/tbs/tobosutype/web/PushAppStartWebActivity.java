@@ -54,6 +54,7 @@ public class PushAppStartWebActivity extends com.tbs.tobosutype.base.BaseActivit
     private Intent mIntent;
     private String mLoadingUrl = "";//加载数据的URL
     private String mShowing = "";//是否显示发单按钮
+    private String mEnableStatistics = "";//是否拼接点击流
     private Gson mGson;
     private _AppEvent mAppEvent;
 
@@ -86,6 +87,7 @@ public class PushAppStartWebActivity extends com.tbs.tobosutype.base.BaseActivit
         pasWebviewBannerRl.setBackgroundColor(Color.parseColor("#ffffff"));
         mLoadingUrl = mIntent.getStringExtra("mLoadingUrl");
         mShowing = mIntent.getStringExtra("mShowing");
+        mEnableStatistics = mIntent.getStringExtra("mEnableStatistics");
         if (mShowing.equals("1")) {
             //显示
             pushStartFadan.setVisibility(View.VISIBLE);
@@ -106,7 +108,28 @@ public class PushAppStartWebActivity extends com.tbs.tobosutype.base.BaseActivit
 
         pasWebviewWeb.setWebChromeClient(webChromeClient);
         pasWebviewWeb.setWebViewClient(webViewClient);
-        pasWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+        //统计用
+        if (mLoadingUrl.contains("?")) {
+            if (mEnableStatistics != null && mEnableStatistics.equals("0")) {
+                //不拼接
+                pasWebviewWeb.loadUrl(mLoadingUrl);
+                Log.e(TAG, "bu拼接==============="+mEnableStatistics);
+            } else {
+                //拼接
+                pasWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+                Log.e(TAG, "拼接==============="+mEnableStatistics);
+            }
+        } else {
+            if (mEnableStatistics != null && mEnableStatistics.equals("0")) {
+                //不拼接
+                pasWebviewWeb.loadUrl(mLoadingUrl);
+                Log.e(TAG, "bu拼接==============="+mEnableStatistics);
+            } else {
+                //拼接
+                pasWebviewWeb.loadUrl(mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+                Log.e(TAG, "拼接==============="+mEnableStatistics);
+            }
+        }
         Log.e(TAG, "测试传值和H5交互========" + mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
     }
 

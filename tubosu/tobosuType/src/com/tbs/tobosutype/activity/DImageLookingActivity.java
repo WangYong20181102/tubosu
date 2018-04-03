@@ -279,6 +279,7 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             dImgLookViewpager.setAdapter(mSImageLookingAdapter);
             dImgLookViewpager.setCurrentItem(mViewPagerPosition);
             dImgLookViewpager.addOnPageChangeListener(onPageChangeListener);
+
             //显示收藏的状态
             if (mImageDArrayList.get(mArrayListPosition).getIs_collect().equals("1")) {
                 //已收藏
@@ -556,7 +557,12 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             isAddTime = true;
             ShowFadanTanChuang();
         }
-
+        //装修公司屏蔽收藏按钮
+        if(AppInfoUtil.getTypeid(mContext).equals("3")){
+            dImgLookShoucanLl.setVisibility(View.GONE);
+        }else {
+            dImgLookShoucanLl.setVisibility(View.VISIBLE);
+        }
         super.onResume();
     }
 

@@ -125,18 +125,19 @@ public class LearnRenovationActivity extends com.tbs.tobosutype.base.BaseActivit
                 _ArticleType articleType = mGson.fromJson(jsonArray.get(i).toString(), _ArticleType.class);
                 mArticleTypeArrayList.add(articleType);
                 //遍历数据
-                Log.e(TAG, "===遍历出来的数据===id===" + articleType.getId() + "===title===" + articleType.getTitle());
+//                Log.e(TAG, "===遍历出来的数据===id===" + articleType.getId() + "===title===" + articleType.getTitle());
             }
             //初始化fragmentList
             for (int i = 0; i < mArticleTypeArrayList.size(); i++) {
                 mFragmentArrayList.add(ArticleTypeFragment.newInstance(mArticleTypeArrayList.get(i).getId()));
-                Log.e(TAG, "=====实例化Fragment时传的参数====" + mArticleTypeArrayList.get(i).getId());
+//                Log.e(TAG, "=====实例化Fragment时传的参数====" + mArticleTypeArrayList.get(i).getId());
             }
             //设置适配器
             myFragmentPagerStateAdapter = new MyFragmentPagerStateAdapter(getSupportFragmentManager(), mFragmentArrayList);
             learnRovatViewPager.setAdapter(myFragmentPagerStateAdapter);
             learnRovatTabLayout.setupWithViewPager(learnRovatViewPager);
             learnRovatViewPager.setOffscreenPageLimit(mArticleTypeArrayList.size());
+
             myFragmentPagerStateAdapter.notifyDataSetChanged();
             for (int i = 0; i < mArticleTypeArrayList.size(); i++) {
                 learnRovatTabLayout.getTabAt(i).setText(mArticleTypeArrayList.get(i).getTitle());

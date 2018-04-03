@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.tbs.tobosutype.activity.OrderSeacherActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+        <!--返回按钮-->
+        <RelativeLayout
+            android:id="@+id/order_seach_back"
+            android:layout_width="25dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/activity_back" />
+        </RelativeLayout>
+        <!--输入框-->
+        <RelativeLayout
+            android:layout_width="280dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/order_seach_back"
+            android:background="@drawable/shape_order_search">
+
+            <EditText
+                android:id="@+id/order_seach_input_et"
+                android:layout_width="250dp"
+                android:layout_height="32dp"
+                android:layout_marginLeft="12dp"
+                android:background="@null"
+                android:hint="请输入订单号/业主称呼/小区名称"
+                android:textColor="#000000"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+
+        <!--搜索按钮-->
+        <TextView
+            android:id="@+id/order_seach_tv_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="搜索"
+            android:textColor="#666666"
+            android:textSize="14sp" />
+    </RelativeLayout>
+    <!--阴影-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_below="@+id/all_order_banner_rl"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/yinying4" />
+</RelativeLayout>

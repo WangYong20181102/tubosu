@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.base.*;
+import com.tbs.tobosutype.base.BaseActivity;
 import com.tbs.tobosutype.bean._PresonerInfo;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.global.Constant;
@@ -30,6 +30,7 @@ import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.GlideUtils;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.socialize.ShareAction;
@@ -56,7 +57,7 @@ import okhttp3.Response;
  * 业主端
  * 3.7版本新增
  */
-public class CustomOfMineActivity extends com.tbs.tobosutype.base.BaseActivity {
+public class CustomOfMineActivity extends BaseActivity {
 
     @BindView(R.id.custom_of_mine_setting_rl)
     RelativeLayout customOfMineSettingRl;
@@ -86,6 +87,8 @@ public class CustomOfMineActivity extends com.tbs.tobosutype.base.BaseActivity {
     RelativeLayout customOfMinePingjiaRl;
     @BindView(R.id.custom_of_mine_ll)
     LinearLayout customOfMineLl;
+    @BindView(R.id.custom_of_mine_fuwuhao_tv)
+    TextView customOfMineFuwuhaoTv;
 
     private Context mContext;
     private String TAG = "CustomOfMineActivity";
@@ -97,13 +100,14 @@ public class CustomOfMineActivity extends com.tbs.tobosutype.base.BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_of_mine);
         ButterKnife.bind(this);
-        Log.e(TAG, "初始化================" + TAG);
+//        Log.e(TAG, "初始化================" + TAG);
         mContext = this;
         initViewEvent();
     }
 
     private void initViewEvent() {
         mGson = new Gson();
+        customOfMineFuwuhaoTv.setText("" + SpUtil.getPublic_number(mContext));
     }
 
 
@@ -111,7 +115,7 @@ public class CustomOfMineActivity extends com.tbs.tobosutype.base.BaseActivity {
     protected void onResume() {
         super.onResume();
         //时时更新用户的信息
-        Log.e(TAG, "数据更新==========onResume======");
+//        Log.e(TAG, "数据更新==========onResume======");
         customOfMineLl.setBackgroundColor(Color.parseColor("#ffffff"));
         if (Util.isNetAvailable(mContext)) {
             //有网
@@ -142,7 +146,7 @@ public class CustomOfMineActivity extends com.tbs.tobosutype.base.BaseActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String json = new String(response.body().string());
-                Log.e(TAG, "链接服务器成功===============" + json);
+//                Log.e(TAG, "链接服务器成功===============" + json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.optString("status");
@@ -163,6 +167,12 @@ public class CustomOfMineActivity extends com.tbs.tobosutype.base.BaseActivity {
                         AppInfoUtil.setUserGrade(mContext, mPresonerInfo.getGrade());//用户的会员等级
                         AppInfoUtil.setUserCellphone_check(mContext, mPresonerInfo.getCellphone_check());//用户是否绑定手机号码
                         AppInfoUtil.setUserOrder_count(mContext, mPresonerInfo.getOrder_count());//用户订单数量
+
+                        AppInfoUtil.setUserNewOrderCount(mContext, mPresonerInfo.getNew_order_count() + "");//用户新订单数量
+                        AppInfoUtil.setUserNotLfOrderCount(mContext, mPresonerInfo.getNot_lf_order_count() + "");//用户未量房数量
+                        AppInfoUtil.setUserLfOrderCount(mContext, mPresonerInfo.getLf_order_count() + "");//用户量房数量
+                        AppInfoUtil.setUserIsNewSms(mContext, mPresonerInfo.getIs_new_sms() + "");//用户是否有新消息  1-有  0-无
+
 
                         CacheManager.setDecorateBudget(mContext, mPresonerInfo.getExpected_cost());//装修日志的花费
                         runOnUiThread(new Runnable() {

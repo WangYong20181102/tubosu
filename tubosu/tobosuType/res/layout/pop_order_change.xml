@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/order_change_pop_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#b4353332"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/order_change_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="165dp"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="44dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="操作失败！"
+                    android:textColor="#000000"
+                    android:layout_marginBottom="21dp"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/order_change_msg_tv"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:text="订单数据已变化，确认后刷新查看最新的订单状态."
+                    android:textColor="#666666"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:background="@color/dividing_line_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:background="@color/dividing_line_bg" />
+
+                <TextView
+                    android:textSize="16sp"
+                    android:id="@+id/queding_order_change"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="确定"
+                    android:textColor="#333333" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

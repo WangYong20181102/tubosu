@@ -46,6 +46,8 @@ import com.xiaomi.channel.commonutils.logger.LoggerInterface;
 import com.xiaomi.mipush.sdk.Logger;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
+import cn.jpush.android.api.JPushInterface;
+
 
 public class MyApplication extends MultiDexApplication {
     public static String iconUrl;
@@ -98,15 +100,18 @@ public class MyApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        context = getApplicationContext();
         SDKInitializer.initialize(this);
         //初始化友盟
         UMShareAPI.get(this);
         //小米推送初始化
         initXiaomiPush();
+        //极光推送
+        //initJpush();
         //百度定位相关
         mLocationClient = new LocationClient(this.getApplicationContext());
         mMyLocationListener = new MyLocationListener();
-        context = getApplicationContext();
+
         try {
             mLocationClient.registerLocationListener(mMyLocationListener); //注册监听函数
         } catch (Exception e) {
@@ -167,6 +172,7 @@ public class MyApplication extends MultiDexApplication {
         };
         Logger.setLogger(this, newLogger);
     }
+
 
     private boolean shouldInit() {
         ActivityManager am = ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE));

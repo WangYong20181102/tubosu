@@ -117,12 +117,13 @@ public class NewAuthorDetailActivity extends AppCompatActivity {
                     //关注作者按钮
                     break;
                 case R.id.riv_concerned_head_picture:
-                    Intent intent = new Intent(mContext, SeeCompanyImgActivity.class);
-                    Util.setErrorLog(TAG, authorUrl);
-                    Bundle b = new Bundle();
-                    b.putString("company_img", authorUrl);
-                    intent.putExtra("company_img_bundle", b);
-                    startActivity(intent);
+                    if(authorUrl!=null&&!TextUtils.isEmpty(authorUrl)){
+                        Intent intent = new Intent(mContext, SeeCompanyImgActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("company_img", authorUrl);
+                        intent.putExtra("company_img_bundle", b);
+                        startActivity(intent);
+                    }
                     break;
             }
         }

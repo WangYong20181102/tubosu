@@ -147,10 +147,12 @@ public class NewArticleDetailActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.new_detail_icon:
-                    Intent intent = new Intent(mContext, NewAuthorDetailActivity.class);
-                    intent.putExtra("author_id", detail.getAuthor_id());
-                    intent.putExtra("page_num", "");
-                    startActivity(intent);
+                    if (detail.getAuthor_id() != null && !TextUtils.isEmpty(detail.getAuthor_id())) {
+                        Intent intent = new Intent(mContext, NewAuthorDetailActivity.class);
+                        intent.putExtra("author_id", detail.getAuthor_id());
+                        intent.putExtra("page_num", "");
+                        startActivity(intent);
+                    }
                     break;
                 case R.id.new_detail_back:
                     finish();

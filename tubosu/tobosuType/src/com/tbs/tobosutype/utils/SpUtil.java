@@ -233,4 +233,58 @@ public class SpUtil {
     public static void setStatisticsEventPageId(Context context, String page_id) {
         context.getSharedPreferences("StatisticsEvent", 0).edit().putString("m_page_id", page_id).commit();
     }
+
+    //存储推送的唯一标识
+    public static String getPushRegisterId(Context context) {
+        return context.getSharedPreferences("PushRegisterId", 0).getString("mPushRegisterId", "");
+    }
+
+    //获取推送的唯一标识
+    public static void setPushRegisterId(Context context, String mPushRegisterId) {
+        context.getSharedPreferences("PushRegisterId", 0).edit().putString("mPushRegisterId", mPushRegisterId).commit();
+    }
+
+
+    //获取官网电话
+    public static String getCustom_service_tel(Context context) {
+        return context.getSharedPreferences("CustomServiceTel", 0).getString("custom_service_tel", "400-696-2221");
+    }
+
+    //存储官网电话
+    public static void setCustom_service_tel(Context context, String custom_service_tel) {
+        context.getSharedPreferences("CustomServiceTel", 0).edit().putString("custom_service_tel", custom_service_tel).commit();
+    }
+
+
+    //获取官网QQ
+    public static String getCustom_service_qq(Context context) {
+        return context.getSharedPreferences("CustomServiceQQ", 0).getString("custom_service_qq", "4006062221");
+    }
+
+    //存储官网QQ
+    public static void setCustom_service_qq(Context context, String custom_service_qq) {
+        context.getSharedPreferences("CustomServiceQQ", 0).edit().putString("custom_service_qq", custom_service_qq).commit();
+    }
+
+    //获取小程序
+    public static String getApplets_name(Context context) {
+        return context.getSharedPreferences("AppletsName", 0).getString("applets_name", "土拨鼠查订单");
+    }
+
+    //存储小程序
+    public static void setApplets_name(Context context, String applets_name) {
+        context.getSharedPreferences("AppletsName", 0).edit().putString("applets_name", applets_name).commit();
+    }
+
+
+    //获取公众号
+    public static String getPublic_number(Context context) {
+        return context.getSharedPreferences("Public_number", 0).getString("public_number", "itobosu");
+    }
+
+    //存储公众号
+    public static void setPublic_number(Context context, String public_number) {
+        context.getSharedPreferences("Public_number", 0).edit().putString("public_number", public_number).commit();
+    }
+
 }

@@ -337,11 +337,45 @@ public class NewLoginFragmentPhone extends BaseFragment {
         AppInfoUtil.setUserCellphone_check(getActivity(), mUser.getCellphone_check());//用户是否绑定手机号码
         AppInfoUtil.setUserOrder_count(getActivity(), mUser.getOrder_count());//用户订单数量
 
+        AppInfoUtil.setUserNewOrderCount(getActivity(), mUser.getNew_order_count() + "");//用户新订单数量
+        AppInfoUtil.setUserNotLfOrderCount(getActivity(), mUser.getNot_lf_order_count() + "");//用户未量房数量
+        AppInfoUtil.setUserLfOrderCount(getActivity(), mUser.getLf_order_count() + "");//用户量房数量
+        AppInfoUtil.setUserIsNewSms(getActivity(), mUser.getIs_new_sms() + "");//用户是否有新消息  1-有  0-无
+
+
         CacheManager.setDecorateBudget(getActivity(), mUser.getExpected_cost());//装修日志的花费
 
         // TODO: 2018/1/10 登录成功并且将数据存储成功之后通知将这个页面销毁
         Log.e(TAG, "发送登录成功的通知====================" + AppInfoUtil.getMark(mContext));
+        //推送上线
+        initPushEvent();
+        //关闭页面
         EventBusUtil.sendEvent(new Event(EC.EventCode.CLOSE_NEW_LOGIN_ACTIVITY));
+    }
+
+    //定点推送相关
+    private void initPushEvent() {
+        if (!TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {
+            //用户已经登录
+            HashMap<String, Object> param = new HashMap<>();
+            param.put("user_id", AppInfoUtil.getId(mContext));
+            param.put("user_type", AppInfoUtil.getTypeid(mContext));
+            param.put("system_type", "1");
+            param.put("app_type", "1");
+            param.put("device_id", SpUtil.getPushRegisterId(mContext));
+            OKHttpUtil.post(Constant.FLUSH_SMS_PUSH, param, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.e(TAG, "链接失败===============" + e.getMessage());
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String json = new String(response.body().string());
+                    Log.e(TAG, "推送相关数据链接成功===========" + json);
+                }
+            });
+        }
     }
 
     //获取验证码

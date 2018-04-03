@@ -45,7 +45,7 @@ public class _AppEvent {
     private String di;//设备的id   Android:md5(ani+imei+mac)
     private String si;//会话id 生成规则：md5(di+current_time+random_str)
     private String sr;//手机的分辨率
-//    private String ip;//当前网络的ip
+    //    private String ip;//当前网络的ip
     private String dm;//设备的型号
     private String sv;//设备的系统版本
     private String lng;//经度
@@ -76,7 +76,8 @@ public class _AppEvent {
 //        this.ip = Util.getIp(MyApplication.getContext());
         this.ev = evBeanArrayList;
     }
-    public _AppEvent(){
+
+    public _AppEvent() {
         this.ct = Util.getUnixTime();
         this.uid = AppInfoUtil.getUserid(MyApplication.getContext());
         this.pn = "tbs_and";
@@ -94,6 +95,7 @@ public class _AppEvent {
         this.no = Util.getOperator();
 //        this.ip = Util.getIp(MyApplication.getContext());
     }
+
     public String getSv() {
         return sv;
     }
@@ -259,6 +261,10 @@ public class _AppEvent {
             this.lt = leaveTime;
             // TODO: 2018/3/1 事件处理的方式  0-访问（页面加载进入算一次访问事件）  1-点击（类似按钮的点击事件）
             this.et = eventType;//传入事件的类型
+        }
+
+        public EvBean() {
+
         }
 
         public String getRef() {

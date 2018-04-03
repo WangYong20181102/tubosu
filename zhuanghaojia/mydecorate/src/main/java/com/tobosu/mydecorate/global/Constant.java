@@ -35,11 +35,11 @@ public class Constant {
     /**
      * 免费设计发单链接
      */
-    public static final String FREE_DISIGN_FADAN = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + Util.getChannType(MyApplication.getContexts());
+    public static final String FREE_DISIGN_FADAN = M_TOBOSU_URL + "quote?channel=app&subchannel=zhjandroid&chcode=" + Util.getChannType(MyApplication.getContexts())+"&app_type=2";
     /**
      * 免费报价链接
      */
-    public static final String FREE_BAOJIA_FADAN = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + Util.getChannType(MyApplication.getContexts());
+    public static final String FREE_BAOJIA_FADAN = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=zhjandroid&chcode=" + Util.getChannType(MyApplication.getContexts())+"&app_type=2";
 
     public static final int CHANGE_USERNAME_RESULTCODE = 0x000014;
     public static final int CHANGE_USERNAME_REQUESTCODE = 0x000015;

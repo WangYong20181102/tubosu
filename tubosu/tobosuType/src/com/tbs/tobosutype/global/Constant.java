@@ -13,48 +13,41 @@ import com.tbs.tobosutype.utils.AppInfoUtil;
  */
 
 public class Constant {
-//    /**
-//     * 测试环境
-//     */
-    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+
 
     /**
-     * 正式环境
+     * todo 全局正式环境**********************************************************************************
      */
+    //接口地址
 //    public static final String TOBOSU_URL = "https://www.tobosu.com/";
-    /**
-     * 数据流上传接口 测试环境
-     */
-//    public static final String TBS_DATA_STREAM = "http://trace.dev.tobosu.com/";
-
-    /**
-     * 数据流上传接口 正式
-     */
+    //数据流上传接口 正式
     public static final String TBS_DATA_STREAM = "http://www.tobosu.com/trace";
-
-    /**
-     * M站 发单跳转 线上环境
-     */
+    //M站 发单跳转 线上环境
 //    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
-    /**
-     * test 环境
-     */
-//    public static final String M_TOBOSU_URL = "http://m.test.tobosu.com/szs/";
+
 
     /**
-     * M站 发单跳转 dev环境
+     * todo 全局测试dev环境**********************************************************************************
      */
+    //接口地址
+    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+    //dev点击流上传接口
+//    public static final String TBS_DATA_STREAM = "http://trace.dev.tobosu.com/";
+    //M站test接口
+//    public static final String M_TOBOSU_URL = "http://m.test.tobosu.com/szs/";
+    //M站dev接口
     public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
 
 
-	/*----------以下是新增加的------------*/
+
+    /*----------以下是新增加的------------*/
 
     public static final int UNLOGIN_TO_LOGIN_RESULTCODE = 0x000018;
     public static final int POP_RESULTCODE = 0x0000027;
     public static final int HOMEFRAGMENT_REQUESTCODE = 0x0000028;
     public static final int FINISH_MAINACTIVITY = 0x0000030;
 
-    public static final String CALCULATER_SHARE_URL = "http://m.tobosu.com/app/share_h5?";
+    public static final String CALCULATER_SHARE_URL = M_TOBOSU_URL + "app/share_h5?";
 
     public static final String NET_STATE_ACTION = "com.tobosu.app.net_state";
 
@@ -100,7 +93,6 @@ public class Constant {
      */
     public static final String ACTION_KITCHEN_FRAGMENT_DATA = "action_kitchen_fragment_data";
 
-    public static final String COMPANY_TANKUANG_URL = M_TOBOSU_URL + "free_price_page";
 
     public static final String SUMMIT_BUDGET_URL = TOBOSU_URL + "mapp/RenovateExpense/expense_bookkeep";
 
@@ -193,11 +185,12 @@ public class Constant {
      * 2是装好家
      * 3效果图
      */
-    public static final String PIPE = "http://m.tobosu.com/app/pub?channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "&app_type=1";
+//    public static final String PIPE = "https://m.tobosu.com/app/pub?channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "&app_type=1";
+    public static final String PIPE = M_TOBOSU_URL + "app/pub?channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "&app_type=1";
 
     public static final String WANGJIANLIN = "&tbsfrom=share";
 
-    public static final String POP_URL = "http://m.tobosu.com/class/?from=app";
+    public static final String POP_URL = M_TOBOSU_URL + "class/?from=app";
     public static final String M_POP_PARAM = "&channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
 
     public static final String ANDROID_SHARE = "&channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "&tbsfrom=share";
@@ -253,7 +246,7 @@ public class Constant {
 
 
 //  入口位置                            渠道代码              对应连接
-//    首页-icon-免费量房	               sy-icon-liangfang	 http://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=sy-icon-liangfang
+//    首页-icon-免费量房	               sy-icon-liangfang	 https://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=sy-icon-liangfang
 //    首页-发单-免费报价	               sy-fd-baojia	         http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=sy-fd-baojia
 //    首页-发单-免费设计	               sy-fd-sheji	         http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=sy-fd-sheji
 //    首页-发单-专业推荐	               sy-fd-tuijian	     http://m.tobosu.com/rec_company?channel=app&subchannel=android&chcode=sy-fd-tuijian
@@ -345,7 +338,7 @@ public class Constant {
     public static final String BIND_WE_CHAT = TOBOSU_URL + "mapp/user/bind_wechat";
     //绑定微信 3.7新增
     public static final String CHECK_ORDER_PWD = TOBOSU_URL + "mapp/company/check_order_pwd";
-    //绑定微信 3.7新增
+    //App配置信息
     public static final String GET_CONFIG = TOBOSU_URL + "mapp/public/get_config";
     //检查用户是否存在 3.7新增
     public static final String IS_EXIST_USER = TOBOSU_URL + "mapp/user/is_exist_user";
@@ -353,6 +346,24 @@ public class Constant {
     public static final String CHECK_APP_IS_UPDATA = TOBOSU_URL + "mapp/public/is_update_app";
     //检查当前登录的用户是否修改了密码
     public static final String CHECK_USER_PASSWORD_IS_CHANGE = TOBOSU_URL + "mapp/user/check_password";
+    //获取订单列表  3.7.2版本新增
+    public static final String GET_ORDER_LIST = TOBOSU_URL + "mapp/companyOrder/order_list";
+    //改变订单的状态  3.7.2版本新增
+    public static final String CHANGE_ORDER_STATE = TOBOSU_URL + "mapp/companyOrder/change_state";
+    //获取订单详情  3.7.2版本新增
+    public static final String GET_ORDER_DETAIL = TOBOSU_URL + "mapp/companyOrder/order_detail";
+    //获取订单消息通知  3.7.2版本新增
+    public static final String GET_ORDER_NOTICE = TOBOSU_URL + "mapp/smsPushRecord/company_sms_push";
+    //已读消息标记  3.7.2版本新增
+    public static final String READ_SMS_PUSH = TOBOSU_URL + "mapp/smsPushRecord/read_sms_push";
+    //推送上线  3.7.2版本新增
+    public static final String FLUSH_SMS_PUSH = TOBOSU_URL + "mapp/public/flush_sms_push";
+    //推送下线  3.7.2版本新增
+    public static final String SMS_PUSH_OFFLINE = TOBOSU_URL + "mapp/public/sms_push_offline";
+    //反馈消息列表  3.7.2版本新增
+    public static final String FEEDBACK_LIST = TOBOSU_URL + "mapp/CompanyFeedback/feedback_list";
+    //添加反馈  3.7.2版本新增
+    public static final String ADD_FEEDBACK_MSG = TOBOSU_URL + "mapp/CompanyFeedback/add_feedback";
 
 
     //装修公司主页 底部发单按钮 3.6版本新增

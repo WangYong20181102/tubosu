@@ -31,8 +31,10 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 
+import com.tbs.tobosutype.bean._AppConfig;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.HomeListener;
+import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 
@@ -48,6 +50,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import cn.jpush.android.api.JPushInterface;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -155,17 +158,87 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         mGson = new Gson();
         needPermissions();//权限的遍历
         initReceiver();
-        initView();
+        initView();//初始化信息
         initEvent();
-        HttpUserIsChangePassWord();
-        clearUserInfoWithAppUpdata();
+        HttpUserIsChangePassWord();//用户修改密码
+        clearUserInfoWithAppUpdata();//App更新清除数据
+        initJpush();
+        initPushEvent();//推送
+        getAppConfigOnNet();//获取相关的配置
+    }
+
+    //获取App配置信息
+    private void getAppConfigOnNet() {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("type", "1");
+        OKHttpUtil.post(Constant.GET_CONFIG, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "获取配置信息失败==========" + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                Log.e(TAG, "获取App配置信息=================" + json);
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String data = jsonObject.optString("data");
+                    _AppConfig mAppConfig = mGson.fromJson(data, _AppConfig.class);
+                    //存储App配置信息
+                    SpUtil.setCustom_service_tel(mContext, mAppConfig.getCustom_service_tel());
+                    SpUtil.setCustom_service_qq(mContext, mAppConfig.getCustom_service_qq());
+                    SpUtil.setApplets_name(mContext, mAppConfig.getApplets_name());
+                    SpUtil.setPublic_number(mContext, mAppConfig.getPublic_number());
+                    Log.e(TAG, "电话号码========" + SpUtil.getCustom_service_tel(mContext) + "=======QQ=======" + SpUtil.getCustom_service_qq(mContext) + "=======小程序=====" + SpUtil.getApplets_name(mContext));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    //初始化极光推送
+    private void initJpush() {
+        Log.e(TAG, "注册极光推送=================");
+        JPushInterface.setDebugMode(true);
+        JPushInterface.init(this);
+        //将推送的唯一标识存入本地
+        SpUtil.setPushRegisterId(MyApplication.getContext(), JPushInterface.getRegistrationID(MyApplication.getContext()));
+        Log.e(TAG, "获取的极光推送注册id=================" + JPushInterface.getRegistrationID(MyApplication.getContext()));
+    }
+
+    //定点推送相关
+    private void initPushEvent() {
+        if (!TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {
+            //用户已经登录
+            HashMap<String, Object> param = new HashMap<>();
+            param.put("user_id", AppInfoUtil.getId(mContext));
+            param.put("user_type", AppInfoUtil.getTypeid(mContext));
+            param.put("system_type", "1");
+            param.put("app_type", "1");
+            param.put("device_id", SpUtil.getPushRegisterId(mContext));
+            OKHttpUtil.post(Constant.FLUSH_SMS_PUSH, param, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.e(TAG, "链接失败===============" + e.getMessage());
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String json = new String(response.body().string());
+                    Log.e(TAG, "推送相关数据链接成功===========" + json);
+                }
+            });
+        }
     }
 
     // TODO: 2018/2/27 点击事件流所需要的执行的操作
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e(TAG, "MainActivity执行的生命周期========onResume()");
+
         setFragmentPosition(SpUtil.getMainTabPosition(mContext));
         isForeground = true;
         initData();
@@ -179,8 +252,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         isForeground = false;
         super.onPause();
         MobclickAgent.onPause(this);
-        Log.e(TAG, "MainActivity执行的生命周期========onPause()");
-
     }
 
     //版本更新清除之前的用户信息
@@ -209,7 +280,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String json = new String(response.body().string());
-                    Log.e(TAG, "检测用户是否修改密码返回的结果================" + json);
+//                    Log.e(TAG, "检测用户是否修改密码返回的结果================" + json);
                     try {
                         JSONObject jsonObject = new JSONObject(json);
                         String ststus = jsonObject.optString("status");
@@ -260,11 +331,11 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         spec = tabHost.newTabSpec("THREE").setIndicator("装修公司").setContent(intent);
         tabHost.addTab(spec);
 
-		/* ------------------------------------
+        /* ------------------------------------
          * 根据情况不同，显示不同   FOUR.未登录，显示登陆界面
-		 *                         FOUR2.登陆的是装修公司界面
-		 *                         FOUR3.登陆的是业主界面
-		 **/
+         *                         FOUR2.登陆的是装修公司界面
+         *                         FOUR3.登陆的是业主界面
+         **/
 //        intent = new Intent().setClass(this, MyActivity.class);
         intent = new Intent().setClass(this, NoneLoginOfMineActivity.class);//3.7新增
         spec = tabHost.newTabSpec("FOUR").setIndicator("我").setContent(intent);
@@ -289,9 +360,9 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Intent gotoLearnActivity = new Intent(mContext, NewWebViewActivity.class);
-                gotoLearnActivity.putExtra("mLoadingUrl", "http://m.dev.tobosu.com/szs/zx/?app_type=1");
-                mContext.startActivity(gotoLearnActivity);
+//                Intent gotoLearnActivity = new Intent(mContext, AllOrderActivity.class);
+////                gotoLearnActivity.putExtra("mLoadingUrl", "http://m.dev.tobosu.com/szs/zx/?app_type=1");
+//                mContext.startActivity(gotoLearnActivity);
                 return true;
             }
         });

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="64dp">
+    <!--上边分割线-->
+    <View
+        android:id="@+id/item_order_sd_up_dev_view"
+        android:layout_width="1dp"
+        android:layout_height="17dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="22dp"
+        android:background="#e5e5e5" />
+    <!--订单进度标识-->
+    <ImageView
+        android:id="@+id/item_order_sd_sigin_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/xuanzhong" />
+    <!--左下分割线-->
+    <View
+        android:id="@+id/item_order_sd_down_dev_view"
+        android:layout_width="1dp"
+        android:layout_height="27dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="22dp"
+        android:background="#e5e5e5" />
+    <!--订单状态描述-->
+    <TextView
+        android:id="@+id/item_order_sd_state_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="17dp"
+        android:layout_toRightOf="@+id/item_order_sd_sigin_iv"
+        android:text="已签单"
+        android:textColor="#ff6c14"
+        android:textSize="14sp" />
+    <!--订单进度时间-->
+    <TextView
+        android:id="@+id/item_order_sd_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/item_order_sd_sigin_iv"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="2dp"
+        android:layout_toRightOf="@+id/item_order_sd_sigin_iv"
+        android:text="2017-12-23   14:23:26"
+        android:textColor="#999999"
+        android:textSize="12sp" />
+    <!--底部的分割线-->
+    <View
+        android:layerType="software"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/shape_xu_xian" />
+</RelativeLayout>

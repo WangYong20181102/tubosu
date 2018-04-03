@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/none_login_company_of_mine_all_ll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
-    android:id="@+id/none_login_company_of_mine_all_ll"
+    android:orientation="vertical"
     tools:context="com.tbs.tobosutype.activity.NoneLoginOfMineActivity">
 
     <ScrollView
@@ -35,16 +35,17 @@
                 <!--右边的设置图片-->
                 <RelativeLayout
                     android:id="@+id/none_login_setting_rl"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp">
+                    android:layout_marginRight="5dp">
+
                     <ImageView
-                        android:layout_centerInParent="true"
                         android:id="@+id/none_login_setting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
                         android:src="@drawable/shezhi" />
                 </RelativeLayout>
 
@@ -205,6 +206,7 @@
                     android:textSize="14sp" />
                 <!--电话-->
                 <TextView
+                    android:id="@+id/none_login_tel_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -253,6 +255,7 @@
                     android:textSize="14sp" />
                 <!--服务号-->
                 <TextView
+                    android:id="@+id/none_login_wc_serive_num_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

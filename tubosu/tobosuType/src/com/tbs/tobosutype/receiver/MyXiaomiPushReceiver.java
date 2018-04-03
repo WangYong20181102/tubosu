@@ -70,6 +70,19 @@ public class MyXiaomiPushReceiver extends PushMessageReceiver {
                 } else {
                     intent.putExtra("mShowing", "0");
                 }
+
+                //是否拼接点击流信息
+                if (message.getExtra().containsKey("enable_statistics")) {
+                    if (message.getExtra().get("enable_statistics").equals("1")) {
+                        //带入点击流
+                        intent.putExtra("mEnableStatistics", "1");
+
+                    } else {
+                        intent.putExtra("mEnableStatistics", "0");
+                    }
+                } else {
+                    intent.putExtra("mEnableStatistics", "0");
+                }
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
@@ -90,6 +103,19 @@ public class MyXiaomiPushReceiver extends PushMessageReceiver {
                 } else {
                     intent.putExtra("mShowing", "0");
                 }
+                //是否拼接点击流信息
+                if (message.getExtra().containsKey("enable_statistics")) {
+                    if (message.getExtra().get("enable_statistics").equals("1")) {
+                        //带入点击流
+                        intent.putExtra("mEnableStatistics", "1");
+                    } else {
+                        intent.putExtra("mEnableStatistics", "0");
+                    }
+                } else {
+                    intent.putExtra("mEnableStatistics", "0");
+                }
+
+
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

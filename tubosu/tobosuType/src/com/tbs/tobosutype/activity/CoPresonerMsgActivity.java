@@ -22,6 +22,7 @@ import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMAuthListener;
@@ -38,6 +39,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -208,9 +210,14 @@ public class CoPresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity 
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 AppInfoUtil.ISJUSTLOGIN = true;
+                //极光推送下线
+                jpushOffline();
+                //清除本地用户信息
                 getSharedPreferences("userInfo", 0).edit().clear().commit();
                 dialog.cancel();
+                //清除微信缓存
                 umShareAPI.deleteOauth(CoPresonerMsgActivity.this, SHARE_MEDIA.WEIXIN, null);
+                //友盟统计关闭
                 MobclickAgent.onProfileSignOff();
                 finish();
             }
@@ -222,6 +229,33 @@ public class CoPresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity 
             }
         });
         builder.create().show();
+    }
+
+    //极光推送下线
+    private void jpushOffline() {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("device_id", SpUtil.getPushRegisterId(mContext));
+        param.put("user_id", AppInfoUtil.getId(mContext));
+        param.put("user_type", AppInfoUtil.getTypeid(mContext));
+        Log.e(TAG, "用户的ID号==========" + AppInfoUtil.getId(mContext));
+        OKHttpUtil.post(Constant.SMS_PUSH_OFFLINE, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "链接失败============" + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                Log.e(TAG, "推送线下链接成功===============" + json);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        JPushInterface.clearAllNotifications(mContext);
+                    }
+                });
+            }
+        });
     }
 
     //绑定微信

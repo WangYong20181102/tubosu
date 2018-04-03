@@ -3,6 +3,7 @@ package com.tbs.tobosutype.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +13,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.Util;
+import com.tbs.tobosutype.web.AdvWebActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -26,6 +28,7 @@ public class LoadingActivity extends BaseActivity {
     private TextView tvCountDownText;
     private ImageView ivImg;
     private Timer timer = new Timer();
+    private String mJumpUrl = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,21 @@ public class LoadingActivity extends BaseActivity {
     private void initView() {
         tvCountDownText = (TextView) findViewById(R.id.tv_count_down_text);
         ivImg = (ImageView) findViewById(R.id.iv_loading_img);
+        ivImg.setOnClickListener(onClickListener);
     }
+
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (!TextUtils.isEmpty(mJumpUrl)) {
+                Intent intentToWebActivity = new Intent(mContext, AdvWebActivity.class);
+                intentToWebActivity.putExtra("mLoadingUrl", mJumpUrl);
+                startActivity(intentToWebActivity);
+                timer.cancel();
+                finish();
+            }
+        }
+    };
 
     private void getIntentData() {
 
@@ -49,6 +66,7 @@ public class LoadingActivity extends BaseActivity {
         if (intent != null) {
             String url = intent.getStringExtra("loading_img_url");
             url = url.replace("\\/", "/");
+            mJumpUrl = intent.getStringExtra("jump_url");
             if (url != null && !"".equals(url)) {
                 stayTime = intent.getIntExtra("staytime", 4);
                 tvCountDownText.setText(stayTime + " 点击跳过");

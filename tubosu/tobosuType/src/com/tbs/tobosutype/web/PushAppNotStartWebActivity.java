@@ -59,6 +59,7 @@ public class PushAppNotStartWebActivity extends BaseActivity {
     private Intent mIntent;
     private String mLoadingUrl = "";//加载数据的URL
     private String mShowing = "";//是否显示单按钮  默认显示
+    private String mEnableStatistics = "";//是否拼接点击流
     private Gson mGson;
     private _AppEvent mAppEvent;
 
@@ -91,6 +92,7 @@ public class PushAppNotStartWebActivity extends BaseActivity {
         pansWebviewBannerRl.setBackgroundColor(Color.parseColor("#ffffff"));
         mLoadingUrl = mIntent.getStringExtra("mLoadingUrl");
         mShowing = mIntent.getStringExtra("mShowing");
+        mEnableStatistics = mIntent.getStringExtra("mEnableStatistics");
         if (mShowing.equals("1")) {
             //显示
             pushNotStartFadan.setVisibility(View.VISIBLE);
@@ -111,7 +113,28 @@ public class PushAppNotStartWebActivity extends BaseActivity {
 
         pansWebviewWeb.setWebChromeClient(webChromeClient);
         pansWebviewWeb.setWebViewClient(webViewClient);
-        pansWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+        //统计用
+        if (mLoadingUrl.contains("?")) {
+            if (mEnableStatistics != null && mEnableStatistics.equals("0")) {
+                //不拼接
+                pansWebviewWeb.loadUrl(mLoadingUrl);
+                Log.e(TAG, "bu拼接==============="+mEnableStatistics);
+            } else {
+                //拼接
+                pansWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+                Log.e(TAG, "拼接==============="+mEnableStatistics);
+            }
+        } else {
+            if (mEnableStatistics != null && mEnableStatistics.equals("0")) {
+                //不拼接
+                pansWebviewWeb.loadUrl(mLoadingUrl);
+                Log.e(TAG, "bu拼接==============="+mEnableStatistics);
+            } else {
+                //拼接
+                pansWebviewWeb.loadUrl(mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+                Log.e(TAG, "拼接==============="+mEnableStatistics);
+            }
+        }
     }
 
     private WebViewClient webViewClient = new WebViewClient() {

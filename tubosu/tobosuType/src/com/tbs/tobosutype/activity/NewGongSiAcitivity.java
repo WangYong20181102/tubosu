@@ -770,7 +770,7 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 break;
             case R.id.findComIcon:
                 Intent web = new Intent(mContext, NewWebViewActivity.class);
-                web.putExtra("mLoadingUrl", Constant.COMPANY_TANKUANG_URL);
+                web.putExtra("mLoadingUrl", Constant.GETANLIURL);
                 startActivity(web);
                 relfindComLayout.setVisibility(View.GONE);
                 CacheManager.setCompanyFlag(mContext, 1);

@@ -91,8 +91,12 @@ public class NewWebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
         newWebviewWeb.setWebChromeClient(webChromeClient);
         newWebviewWeb.setWebViewClient(webViewClient);
         //统计用
-        newWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent)+ "&app_ref=" + AppManager.lastSecoundActivityName());
-        Log.e(TAG, "统计传值=====" + mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent)+ "&app_ref=" + AppManager.lastSecoundActivityName());
+        if (mLoadingUrl.contains("?")) {
+            newWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+        } else {
+            newWebviewWeb.loadUrl(mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+        }
+        Log.e(TAG, "统计传值=====" + mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
     }
 
     private WebViewClient webViewClient = new WebViewClient() {

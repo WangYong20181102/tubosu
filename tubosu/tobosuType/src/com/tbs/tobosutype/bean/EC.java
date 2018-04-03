@@ -28,6 +28,12 @@ public class EC {
         public static final int CHANGE_COMMUNITY = 0x000019;//用户的个人信息修改城市区域
         public static final int CHANGE_NICK_NAME = 0x000020;//用户的个人信息修改昵称
         public static final int BAND_PHONE_SUCCESS = 0x000021;//用户绑定手机号码成功
+        public static final int NOTE_ORDER_FRAGMENT_UPDATE_DATA = 0x000022;//通知订单列表页刷新数据
+        public static final int CHANGE_ORDER_DETAIL_ACTIVITY_TO_FEEDBACK_VIEW = 0x000023;//通知页面切换到反馈
+
+
+
+
 
         public static final int DELETE_TAOTU_CODE = 0x100000;//删除收藏
         public static final int DELETE_TAOTU_LIST_CODE = 0x100001;//删除收藏套图

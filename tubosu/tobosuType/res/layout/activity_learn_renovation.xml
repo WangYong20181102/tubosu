@@ -50,11 +50,11 @@
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="32dp"
+            app:xTabDisplayNum="6"
             app:xTabIndicatorColor="#ff6f20"
             app:xTabIndicatorHeight="2dp"
-            app:xTabMode="scrollable"
-            app:xTabDisplayNum="6"
             app:xTabIndicatorWidth="36dp"
+            app:xTabMode="scrollable"
             app:xTabSelectedTextColor="#ff6f20"
             app:xTabTextColor="#242424">
 

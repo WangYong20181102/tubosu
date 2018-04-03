@@ -84,6 +84,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.android.api.JPushInterface;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -878,6 +879,7 @@ public class PresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 AppInfoUtil.ISJUSTLOGIN = true;
+                jpushOffline();
                 getSharedPreferences("userInfo", 0).edit().clear().commit();
                 dialog.cancel();
                 umShareAPI.deleteOauth(PresonerMsgActivity.this, SHARE_MEDIA.WEIXIN, null);
@@ -894,4 +896,29 @@ public class PresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity {
         builder.create().show();
     }
 
+    //极光推送下线
+    private void jpushOffline() {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("device_id", SpUtil.getPushRegisterId(mContext));
+        param.put("user_id", AppInfoUtil.getId(mContext));
+        param.put("user_type", AppInfoUtil.getTypeid(mContext));
+        OKHttpUtil.post(Constant.SMS_PUSH_OFFLINE, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "链接失败============" + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                Log.e(TAG, "推送线下链接成功===============" + json);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        JPushInterface.clearAllNotifications(mContext);
+                    }
+                });
+            }
+        });
+    }
 }

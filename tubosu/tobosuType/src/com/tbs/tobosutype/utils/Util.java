@@ -663,7 +663,7 @@ public class Util {
     public static void addAppEventCount(_AppEvent.EvBean evBean) {
         //添加事件
         MyApplication.evBeanArrayList.add(evBean);
-        Log.e(TAG, "添加事件成功=========" + evBean.getLt());
+//        Log.e(TAG, "添加事件成功=========" + evBean.getLt());
         if (MyApplication.evBeanArrayList.size() >= 50) {
             //上传数据
             mTime = 0;
@@ -680,7 +680,7 @@ public class Util {
                     try {
                         Thread.sleep(1000);
                         mTime++;
-                        Log.e(TAG, "计时时间============" + mTime + "===当前全局事件集合长度===" + MyApplication.evBeanArrayList.size());
+//                        Log.e(TAG, "计时时间============" + mTime + "===当前全局事件集合长度===" + MyApplication.evBeanArrayList.size());
                         if (mTime >= 30) {
                             //时间到了30秒进行数据的上传
                             mTime = 0;
@@ -713,7 +713,7 @@ public class Util {
                 appEvent.getEv().get(0).setRef("activity.LauncherActivity");
             }
         }
-        Log.e(TAG, "上传事件集合长度==========" + appEvent.getEv().size());
+//        Log.e(TAG, "上传事件集合长度==========" + appEvent.getEv().size());
         //将对象转为json
         String appEventJson = mGson.toJson(appEvent);
         //生成对象后将集合清空
@@ -721,17 +721,17 @@ public class Util {
         //生成参数上传
         HashMap<String, Object> param = new HashMap<>();
         param.put("data", appEventJson);
-        Log.e(TAG, "点击流上传的JSON数据==============" + appEventJson);
+//        Log.e(TAG, "点击流上传的JSON数据==============" + appEventJson);
         OKHttpUtil.post(Constant.TBS_DATA_STREAM, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "数据流链接数据失败=====" + e.getMessage());
+//                Log.e(TAG, "数据流链接数据失败=====" + e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String result = new String(response.body().string());
-                Log.e(TAG, "数据流链接数据成功=====" + result);
+//                Log.e(TAG, "数据流链接数据成功=====" + result);
 
             }
         });
@@ -739,10 +739,15 @@ public class Util {
 
     //第一次上传数据
     public static void HttpFristPostUserUseInfo() {
+        ArrayList<_AppEvent.EvBean> evBeans = new ArrayList<>();
+        _AppEvent.EvBean evBean = new _AppEvent.EvBean();
+        evBean.setEt("2");
+        evBeans.add(evBean);
         //根据事件的集合生成要上传的对象
-        _AppEvent appEvent = new _AppEvent();
+        _AppEvent appEvent = new _AppEvent(evBeans);
         //将对象转为json
         String appEventJson = mGson.toJson(appEvent);
+        Log.e(TAG, "第一次上传生成的数据====================" + appEventJson);
         //生成参数上传
         HashMap<String, Object> param = new HashMap<>();
         param.put("data", appEventJson);

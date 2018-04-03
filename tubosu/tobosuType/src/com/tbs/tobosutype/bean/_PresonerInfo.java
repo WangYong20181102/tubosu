@@ -8,22 +8,26 @@ package com.tbs.tobosutype.bean;
 public class _PresonerInfo {
 
     /**
-     * uid : 344200
-     * id : 312138
+     * uid : 344295
+     * id : 312197
      * user_type : 1
-     * cellphone : 13326585571
+     * cellphone : 18689470604
      * cellphone_check : 1
      * expected_cost : 0
      * order_count : 0
-     * city_name : 深圳
-     * province_name : 广东
-     * token : El3w65fs/6DCl4RDWlWCaZSyPARoVfA8LB2fFYjAtqtWWyTPluZrth36ic2mVXQfLodl1cQDF5z1xfrdkhlBYTB1YvOaXRebSAtwa4R70IPflOtee7VL5ItGWL2W+lnwa894GqLWGifSVCUxXjAa2JuFQJ6W2PiUdnBWCufQoiGGYs6rLhUdA7TuYHDq9OddGkDaaYDSmWZS32zPSXS/sk9z5SbR4ct0ODWBLANbzeYi66hThR4dEFhLClzKmGMCDVxY6sqevA0FnD5oU48glW4sGjcF1EniaPbv0eApGU7wRs7HrSFuXmRfxbNYj+/i19jIjXlVy73EcZUHpKlUq5Enqjtr3wlzRdn1aOzWVw3/Hdnk6L1RbI+C4wwtEgiiglhMPAvKfFrN6n+JKAM+HyvdvzH9VivwA6fGOy3s7kUI6OovkOxdmRrRCEFnosEiD6TbZMyXwIJFsdaLALdj36IP7USX4Kp6I/YGyaKAUAkqvKkXIH65fHpbKBxJofR0CAJp7gXqPMfAj+eb6nR43HkWuqMpYiK8lly2Ix33C6ws3z6vTymVUfiGSrzIdS2htdcoy0F0Tg/4ST6SzfOF7c7/Rl15gjr0ZqjOOTiOcLZnPD7hCWZlwtvMmPcnt8TBCE43EZKzoFOrCMUJ7VU13iP6Wx+ayNE68CQAf8UxIJA=
-     * icon : http://front.tobosu.com/res/common/images/icon/icon18.jpg
-     * nickname : xiaozhong
-     * gender : 1
-     * community : 万达广场
+     * city_name : 北京
+     * province_name : 北京
+     * icon : http://cdn111.dev.tobosu.com/app/2018-01-29/5a6e7a033c053.jpg
+     * nickname : tbs_5a67165601399
+     * gender : 0
+     * community : 图wwwwww
      * grade : 0
+     * token :
      * wechat_check : 0
+     * new_order_count : 0
+     * not_lf_order_count : 0
+     * lf_order_count : 0
+     * is_new_sms : 0
      */
 
     private String uid;
@@ -35,13 +39,17 @@ public class _PresonerInfo {
     private String order_count;
     private String city_name;
     private String province_name;
-    private String token;
     private String icon;
     private String nickname;
     private String gender;
     private String community;
     private String grade;
+    private String token;
     private String wechat_check;
+    private int new_order_count;
+    private int not_lf_order_count;
+    private int lf_order_count;
+    private int is_new_sms;
 
     public String getUid() {
         return uid;
@@ -115,14 +123,6 @@ public class _PresonerInfo {
         this.province_name = province_name;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
     public String getIcon() {
         return icon;
     }
@@ -163,11 +163,51 @@ public class _PresonerInfo {
         this.grade = grade;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public String getWechat_check() {
         return wechat_check;
     }
 
     public void setWechat_check(String wechat_check) {
         this.wechat_check = wechat_check;
+    }
+
+    public int getNew_order_count() {
+        return new_order_count;
+    }
+
+    public void setNew_order_count(int new_order_count) {
+        this.new_order_count = new_order_count;
+    }
+
+    public int getNot_lf_order_count() {
+        return not_lf_order_count;
+    }
+
+    public void setNot_lf_order_count(int not_lf_order_count) {
+        this.not_lf_order_count = not_lf_order_count;
+    }
+
+    public int getLf_order_count() {
+        return lf_order_count;
+    }
+
+    public void setLf_order_count(int lf_order_count) {
+        this.lf_order_count = lf_order_count;
+    }
+
+    public int getIs_new_sms() {
+        return is_new_sms;
+    }
+
+    public void setIs_new_sms(int is_new_sms) {
+        this.is_new_sms = is_new_sms;
     }
 }

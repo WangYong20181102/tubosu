@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -22,10 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.base.*;
-import com.tbs.tobosutype.bean._AppEvent;
+import com.tbs.tobosutype.base.BaseActivity;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.socialize.ShareAction;
@@ -44,7 +42,7 @@ import butterknife.OnClick;
  * 3.7版本新增
  * 整个页面纯展示
  */
-public class NoneLoginOfMineActivity extends com.tbs.tobosutype.base.BaseActivity {
+public class NoneLoginOfMineActivity extends BaseActivity {
     @BindView(R.id.none_login_setting)
     ImageView noneLoginSetting;
     @BindView(R.id.none_login_register_rl)
@@ -65,6 +63,10 @@ public class NoneLoginOfMineActivity extends com.tbs.tobosutype.base.BaseActivit
     RelativeLayout noneLoginSettingRl;
     @BindView(R.id.none_login_company_of_mine_all_ll)
     LinearLayout noneLoginCompanyOfMineAllLl;
+    @BindView(R.id.none_login_tel_tv)
+    TextView noneLoginTelTv;
+    @BindView(R.id.none_login_wc_serive_num_tv)
+    TextView noneLoginWcSeriveNumTv;
     private String TAG = "NoneLoginOfMineActivity";
     private Context mContext;
     private UMShareAPI umShareAPI;
@@ -122,6 +124,8 @@ public class NoneLoginOfMineActivity extends com.tbs.tobosutype.base.BaseActivit
 
     private void initViewEvent() {
         umShareAPI = UMShareAPI.get(mContext);
+        noneLoginTelTv.setText("" + SpUtil.getCustom_service_tel(mContext));
+        noneLoginWcSeriveNumTv.setText("" + SpUtil.getPublic_number(mContext));
     }
 
     @OnClick({R.id.none_login_setting, R.id.none_login_register_rl,
@@ -141,7 +145,6 @@ public class NoneLoginOfMineActivity extends com.tbs.tobosutype.base.BaseActivit
                 //跳转到登录页面
                 Intent intentToRegister = new Intent(mContext, NewLoginActivity.class);
                 intentToRegister.putExtra("mWhereComeFrom", "NoneLoginOfMineActivity");
-                // TODO: 2018/2/27 设置将要去的页面  添加点击事件的事件码
                 mContext.startActivity(intentToRegister);
                 break;
             case R.id.none_login_dalibao_iv:

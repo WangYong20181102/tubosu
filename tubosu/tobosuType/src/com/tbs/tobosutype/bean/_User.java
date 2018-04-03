@@ -9,34 +9,48 @@ package com.tbs.tobosutype.bean;
 public class _User {
 
     /**
-     * uid : 272286
-     * id : 263616
-     * user_type : 1
-     * city_name : 南京
-     * province_name : 江苏省
-     * cellphone : 17328356612
+     * uid : 344290
+     * id : 276836
+     * user_type : 3
+     * cellphone : 18888888888
      * cellphone_check : 1
-     * nickname : 昵称这样可以吗
-     * expected_cost : 100000.00
-     * icon : https://back.tobosu.com/head_file/2017-08-15/5992b5650280b.jpeg
-     * order_count : 0
-     * grade : 0
-     * token : KEoGF3m7meQSJaEkZSX2znGQTDGHynZibMaavE/DcYyr1gDtkLLxqOz7HW0tuHjOOB7W4KAriLjaRCsXMPHjwpZcrV3aoMk3hTZv1B8hzAh9ZDx+cek8SSGugU5DMBZCxoFpGgnO6uXKKVXwbdSRyhSEYdJHTF3TiNGwJ1XDQxUwuJU9jFEKpIQlrZ0ubJKLFtutl3xVztwoPFyKXNDz8mzLsfsDHheIpFSoJ5ePcmBM/EETn6chs5t9xyrd/049D8i6ohcAUG8RGA3RSigEwgxnKAeitNv4SjcPerNgnwEHf0uw0wWCis8gUXk2MUVAlp05IFKWBhPkZ9drjxgFqXvLPZEXO+Dny5R8Jw5JxzKJxFs7FmshgZYoTUMneJm1z0jQfanaGtNJT1KFNdh5s+uj2F58Y0EnFRSwiozxDUqvMNsrAds8EAacpp3xs3TAyXF6jdIqvRhaxOLhK8BLakUdUV8lEyEjUALzE0kWxaMngSb6KcAFoDrjX2RyWXc9pdypMzBwNipN8mTxDdFsbcJjjgom/DqVQyMMVuFF7Lm/jM/UpqGwEH6Ex2kbF+kzeV8WJPg/QVfMfh0UaVB+j9dykuEId3RpYj6X3ln91RZYwucFEpZvgl2lFtiv2Pq2fWJyYY+eVjx0Ppkp/L5F+pb7IdtfYnJwD4ZZGP/x1Qqa5E2GQ8k17JpauvN4k/Zik6IZXXGEWbAcxQuROf3RjJMHMRA2lEQODa0fQ5NOEXBYcifuvJ8i7OWHUBxKcCD/8MvV43Y2adtqcqlD6ncCiptszs23iAd2uP08UvGzHaX2H3GrzZiNpnBp5TbgkLfwdMaHd3l9BsGrtOmTjGoHl4IiCg8nDC0DsRG21gfkGwuiyKx8WBF98fwMslAuZcfQaCyNqZP/GtvG5RfoXP7yCG3QfsV3XlZql7C7WNihCpAMNEPzVfQpZ7T8d4DzvnKSv74B50ec9d/9Yrhm+24AOHg0KvoOuLYTvt94bFLPwSjS0aThLI2AdOq7W+mePRA5
+     * expected_cost : 0
+     * order_count : 30
+     * city_name : 深圳
+     * province_name : 广东
+     * icon : http://cdn111.dev.tobosu.com/company_logo/2018-03-26/thumb_5ab8a3241684e.png
+     * nickname : 发财猫
+     * gender : 0
+     * community :
+     * grade : 5
+     * token : ANOq0PmmrqLLs/AxprMCTT0abns9MsH6R7CUh2f9SMkCvDPQBxSZwm5507D5VwTB24BHUNVgO/tg3kZs/YycG9nIhm0PFPyvZY2pHeyMRYvnLU19brO8Lr0MamSUH3gUJP7edvQ9+/U6KKCFERc6jLyPEGwjb1wwxNFUxd9kJJavGZpkjjYB+wgeschzh947GXCwlgpSrxteHlEyFxHa+JwWtViiaSrcZkZflpJNGeFQG/QMdEfZipARVQk0eAJVEVsS9zslcMr4iHZXqmf3rWEBW7YS1j7x3eLj5KNvo3lI+c9JJ8PvOv5/Z9cXq3PYm91sg44VbEpOtPGW2Ub7qmdg9VcwiM2WqTc2tSiJ90my+lMBX30jsAw/TwBxV/8LEuRf+X57nrRRQmRwDwsSIus0K0YsjBi4knBRWDbGwTt+OzC38pr0WQ8gzzrPD8KDbnea4LqPjgv0gTEFwjX8NuY8aVQdr1HbxHl4P6jSgZkIGjJfU4/e6x+Icc3GZSrwpaB+rUzyCsaVTob86Q2eX9d9GaslgSNxvWkSclZ0Oc6QLd8G6FcaqirbhLmXPYxG3wDo7pFfFQyE6JeNNRKjGj0cioBhmJk/9yZQNSg/1obzZLgQi/fuOfIL9jDTfoQ032aRek44VwTZHojbUTW9Q5ngoQOj/wkZ+l8w75B/aPwehnIsxnt/t5cjIt0F8/+8RnRQXkqezuyHpIHQE73saQ6eulcVnUP+e4k6dlxpjrjV2FtSo1HzunjG/sms81gLpywkMCEudEPM+uHgeRguru1MHMYFuV220R32Qy3LuRMI5piyja9YR/e14Swx93d6nu+QasqJGnUJtv8yFaLuGoX2wvjT3gNfevYZklHZ/EetfRXjeVGzE92zdoIaaKf2Ghe2kX1TAZF5TZYH/dZqNw8aQKhBZz5EKhIIt7Ro38r7+DK1v8Ne56yMdbJhfbNn1wwP5nk6OLhrj8KzfriXZuPj4qh+uc2CVtBWksN3AHFdL5pMSGhPSV9pMELty45H
+     * wechat_check : 0
+     * new_order_count : 30
+     * not_lf_order_count : 0
+     * lf_order_count : 0
+     * is_new_sms : 1
      */
 
     private String uid;
     private String id;
     private String user_type;
-    private String city_name;
-    private String province_name;
     private String cellphone;
     private String cellphone_check;
-    private String nickname;
     private String expected_cost;
-    private String icon;
     private String order_count;
+    private String city_name;
+    private String province_name;
+    private String icon;
+    private String nickname;
+    private String gender;
+    private String community;
     private String grade;
     private String token;
+    private String wechat_check;
+    private int new_order_count;
+    private int not_lf_order_count;
+    private int lf_order_count;
+    private int is_new_sms;
 
     public String getUid() {
         return uid;
@@ -62,22 +76,6 @@ public class _User {
         this.user_type = user_type;
     }
 
-    public String getCity_name() {
-        return city_name;
-    }
-
-    public void setCity_name(String city_name) {
-        this.city_name = city_name;
-    }
-
-    public String getProvince_name() {
-        return province_name;
-    }
-
-    public void setProvince_name(String province_name) {
-        this.province_name = province_name;
-    }
-
     public String getCellphone() {
         return cellphone;
     }
@@ -94,20 +92,36 @@ public class _User {
         this.cellphone_check = cellphone_check;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
     public String getExpected_cost() {
         return expected_cost;
     }
 
     public void setExpected_cost(String expected_cost) {
         this.expected_cost = expected_cost;
+    }
+
+    public String getOrder_count() {
+        return order_count;
+    }
+
+    public void setOrder_count(String order_count) {
+        this.order_count = order_count;
+    }
+
+    public String getCity_name() {
+        return city_name;
+    }
+
+    public void setCity_name(String city_name) {
+        this.city_name = city_name;
+    }
+
+    public String getProvince_name() {
+        return province_name;
+    }
+
+    public void setProvince_name(String province_name) {
+        this.province_name = province_name;
     }
 
     public String getIcon() {
@@ -118,12 +132,28 @@ public class _User {
         this.icon = icon;
     }
 
-    public String getOrder_count() {
-        return order_count;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setOrder_count(String order_count) {
-        this.order_count = order_count;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getCommunity() {
+        return community;
+    }
+
+    public void setCommunity(String community) {
+        this.community = community;
     }
 
     public String getGrade() {
@@ -140,5 +170,45 @@ public class _User {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getWechat_check() {
+        return wechat_check;
+    }
+
+    public void setWechat_check(String wechat_check) {
+        this.wechat_check = wechat_check;
+    }
+
+    public int getNew_order_count() {
+        return new_order_count;
+    }
+
+    public void setNew_order_count(int new_order_count) {
+        this.new_order_count = new_order_count;
+    }
+
+    public int getNot_lf_order_count() {
+        return not_lf_order_count;
+    }
+
+    public void setNot_lf_order_count(int not_lf_order_count) {
+        this.not_lf_order_count = not_lf_order_count;
+    }
+
+    public int getLf_order_count() {
+        return lf_order_count;
+    }
+
+    public void setLf_order_count(int lf_order_count) {
+        this.lf_order_count = lf_order_count;
+    }
+
+    public int getIs_new_sms() {
+        return is_new_sms;
+    }
+
+    public void setIs_new_sms(int is_new_sms) {
+        this.is_new_sms = is_new_sms;
     }
 }

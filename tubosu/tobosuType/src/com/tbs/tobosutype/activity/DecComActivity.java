@@ -204,6 +204,7 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
         HttpGetDecComData();//获取数据
     }
 
+
     @Override
     protected boolean isRegisterEventBus() {
         return true;
@@ -269,7 +270,11 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
 
             } else {
                 decComBanner.setVisibility(View.GONE);
-                decComShoucangLl.setVisibility(View.VISIBLE);
+                if (AppInfoUtil.getTypeid(mContext).equals("3")){
+                    decComShoucangLl.setVisibility(View.GONE);
+                }else {
+                    decComShoucangLl.setVisibility(View.VISIBLE);
+                }
                 decComBackLl.setVisibility(View.VISIBLE);
                 decComShareLl.setVisibility(View.VISIBLE);
             }
@@ -346,11 +351,10 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
             case R.id.dec_com_phone_iv:
                 //拨打电话按钮
                 if (TextUtils.isEmpty(mCompanyDetail.getTelephone())) {
-                    showOpenPhone("400-606-2221");
+                    showOpenPhone("" + SpUtil.getCustom_service_tel(mContext));
                 } else {
                     showOpenPhone(mCompanyDetail.getTelephone());
                 }
-
                 break;
             case R.id.dec_com_qq_iv:
                 //qq联系按钮
@@ -807,6 +811,13 @@ public class DecComActivity extends com.tbs.tobosutype.base.BaseActivity {
                 && !mCompanyDetail.getPromotions_title().isEmpty()
                 && decComYouhuiLunboTv != null) {
             decComYouhuiLunboTv.startAutoScroll();
+        }
+        if (AppInfoUtil.getTypeid(mContext).equals("3")) {
+            decComBannerShoucang.setVisibility(View.GONE);
+            decComShareLl.setVisibility(View.GONE);
+        }else {
+            decComBannerShoucang.setVisibility(View.VISIBLE);
+            decComShareLl.setVisibility(View.VISIBLE);
         }
     }
 

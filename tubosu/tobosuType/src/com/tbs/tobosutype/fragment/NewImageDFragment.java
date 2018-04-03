@@ -666,7 +666,11 @@ public class NewImageDFragment extends BaseFragment {
 //                        intent.putExtra("isFav", true);
                         startActivityForResult(intent, 0);
                     } else {
-                        HttpCollection(mImageDArrayList.get(position).getId(), AppInfoUtil.getUserid(mContext), AppInfoUtil.getTypeid(mContext), position);
+                        if (AppInfoUtil.getTypeid(mContext).equals("3")) {
+
+                        } else {
+                            HttpCollection(mImageDArrayList.get(position).getId(), AppInfoUtil.getUserid(mContext), AppInfoUtil.getTypeid(mContext), position);
+                        }
                     }
                     break;
                 case R.id.item_new_image_img_ll:

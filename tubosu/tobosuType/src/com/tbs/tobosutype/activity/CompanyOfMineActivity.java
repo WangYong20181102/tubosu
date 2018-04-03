@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.base.*;
+import com.tbs.tobosutype.base.BaseActivity;
 import com.tbs.tobosutype.bean._PresonerInfo;
 import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.global.Constant;
@@ -33,6 +33,7 @@ import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.GlideUtils;
 import com.tbs.tobosutype.utils.MD5Util;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.socialize.ShareAction;
@@ -59,7 +60,7 @@ import okhttp3.Response;
  * 装修公司端 我的界面
  * 3.7版本新增
  */
-public class CompanyOfMineActivity extends com.tbs.tobosutype.base.BaseActivity {
+public class CompanyOfMineActivity extends BaseActivity {
     @BindView(R.id.company_of_mine_setting_rl)
     RelativeLayout companyOfMineSettingRl;
     @BindView(R.id.company_of_mine_icon_iv)
@@ -78,8 +79,6 @@ public class CompanyOfMineActivity extends com.tbs.tobosutype.base.BaseActivity 
     LinearLayout companyOfMineWeiliangfangLl;
     @BindView(R.id.company_of_mine_yiliangfang_ll)
     LinearLayout companyOfMineYiliangfangLl;
-    @BindView(R.id.company_of_mine_yiqiandan_ll)
-    LinearLayout companyOfMineYiqiandanLl;
     @BindView(R.id.company_of_mine_all_dingdan_rl)
     RelativeLayout companyOfMineAllDingdanRl;
     @BindView(R.id.company_of_mine_wangdian_rl)
@@ -96,6 +95,20 @@ public class CompanyOfMineActivity extends com.tbs.tobosutype.base.BaseActivity 
     RelativeLayout companyOfMineAllDingdanNumRl;
     @BindView(R.id.company_of_mine_ll)
     LinearLayout companyOfMineLl;
+    @BindView(R.id.xindingdan_num_tv)
+    TextView xindingdanNumTv;
+    @BindView(R.id.weiliangfang_num_tv)
+    TextView weiliangfangNumTv;
+    @BindView(R.id.yiliangfang_num_tv)
+    TextView yiliangfangNumTv;
+    @BindView(R.id.company_of_mine_note_iv)
+    ImageView companyOfMineNoteIv;
+    @BindView(R.id.company_of_mine_note_rl)
+    RelativeLayout companyOfMineNoteRl;
+    @BindView(R.id.company_of_mine_xindingdan_ll)
+    LinearLayout companyOfMineXindingdanLl;
+    @BindView(R.id.company_of_mine_xiaochengxu_tv)
+    TextView companyOfMineXiaochengxuTv;
     private String TAG = "CompanyOfMineActivity";
     private Context mContext;
     private UMShareAPI umShareAPI;
@@ -114,7 +127,7 @@ public class CompanyOfMineActivity extends com.tbs.tobosutype.base.BaseActivity 
     @Override
     protected void onResume() {
         super.onResume();
-        //时时修改用户的信息
+        // TODO: 2018/3/22  时时修改用户的信息   新增订单的数量
         companyOfMineLl.setBackgroundColor(Color.parseColor("#ffffff"));
         if (Util.isNetAvailable(mContext)) {
             //有网络的情况下
@@ -166,6 +179,11 @@ public class CompanyOfMineActivity extends com.tbs.tobosutype.base.BaseActivity 
                         AppInfoUtil.setUserGrade(mContext, mPresonerInfo.getGrade());//用户的会员等级
                         AppInfoUtil.setUserCellphone_check(mContext, mPresonerInfo.getCellphone_check());//用户是否绑定手机号码
                         AppInfoUtil.setUserOrder_count(mContext, mPresonerInfo.getOrder_count());//用户订单数量
+
+                        AppInfoUtil.setUserNewOrderCount(mContext, mPresonerInfo.getNew_order_count() + "");//用户新订单数量
+                        AppInfoUtil.setUserNotLfOrderCount(mContext, mPresonerInfo.getNot_lf_order_count() + "");//用户未量房数量
+                        AppInfoUtil.setUserLfOrderCount(mContext, mPresonerInfo.getLf_order_count() + "");//用户量房数量
+                        AppInfoUtil.setUserIsNewSms(mContext, mPresonerInfo.getIs_new_sms() + "");//用户是否有新消息  1-有  0-无
 
                         CacheManager.setDecorateBudget(mContext, mPresonerInfo.getExpected_cost());//装修日志的花费
                         runOnUiThread(new Runnable() {
@@ -228,19 +246,63 @@ public class CompanyOfMineActivity extends com.tbs.tobosutype.base.BaseActivity 
             companyOfMineAllDingdanRl.setVisibility(View.VISIBLE);
             companyOfMineNoneDingdanTv.setVisibility(View.GONE);
         }
+        //设置新订单数据
+        if (AppInfoUtil.getUserNewOrderCount(mContext).equals("0")) {
+            xindingdanNumTv.setVisibility(View.GONE);
+        } else {
+            xindingdanNumTv.setVisibility(View.VISIBLE);
+            int xindindanNum = Integer.parseInt(AppInfoUtil.getUserNewOrderCount(mContext));
+            if (xindindanNum > 99) {
+                xindingdanNumTv.setText("" + "99+");
+            } else {
+                xindingdanNumTv.setText("" + AppInfoUtil.getUserNewOrderCount(mContext));
+            }
+        }
+        //设置未量房数据
+        if (AppInfoUtil.getUserNotLfOrderCount(mContext).equals("0")) {
+            weiliangfangNumTv.setVisibility(View.GONE);
+        } else {
+            weiliangfangNumTv.setVisibility(View.VISIBLE);
+            int weiliangfangNum = Integer.parseInt(AppInfoUtil.getUserNotLfOrderCount(mContext));
+            if (weiliangfangNum > 99) {
+                weiliangfangNumTv.setText("" + "99+");
+            } else {
+                weiliangfangNumTv.setText("" + AppInfoUtil.getUserNotLfOrderCount(mContext));
+            }
+        }
+        //设置已量房数据
+        if (AppInfoUtil.getUserLfOrderCount(mContext).equals("0")) {
+            yiliangfangNumTv.setVisibility(View.GONE);
+        } else {
+            yiliangfangNumTv.setVisibility(View.VISIBLE);
+            int yiliangfangNum = Integer.parseInt(AppInfoUtil.getUserLfOrderCount(mContext));
+            if (yiliangfangNum > 99) {
+                yiliangfangNumTv.setText("" + "99+");
+            } else {
+                yiliangfangNumTv.setText("" + AppInfoUtil.getUserLfOrderCount(mContext));
+            }
+        }
+        //设置是否有新消息
+        if (AppInfoUtil.getUserIsNewSms(mContext).equals("1")) {
+            companyOfMineNoteIv.setImageResource(R.drawable.xiaoxi_2);
+        } else {
+            companyOfMineNoteIv.setImageResource(R.drawable.xiaoxi);
+        }
     }
 
     private void initViewEvent() {
         mGson = new Gson();
         umShareAPI = UMShareAPI.get(mContext);
+        companyOfMineXiaochengxuTv.setText("" + SpUtil.getApplets_name(mContext));
     }
 
     @OnClick({R.id.company_of_mine_setting_rl, R.id.company_of_mine_icon_iv,
             R.id.company_of_mine_msg_rl, R.id.company_of_mine_weiliangfang_ll,
-            R.id.company_of_mine_yiliangfang_ll, R.id.company_of_mine_yiqiandan_ll,
+            R.id.company_of_mine_yiliangfang_ll, R.id.company_of_mine_xindingdan_ll,
             R.id.company_of_mine_wangdian_rl, R.id.company_of_mine_kefu_rl,
             R.id.company_of_mine_xiaochengxu_rl, R.id.company_of_mine_share_rl,
-            R.id.company_of_mine_pingjia_rl, R.id.company_of_mine_all_dingdan_num_rl})
+            R.id.company_of_mine_pingjia_rl, R.id.company_of_mine_all_dingdan_num_rl,
+            R.id.company_of_mine_note_rl})
     public void onViewClickedInCompanyOfMineActivity(View view) {
         switch (view.getId()) {
             case R.id.company_of_mine_setting_rl:
@@ -258,7 +320,7 @@ public class CompanyOfMineActivity extends com.tbs.tobosutype.base.BaseActivity 
                     showChadanPassWordPop("0");
                 } else {
                     //进入所有订单
-                    goAllOrder("0");
+                    startActivity(new Intent(mContext, AllOrderActivity.class));
                 }
                 break;
             case R.id.company_of_mine_weiliangfang_ll:
@@ -273,19 +335,19 @@ public class CompanyOfMineActivity extends com.tbs.tobosutype.base.BaseActivity 
             case R.id.company_of_mine_yiliangfang_ll:
                 //已量房按钮
                 if (!MyApplication.IS_CHECK_COMPANY_ORDER_PASSWORD) {
-                    showChadanPassWordPop("1");
-                } else {
-                    //进入未量房界面
-                    goAllOrder("1");
-                }
-                break;
-            case R.id.company_of_mine_yiqiandan_ll:
-                //已签单按钮
-                if (!MyApplication.IS_CHECK_COMPANY_ORDER_PASSWORD) {
                     showChadanPassWordPop("3");
                 } else {
-                    //进入未量房界面
+                    //进入已量房界面
                     goAllOrder("3");
+                }
+                break;
+            case R.id.company_of_mine_xindingdan_ll:
+                //新订单按钮
+                if (!MyApplication.IS_CHECK_COMPANY_ORDER_PASSWORD) {
+                    showChadanPassWordPop("1");
+                } else {
+                    //进入新订单界面
+                    goAllOrder("1");
                 }
                 break;
             case R.id.company_of_mine_wangdian_rl:
@@ -307,15 +369,23 @@ public class CompanyOfMineActivity extends com.tbs.tobosutype.base.BaseActivity 
                 //评价App
                 praiseApp();
                 break;
+            case R.id.company_of_mine_note_rl:
+                // TODO: 2018/3/22 点击进入消息界面
+                Intent intent = new Intent(mContext, OrderNoteActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 
     public void goAllOrder(String kind) {
-        Intent allOrderIntent = new Intent(mContext, AllOrderListActivity.class);
-        Bundle allOrderBundle = new Bundle();
-        allOrderBundle.putString("kind", kind);
-        allOrderIntent.putExtras(allOrderBundle);
-        mContext.startActivity(allOrderIntent);
+//        Intent allOrderIntent = new Intent(mContext, AllOrderListActivity.class);
+//        Bundle allOrderBundle = new Bundle();
+//        allOrderBundle.putString("kind", kind);
+//        allOrderIntent.putExtras(allOrderBundle);
+//        mContext.startActivity(allOrderIntent);
+        Intent intentIntoAllOrderActivity = new Intent(mContext, AllOrderActivity.class);
+        intentIntoAllOrderActivity.putExtra("mIndex", kind);
+        startActivity(intentIntoAllOrderActivity);
     }
 
     /**
@@ -380,17 +450,20 @@ public class CompanyOfMineActivity extends com.tbs.tobosutype.base.BaseActivity 
                                         public void run() {
                                             MyApplication.IS_CHECK_COMPANY_ORDER_PASSWORD = true;
                                             if (kind.equals("0")) {
+                                                //全部
                                                 goAllOrder("0");
                                             } else if (kind.equals("1")) {
+                                                //新订单
                                                 goAllOrder("1");
                                             } else if (kind.equals("2")) {
+                                                //未量房
                                                 goAllOrder("2");
                                             } else if (kind.equals("3")) {
+                                                //已量房
                                                 goAllOrder("3");
                                             } else {
                                                 goAllOrder("0");
                                             }
-
                                             popupWindow.dismiss();
                                         }
                                     });

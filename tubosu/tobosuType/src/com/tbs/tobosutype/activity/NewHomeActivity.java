@@ -481,7 +481,9 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
             public void onClick(View v) {
                 //弹窗  尝试打开QQ
                 if (Util.checkApkExist(mContext, "com.tencent.mobileqq")) {
-                    String url = "http://wpa.b.qq.com/cgi/wpa.php?ln=2&uin=4006062221";
+                    String url = "http://wpa.b.qq.com/cgi/wpa.php?ln=2&uin=" + SpUtil.getCustom_service_qq(mContext);
+                    Log.e(TAG, "获取QQ==============" + SpUtil.getCustom_service_qq(mContext));
+
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                 } else {
                     Toast.makeText(mContext, "本机未安装QQ", Toast.LENGTH_SHORT).show();
@@ -520,9 +522,11 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         View popview = View.inflate(mContext, R.layout.popwindow_qqzixun, null);
         TextView quxiao_phone = (TextView) popview.findViewById(R.id.quxiao_phone);
         TextView open_phone = (TextView) popview.findViewById(R.id.open_phone);
+        TextView phone_num = popview.findViewById(R.id.phone_num);
         RelativeLayout pop_phone_zixun = (RelativeLayout) popview.findViewById(R.id.pop_phone_zixun);
         LinearLayout phone_pop_window_ll = popview.findViewById(R.id.phone_pop_window_ll);
         phone_pop_window_ll.setBackgroundColor(Color.parseColor("#ffffff"));
+        phone_num.setText("土拨鼠热线：" + SpUtil.getCustom_service_tel(mContext));
         final PopupWindow popupWindow = new PopupWindow(popview, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
@@ -532,7 +536,8 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
             @Override
             public void onClick(View v) {
                 //打电话
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "4006062221"));
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + SpUtil.getCustom_service_tel(mContext)));
+                Log.e(TAG, "获取电话==============" + SpUtil.getCustom_service_tel(mContext));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 popupWindow.dismiss();

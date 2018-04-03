@@ -105,6 +105,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
             }
         }, 3000);
     }
+
     /**
      * 初始化App事件统计
      * 1.清空之前存储的数据
@@ -288,7 +289,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                     public void onFailure(Call call, IOException e) {
                         // 没有拿到图片地址
                         Util.setErrorLog(TAG, "----22----有网络--请求失败------");
-                        goLoadingActivity("", -1);
+                        goLoadingActivity("", -1,"");
                     }
 
                     @Override
@@ -300,14 +301,15 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                             if (jsonObject.getInt("error_code") == 0) {
                                 // 拿到了图片地址
                                 JSONObject data = jsonObject.getJSONObject("data");
-                                String url = data.getString("img_url");
-                                String time = data.getString("stay_time");
+                                String url = data.optString("img_url");
+                                String time = data.optString("stay_time");
+                                String jumpUrl = data.optString("jump_url");
                                 Util.setErrorLog(TAG, "----33---有网络 有地址------");
-                                goLoadingActivity(url, Integer.parseInt(time));
+                                goLoadingActivity(url, Integer.parseInt(time),jumpUrl);
                             } else {
                                 // 没有拿到图片地址
                                 Util.setErrorLog(TAG, "---44----有网络 无地址------");
-                                goLoadingActivity("", -1);
+                                goLoadingActivity("", -1,"");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -317,7 +319,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
             } else {
                 // 没有拿到图片地址
                 Util.setErrorLog(TAG, "-----5---无网络--------");
-                goLoadingActivity("", -1);
+                goLoadingActivity("", -1,"");
             }
         }
     }
@@ -327,7 +329,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
      *
      * @param time 广告停留时间
      */
-    private void goLoadingActivity(String imgUrl, int time) {
+    private void goLoadingActivity(String imgUrl, int time,String jumpUrl) {
         Util.setErrorLog(TAG, "-----66---" + time + "s--------");
         Intent intent;
         if (time == -1) {
@@ -347,6 +349,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                 // 传递url
                 intent.putExtra("loading_img_url", imgUrl);
                 intent.putExtra("staytime", time);
+                intent.putExtra("jump_url", jumpUrl);
             } else {
                 // 图片正在下载中，还没有下载好
                 if ("".equals(CacheManager.getAppEntryOrderPre(mContext))) {

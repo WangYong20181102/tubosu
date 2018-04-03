@@ -102,7 +102,7 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
     private ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
     private SImageLookingAdapter mSImageLookingAdapter;
     private int mPosition = 0;//上一个界面传来的位置信息
-    private String mWhereFrom="";//上一个界面传来用
+    private String mWhereFrom = "";//上一个界面传来用
     private boolean isShowingBanner = true;//是否显示banner  默认显示
     private PopupWindow mDownLoadImagePopWindow;//长按显示下载的pop
     private View mDownLoadImageView;//承载pop的view
@@ -157,7 +157,7 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                 sImgLookShoucan.setImageResource(R.drawable.shoucang_detail_befor);
             }
             //设置统计的页面id
-            SpUtil.setStatisticsEventPageId(mContext,mImageSArrayList.get(mPosition).getId());
+            SpUtil.setStatisticsEventPageId(mContext, mImageSArrayList.get(mPosition).getId());
         }
         //展示动画
         ShowFristIntoAnim();
@@ -185,7 +185,12 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             isAddTime = true;
             ShowFadanTanChuang();
         }
-
+        //装修公司隐藏收藏按钮
+        if (AppInfoUtil.getTypeid(mContext).equals("3")) {
+            sImgLookShoucanLl.setVisibility(View.GONE);
+        } else {
+            sImgLookShoucanLl.setVisibility(View.VISIBLE);
+        }
         super.onResume();
     }
 
@@ -262,10 +267,10 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             } else {
                 sImgLookShoucan.setImageResource(R.drawable.shoucang_detail_befor);
             }
-            if (isLeft){
-                Log.e(TAG,"--->左划==============="+position);
-            }else {
-                Log.e(TAG,"--->右划==============="+position);
+            if (isLeft) {
+                Log.e(TAG, "--->左划===============" + position);
+            } else {
+                Log.e(TAG, "--->右划===============" + position);
             }
         }
 
@@ -481,7 +486,7 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
         param.put("type", "1");
 
 
-        Util.setErrorLog(TAG, "昭仲要传的参数 state=" + state + "   id=" + id + "   uid=" +_id + "  user_type=" + AppInfoUtil.getTypeid(mContext) + " type=1");
+        Util.setErrorLog(TAG, "昭仲要传的参数 state=" + state + "   id=" + id + "   uid=" + _id + "  user_type=" + AppInfoUtil.getTypeid(mContext) + " type=1");
         OKHttpUtil.post(Constant.IMAGE_COLLECT, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -491,7 +496,7 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String json = new String(response.body().string());
-                Util.setErrorLog(TAG, "昭仲返回的结果："+json);
+                Util.setErrorLog(TAG, "昭仲返回的结果：" + json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     int status = jsonObject.optInt("status");
@@ -505,7 +510,7 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                                     sImgLookShoucan.setImageResource(R.drawable.shoucang_after);
                                     mImageSArrayList.get(mPosition).setIs_collect("1");
                                     Toast.makeText(mContext, "收藏成功", Toast.LENGTH_SHORT).show();
-                                    if(mWhereFrom.equals("NewImageSFragment")){
+                                    if (mWhereFrom.equals("NewImageSFragment")) {
                                         EventBusUtil.sendEvent(new Event(EC.EventCode.NOTIF_SHOUCANG_DATA_CHANGE_IS_COLLECT, mPosition));
                                     }
                                 } else {
@@ -513,10 +518,10 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                                     sImgLookShoucan.setImageResource(R.drawable.shoucang_detail_befor);
                                     mImageSArrayList.get(mPosition).setIs_collect("0");
                                     Toast.makeText(mContext, "取消收藏成功", Toast.LENGTH_SHORT).show();
-                                    if(mWhereFrom.equals("NewImageSFragment")){
+                                    if (mWhereFrom.equals("NewImageSFragment")) {
                                         // TODO: 2017/11/20
                                         EventBusUtil.sendEvent(new Event(EC.EventCode.NOTIF_SHOUCANG_DATA_CHANGE_IS_NOT_COLLECT, mPosition));
-                                    }else if(mWhereFrom.equals("DanTuActivity")){
+                                    } else if (mWhereFrom.equals("DanTuActivity")) {
                                         EventBusUtil.sendEvent(new Event(EC.EventCode.DELETE_DANTU_LIST_CODE, mPosition));
                                     }
                                 }
