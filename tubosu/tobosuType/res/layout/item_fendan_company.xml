@@ -8,7 +8,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerInParent="true"
-        android:layout_marginLeft="15dp"
         android:orientation="horizontal">
         <!--装修公司名称-->
         <TextView
@@ -26,9 +25,12 @@
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
             android:background="@drawable/shape_yiliangfang"
-            android:padding="2dp"
+            android:paddingLeft="4dp"
+            android:paddingBottom="1dp"
+            android:paddingTop="1dp"
+            android:paddingRight="4dp"
             android:text="已量房"
-            android:textColor="#ff6c14"
-            android:textSize="11sp" />
+            android:textColor="#0da680"
+            android:textSize="10sp" />
     </LinearLayout>
 </RelativeLayout>

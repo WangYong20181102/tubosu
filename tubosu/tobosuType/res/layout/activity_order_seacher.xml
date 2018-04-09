@@ -37,8 +37,19 @@
                 android:layout_marginLeft="12dp"
                 android:background="@null"
                 android:hint="请输入订单号/业主称呼/小区名称"
+                android:maxLength="20"
                 android:textColor="#000000"
                 android:textSize="13sp" />
+
+            <ImageView
+                android:id="@+id/order_seach_clean_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="18dp"
+                android:src="@drawable/login_close"
+                android:visibility="gone" />
         </RelativeLayout>
 
 

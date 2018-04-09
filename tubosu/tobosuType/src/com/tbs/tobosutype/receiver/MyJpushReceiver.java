@@ -62,7 +62,7 @@ public class MyJpushReceiver extends BroadcastReceiver {
                 String mNoticeType = jsonObject.optString("notice_type");
                 if (3 == Util.getAppSatus(context, "com.tbs.tobosutype")) {
                     //App未启动的情况下 打开推送相关的信息  点击返回时启动App
-                    if (mNoticeType.equals("1")) {
+                    if (mNoticeType != null && mNoticeType.equals("1")) {
                         //进入订单列表
                         Intent intentToNotice = new Intent(context, OrderNoteActivity.class);
                         intentToNotice.putExtra("back_key", "1");
@@ -71,7 +71,7 @@ public class MyJpushReceiver extends BroadcastReceiver {
                     }
                 } else {
                     //App已经启动
-                    if (mNoticeType.equals("1")) {
+                    if (mNoticeType != null && mNoticeType.equals("1")) {
                         //进入订单列表
                         Intent intentToNotice = new Intent(context, OrderNoteActivity.class);
                         intentToNotice.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

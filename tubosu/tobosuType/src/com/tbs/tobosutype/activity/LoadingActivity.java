@@ -50,7 +50,7 @@ public class LoadingActivity extends BaseActivity {
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (!TextUtils.isEmpty(mJumpUrl)) {
+            if (mJumpUrl != null && !TextUtils.isEmpty(mJumpUrl)) {
                 Intent intentToWebActivity = new Intent(mContext, AdvWebActivity.class);
                 intentToWebActivity.putExtra("mLoadingUrl", mJumpUrl);
                 startActivity(intentToWebActivity);

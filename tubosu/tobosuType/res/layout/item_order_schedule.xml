@@ -9,7 +9,7 @@
         android:layout_height="17dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="22dp"
+        android:layout_marginLeft="7dp"
         android:background="#e5e5e5" />
     <!--订单进度标识-->
     <ImageView
@@ -17,7 +17,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/xuanzhong" />
     <!--左下分割线-->
@@ -27,7 +26,7 @@
         android:layout_height="27dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="22dp"
+        android:layout_marginLeft="7dp"
         android:background="#e5e5e5" />
     <!--订单状态描述-->
     <TextView
@@ -58,7 +57,7 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="36dp"
+        android:layout_marginLeft="27dp"
         android:layout_marginRight="15dp"
         android:background="@drawable/shape_xu_xian" />
 </RelativeLayout>

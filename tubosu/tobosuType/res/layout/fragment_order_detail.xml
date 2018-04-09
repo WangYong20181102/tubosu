@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
     <!--可滑动页面-->
     <ScrollView
         android:layout_width="match_parent"
@@ -56,17 +56,17 @@
             </LinearLayout>
             <!--分割线-->
             <View
-                android:layerType="software"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:background="@drawable/shape_xu_xian" />
+                android:background="@drawable/shape_xu_xian"
+                android:layerType="software" />
             <!--用户的信息-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#fafafa"
+                android:background="@color/white"
                 android:orientation="vertical">
                 <!--区域和面积-->
                 <LinearLayout
@@ -236,12 +236,12 @@
             </LinearLayout>
             <!--分割线-->
             <View
-                android:layerType="software"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:background="@drawable/shape_xu_xian" />
+                android:background="@drawable/shape_xu_xian"
+                android:layerType="software" />
             <!--风格和是否有钥匙-->
             <!--户型以及房屋类型-->
             <LinearLayout
@@ -482,12 +482,12 @@
             </LinearLayout>
             <!--分割线-->
             <View
-                android:layerType="software"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:background="@drawable/shape_xu_xian" />
+                android:background="@drawable/shape_xu_xian"
+                android:layerType="software" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -546,12 +546,12 @@
                 </LinearLayout>
                 <!--分割线-->
                 <View
-                    android:layerType="software"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:background="@drawable/shape_xu_xian" />
+                    android:background="@drawable/shape_xu_xian"
+                    android:layerType="software" />
                 <!--显示分单公司的列表-->
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/new_order_frag_fendan_gongsi_recycler"
@@ -590,12 +590,12 @@
             </LinearLayout>
             <!--分割线-->
             <View
-                android:layerType="software"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:background="@drawable/shape_xu_xian" />
+                android:background="@drawable/shape_xu_xian"
+                android:layerType="software" />
             <!--显示订单进度-->
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/new_order_frag_jindu_recycler"
@@ -662,5 +662,10 @@
                 android:textColor="#ff6c14" />
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentTop="true"
+            android:background="#e8e8e8" />
     </RelativeLayout>
 </RelativeLayout>

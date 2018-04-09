@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.tbs.tobosutype.utils.Util;
 import com.tbs.tobosutype.web.PushAppNotStartWebActivity;
@@ -55,70 +56,134 @@ public class MyXiaomiPushReceiver extends PushMessageReceiver {
              * 1.打开查看推送的相关的信息
              * 2.点返回将启动App
              */
-            if (!TextUtils.isEmpty(message.getExtra().get("url"))) {
-                Intent intent = new Intent(context, PushAppNotStartWebActivity.class);
-                intent.putExtra("mLoadingUrl", message.getExtra().get("url"));
-                Log.e(TAG, "收到消息=========消息中包含的tag=====" + message.getExtra().get("tag"));
-                if (message.getExtra().containsKey("tag")) {
-                    //包含推送发单的key  传值通知下一个页面  展示发单的key
-                    if (message.getExtra().get("tag").equals("1")) {
-                        //显示发标按钮
-                        intent.putExtra("mShowing", "1");
-                    } else {
-                        intent.putExtra("mShowing", "0");
+//            if (!TextUtils.isEmpty(message.getExtra().get("url"))) {
+//                Intent intent = new Intent(context, PushAppNotStartWebActivity.class);
+//                intent.putExtra("mLoadingUrl", message.getExtra().get("url"));
+//                Log.e(TAG, "收到消息=========消息中包含的tag=====" + message.getExtra().get("tag"));
+//                if (message.getExtra().containsKey("tag")) {
+//                    //包含推送发单的key  传值通知下一个页面  展示发单的key
+//                    if (message.getExtra().get("tag").equals("1")) {
+//                        //显示发标按钮
+//                        intent.putExtra("mShowing", "1");
+//                    } else {
+//                        intent.putExtra("mShowing", "0");
+//                    }
+//                } else {
+//                    intent.putExtra("mShowing", "0");
+//                }
+//
+//                //是否拼接点击流信息
+//                if (message.getExtra().containsKey("enable_statistics")) {
+//                    if (message.getExtra().get("enable_statistics").equals("1")) {
+//                        //带入点击流
+//                        intent.putExtra("mEnableStatistics", "1");
+//
+//                    } else {
+//                        intent.putExtra("mEnableStatistics", "0");
+//                    }
+//                } else {
+//                    intent.putExtra("mEnableStatistics", "0");
+//                }
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                context.startActivity(intent);
+//            }
+            if (message.getExtra().containsKey("notice_type")) {
+                String notice_type = message.getExtra().get("notice_type");
+                if (notice_type.equals("1")) {
+                    //推送订单页面  这个是由后台直接推送的
+                } else if (notice_type.equals("2")) {
+                    //推送文章页
+                    if (message.getExtra().containsKey("url")) {
+                        Intent intentToNotStartWebActivity = new Intent(context, PushAppNotStartWebActivity.class);
+                        //有url链接才能启动
+                        intentToNotStartWebActivity.putExtra("mLoadingUrl", message.getExtra().get("url"));
+                        //是否包含tag
+                        if (message.getExtra().containsKey("tag")) {
+                            //含tag  获取tag的值传给目标
+                            intentToNotStartWebActivity.putExtra("mShowing", message.getExtra().get("tag"));
+                        } else {
+                            //不含tag 默认不含
+                            intentToNotStartWebActivity.putExtra("mShowing", "0");
+                        }
+                        //是否拼接点击流字段
+                        if (message.getExtra().containsKey("enable_statistics")) {
+                            //含有点击流的字段
+                            intentToNotStartWebActivity.putExtra("mEnableStatistics", message.getExtra().get("enable_statistics"));
+                        } else {
+                            //不含点击流字段 默认拼接
+                            intentToNotStartWebActivity.putExtra("mEnableStatistics", "1");
+                        }
+                        intentToNotStartWebActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intentToNotStartWebActivity);
                     }
-                } else {
-                    intent.putExtra("mShowing", "0");
                 }
-
-                //是否拼接点击流信息
-                if (message.getExtra().containsKey("enable_statistics")) {
-                    if (message.getExtra().get("enable_statistics").equals("1")) {
-                        //带入点击流
-                        intent.putExtra("mEnableStatistics", "1");
-
-                    } else {
-                        intent.putExtra("mEnableStatistics", "0");
-                    }
-                } else {
-                    intent.putExtra("mEnableStatistics", "0");
-                }
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
             }
         } else {
             //程序已经启动
-            if (!TextUtils.isEmpty(message.getExtra().get("url"))) {
-                Intent intent = new Intent(context, PushAppStartWebActivity.class);
-                intent.putExtra("mLoadingUrl", message.getExtra().get("url"));
-                Log.e(TAG, "收到消息=========消息中包含的tag=====" + message.getExtra().get("tag"));
-                if (message.getExtra().containsKey("tag")) {
-                    //包含推送发单的key  传值通知下一个页面  展示发单的key
-                    if (message.getExtra().get("tag").equals("1")) {
-                        //显示发标按钮
-                        intent.putExtra("mShowing", "1");
-                    } else {
-                        intent.putExtra("mShowing", "0");
-                    }
-                } else {
-                    intent.putExtra("mShowing", "0");
-                }
-                //是否拼接点击流信息
-                if (message.getExtra().containsKey("enable_statistics")) {
-                    if (message.getExtra().get("enable_statistics").equals("1")) {
-                        //带入点击流
-                        intent.putExtra("mEnableStatistics", "1");
-                    } else {
-                        intent.putExtra("mEnableStatistics", "0");
-                    }
-                } else {
-                    intent.putExtra("mEnableStatistics", "0");
-                }
+//            if (!TextUtils.isEmpty(message.getExtra().get("url"))) {
+//                Intent intent = new Intent(context, PushAppStartWebActivity.class);
+//                intent.putExtra("mLoadingUrl", message.getExtra().get("url"));
+//                Log.e(TAG, "收到消息=========消息中包含的tag=====" + message.getExtra().get("tag"));
+//                if (message.getExtra().containsKey("tag")) {
+//                    //包含推送发单的key  传值通知下一个页面  展示发单的key
+//                    if (message.getExtra().get("tag").equals("1")) {
+//                        //显示发标按钮
+//                        intent.putExtra("mShowing", "1");
+//                    } else {
+//                        intent.putExtra("mShowing", "0");
+//                    }
+//                } else {
+//                    intent.putExtra("mShowing", "0");
+//                }
+//                //是否拼接点击流信息
+//                if (message.getExtra().containsKey("enable_statistics")) {
+//                    if (message.getExtra().get("enable_statistics").equals("1")) {
+//                        //带入点击流
+//                        intent.putExtra("mEnableStatistics", "1");
+//                    } else {
+//                        intent.putExtra("mEnableStatistics", "0");
+//                    }
+//                } else {
+//                    intent.putExtra("mEnableStatistics", "0");
+//                }
+//
+//
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                context.startActivity(intent);
+//            }
 
-
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+            if (message.getExtra().containsKey("notice_type")) {
+                String notice_type = message.getExtra().get("notice_type");
+                if (notice_type.equals("1")) {
+                    //推送订单页面  这个是由后台直接推送的
+                } else if (notice_type.equals("2")) {
+                    //推送文章页
+                    if (message.getExtra().containsKey("url")) {
+                        Intent intentToStartWebActivity = new Intent(context, PushAppStartWebActivity.class);
+                        //有url链接才能启动
+                        intentToStartWebActivity.putExtra("mLoadingUrl", message.getExtra().get("url"));
+                        //是否包含tag
+                        if (message.getExtra().containsKey("tag")) {
+                            //含tag  获取tag的值传给目标
+                            intentToStartWebActivity.putExtra("mShowing", message.getExtra().get("tag"));
+                        } else {
+                            //不含tag 默认不含
+                            intentToStartWebActivity.putExtra("mShowing", "0");
+                        }
+                        //是否拼接点击流字段
+                        if (message.getExtra().containsKey("enable_statistics")) {
+                            //含有点击流的字段
+                            intentToStartWebActivity.putExtra("mEnableStatistics", message.getExtra().get("enable_statistics"));
+                        } else {
+                            //不含点击流字段 默认拼接
+                            intentToStartWebActivity.putExtra("mEnableStatistics", "1");
+                        }
+                        intentToStartWebActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intentToStartWebActivity);
+                    }
+                }
             }
+
         }
 
     }

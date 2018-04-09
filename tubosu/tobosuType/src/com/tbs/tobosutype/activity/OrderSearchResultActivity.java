@@ -47,6 +47,10 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+/**
+ * 订单搜索页面  搜索结果
+ */
+
 public class OrderSearchResultActivity extends com.tbs.tobosutype.base.BaseActivity {
     @BindView(R.id.search_order_back_rl)
     RelativeLayout searchOrderBackRl;

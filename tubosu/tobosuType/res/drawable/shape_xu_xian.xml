@@ -3,7 +3,7 @@
     android:shape="line">
     <stroke
         android:width="0.8dp"
-        android:color="#cfcfcf"
+        android:color="#e8e8e8"
         android:dashWidth="4dp"
-        android:dashGap="4dp" />
+        android:dashGap="2dp" />
 </shape>

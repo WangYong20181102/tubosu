@@ -187,7 +187,7 @@ public class OrderDetailFragment extends BaseFragment {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.optString("status");
                     final String msg = jsonObject.optString("msg");
-                    Log.e(TAG, "获取数据成功=========参数==========" + mOrderId + "============" + json);
+//                    Log.e(TAG, "获取数据成功=========参数==========" + mOrderId + "============" + json);
                     if (status.equals("200")) {
                         final String data = jsonObject.optString("data");
                         getActivity().runOnUiThread(new Runnable() {

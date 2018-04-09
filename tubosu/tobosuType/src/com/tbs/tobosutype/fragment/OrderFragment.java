@@ -311,7 +311,7 @@ public class OrderFragment extends BaseFragment {
                     //在处理新订单时要对数据操作
                     if (mOrderItemArrayList.get(position).getState().equals("1")) {
                         //通知刷新 并改变订单的状态
-                        Log.e(TAG, "集合长度===============" + mOrderItemArrayList.size() + "=====当前所处的页面位置====" + mOrderType);
+//                        Log.e(TAG, "集合长度===============" + mOrderItemArrayList.size() + "=====当前所处的页面位置====" + mOrderType);
                         HttpChangeOrderState(mOrderItemArrayList.get(position).getId(), mOrderItemArrayList.get(position).getState(), 1, position);
                         EventBusUtil.sendEvent(new Event(EC.EventCode.NOTE_ORDER_FRAGMENT_UPDATE_DATA));
                     }
@@ -422,6 +422,7 @@ public class OrderFragment extends BaseFragment {
                         mAllOrderActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                Toast.makeText(mContext, "订单状态已修改", Toast.LENGTH_SHORT).show();
                                 if (!mOrderType.equals("0")) {
                                     //除了在全部页面，其他页面做了数据操作都得移除数据
                                     mOrderItemArrayList.remove(position);
