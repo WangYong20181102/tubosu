@@ -554,6 +554,7 @@
                     android:layerType="software" />
                 <!--显示分单公司的列表-->
                 <android.support.v7.widget.RecyclerView
+                    android:layout_marginBottom="20dp"
                     android:id="@+id/new_order_frag_fendan_gongsi_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

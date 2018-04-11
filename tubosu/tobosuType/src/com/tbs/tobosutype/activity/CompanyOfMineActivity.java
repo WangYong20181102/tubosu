@@ -109,6 +109,8 @@ public class CompanyOfMineActivity extends BaseActivity {
     LinearLayout companyOfMineXindingdanLl;
     @BindView(R.id.company_of_mine_xiaochengxu_tv)
     TextView companyOfMineXiaochengxuTv;
+    @BindView(R.id.company_of_mine_kefu_phone_tv)
+    TextView companyOfMineKefuPhoneTv;
     private String TAG = "CompanyOfMineActivity";
     private Context mContext;
     private UMShareAPI umShareAPI;
@@ -294,6 +296,7 @@ public class CompanyOfMineActivity extends BaseActivity {
         mGson = new Gson();
         umShareAPI = UMShareAPI.get(mContext);
         companyOfMineXiaochengxuTv.setText("" + SpUtil.getApplets_name(mContext));
+        companyOfMineKefuPhoneTv.setText(""+SpUtil.getCustom_service_tel(mContext));
     }
 
     @OnClick({R.id.company_of_mine_setting_rl, R.id.company_of_mine_icon_iv,
@@ -505,10 +508,12 @@ public class CompanyOfMineActivity extends BaseActivity {
     private void showKefuPopWindow() {
         View popview = View.inflate(mContext, R.layout.popwindow_qqzixun, null);
         TextView quxiao_phone = (TextView) popview.findViewById(R.id.quxiao_phone);
+        TextView phone_num = (TextView) popview.findViewById(R.id.phone_num);
         TextView open_phone = (TextView) popview.findViewById(R.id.open_phone);
         RelativeLayout pop_phone_zixun = (RelativeLayout) popview.findViewById(R.id.pop_phone_zixun);
         LinearLayout phone_pop_window_ll = popview.findViewById(R.id.phone_pop_window_ll);
         phone_pop_window_ll.setBackgroundColor(Color.parseColor("#ffffff"));
+        phone_num.setText(""+"土拨鼠热线："+SpUtil.getCustom_service_tel(mContext));
         final PopupWindow popupWindow = new PopupWindow(popview, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
@@ -518,7 +523,7 @@ public class CompanyOfMineActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //打电话
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "4006062221"));
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + SpUtil.getCustom_service_tel(mContext)));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 popupWindow.dismiss();

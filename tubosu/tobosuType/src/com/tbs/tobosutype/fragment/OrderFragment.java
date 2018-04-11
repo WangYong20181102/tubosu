@@ -558,7 +558,7 @@ public class OrderFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 //  确定未签单 操作数据
-                HttpChangeOrderState(id, order_state, 4, position);
+                HttpChangeOrderState(id, order_state, 5, position);
                 popupWindow.dismiss();
             }
         });
@@ -595,7 +595,7 @@ public class OrderFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 // 确定签单 操作数据
-                HttpChangeOrderState(id, order_state, 5, position);
+                HttpChangeOrderState(id, order_state, 4, position);
                 popupWindow.dismiss();
             }
         });

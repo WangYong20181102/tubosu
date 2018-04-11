@@ -21,7 +21,7 @@ public class Constant {
     //接口地址
 //    public static final String TOBOSU_URL = "https://www.tobosu.com/";
     //数据流上传接口 正式
-    public static final String TBS_DATA_STREAM = "http://www.tobosu.com/trace";
+    public static final String TBS_DATA_STREAM = "https://www.tobosu.com/trace";
     //M站 发单跳转 线上环境
 //    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
 

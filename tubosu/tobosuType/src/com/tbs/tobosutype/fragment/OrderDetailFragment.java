@@ -270,7 +270,7 @@ public class OrderDetailFragment extends BaseFragment {
         //设置分单公司
         if (mOrderDetail.getCompany_list().isEmpty()) {
             //分单公司数量为空 分单公司布局页面
-            fendanGongsiLl.setVisibility(View.GONE);
+             fendanGongsiLl.setVisibility(View.GONE);
         } else {
             mFendanComAdapter = new FendanComAdapter(mContext, mOrderDetail.getCompany_list());
             newOrderFragFendanGongsiRecycler.setAdapter(mFendanComAdapter);
@@ -510,7 +510,7 @@ public class OrderDetailFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 //  确定未签单 操作数据
-                HttpChangeOrderState(id, 4, order_state);
+                HttpChangeOrderState(id, 5, order_state);
                 popupWindow.dismiss();
             }
         });
@@ -547,7 +547,7 @@ public class OrderDetailFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 // 确定签单 操作数据
-                HttpChangeOrderState(id, 5, order_state);
+                HttpChangeOrderState(id, 4, order_state);
                 popupWindow.dismiss();
             }
         });

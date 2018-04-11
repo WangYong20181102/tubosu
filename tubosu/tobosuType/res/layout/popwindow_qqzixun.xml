@@ -24,7 +24,7 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="土拨鼠热线：400-606-2221" />
+            android:text="土拨鼠热线：400-696-2221" />
         <View
             android:background="@color/dividing_line_bg"
             android:layout_width="match_parent"

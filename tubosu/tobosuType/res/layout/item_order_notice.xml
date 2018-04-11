@@ -52,5 +52,10 @@
             android:scrollbarSize="15dp"
             android:text=""
             android:textColor="#666666" />
+        <View
+            android:background="@color/divide_gray_color"
+            android:layout_below="@+id/item_order_notice_conten_tv"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
     </RelativeLayout>
 </RelativeLayout>

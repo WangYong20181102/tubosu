@@ -387,6 +387,7 @@
                     android:textSize="14sp" />
                 <!--电话-->
                 <TextView
+                    android:id="@+id/company_of_mine_kefu_phone_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
