@@ -480,7 +480,7 @@ public class Util {
         int uid = appInfo.uid;
 
         Class appOpsClass;
-     /* Context.APP_OPS_MANAGER */
+        /* Context.APP_OPS_MANAGER */
         try {
             appOpsClass = Class.forName(AppOpsManager.class.getName());
             Method checkOpNoThrowMethod = appOpsClass.getMethod(CHECK_OP_NO_THROW, Integer.TYPE, Integer.TYPE,
@@ -742,26 +742,27 @@ public class Util {
         ArrayList<_AppEvent.EvBean> evBeans = new ArrayList<>();
         _AppEvent.EvBean evBean = new _AppEvent.EvBean();
         evBean.setEt("2");
+        evBean.setVt(Util.getUnixTime());
         evBeans.add(evBean);
         //根据事件的集合生成要上传的对象
         _AppEvent appEvent = new _AppEvent(evBeans);
         //将对象转为json
         String appEventJson = mGson.toJson(appEvent);
-        Log.e(TAG, "第一次上传生成的数据====================" + appEventJson);
+//        Log.e(TAG, "第一次上传生成的数据====================" + appEventJson);
         //生成参数上传
         HashMap<String, Object> param = new HashMap<>();
         param.put("data", appEventJson);
-        Log.e(TAG, "App启动第一次点击流上传的JSON数据==============" + appEventJson);
+//        Log.e(TAG, "App启动第一次点击流上传的JSON数据==============" + appEventJson);
         OKHttpUtil.post(Constant.TBS_DATA_STREAM, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "App启动第一次上传数据流链接数据失败=====" + e.getMessage());
+//                Log.e(TAG, "App启动第一次上传数据流链接数据失败=====" + e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String result = new String(response.body().string());
-                Log.e(TAG, "App启动第一次上传数据流链接数据成功=====" + result);
+//                Log.e(TAG, "App启动第一次上传数据流链接数据成功=====" + result);
 
             }
         });

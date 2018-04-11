@@ -588,6 +588,7 @@ public class PresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.e(TAG, "获取的返回码======================" + resultCode);
         if (resultCode != RESULT_OK) {
             return;
         }

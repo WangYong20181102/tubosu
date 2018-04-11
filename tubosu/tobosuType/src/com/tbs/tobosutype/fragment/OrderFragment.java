@@ -193,6 +193,7 @@ public class OrderFragment extends BaseFragment {
             super.onScrollStateChanged(recyclerView, newState);
             int lastVisiableItem = mLinearLayoutManager.findLastVisibleItemPosition();
             if (newState == 0 && lastVisiableItem + 1 >= mLinearLayoutManager.getItemCount()
+                    && fragOrderSwipLayout != null
                     && !fragOrderSwipLayout.isRefreshing()
                     && !isLoading) {
                 //加载更多
@@ -313,7 +314,6 @@ public class OrderFragment extends BaseFragment {
                         //通知刷新 并改变订单的状态
 //                        Log.e(TAG, "集合长度===============" + mOrderItemArrayList.size() + "=====当前所处的页面位置====" + mOrderType);
                         HttpChangeOrderState(mOrderItemArrayList.get(position).getId(), mOrderItemArrayList.get(position).getState(), 1, position);
-                        EventBusUtil.sendEvent(new Event(EC.EventCode.NOTE_ORDER_FRAGMENT_UPDATE_DATA));
                     }
                     break;
                 //按键处理模式根据数据类型
@@ -329,7 +329,6 @@ public class OrderFragment extends BaseFragment {
                         startActivity(intentToOrderDetail);
                         //通知刷新 并改变订单的状态
                         HttpChangeOrderState(mOrderItemArrayList.get(position).getId(), mOrderItemArrayList.get(position).getState(), 1, position);
-                        EventBusUtil.sendEvent(new Event(EC.EventCode.NOTE_ORDER_FRAGMENT_UPDATE_DATA));
                     } else if (mOrderItemArrayList.get(position).getState().equals("2")) {
                         //未量房处理模式
 //                        Toast.makeText(mContext, "确认量房", Toast.LENGTH_SHORT).show();
@@ -422,9 +421,12 @@ public class OrderFragment extends BaseFragment {
                         mAllOrderActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(mContext, "订单状态已修改", Toast.LENGTH_SHORT).show();
+                                if (operate_type != 1) {
+                                    Toast.makeText(mContext, "订单状态已修改", Toast.LENGTH_SHORT).show();
+                                }
                                 if (!mOrderType.equals("0")) {
                                     //除了在全部页面，其他页面做了数据操作都得移除数据
+                                    Log.e(TAG, "更改了订单的状态此时的列表长度==============" + mOrderItemArrayList.size());
                                     mOrderItemArrayList.remove(position);
                                     mOrderAdapter.notifyItemRemoved(position);
                                     mOrderAdapter.notifyItemRangeChanged(position, mOrderItemArrayList.size());
