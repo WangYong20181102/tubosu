@@ -201,6 +201,7 @@ public class NewLoginFragmentAccount extends BaseFragment {
         param.put("password", Md5Password);
         param.put("version", AppInfoUtil.getAppVersionName(mContext));
         param.put("client_type", "1");
+        param.put("device_id", SpUtil.getPushRegisterId(mContext));
         OKHttpUtil.post(Constant.ACCOUNT_LOGIN, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -286,6 +287,7 @@ public class NewLoginFragmentAccount extends BaseFragment {
         param.put("city_name", SpUtil.getCity(mContext));
         param.put("chcode", AppInfoUtil.getChannType(mContext));
         param.put("system_type", "1");
+        param.put("device_id", SpUtil.getPushRegisterId(mContext));
         Log.e(TAG, "微信登录的参数=============openid====" + openid + "===nickname===" + nickname + "===version===" + AppInfoUtil.getAppVersionName(mContext) + "==city_name==" + SpUtil.getCity(mContext) + "==icon==" + icon);
         OKHttpUtil.post(Constant.WECHAT_LOGIN, param, new Callback() {
             @Override

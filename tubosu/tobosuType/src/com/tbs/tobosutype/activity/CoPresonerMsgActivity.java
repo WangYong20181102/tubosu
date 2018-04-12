@@ -109,6 +109,7 @@ public class CoPresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity 
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         param.put("uid", AppInfoUtil.getUserid(mContext));
+        param.put("device_id", SpUtil.getPushRegisterId(mContext));
         OKHttpUtil.post(Constant.USER_INFO, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

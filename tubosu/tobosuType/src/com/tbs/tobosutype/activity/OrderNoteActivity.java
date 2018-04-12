@@ -33,6 +33,7 @@ import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.MD5Util;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 
 import org.json.JSONArray;
@@ -176,6 +177,7 @@ public class OrderNoteActivity extends BaseActivity {
         param.put("id", AppInfoUtil.getId(mContext));
         param.put("page", mPage);
         param.put("page_size", mPageSize);
+        param.put("device_id", SpUtil.getPushRegisterId(mContext));
         OKHttpUtil.post(Constant.GET_ORDER_NOTICE, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

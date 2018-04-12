@@ -145,6 +145,7 @@ public class CompanyOfMineActivity extends BaseActivity {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         param.put("uid", AppInfoUtil.getUserid(mContext));
+        param.put("device_id", SpUtil.getPushRegisterId(mContext));
         param.put("version", AppInfoUtil.getAppVersionName(mContext));
         OKHttpUtil.post(Constant.USER_INFO, param, new Callback() {
             @Override
@@ -296,7 +297,7 @@ public class CompanyOfMineActivity extends BaseActivity {
         mGson = new Gson();
         umShareAPI = UMShareAPI.get(mContext);
         companyOfMineXiaochengxuTv.setText("" + SpUtil.getApplets_name(mContext));
-        companyOfMineKefuPhoneTv.setText(""+SpUtil.getCustom_service_tel(mContext));
+        companyOfMineKefuPhoneTv.setText("" + SpUtil.getCustom_service_tel(mContext));
     }
 
     @OnClick({R.id.company_of_mine_setting_rl, R.id.company_of_mine_icon_iv,
@@ -513,7 +514,7 @@ public class CompanyOfMineActivity extends BaseActivity {
         RelativeLayout pop_phone_zixun = (RelativeLayout) popview.findViewById(R.id.pop_phone_zixun);
         LinearLayout phone_pop_window_ll = popview.findViewById(R.id.phone_pop_window_ll);
         phone_pop_window_ll.setBackgroundColor(Color.parseColor("#ffffff"));
-        phone_num.setText(""+"土拨鼠热线："+SpUtil.getCustom_service_tel(mContext));
+        phone_num.setText("" + "土拨鼠热线：" + SpUtil.getCustom_service_tel(mContext));
         final PopupWindow popupWindow = new PopupWindow(popview, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
