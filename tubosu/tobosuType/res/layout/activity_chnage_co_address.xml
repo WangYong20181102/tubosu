@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f7f7f7"
+    tools:context=".activity.ChangeCoAddressActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/co_change_address_dissmiss_rl"
+            android:layout_width="58dp"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="取消"
+                android:textColor="#000000"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/co_change_address_ok_rl"
+            android:layout_width="58dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="保存"
+                android:textColor="#000000"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="公司地址"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+    </RelativeLayout>
+    <!--选择模块-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+        <!--城市信息-->
+        <RelativeLayout
+            android:id="@+id/co_change_address_city_rl"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="省/市/区"
+                android:textColor="#999"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/co_change_address_city_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="89dp"
+                android:hint="请选择"
+                android:textColorHint="#333333"
+                android:textColor="#333333"
+                android:textSize="13sp" />
+            <!--右箭头-->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/youjiantou" />
+        </RelativeLayout>
+        <!--详细地址-->
+        <RelativeLayout
+            android:id="@+id/co_change_address_detail_rl"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="详细地址"
+                android:textColor="#999"
+                android:textSize="13sp" />
+
+            <EditText
+                android:maxLength="40"
+                android:text=""
+                android:id="@+id/co_change_address_detail_et"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="89dp"
+                android:background="@null"
+                android:hint="必填，请填写详细地址"
+                android:textColor="#333333"
+                android:textColorHint="#b4b4b4"
+                android:textSize="13sp" />
+        </RelativeLayout>
+    </LinearLayout>
+    <!--阴影-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/yinying4"
+        android:visibility="visible" />
+</RelativeLayout>

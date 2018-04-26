@@ -510,7 +510,7 @@ public class OrderDetailFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 //  确定未签单 操作数据
-                HttpChangeOrderState(id, 5, order_state);
+                HttpChangeOrderState(id, 6, order_state);
                 popupWindow.dismiss();
             }
         });

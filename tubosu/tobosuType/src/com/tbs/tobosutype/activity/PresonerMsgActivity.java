@@ -710,8 +710,8 @@ public class PresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity {
         intent.putExtra("aspectX", 1);
         intent.putExtra("aspectY", 1);
         // outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputX", 200);
-        intent.putExtra("outputY", 200);
+        intent.putExtra("outputX", 720);
+        intent.putExtra("outputY", 720);
 //        intent.putExtra("return-data", true);
         uritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + Util.getNowTime() + "small.jpg");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);

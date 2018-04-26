@@ -64,7 +64,7 @@ public class BaseActivity extends AppCompatActivity {
         MobclickAgent.onResume(this);
         // TODO: 2018/3/5 用自己写的任务栈管理获取
         AppManager.addActivity(this);
-        Log.e(TAG, "BaseActivity执行onResume====获取栈顶的Activity====" + AppManager.currentActivityName() + "===页面属性===" + SpUtil.getStatisticsEventPageId(MyApplication.getContext()) + "====上一个Activity====" + AppManager.lastSecoundActivityName());
+//        Log.e(TAG, "BaseActivity执行onResume====获取栈顶的Activity====" + AppManager.currentActivityName() + "===页面属性===" + SpUtil.getStatisticsEventPageId(MyApplication.getContext()) + "====上一个Activity====" + AppManager.lastSecoundActivityName());
         Util.useStatisticsEventVistEvent(true, AppManager.lastSecoundActivityName(), AppManager.currentActivityName());
 
     }
@@ -74,7 +74,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onPause();
         mHomeListener.stopListen();
         MobclickAgent.onPause(this);
-        Log.e(TAG, "BaseActivity执行onPause====获取栈顶的Activity====" + AppManager.currentActivityName() + "===页面属性===" + SpUtil.getStatisticsEventPageId(MyApplication.getContext()) + "====上一个Activity====" + AppManager.lastSecoundActivityName());
+//        Log.e(TAG, "BaseActivity执行onPause====获取栈顶的Activity====" + AppManager.currentActivityName() + "===页面属性===" + SpUtil.getStatisticsEventPageId(MyApplication.getContext()) + "====上一个Activity====" + AppManager.lastSecoundActivityName());
 //        Log.e(TAG, "BaseActivity执行onPause========");
         if (havePageId()) {
             //有页面属性
@@ -155,7 +155,7 @@ public class BaseActivity extends AppCompatActivity {
     private HomeListener.KeyFun keyFun = new HomeListener.KeyFun() {
         @Override
         public void home() {
-            Log.e(TAG,"按键监听_lin=======点击了home键");
+//            Log.e(TAG,"按键监听_lin=======点击了home键");
             if(!MyApplication.evBeanArrayList.isEmpty()){
                 Util.HttpPostUserUseInfo();
             }
@@ -163,7 +163,7 @@ public class BaseActivity extends AppCompatActivity {
 
         @Override
         public void recent() {
-            Log.e(TAG,"按键监听_lin=======点击了任务键");
+//            Log.e(TAG,"按键监听_lin=======点击了任务键");
             if(!MyApplication.evBeanArrayList.isEmpty()){
                 Util.HttpPostUserUseInfo();
             }
@@ -171,7 +171,7 @@ public class BaseActivity extends AppCompatActivity {
 
         @Override
         public void longHome() {
-            Log.e(TAG,"按键监听_lin=======长按了home键");
+//            Log.e(TAG,"按键监听_lin=======长按了home键");
             if(!MyApplication.evBeanArrayList.isEmpty()){
                 Util.HttpPostUserUseInfo();
             }

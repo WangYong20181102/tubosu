@@ -356,6 +356,7 @@ public class CompanyOfMineActivity extends BaseActivity {
                 break;
             case R.id.company_of_mine_wangdian_rl:
                 //网店设置
+                startActivity(new Intent(mContext, OnlineStoreActivity.class));
                 break;
             case R.id.company_of_mine_kefu_rl:
                 //客服

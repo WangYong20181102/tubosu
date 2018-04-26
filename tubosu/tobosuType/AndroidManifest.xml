@@ -611,7 +611,22 @@
         <activity
             android:name=".activity.OrderNoteActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".web.AdvWebActivity"></activity>
+        <activity android:name=".web.AdvWebActivity" />
+        <activity android:name=".activity.OnlineStoreActivity" />
+        <activity android:name=".activity.CoChangeFullNameActivity" />
+        <activity android:name=".activity.CoChangeSimpNameActivity" />
+        <activity android:name=".activity.ChangeStoreLogoActivity" />
+        <activity android:name=".activity.ChangePinPaiLogoActivity" />
+        <activity android:name=".activity.BigImagePinPaiLookActivity" />
+        <activity android:name=".activity.ChangeQiantaiImageActivity" />
+        <activity android:name=".activity.ChangeCoServiceActivity" />
+        <activity android:name=".activity.ChangeCoJiaZhuangRange" />
+        <activity android:name=".activity.ChangeCoGongZhuangRangeActivity" />
+        <activity android:name=".activity.ChangeCoFengGeRangeActivity" />
+        <activity android:name=".activity.ChangeRongYuImageActivity" />
+        <activity android:name=".activity.BigImageLookActivity" />
+        <activity android:name=".activity.CoChangeBussinessLicenseActivity" />
+        <activity android:name=".activity.ChangeCoAddressActivity"></activity>
     </application>
 
 </manifest>

@@ -578,7 +578,7 @@ public class OrderSearchResultActivity extends com.tbs.tobosutype.base.BaseActiv
             @Override
             public void onClick(View v) {
                 //  确定未签单 操作数据
-                HttpChangeOrderState(id, order_state, 5, position);
+                HttpChangeOrderState(id, order_state, 6, position);
                 popupWindow.dismiss();
             }
         });

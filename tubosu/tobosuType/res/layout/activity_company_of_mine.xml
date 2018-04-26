@@ -324,13 +324,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginLeft="16dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <ImageView
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/wangdianshezhi" />
+                    android:src="@drawable/store" />
                 <!--文本描述-->
                 <TextView
                     android:layout_width="wrap_content"
@@ -338,7 +338,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="33dp"
-                    android:text="网店设置"
+                    android:text="网店管理"
                     android:textColor="#333333"
                     android:textSize="14sp" />
                 <!--右边的箭头-->
@@ -359,6 +359,7 @@
             </RelativeLayout>
 
             <View
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="7dp"
                 android:background="#f7f7f7" />

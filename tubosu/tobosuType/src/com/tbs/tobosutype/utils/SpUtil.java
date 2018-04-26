@@ -287,4 +287,44 @@ public class SpUtil {
         context.getSharedPreferences("Public_number", 0).edit().putString("public_number", public_number).commit();
     }
 
+    //获取城市JSON
+    public static String getLocalCityJson(Context context) {
+        return context.getSharedPreferences("LocalCityJson", 0).getString("mLocalCityJson", "");
+    }
+
+    //存储城市JSON
+    public static void setLocalCityJson(Context context, String localCityJson) {
+        context.getSharedPreferences("LocalCityJson", 0).edit().putString("mLocalCityJson", localCityJson).commit();
+    }
+
+    //获取省份option
+    public static int getShengOption(Context context) {
+        return context.getSharedPreferences("ShengOption", 0).getInt("mShengOption", 0);
+    }
+
+    //存储省份option
+    public static void setShengOption(Context context, int mShengOption) {
+        context.getSharedPreferences("ShengOption", 0).edit().putInt("mShengOption", mShengOption).commit();
+    }
+
+    //获取城市option
+    public static int getShiOption(Context context) {
+        return context.getSharedPreferences("ShiOption", 0).getInt("mShiOption", 0);
+    }
+
+    //存储城市option
+    public static void setShiOption(Context context, int mShiOption) {
+        context.getSharedPreferences("ShiOption", 0).edit().putInt("mShiOption", mShiOption).commit();
+    }
+
+    //获取区域option
+    public static int getQuOption(Context context) {
+        return context.getSharedPreferences("QuOption", 0).getInt("mQuOption", 0);
+    }
+
+    //存储城市option
+    public static void setQuOption(Context context, int mQuOption) {
+        context.getSharedPreferences("QuOption", 0).edit().putInt("mQuOption", mQuOption).commit();
+    }
+
 }

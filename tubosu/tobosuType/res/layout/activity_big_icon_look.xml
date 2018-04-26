@@ -5,12 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
+    android:id="@+id/big_icon_rl"
     tools:context="com.tbs.tobosutype.activity.BigIconLookActivity">
-
-    <ImageView
-        android:id="@+id/big_icon_iamge"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <RelativeLayout
         android:layout_centerInParent="true"
-        android:scaleType="centerCrop" />
+        android:layout_width="360dp"
+        android:layout_height="360dp">
+        <ImageView
+            android:id="@+id/big_icon_iamge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
 </RelativeLayout>

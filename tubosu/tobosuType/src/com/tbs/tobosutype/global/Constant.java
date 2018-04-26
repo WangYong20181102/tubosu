@@ -19,7 +19,7 @@ public class Constant {
      * todo 全局正式环境**********************************************************************************
      */
     //接口地址
-    public static final String TOBOSU_URL = "https://www.tobosu.com/";
+//    public static final String TOBOSU_URL = "https://www.tobosu.com/";
     //数据流上传接口 正式
     public static final String TBS_DATA_STREAM = "https://www.tobosu.com/trace";
     //M站 发单跳转 线上环境
@@ -30,7 +30,7 @@ public class Constant {
      * todo 全局测试dev环境**********************************************************************************
      */
     //接口地址
-//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
     //dev点击流上传接口
 //    public static final String TBS_DATA_STREAM = "http://trace.dev.tobosu.com/";
     //M站test接口
@@ -364,6 +364,12 @@ public class Constant {
     public static final String FEEDBACK_LIST = TOBOSU_URL + "mapp/CompanyFeedback/feedback_list";
     //添加反馈  3.7.2版本新增
     public static final String ADD_FEEDBACK_MSG = TOBOSU_URL + "mapp/CompanyFeedback/add_feedback";
+    //网店管理  3.7.3版本新增
+    public static final String COMPANY_MY_STORE = TOBOSU_URL + "mapp/company/my_store";
+    //网店管理修改网店管理
+    public static final String COMPANY_MODIFY_STORE= TOBOSU_URL + "mapp/company/modify_store";
+
+
 
 
     //装修公司主页 底部发单按钮 3.6版本新增

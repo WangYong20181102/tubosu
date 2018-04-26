@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
+import java.io.File;
+
 /**
  * Created by Mr.Lin on 2017/6/28 18:06.
  */
@@ -31,7 +33,12 @@ public class GlideUtils {
     public static void glideLoader(Context context, String imgUrl, int erroImg, int emptyImg, ImageView imageView) {
         Glide.with(context).load(imgUrl).asBitmap().placeholder(emptyImg).error(erroImg).centerCrop().into(imageView);
     }
-
+    public static void glideLoaderUriImage(Context context, Uri imgUri, int erroImg, int emptyImg, ImageView imageView) {
+        Glide.with(context).load(imgUri).asBitmap().placeholder(emptyImg).error(erroImg).into(imageView);
+    }
+    public static void glideLoaderFileImage(Context context, File imgFile, int erroImg, int emptyImg, ImageView imageView) {
+        Glide.with(context).load(imgFile).asBitmap().placeholder(emptyImg).error(erroImg).centerCrop().into(imageView);
+    }
     /**
      * 处理圆角图片或者圆形图片
      *

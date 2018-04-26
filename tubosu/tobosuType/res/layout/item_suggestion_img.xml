@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:layout_width="92dp"
-        android:layout_height="92dp">
-
-        <ImageView
-            android:id="@+id/item_suggestion_img"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp">
+        <RelativeLayout
+            android:id="@+id/item_suggestion_img_rl"
             android:layout_centerInParent="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/b_home_style" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/item_suggestion_img"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_centerInParent="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/b_home_style" />
+        </RelativeLayout>
+
 
         <ImageView
             android:layout_marginTop="1dp"
-            android:layout_marginRight="2dp"
+            android:layout_marginRight="3dp"
             android:id="@+id/item_suggestion_close"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:src="@drawable/shanchutupian" />
+            android:src="@drawable/black_img_close" />
     </RelativeLayout>
 </LinearLayout>

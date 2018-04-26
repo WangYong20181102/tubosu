@@ -30,9 +30,23 @@ public class EC {
         public static final int BAND_PHONE_SUCCESS = 0x000021;//用户绑定手机号码成功
         public static final int NOTE_ORDER_FRAGMENT_UPDATE_DATA = 0x000022;//通知订单列表页刷新数据
         public static final int CHANGE_ORDER_DETAIL_ACTIVITY_TO_FEEDBACK_VIEW = 0x000023;//通知页面切换到反馈
-
-
-
+        public static final int NOTICE_CO_NET_STORE_CHANGE_FULL_NAME = 0x000024;//通知装修公司网店修改全称
+        public static final int NOTICE_CO_NET_STORE_CHANGE_SIMP_NAME = 0x000025;//通知装修公司网店修改简称
+        public static final int NOTICE_CO_NET_STORE_CHANGE_STORE_LOGO = 0x000026;//通知装修公司网店修改网店logo
+        public static final int NOTICE_CO_NET_STORE_CHANGE_PINPAI_LOGO = 0x000027;//通知装修公司网店修改品牌logo
+        public static final int NOTICE_CO_NET_STORE_CHANGE_QIANTAI_LOGO = 0x000028;//通知装修公司网店修改前台图片
+        public static final int NOTICE_CO_NET_STORE_CLEAN_QIANTAI_LOGO = 0x000029;//通知装修公司网店删除前台图片
+        public static final int NOTICE_CO_NET_STORE_CLEAN_JIAZHUANG_FANWEI = 0x000030;//通知装修公司修改家装范围
+        public static final int NOTICE_CO_NET_STORE_CLEAN_GONGZHUANG_FANWEI = 0x000031;//通知装修公司修改公装范围
+        public static final int NOTICE_CO_NET_STORE_CLEAN_FENGGE_FANWEI = 0x000032;//通知装修公司修改风格范围
+        public static final int NOTICE_CO_NET_STORE_CHANGE_RYZZ_DEL_IMAGE = 0x000033;//通知装修公司网店管理修改荣誉资质的图片删除数据（delimg）
+        public static final int NOTICE_CO_NET_STORE_CHANGE_RYZZ_ADD_IMAGE = 0x000034;//通知装修公司网店管理修改荣誉资质的图片新增数据（needuploadImage）
+        public static final int NOTICE_CO_NET_STORE_CHANGE_RYZZ_ALLDATE = 0x000035;//通知装修公司网店管理修改荣誉资质对象
+        public static final int NOTICE_CO_NET_STORE_CHANGE_YINGYEZHIZHAO_ALLDATE = 0x000036;//通知装修公司网店管理修改营业执照的信息
+        public static final int INIT_CITY_DATA_IS_OK = 0x000037;//初始化城市信息ok
+        public static final int NOTICE_CO_NET_STORE_CHANGE_ADDRESS = 0x000038;//通知装修公司网店管理修改了地址信息
+        public static final int NOTICE_CO_NET_STORE_CHANGE_FUWUQUYU_MSG = 0x000039;//通知装修公司网店管理修改了地址信息
+        public static final int NOTICE_CO_NET_STORE_CHANGE_SERVICE_MSG = 0x000040;//通知装修公司网店管理修改了服务区域
 
 
         public static final int DELETE_TAOTU_CODE = 0x100000;//删除收藏
