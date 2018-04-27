@@ -194,7 +194,7 @@ public class CoChangeBussinessLicenseActivity extends BaseActivity {
         }
         //文本信息
         //有效期
-        Log.e(TAG, "图片=================" + businessLicenseBean.getEffect_time());
+        Log.e(TAG, "有效期=================" + businessLicenseBean.getEffect_time());
         if (businessLicenseBean.getEffect_time() != null && !TextUtils.isEmpty(businessLicenseBean.getEffect_time())) {
             coChangeYingyezhizhaoTimeTv.setText("" + businessLicenseBean.getEffect_time());
         } else {

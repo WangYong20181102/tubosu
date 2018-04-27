@@ -111,6 +111,8 @@ public class OnlineStoreActivity extends BaseActivity {
     private boolean isChangeMessage = false;
     //数据对象
     private _MyStore mMyStore;
+    //比对 对象
+    private _MyStore mTempMyStore;
     //荣誉资质操操作相关的数据集合
     private ArrayList<String> mRyzzOnNetRawImageData = new ArrayList<>();//初次加载的原始数据
     private ArrayList<String> mRyzzDelImageData = new ArrayList<>();//删除的数据 从修改界面传来的数据
@@ -569,6 +571,7 @@ public class OnlineStoreActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 mMyStore = mGson.fromJson(data, _MyStore.class);
+                                mTempMyStore = mGson.fromJson(data, _MyStore.class);
                                 //初始化荣誉资质的原始数据
                                 initRyzzRawData(mMyStore);
                                 initView(mMyStore);
@@ -724,7 +727,7 @@ public class OnlineStoreActivity extends BaseActivity {
         //修改营业执照的有效期
         if (mMyStore.getBusiness_license().getEffect_time() != null) {
             param.put("license_effect_time", mMyStore.getBusiness_license().getEffect_time());
-        }else {
+        } else {
             param.put("license_effect_time", "");
         }
         //注册号
@@ -736,8 +739,8 @@ public class OnlineStoreActivity extends BaseActivity {
         //字号名称
         if (mMyStore.getBusiness_license().getFont_name() != null) {
             param.put("license_font_name", mMyStore.getBusiness_license().getFont_name());
-        }else {
-            param.put("license_font_name","");
+        } else {
+            param.put("license_font_name", "");
         }
         //是否删除营业执照照片
         if (TextUtils.isEmpty(mMyStore.getBusiness_license().getImg_url())

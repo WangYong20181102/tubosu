@@ -3,6 +3,7 @@ package com.tbs.tobosutype.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -40,6 +41,8 @@ public class BigImageLookActivity extends BaseActivity {
     private void initViewEvent() {
         mIntent = getIntent();
         mImageIconUrl = mIntent.getStringExtra("mImageIconUrl");
+        Log.e(TAG, "获取的查看图片================" + mImageIconUrl);
+
         Glide.with(mContext).load(mImageIconUrl).into(bigImageIamge);
     }
 
