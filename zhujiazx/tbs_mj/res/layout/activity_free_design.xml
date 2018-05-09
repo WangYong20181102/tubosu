@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_fd_bai"
+    android:fitsSystemWindows="true"
+    tools:context="com.tbs.tbs_mj.activity.FreeDesign">
+
+    <com.tbs.tbs_mj.customview.ScrollViewExtend
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/fd_title"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/bg_fd_title">
+
+                <ImageView
+                    android:id="@+id/fd_back"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:padding="5dp"
+                    android:src="@drawable/back_up" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="免费报价"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fd_title"
+                android:scaleType="fitXY"
+                android:src="@drawable/fd_banner" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="145dp"
+                android:background="@drawable/fd_bg_s"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/fd_city"
+                    android:layout_width="300dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/bg_edit_line"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/fd_text_city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
+                        android:background="@color/bg_white"
+                        android:text="深圳"
+                        android:textColor="#000000"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/fd_city_select"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/fd_back" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="300dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_edit_line"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/fd_text_my_home_area"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
+                        android:background="@color/bg_white"
+                        android:text="我家的面积(m²)"
+                        android:textColor="#999999"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:id="@+id/fd_text_my_home_area_num"
+                        android:layout_width="160dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:maxLength="8"
+                        android:singleLine="true"
+                        android:text="90"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_alignBaseline="@+id/fd_text_my_home_area"
+                        android:layout_alignBottom="@+id/fd_text_my_home_area"
+                        android:layout_toRightOf="@+id/fd_text_my_home_area"
+                        android:layout_toEndOf="@+id/fd_text_my_home_area" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="300dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_edit_line"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/fd_text_my_home_room_num"
+                        android:layout_width="15dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
+                        android:background="@color/bg_white"
+                        android:gravity="center_vertical|right"
+                        android:inputType="number"
+                        android:maxLength="5"
+                        android:text="3"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/fd_text_my_home_room_num"
+                        android:layout_alignBottom="@+id/fd_text_my_home_room_num"
+                        android:layout_marginLeft="17dp"
+                        android:layout_marginStart="17dp"
+                        android:layout_toEndOf="@+id/fd_text_my_home_room_num"
+                        android:layout_toRightOf="@+id/fd_text_my_home_room_num"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:text="室"
+                        android:textColor="#999999"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/fd_btn_room_down"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="50dp"
+                        android:layout_marginRight="50dp"
+                        android:src="@drawable/fd_down" />
+
+                    <ImageView
+                        android:id="@+id/fd_btn_room_up"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginEnd="9dp"
+                        android:layout_marginRight="13dp"
+                        android:layout_marginTop="13dp"
+                        android:src="@drawable/fd_up" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="300dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="2dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_edit_line"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/fd_text_my_home_ting_num"
+                            android:layout_width="15dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="17dp"
+                            android:layout_marginStart="17dp"
+                            android:background="@color/bg_white"
+                            android:gravity="center_vertical|right"
+                            android:inputType="number"
+                            android:text="2"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/fd_text_my_home_ting_num"
+                            android:layout_alignBottom="@+id/fd_text_my_home_ting_num"
+                            android:layout_marginLeft="17dp"
+                            android:layout_marginStart="17dp"
+                            android:layout_toEndOf="@+id/fd_text_my_home_ting_num"
+                            android:layout_toRightOf="@+id/fd_text_my_home_ting_num"
+                            android:background="@color/white"
+                            android:gravity="center"
+                            android:text="厅"
+                            android:textColor="#999999"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/fd_btn_ting_down"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="50dp"
+                            android:layout_marginRight="50dp"
+                            android:src="@drawable/fd_down" />
+
+                        <ImageView
+                            android:id="@+id/fd_btn_ting_up"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignTop="@+id/fd_btn_ting_down"
+                            android:layout_marginEnd="14dp"
+                            android:layout_marginRight="14dp"
+                            android:src="@drawable/fd_up" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="2dp"
+                        android:layout_weight="1"
+
+                        android:background="@drawable/bg_edit_line"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/fd_text_my_home_chu_num"
+                            android:layout_width="15dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="17dp"
+                            android:layout_marginStart="17dp"
+                            android:background="@color/bg_white"
+                            android:gravity="center_vertical|right"
+                            android:inputType="number"
+                            android:text="1"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/fd_text_my_home_chu_num"
+                            android:layout_alignBottom="@+id/fd_text_my_home_chu_num"
+                            android:layout_marginLeft="17dp"
+                            android:layout_marginStart="17dp"
+                            android:layout_toEndOf="@+id/fd_text_my_home_chu_num"
+                            android:layout_toRightOf="@+id/fd_text_my_home_chu_num"
+                            android:background="@color/white"
+                            android:gravity="center"
+                            android:text="厨"
+                            android:textColor="#999999"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/fd_btn_chu_down"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="50dp"
+                            android:layout_marginRight="50dp"
+                            android:src="@drawable/fd_down" />
+
+                        <ImageView
+                            android:id="@+id/fd_btn_chu_up"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignTop="@+id/fd_btn_chu_down"
+                            android:layout_marginEnd="14dp"
+                            android:layout_marginRight="14dp"
+                            android:src="@drawable/fd_up" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="300dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="2dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_edit_line"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/fd_text_my_home_wei_num"
+                            android:layout_width="15dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="17dp"
+                            android:layout_marginStart="17dp"
+                            android:background="@color/bg_white"
+                            android:gravity="center_vertical|right"
+                            android:inputType="number"
+                            android:text="2"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/fd_text_my_home_wei_num"
+                            android:layout_alignBottom="@+id/fd_text_my_home_wei_num"
+                            android:layout_marginLeft="17dp"
+                            android:layout_marginStart="17dp"
+                            android:layout_toEndOf="@+id/fd_text_my_home_wei_num"
+                            android:layout_toRightOf="@+id/fd_text_my_home_wei_num"
+                            android:background="@color/white"
+                            android:gravity="center"
+                            android:text="卫"
+                            android:textColor="#999999"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/fd_btn_wei_down"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="50dp"
+                            android:layout_marginRight="50dp"
+                            android:src="@drawable/fd_down" />
+
+                        <ImageView
+                            android:id="@+id/fd_btn_wei_up"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignTop="@+id/fd_btn_wei_down"
+                            android:layout_marginEnd="14dp"
+                            android:layout_marginRight="14dp"
+                            android:src="@drawable/fd_up" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="2dp"
+                        android:layout_weight="1"
+
+                        android:background="@drawable/bg_edit_line"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:orientation="horizontal">
+
+                        <EditText
+                            android:id="@+id/fd_text_my_home_yangtai_num"
+                            android:layout_width="15dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="17dp"
+                            android:layout_marginStart="17dp"
+                            android:background="@color/bg_white"
+                            android:gravity="center_vertical|right"
+                            android:inputType="number"
+                            android:text="1"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/fd_text_my_home_yangtai_num"
+                            android:layout_alignBottom="@+id/fd_text_my_home_yangtai_num"
+                            android:layout_marginLeft="17dp"
+                            android:layout_marginStart="17dp"
+                            android:layout_toEndOf="@+id/fd_text_my_home_yangtai_num"
+                            android:layout_toRightOf="@+id/fd_text_my_home_yangtai_num"
+                            android:background="@color/white"
+                            android:gravity="center"
+                            android:text="阳台"
+                            android:textColor="#999999"
+                            android:textSize="14sp" />
+
+                        <ImageView
+                            android:id="@+id/fd_btn_yangtai_down"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="50dp"
+                            android:layout_marginRight="50dp"
+                            android:src="@drawable/fd_down" />
+
+                        <ImageView
+                            android:id="@+id/fd_btn_yangtai_up"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignTop="@+id/fd_btn_yangtai_down"
+                            android:layout_marginEnd="14dp"
+                            android:layout_marginRight="14dp"
+                            android:src="@drawable/fd_up" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="300dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/bg_edit_line"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/fd_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginStart="15dp"
+                        android:background="@color/bg_white"
+                        android:text="手机号"
+                        android:textColor="#000000"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/fd_edit_phone_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/fd_phone"
+                        android:layout_alignBottom="@+id/fd_phone"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/white"
+                        android:hint="请输入手机号                  "
+                        android:inputType="number"
+                        android:maxLength="11"
+                        android:singleLine="true"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/fd_btn_ok"
+                    android:layout_width="300dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/fd_btn_1" />
+            </LinearLayout>
+        </RelativeLayout>
+    </com.tbs.tbs_mj.customview.ScrollViewExtend>
+</RelativeLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <item>
+            <shape>
+                <!-- textview 边框颜色 -->
+                <solid android:color="#ACAAAA" />
+            </shape>
+        </item>
+
+        <!-- 设置边框 -->
+        <item android:bottom="1dp" android:top="1dp" android:right="1dp">
+            <shape>
+                <!-- textview主体颜色 -->
+                <solid android:color="#DBDBDB" />
+            </shape>
+        </item>
+    </layer-list>

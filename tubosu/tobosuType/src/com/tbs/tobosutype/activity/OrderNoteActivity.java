@@ -268,6 +268,7 @@ public class OrderNoteActivity extends BaseActivity {
         //点击进入订单详情页
         Intent intent = new Intent(mContext, NewOrderDetailActivity.class);
         intent.putExtra("mOrderId", mNoticeArrayList.get(position).getCom_order_id());
+        intent.putExtra("mShowingOrderId", mNoticeArrayList.get(position).getOrder_id());
         startActivity(intent);
         //标记消息已读
         HttpReadSmsPush(mNoticeArrayList.get(position).getId(), position);

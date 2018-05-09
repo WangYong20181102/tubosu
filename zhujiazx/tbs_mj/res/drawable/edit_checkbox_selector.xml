@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/select_del_select" android:state_checked="true"/>
+ <!-- 设置选中图片 -->
+    <item android:drawable="@drawable/select_del_nor" android:state_checked="false"/>
+ <!-- 设置未选中图片 -->
+
+</selector>

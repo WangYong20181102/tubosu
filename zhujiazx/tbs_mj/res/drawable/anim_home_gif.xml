@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item
+        android:drawable="@drawable/home_gif_01"
+        android:duration="500" />
+    <item
+        android:drawable="@drawable/home_gif_02"
+        android:duration="500" />
+    <item
+        android:drawable="@drawable/home_gif_03"
+        android:duration="500" />
+</animation-list>

@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout="@layout/layout_loading_data" />
+
+    <com.tbs.tbs_mj.customview.ScrollViewExtend
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical" >
+
+            <!-- 左右滑动 布局 start -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="210dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <!-- 这个页面的顶部标题栏  start -->
+                    <FrameLayout
+                        android:id="@+id/frame_layout_bars"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+                        <RelativeLayout
+                            android:id="@+id/rel_image_detail_activity_toptitlelayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                        	android:background="@drawable/title_bar_bg1" >
+
+                            <ImageView
+                                android:id="@+id/iv_back_image_detail_activity"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="10dip"
+                                android:padding="5dp"
+                                android:src="@drawable/back_up" />
+
+                            <ImageView
+                                android:id="@+id/iv_share_image_detail_activity"
+                                android:layout_width="20dip"
+                                android:layout_height="20dip"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="14dip"
+                                android:src="@drawable/image_share" />
+
+                            <ImageView
+                                android:id="@+id/image_collect_imagedetail_activity"
+                                android:layout_width="20dip"
+                                android:layout_height="20dip"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginTop="14dip"
+                                android:layout_toLeftOf="@+id/iv_share_image_detail_activity"
+                                android:src="@drawable/image_love_nor1" />
+                        </RelativeLayout>
+                    </FrameLayout>
+                    <!-- 这个页面的顶部标题栏  end -->
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+                        <android.support.v4.view.ViewPager
+                            android:id="@+id/vp_singleMap"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" >
+                        </android.support.v4.view.ViewPager>
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/tv_number"
+                        android:layout_width="40dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:background="#40000000"
+                        android:gravity="center"
+                        android:text="1/4"
+                        android:textColor="@color/white" />
+                </RelativeLayout>
+            </RelativeLayout>
+            <!-- 左右滑动 布局 end -->
+            
+
+			<!-- 小区标题 布局 start -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/tv_village"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="幸福花园"
+                    android:textColor="@color/color_darkgray"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/tv_village_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="三居室 -100平米 -5~8万"
+                    android:textColor="@color/color_neutralgrey"
+                    android:textSize="13sp" />
+                
+                <View
+	                android:layout_width="match_parent"
+	                android:layout_height="1dp"
+	                android:background="@color/dividing_line_bg" />
+            </LinearLayout>
+            <!-- 小区标题 布局 end -->
+            
+            
+            
+			<!-- 相关图册 开始 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="2"
+                android:background="#FFFFFF"
+                android:layout_gravity="center"
+                android:gravity="center" >
+
+                
+                <!-- 相关图册 标题布局 -->
+	            <TextView
+	                android:id="@+id/tv_relate_tc"
+	                android:layout_width="wrap_content"
+	                android:layout_height="35dp"
+	                android:layout_marginLeft="10dp"
+	                android:gravity="center_vertical"
+	                android:text="相关图册"
+	                android:textColor="@color/color_neutralgrey"
+	                android:textSize="13sp" />
+	            
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_relate_tc"
+                    android:orientation="vertical" >
+
+                    <!-- 第一行相关图册 start -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:id="@+id/iv_relate1"
+                            android:layout_width="0dp"
+                            android:layout_height="100dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/img_about_details"
+                            android:scaleType="fitXY" />
+
+                        <ImageView
+                            android:id="@+id/iv_relate2"
+                            android:layout_width="0dp"
+                            android:layout_height="100dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/img_about_details"
+                            android:scaleType="fitXY" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/tv_relate_desc1"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="【幸福花园】-现代简约风格"
+                            android:textColor="@color/color_neutralgrey"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tv_relate_desc2"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="【幸福花园】-现代简约风格"
+                            android:textColor="@color/color_neutralgrey"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                    <!-- 第一行相关图册 end -->
+
+
+                    <!-- 第二行相关图册 start -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:id="@+id/iv_relate3"
+                            android:layout_width="0dp"
+                            android:layout_height="100dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/img_about_details"
+                            android:scaleType="fitXY" />
+
+                        <ImageView
+                            android:id="@+id/iv_relate4"
+                            android:layout_width="0dp"
+                            android:layout_height="100dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/img_about_details"
+                            android:scaleType="fitXY" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/tv_relate_desc3"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="【幸福花园】-现代简约风格"
+                            android:textColor="@color/color_neutralgrey"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tv_relate_desc4"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="【幸福花园】-现代简约风格"
+                            android:textColor="@color/color_neutralgrey"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+                    <!-- 第二行相关图册 end -->
+                </LinearLayout>
+
+                
+                <!-- 没有相关图册时显示 -->
+                <ImageView
+		            android:id="@+id/no_relative_company_images"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_centerInParent="true"
+		            android:background="@drawable/img_nocontent"
+		            android:visibility="gone" />
+            </RelativeLayout>
+            <!-- 相关图册 结束 -->
+
+        </LinearLayout>
+    </com.tbs.tbs_mj.customview.ScrollViewExtend>
+
+    <!-- 底部固定的View 开始 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:background="#FFFFFF" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_alignParentBottom="true" >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/dividing_line_bg" />
+
+            <ImageView
+                android:id="@+id/iv_company_logo"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:id="@+id/tv_comsimpname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/iv_company_logo"
+                android:textColor="@color/color_darkgray"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_design"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/user_login_btn_background"
+                android:drawableLeft="@drawable/img_edit"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="免费设计"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+    <!-- 底部固定的View 结束 -->
+
+</LinearLayout>

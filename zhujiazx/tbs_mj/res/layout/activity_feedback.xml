@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_feedback"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EFF5F5"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+		android:id="@+id/rl_banner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_icon" >
+
+        <ImageView
+            android:id="@+id/iv_back_up"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:src="@drawable/back_up" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dip"
+            android:layout_toRightOf="@+id/iv_back_up"
+            android:text="意见反馈"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+        
+        <TextView
+            android:id="@+id/send_text_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dip"
+            android:layout_marginLeft="12dip"
+            android:text="发送"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+        
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+		<RelativeLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginTop="10dip"
+		    android:layout_marginBottom="13dip">
+		    <View 
+		        android:id="@+id/v_icon1"
+		        android:layout_width="6dip"
+		        android:layout_height="18dip"
+		        android:layout_centerVertical="true"
+		        android:layout_marginLeft="12dip"
+		        android:background="#FCC21E"/>
+		    <TextView 
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginLeft="12dip"
+		        android:text="问题和意见"
+		        android:layout_centerVertical="true"
+		        android:layout_toRightOf="@+id/v_icon1"
+		        android:textColor="#333333"
+		        android:textSize="15sp"/>
+		    
+		    <TextView
+	            android:id="@+id/tv_number_words"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerVertical="true"
+	            android:layout_alignParentRight="true"
+	            android:layout_marginRight="20dip"
+	            android:layout_gravity="right"
+	            android:padding="5dp"
+	            android:text="0/500"
+	            android:textColor="@color/color_neutralgrey" />
+		</RelativeLayout>
+		
+		
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:gravity="top"
+            android:cursorVisible="false"
+            android:hint=" 感谢您对土拨鼠的支持，点击输入反馈..."
+            android:maxLength="500"
+            android:layout_marginLeft="12dip"
+            android:layout_marginRight="12dip"
+            android:padding="5dp"
+            android:background="@drawable/shape_et_feedback_bg"
+            android:textColor="@color/color_darkgray"
+            android:textSize="16sp" />
+
+        <RelativeLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout 
+                android:id="@+id/rel_pict"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginTop="20dip"
+			    android:layout_marginBottom="20dip" >
+			    <View 
+			        android:id="@+id/v_icon2"
+			        android:layout_width="6dip"
+			        android:layout_height="18dip"
+			        android:layout_centerVertical="true"
+			        android:layout_marginLeft="12dip"
+			        android:background="#FCC21E"/>
+			    <TextView 
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_marginLeft="12dip"
+			        android:text="图片(选填， 提供问题截图)"
+			        android:layout_toRightOf="@+id/v_icon2"
+			        android:layout_centerVertical="true"
+			        android:textColor="#333333"
+			        android:textSize="15sp"/>
+			    <ImageView 
+			        android:id="@+id/iv_add_icon"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_alignParentRight="true"
+			        android:layout_centerVertical="true"
+			        android:layout_marginRight="20dip"
+			        android:background="@drawable/icon_pull_down"/>
+			</RelativeLayout>
+			
+	        <LinearLayout 
+	            android:id="@+id/ll_feedback_pictures_layout"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal"
+			    android:layout_marginLeft="20dip"
+			    android:layout_marginRight="20dip"
+			    android:layout_below="@+id/rel_pict"
+			    android:background="@drawable/shape_et_feedback_bg" >
+			    <ImageView 
+			        android:id="@+id/iv_add_picture1"
+			        android:layout_width="37dip"
+			        android:layout_height="37dip"
+			        android:layout_marginTop="10dip"
+			        android:layout_marginRight="7dip"
+			        android:layout_marginLeft="7dip"
+			        android:layout_marginBottom="10dip"
+			        android:layout_gravity="center_vertical"
+			        android:visibility="gone"/>
+			    <ImageView 
+			        android:id="@+id/iv_add_picture2"
+			        android:layout_width="37dip"
+			        android:layout_height="37dip"
+			        android:layout_marginTop="10dip"
+			        android:layout_marginRight="7dip"
+			        android:layout_marginLeft="7dip"
+			        android:layout_marginBottom="10dip"
+			        android:visibility="gone"
+			        android:layout_gravity="center_vertical"/>
+			    <ImageView 
+			        android:id="@+id/iv_add_picture3"
+			        android:layout_width="37dip"
+			        android:layout_height="37dip"
+			        android:visibility="gone"
+			        android:layout_marginTop="10dip"
+			        android:layout_marginRight="7dip"
+			        android:layout_marginLeft="7dip"
+			        android:layout_marginBottom="10dip"
+			        android:layout_gravity="center_vertical"/>
+			    <ImageView 
+			        android:id="@+id/iv_add_picture"
+			        android:layout_width="37dip"
+			        android:layout_height="37dip"
+			        android:layout_gravity="center_vertical"
+			        android:layout_margin="5dip"
+			        android:background="@drawable/ico_addpict"/>
+			</LinearLayout>
+        </RelativeLayout>
+		<LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical" >
+		    
+	        <RelativeLayout 
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginTop="22dip">
+			    <View 
+			        android:id="@+id/view_icon3"
+			        android:layout_width="6dip"
+			        android:layout_height="18dip"
+			        android:layout_centerVertical="true"
+			        android:layout_marginLeft="12dip"
+			        android:background="#FCC21E"/>
+			    <TextView
+                    android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_marginLeft="12dip"
+			        android:text="联系方式(选填)"
+			        android:layout_toRightOf="@+id/view_icon3"
+			        android:layout_centerVertical="true"
+			        android:textColor="#333333"
+			        android:textSize="15sp"/>
+			</RelativeLayout>
+			
+	        <RelativeLayout 
+		        android:layout_width="match_parent"
+		        android:layout_height="40dip"
+		        android:layout_marginTop="12dip" >
+		        <Button 
+			        android:id="@+id/btn_select_contact"
+			        android:layout_width="94dip"
+			        android:layout_height="match_parent"
+			        android:layout_marginLeft="12dip"
+			        android:layout_centerVertical="true"
+			        android:text="手机号         "
+			        android:textSize="15sp"
+			        android:background="@drawable/ico_select_contact"/>
+			    
+			    <EditText 
+			        android:id="@+id/et_contact_cell"
+			        android:layout_width="match_parent"
+		            android:layout_height="match_parent"
+		            android:inputType="text"
+		            android:paddingLeft="10dip"
+		            android:layout_toRightOf="@+id/btn_select_contact"
+		            android:layout_marginLeft="12dip"
+		            android:layout_marginRight="20dip"
+		            android:layout_centerVertical="true"
+		            android:background="@drawable/shape_et_feedback_bg"
+		            android:textColor="#CCCCCC"
+		            android:textSize="14sp" />
+		    </RelativeLayout>
+		</LinearLayout>
+   
+	<Button
+        android:id="@+id/bt_ensure"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/login"
+        android:text="确定"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pop_image_download_rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#b4353332">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_marginRight="6dp"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/shape_white_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:background="@drawable/shape_white_btn"
+                android:gravity="center"
+                android:text="是否保存图片到相册？"
+                android:textColor="@color/color_black"
+                android:textSize="15sp" />
+            <View
+                android:background="@color/bg_gray"
+                android:layout_width="match_parent"
+                android:layout_height="2.5dp"/>
+            <TextView
+                android:id="@+id/pop_img_dw_ok"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="#3a90fe"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/pop_img_dw_no"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:background="@drawable/shape_white_btn"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="#3a90fe"
+            android:textSize="16sp" />
+    </LinearLayout>
+</RelativeLayout>

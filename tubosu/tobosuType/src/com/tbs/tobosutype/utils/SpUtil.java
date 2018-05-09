@@ -327,4 +327,6 @@ public class SpUtil {
         context.getSharedPreferences("QuOption", 0).edit().putInt("mQuOption", mQuOption).commit();
     }
 
+    // TODO: 2018/5/7  App发单地址********根据获取配置表的信息去取最新的值********
+
 }

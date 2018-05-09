@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="320dp"
+    android:layout_height="110dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="318dp"
+        android:layout_height="70dp">
+
+    <LinearLayout
+        android:id="@+id/item_map_ll"
+        android:layout_width="318dp"
+        android:layout_height="70dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="230dp"
+            android:layout_height="62dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/shape_map_address"
+            android:orientation="vertical"
+            android:paddingLeft="12dp"
+            android:paddingTop="10dp">
+            <!--公司名称-->
+            <TextView
+                android:id="@+id/item_map_company_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:maxEms="12"
+                android:singleLine="true"
+                android:text="深圳市千叶装饰设计有限公司的分公司电饭锅"
+                android:textColor="#4d4d4d"
+                android:textSize="15sp" />
+            <!--地址-->
+            <TextView
+                android:id="@+id/item_map_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:ellipsize="marquee"
+                android:maxEms="16"
+                android:singleLine="true"
+                android:text="地址:南山区万众家居广场B座会议室五号楼上"
+                android:textColor="#666666"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:clickable="true"
+            android:id="@+id/item_map_get_line"
+            android:layout_width="75dp"
+            android:layout_height="62dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/shape_goto_map"
+            android:gravity="center"
+            android:text="获取路线"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/baidu_map_san" />
+    </RelativeLayout>
+    <ImageView
+        android:layout_width="18dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/baidu_map_mark" />
+</LinearLayout>

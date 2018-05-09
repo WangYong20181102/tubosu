@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="bg_title">#e6e6e6</color>
+    <color name="bg_fd_title">#ff882e</color>
+    <!-- 背景颜色 -->
+    <color name="bg_fd_bai">#f5f3f2</color>
+    <color name="bg_gray">#f7f7f7</color>
+    <color name="bg_white">#ffffff</color>
+    <color name="white">#ffffff</color>
+    <color name="line">#e5e5e5</color>
+    <!-- 背景线条颜色 -->
+    <!-- 分隔线 -->
+    <color name="dividing_line_bg">#e5e5e5</color>
+    <color name="mycolor">#666666</color>
+    <!-- 户型选择的颜色 -->
+    <color name="layout_color">#ff9c00</color>
+    <!-- 橙色 -->
+    <color name="color_darkgray">#1e1f1f</color>
+    <color name="color_neutralgrey">#74777a</color>
+    <color name="color_pop_tv_select">#4d4d4d</color>
+    <color name="color_lightgray">#cbd2da</color>
+    <color name="color_huxing">#f4f4f4</color>
+    <color name="color_black">#000</color>
+    <color name="color_designer_textview_bg">#B7B7B7</color>
+    <color name="color_icon">#ff882e</color>
+    <color name="color_weixi">#bbebb5</color>
+    <color name="color_icon_bg_normal">#fff</color>
+    <color name="color_icon_bg_pressed">#e9ebec</color>
+
+    <color name="color_yellow_chamption">#F4BE14</color>
+
+    <!-- 按钮和图标背景色-橙色 -->
+    <!-- 按钮和图标背景色-红色 -->
+    <!-- 按钮和图标背景色-不可点击-红色 -->
+
+
+    <!-- 用户登陆成功后的状态选择色彩 -->
+    <color name="userinfopressnomal">#fff</color>
+    <color name="userinfopressdown">#ffe</color>
+    <!-- 选择性别的色 -->
+    <color name="select_sex_bg_normal">#fff</color>
+    <color name="select_sex_bg_selector">#C3C3C3</color>
+
+
+    <color name="whole_color_theme">#FFBD25</color>
+
+    <color name="up_pressed_color">#B2B2B2</color>
+    <color name="up_normal_color">#1B1B1B</color>
+
+    <color name="cal_pressed_color">#000000</color>
+    <color name="cal_calculater_color">#ff882e</color>
+
+    <color name="selecte_image_detail_bg_color">#1a1a1a</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="concern_color">#C0C4CC</color>
+    <color name="color_00">#8A000000</color>
+    <color name="framelayout1_textview_color">#BF8A63</color>
+    <color name="style_textcolor_selected">#FFFFFF</color>
+    <color name="style_textcolor_unselected">#BF8A63</color>
+
+
+    <color name="budget_green">#12dc8b</color>
+    <color name="budget_blue">#00c5ef</color>
+    <color name="budget_orange">#ed7626</color>
+    <color name="budget_yellow">#ffbb00</color>
+    <color name="budget_red">#f75128</color>
+    <color name="budget_normal_color">#40ed7626</color>
+
+    <color name="topbar_3">#339EFE</color>
+    <color name="text_10">#333333</color>
+    <color name="text_11">#999999</color>
+    <color name="text_gray">#b7b8ba</color>
+
+    <color name="edit_outcome_bg">#FE892D</color>
+
+    <color name="gongsi_selected">#FF6F20</color>
+    <color name="gongsi_unselected">#1a1a1a</color>
+
+    <color name="divide_gray_color">#F7F7F7</color>
+    <color name="cal_pressed_color_trancspar">#00000000</color>
+</resources>

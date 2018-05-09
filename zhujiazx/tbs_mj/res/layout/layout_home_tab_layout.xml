@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fr_dialog_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_main_ad"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"/>
+
+        <RelativeLayout
+            android:id="@+id/iv_main_ad_close"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_above="@+id/iv_main_ad"
+            android:layout_marginBottom="-10dp"
+            android:layout_alignRight="@+id/iv_main_ad">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/home_close"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</FrameLayout>

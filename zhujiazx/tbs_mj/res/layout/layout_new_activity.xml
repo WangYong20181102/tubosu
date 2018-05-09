@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/newhome_swiprefreshlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/newhome_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/home_view"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:background="#00000000" />
+
+        <ImageView
+            android:id="@+id/ivYingying"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/home_view"
+            android:background="@drawable/dfgying"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="49dp">
+
+            <View
+                android:id="@+id/newhomeView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/app_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="土拨鼠"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/home_kefu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="18dp"
+                android:background="@drawable/kefu_black" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/relSelectCity"
+        android:layout_width="wrap_content"
+        android:layout_height="49dp"
+        android:background="#00000000">
+
+        <ImageView
+            android:id="@+id/iv_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:background="@drawable/ad_icon" />
+        <!--定位的城市-->
+        <TextView
+            android:id="@+id/newhomeCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_toRightOf="@+id/iv_add"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/iv_sanjiaoxing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_toRightOf="@+id/newhomeCity"
+            android:background="@drawable/sanjiaoxing" />
+    </RelativeLayout>
+    <!--推送3.7版本新增-->
+    <RelativeLayout
+        android:id="@+id/tuisong_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#7f000000"
+        android:visibility="gone">
+
+
+        <RelativeLayout
+            android:layout_width="250dp"
+            android:layout_height="350dp"
+            android:layout_centerInParent="true">
+            <!--图片显示-->
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="290dp"
+                android:layout_alignParentTop="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/tuisongtanchuang" />
+            <!--去开启的按钮-->
+            <TextView
+                android:id="@+id/tuisong_kaiqi_tv"
+                android:layout_width="160dp"
+                android:layout_height="32dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="85dp"
+                android:background="@drawable/shape_open_tuisong"
+                android:gravity="center"
+                android:text="去开启"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+            <!--关闭的按钮-->
+            <RelativeLayout
+                android:id="@+id/tuisong_guanbi_rl"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/image_free_design_close" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+    <!--测试按钮-->
+    <TextView
+        android:id="@+id/new_home_test"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="测试按钮"
+        android:visibility="gone" />
+</RelativeLayout>

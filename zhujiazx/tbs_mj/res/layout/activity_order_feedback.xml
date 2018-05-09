@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/color_icon" >
+
+        <ImageView
+            android:id="@+id/allorder_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:onClick="back"
+            android:padding="5dp"
+            android:src="@drawable/back_up" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:text="跟踪"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/dividing_line_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/order_feedback_listview"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:divider="@color/bg_gray"
+            android:listSelector="@color/white" >
+        </ListView>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dividing_line_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical" >
+
+            <RadioGroup
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/feedback_noamount_room"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/feedback_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="未量房"
+                    android:textColor="@color/color_neutralgrey"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/feedback_not_signed"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/feedback_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="未签约"
+                    android:textColor="@color/color_neutralgrey"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/feedback_contract_signed"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/feedback_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="已签约"
+                    android:textColor="@color/color_neutralgrey"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/feedback_apply_refund"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/feedback_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="申请退款"
+                    android:textColor="@color/feedback_tv_selector"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:orientation="horizontal" >
+
+                <EditText
+                    android:id="@+id/feedback_input_content"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:background="@drawable/detail_text_bg"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:padding="2dp" />
+
+                <TextView
+                    android:id="@+id/tv_send"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="2"
+                    android:background="@drawable/user_login_btn_background"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:text="发 送"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

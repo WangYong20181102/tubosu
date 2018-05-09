@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pop_zixun_rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#b4353332">
+
+    <RelativeLayout
+        android:id="@+id/popwindow_zixun_rl"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="156dp">
+            <ImageView
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/lianxin_kefu" />
+            <TextView
+                android:textColor="#666666"
+                android:textSize="14sp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="15dp"
+                android:layout_centerHorizontal="true"
+                android:text="免费在线咨询"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/lianxi_ll"
+            android:background="@color/dividing_line_bg" />
+
+        <LinearLayout
+            android:id="@+id/lianxi_ll"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/qq_lianxi"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:background="#ffc410"
+                android:gravity="center"
+                android:text="QQ联系"
+                android:textColor="#ffffff" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="44dp"
+                android:background="@color/dividing_line_bg" />
+
+            <TextView
+                android:id="@+id/dianhua_lianxi"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:background="#ff801a"
+                android:gravity="center"
+                android:text="电话联系"
+                android:textColor="#ffffff" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

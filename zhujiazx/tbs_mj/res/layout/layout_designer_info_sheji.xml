@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/sehjis0011"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <com.tbs.tbs_mj.utils.TRoundView
+                android:id="@+id/shejiPic"
+                android:layout_width="match_parent"
+                android:layout_height="182dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="14dp"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:id="@+id/shejiInfoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="简欧/三居室/120m/12万"
+                android:textColor="#333333"
+                android:textSize="14sp"
+                android:layout_gravity="center_horizontal"/>
+
+
+            <TextView
+                android:id="@+id/shejiGetThis"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="14dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="100dp"
+                android:layout_height="28dp"
+                android:background="@drawable/shape_get_this_design"
+                android:gravity="center"
+                android:textColor="#ff630f"
+                android:textSize="12sp"
+                android:text="获取此设计"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_below="@+id/sehjis0011"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#F7F7F7"/>
+
+
+</RelativeLayout>

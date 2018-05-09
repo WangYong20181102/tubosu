@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="165dp"
+    android:layout_height="36dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+        <!--装修公司名称-->
+        <TextView
+            android:id="@+id/item_fendan_com_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="深"
+            android:textColor="#333333"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/item_fendan_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/shape_yiliangfang"
+            android:paddingLeft="4dp"
+            android:paddingBottom="1dp"
+            android:paddingTop="1dp"
+            android:paddingRight="4dp"
+            android:text="已量房"
+            android:textColor="#0da680"
+            android:textSize="10sp" />
+    </LinearLayout>
+</RelativeLayout>

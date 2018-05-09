@@ -23,7 +23,7 @@ public class Constant {
     //数据流上传接口 正式
     public static final String TBS_DATA_STREAM = "https://www.tobosu.com/trace";
     //M站 发单跳转 线上环境
-    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
+//    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
 
 
     /**
@@ -36,7 +36,7 @@ public class Constant {
     //M站test接口
 //    public static final String M_TOBOSU_URL = "http://m.test.tobosu.com/szs/";
     //M站dev接口
-//    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
+    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
 
 
 
@@ -367,9 +367,7 @@ public class Constant {
     //网店管理  3.7.3版本新增
     public static final String COMPANY_MY_STORE = TOBOSU_URL + "mapp/company/my_store";
     //网店管理修改网店管理
-    public static final String COMPANY_MODIFY_STORE= TOBOSU_URL + "mapp/company/modify_store";
-
-
+    public static final String COMPANY_MODIFY_STORE = TOBOSU_URL + "mapp/company/modify_store";
 
 
     //装修公司主页 底部发单按钮 3.6版本新增

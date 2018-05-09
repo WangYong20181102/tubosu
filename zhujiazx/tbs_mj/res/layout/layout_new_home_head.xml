@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/newhome_head_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"></android.support.v4.view.ViewPager>
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/newHomeDotLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp"></LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/meng_ceng_bg"></RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center">
+
+        <com.tbs.tbs_mj.customview.MarqueeView
+            android:id="@+id/newhome_cheat_text"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            app:mvAnimDuration="644"
+            app:mvInterval="3000"
+            app:mvTextSize="14sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="14dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <!--免费量房  换成 学装修-->
+        <RelativeLayout
+            android:id="@+id/relZhuangXiuKetang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_newhome1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/xuezhuangxiu" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_newhome1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="13dp"
+                android:text="学装修"
+                android:textColor="#666666"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relXuanSheJi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_newhome2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/newxuansheji" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_newhome2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="13dp"
+                android:text="选设计"
+                android:textColor="#666666"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relKanAnLi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_newhome3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/kananli_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_newhome3"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="13dp"
+                android:text="看案例"
+                android:textColor="#666666"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relZhaoZhuangXiu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_newhome4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/newzhaozhuangxiu" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_newhome4"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="13dp"
+                android:text="找装修"
+                android:textColor="#666666"
+                android:textSize="12sp" />
+        </RelativeLayout>
+        <!--装修课堂 换成免费量房-->
+        <RelativeLayout
+            android:id="@+id/relFreeLiangFang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_newhome5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/newmianfeiliangfang" />
+            <!--newmianfeiliangfang-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_newhome5"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="13dp"
+                android:text="免费量房"
+                android:textColor="#666666"
+                android:textSize="12sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="155dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_centerInParent="true"
+            android:id="@+id/price_img"
+            android:layout_width="340dp"
+            android:layout_height="155dp"
+            android:background="@drawable/home_gif_01"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="340dp"
+            android:layout_height="155dp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/relFreeBaojia"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"></RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/relFreeSheji"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"></RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relProfessalTuiJian"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"></RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rel_cuiying"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="#FFFCFB" />
+
+        <ImageView
+            android:id="@+id/ivRedBag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="2dp"
+            android:background="@drawable/red_bag" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/ivRedBag">
+
+            <TextView
+                android:id="@+id/tvDaLibao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="装修大礼包"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="6dp"
+                android:layout_toRightOf="@+id/tvDaLibao"
+                android:background="@drawable/nine_years" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvDaLibao"
+                android:layout_marginTop="2dp"
+                android:text="土拨鼠装修10周年庆，回馈千万业主!"
+                android:textColor="#888888"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvGoGet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="2dp"
+            android:background="@drawable/shape_poporder_sumit_bg"
+            android:gravity="center"
+            android:text="GO >"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="#F7F7F7" />
+
+
+    <!-- 以下是装修案例 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="装修案例"
+                android:textColor="@color/color_black"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:id="@+id/rel_more_anli"
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
+
+                <TextView
+                    android:id="@+id/tv_more_anli"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:text="更多"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/tv_more_anli"
+                    android:background="@drawable/fuck_more" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <com.tbs.tbs_mj.customview.CustomGridView
+            android:id="@+id/newhome_gv_anli"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="-6dp"
+            android:horizontalSpacing="10dp"
+            android:listSelector="@color/transparent"
+            android:numColumns="2"
+            android:scrollbars="none"
+            android:verticalSpacing="10dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginTop="14dp"
+            android:background="#F7F7F7" />
+
+    </LinearLayout>
+
+
+    <!-- 装修设计 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="装修设计"
+                android:textColor="@color/color_black"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:id="@+id/rel_more_sheji"
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
+
+                <TextView
+                    android:id="@+id/tv_more_sheji"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:text="更多"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/tv_more_sheji"
+                    android:background="@drawable/fuck_more" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <com.tbs.tbs_mj.customview.MySwipeRefreshLayout
+            android:id="@+id/swipe_newhome_sheji"
+            android:layout_width="match_parent"
+            android:layout_height="192dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="-6dp">
+
+            <com.tbs.tbs_mj.customview.BetterRecyclerView
+                android:id="@+id/newhome_recyclerview_sheji"
+                android:layout_width="match_parent"
+                android:layout_height="192dp"></com.tbs.tbs_mj.customview.BetterRecyclerView>
+        </com.tbs.tbs_mj.customview.MySwipeRefreshLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginBottom="18dp"
+            android:background="#F7F7F7" />
+
+    </LinearLayout>
+
+
+    <!-- 装修课堂 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="23dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="学装修"
+                android:textColor="@color/color_black"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:id="@+id/rel_more_class"
+                android:layout_width="wrap_content"
+                android:layout_height="49dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
+
+                <TextView
+                    android:id="@+id/tv_more_class"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:text="更多"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/tv_more_class"
+                    android:background="@drawable/fuck_more" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <com.tbs.tbs_mj.customview.MySwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <com.tbs.tbs_mj.customview.BetterRecyclerView
+                android:id="@+id/newhome_recyclerview_class"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"></com.tbs.tbs_mj.customview.BetterRecyclerView>
+        </com.tbs.tbs_mj.customview.MySwipeRefreshLayout>
+
+        <com.tbs.tbs_mj.customview.MyListView
+            android:id="@+id/newhome_ketang_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="2dp"
+            android:divider="#F7F7F7"
+            android:dividerHeight="1dp"
+            android:listSelector="@color/transparent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="14dp"
+            android:background="#F7F7F7" />
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:text="精选专题"
+            android:textColor="@color/color_black"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <color name="color_white">#fff</color>
+    <color name="color_red">#ff1919</color>
+    <color name="activity_bg_color">#ff882e</color>
+    <color name="divider">#ffdddddd</color>
+    <drawable name="color_first_head">#ff882e</drawable>
+    <drawable name="color_dra_white">#fff</drawable>
+</resources>

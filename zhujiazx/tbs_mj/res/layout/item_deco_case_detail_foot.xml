@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <!--案例详情的空间展示子项-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+        <!--标题-->
+        <TextView
+            android:id="@+id/item_deco_detail_foot_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="#户型图#"
+            android:textColor="#808080"
+            android:textSize="13sp" />
+        <!--图片-->
+        <ImageView
+            android:id="@+id/item_deco_detail_foot_img"
+            android:layout_width="332dp"
+            android:layout_height="193dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="39dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/b_home_style" />
+    </RelativeLayout>
+</LinearLayout>

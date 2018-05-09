@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_banner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ff882e">
+
+        <ImageView
+            android:id="@+id/iv_back_calculater"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:src="@drawable/back_up" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="12dip"
+            android:layout_toRightOf="@+id/iv_back_up"
+            android:text="装修计算器"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+
+    <com.tbs.tbs_mj.customview.ViewPagerIndicator
+        android:id="@+id/calculater_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ff882e"
+        android:orientation="horizontal"></com.tbs.tbs_mj.customview.ViewPagerIndicator>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/calculater_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></android.support.v4.view.ViewPager>
+
+</LinearLayout>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.tbs.tbs_mj.activity.NewOrderDetailActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+        <!--返回按钮-->
+        <RelativeLayout
+            android:id="@+id/new_order_detail_back_rl"
+            android:layout_width="48dp"
+            android:layout_height="48dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/activity_back" />
+        </RelativeLayout>
+        <!--标题，显示订单ID号-->
+        <TextView
+            android:id="@+id/new_order_id_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="订单"
+            android:textColor="@color/color_black"
+            android:textSize="17sp" />
+    </RelativeLayout>
+    <!--选项卡-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="48dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:weightSum="2">
+            <!--右侧的tab-->
+            <RelativeLayout
+                android:id="@+id/new_order_detail_tab_rl"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/new_order_detail_tab_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="订单详情"
+                    android:textColor="#ff6c14"
+                    android:textSize="14sp" />
+
+                <View
+                    android:id="@+id/new_order_detail_tab_sign_view"
+                    android:layout_width="55dp"
+                    android:layout_height="3dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="#ff6c14" />
+            </RelativeLayout>
+            <!--左侧的tab-->
+            <RelativeLayout
+                android:id="@+id/new_order_detail_feedback_tab_rl"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/new_order_detail_feedback_tab_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="订单反馈"
+                    android:textColor="#666666"
+                    android:textSize="14sp" />
+
+                <View
+                    android:id="@+id/new_order_detail_feedback_tab_sign_view"
+                    android:layout_width="55dp"
+                    android:layout_height="3dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="#ff6c14"
+                    android:visibility="gone" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <!--中间的分割线-->
+        <View
+            android:layout_width="1dp"
+            android:layout_height="19dp"
+            android:layout_centerInParent="true"
+            android:background="#e5e5e5" />
+    </RelativeLayout>
+    <View
+        android:layout_marginTop="95dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#e5e5e5" />
+    <!--选项卡-->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/new_order_detail_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="96dp">
+
+    </android.support.v4.view.ViewPager>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_below="@+id/all_order_banner_rl"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/yinying4" />
+</RelativeLayout>

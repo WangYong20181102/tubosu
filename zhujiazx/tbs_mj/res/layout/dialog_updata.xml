@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?><!--用户更新提示的弹窗  3.7版本新增-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="260dp"
+    android:layout_height="306dp"
+    android:background="@drawable/shape_app_update">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/gengxintanchuang" />
+
+    <TextView
+        android:id="@+id/base_conten"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+    <RelativeLayout
+        android:layout_width="200dp"
+        android:layout_height="110dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp">
+        <!--显示更新内容-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/update_dialog_msg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#d9d9d9" />
+        <!--下次再说-->
+        <TextView
+            android:id="@id/versionchecklib_version_dialog_cancel"
+            android:layout_width="129dp"
+            android:layout_height="49dp"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="下次再说"
+            android:textColor="#b3b3b3"
+            android:textSize="15sp" />
+        <!--立即更新-->
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="20dp"
+            android:layout_centerInParent="true"
+            android:background="#d9d9d9" />
+
+        <TextView
+            android:id="@id/versionchecklib_version_dialog_commit"
+            android:layout_width="129dp"
+            android:layout_height="49dp"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="立即更新"
+            android:textColor="#ff6f14"
+            android:textSize="15sp" />
+    </RelativeLayout>
+</RelativeLayout>

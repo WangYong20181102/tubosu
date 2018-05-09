@@ -1,0 +1,711 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:background="@color/activity_bg_color" >
+    android:orientation="vertical" >
+
+    <com.tbs.tbs_mj.customview.ScrollViewExtend
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollViewExtend"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:background="@color/white"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <!-- 第一栏  顶部广告页面 【帧布局】 -->
+            <com.tbs.tbs_mj.customview.HomeTopFrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp" >
+            </com.tbs.tbs_mj.customview.HomeTopFrameLayout>
+
+            <!-- 第二栏  设计与报价 预约装修 装修快报  计算机  start -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="84dp"
+                android:layout_margin="5dp"
+                android:weightSum="4" >
+
+                <LinearLayout
+                    android:id="@+id/layout_price"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dip"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/icon_design_price01" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="智能报价"
+                        android:textColor="@color/color_neutralgrey"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_homeactivity_yuyue_decoration"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_marginRight="6dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dip"
+                        android:background="@drawable/icon_appointment02" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="免费设计"
+                        android:textColor="@color/color_neutralgrey"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_decorate_myhouse"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/decorate_house003" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="装修快报"
+                        android:textColor="@color/color_neutralgrey"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_calculater"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/icon_calculater04"
+                        android:paddingLeft="11dp"
+                        android:paddingRight="11dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="装修计算器"
+                        android:textColor="@color/color_neutralgrey"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </LinearLayout>
+            <!-- 第二栏  设计与报价 预约装修 装修快报  计算机    end -->
+
+
+            <!-- 分割线 -->
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/dividing_line" />
+
+            <!-- 第三栏  装修课堂 -->
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/layout_decorate_classroom" />
+
+            <!-- 第四栏  本地优惠 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <!-- 分割线 -->
+
+                <include
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/dividing_line"
+                    android:visibility="gone" />
+
+                <!-- 本地优惠 -->
+
+                <include
+                    android:id="@+id/ll_local_dicount_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/layout_local_discount_linearlayout"
+                    android:visibility="gone" />
+
+                <!-- 分割线 -->
+                <include
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/dividing_line" />
+
+                <!-- 第五栏 效果图精选   start -->
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp" >
+
+                    <ImageView
+                        android:id="@+id/iv_firstcheckness_flag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="12dp"
+                        android:background="@drawable/firstcheckness_flag" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="3dp"
+                        android:layout_toRightOf="@id/iv_firstcheckness_flag"
+                        android:text="效果图精选"
+                        android:textColor="@color/color_neutralgrey"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tv_home_project_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="30dp"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="更多 "
+                        android:textColor="@color/color_neutralgrey"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/right" />
+                </RelativeLayout>
+
+                <!-- 不需要了 -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:visibility="gone"
+                    android:gravity="center" >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp" >
+
+                        <com.tbs.tbs_mj.customview.RoundAngleImageView
+                            android:id="@+id/iv_home_fully_selected_images"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:adjustViewBounds="true" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/tv_firstcheckness_bg"
+                            android:gravity="center" >
+
+                            <TextView
+                                android:id="@+id/banner_textview_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                android:textColor="@color/white"
+                                android:textSize="13sp" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+                <!-- 上面不需要了 -->
+                <!-- 2017-01-07 修改如下  -->
+                <LinearLayout
+                    android:id="@+id/layout_a_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/rel_local_a"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.tbs.tbs_mj.customview.RoundAngleImageView
+                            android:id="@+id/iv_local"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="17dp"
+                            android:layout_marginRight="17dp"
+                            android:adjustViewBounds="true"
+                            android:background="@drawable/home_local"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginBottom="9dp"
+                            android:layout_marginTop="6dp"
+                            android:padding="3dp"
+                            android:maxLines="2"
+                            android:layout_below="@+id/iv_local"
+                            android:text="1+1>2，局部设计精致多一点，实用多一点，完美住宅，就是这样便利与美妙。"
+                            android:textColor="#74777A"
+                            android:textSize="15sp"/>
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/rel_style_a"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.tbs.tbs_mj.customview.RoundAngleImageView
+                            android:id="@+id/iv_style"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="17dp"
+                            android:layout_marginRight="17dp"
+                            android:adjustViewBounds="true"
+                            android:background="@drawable/home_style"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginBottom="9dp"
+                            android:layout_marginTop="6dp"
+                            android:padding="3dp"
+                            android:maxLines="2"
+                            android:layout_below="@+id/iv_style"
+                            android:text="中式的庄重，法式的高贵，美式的随意自在，都是爱的符号，只愿与你共享。"
+                            android:textColor="#74777A"
+                            android:textSize="15sp"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rel_space_a"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.tbs.tbs_mj.customview.RoundAngleImageView
+                            android:id="@+id/iv_space"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="17dp"
+                            android:layout_marginRight="17dp"
+                            android:adjustViewBounds="true"
+                            android:background="@drawable/home_space"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginBottom="9dp"
+                            android:layout_marginTop="6dp"
+                            android:padding="3dp"
+                            android:maxLines="2"
+                            android:layout_below="@+id/iv_space"
+                            android:text="我们是千面娇娃，岂止一成不变，百变的空间飘然一过，心变得纯净，幽宁。"
+                            android:textColor="#74777A"
+                            android:textSize="15sp"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rel_home_sytle_a"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.tbs.tbs_mj.customview.RoundAngleImageView
+                            android:id="@+id/iv_home_sytle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="17dp"
+                            android:layout_marginRight="17dp"
+                            android:adjustViewBounds="true"
+                            android:background="@drawable/home_house_style"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginBottom="9dp"
+                            android:layout_marginTop="6dp"
+                            android:padding="3dp"
+                            android:maxLines="2"
+                            android:layout_below="@+id/iv_home_sytle"
+                            android:text="浪漫的大别墅，温馨的小蜗居，无论户型大小，有你才最好。"
+                            android:textColor="#74777A"
+                            android:textSize="15sp"/>
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/rel_special_a"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.tbs.tbs_mj.customview.RoundAngleImageView
+                            android:id="@+id/iv_home_special"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="17dp"
+                            android:layout_marginRight="17dp"
+                            android:adjustViewBounds="true"
+                            android:background="@drawable/home_specail"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginBottom="9dp"
+                            android:layout_marginTop="6dp"
+                            android:padding="3dp"
+                            android:maxLines="2"
+                            android:layout_below="@+id/iv_home_special"
+                            android:text="“枫丹白露”,芳亭情露，每处细微的角落都可化身为绝美的风景。"
+                            android:textColor="#74777A"
+                            android:textSize="15sp"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <!-- a -->
+                <!-- b -->
+                <LinearLayout
+                    android:id="@+id/layout_b_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:id="@+id/home_local"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <com.tbs.tbs_mj.customview.RoundAngleImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:layout_weight="1"
+                            android:background="@drawable/b_home_local"/>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center">
+                                <TextView
+                                    android:id="@+id/tvlocal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:text="局部之美"
+                                    android:textColor="#1E1F1F"
+                                    android:textSize="24sp"/>
+                                <ImageView
+                                    android:id="@+id/iv_local_line"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/home_line"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_below="@+id/tvlocal"
+                                    android:layout_alignLeft="@+id/tvlocal"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="16dp"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:layout_marginTop="6dp"
+                                    android:padding="3dp"
+                                    android:maxLines="3"
+                                    android:layout_below="@+id/iv_local_line"
+                                    android:text="1+1>2，局部设计精致多一点，实用多一点，完美住宅，就是这样便利与美妙。"
+                                    android:textColor="#74777A"
+                                    android:textSize="12sp"/>
+                            </RelativeLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/home_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center">
+                                <TextView
+                                    android:id="@+id/tvstyle"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:text="风格欣赏"
+                                    android:textColor="#1E1F1F"
+                                    android:textSize="24sp"/>
+                                <ImageView
+                                    android:id="@+id/iv_style_line"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/home_line"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_below="@+id/tvstyle"
+                                    android:layout_alignLeft="@+id/tvstyle"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="16dp"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:layout_marginTop="6dp"
+                                    android:padding="3dp"
+                                    android:maxLines="3"
+                                    android:layout_below="@+id/iv_style_line"
+                                    android:text="中式的庄重，法式的高贵，美式的随意自在，都是爱的符号，只愿与你共享。"
+                                    android:textColor="#74777A"
+                                    android:textSize="12sp"/>
+                            </RelativeLayout>
+                        </RelativeLayout>
+                        <com.tbs.tbs_mj.customview.RoundAngleImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:layout_weight="1"
+                            android:background="@drawable/b_home_style"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/home_space"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <com.tbs.tbs_mj.customview.RoundAngleImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:layout_weight="1"
+                            android:background="@drawable/b_home_space"/>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center">
+                                <TextView
+                                    android:id="@+id/tvspace"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:text="百变空间"
+                                    android:textColor="#1E1F1F"
+                                    android:textSize="24sp"/>
+                                <ImageView
+                                    android:id="@+id/iv_space_line"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/home_line"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_below="@+id/tvspace"
+                                    android:layout_alignLeft="@+id/tvspace"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="16dp"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:layout_marginTop="6dp"
+                                    android:padding="3dp"
+                                    android:maxLines="3"
+                                    android:layout_below="@+id/iv_space_line"
+                                    android:text="我们是千面娇娃，岂止一成不变，百变的空间飘然一过，心变得纯净，幽宁。"
+                                    android:textColor="#74777A"
+                                    android:textSize="12sp"/>
+                            </RelativeLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/home_house_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center">
+                                <TextView
+                                    android:id="@+id/tv_house_style"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:text="户型设计"
+                                    android:textColor="#1E1F1F"
+                                    android:textSize="24sp"/>
+                                <ImageView
+                                    android:id="@+id/iv_house_style_line"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/home_line"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_below="@+id/tv_house_style"
+                                    android:layout_alignLeft="@+id/tv_house_style"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="16dp"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:layout_marginTop="6dp"
+                                    android:padding="3dp"
+                                    android:maxLines="3"
+                                    android:layout_below="@+id/iv_house_style_line"
+                                    android:text="浪漫的大别墅，温馨的小蜗居，无论户型大小，有你才最好。"
+                                    android:textColor="#74777A"
+                                    android:textSize="12sp"/>
+                            </RelativeLayout>
+                        </RelativeLayout>
+                        <com.tbs.tbs_mj.customview.RoundAngleImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:layout_weight="1"
+                            android:background="@drawable/b_home_design"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/home_specail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <com.tbs.tbs_mj.customview.RoundAngleImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:layout_weight="1"
+                            android:background="@drawable/b_home_special"/>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center">
+
+                                <TextView
+                                    android:id="@+id/tvspecail"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:text="特色系列"
+                                    android:textColor="#1E1F1F"
+                                    android:textSize="24sp"/>
+                                <ImageView
+                                    android:id="@+id/iv_sspecail_line"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/home_line"
+                                    android:layout_marginTop="7dp"
+                                    android:layout_below="@+id/tvspecail"
+                                    android:layout_alignLeft="@+id/tvspecail"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="16dp"
+                                    android:layout_marginLeft="16dp"
+                                    android:layout_marginBottom="12dp"
+                                    android:layout_marginTop="6dp"
+                                    android:padding="3dp"
+                                    android:maxLines="3"
+                                    android:layout_below="@+id/iv_sspecail_line"
+                                    android:text="“枫丹白露”,芳亭情露，每处细微的角落都可化身为绝美的风景。"
+                                    android:textColor="#74777A"
+                                    android:textSize="12sp"/>
+                            </RelativeLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+                <!-- 2017-01-07 修改 end  -->
+                <!-- 第五栏 效果图精选   end -->
+            </LinearLayout>
+        </LinearLayout>
+    </com.tbs.tbs_mj.customview.ScrollViewExtend>
+
+    <!-- 顶部标题栏 -->
+
+    <include
+        android:id="@+id/rl_head"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        layout="@layout/head_home_bar" />
+
+</RelativeLayout>

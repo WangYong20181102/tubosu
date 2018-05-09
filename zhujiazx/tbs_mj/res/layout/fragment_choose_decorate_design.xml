@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F65259"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+    
+    <ImageView 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:background="@drawable/icon_choose_getdesign_top"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="30dip"
+        android:background="#FFFFFF" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical" >
+        <EditText 
+            android:id="@+id/et_input_cellnum_design"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="42dip"
+            android:layout_marginRight="42dip"
+            android:inputType="phone"
+            android:digits="0123456789"
+            android:paddingLeft="10dip"
+            android:background="@drawable/shape_input_cellphonenum"
+            android:hint="请输入您的手机号码"
+            android:maxLength="11"
+            android:textColor="#808080"
+            android:layout_height="40dip" />
+        <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:layout_marginTop="20dip" >
+            <Button
+	            android:id="@+id/btn_take_design"
+	            android:layout_width="match_parent"
+	            android:layout_height="40dip"
+	            android:layout_marginLeft="42dip"
+	            android:layout_marginRight="42dip"
+	            android:background="@drawable/selector_take_design"
+	            android:text="立即领取"
+	            android:layout_gravity="center_horizontal"
+	            android:gravity="center"
+	            android:textSize="18sp"
+	            android:textColor="#FFFFFF" />
+	        <TextView
+	            android:id="@+id/tv_giveup"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="20dip"
+	            android:background="#FFFFFF"
+	            android:layout_below="@+id/btn_take_design"
+	            android:layout_alignRight="@+id/btn_take_design"
+	            android:text="暂不需要"
+	            android:gravity="center"
+	            android:textSize="15sp"
+	            android:textColor="#CCCCCC" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

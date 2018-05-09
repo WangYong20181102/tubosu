@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/reltantuac"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:background="@color/white">
+        <RelativeLayout
+            android:id="@+id/relBackDantu"
+            android:layout_width="49dp"
+            android:layout_height="49dp">
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="17dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/activity_back"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收藏的单图"
+            android:textColor="@color/color_black"
+            android:layout_centerInParent="true"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tvEditDantu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="14dp"
+            android:text="编辑"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_below="@+id/reltantuac"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/dantuRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/reclerviewDantu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <RelativeLayout
+            android:id="@+id/relDeleteDatu"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/meng_ceng">
+            <TextView
+                android:id="@+id/tvDelelteDantu"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edit_textview_bg"
+                android:layout_margin="16dp"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:textColor="#ff8214"
+                android:text="删除"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rel_no_dantu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/iv_no_comp2any"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/no_shoucang"/>
+        <TextView
+            android:layout_below="@+id/iv_no_comp2any"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="#D0D1D3"
+            android:layout_centerHorizontal="true"
+            android:text="暂无收藏，赶紧去逛逛吧!"/>
+    </RelativeLayout>
+
+</RelativeLayout>

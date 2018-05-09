@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FB844C"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+    
+    <ImageView 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_choose_square_top"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="#FFFFFF" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:orientation="vertical" >
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" >
+            <RelativeLayout
+                android:id="@+id/rel_square_below60"
+                android:layout_width="match_parent"
+	        	android:layout_height="wrap_content"
+	        	android:layout_weight="1" >
+                <ImageView 
+                    android:id="@+id/iv_square_below60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/square_selected"
+                    android:layout_centerInParent="true"/>
+                <TextView 
+                    android:id="@+id/tv_square_below60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="60以下"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+            
+            <RelativeLayout
+                android:id="@+id/rel_square_above60"
+                android:layout_width="match_parent"
+	        	android:layout_height="wrap_content"
+	        	android:layout_weight="1" >
+                <ImageView 
+                    android:id="@+id/iv_square_above60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/square_normal"
+                    android:layout_centerInParent="true"/>
+                <TextView 
+                    android:id="@+id/tv_square_above60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="61-90"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+            
+             <RelativeLayout
+                android:id="@+id/rel_square_above90"
+                android:layout_width="match_parent"
+	        	android:layout_height="wrap_content"
+	        	android:layout_weight="1" >
+                <ImageView 
+                    android:id="@+id/iv_square_above90"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/square_normal"
+                    android:layout_centerInParent="true"/>
+                <TextView 
+                    android:id="@+id/tv_square_above90"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="91-120"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_marginTop="40dip"
+	        android:orientation="horizontal" >
+            <RelativeLayout
+                android:id="@+id/rel_square_above120"
+                android:layout_width="match_parent"
+	        	android:layout_height="wrap_content"
+	        	android:layout_weight="1" >
+                <ImageView 
+                    android:id="@+id/iv_square_above120"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/square_normal"
+                    android:layout_centerInParent="true"/>
+                <TextView 
+                    android:id="@+id/tv_square_above120"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="121-150"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+            
+            <RelativeLayout
+                android:id="@+id/rel_square_above150"
+                android:layout_width="match_parent"
+	        	android:layout_height="wrap_content"
+	        	android:layout_weight="1" >
+                <ImageView 
+                    android:id="@+id/iv_square_above150"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/square_normal"
+                    android:layout_centerInParent="true"/>
+                <TextView 
+                    android:id="@+id/tv_square_above150"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="151-180"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+            
+             <RelativeLayout
+                android:id="@+id/rel_square_above180"
+                android:layout_width="match_parent"
+	        	android:layout_height="wrap_content"
+	        	android:layout_weight="1" >
+                <ImageView 
+                    android:id="@+id/iv_square_above180"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/square_normal"
+                    android:layout_centerInParent="true"/>
+                <TextView 
+                    android:id="@+id/tv_square_above180"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="180以上"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+        </LinearLayout>
+        
+    </LinearLayout>
+    
+
+</LinearLayout>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical">
+    <!--设计方案子项,作用于设计方案列表-->
+    <RelativeLayout
+        android:id="@+id/item_design_case_image_rl"
+        android:layout_width="match_parent"
+        android:layout_height="182dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp">
+        <!--封面图片-->
+        <ImageView
+            android:id="@+id/item_design_case_image"
+            android:layout_width="match_parent"
+            android:layout_height="182dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/b_home_style" />
+        <!--底部阴影-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/mengceng_yingyin" />
+        <!--设计师的头像以及名称-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <!--头像-->
+            <LinearLayout
+                android:layout_width="19dp"
+                android:layout_height="19dp"
+                android:background="@drawable/shape_oval"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/item_design_case_designer_icon"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/def_icon" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/item_design_case_designer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:text="李子柒"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </RelativeLayout>
+    <!--标题-->
+    <TextView
+        android:id="@+id/item_design_case_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="简欧/三居室/120m/12万"
+        android:textColor="#333333"
+        android:textSize="15sp" />
+    <!--按钮-->
+    <TextView
+        android:id="@+id/item_design_case_get_design"
+        android:layout_width="100dp"
+        android:layout_height="28dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape_get_this_design"
+        android:gravity="center"
+        android:text="获取此设计"
+        android:textColor="#ff630f"
+        android:textSize="12sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="#f5f5f5" />
+</LinearLayout>

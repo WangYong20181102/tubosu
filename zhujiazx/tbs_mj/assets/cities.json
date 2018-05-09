@@ -1,0 +1,1649 @@
+{
+    "data": [
+        {
+            "cityid": "36",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "a",
+            "simpname": "阿拉善盟"
+        },
+        {
+            "cityid": "39",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "a",
+            "simpname": "鞍山"
+        },
+        {
+            "cityid": "105",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "a",
+            "simpname": "安庆"
+        },
+        {
+            "cityid": "156",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "a",
+            "simpname": "安阳"
+        },
+        {
+            "cityid": "296",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "a",
+            "simpname": "安康"
+        },
+        {
+            "cityid": "1",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "b",
+            "simpname": "北京"
+        },
+        {
+            "cityid": "8",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "b",
+            "simpname": "保定"
+        },
+        {
+            "cityid": "26",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "b",
+            "simpname": "包头"
+        },
+        {
+            "cityid": "41",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "b",
+            "simpname": "本溪"
+        },
+        {
+            "cityid": "150",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "b",
+            "simpname": "滨州"
+        },
+        {
+            "cityid": "251",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "b",
+            "simpname": "巴中"
+        },
+        {
+            "cityid": "290",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "b",
+            "simpname": "宝鸡"
+        },
+        {
+            "cityid": "10",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "c",
+            "simpname": "承德"
+        },
+        {
+            "cityid": "11",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "c",
+            "simpname": "沧州"
+        },
+        {
+            "cityid": "17",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "c",
+            "simpname": "长治"
+        },
+        {
+            "cityid": "28",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "c",
+            "simpname": "赤峰"
+        },
+        {
+            "cityid": "51",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "c",
+            "simpname": "长春"
+        },
+        {
+            "cityid": "77",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "c",
+            "simpname": "常州"
+        },
+        {
+            "cityid": "183",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "c",
+            "simpname": "长沙"
+        },
+        {
+            "cityid": "189",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "c",
+            "simpname": "常德"
+        },
+        {
+            "cityid": "192",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "c",
+            "simpname": "郴州"
+        },
+        {
+            "cityid": "215",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "c",
+            "simpname": "潮州"
+        },
+        {
+            "cityid": "234",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "c",
+            "simpname": "重庆"
+        },
+        {
+            "cityid": "235",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "c",
+            "simpname": "成都"
+        },
+        {
+            "cityid": "354",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "c",
+            "simpname": "常熟"
+        },
+        {
+            "cityid": "359",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "c",
+            "simpname": "慈溪"
+        },
+        {
+            "cityid": "15",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "d",
+            "simpname": "大同"
+        },
+        {
+            "cityid": "38",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "d",
+            "simpname": "大连"
+        },
+        {
+            "cityid": "42",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "d",
+            "simpname": "丹东"
+        },
+        {
+            "cityid": "65",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "d",
+            "simpname": "大庆"
+        },
+        {
+            "cityid": "139",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "d",
+            "simpname": "东营"
+        },
+        {
+            "cityid": "148",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "d",
+            "simpname": "德州"
+        },
+        {
+            "cityid": "213",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "d",
+            "simpname": "东莞"
+        },
+        {
+            "cityid": "239",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "d",
+            "simpname": "德阳"
+        },
+        {
+            "cityid": "249",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "d",
+            "simpname": "达州"
+        },
+        {
+            "cityid": "360",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "d",
+            "simpname": "丹阳"
+        },
+        {
+            "cityid": "30",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "e",
+            "simpname": "鄂尔多斯"
+        },
+        {
+            "cityid": "174",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "e",
+            "simpname": "鄂州"
+        },
+        {
+            "cityid": "181",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "e",
+            "simpname": "恩施"
+        },
+        {
+            "cityid": "40",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "f",
+            "simpname": "抚顺"
+        },
+        {
+            "cityid": "45",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "f",
+            "simpname": "阜新"
+        },
+        {
+            "cityid": "108",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "f",
+            "simpname": "阜阳"
+        },
+        {
+            "cityid": "115",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "f",
+            "simpname": "福州"
+        },
+        {
+            "cityid": "133",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "f",
+            "simpname": "抚州"
+        },
+        {
+            "cityid": "202",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "f",
+            "simpname": "佛山"
+        },
+        {
+            "cityid": "353",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "f",
+            "simpname": "福清"
+        },
+        {
+            "cityid": "130",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "g",
+            "simpname": "赣州"
+        },
+        {
+            "cityid": "197",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "g",
+            "simpname": "广州"
+        },
+        {
+            "cityid": "220",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "g",
+            "simpname": "桂林"
+        },
+        {
+            "cityid": "241",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "g",
+            "simpname": "广元"
+        },
+        {
+            "cityid": "248",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "g",
+            "simpname": "广安"
+        },
+        {
+            "cityid": "256",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "g",
+            "simpname": "贵阳"
+        },
+        {
+            "cityid": "6",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "邯郸"
+        },
+        {
+            "cityid": "13",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "衡水"
+        },
+        {
+            "cityid": "25",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "呼和浩特"
+        },
+        {
+            "cityid": "50",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "葫芦岛"
+        },
+        {
+            "cityid": "60",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "哈尔滨"
+        },
+        {
+            "cityid": "81",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "淮安"
+        },
+        {
+            "cityid": "87",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "杭州"
+        },
+        {
+            "cityid": "91",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "湖州"
+        },
+        {
+            "cityid": "98",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "合肥"
+        },
+        {
+            "cityid": "101",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "淮南"
+        },
+        {
+            "cityid": "151",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "菏泽"
+        },
+        {
+            "cityid": "170",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "黄石"
+        },
+        {
+            "cityid": "178",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "黄冈"
+        },
+        {
+            "cityid": "186",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "衡阳"
+        },
+        {
+            "cityid": "194",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "怀化"
+        },
+        {
+            "cityid": "207",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "惠州"
+        },
+        {
+            "cityid": "210",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "河源"
+        },
+        {
+            "cityid": "232",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "海口"
+        },
+        {
+            "cityid": "294",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "h",
+            "simpname": "汉中"
+        },
+        {
+            "cityid": "43",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "j",
+            "simpname": "锦州"
+        },
+        {
+            "cityid": "52",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "j",
+            "simpname": "吉林"
+        },
+        {
+            "cityid": "90",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "j",
+            "simpname": "嘉兴"
+        },
+        {
+            "cityid": "93",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "j",
+            "simpname": "金华"
+        },
+        {
+            "cityid": "127",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "j",
+            "simpname": "九江"
+        },
+        {
+            "cityid": "131",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "j",
+            "simpname": "吉安"
+        },
+        {
+            "cityid": "135",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "j",
+            "simpname": "济南"
+        },
+        {
+            "cityid": "142",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "j",
+            "simpname": "济宁"
+        },
+        {
+            "cityid": "159",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "j",
+            "simpname": "焦作"
+        },
+        {
+            "cityid": "175",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "j",
+            "simpname": "荆门"
+        },
+        {
+            "cityid": "177",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "j",
+            "simpname": "荆州"
+        },
+        {
+            "cityid": "203",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "j",
+            "simpname": "江门"
+        },
+        {
+            "cityid": "216",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "j",
+            "simpname": "揭阳"
+        },
+        {
+            "cityid": "346",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "j",
+            "simpname": "江阴"
+        },
+        {
+            "cityid": "361",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "j",
+            "simpname": "句容"
+        },
+        {
+            "cityid": "368",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "j",
+            "simpname": "靖江"
+        },
+        {
+            "cityid": "153",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "k",
+            "simpname": "开封"
+        },
+        {
+            "cityid": "265",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "k",
+            "simpname": "昆明"
+        },
+        {
+            "cityid": "349",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "k",
+            "simpname": "昆山"
+        },
+        {
+            "cityid": "369",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "k",
+            "simpname": "库尔勒"
+        },
+        {
+            "cityid": "12",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "廊坊"
+        },
+        {
+            "cityid": "23",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "临汾"
+        },
+        {
+            "cityid": "46",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "辽阳"
+        },
+        {
+            "cityid": "80",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "连云港"
+        },
+        {
+            "cityid": "97",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "丽水"
+        },
+        {
+            "cityid": "122",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "龙岩"
+        },
+        {
+            "cityid": "146",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "莱芜"
+        },
+        {
+            "cityid": "147",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "临沂"
+        },
+        {
+            "cityid": "149",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "聊城"
+        },
+        {
+            "cityid": "154",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "洛阳"
+        },
+        {
+            "cityid": "162",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "漯河"
+        },
+        {
+            "cityid": "219",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "柳州"
+        },
+        {
+            "cityid": "238",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "泸州"
+        },
+        {
+            "cityid": "244",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "乐山"
+        },
+        {
+            "cityid": "257",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "六盘水"
+        },
+        {
+            "cityid": "281",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "拉萨"
+        },
+        {
+            "cityid": "298",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "兰州"
+        },
+        {
+            "cityid": "356",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "溧阳"
+        },
+        {
+            "cityid": "362",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "l",
+            "simpname": "溧水"
+        },
+        {
+            "cityid": "69",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "m",
+            "simpname": "牡丹江"
+        },
+        {
+            "cityid": "102",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "m",
+            "simpname": "马鞍山"
+        },
+        {
+            "cityid": "205",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "m",
+            "simpname": "茂名"
+        },
+        {
+            "cityid": "208",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "m",
+            "simpname": "梅州"
+        },
+        {
+            "cityid": "240",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "m",
+            "simpname": "绵阳"
+        },
+        {
+            "cityid": "246",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "m",
+            "simpname": "眉山"
+        },
+        {
+            "cityid": "74",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "n",
+            "simpname": "南京"
+        },
+        {
+            "cityid": "79",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "n",
+            "simpname": "南通"
+        },
+        {
+            "cityid": "88",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "n",
+            "simpname": "宁波"
+        },
+        {
+            "cityid": "121",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "n",
+            "simpname": "南平"
+        },
+        {
+            "cityid": "123",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "n",
+            "simpname": "宁德"
+        },
+        {
+            "cityid": "124",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "n",
+            "simpname": "南昌"
+        },
+        {
+            "cityid": "218",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "n",
+            "simpname": "南宁"
+        },
+        {
+            "cityid": "243",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "n",
+            "simpname": "内江"
+        },
+        {
+            "cityid": "245",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "n",
+            "simpname": "南充"
+        },
+        {
+            "cityid": "47",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "p",
+            "simpname": "盘锦"
+        },
+        {
+            "cityid": "117",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "p",
+            "simpname": "莆田"
+        },
+        {
+            "cityid": "155",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "p",
+            "simpname": "平顶山"
+        },
+        {
+            "cityid": "160",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "p",
+            "simpname": "濮阳"
+        },
+        {
+            "cityid": "237",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "p",
+            "simpname": "攀枝花"
+        },
+        {
+            "cityid": "5",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "q",
+            "simpname": "秦皇岛"
+        },
+        {
+            "cityid": "61",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "q",
+            "simpname": "齐齐哈尔"
+        },
+        {
+            "cityid": "94",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "q",
+            "simpname": "衢州"
+        },
+        {
+            "cityid": "119",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "q",
+            "simpname": "泉州"
+        },
+        {
+            "cityid": "136",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "q",
+            "simpname": "青岛"
+        },
+        {
+            "cityid": "212",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "q",
+            "simpname": "清远"
+        },
+        {
+            "cityid": "266",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "q",
+            "simpname": "曲靖"
+        },
+        {
+            "cityid": "145",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "r",
+            "simpname": "日照"
+        },
+        {
+            "cityid": "3",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "石家庄"
+        },
+        {
+            "cityid": "37",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "沈阳"
+        },
+        {
+            "cityid": "53",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "四平"
+        },
+        {
+            "cityid": "71",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "绥化"
+        },
+        {
+            "cityid": "73",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "上海"
+        },
+        {
+            "cityid": "78",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "苏州"
+        },
+        {
+            "cityid": "86",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "宿迁"
+        },
+        {
+            "cityid": "92",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "绍兴"
+        },
+        {
+            "cityid": "118",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "三明"
+        },
+        {
+            "cityid": "134",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "上饶"
+        },
+        {
+            "cityid": "165",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "商丘"
+        },
+        {
+            "cityid": "171",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "十堰"
+        },
+        {
+            "cityid": "180",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "随州"
+        },
+        {
+            "cityid": "182",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "神农架"
+        },
+        {
+            "cityid": "187",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "邵阳"
+        },
+        {
+            "cityid": "198",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "韶关"
+        },
+        {
+            "cityid": "199",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "深圳"
+        },
+        {
+            "cityid": "201",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "汕头"
+        },
+        {
+            "cityid": "209",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "汕尾"
+        },
+        {
+            "cityid": "242",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "遂宁"
+        },
+        {
+            "cityid": "297",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "商洛"
+        },
+        {
+            "cityid": "365",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "s",
+            "simpname": "绥宁"
+        },
+        {
+            "cityid": "2",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "t",
+            "simpname": "天津"
+        },
+        {
+            "cityid": "4",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "t",
+            "simpname": "唐山"
+        },
+        {
+            "cityid": "14",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "t",
+            "simpname": "太原"
+        },
+        {
+            "cityid": "48",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "t",
+            "simpname": "铁岭"
+        },
+        {
+            "cityid": "55",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "t",
+            "simpname": "通化"
+        },
+        {
+            "cityid": "85",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "t",
+            "simpname": "泰州"
+        },
+        {
+            "cityid": "96",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "t",
+            "simpname": "台州"
+        },
+        {
+            "cityid": "104",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "t",
+            "simpname": "铜陵"
+        },
+        {
+            "cityid": "143",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "t",
+            "simpname": "泰安"
+        },
+        {
+            "cityid": "260",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "t",
+            "simpname": "铜仁"
+        },
+        {
+            "cityid": "289",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "t",
+            "simpname": "铜川"
+        },
+        {
+            "cityid": "357",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "t",
+            "simpname": "太仓"
+        },
+        {
+            "cityid": "75",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "w",
+            "simpname": "无锡"
+        },
+        {
+            "cityid": "89",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "w",
+            "simpname": "温州"
+        },
+        {
+            "cityid": "99",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "w",
+            "simpname": "芜湖"
+        },
+        {
+            "cityid": "141",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "w",
+            "simpname": "潍坊"
+        },
+        {
+            "cityid": "144",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "w",
+            "simpname": "威海"
+        },
+        {
+            "cityid": "169",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "w",
+            "simpname": "武汉"
+        },
+        {
+            "cityid": "292",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "w",
+            "simpname": "渭南"
+        },
+        {
+            "cityid": "325",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "w",
+            "simpname": "乌鲁木齐"
+        },
+        {
+            "cityid": "363",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "w",
+            "simpname": "吴江"
+        },
+        {
+            "cityid": "7",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "x",
+            "simpname": "邢台"
+        },
+        {
+            "cityid": "76",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "x",
+            "simpname": "徐州"
+        },
+        {
+            "cityid": "114",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "x",
+            "simpname": "宣城"
+        },
+        {
+            "cityid": "116",
+            "hot_flag": "1",
+            "isopen": "1",
+            "pinyin_sort": "x",
+            "simpname": "厦门"
+        },
+        {
+            "cityid": "158",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "x",
+            "simpname": "新乡"
+        },
+        {
+            "cityid": "161",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "x",
+            "simpname": "许昌"
+        },
+        {
+            "cityid": "166",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "x",
+            "simpname": "信阳"
+        },
+        {
+            "cityid": "173",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "x",
+            "simpname": "襄阳"
+        },
+        {
+            "cityid": "176",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "x",
+            "simpname": "孝感"
+        },
+        {
+            "cityid": "179",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "x",
+            "simpname": "咸宁"
+        },
+        {
+            "cityid": "185",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "x",
+            "simpname": "湘潭"
+        },
+        {
+            "cityid": "288",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "x",
+            "simpname": "西安"
+        },
+        {
+            "cityid": "291",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "x",
+            "simpname": "咸阳"
+        },
+        {
+            "cityid": "312",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "x",
+            "simpname": "西宁"
+        },
+        {
+            "cityid": "16",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "阳泉"
+        },
+        {
+            "cityid": "21",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "运城"
+        },
+        {
+            "cityid": "44",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "营口"
+        },
+        {
+            "cityid": "82",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "盐城"
+        },
+        {
+            "cityid": "83",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "扬州"
+        },
+        {
+            "cityid": "129",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "鹰潭"
+        },
+        {
+            "cityid": "132",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "宜春"
+        },
+        {
+            "cityid": "140",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "烟台"
+        },
+        {
+            "cityid": "172",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "宜昌"
+        },
+        {
+            "cityid": "188",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "岳阳"
+        },
+        {
+            "cityid": "191",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "益阳"
+        },
+        {
+            "cityid": "193",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "永州"
+        },
+        {
+            "cityid": "211",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "阳江"
+        },
+        {
+            "cityid": "247",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "宜宾"
+        },
+        {
+            "cityid": "250",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "雅安"
+        },
+        {
+            "cityid": "293",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "延安"
+        },
+        {
+            "cityid": "295",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "榆林"
+        },
+        {
+            "cityid": "320",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "银川"
+        },
+        {
+            "cityid": "348",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "宜兴"
+        },
+        {
+            "cityid": "358",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "余姚"
+        },
+        {
+            "cityid": "364",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "y",
+            "simpname": "永康"
+        },
+        {
+            "cityid": "9",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "张家口"
+        },
+        {
+            "cityid": "49",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "朝阳"
+        },
+        {
+            "cityid": "84",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "镇江"
+        },
+        {
+            "cityid": "95",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "舟山"
+        },
+        {
+            "cityid": "120",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "漳州"
+        },
+        {
+            "cityid": "137",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "淄博"
+        },
+        {
+            "cityid": "138",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "枣庄"
+        },
+        {
+            "cityid": "152",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "郑州"
+        },
+        {
+            "cityid": "167",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "周口"
+        },
+        {
+            "cityid": "168",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "驻马店"
+        },
+        {
+            "cityid": "184",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "株洲"
+        },
+        {
+            "cityid": "200",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "珠海"
+        },
+        {
+            "cityid": "204",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "湛江"
+        },
+        {
+            "cityid": "206",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "肇庆"
+        },
+        {
+            "cityid": "214",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "中山"
+        },
+        {
+            "cityid": "236",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "自贡"
+        },
+        {
+            "cityid": "252",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "资阳"
+        },
+        {
+            "cityid": "258",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "遵义"
+        },
+        {
+            "cityid": "350",
+            "hot_flag": "0",
+            "isopen": "1",
+            "pinyin_sort": "z",
+            "simpname": "张家港"
+        }
+    ]
+}

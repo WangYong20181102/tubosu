@@ -1,0 +1,157 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+apply plugin: 'android'
+repositories {
+    maven { url "https://jitpack.io" }
+}
+dependencies {
+    implementation fileTree(include: '*.jar', dir: 'libs')
+    implementation files('libs/org.apache.http.legacy.jar')
+    implementation files('libs/SocialSDK_QQ_Simplify.jar')
+    implementation files('libs/SocialSDK_WeChat_Simplify.jar')
+    implementation files('libs/umeng_shareboard_widget.jar')
+    implementation files('libs/umeng_social_api.jar')
+    implementation files('libs/umeng_social_shareboard.jar')
+    implementation files('libs/umeng_social_net.jar')
+    implementation files('libs/umeng_social_tool.jar')
+    implementation files('libs/BaiduLBS_Android.jar')
+    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+    implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.3.0'
+    implementation 'com.android.support:appcompat-v7:27.0.1'
+    implementation 'com.android.support:design:27.0.1'
+    implementation 'com.android.support:cardview-v7:27.0.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.facebook.rebound:rebound:0.3.8'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    implementation 'com.umeng.analytics:analytics:latest.integration'
+    implementation 'com.google.code.gson:gson:2.8.1'
+    implementation 'com.jakewharton:butterknife:8.6.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
+    implementation 'cn.jiguang.sdk:jpush:3.1.1'
+    // 此处以JPush 3.0.9 版本为例。
+    implementation 'cn.jiguang.sdk:jcore:1.1.9'
+    // 此处以JCore 1.1.7 版本为例。
+    implementation 'com.jaydenxiao:ExpandableTextView:1.0.0'
+    implementation 'com.androidkun:XTabLayout:1.1.3'
+    implementation files('libs/MiPush_SDK_Client_3_5_2.jar')
+    implementation 'com.github.lovetuzitong:MultiImageSelector:1.2'
+    implementation 'com.allenliu.versionchecklib:library:2.0.0'
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation files('libs/glide-3.7.0.jar')
+    implementation 'com.contrarywind:Android-PickerView:4.1.3'
+}
+
+
+
+
+android {
+    signingConfigs {
+        release {
+            keyAlias 'tbszjzx'
+            keyPassword 'tbszjzx'
+            storeFile file('D:/keystore/zhujiazhuangxiu/zhujiazhuangxiu')
+            storePassword 'tbszjzx'
+        }
+    }
+    compileSdkVersion 26
+    buildToolsVersion '27.0.3'
+    defaultConfig {
+        applicationId "com.tbs.tbs_mj" // 程序的包名
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0.0"
+        flavorDimensions "versionCode"
+        multiDexEnabled true  // 消去重复的jar 引用
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "ali"]//多渠道打包标识 默认阿里
+
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: "com.tbs.tobosutype",
+                JPUSH_APPKEY : "867c2106715593b757fde749", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+        ]
+
+
+    }
+
+    useLibrary 'org.apache.http.legacy'
+
+
+    productFlavors {
+        ali {}
+        anzhi {}
+        appbaidu {}
+        apphuawei {}
+        applenovo {}
+        appmeizu {}
+        appoppo {}
+        appqihu {}
+        appttt {}
+        appvivo {}
+        appxiaomi {}
+        appyyb {}
+        jinli {}
+        leshi {}
+        sougou {}
+        sumsung {}
+        youyi {}
+        zhuanghaojia {}
+        tbspc {}
+    }
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs']
+        }
+
+        // Move the tests to tests/java, tests/res, etc...
+//        instrumentTest.setRoot('tests')
+
+        // Move the build types to build-types/<type>
+        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
+        // This moves them out of them default location under src/<type>/... which would
+        // conflict with src/ being used by the main source set.
+        // Adding new build types or product flavors should be accompanied
+        // by a similar customization.
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+}
+android.applicationVariants.all { variant ->
+    variant.outputs.all { output ->
+        def outputFile = output.outputFile
+        if (outputFile != null && outputFile.name.endsWith('.apk')) {
+            File outputDirectory = new File(outputFile.parent);
+            def fileName
+            if (variant.buildType.name == "release") {
+//                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_${variant.productFlavors[0].name}.apk"
+                fileName = "zhujiazhuangxiu_v1.0.0_${variant.productFlavors[0].name}.apk"
+            } else {
+//                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_beta.apk"
+                fileName = "zhujiazhuangxiu_v1.0.0_${variant.productFlavors[0].name}_beta.apk"
+            }
+//            output.outputFile = new File(outputDirectory, fileName)
+//            outputFileName="${variant.applicationId}-${ buildType.name}-${variant.productFlavors[0].name}.apk"
+            outputFileName = fileName
+        }
+    }
+}

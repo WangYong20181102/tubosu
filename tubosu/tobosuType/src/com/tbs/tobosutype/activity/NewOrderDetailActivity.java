@@ -49,6 +49,7 @@ public class NewOrderDetailActivity extends BaseActivity {
     private Context mContext;
     private String TAG = "NewOrderDetailActivity";
     private String mOrderId = "";//从上一个界面进来的订单id
+    private String mShowingOrderId = "";//从上一个界面进来的用于展示的订单id
     private String mViewPagerPosition = "";
     private Intent mIntent;
     private Gson mGson;
@@ -87,10 +88,12 @@ public class NewOrderDetailActivity extends BaseActivity {
         mGson = new Gson();
         //获取从上一个界面传来的订单id
         mOrderId = mIntent.getStringExtra("mOrderId");
+        //获取从上一个界面传来的订单id用于展示
+        mShowingOrderId = mIntent.getStringExtra("mShowingOrderId");
         //获取切换的界面
         mViewPagerPosition = mIntent.getStringExtra("mViewPagerPosition");
         //显示订单号码
-        newOrderIdTv.setText("" + "订单 " + mOrderId);
+        newOrderIdTv.setText("" + "订单 " + mShowingOrderId);
         mFragmentArrayList.add(OrderDetailFragment.newInstance(mOrderId));
         mFragmentArrayList.add(OrderFeedBackFragment.newInstance(mOrderId));
         myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragmentArrayList);

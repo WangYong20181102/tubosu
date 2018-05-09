@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/gongsibar"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:background="@color/white">
+        <RelativeLayout
+            android:id="@+id/relBackGongsi"
+            android:layout_width="49dp"
+            android:layout_height="49dp">
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="17dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/activity_back"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收藏的装修公司"
+            android:textColor="@color/color_black"
+            android:layout_centerInParent="true"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tvEditZhuangxiuGongsi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="#232323"
+            android:layout_marginRight="14dp"
+            android:text="编辑"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/shoucangyinying"
+        android:layout_below="@+id/gongsibar"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="@drawable/yinying4"/>
+
+    <RelativeLayout
+        android:layout_below="@+id/shoucangyinying"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/gongsiRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/reclerviewGongsi"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/relDeleteCompany"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            android:background="@drawable/meng_ceng">
+            <TextView
+                android:id="@+id/tvDelelteZhuangxiuGongsi"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edit_textview_bg"
+                android:layout_margin="16dp"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:textColor="#FF8214"
+                android:text="删除"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rel_no_company"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/iv_no_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/no_shoucang"/>
+        <TextView
+            android:layout_below="@+id/iv_no_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="#D0D1D3"
+            android:layout_centerHorizontal="true"
+            android:text="暂无收藏，赶紧去逛逛吧!"/>
+    </RelativeLayout>
+</RelativeLayout>

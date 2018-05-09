@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/item_deco_detail_head_ll"
+    android:background="#ffffff"
+    android:orientation="vertical">
+    <!--头部显示的图片-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="262dp"
+        android:visibility="visible">
+        <ImageView
+            android:id="@+id/item_deco_detail_head_img"
+            android:layout_width="match_parent"
+            android:layout_height="262dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/b_home_style" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/meng_ceng_bg">
+            <!--返回按钮-->
+            <LinearLayout
+                android:id="@+id/item_deco_detail_back"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/back_white" />
+            </LinearLayout>
+            <!--分享按钮-->
+            <LinearLayout
+                android:id="@+id/item_deco_detail_share"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/img_detail_share" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/book_sign" />
+        <View
+            android:id="@+id/item_deco_detail_view"
+            android:scaleType="fitXY"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="30dp" />
+
+    </RelativeLayout>
+    <!--XX的家以及风格-->
+    <LinearLayout
+        android:id="@+id/item_deco_detail_name_title_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_marginRight="50dp"
+            android:textStyle="bold"
+            android:id="@+id/item_deco_detail_title_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="郭先生的家"
+            android:textColor="#45474d"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/item_deco_detail_title_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="风格：北欧"
+            android:textColor="#999999"
+            android:textSize="12sp" />
+    </LinearLayout>
+    <!--设计师模块-->
+    <LinearLayout
+        android:id="@+id/item_deco_detail_design_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="36dp"
+        android:orientation="vertical">
+        <!--设计师的标题-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="4.7dp"
+                android:layout_height="15dp"
+                android:src="@drawable/deco_case_sign" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:text="设计师"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <!--设计师的头像以及找他设计的按钮-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="14dp">
+
+            <ImageView
+                android:id="@+id/item_deco_detail_design_icon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/def_icon" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/item_deco_detail_design_icon"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/item_deco_detail_design_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="害羞的小狮子"
+                    android:textColor="#000000"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/item_deco_detail_design_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="首席设计师"
+                    android:textColor="#999999"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/item_deco_detail_find_he_design"
+                android:layout_width="96dp"
+                android:layout_height="27dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/shape_decoration_case_price"
+                android:gravity="center"
+                android:text="找TA免费设计"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:layout_marginTop="18dp"
+            android:background="@color/bg_gray" />
+    </LinearLayout>
+    <!--房屋信息-->
+    <LinearLayout
+        android:id="@+id/item_deco_detail_house_msg_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+        <!--房屋信息的标题-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="4.7dp"
+                android:layout_height="15dp"
+                android:src="@drawable/deco_case_sign" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:text="房屋信息"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <!--显示具体信息-->
+        <!--户型-->
+        <LinearLayout
+            android:id="@+id/item_deco_detail_huxing_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="户型"
+                android:textColor="#999999"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/item_deco_detail_huxing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:text="3室1厅2卫"
+                android:textColor="#000000"
+                android:textSize="13sp" />
+        </LinearLayout>
+        <!--面积-->
+        <LinearLayout
+            android:id="@+id/item_deco_detail_mianji_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="面积"
+                android:textColor="#999999"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/item_deco_detail_mianji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:text="128㎡"
+                android:textColor="#000000"
+                android:textSize="13sp" />
+        </LinearLayout>
+        <!--位置-->
+        <LinearLayout
+            android:id="@+id/item_deco_detail_weizhi_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="位置"
+                android:textColor="#999999"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/item_deco_detail_weizhi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:text="广东 深圳 桃园小区"
+                android:textColor="#000000"
+                android:textSize="13sp" />
+        </LinearLayout>
+        <!--花费-->
+        <LinearLayout
+            android:id="@+id/item_deco_detail_huafei_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="花费"
+                android:textColor="#999999"
+                android:textSize="13sp" />
+            <TextView
+                android:id="@+id/item_deco_detail_huafei"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:text="约20万元"
+                android:textColor="#000000"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:layout_marginTop="18dp"
+            android:background="@color/bg_gray" />
+    </LinearLayout>
+    <!--简介-->
+    <LinearLayout
+        android:id="@+id/item_deco_detail_jianjie_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+        <!--简介信息的标题-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="4.7dp"
+                android:layout_height="15dp"
+                android:src="@drawable/deco_case_sign" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:text="简介"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/item_deco_detail_jianjie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="28dp"
+            android:layout_marginTop="16dp"
+            android:lineSpacingExtra="5dp"
+            android:text="复活卡就是疯狂就撒旦浩丰科技哈萨克大姐夫好复活卡就是疯狂就撒旦浩丰科技哈萨克大姐夫好"
+            android:textColor="#999999"
+            android:textSize="13sp" />
+
+        <View
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/bg_gray" />
+    </LinearLayout>
+    <!--空间展示-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="17dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="4.7dp"
+                android:layout_height="15dp"
+                android:src="@drawable/deco_case_sign" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:text="空间展示"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

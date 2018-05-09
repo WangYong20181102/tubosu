@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.tbs.tbs_mj.activity.NewImageActivity">
+    <!--可切换的Touch页面-->
+    <RelativeLayout
+        android:id="@+id/tab_view_pager_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--头部切换的标签-->
+        <android.support.design.widget.TabLayout
+            android:id="@+id/new_image_tab"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentTop="true"
+            app:tabGravity="center"
+            app:tabIndicatorColor="#ff6f20"
+            app:tabIndicatorHeight="4dp"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="#ff6f20"
+            app:tabTextAppearance="@style/TabLayoutTextStyle"
+            app:tabTextColor="#242424">
+
+        </android.support.design.widget.TabLayout>
+        <!--分割线-->
+        <View
+            android:id="@+id/new_image_dev_view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/new_image_tab"
+            android:background="#efefef" />
+        <!--切换的viewpage-->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/new_image_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/new_image_dev_view">
+
+        </android.support.v4.view.ViewPager>
+    </RelativeLayout>
+
+    <!--弹窗-->
+    <RelativeLayout
+        android:id="@+id/new_image_free_design_img_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:visibility="gone">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/new_image_free_design_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/image_free_design" />
+
+        <ImageView
+            android:id="@+id/new_image_free_design_img_close"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/new_image_free_design_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/image_free_design_close" />
+    </RelativeLayout>
+    <!--悬浮贴边-->
+    <ImageView
+        android:id="@+id/new_image_gif"
+        android:layout_width="40dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="48dp"
+        android:src="@drawable/free_design_anim_01"
+        android:visibility="gone" />
+</RelativeLayout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="116dp"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:id="@+id/item_article_type_item_ll"
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:orientation="horizontal">
+        <!--显示图片-->
+        <ImageView
+            android:id="@+id/item_article_type_item_img"
+            android:layout_width="120dp"
+            android:layout_height="82dp"
+            android:layout_gravity="center_vertical"
+            android:scaleType="centerCrop"
+            android:src="@drawable/iamge_loading" />
+        <!--右侧显示的数据-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="82dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="12dp">
+            <!--标题-->
+            <TextView
+                android:id="@+id/item_article_type_item_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="7dp"
+                android:maxLines="2"
+                android:text="二手房装修注意事项，这三点要牢记!"
+                android:textColor="#333231"
+                android:textSize="16sp" />
+            <!--浏览量 以及时间-->
+            <!--浏览量-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/liulanliang" />
+
+                <TextView
+                    android:id="@+id/item_article_type_item_view_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="6dp"
+                    android:text="656561"
+                    android:textColor="#808080"
+                    android:textSize="11sp" />
+            </LinearLayout>
+            <!--时间-->
+            <TextView
+                android:id="@+id/item_article_type_item_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="5dp"
+                android:text="2017-10-10"
+                android:textColor="#808080"
+                android:textSize="11sp" />
+        </RelativeLayout>
+    </LinearLayout>
+    <!--分割线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divide_gray_color" />
+</RelativeLayout>

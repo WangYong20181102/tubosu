@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.tbs.tbs_mj.activity.NewLoginActivity">
+    <!--顶部的显示图片-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="178dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/denglubeijing" />
+        <!--左右切换的滑块-->
+        <!--手机登录-->
+        <RelativeLayout
+            android:id="@+id/new_login_with_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="75dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="手机登录"
+                android:textColor="#ffffff"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+
+        <!--账号登录-->
+        <RelativeLayout
+            android:id="@+id/new_login_with_account"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="75dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="账号登录"
+                android:textColor="#ffffff"
+                android:textSize="13sp" />
+        </RelativeLayout>
+
+
+        <!--关闭这个页面的按钮-->
+        <RelativeLayout
+            android:id="@+id/new_login_close"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/new_login_guanbi" />
+        </RelativeLayout>
+        <!--左边的滑块-->
+        <ImageView
+            android:id="@+id/new_login_left_sanjiao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="94dp"
+            android:src="@drawable/sanjiao" />
+        <!--右边的滑块-->
+        <ImageView
+            android:id="@+id/new_login_right_sanjiao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="94dp"
+            android:src="@drawable/sanjiao"
+            android:visibility="invisible" />
+    </RelativeLayout>
+    <!--左右滑动的页面-->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/new_login_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
+</LinearLayout>

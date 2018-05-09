@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tvCompabn"
+        android:layout_width="71dp"
+        android:layout_height="26dp"
+        android:text="sdf"
+        android:maxLines="1"
+        android:layout_centerInParent="true"
+        android:maxEms="6"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:background="@drawable/select_servicearea_textview_bg"
+        android:textSize="11sp"/>
+
+</RelativeLayout>

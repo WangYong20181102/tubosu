@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="#FFFFFF"
+    android:orientation="vertical" >
+    <RelativeLayout 
+        android:layout_width="200dip"
+        android:layout_height="280dip" >
+        <ImageView 
+            android:id="@+id/iv_net_out_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icon_net_out"
+            android:layout_marginTop="22dip"
+            android:layout_centerHorizontal="true"/>
+        
+        
+        <TextView
+            android:id="@+id/tv_net_out_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dip"
+            android:layout_below="@+id/iv_net_out_icon"
+            android:textColor="#B0AEAE"
+            android:text="链接失败"
+            android:textSize="19sp" />
+        
+        <TextView
+            android:id="@+id/tv_checknet_text_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dip"
+            android:layout_below="@+id/tv_net_out_text"
+            android:textColor="#B0AEAE"
+            android:text="请检查您的手机是否联网"
+            android:textSize="14sp" />
+        
+        <TextView
+            android:id="@+id/tv_reload_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dip"
+            android:paddingRight="20dip"
+            android:paddingTop="10dip"
+            android:paddingBottom="10dip"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="14dip"
+            android:layout_below="@+id/tv_checknet_text_tips"
+            android:background="@drawable/textview_reload_bg"
+            android:text="重新加载"
+            android:textColor="#B0AEAE"
+            android:textSize="18sp" />
+        
+    </RelativeLayout>
+</LinearLayout>

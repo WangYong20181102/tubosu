@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+        <!--标题-->
+        <TextView
+            android:textStyle="bold"
+            android:id="@+id/item_topic_head_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="6dp"
+            android:text="简约现代装修案例风格合集，家里颜值的重头戏"
+            android:textColor="#45474d"
+            android:textSize="22sp" />
+        <!--时间-->
+        <TextView
+            android:id="@+id/item_topic_head_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="2017-10-16"
+            android:textColor="#b3b3b3"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="48dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical">
+            <!--上边的逗号-->
+            <TextView
+                android:id="@+id/item_topic_head_up_dou"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:gravity="left"
+                android:text="“一"
+                android:textColor="#afb1b3"
+                android:textSize="34sp" />
+            <!--里边的内容-->
+            <TextView
+                android:id="@+id/item_topic_head_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="17dp"
+                android:layout_marginRight="16dp"
+                android:lineSpacingExtra="8dp"
+                android:text="简约的设计风格按快地方哈看似简单浩打开兼爱非攻榜首的房间号都是废话丰科技收到风会计核算款到发货快来发挥空间发哈科技时代"
+                android:textColor="#afb1b3"
+                android:textSize="13sp" />
+            <!--下边的逗号-->
+            <TextView
+                android:id="@+id/item_topic_head_down_dou"
+                android:gravity="top"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:text="一”"
+                android:textColor="#afb1b3"
+                android:textSize="34sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

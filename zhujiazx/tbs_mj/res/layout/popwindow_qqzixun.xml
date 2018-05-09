@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/pop_phone_zixun"
+    android:background="#b4353332"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/phone_pop_window_ll"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/phone_num"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="土拨鼠热线：400-696-2221" />
+        <View
+            android:background="@color/dividing_line_bg"
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="44dp">
+            <TextView
+                android:id="@+id/quxiao_phone"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:text="取消"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <View
+                android:layout_gravity="center"
+                android:background="@color/dividing_line_bg"
+                android:layout_width="1dp"
+                android:layout_height="20dp"/>
+            <TextView
+                android:id="@+id/open_phone"
+                android:textColor="#ff6f12"
+                android:gravity="center"
+                android:text="拨打"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

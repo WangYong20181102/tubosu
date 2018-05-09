@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#f5f3f2"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="14dp">
+
+        <RelativeLayout
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/item_pop_tv"
+                android:layout_width="72dp"
+                android:layout_height="30dp"
+                android:background="@drawable/pop_item_bg_select"
+                android:gravity="center"
+                android:text="二居室"
+                android:textColor="@color/pop_item_text_color"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/item_pop_dot"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="9dp" />
+
+            <ImageView
+                android:id="@+id/item_pop_dot_colorful"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="9dp"
+                android:src="@drawable/colorful"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/item_pop_dot_white"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="9dp"
+                android:src="@drawable/white_image_dot"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

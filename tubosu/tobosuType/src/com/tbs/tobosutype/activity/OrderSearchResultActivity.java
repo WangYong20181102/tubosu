@@ -224,6 +224,7 @@ public class OrderSearchResultActivity extends com.tbs.tobosutype.base.BaseActiv
                     //进入详情页
                     Intent intent = new Intent(mContext, NewOrderDetailActivity.class);
                     intent.putExtra("mOrderId", mOrderItemArrayList.get(position).getId());
+                    intent.putExtra("mShowingOrderId", mOrderItemArrayList.get(position).getOrder_id());
                     intent.putExtra("mOrderType", mOrderType);
                     startActivity(intent);
                     //在处理新订单时要对数据操作
@@ -243,6 +244,7 @@ public class OrderSearchResultActivity extends com.tbs.tobosutype.base.BaseActiv
                         //跳转页面
                         Intent intentToOrderDetail = new Intent(mContext, NewOrderDetailActivity.class);
                         intentToOrderDetail.putExtra("mOrderId", mOrderItemArrayList.get(position).getId());
+                        intentToOrderDetail.putExtra("mShowingOrderId", mOrderItemArrayList.get(position).getOrder_id());
                         intentToOrderDetail.putExtra("mOrderType", mOrderType);
                         startActivity(intentToOrderDetail);
                         //通知刷新 并改变订单的状态
@@ -265,6 +267,7 @@ public class OrderSearchResultActivity extends com.tbs.tobosutype.base.BaseActiv
 //                        Toast.makeText(mContext, "反馈", Toast.LENGTH_SHORT).show();
                         Intent intentToFeedBack = new Intent(mContext, NewOrderDetailActivity.class);
                         intentToFeedBack.putExtra("mOrderId", mOrderItemArrayList.get(position).getId());
+                        intentToFeedBack.putExtra("mShowingOrderId", mOrderItemArrayList.get(position).getOrder_id());
                         intentToFeedBack.putExtra("mOrderType", mOrderType);
                         intentToFeedBack.putExtra("mViewPagerPosition", "1");
                         mContext.startActivity(intentToFeedBack);

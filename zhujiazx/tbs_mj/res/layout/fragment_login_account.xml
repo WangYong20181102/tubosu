@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/account_login_rl"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#323333"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="20dip"
+                    android:layout_centerVertical="true"
+                    android:text="账号:"/>
+
+                <EditText
+                    android:id="@+id/et_login_useraccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_a"
+                    android:maxLines="1"
+                    android:background="@null"
+                    android:textColorHint="#b9b7b7"
+                    android:hint="请输入账号"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="10dip"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:layout_marginLeft="20dip"
+                    android:layout_marginRight="40dip"
+                    android:layout_below="@+id/et_login_useraccount"
+                    android:background="#9A948B"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dip">
+                <TextView
+                    android:id="@+id/tv_pas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#323333"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="20dip"
+                    android:layout_centerVertical="true"
+                    android:text="密码:"/>
+                <EditText
+                    android:id="@+id/et_login_useraccount_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dip"
+                    android:layout_toRightOf="@+id/tv_pas"
+                    android:layout_marginRight="40dip"
+                    android:background="@null"
+                    android:maxLines="1"
+                    android:textColorHint="#b9b7b7"
+                    android:inputType="textPassword"
+                    android:hint="请输入密码"
+                    android:textSize="14sp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:layout_marginLeft="20dip"
+                    android:layout_marginRight="40dip"
+                    android:layout_below="@+id/et_login_useraccount_password"
+                    android:background="#9A948B"/>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dip">
+                <TextView
+                    android:id="@+id/tv_accountlogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dip"
+                    android:gravity="center"
+                    android:layout_marginLeft="40dip"
+                    android:layout_marginRight="40dip"
+                    android:text="登 录"
+                    android:textSize="20sp"
+                    android:background="@drawable/text_verifycode_bg"
+                    android:textColor="@color/white"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_obtain_weixin_login_account"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="14dip"
+                android:background="@drawable/selector_weixin_login"
+                android:clickable="true"
+                android:gravity="center" >
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:clickable="false"
+                    android:drawableLeft="@drawable/img_weixin"
+                    android:drawablePadding="3dp"
+                    android:text="微信登录"
+                    android:textColor="@color/color_neutralgrey"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

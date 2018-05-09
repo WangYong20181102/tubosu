@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/tao_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:layout_margin="7dp"/>
+
+    <ImageView
+        android:id="@+id/tao_fav_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tao_img"
+        android:layout_alignLeft="@+id/tao_img"
+        android:layout_margin="10dp"
+        android:background="@drawable/d_selected"/>
+
+    <TextView
+        android:id="@+id/tvTaoTextTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="6dp"
+        android:maxLines="1"
+        android:maxEms="13"
+        android:textColor="#74777A"
+        android:layout_below="@+id/tao_img"
+        android:layout_alignLeft="@+id/tao_img"
+        android:ellipsize="end"
+        android:text="sdfsfd"/>
+
+</RelativeLayout>

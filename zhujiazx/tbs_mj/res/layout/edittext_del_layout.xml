@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+      >
+
+    <EditText
+        android:id="@+id/ed_username"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/req_kuang_bg"
+        android:hint="请输入您要修改的昵称"
+        />
+
+   <ImageView
+        android:id="@+id/img_del"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ed_username"
+        android:layout_alignRight="@+id/ed_username"
+        android:layout_alignTop="@+id/ed_username"
+        android:src="@drawable/del" />
+
+</RelativeLayout>

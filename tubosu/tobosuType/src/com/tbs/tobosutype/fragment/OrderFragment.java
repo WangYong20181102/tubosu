@@ -12,12 +12,15 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -46,6 +49,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -254,6 +259,9 @@ public class OrderFragment extends BaseFragment {
                             _OrderItem orderItem = mGson.fromJson(jsonArray.get(i).toString(), _OrderItem.class);
                             mOrderItemArrayList.add(orderItem);
                         }
+                        if (mAllOrderActivity == null) {
+                            return;
+                        }
                         //将数据布局到页面上
                         mAllOrderActivity.runOnUiThread(new Runnable() {
                             @Override
@@ -273,6 +281,9 @@ public class OrderFragment extends BaseFragment {
                             }
                         });
                     } else {
+                        if (mAllOrderActivity == null) {
+                            return;
+                        }
                         //没有更多的数据
                         mAllOrderActivity.runOnUiThread(new Runnable() {
                             @Override
@@ -307,13 +318,14 @@ public class OrderFragment extends BaseFragment {
                     //进入详情页
                     Intent intent = new Intent(mContext, NewOrderDetailActivity.class);
                     intent.putExtra("mOrderId", mOrderItemArrayList.get(position).getId());
+                    intent.putExtra("mShowingOrderId", mOrderItemArrayList.get(position).getOrder_id());//显示的订单id
                     intent.putExtra("mOrderType", mOrderType);
                     startActivity(intent);
                     //在处理新订单时要对数据操作
                     if (mOrderItemArrayList.get(position).getState().equals("1")) {
                         //通知刷新 并改变订单的状态
 //                        Log.e(TAG, "集合长度===============" + mOrderItemArrayList.size() + "=====当前所处的页面位置====" + mOrderType);
-                        HttpChangeOrderState(mOrderItemArrayList.get(position).getId(), mOrderItemArrayList.get(position).getState(), 1, position);
+//                        HttpChangeOrderState(mOrderItemArrayList.get(position).getId(), mOrderItemArrayList.get(position).getState(), 1, position);
                     }
                     break;
                 //按键处理模式根据数据类型
@@ -324,19 +336,22 @@ public class OrderFragment extends BaseFragment {
 //                        Toast.makeText(mContext, "查看", Toast.LENGTH_SHORT).show();
                         //跳转页面
                         Intent intentToOrderDetail = new Intent(mContext, NewOrderDetailActivity.class);
-                        intentToOrderDetail.putExtra("mOrderId", mOrderItemArrayList.get(position).getId());
+                        intentToOrderDetail.putExtra("mOrderId", mOrderItemArrayList.get(position).getId());//操作数据的id
+                        intentToOrderDetail.putExtra("mShowingOrderId", mOrderItemArrayList.get(position).getOrder_id());//显示的订单id
                         intentToOrderDetail.putExtra("mOrderType", mOrderType);
                         startActivity(intentToOrderDetail);
                         //通知刷新 并改变订单的状态
-                        HttpChangeOrderState(mOrderItemArrayList.get(position).getId(), mOrderItemArrayList.get(position).getState(), 1, position);
+                        HttpChangeOrderState(mOrderItemArrayList.get(position).getId(), mOrderItemArrayList.get(position).getState(), 1, position, "");
                     } else if (mOrderItemArrayList.get(position).getState().equals("2")) {
                         //未量房处理模式
 //                        Toast.makeText(mContext, "确认量房", Toast.LENGTH_SHORT).show();
-                        showQuedingLiangfang(mOrderItemArrayList.get(position).getId(), position, mOrderItemArrayList.get(position).getState());
+//                        showQuedingLiangfang(mOrderItemArrayList.get(position).getId(), position, mOrderItemArrayList.get(position).getState());
+                        showReasonPop(mOrderItemArrayList.get(position).getId(), position,3, mOrderItemArrayList.get(position).getState());
                     } else if (mOrderItemArrayList.get(position).getState().equals("3")) {
                         //已量房处理模式
 //                        Toast.makeText(mContext, "确认签单", Toast.LENGTH_SHORT).show();
-                        showQuedingqiandan(mOrderItemArrayList.get(position).getId(), position, mOrderItemArrayList.get(position).getState());
+//                        showQuedingqiandan(mOrderItemArrayList.get(position).getId(), position, mOrderItemArrayList.get(position).getState());
+                        showReasonPop(mOrderItemArrayList.get(position).getId(), position,4, mOrderItemArrayList.get(position).getState());
                     } else if (mOrderItemArrayList.get(position).getState().equals("4")) {
                         //已签单处理模式
 //                        Toast.makeText(mContext, "联系业主", Toast.LENGTH_SHORT).show();
@@ -346,6 +361,7 @@ public class OrderFragment extends BaseFragment {
 //                        Toast.makeText(mContext, "反馈", Toast.LENGTH_SHORT).show();
                         Intent intentToFeedBack = new Intent(mContext, NewOrderDetailActivity.class);
                         intentToFeedBack.putExtra("mOrderId", mOrderItemArrayList.get(position).getId());
+                        intentToFeedBack.putExtra("mShowingOrderId", mOrderItemArrayList.get(position).getOrder_id());//显示的订单id
                         intentToFeedBack.putExtra("mOrderType", mOrderType);
                         intentToFeedBack.putExtra("mViewPagerPosition", "1");
                         mContext.startActivity(intentToFeedBack);
@@ -358,11 +374,13 @@ public class OrderFragment extends BaseFragment {
                     } else if (mOrderItemArrayList.get(position).getState().equals("2")) {
                         //未量房处理模式
 //                        Toast.makeText(mContext, "量房失败", Toast.LENGTH_SHORT).show();
-                        showLiangfangshibai(mOrderItemArrayList.get(position).getId(), position, mOrderItemArrayList.get(position).getState());
+//                        showLiangfangshibai(mOrderItemArrayList.get(position).getId(), position, mOrderItemArrayList.get(position).getState());
+                        showReasonPop(mOrderItemArrayList.get(position).getId(), position,2, mOrderItemArrayList.get(position).getState());
                     } else if (mOrderItemArrayList.get(position).getState().equals("3")) {
                         //已量房处理模式
 //                        Toast.makeText(mContext, "未签单", Toast.LENGTH_SHORT).show();
-                        showWeiQianDanPop(mOrderItemArrayList.get(position).getId(), position, mOrderItemArrayList.get(position).getState());
+//                        showWeiQianDanPop(mOrderItemArrayList.get(position).getId(), position, mOrderItemArrayList.get(position).getState());
+                        showReasonPop(mOrderItemArrayList.get(position).getId(), position,6, mOrderItemArrayList.get(position).getState());
                     } else if (mOrderItemArrayList.get(position).getState().equals("4")) {
                         //已签单处理模式 没有这个按钮
                     } else if (mOrderItemArrayList.get(position).getState().equals("5")) {
@@ -396,12 +414,13 @@ public class OrderFragment extends BaseFragment {
      * 操作类型operate_type：1：查看；2：量房失败；3：确定量房；4：未签单；5：已签单
      * 当前订单的状态 order_state
      */
-    private void HttpChangeOrderState(String id, final String order_state, final int operate_type, final int position) {
+    private void HttpChangeOrderState(String id, final String order_state, final int operate_type, final int position, String content) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         param.put("id", id);
         param.put("state", order_state);//订单状态
         param.put("operate_type", operate_type);
+        param.put("content", content);
         OKHttpUtil.post(Constant.CHANGE_ORDER_STATE, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -417,6 +436,9 @@ public class OrderFragment extends BaseFragment {
                     String status = jsonObject.optString("status");
                     final String msg = jsonObject.optString("msg");
                     if (status.equals("200")) {
+                        if (mAllOrderActivity == null) {
+                            return;
+                        }
                         //操作成功 移除操作项
                         mAllOrderActivity.runOnUiThread(new Runnable() {
                             @Override
@@ -440,6 +462,9 @@ public class OrderFragment extends BaseFragment {
                         });
 
                     } else if (status.equals("205")) {
+                        if (mAllOrderActivity == null) {
+                            return;
+                        }
                         //当前订单数据已经发生变化
                         mAllOrderActivity.runOnUiThread(new Runnable() {
                             @Override
@@ -452,6 +477,9 @@ public class OrderFragment extends BaseFragment {
                             }
                         });
                     } else {
+                        if (mAllOrderActivity == null) {
+                            return;
+                        }
                         mAllOrderActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -560,7 +588,7 @@ public class OrderFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 //  确定未签单 操作数据
-                HttpChangeOrderState(id, order_state, 6, position);
+//                HttpChangeOrderState(id, order_state, 6, position);
                 popupWindow.dismiss();
             }
         });
@@ -597,7 +625,7 @@ public class OrderFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 // 确定签单 操作数据
-                HttpChangeOrderState(id, order_state, 4, position);
+//                HttpChangeOrderState(id, order_state, 4, position);
                 popupWindow.dismiss();
             }
         });
@@ -634,7 +662,7 @@ public class OrderFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 //改变订单状态
-                HttpChangeOrderState(id, order_state, 3, position);
+//                HttpChangeOrderState(id, order_state, 3, position);
                 popupWindow.dismiss();
             }
         });
@@ -670,7 +698,7 @@ public class OrderFragment extends BaseFragment {
         queding_liangfangshibai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HttpChangeOrderState(id, order_state, 2, position);
+//                HttpChangeOrderState(id, order_state, 2, position);
                 popupWindow.dismiss();
             }
         });
@@ -688,6 +716,64 @@ public class OrderFragment extends BaseFragment {
             }
         });
         popupWindow.showAtLocation(popview, Gravity.CENTER, 0, 0);
+    }
+
+    // TODO: 2018/5/4  显示输入原因的弹框
+    private void showReasonPop(final String id, final int position, final int oprate_type, final String order_state) {
+        View popview = View.inflate(mContext, R.layout.pop_order_reason, null);
+        //关闭按钮
+        RelativeLayout order_reason_pop_close_rl = popview.findViewById(R.id.order_reason_pop_close_rl);
+        //确定提交按钮
+        TextView order_reason_pop_ok_btn = (TextView) popview.findViewById(R.id.order_reason_pop_ok_btn);
+        //整个黑框
+        RelativeLayout order_reason_pop_rl = (RelativeLayout) popview.findViewById(R.id.order_reason_pop_rl);
+        //整个输入原因的框
+        LinearLayout order_reason_pop_ll = popview.findViewById(R.id.order_reason_pop_ll);
+        //输入框
+        final EditText order_reason_pop_input_et = popview.findViewById(R.id.order_reason_pop_input_et);
+
+        order_reason_pop_ll.setBackgroundColor(Color.parseColor("#ffffff"));
+        final PopupWindow popupWindow = new PopupWindow(popview, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.update();
+        //确定
+        order_reason_pop_ok_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(order_reason_pop_input_et.getText().toString())) {
+                    HttpChangeOrderState(id, order_state,oprate_type, position,order_reason_pop_input_et.getText().toString());
+                    popupWindow.dismiss();
+                } else {
+                    Toast.makeText(mContext, "请输入反馈信息", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        //取消
+        order_reason_pop_close_rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        order_reason_pop_rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        popupWindow.showAtLocation(popview, Gravity.CENTER, 0, 0);
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) mContext
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+            }
+
+        }, 200);
     }
 
     @Override
