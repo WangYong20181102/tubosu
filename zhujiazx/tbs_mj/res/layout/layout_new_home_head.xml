@@ -163,6 +163,7 @@
         </RelativeLayout>
         <!--装修课堂 换成免费量房-->
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/relFreeLiangFang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -203,8 +204,7 @@
             android:id="@+id/price_img"
             android:layout_width="340dp"
             android:layout_height="155dp"
-            android:background="@drawable/home_gif_01"
-            android:scaleType="centerCrop" />
+            android:src="@drawable/fadan1"/>
 
         <LinearLayout
             android:layout_width="340dp"
@@ -247,8 +247,14 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:background="@color/white">
-
+        <!--礼包-->
+        <ImageView
+            android:layout_centerInParent="true"
+            android:src="@drawable/dalibao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <TextView
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
@@ -256,6 +262,7 @@
             android:background="#FFFCFB" />
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/ivRedBag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -264,6 +271,7 @@
             android:background="@drawable/red_bag" />
 
         <RelativeLayout
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -271,6 +279,7 @@
             android:layout_toRightOf="@+id/ivRedBag">
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tvDaLibao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -279,6 +288,7 @@
                 android:textSize="18sp" />
 
             <ImageView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -287,6 +297,7 @@
                 android:background="@drawable/nine_years" />
 
             <TextView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvDaLibao"
@@ -297,6 +308,7 @@
         </RelativeLayout>
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tvGoGet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

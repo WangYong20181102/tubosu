@@ -507,7 +507,11 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         urlList.clear();
         if (bannerList != null && bannerList.size() > 0) {
             for (int i = 0; i < bannerList.size(); i++) {
-                urlList.add(bannerList.get(i).getContent_url() + "?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()));
+                if (bannerList.get(i).getContent_url().contains("?")) {
+                    urlList.add(bannerList.get(i).getContent_url() + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()));
+                } else {
+                    urlList.add(bannerList.get(i).getContent_url() + "?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()));
+                }
                 ImageView view = new ImageView(context);
                 view.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 Glide.with(context).load(bannerList.get(i).getImg_url()).into(view);

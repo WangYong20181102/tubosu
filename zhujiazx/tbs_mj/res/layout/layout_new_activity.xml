@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="土拨鼠"
+                android:text="住家"
                 android:textColor="@color/white"
                 android:textSize="17sp" />
 

@@ -421,12 +421,12 @@ public class SImageLookingActivity extends com.tbs.tbs_mj.base.BaseActivity {
             case R.id.s_img_look_shoucan_ll:
                 //收藏按钮
                 if (TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {
-                    //用户未登录 跳转到登录页面
-                    Toast.makeText(mContext, "您还没有登陆,请登陆后再来收藏!", Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(mContext, LoginActivity.class);
-                    Intent intent = new Intent(mContext, NewLoginActivity.class);
-//                    intent.putExtra("isFav", true);
-                    startActivityForResult(intent, 0);
+//                    //用户未登录 跳转到登录页面
+//                    Toast.makeText(mContext, "您还没有登陆,请登陆后再来收藏!", Toast.LENGTH_SHORT).show();
+////                    Intent intent = new Intent(mContext, LoginActivity.class);
+//                    Intent intent = new Intent(mContext, NewLoginActivity.class);
+////                    intent.putExtra("isFav", true);
+//                    startActivityForResult(intent, 0);
                 } else {
                     HttpShouCang(mImageSArrayList.get(mPosition).getId(), mImageSArrayList.get(mPosition).getIs_collect());
                 }

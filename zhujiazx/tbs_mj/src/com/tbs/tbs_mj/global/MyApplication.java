@@ -105,7 +105,7 @@ public class MyApplication extends MultiDexApplication {
         //初始化友盟
         UMShareAPI.get(this);
         //小米推送初始化
-        initXiaomiPush();
+//        initXiaomiPush();
         //极光推送
         //initJpush();
         //百度定位相关

@@ -76,8 +76,8 @@ android {
         }
 
         manifestPlaceholders = [
-                JPUSH_PKGNAME: "com.tbs.tobosutype",
-                JPUSH_APPKEY : "867c2106715593b757fde749", //JPush上注册的包名对应的appkey.
+                JPUSH_PKGNAME: "com.tbs.tbs_mj",
+                JPUSH_APPKEY : "f369cb4bb358773cb9e30a6e", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
 

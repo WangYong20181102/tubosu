@@ -162,8 +162,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         initEvent();
         HttpUserIsChangePassWord();//用户修改密码
         clearUserInfoWithAppUpdata();//App更新清除数据
-        initJpush();
-        initPushEvent();//推送
+//        initJpush();
+//        initPushEvent();//推送
         getAppConfigOnNet();//获取相关的配置
     }
 

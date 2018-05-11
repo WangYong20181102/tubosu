@@ -143,9 +143,9 @@ public class NoneLoginOfMineActivity extends BaseActivity {
             case R.id.none_login_goto_login_rl:
                 //跳转到注册界面
                 //跳转到登录页面
-                Intent intentToRegister = new Intent(mContext, NewLoginActivity.class);
-                intentToRegister.putExtra("mWhereComeFrom", "NoneLoginOfMineActivity");
-                mContext.startActivity(intentToRegister);
+//                Intent intentToRegister = new Intent(mContext, NewLoginActivity.class);
+//                intentToRegister.putExtra("mWhereComeFrom", "NoneLoginOfMineActivity");
+//                mContext.startActivity(intentToRegister);
                 break;
             case R.id.none_login_dalibao_iv:
                 //点击大礼包发单条 跳转到发单页面

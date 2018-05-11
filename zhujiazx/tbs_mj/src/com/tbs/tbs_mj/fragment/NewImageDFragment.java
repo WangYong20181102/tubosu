@@ -661,10 +661,10 @@ public class NewImageDFragment extends BaseFragment {
                 case R.id.item_new_image_shoucan_icon_ll:
                     if (TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {
                         //用户未登录 跳转到登录页面
-                        Toast.makeText(mContext, "您还没有登陆,请登陆后再来收藏!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(mContext, NewLoginActivity.class);
-//                        intent.putExtra("isFav", true);
-                        startActivityForResult(intent, 0);
+//                        Toast.makeText(mContext, "您还没有登陆,请登陆后再来收藏!", Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(mContext, NewLoginActivity.class);
+////                        intent.putExtra("isFav", true);
+//                        startActivityForResult(intent, 0);
                     } else {
                         if (AppInfoUtil.getTypeid(mContext).equals("3")) {
 

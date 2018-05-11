@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.tbs.tbs_mj.R;
 import com.tbs.tbs_mj.activity.ApplyforSuccessActivity;
 import com.tbs.tbs_mj.activity.ImageDetailsFullScreenActivity;
-import com.tbs.tbs_mj.activity.NewLoginActivity;
 import com.tbs.tbs_mj.bean._CardDataItem;
 import com.tbs.tbs_mj.bean._ImageDetail;
 import com.tbs.tbs_mj.customview.CardSlidePanel;
@@ -316,11 +315,11 @@ public class ImageDetailFragment extends Fragment {
     private void HttpChangeUserLike() {
         token = AppInfoUtil.getToekn(mContext);
         if (TextUtils.isEmpty(token)) {
-            Toast.makeText(mContext, "您还没有登陆,请登陆后再来收藏!", Toast.LENGTH_SHORT).show();
-//            Intent intent = new Intent(mContext, LoginActivity.class);
-            Intent intent = new Intent(mContext, NewLoginActivity.class);
-//            intent.putExtra("isFav", true);
-            startActivityForResult(intent, 0);
+//            Toast.makeText(mContext, "您还没有登陆,请登陆后再来收藏!", Toast.LENGTH_SHORT).show();
+////            Intent intent = new Intent(mContext, LoginActivity.class);
+//            Intent intent = new Intent(mContext, NewLoginActivity.class);
+////            intent.putExtra("isFav", true);
+//            startActivityForResult(intent, 0);
             return;
         }
 

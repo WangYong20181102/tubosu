@@ -70,7 +70,7 @@ public class MyActivity extends BaseActivity implements View.OnClickListener {
             case R.id.my_unlogin_personal_data:
             case R.id.my_unlogin_store:
             case R.id.rel_go_login:
-                startActivityForResult(new Intent(mContext, NewLoginActivity.class), 0x00017);
+//                startActivityForResult(new Intent(mContext, NewLoginActivity.class), 0x00017);
                 break;
             case R.id.iv_unlogin_setting:
                 startActivity(new Intent(mContext, SettingActivity.class));

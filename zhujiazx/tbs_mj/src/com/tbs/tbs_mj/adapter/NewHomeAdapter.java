@@ -249,7 +249,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     fadanClick("1011", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_DALIBAO);
+                    webIntent.putExtra("mLoadingUrl", Constant.FREE_DESIGN);
                     context.startActivity(webIntent);
                 }
             });
@@ -507,8 +507,11 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         urlList.clear();
         if (bannerList != null && bannerList.size() > 0) {
             for (int i = 0; i < bannerList.size(); i++) {
-                urlList.add(bannerList.get(i).getContent_url() + "?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()));
-                ImageView view = new ImageView(context);
+                if (bannerList.get(i).getContent_url().contains("?")) {
+                    urlList.add(bannerList.get(i).getContent_url() + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()));
+                } else {
+                    urlList.add(bannerList.get(i).getContent_url() + "?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()));
+                }                ImageView view = new ImageView(context);
                 view.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 Glide.with(context).load(bannerList.get(i).getImg_url()).into(view);
                 imageViewList.add(view);
