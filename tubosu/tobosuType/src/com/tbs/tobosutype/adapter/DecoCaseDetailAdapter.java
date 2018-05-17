@@ -144,7 +144,7 @@ public class DecoCaseDetailAdapter
                     public void onClick(View v) {
                         //跳转到免费设计的H5页面
                         Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                        intent.putExtra("mLoadingUrl", Constant.ZHAO_TA_SHEJI);
+                        intent.putExtra("mLoadingUrl", Constant.QUOTE);
                         mContext.startActivity(intent);
                     }
                 });

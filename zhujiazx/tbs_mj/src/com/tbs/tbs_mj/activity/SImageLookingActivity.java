@@ -446,7 +446,7 @@ public class SImageLookingActivity extends com.tbs.tbs_mj.base.BaseActivity {
             case R.id.s_img_look_btn_fadan:
                 //底部的发单按钮
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.IAMGE_DETAIL_BUTTON);
+                intent.putExtra("mLoadingUrl", Constant.QUOTE);
                 mContext.startActivity(intent);
                 break;
             case R.id.s_img_look_i_know:
@@ -461,7 +461,7 @@ public class SImageLookingActivity extends com.tbs.tbs_mj.base.BaseActivity {
                 Log.e(TAG, "点击了发单按钮===================");
                 sImgLookFadanRl.setVisibility(View.GONE);
                 Intent intent2 = new Intent(mContext, NewWebViewActivity.class);
-                intent2.putExtra("mLoadingUrl", Constant.IAMGE_DETAIL_DIALOG);
+                intent2.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
                 startActivity(intent2);
                 break;
             case R.id.s_img_look_fadan_close:

@@ -771,6 +771,7 @@
         </LinearLayout>
         <!--分享按钮-->
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/dec_com_banner_share"
             android:layout_width="48dp"
             android:layout_height="48dp"
@@ -786,6 +787,7 @@
         </LinearLayout>
         <!--收藏按钮-->
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/dec_com_banner_shoucang"
             android:layout_width="48dp"
             android:layout_height="48dp"

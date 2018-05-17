@@ -279,17 +279,13 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
             if (Util.isNetAvailable(mContext)) {
                 Util.setErrorLog(TAG, "----11----有网络--------");
                 HashMap<String, Object> hashMap = new HashMap<String, Object>();
-                WindowManager wm = getWindowManager();
-                int width = wm.getDefaultDisplay().getWidth();
-                int height = wm.getDefaultDisplay().getHeight();
-                hashMap.put("width", width + "");
-                hashMap.put("height", height + "");
+                hashMap.put("token", Util.getDateToken());
                 OKHttpUtil.post(Constant.GET_LOADING_AD_URL, hashMap, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         // 没有拿到图片地址
                         Util.setErrorLog(TAG, "----22----有网络--请求失败------");
-                        goLoadingActivity("", -1,"");
+                        goLoadingActivity("", -1, "");
                     }
 
                     @Override
@@ -298,18 +294,18 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                         Util.setErrorLog(TAG, json);
                         try {
                             JSONObject jsonObject = new JSONObject(json);
-                            if (jsonObject.getInt("error_code") == 0) {
+                            if (jsonObject.getInt("status") == 200) {
                                 // 拿到了图片地址
                                 JSONObject data = jsonObject.getJSONObject("data");
                                 String url = data.optString("img_url");
                                 String time = data.optString("stay_time");
                                 String jumpUrl = data.optString("jump_url");
                                 Util.setErrorLog(TAG, "----33---有网络 有地址------");
-                                goLoadingActivity(url, Integer.parseInt(time),jumpUrl);
+                                goLoadingActivity(url, Integer.parseInt(time), jumpUrl);
                             } else {
                                 // 没有拿到图片地址
                                 Util.setErrorLog(TAG, "---44----有网络 无地址------");
-                                goLoadingActivity("", -1,"");
+                                goLoadingActivity("", -1, "");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -319,7 +315,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
             } else {
                 // 没有拿到图片地址
                 Util.setErrorLog(TAG, "-----5---无网络--------");
-                goLoadingActivity("", -1,"");
+                goLoadingActivity("", -1, "");
             }
         }
     }
@@ -329,7 +325,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
      *
      * @param time 广告停留时间
      */
-    private void goLoadingActivity(String imgUrl, int time,String jumpUrl) {
+    private void goLoadingActivity(String imgUrl, int time, String jumpUrl) {
         Util.setErrorLog(TAG, "-----66---" + time + "s--------");
         Intent intent;
         if (time == -1) {

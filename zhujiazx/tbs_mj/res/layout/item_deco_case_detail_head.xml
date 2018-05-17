@@ -39,6 +39,7 @@
             </LinearLayout>
             <!--分享按钮-->
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/item_deco_detail_share"
                 android:layout_width="48dp"
                 android:layout_height="48dp"

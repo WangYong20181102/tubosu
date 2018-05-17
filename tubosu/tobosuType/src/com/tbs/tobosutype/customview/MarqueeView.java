@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.NewWebViewActivity;
 import com.tbs.tobosutype.global.Constant;
-import com.tbs.tobosutype.utils.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,13 +164,13 @@ public class MarqueeView extends ViewFlipper {
                 webIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 String text = tvMarquee.getText().toString();
                 if(text.contains("设计")){
-                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_MIANFEI_SHEJI);
+                    webIntent.putExtra("mLoadingUrl", Constant.QUOTE);
                 }else if (text.contains("报价")){
-                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_MIANMFEI_BAOJIA);
+                    webIntent.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
                 }else if(text.contains("推荐")){
-                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_ZHUANYE_TUIJIAN);
+                    webIntent.putExtra("mLoadingUrl", Constant.REC_COMPANY);
                 }else if(text.contains("礼包")){
-                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_DALIBAO);
+                    webIntent.putExtra("mLoadingUrl", Constant.COMPANY_GIFT);
                 }
                 context.startActivity(webIntent);
             }

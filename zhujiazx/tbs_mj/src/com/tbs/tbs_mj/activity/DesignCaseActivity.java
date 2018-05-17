@@ -211,7 +211,7 @@ public class DesignCaseActivity extends com.tbs.tbs_mj.base.BaseActivity {
                 case R.id.item_design_case_get_design:
                     /// TODO: 2017/12/5  点击了发单页 跳转到发单页面
                     Intent intent2 = new Intent(mContext, NewWebViewActivity.class);
-                    intent2.putExtra("mLoadingUrl", Constant.DEC_COOM_GET_THIS_DISGIN);
+                    intent2.putExtra("mLoadingUrl", Constant.QUOTE);
                     mContext.startActivity(intent2);
                     break;
             }
@@ -227,7 +227,7 @@ public class DesignCaseActivity extends com.tbs.tbs_mj.base.BaseActivity {
             case R.id.design_case_find_price_rl:
                 // 发单页
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.DEC_COOM_DESIGN_CASE_BUTTON);
+                intent.putExtra("mLoadingUrl", Constant.QUOTE);
                 mContext.startActivity(intent);
                 break;
         }

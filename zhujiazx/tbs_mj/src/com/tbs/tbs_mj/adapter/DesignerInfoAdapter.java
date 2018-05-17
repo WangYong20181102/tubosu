@@ -258,7 +258,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         @Override
                         public void onClick(View view) {
                             Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                            webIntent.putExtra("mLoadingUrl", Constant.getSheJiUrl);
+                            webIntent.putExtra("mLoadingUrl", Constant.QUOTE);
                             context.startActivity(webIntent);
                         }
                     });
@@ -279,7 +279,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         @Override
                         public void onClick(View view) {
                             Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                            webIntent.putExtra("mLoadingUrl", Constant.GETANLIURL);
+                            webIntent.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
                             context.startActivity(webIntent);
                         }
                     });

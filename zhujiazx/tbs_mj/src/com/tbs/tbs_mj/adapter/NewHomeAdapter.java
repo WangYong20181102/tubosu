@@ -10,6 +10,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -172,7 +173,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_MIANFEI_LIANGFANG);
+                    webIntent.putExtra("mLoadingUrl", Constant.COMPANY_GIFT);
                     context.startActivity(webIntent);
                 }
             });
@@ -222,7 +223,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     fadanClick("1009", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_MIANMFEI_BAOJIA);
+                    webIntent.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
                     context.startActivity(webIntent);
                 }
             });
@@ -231,7 +232,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     fadanClick("950", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_MIANFEI_SHEJI);
+                    webIntent.putExtra("mLoadingUrl", Constant.QUOTE);
                     context.startActivity(webIntent);
                 }
             });
@@ -240,7 +241,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     fadanClick("1010", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_ZHUANYE_TUIJIAN);
+                    webIntent.putExtra("mLoadingUrl", Constant.REC_COMPANY);
                     context.startActivity(webIntent);
                 }
             });
@@ -352,7 +353,8 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             NewhomeDecorationClassAdapter classAdapter = new NewhomeDecorationClassAdapter(context/*, dataSource.getCourseType()*/);
             headHolder.newhomeRecyclerviewClass.setAdapter(classAdapter);
             classAdapter.notifyDataSetChanged();
-            // TODO: 2017/12/29 首页的装修 学装修的选项卡 这个点击某一个选项进入学装修对应的页面 
+            // TODO: 2017/12/29 首页的装修 学装修的选项卡 这个点击某一个选项进入学装修对应的页面
+//            Log.e("NewHomeAdapter", "适配器的数据==========" + dataSource.getArticle_type().size());
             classAdapter.setOnItemClickListener(new NewhomeDecorationClassAdapter.OnRecyclerViewItemClickListener() {
 
                 @Override
@@ -508,10 +510,11 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (bannerList != null && bannerList.size() > 0) {
             for (int i = 0; i < bannerList.size(); i++) {
                 if (bannerList.get(i).getContent_url().contains("?")) {
-                    urlList.add(bannerList.get(i).getContent_url() + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()));
+                    urlList.add(bannerList.get(i).getContent_url() + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + Constant.APP_TYPE);
                 } else {
-                    urlList.add(bannerList.get(i).getContent_url() + "?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()));
-                }                ImageView view = new ImageView(context);
+                    urlList.add(bannerList.get(i).getContent_url() + "?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + Constant.APP_TYPE);
+                }
+                ImageView view = new ImageView(context);
                 view.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 Glide.with(context).load(bannerList.get(i).getImg_url()).into(view);
                 imageViewList.add(view);

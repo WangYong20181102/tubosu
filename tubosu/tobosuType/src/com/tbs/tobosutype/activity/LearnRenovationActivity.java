@@ -167,13 +167,13 @@ public class LearnRenovationActivity extends com.tbs.tobosutype.base.BaseActivit
             case R.id.learn_rovat_fadan_rl:
                 //底部的发单页
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.ANLI_LIST_FADAN);
+                intent.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
                 mContext.startActivity(intent);
                 break;
             case R.id.learn_rovat_right_anim:
                 //点击右侧的动画进行发单
                 Intent intent1 = new Intent(mContext, NewWebViewActivity.class);
-                intent1.putExtra("mLoadingUrl", Constant.DEC_COOM_DESIGNER_GET_PRICE);
+                intent1.putExtra("mLoadingUrl", Constant.QUOTE);
                 startActivity(intent1);
                 break;
         }

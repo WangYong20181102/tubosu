@@ -194,6 +194,9 @@ public class OrderDetailFragment extends BaseFragment {
 //                    Log.e(TAG, "获取数据成功=========参数==========" + mOrderId + "============" + json);
                     if (status.equals("200")) {
                         final String data = jsonObject.optString("data");
+                        if(getActivity()==null){
+                            return;
+                        }
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -201,6 +204,9 @@ public class OrderDetailFragment extends BaseFragment {
                             }
                         });
                     } else if (status.equals("0")) {
+                        if(getActivity()==null){
+                            return;
+                        }
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

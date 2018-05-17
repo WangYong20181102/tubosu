@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:maxLines="2"
-                    android:text="深圳市千叶装饰工程有限公司"
+                    android:text=""
                     android:textColor="#333232"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -175,7 +175,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:text="（16398咨询）"
+                        android:text=""
                         android:textColor="#6e6e6e"
                         android:textSize="10sp" />
                 </LinearLayout>
@@ -206,7 +206,7 @@
                         android:ellipsize="marquee"
                         android:maxEms="13"
                         android:singleLine="true"
-                        android:text="南山区世纪百货万达家居广场三楼办公室独守空房挥洒的空间裂缝更换水电费空间撒浩丰科技"
+                        android:text=""
                         android:textColor="#666666"
                         android:textSize="12sp" />
                     <!--显示的箭头-->

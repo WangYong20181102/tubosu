@@ -38,7 +38,8 @@ public class Constant {
     //M站dev接口
     public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
 
-
+    //拼接在链接后面的字符串标识App的类别
+    public static final String APP_TYPE = "&app_type=1";
 
     /*----------以下是新增加的------------*/
 
@@ -99,12 +100,12 @@ public class Constant {
     /**
      * activity_url
      */
-    public static final String ACTIVITY_URL = TOBOSU_URL + "tapp/Activity/get_activity";
+    public static final String ACTIVITY_URL = TOBOSU_URL + "mapp/activity/get_activity";
 
     /**
      * loading
      */
-    public static final String GET_LOADING_AD_URL = TOBOSU_URL + "tapp/Advert/get_advert";
+    public static final String GET_LOADING_AD_URL = TOBOSU_URL + "mapp/advert/get_advert";
 
 
     /**
@@ -186,7 +187,7 @@ public class Constant {
      * 3效果图
      */
 //    public static final String PIPE = "https://m.tobosu.com/app/pub?channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "&app_type=1";
-    public static final String PIPE = M_TOBOSU_URL + "app/pub?channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "&app_type=1";
+    public static final String PIPE = M_TOBOSU_URL + "app/pub?channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE;
 
     public static final String WANGJIANLIN = "&tbsfrom=share";
 
@@ -244,47 +245,16 @@ public class Constant {
     public static final String TOPIC_DETAIL = TOBOSU_URL + "mapp/topic/topic_detail";
     public static final String ZHUANTI_URL = TOBOSU_URL + "mapp/topic/topic_list";
 
+    // TODO: 2018/5/14 App全栈通一发单地址*****************************************************************************************************
+    //免费报价 配置App类型
+    public static final String FREE_PRICE_PAGE = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE;
+    //免费设计
+    public static final String QUOTE = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE;
+    //装修公司推荐
+    public static final String REC_COMPANY = M_TOBOSU_URL + "rec_company?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE;
+    //装修大礼包
+    public static final String COMPANY_GIFT = M_TOBOSU_URL + "company_gift?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE;
 
-//  入口位置                            渠道代码              对应连接
-//    首页-icon-免费量房	               sy-icon-liangfang	 https://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=sy-icon-liangfang
-//    首页-发单-免费报价	               sy-fd-baojia	         http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=sy-fd-baojia
-//    首页-发单-免费设计	               sy-fd-sheji	         http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=sy-fd-sheji
-//    首页-发单-专业推荐	               sy-fd-tuijian	     http://m.tobosu.com/rec_company?channel=app&subchannel=android&chcode=sy-fd-tuijian
-//    首页-发单-装修大礼包	           sy-fd-libao	         http://m.tobosu.com/company_gift?channel=app&subchannel=android&chcode=sy-fd-libao
-//    案例-列表-报价                    al-lb-baojia	         http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=al-lb-baojia
-//    案例-详情-报价（包括看图）        al-xq-baojia	         http://m.tobosu.com/free_price_page?channel=app&subchannel=android&chcode=al-xq-baojia
-//    专题-详情-设计	                   zt-xq-sheji	         http://m.tobosu.com/quote?channel=app&subchannel=android&chcode=zt-xq-sheji
-
-
-    // 设计
-    public static final String getSheJiUrl = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    // 案例
-    public static final String GETANLIURL = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-
-    //案例列表发单
-    public static final String ANLI_LIST_FADAN = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    //案例详情（看图页）
-    public static final String ANLI_XIANGQING_FADAN = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    //专题详情
-    public static final String ZHUANTI_XIANGQING_FADAN = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    //找他设计
-    public static final String ZHAO_TA_SHEJI = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    //发单地址
-    public static final String LINK_HOME_MIANFEI_LIANGFANG = M_TOBOSU_URL + "company_gift?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    public static final String LINK_HOME_MIANMFEI_BAOJIA = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    public static final String LINK_HOME_MIANFEI_SHEJI = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    public static final String LINK_HOME_ZHUANYE_TUIJIAN = M_TOBOSU_URL + "rec_company?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    public static final String LINK_HOME_DALIBAO = M_TOBOSU_URL + "company_gift?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    //逛图库 列表弹窗发单地址
-    public static final String IAMGE_LIST_DIALOG = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    //逛图库 右侧悬浮窗发单地址
-    public static final String IAMGE_LIST_RIGHT_GIF = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    //图库详情 弹窗发单地址
-    public static final String IAMGE_DETAIL_DIALOG = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    //图库详情 底部发单地址
-    public static final String IAMGE_DETAIL_BUTTON = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-
-    public static final String COMPANY_FADAN_URL = M_TOBOSU_URL + "rec_company?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
 
     //新的逛图库 套图 3.5版本 add time 20171111
     public static final String SUITE_LIST = TOBOSU_URL + "mapp/impression/suite_list";
@@ -369,18 +339,5 @@ public class Constant {
     //网店管理修改网店管理
     public static final String COMPANY_MODIFY_STORE = TOBOSU_URL + "mapp/company/modify_store";
 
-
-    //装修公司主页 底部发单按钮 3.6版本新增
-    public static final String DEC_COOM_BUTTON = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    //装修公司主页 优惠活动发单按钮 3.6版本新增
-    public static final String DEC_COOM_YOU_HUI = M_TOBOSU_URL + "promotions?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    //装修公司主页 设计方案 底部发单按钮 3.6版本新增
-    public static final String DEC_COOM_DESIGN_CASE_BUTTON = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    //装修公司主页 设计方案 列表  获取此设计 3.6版本新增
-    public static final String DEC_COOM_GET_THIS_DISGIN = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    //装修公司主页 设计师团队 列表  获取此设计 3.6版本新增
-    public static final String DEC_COOM_DESIGNER_GET_PRICE = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
-    //装修公司主页 设计师团队找他免费设计 3.6版本新增
-    public static final String DEC_COOM_DESIGNER_FIND_DISIGN = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
 
 }

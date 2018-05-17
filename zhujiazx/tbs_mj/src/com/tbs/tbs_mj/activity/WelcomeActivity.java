@@ -9,7 +9,6 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
@@ -23,6 +22,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.bumptech.glide.Glide;
 import com.tbs.tbs_mj.R;
+import com.tbs.tbs_mj.base.BaseActivity;
 import com.tbs.tbs_mj.global.Constant;
 import com.tbs.tbs_mj.global.OKHttpUtil;
 import com.tbs.tbs_mj.utils.AppInfoUtil;
@@ -49,10 +49,12 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 
-public class WelcomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
+public class WelcomeActivity extends BaseActivity {
     private static final String TAG = "WelcomeActivity";
     @BindView(R.id.welcome_image)
     ImageView welcomeImage;
+    @BindView(R.id.welcome_slogan)
+    ImageView welcomeSlogan;
     private String SURVIVAL_URL = Constant.TOBOSU_URL + "resapp/DataCount/survival_count";
 
     private Context mContext;
@@ -174,9 +176,14 @@ public class WelcomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
     }
 
     private void initView() {
+        //闪屏 以后变成可替换的广告
         Glide.with(mContext).load(R.drawable.welcome_image)
                 .asBitmap().centerCrop().placeholder(R.drawable.welcome_image)
                 .error(R.drawable.welcome_image).into(welcomeImage);
+        //slogan
+        Glide.with(mContext).load(R.drawable.app_bottom)
+                .asBitmap().centerCrop().placeholder(R.drawable.app_bottom)
+                .error(R.drawable.app_bottom).into(welcomeSlogan);
 //        welcomeImage.setImageResource(R.drawable.welcome_image);
         //区分市场
 //        if("appxiaomi".equals(AppInfoUtil.getChannType(MyApplication.getContext()))){
@@ -280,10 +287,9 @@ public class WelcomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                 Util.setErrorLog(TAG, "----11----有网络--------");
                 HashMap<String, Object> hashMap = new HashMap<String, Object>();
                 WindowManager wm = getWindowManager();
-                int width = wm.getDefaultDisplay().getWidth();
-                int height = wm.getDefaultDisplay().getHeight();
-                hashMap.put("width", width + "");
-                hashMap.put("height", height + "");
+
+                hashMap.put("system_type", "1");
+                hashMap.put("token", Util.getDateToken());
                 OKHttpUtil.post(Constant.GET_LOADING_AD_URL, hashMap, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -299,7 +305,7 @@ public class WelcomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                         Log.e(TAG, "欢迎页面请求数据链接成功========" + json);
                         try {
                             JSONObject jsonObject = new JSONObject(json);
-                            if (jsonObject.getInt("error_code") == 0) {
+                            if (jsonObject.getInt("status") == 200) {
                                 // 拿到了图片地址
                                 JSONObject data = jsonObject.getJSONObject("data");
                                 String url = data.optString("img_url");

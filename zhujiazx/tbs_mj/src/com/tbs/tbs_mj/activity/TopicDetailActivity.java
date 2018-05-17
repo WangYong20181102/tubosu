@@ -22,6 +22,7 @@ import com.tbs.tbs_mj.global.OKHttpUtil;
 import com.tbs.tbs_mj.utils.SpUtil;
 import com.tbs.tbs_mj.utils.Util;
 import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
@@ -160,7 +161,7 @@ public class TopicDetailActivity extends com.tbs.tbs_mj.base.BaseActivity {
                 //跳转到发单页
                 /// TODO: 2017/10/24  跳转到免费报价发单页暂时写固定url
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.ZHUANTI_XIANGQING_FADAN);
+                intent.putExtra("mLoadingUrl", Constant.QUOTE);
                 mContext.startActivity(intent);
                 break;
         }

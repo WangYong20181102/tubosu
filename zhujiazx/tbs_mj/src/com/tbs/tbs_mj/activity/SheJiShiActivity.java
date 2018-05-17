@@ -498,7 +498,7 @@ public class SheJiShiActivity extends com.tbs.tbs_mj.base.BaseActivity implement
 
             case R.id.get_designe_layout:
                 Intent webIntent = new Intent(mContext, NewWebViewActivity.class);
-                webIntent.putExtra("mLoadingUrl", Constant.getSheJiUrl);
+                webIntent.putExtra("mLoadingUrl", Constant.QUOTE);
                 startActivity(webIntent);
                 break;
         }

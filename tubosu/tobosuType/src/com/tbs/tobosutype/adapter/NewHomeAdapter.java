@@ -41,7 +41,6 @@ import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.EndlessRecyclerOnScrollListener;
 import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
@@ -172,7 +171,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_MIANFEI_LIANGFANG);
+                    webIntent.putExtra("mLoadingUrl", Constant.COMPANY_GIFT);
                     context.startActivity(webIntent);
                 }
             });
@@ -222,7 +221,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     fadanClick("1009", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_MIANMFEI_BAOJIA);
+                    webIntent.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
                     context.startActivity(webIntent);
                 }
             });
@@ -231,7 +230,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     fadanClick("950", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_MIANFEI_SHEJI);
+                    webIntent.putExtra("mLoadingUrl", Constant.QUOTE);
                     context.startActivity(webIntent);
                 }
             });
@@ -240,7 +239,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     fadanClick("1010", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_ZHUANYE_TUIJIAN);
+                    webIntent.putExtra("mLoadingUrl", Constant.REC_COMPANY);
                     context.startActivity(webIntent);
                 }
             });
@@ -249,7 +248,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     fadanClick("1011", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.LINK_HOME_DALIBAO);
+                    webIntent.putExtra("mLoadingUrl", Constant.COMPANY_GIFT);
                     context.startActivity(webIntent);
                 }
             });
@@ -508,9 +507,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (bannerList != null && bannerList.size() > 0) {
             for (int i = 0; i < bannerList.size(); i++) {
                 if (bannerList.get(i).getContent_url().contains("?")) {
-                    urlList.add(bannerList.get(i).getContent_url() + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()));
+                    urlList.add(bannerList.get(i).getContent_url() + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext())+Constant.APP_TYPE);
                 } else {
-                    urlList.add(bannerList.get(i).getContent_url() + "?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()));
+                    urlList.add(bannerList.get(i).getContent_url() + "?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext())+Constant.APP_TYPE);
                 }
                 ImageView view = new ImageView(context);
                 view.setScaleType(ImageView.ScaleType.CENTER_CROP);

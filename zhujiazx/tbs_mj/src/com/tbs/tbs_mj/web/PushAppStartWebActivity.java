@@ -191,7 +191,7 @@ public class PushAppStartWebActivity extends com.tbs.tbs_mj.base.BaseActivity {
             case R.id.push_start_fadan:
                 //跳转到发单页面
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.DEC_COOM_DESIGNER_FIND_DISIGN);
+                intent.putExtra("mLoadingUrl", Constant.QUOTE);
                 mContext.startActivity(intent);
                 break;
         }

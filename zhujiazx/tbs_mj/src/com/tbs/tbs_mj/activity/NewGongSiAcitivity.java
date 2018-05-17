@@ -765,12 +765,12 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
                 relfindComLayout.setVisibility(View.GONE);
                 CacheManager.setCompanyFlag(mContext, 1);
                 Intent webIntent = new Intent(mContext, NewWebViewActivity.class);
-                webIntent.putExtra("mLoadingUrl", Constant.COMPANY_FADAN_URL);
+                webIntent.putExtra("mLoadingUrl", Constant.REC_COMPANY);
                 startActivity(webIntent);
                 break;
             case R.id.findComIcon:
                 Intent web = new Intent(mContext, NewWebViewActivity.class);
-                web.putExtra("mLoadingUrl", Constant.GETANLIURL);
+                web.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
                 startActivity(web);
                 relfindComLayout.setVisibility(View.GONE);
                 CacheManager.setCompanyFlag(mContext, 1);
@@ -1596,7 +1596,11 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
         if (banners != null && banners.size() > 0) {
             for (int i = 0; i < banners.size(); i++) {
 //                Util.setErrorLog(TAG, "==bnn=>>>>" +banners.get(i).getContent_url());
-                urlList.add(banners.get(i).getContent_url() + "?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()));
+                if (banners.get(i).getContent_url().contains("?")) {
+                    urlList.add(banners.get(i).getContent_url() + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + Constant.APP_TYPE);
+                } else {
+                    urlList.add(banners.get(i).getContent_url() + "?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + Constant.APP_TYPE);
+                }
                 ImageView view = new ImageView(mContext);
                 view.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 Glide.with(mContext).load(banners.get(i).getImg_url()).into(view);

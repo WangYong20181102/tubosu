@@ -97,6 +97,7 @@ public class NewWebViewActivity extends com.tbs.tbs_mj.base.BaseActivity {
             newWebviewWeb.loadUrl(mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
         }
         Log.e(TAG, "统计传值=====" + mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+        Log.e(TAG, "加载的链接=====" + mLoadingUrl);
     }
 
     private WebViewClient webViewClient = new WebViewClient() {

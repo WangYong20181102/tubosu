@@ -49,6 +49,7 @@
             android:textSize="17sp" />
         <!--分享按钮-->
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/deco_case_detail_share"
             android:layout_width="48dp"
             android:layout_height="48dp"

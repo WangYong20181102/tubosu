@@ -120,7 +120,7 @@ public class DesignerListActivity extends com.tbs.tbs_mj.base.BaseActivity {
             case R.id.designer_list_price_rl:
                 /// TODO: 2017/12/6  跳转到发单页
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.DEC_COOM_DESIGNER_GET_PRICE);
+                intent.putExtra("mLoadingUrl", Constant.QUOTE);
                 mContext.startActivity(intent);
                 break;
         }
@@ -199,7 +199,7 @@ public class DesignerListActivity extends com.tbs.tbs_mj.base.BaseActivity {
                 case R.id.item_designer_find_he_design:
                     /// TODO: 2017/12/6  跳转到发单接口
                     Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                    intent.putExtra("mLoadingUrl", Constant.DEC_COOM_DESIGNER_FIND_DISIGN);
+                    intent.putExtra("mLoadingUrl", Constant.QUOTE);
                     mContext.startActivity(intent);
                     break;
             }

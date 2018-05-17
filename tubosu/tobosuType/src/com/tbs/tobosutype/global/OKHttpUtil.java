@@ -1,7 +1,9 @@
 package com.tbs.tobosutype.global;
+
 import android.content.Context;
 import android.util.Log;
 
+import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
 
 import java.io.File;
@@ -12,12 +14,14 @@ import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
+
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -32,6 +36,7 @@ import okhttp3.Response;
 public class OKHttpUtil {
     private static final String TAG = OKHttpUtil.class.getSimpleName();
     private static OkHttpClient client;
+
     public OKHttpUtil() {
     }
 
@@ -49,6 +54,7 @@ public class OKHttpUtil {
 
     /**
      * get请求
+     *
      * @param url
      * @param callBack
      */
@@ -63,6 +69,7 @@ public class OKHttpUtil {
 
     /**
      * get请求
+     *
      * @param url
      * @param callBack
      */
@@ -77,12 +84,16 @@ public class OKHttpUtil {
 
     /**
      * post请求
+     *
      * @param url
      * @param params
      * @param callback
      */
     public static void post(String url, HashMap<String, Object> params, Callback callback) {
         FormBody.Builder builder = new FormBody.Builder();
+        params.put("subchannel", "android");
+        params.put("tbschcode", "android");
+        params.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
         for (String key : params.keySet()) {
             builder.add(key, String.valueOf(params.get(key)));
         }
@@ -121,10 +132,10 @@ public class OKHttpUtil {
 //    }
 
 
-
     /**
      * 下载文件
-     *@param  context
+     *
+     * @param context
      * @param url      请求的地址 可以是图片的url或者是apk的下载地址
      * @param fileDir  保存文件的路径名
      * @param fileName 保存文件的文件名

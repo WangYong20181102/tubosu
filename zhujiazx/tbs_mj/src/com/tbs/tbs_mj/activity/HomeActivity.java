@@ -130,7 +130,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
     private TextView banner_textview_title;
 
 
-	/*--------------------归类----------------------*/
+    /*--------------------归类----------------------*/
     /**
      * 设计与报价
      */
@@ -201,7 +201,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
      */
     private LinearLayout liearlayout_local_discount;
 
-	/*-------------------------------------------------*/
+    /*-------------------------------------------------*/
 //	/** 本地优惠数据适配器 */
 //	private LocalDiscountAdapter localDiscountAdapter;
 
@@ -314,7 +314,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         /*----------- 首页 整页滑动控件 -----------*/
         scrollViewExtend = (ScrollViewExtend) findViewById(R.id.scrollViewExtend);
 
-		/*----------- 首页topbar -----------*/
+        /*----------- 首页topbar -----------*/
         headLayout = (RelativeLayout) findViewById(R.id.rl_head);
         home_city = (TextView) headLayout.findViewById(R.id.tv_home_choose_city);
         home_select_city = (ImageView) headLayout.findViewById(R.id.iv_home_select_city);
@@ -326,24 +326,24 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         headLayout.setOnClickListener(this);
 
 
-		/*----------- 首页 设计报价&预约装修&装修课堂&装修公司 -----------*/
+        /*----------- 首页 设计报价&预约装修&装修课堂&装修公司 -----------*/
         layout_price = (LinearLayout) findViewById(R.id.layout_price);
         layout_calculater = (LinearLayout) findViewById(R.id.layout_calculater);
         layout_homeactivity_yuyue_decoration = (LinearLayout) findViewById(R.id.layout_homeactivity_yuyue_decoration);
         layout_decorate_myhouse = (LinearLayout) findViewById(R.id.layout_decorate_myhouse);
 
-		/*----------- 首页装修课堂 -----------*/
+        /*----------- 首页装修课堂 -----------*/
         decorate_class_gridview = (GalleryGridView) findViewById(R.id.decorate_gridview);
         ll_decorate_class_gallery = (LinearLayout) findViewById(R.id.linearlayout_decorate_class);
         decorateClassScrollView = (HorizontalScrollView) findViewById(R.id.decorate_class_horizontal_scrollView);
 
-		/*----------- 首页本地优惠 -----------*/
+        /*----------- 首页本地优惠 -----------*/
         ll_local_dicount_layout = (LinearLayout) findViewById(R.id.ll_local_dicount_layout);
         home_decorate_class_all = (TextView) findViewById(R.id.home_decorate_class_all);
 //		liearlayout_decorate_class = (LinearLayout) findViewById(R.id.liearlayout_decorate_class);
         liearlayout_local_discount = (LinearLayout) findViewById(R.id.liearlayout_local_discount);
 
-		/*----------- 首页效果图精选 -----------*/
+        /*----------- 首页效果图精选 -----------*/
         ivHomeFullySelectedImages = (RoundAngleImageView) findViewById(R.id.iv_home_fully_selected_images);
         banner_textview_title = (TextView) findViewById(R.id.banner_textview_title);
         tv_home_project_more = (TextView) findViewById(R.id.tv_home_project_more);
@@ -1053,6 +1053,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
             if (Util.isNetAvailable(HomeActivity.this)) {
                 final Dialog dialog = new Dialog(HomeActivity.this, R.style.popupDialog);
                 HashMap<String, Object> hashMap = new HashMap<String, Object>();
+                hashMap.put("app_type", "4");
                 OKHttpUtil.post(Constant.ACTIVITY_URL, hashMap, new Callback() {
 
                     @Override

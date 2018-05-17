@@ -520,7 +520,7 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             case R.id.d_img_look_btn_fadan:
                 //底部发单的条
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.IAMGE_DETAIL_BUTTON);
+                intent.putExtra("mLoadingUrl", Constant.QUOTE);
                 mContext.startActivity(intent);
                 break;
             case R.id.d_img_look_i_know:
@@ -532,7 +532,7 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                 Log.e(TAG, "点击了发单按钮===================");
                 dImgLookFadanRl.setVisibility(View.GONE);
                 Intent intent2 = new Intent(mContext, NewWebViewActivity.class);
-                intent2.putExtra("mLoadingUrl", Constant.IAMGE_DETAIL_DIALOG);
+                intent2.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
                 startActivity(intent2);
                 break;
             case R.id.d_img_look_fadan_close:

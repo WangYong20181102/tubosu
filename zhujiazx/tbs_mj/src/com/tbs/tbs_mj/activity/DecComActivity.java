@@ -410,7 +410,7 @@ public class DecComActivity extends com.tbs.tbs_mj.base.BaseActivity {
             case R.id.dec_com_find_price_rl:
                 //跳转到发单页面
                 Intent intentToFadan = new Intent(mContext, NewWebViewActivity.class);
-                intentToFadan.putExtra("mLoadingUrl", Constant.DEC_COOM_BUTTON);
+                intentToFadan.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
                 mContext.startActivity(intentToFadan);
                 break;
         }

@@ -165,7 +165,7 @@ public class DecorationCaseActivity extends com.tbs.tobosutype.base.BaseActivity
             case R.id.deco_case_find_price:
                 /// TODO: 2017/10/24  跳转到免费报价发单页暂时写固定url
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.ANLI_LIST_FADAN);
+                intent.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
                 mContext.startActivity(intent);
                 break;
         }

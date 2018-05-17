@@ -134,14 +134,13 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
         //获取网络数据
         getDataFromNet(false);
         initReceiver();
-        // 3.7版本新增 显示弹窗
+        //显示弹窗
         showHomeDialog();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e(TAG, "NewHomeActivity执行的生命周期========onResume()");
     }
 
     @Override
@@ -164,11 +163,12 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
             SpUtil.setTodayToken(mContext, Util.getDateToken());
             SpUtil.cleanDialogInfo(mContext);
         }
-        if (TextUtils.isEmpty(SpUtil.getIsShowUpdataDialog(mContext))) {
-            //没有开启过更新提示
-            HttpCheckAppUpdata();//检测更新与否  在检测完成之后设置更新弹窗的flag（有强制更新的时候不设置flag） 如果没有更新提示 走 getHuoDongPicture()方法
-            return;
-        }
+//        if (TextUtils.isEmpty(SpUtil.getIsShowUpdataDialog(mContext))) {
+//            // TODO: 2018/5/14 马甲包注释了App更新
+//            //没有开启过更新提示
+////            HttpCheckAppUpdata();//检测更新与否  在检测完成之后设置更新弹窗的flag（有强制更新的时候不设置flag） 如果没有更新提示 走 getHuoDongPicture()方法
+//            return;
+//        }
         if (TextUtils.isEmpty(SpUtil.getIsShowActivityDialog(mContext))) {
             //今天还没有开启过运营弹窗
             getHuoDongPicture();//开启运营弹窗 有运营弹窗时设置flag 没有运营弹窗时 走  notifyOpenNotice() 方法
@@ -273,7 +273,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
         }
         builder.setShowDownloadingDialog(false);
         builder.setNotificationBuilder(NotificationBuilder.create().setRingtone(true)
-                .setIcon(R.drawable.app_icon).setContentTitle("土拨鼠装修").setContentText("正在下载最新土拨鼠安装包..."));
+                .setIcon(R.drawable.app_icon).setContentTitle("住家装修").setContentText("正在下载最新住家装修安装包..."));
         builder.excuteMission(mContext);
     }
 
@@ -761,7 +761,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                         String result = new String(response.body().string());
                         // 有数据 这样处理是不至于无数据的时候出现app闪退
                         if (result.contains("data")) {
-                            Log.e(TAG, "数据链接成功============" + result);
+//                            Log.e(TAG, "首页数据链接成功============" + result);
                             CacheManager.setNewhomeJson(mContext, result);
                             Gson gson = new Gson();
                             final NewHomeDataItem dataItem = gson.fromJson(result, NewHomeDataItem.class);
@@ -785,6 +785,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
 
                             if (dataItem.getStatus() == 200) {
                                 bigData = dataItem.getData();
+//                                Log.e(TAG, "数据赋值=================" + bigData.getArticle_type().size());
                                 initData();
                             } else if (dataItem.getStatus() == 0) {
                                 runOnUiThread(new Runnable() {
@@ -895,6 +896,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
     private String activityName;
 
     private void getHuoDongPicture() {
+//        Log.e(TAG, "获取弹窗活动===========开始=====");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         final String date = sdf.format(new Date());
 
@@ -906,6 +908,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
             if (Util.isNetAvailable(NewHomeActivity.this)) {
                 final Dialog dialog = new Dialog(NewHomeActivity.this, R.style.popupDialog);
                 HashMap<String, Object> hashMap = new HashMap<String, Object>();
+                hashMap.put("token", Util.getDateToken());
                 OKHttpUtil.post(Constant.ACTIVITY_URL, hashMap, new Callback() {
 
                     @Override
@@ -922,7 +925,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                             public void run() {
                                 try {
                                     JSONObject jsonObject = new JSONObject(json);
-                                    if (jsonObject.getInt("error_code") == 0) {
+                                    if (jsonObject.getInt("status") == 200) {
                                         JSONObject data = jsonObject.getJSONObject("data");
                                         activityId = data.getString("id");
                                         activityImg_url = data.getString("img_url");
@@ -931,7 +934,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                                         activityName = data.getString("name");
 //                                        picUrl = activityImg_url.replace("\\/\\/", "\\");
                                         CacheManager.setLoadingHUODONG(mContext, date);
-                                        Log.e(TAG, "获取的活动的图片==================" + activityImg_url);
+//                                        Log.e(TAG, "获取的活动的图片==================" + activityImg_url);
                                         if (!TextUtils.isEmpty(activityImg_url)) {
                                             //已经弹了活动弹窗
                                             SpUtil.setIsShowActivityDialog(mContext, "showing");

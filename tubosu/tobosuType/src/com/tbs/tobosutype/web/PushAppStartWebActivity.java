@@ -21,7 +21,6 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.activity.BaseActivity;
 import com.tbs.tobosutype.activity.NewWebViewActivity;
 import com.tbs.tobosutype.bean._AppEvent;
 import com.tbs.tobosutype.global.Constant;
@@ -191,7 +190,7 @@ public class PushAppStartWebActivity extends com.tbs.tobosutype.base.BaseActivit
             case R.id.push_start_fadan:
                 //跳转到发单页面
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.DEC_COOM_DESIGNER_FIND_DISIGN);
+                intent.putExtra("mLoadingUrl", Constant.QUOTE);
                 mContext.startActivity(intent);
                 break;
         }

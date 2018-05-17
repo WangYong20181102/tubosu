@@ -114,7 +114,7 @@ public class Util {
      * 4.然后再对整体进行base64加密
      */
     public static String getDateToken() {
-        String md5ZHJ = MD5Util.md5("tbs");//加密后的tbs
+        String md5ZHJ = MD5Util.md5("zjzx");//加密后的zjzx
         Date date = new Date();
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String mTime = format.format(date);

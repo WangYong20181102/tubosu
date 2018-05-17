@@ -2,12 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/topic_detail_all"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    android:id="@+id/topic_detail_all"
     tools:context="com.tbs.tbs_mj.activity.TopicDetailActivity">
+
     <RelativeLayout
         android:id="@+id/topic_detail_banner"
         android:layout_width="match_parent"
@@ -43,7 +44,8 @@
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="18dp"
@@ -70,6 +72,7 @@
         android:layout_below="@+id/topic_detail_banner"
         android:background="@drawable/yinying4"
         android:visibility="visible" />
+
     <RelativeLayout
         android:id="@+id/ltopic_detail_find_price_rl"
         android:layout_width="match_parent"

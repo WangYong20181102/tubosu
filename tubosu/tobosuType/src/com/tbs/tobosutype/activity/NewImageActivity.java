@@ -191,14 +191,14 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
             case R.id.new_image_gif:
                 //右侧gif点击进发单页
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.IAMGE_LIST_RIGHT_GIF);
+                intent.putExtra("mLoadingUrl", Constant.QUOTE);
                 startActivity(intent);
                 break;
             case R.id.new_image_free_design_img:
                 //跳转到发单页
                 Log.e(TAG, "点击了发单按钮===================");
                 Intent intent2 = new Intent(mContext, NewWebViewActivity.class);
-                intent2.putExtra("mLoadingUrl", Constant.IAMGE_LIST_DIALOG);
+                intent2.putExtra("mLoadingUrl", Constant.QUOTE);
                 startActivity(intent2);
                 dismissTanChuang();
                 break;

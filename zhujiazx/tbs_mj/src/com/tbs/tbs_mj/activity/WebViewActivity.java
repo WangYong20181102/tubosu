@@ -97,7 +97,7 @@ public class WebViewActivity extends com.tbs.tbs_mj.base.BaseActivity {
         detail_share = (ImageView) findViewById(R.id.detail_share);
         iv_back = (ImageView) findViewById(R.id.iv_back_webview_activity);
         rl_banner = (RelativeLayout) findViewById(R.id.rl_banner);
-        rl_banner.setBackgroundColor(Color.parseColor("#ff882e"));
+        rl_banner.setBackgroundColor(Color.parseColor("#ffffff"));
 //		pbDialog = new ProgressDialog(mContext);
 //		pbDialog.show();
     }
@@ -113,7 +113,12 @@ public class WebViewActivity extends com.tbs.tbs_mj.base.BaseActivity {
 
         webView.setWebChromeClient(new WebChromeClient());
         SpUtil.setStatisticsEventPageId(mContext, url);
-        webView.loadUrl(url + "&equipmentInfo=" + mGson.toJson(mAppEvent)+ "&app_ref=" + AppManager.lastSecoundActivityName());
+        if (url.contains("?")) {
+            webView.loadUrl(url + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+        } else {
+            webView.loadUrl(url + "?equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+        }
+
 //		webView_detailslideshow.addJavascriptInterface(object, name);
     }
 

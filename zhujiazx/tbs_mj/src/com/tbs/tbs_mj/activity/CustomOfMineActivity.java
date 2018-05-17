@@ -254,7 +254,7 @@ public class CustomOfMineActivity extends BaseActivity {
                 //跳转到发单页面
                 Intent intentToWeb = new Intent(mContext, NewWebViewActivity.class);
                 // TODO: 2018/1/11 发单地址
-                intentToWeb.putExtra("mLoadingUrl", Constant.LINK_HOME_DALIBAO);
+                intentToWeb.putExtra("mLoadingUrl", Constant.COMPANY_GIFT);
                 mContext.startActivity(intentToWeb);
                 break;
             case R.id.custom_of_mine_kefu_rl:
