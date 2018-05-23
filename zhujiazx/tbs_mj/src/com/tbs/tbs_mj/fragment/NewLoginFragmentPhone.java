@@ -363,7 +363,7 @@ public class NewLoginFragmentPhone extends BaseFragment {
             param.put("user_id", AppInfoUtil.getId(mContext));
             param.put("user_type", AppInfoUtil.getTypeid(mContext));
             param.put("system_type", "1");
-            param.put("app_type", "1");
+            param.put("app_type", "4");
             param.put("device_id", SpUtil.getPushRegisterId(mContext));
             OKHttpUtil.post(Constant.FLUSH_SMS_PUSH, param, new Callback() {
                 @Override

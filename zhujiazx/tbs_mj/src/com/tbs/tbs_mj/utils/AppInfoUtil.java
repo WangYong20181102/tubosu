@@ -92,6 +92,54 @@ public class AppInfoUtil {
         return mChannType;
     }
 
+    //获取新的渠道代码值 链接中的tbschcode
+    public static String getNewChannType(Context context) {
+        if (AppInfoUtil.getChannType(context).equals("ali")) {
+            return "al_yysc_tbs";
+        } else if (AppInfoUtil.getChannType(context).equals("anzhi")) {
+            return "az_yysc_tbs";
+        }else if (AppInfoUtil.getChannType(context).equals("appbaidu")) {
+            return "bd_yysc_tbs";
+        }else if (AppInfoUtil.getChannType(context).equals("apphuawei")) {
+            return "hw_yysc_tbs";
+        }else if (AppInfoUtil.getChannType(context).equals("applenovo")) {
+            return "lx_yysc_tbs";
+        }else if (AppInfoUtil.getChannType(context).equals("appmeizu")) {
+            return "mz_yysc_tbs";
+        }else if (AppInfoUtil.getChannType(context).equals("appoppo")) {
+            return "oppo_yysc_tbs";
+        }else if (AppInfoUtil.getChannType(context).equals("appqihu")) {
+            return "360_yysc_tbs";
+        }else if (AppInfoUtil.getChannType(context).equals("appttt")) {
+            return "cz_yysc_tbs";
+        }else if (AppInfoUtil.getChannType(context).equals("appvivo")) {
+            return "vivo_yysc_tbs";
+        }else if (AppInfoUtil.getChannType(context).equals("appxiaomi")) {
+            return "xm_yysc_tbs";
+        }else if (AppInfoUtil.getChannType(context).equals("appyyb")) {
+            return "tx_yysc_tbs";
+        }else if (AppInfoUtil.getChannType(context).equals("yybff")) {
+            return "tx_yysc_yybff";
+        }else if (AppInfoUtil.getChannType(context).equals("jinli")) {
+            return "jl_yysc_tbs";
+        }else if (AppInfoUtil.getChannType(context).equals("leshi")) {
+            return "tbs";
+        }else if (AppInfoUtil.getChannType(context).equals("sougou")) {
+            return "sg_yysc_tbs";
+        }else if (AppInfoUtil.getChannType(context).equals("sumsung")) {
+            return "sx_yysc_tbs";
+        }else if (AppInfoUtil.getChannType(context).equals("youyi")) {
+            return "yysc_yysc_tbs";
+        }else if (AppInfoUtil.getChannType(context).equals("zhuanghaojia")) {
+            return "";
+        }else if (AppInfoUtil.getChannType(context).equals("tbspc")) {
+            return "tbspc_pczy";
+        }else {
+            return "";
+        }
+    }
+
+
     public static String getCityName(Context context) {
         return context.getSharedPreferences("city", 0).getString("cityName", "深圳");
     }

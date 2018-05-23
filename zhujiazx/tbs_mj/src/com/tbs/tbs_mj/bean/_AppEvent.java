@@ -60,7 +60,7 @@ public class _AppEvent {
     public _AppEvent(ArrayList<EvBean> evBeanArrayList) {
         this.ct = Util.getUnixTime();
         this.uid = AppInfoUtil.getUserid(MyApplication.getContext());
-        this.pn = "tbs_and";
+        this.pn = "zjzx_and";
         this.pv = AppInfoUtil.getAppVersionName(MyApplication.getContext()) + "/" + AppInfoUtil.getChannType(MyApplication.getContext());
         this.di = Util.getDeviceID();
         this.si = Util.getSessionID();

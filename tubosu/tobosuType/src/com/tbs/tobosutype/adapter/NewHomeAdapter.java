@@ -171,7 +171,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.COMPANY_GIFT);
+                    webIntent.putExtra("mLoadingUrl", SpUtil.getTbsAj05(context));
                     context.startActivity(webIntent);
                 }
             });
@@ -221,7 +221,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     fadanClick("1009", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
+                    webIntent.putExtra("mLoadingUrl", SpUtil.getTbsAj01(context));
                     context.startActivity(webIntent);
                 }
             });
@@ -230,7 +230,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     fadanClick("950", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.QUOTE);
+                    webIntent.putExtra("mLoadingUrl",SpUtil.getTbsAj02(context));
                     context.startActivity(webIntent);
                 }
             });
@@ -239,7 +239,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     fadanClick("1010", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.REC_COMPANY);
+                    webIntent.putExtra("mLoadingUrl", SpUtil.getTbsAj03(context));
                     context.startActivity(webIntent);
                 }
             });
@@ -248,7 +248,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     fadanClick("1011", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.COMPANY_GIFT);
+                    webIntent.putExtra("mLoadingUrl", SpUtil.getTbsAj04(context));
                     context.startActivity(webIntent);
                 }
             });
@@ -507,9 +507,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (bannerList != null && bannerList.size() > 0) {
             for (int i = 0; i < bannerList.size(); i++) {
                 if (bannerList.get(i).getContent_url().contains("?")) {
-                    urlList.add(bannerList.get(i).getContent_url() + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext())+Constant.APP_TYPE);
+                    urlList.add(bannerList.get(i).getContent_url() + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + Constant.APP_TYPE);
                 } else {
-                    urlList.add(bannerList.get(i).getContent_url() + "?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext())+Constant.APP_TYPE);
+                    urlList.add(bannerList.get(i).getContent_url() + "?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + Constant.APP_TYPE);
                 }
                 ImageView view = new ImageView(context);
                 view.setScaleType(ImageView.ScaleType.CENTER_CROP);

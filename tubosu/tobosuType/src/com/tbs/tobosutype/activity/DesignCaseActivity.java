@@ -210,7 +210,7 @@ public class DesignCaseActivity extends com.tbs.tobosutype.base.BaseActivity {
                     break;
                 case R.id.item_design_case_get_design:
                     Intent intent2 = new Intent(mContext, NewWebViewActivity.class);
-                    intent2.putExtra("mLoadingUrl", Constant.QUOTE);
+                    intent2.putExtra("mLoadingUrl", SpUtil.getTbsAj17(mContext));
                     mContext.startActivity(intent2);
                     break;
             }
@@ -226,7 +226,7 @@ public class DesignCaseActivity extends com.tbs.tobosutype.base.BaseActivity {
             case R.id.design_case_find_price_rl:
                 // 发单页
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.QUOTE);
+                intent.putExtra("mLoadingUrl", SpUtil.getTbsAj18(mContext));
                 mContext.startActivity(intent);
                 break;
         }

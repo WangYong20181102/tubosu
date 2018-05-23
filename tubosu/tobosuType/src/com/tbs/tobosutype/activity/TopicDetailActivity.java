@@ -160,7 +160,7 @@ public class TopicDetailActivity extends com.tbs.tobosutype.base.BaseActivity {
                 //跳转到发单页
                 /// TODO: 2017/10/24  跳转到免费报价发单页暂时写固定url
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.QUOTE);
+                intent.putExtra("mLoadingUrl", SpUtil.getTbsAj32(mContext));
                 mContext.startActivity(intent);
                 break;
         }

@@ -35,6 +35,7 @@ import com.tbs.tobosutype.fragment.NewImageSFragment;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.EventBusUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 
 import java.lang.reflect.Field;
@@ -191,14 +192,14 @@ public class NewImageActivity extends com.tbs.tobosutype.base.BaseActivity {
             case R.id.new_image_gif:
                 //右侧gif点击进发单页
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.QUOTE);
+                intent.putExtra("mLoadingUrl", SpUtil.getTbsAj10(mContext));
                 startActivity(intent);
                 break;
             case R.id.new_image_free_design_img:
                 //跳转到发单页
                 Log.e(TAG, "点击了发单按钮===================");
                 Intent intent2 = new Intent(mContext, NewWebViewActivity.class);
-                intent2.putExtra("mLoadingUrl", Constant.QUOTE);
+                intent2.putExtra("mLoadingUrl", SpUtil.getTbsAj10(mContext));
                 startActivity(intent2);
                 dismissTanChuang();
                 break;

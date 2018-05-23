@@ -765,12 +765,12 @@ public class NewGongSiAcitivity extends com.tbs.tobosutype.base.BaseActivity imp
                 relfindComLayout.setVisibility(View.GONE);
                 CacheManager.setCompanyFlag(mContext, 1);
                 Intent webIntent = new Intent(mContext, NewWebViewActivity.class);
-                webIntent.putExtra("mLoadingUrl", Constant.REC_COMPANY);
+                webIntent.putExtra("mLoadingUrl", SpUtil.getTbsAj15(mContext));
                 startActivity(webIntent);
                 break;
             case R.id.findComIcon:
                 Intent web = new Intent(mContext, NewWebViewActivity.class);
-                web.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
+                web.putExtra("mLoadingUrl", SpUtil.getTbsAj14(mContext));
                 startActivity(web);
                 relfindComLayout.setVisibility(View.GONE);
                 CacheManager.setCompanyFlag(mContext, 1);

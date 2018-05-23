@@ -187,12 +187,12 @@ public class Constant {
      * 3效果图
      */
 //    public static final String PIPE = "https://m.tobosu.com/app/pub?channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "&app_type=1";
-    public static final String PIPE = M_TOBOSU_URL + "app/pub?channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE;
+    public static final String PIPE = M_TOBOSU_URL + "app/pub?channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
 
     public static final String WANGJIANLIN = "&tbsfrom=share";
 
     public static final String POP_URL = M_TOBOSU_URL + "class/?from=app";
-    public static final String M_POP_PARAM = "&channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext());
+    public static final String M_POP_PARAM = "&channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext())+ APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
 
     public static final String ANDROID_SHARE = "&channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "&tbsfrom=share";
 
@@ -247,13 +247,15 @@ public class Constant {
 
     // TODO: 2018/5/14 App全栈通一发单地址*****************************************************************************************************
     //免费报价 配置App类型
-    public static final String FREE_PRICE_PAGE = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE;
+    public static final String FREE_PRICE_PAGE = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
     //免费设计
-    public static final String QUOTE = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE;
+    public static final String QUOTE = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
     //装修公司推荐
-    public static final String REC_COMPANY = M_TOBOSU_URL + "rec_company?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE;
+    public static final String REC_COMPANY = M_TOBOSU_URL + "rec_company?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
     //装修大礼包
-    public static final String COMPANY_GIFT = M_TOBOSU_URL + "company_gift?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE;
+    public static final String COMPANY_GIFT = M_TOBOSU_URL + "company_gift?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
+    //优惠活动 立即领取
+    public static final String PROMOTIONS = M_TOBOSU_URL + "promotions?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
 
 
     //新的逛图库 套图 3.5版本 add time 20171111
@@ -338,6 +340,4 @@ public class Constant {
     public static final String COMPANY_MY_STORE = TOBOSU_URL + "mapp/company/my_store";
     //网店管理修改网店管理
     public static final String COMPANY_MODIFY_STORE = TOBOSU_URL + "mapp/company/modify_store";
-
-
 }

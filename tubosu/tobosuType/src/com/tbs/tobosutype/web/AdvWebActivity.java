@@ -84,6 +84,7 @@ public class AdvWebActivity extends BaseActivity {
         } else {
             advWebviewWeb.loadUrl(mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
         }
+        Log.e(TAG, "获取loading页的url值==========" + mLoadingUrl);
     }
 
     private WebChromeClient webChromeClient = new WebChromeClient() {

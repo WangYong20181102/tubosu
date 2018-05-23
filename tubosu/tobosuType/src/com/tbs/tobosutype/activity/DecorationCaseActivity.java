@@ -24,6 +24,7 @@ import com.tbs.tobosutype.bean._DecorationCaseItem;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 
 import org.json.JSONArray;
@@ -165,7 +166,7 @@ public class DecorationCaseActivity extends com.tbs.tobosutype.base.BaseActivity
             case R.id.deco_case_find_price:
                 /// TODO: 2017/10/24  跳转到免费报价发单页暂时写固定url
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
+                intent.putExtra("mLoadingUrl", SpUtil.getTbsAj19(mContext));
                 mContext.startActivity(intent);
                 break;
         }

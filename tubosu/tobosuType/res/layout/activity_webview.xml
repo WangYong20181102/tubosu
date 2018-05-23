@@ -9,7 +9,7 @@
         android:id="@+id/rl_banner"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/color_icon">
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/iv_back_webview_activity"
@@ -18,7 +18,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:padding="5dp"
-            android:src="@drawable/back_up" />
+            android:src="@drawable/activity_back" />
 
         <TextView
             android:id="@+id/detailslideshow_title"
@@ -42,8 +42,8 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-            android:src="@drawable/image_share"
-            android:visibility="visible" />
+            android:src="@drawable/my_fenxiang"
+            android:visibility="gone" />
     </RelativeLayout>
 
 

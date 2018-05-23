@@ -92,7 +92,6 @@ public class OKHttpUtil {
     public static void post(String url, HashMap<String, Object> params, Callback callback) {
         FormBody.Builder builder = new FormBody.Builder();
         params.put("subchannel", "android");
-        params.put("tbschcode", "android");
         params.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
         for (String key : params.keySet()) {
             builder.add(key, String.valueOf(params.get(key)));
@@ -103,7 +102,6 @@ public class OKHttpUtil {
                 .build();
         Call call = getInstance().newCall(request);
         call.enqueue(callback);
-
     }
 //    /**
 //     * 1）获取Request对象

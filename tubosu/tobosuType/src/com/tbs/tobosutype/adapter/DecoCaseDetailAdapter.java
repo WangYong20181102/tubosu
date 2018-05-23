@@ -19,6 +19,7 @@ import com.tbs.tobosutype.activity.NewWebViewActivity;
 import com.tbs.tobosutype.bean._DecoCaseDetail;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.ImageLoaderUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 
 import java.util.ArrayList;
 
@@ -144,7 +145,7 @@ public class DecoCaseDetailAdapter
                     public void onClick(View v) {
                         //跳转到免费设计的H5页面
                         Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                        intent.putExtra("mLoadingUrl", Constant.QUOTE);
+                        intent.putExtra("mLoadingUrl", SpUtil.getTbsAj20(mContext));
                         mContext.startActivity(intent);
                     }
                 });

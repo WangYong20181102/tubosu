@@ -181,7 +181,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 //                    onShowShejisDataListener.OnShowShejisDataListener();
                     shejishiHeadHolder.dataListBar.setVisibility(View.VISIBLE);
                     setClickType(0);
-                    shejishiHeadHolder.desigText.setTextColor(Color.parseColor("#FF6F20"));
+                    shejishiHeadHolder.desigText.setTextColor(Color.parseColor("#54b3b3"));
                     shejishiHeadHolder.designTextBar.setVisibility(View.VISIBLE);
                     shejishiHeadHolder.caseText.setTextColor(Color.parseColor("#333333"));
                     shejishiHeadHolder.caseTextBar.setVisibility(View.GONE);
@@ -207,7 +207,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     setClickType(1);
                     shejishiHeadHolder.desigText.setTextColor(Color.parseColor("#333333"));
                     shejishiHeadHolder.designTextBar.setVisibility(View.GONE);
-                    shejishiHeadHolder.caseText.setTextColor(Color.parseColor("#FF6F20"));
+                    shejishiHeadHolder.caseText.setTextColor(Color.parseColor("#54b3b3"));
                     shejishiHeadHolder.caseTextBar.setVisibility(View.VISIBLE);
                     moreData = false;
                     if(clickType != SHEJI_TYPE && noAnliData){

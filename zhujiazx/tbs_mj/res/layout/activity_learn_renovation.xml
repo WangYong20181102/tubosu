@@ -51,11 +51,11 @@
             android:layout_alignParentLeft="true"
             android:layout_marginRight="32dp"
             app:xTabDisplayNum="6"
-            app:xTabIndicatorColor="#ff6f20"
+            app:xTabIndicatorColor="@color/app_theme_color"
             app:xTabIndicatorHeight="2dp"
             app:xTabIndicatorWidth="36dp"
             app:xTabMode="scrollable"
-            app:xTabSelectedTextColor="#ff6f20"
+            app:xTabSelectedTextColor="@color/app_theme_color"
             app:xTabTextColor="#242424">
 
         </com.androidkun.xtablayout.XTabLayout>

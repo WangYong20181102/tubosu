@@ -2,6 +2,8 @@ package com.tbs.tobosutype.utils;
 
 import android.content.Context;
 
+import com.tbs.tobosutype.global.Constant;
+
 /**
  * Created by Mr.Lin on 2017/11/17 11:17.
  * 存储的工具类
@@ -193,7 +195,7 @@ public class SpUtil {
         context.getSharedPreferences("mHomeAndCompanyUsingCity", 0).edit().putString("mHomeAndCompanyUsingCity", mHomeAndCompanyUsingCity).commit();
     }
 
-    // TODO: 2018/3/1  统计相关的数据
+    // TODO: 2018/3/1  统计相关的数据**********************************************************************************************************↓
     //存储统计的访问时间
     public static long getStatisticsEventVistTime(Context context) {
         return context.getSharedPreferences("StatisticsEvent", 0).getLong("m_vist_time", 0);
@@ -234,6 +236,7 @@ public class SpUtil {
         context.getSharedPreferences("StatisticsEvent", 0).edit().putString("m_page_id", page_id).commit();
     }
 
+    // TODO: 2018/3/1  统计相关的数据**********************************************************************************************************↑
     //存储推送的唯一标识
     public static String getPushRegisterId(Context context) {
         return context.getSharedPreferences("PushRegisterId", 0).getString("mPushRegisterId", "");
@@ -327,6 +330,335 @@ public class SpUtil {
         context.getSharedPreferences("QuOption", 0).edit().putInt("mQuOption", mQuOption).commit();
     }
 
-    // TODO: 2018/5/7  App发单地址********根据获取配置表的信息去取最新的值********
+    // TODO: 2018/5/18  App发单地址********根据获取配置表的信息去取最新的值******** App的发单地址 33个地址
+    //todo 1.首页-免费报价       tbsaj01
+    //获取
+    public static String getTbsAj01(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj01", Constant.FREE_PRICE_PAGE);
+    }
 
+    //存储
+    public static void setTbsAj01(Context context, String tbsaj01) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj01", tbsaj01).commit();
+    }
+
+    //todo 2.首页-免费设计       tbsaj02
+    public static String getTbsAj02(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj02", Constant.QUOTE);
+    }
+
+    //存储
+    public static void setTbsAj02(Context context, String tbsaj02) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj02", tbsaj02).commit();
+    }
+
+    //todo 3.首页-专业推荐       tbsaj03
+    public static String getTbsAj03(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj03", Constant.REC_COMPANY);
+    }
+
+    //存储
+    public static void setTbsAj03(Context context, String tbsaj03) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj03", tbsaj03).commit();
+    }
+
+    //todo 4.首页-装修大礼包     tbsaj04
+    public static String getTbsAj04(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj04", Constant.COMPANY_GIFT);
+    }
+
+    //存储
+    public static void setTbsAj04(Context context, String tbsaj04) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj04", tbsaj04).commit();
+    }
+
+    //todo 5.首页-免费量房       tbsaj05
+    public static String getTbsAj05(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj05", Constant.COMPANY_GIFT);
+    }
+
+    //存储
+    public static void setTbsAj05(Context context, String tbsaj05) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj05", tbsaj05).commit();
+    }
+
+    //todo 6.首页-滚动信息-免费设计    tbsaj06
+    public static String getTbsAj06(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj06", Constant.QUOTE);
+    }
+
+    //存储
+    public static void setTbsAj06(Context context, String tbsaj06) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj06", tbsaj06).commit();
+    }
+
+    //todo 7.首页-滚动信息-免费报价    tbsaj07
+    public static String getTbsAj07(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj07", Constant.FREE_PRICE_PAGE);
+    }
+
+    //存储
+    public static void setTbsAj07(Context context, String tbsaj07) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj07", tbsaj07).commit();
+    }
+
+    //todo 8.首页-滚动信息-专业推荐    tbsaj08
+    public static String getTbsAj08(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj08", Constant.COMPANY_GIFT);
+    }
+
+    //存储
+    public static void setTbsAj08(Context context, String tbsaj08) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj08", tbsaj08).commit();
+    }
+
+    //todo 9.首页-滚动信息-大礼包     tbsaj09
+    public static String getTbsAj09(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj09", Constant.REC_COMPANY);
+    }
+
+    //存储
+    public static void setTbsAj09(Context context, String tbsaj09) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj09", tbsaj09).commit();
+    }
+
+    //todo 10.效果图列表-弹窗    tbsaj10
+    public static String getTbsAj10(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj10", Constant.QUOTE);
+    }
+
+    //存储
+    public static void setTbsAj10(Context context, String tbsaj10) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj10", tbsaj10).commit();
+    }
+
+    //todo 11.效果图详情(单图)弹窗-免费设计    tbsaj11
+    public static String getTbsAj11(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj11", Constant.QUOTE);
+    }
+
+    //存储
+    public static void setTbsAj11(Context context, String tbsaj11) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj11", tbsaj11).commit();
+    }
+
+    //todo 12.效果图详情(套图)弹窗-免费报价    tbsaj12
+    public static String getTbsAj12(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj12", Constant.FREE_PRICE_PAGE);
+    }
+
+    //存储
+    public static void setTbsAj12(Context context, String tbsaj12) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj12", tbsaj12).commit();
+    }
+
+    //todo 13.底部-立即预约    tbsaj13
+    public static String getTbsAj13(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj13", Constant.QUOTE);
+    }
+
+    //存储
+    public static void setTbsAj13(Context context, String tbsaj13) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj13", tbsaj13).commit();
+    }
+
+    //todo 14.装修公司列表-弹窗     tbsaj14
+    public static String getTbsAj14(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj14", Constant.FREE_PRICE_PAGE);
+    }
+
+    //存储
+    public static void setTbsAj14(Context context, String tbsaj14) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj14", tbsaj14).commit();
+    }
+
+    //todo 15.装修公司列表-侧边键    tbsaj15
+    public static String getTbsAj15(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj15", Constant.REC_COMPANY);
+    }
+
+    //存储
+    public static void setTbsAj15(Context context, String tbsaj15) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj15", tbsaj15).commit();
+    }
+
+    //todo 16.装修公司网店-底部    tbsaj16
+    public static String getTbsAj16(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj16", Constant.FREE_PRICE_PAGE);
+    }
+
+    //存储
+    public static void setTbsAj16(Context context, String tbsaj16) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj16", tbsaj16).commit();
+    }
+
+    //todo 17.设计方案列表-获取此设计    tbsaj17
+    public static String getTbsAj17(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj17", Constant.QUOTE);
+    }
+
+    //存储
+    public static void setTbsAj17(Context context, String tbsaj17) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj17", tbsaj17).commit();
+    }
+
+    //todo 18.设计方案列表-底部    tbsaj18
+    public static String getTbsAj18(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj18", Constant.QUOTE);
+    }
+
+    //存储
+    public static void setTbsAj18(Context context, String tbsaj18) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj18", tbsaj18).commit();
+    }
+
+    //todo 19.装修案列表-底部    tbsaj19
+    public static String getTbsAj19(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj19", Constant.FREE_PRICE_PAGE);
+    }
+
+    //存储
+    public static void setTbsAj19(Context context, String tbsaj19) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj19", tbsaj19).commit();
+    }
+
+    //todo 20.装修案例详情-找ta免费设计    tbsaj20
+    public static String getTbsAj20(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj20", Constant.QUOTE);
+    }
+
+    //存储
+    public static void setTbsAj20(Context context, String tbsaj20) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj20", tbsaj20).commit();
+    }
+
+    //todo 21.装修案例详情-立即报价    tbsaj21
+    public static String getTbsAj21(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj21", Constant.FREE_PRICE_PAGE);
+    }
+
+    //存储
+    public static void setTbsAj21(Context context, String tbsaj21) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj21", tbsaj21).commit();
+    }
+
+    //todo 22.优惠活动-立即领取    tbsaj22
+    public static String getTbsAj22(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj22", Constant.PROMOTIONS);
+    }
+
+    //存储
+    public static void setTbsAj22(Context context, String tbsaj22) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj22", tbsaj22).commit();
+    }
+
+    //todo 23.设计团队列表-找TA免费设计    tbsaj23
+    public static String getTbsAj23(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj23", Constant.QUOTE);
+    }
+
+    //存储
+    public static void setTbsAj23(Context context, String tbsaj23) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj23", tbsaj23).commit();
+    }
+
+    //todo 24.设计团队列表页-底部    tbsaj24
+    public static String getTbsAj24(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj24", Constant.QUOTE);
+    }
+
+    //存储
+    public static void setTbsAj24(Context context, String tbsaj24) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj24", tbsaj24).commit();
+    }
+
+    //todo 25.设计师个人页-找TA免费设计    tbsaj25
+    public static String getTbsAj25(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj25", Constant.QUOTE);
+    }
+
+    //存储
+    public static void setTbsAj25(Context context, String tbsaj25) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj25", tbsaj25).commit();
+    }
+
+    //todo 26.设计师个人页-获取此设计    tbsaj26
+    public static String getTbsAj26(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj26", Constant.QUOTE);
+    }
+
+    //存储
+    public static void setTbsAj26(Context context, String tbsaj26) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj26", tbsaj26).commit();
+    }
+
+    //todo 27.设计师个人页-获取报价    tbsaj27
+    public static String getTbsAj27(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj27", Constant.FREE_PRICE_PAGE);
+    }
+
+    //存储
+    public static void setTbsAj27(Context context, String tbsaj27) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj27", tbsaj27).commit();
+    }
+
+    //todo 28.我的-限量领取    tbsaj28
+    public static String getTbsAj28(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj28", Constant.COMPANY_GIFT);
+    }
+
+    //存储
+    public static void setTbsAj28(Context context, String tbsaj28) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj28", tbsaj28).commit();
+    }
+
+    //todo 29.学装修首页-底部    tbsaj29
+    public static String getTbsAj29(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj29", Constant.FREE_PRICE_PAGE);
+    }
+
+    //存储
+    public static void setTbsAj29(Context context, String tbsaj29) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj29", tbsaj29).commit();
+    }
+
+    //todo 30.学装修侧边-红包    tbsaj30
+    public static String getTbsAj30(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj30", Constant.QUOTE);
+    }
+
+    //存储
+    public static void setTbsAj30(Context context, String tbsaj30) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj30", tbsaj30).commit();
+    }
+
+    //todo 31.文章详情页-侧边    tbsaj31
+    public static String getTbsAj31(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj31", Constant.QUOTE);
+    }
+
+    //存储
+    public static void setTbsAj31(Context context, String tbsaj31) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj31", tbsaj31).commit();
+    }
+
+    //todo 32.专题详情页-底部    tbsaj32
+    public static String getTbsAj32(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj32", Constant.FREE_PRICE_PAGE);
+    }
+
+    //存储
+    public static void setTbsAj32(Context context, String tbsaj32) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj32", tbsaj32).commit();
+    }
+
+    //todo 33.看案例列表页-底部    tbsaj33 和按键19一致
+    public static String getTbsAj33(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj33", Constant.QUOTE);
+    }
+
+    //存储
+    public static void setTbsAj33(Context context, String tbsaj33) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj33", tbsaj33).commit();
+    }
 }

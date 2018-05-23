@@ -27,6 +27,7 @@ import com.tbs.tobosutype.bean._DecoCaseDetail;
 import com.tbs.tobosutype.fragment.LookPhotoFragment;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 
 import java.io.File;
@@ -258,7 +259,7 @@ public class LookPhotoActivity extends com.tbs.tobosutype.base.BaseActivity {
             case R.id.look_photo_find_price_rl:
                 /// TODO: 2017/10/24  跳转到免费报价发单页暂时写固定url
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
+                intent.putExtra("mLoadingUrl", SpUtil.getTbsAj21(mContext));
                 mContext.startActivity(intent);
                 break;
         }

@@ -906,6 +906,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
             if (Util.isNetAvailable(NewHomeActivity.this)) {
                 final Dialog dialog = new Dialog(NewHomeActivity.this, R.style.popupDialog);
                 HashMap<String, Object> hashMap = new HashMap<String, Object>();
+                hashMap.put("token", Util.getDateToken());
                 OKHttpUtil.post(Constant.ACTIVITY_URL, hashMap, new Callback() {
 
                     @Override
@@ -922,7 +923,7 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
                             public void run() {
                                 try {
                                     JSONObject jsonObject = new JSONObject(json);
-                                    if (jsonObject.getInt("error_code") == 0) {
+                                    if (jsonObject.getInt("status") == 200) {
                                         JSONObject data = jsonObject.getJSONObject("data");
                                         activityId = data.getString("id");
                                         activityImg_url = data.getString("img_url");

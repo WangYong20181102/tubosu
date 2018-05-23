@@ -217,7 +217,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
             param.put("user_id", AppInfoUtil.getId(mContext));
             param.put("user_type", AppInfoUtil.getTypeid(mContext));
             param.put("system_type", "1");
-            param.put("app_type", "1");
+            param.put("app_type", "4");
             param.put("device_id", SpUtil.getPushRegisterId(mContext));
             OKHttpUtil.post(Constant.FLUSH_SMS_PUSH, param, new Callback() {
                 @Override
@@ -458,7 +458,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                 img_decorate.setBackgroundResource(R.drawable.company_black);
                 img_my.setBackgroundResource(R.drawable.me_black);
 
-                tv_home_textview.setTextColor(Color.parseColor("#ff2c10"));
+                tv_home_textview.setTextColor(Color.parseColor("#54b3b3"));
                 tv_image_textview.setTextColor(Color.parseColor("#666666"));
                 tv_decorate_textview.setTextColor(Color.parseColor("#666666"));
                 tv_my_textview.setTextColor(Color.parseColor("#666666"));
@@ -473,7 +473,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                 img_my.setBackgroundResource(R.drawable.me_black);
 
                 tv_home_textview.setTextColor(Color.parseColor("#666666"));
-                tv_image_textview.setTextColor(Color.parseColor("#ff2c10"));
+                tv_image_textview.setTextColor(Color.parseColor("#54b3b3"));
                 tv_decorate_textview.setTextColor(Color.parseColor("#666666"));
                 tv_my_textview.setTextColor(Color.parseColor("#666666"));
                 SpUtil.setMainTabPosition(mContext, 1);
@@ -488,7 +488,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 
                 tv_home_textview.setTextColor(Color.parseColor("#666666"));
                 tv_image_textview.setTextColor(Color.parseColor("#666666"));
-                tv_decorate_textview.setTextColor(Color.parseColor("#ff2c10"));
+                tv_decorate_textview.setTextColor(Color.parseColor("#54b3b3"));
                 tv_my_textview.setTextColor(Color.parseColor("#666666"));
                 SpUtil.setMainTabPosition(mContext, 2);
                 break;
@@ -513,7 +513,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     tv_home_textview.setTextColor(Color.parseColor("#666666"));
                     tv_image_textview.setTextColor(Color.parseColor("#666666"));
                     tv_decorate_textview.setTextColor(Color.parseColor("#666666"));
-                    tv_my_textview.setTextColor(Color.parseColor("#ff2c10"));
+                    tv_my_textview.setTextColor(Color.parseColor("#54b3b3"));
                 } else if ("3".equals(mark)) {
                     // 装修公司
                     tabHost.setCurrentTabByTag("FOUR2");
@@ -526,7 +526,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     tv_home_textview.setTextColor(Color.parseColor("#666666"));
                     tv_image_textview.setTextColor(Color.parseColor("#666666"));
                     tv_decorate_textview.setTextColor(Color.parseColor("#666666"));
-                    tv_my_textview.setTextColor(Color.parseColor("#ff2c10"));
+                    tv_my_textview.setTextColor(Color.parseColor("#54b3b3"));
                 } else if ("0".equals(mark)) {
                     Util.setLog(TAG, "==========mark 0 =========");
                     tabHost.setCurrentTab(fragmentPostion);
@@ -540,7 +540,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     tv_home_textview.setTextColor(Color.parseColor("#666666"));
                     tv_image_textview.setTextColor(Color.parseColor("#666666"));
                     tv_decorate_textview.setTextColor(Color.parseColor("#666666"));
-                    tv_my_textview.setTextColor(Color.parseColor("#ff2c10"));
+                    tv_my_textview.setTextColor(Color.parseColor("#54b3b3"));
                 }
                 SpUtil.setMainTabPosition(mContext, 3);
                 break;

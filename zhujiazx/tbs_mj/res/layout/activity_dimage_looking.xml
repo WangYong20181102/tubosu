@@ -159,7 +159,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="#ff7022">
+                android:background="@color/app_theme_color">
 
                 <TextView
                     android:layout_width="wrap_content"

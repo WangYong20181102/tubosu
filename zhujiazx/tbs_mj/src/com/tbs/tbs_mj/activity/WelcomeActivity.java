@@ -172,7 +172,6 @@ public class WelcomeActivity extends BaseActivity {
 //            ToastUtil.showShort(mContext, "触发百度定位=====" + location.getCity() + "获取的本地真实的存储定位信息====" + SpUtil.getCity(mContext));
 //            Log.e(TAG, "百度定位监听==========" + location.getCity());
         }
-
     }
 
     private void initView() {
@@ -370,7 +369,6 @@ public class WelcomeActivity extends BaseActivity {
         if (intent != null) {
             startActivity(intent);
             finish();
-//            System.gc();
         }
 
     }
@@ -378,7 +376,7 @@ public class WelcomeActivity extends BaseActivity {
     //基于6.0以上系统动态获取权限问题
     private void needPermissions() {
         if (Build.VERSION.SDK_INT >= 23) {
-            List<String> permission = getPermissionList(mContext);//需要获取动态权限的集合 总6个
+            List<String> permission = getPermissionList(mContext);//需要获取动态权限的集合
             Log.e(TAG, "获取权限的集合长度===========" + permission.size());
             if (permission.size() > 0) {
                 //未获取全部的权限 去获取相应的权限

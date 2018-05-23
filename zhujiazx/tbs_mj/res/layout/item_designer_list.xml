@@ -76,7 +76,7 @@
                     android:background="@drawable/shape_designer_find_he_design"
                     android:gravity="center"
                     android:text="找TA免费设计"
-                    android:textColor="#ff5a00"
+                    android:textColor="@color/app_theme_color"
                     android:textSize="12sp" />
             </RelativeLayout>
             <!--风格相关-->

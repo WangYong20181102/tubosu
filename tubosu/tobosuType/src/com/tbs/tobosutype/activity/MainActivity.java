@@ -186,12 +186,115 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     String data = jsonObject.optString("data");
                     _AppConfig mAppConfig = mGson.fromJson(data, _AppConfig.class);
                     //存储App配置信息
-                    SpUtil.setCustom_service_tel(mContext, mAppConfig.getCustom_service_tel());
-                    SpUtil.setCustom_service_qq(mContext, mAppConfig.getCustom_service_qq());
-                    SpUtil.setApplets_name(mContext, mAppConfig.getApplets_name());
-                    SpUtil.setPublic_number(mContext, mAppConfig.getPublic_number());
-                    Log.e(TAG, "电话号码========" + SpUtil.getCustom_service_tel(mContext) + "=======QQ=======" + SpUtil.getCustom_service_qq(mContext) + "=======小程序=====" + SpUtil.getApplets_name(mContext));
-
+                    SpUtil.setCustom_service_tel(mContext, mAppConfig.getCustom_service_tel());//电话
+                    SpUtil.setCustom_service_qq(mContext, mAppConfig.getCustom_service_qq());//QQ
+                    SpUtil.setApplets_name(mContext, mAppConfig.getApplets_name());//土拨鼠查单小程序
+                    SpUtil.setPublic_number(mContext, mAppConfig.getOfficial_accounts());//土拨鼠微信公众号
+                    //存储发单链接信息
+                    HashMap<String, String> urlMap = new HashMap<>();
+                    for (int i = 0; i < mAppConfig.getOrder_links().size(); i++) {
+                        urlMap.put(mAppConfig.getOrder_links().get(i).getCode(), mAppConfig.getOrder_links().get(i).getUrl());
+                    }
+                    //存储
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj01"))) {
+                        SpUtil.setTbsAj01(mContext,urlMap.get("tbsaj01"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj02"))) {
+                        SpUtil.setTbsAj02(mContext,urlMap.get("tbsaj02"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj03"))) {
+                        SpUtil.setTbsAj03(mContext,urlMap.get("tbsaj03"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj04"))) {
+                        SpUtil.setTbsAj04(mContext,urlMap.get("tbsaj04"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj05"))) {
+                        SpUtil.setTbsAj05(mContext,urlMap.get("tbsaj05"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj06"))) {
+                        SpUtil.setTbsAj06(mContext,urlMap.get("tbsaj06"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj07"))) {
+                        SpUtil.setTbsAj07(mContext,urlMap.get("tbsaj07"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj08"))) {
+                        SpUtil.setTbsAj08(mContext,urlMap.get("tbsaj08"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj09"))) {
+                        SpUtil.setTbsAj09(mContext,urlMap.get("tbsaj09"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj10"))) {
+                        SpUtil.setTbsAj10(mContext,urlMap.get("tbsaj10"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj11"))) {
+                        SpUtil.setTbsAj11(mContext,urlMap.get("tbsaj11"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj12"))) {
+                        SpUtil.setTbsAj12(mContext,urlMap.get("tbsaj12"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj13"))) {
+                        SpUtil.setTbsAj13(mContext,urlMap.get("tbsaj13"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj14"))) {
+                        SpUtil.setTbsAj14(mContext,urlMap.get("tbsaj14"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj15"))) {
+                        SpUtil.setTbsAj15(mContext,urlMap.get("tbsaj15"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj16"))) {
+                        SpUtil.setTbsAj16(mContext,urlMap.get("tbsaj16"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj17"))) {
+                        SpUtil.setTbsAj17(mContext,urlMap.get("tbsaj17"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj18"))) {
+                        SpUtil.setTbsAj18(mContext,urlMap.get("tbsaj18"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj19"))) {
+                        SpUtil.setTbsAj19(mContext,urlMap.get("tbsaj19"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj20"))) {
+                        SpUtil.setTbsAj20(mContext,urlMap.get("tbsaj20"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj21"))) {
+                        SpUtil.setTbsAj21(mContext,urlMap.get("tbsaj21"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj22"))) {
+                        SpUtil.setTbsAj22(mContext,urlMap.get("tbsaj22"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj23"))) {
+                        SpUtil.setTbsAj23(mContext,urlMap.get("tbsaj23"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj24"))) {
+                        SpUtil.setTbsAj24(mContext,urlMap.get("tbsaj24"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj25"))) {
+                        SpUtil.setTbsAj25(mContext,urlMap.get("tbsaj25"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj26"))) {
+                        SpUtil.setTbsAj26(mContext,urlMap.get("tbsaj26"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj27"))) {
+                        SpUtil.setTbsAj27(mContext,urlMap.get("tbsaj27"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj28"))) {
+                        SpUtil.setTbsAj28(mContext,urlMap.get("tbsaj28"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj29"))) {
+                        SpUtil.setTbsAj29(mContext,urlMap.get("tbsaj29"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj30"))) {
+                        SpUtil.setTbsAj30(mContext,urlMap.get("tbsaj30"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj31"))) {
+                        SpUtil.setTbsAj31(mContext,urlMap.get("tbsaj31"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj32"))) {
+                        SpUtil.setTbsAj32(mContext,urlMap.get("tbsaj32"));
+                    }
+                    if (!TextUtils.isEmpty(urlMap.get("tbsaj33"))) {
+                        SpUtil.setTbsAj33(mContext,urlMap.get("tbsaj33"));
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

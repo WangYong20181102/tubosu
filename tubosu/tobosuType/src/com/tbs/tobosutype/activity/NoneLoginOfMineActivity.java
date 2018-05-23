@@ -151,7 +151,7 @@ public class NoneLoginOfMineActivity extends BaseActivity {
                 //点击大礼包发单条 跳转到发单页面
                 Intent intentToWeb = new Intent(mContext, NewWebViewActivity.class);
                 // TODO: 2018/1/11 发单地址
-                intentToWeb.putExtra("mLoadingUrl", Constant.COMPANY_GIFT);
+                intentToWeb.putExtra("mLoadingUrl", SpUtil.getTbsAj28(mContext));
                 mContext.startActivity(intentToWeb);
                 break;
             case R.id.none_login_kefu_rl:

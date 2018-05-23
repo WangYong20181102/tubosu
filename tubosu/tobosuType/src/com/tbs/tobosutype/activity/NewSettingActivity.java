@@ -95,11 +95,8 @@ public class NewSettingActivity extends com.tbs.tobosutype.base.BaseActivity {
                     String status = jsonObject.optString("status");
                     if (status.equals("200")) {
                         String data = jsonObject.optString("data");
-                        Log.e(TAG, "获取校验码=================" + data);
                         //获取数据成功
                         mAppConfig = mGson.fromJson(data, _AppConfig.class);
-                        Log.e(TAG, "获取解密的校验码=================" + Base64Util.getFromBase64(mAppConfig.getCellphone_partern()));
-
                         SpUtil.setCellphonePartern(mContext, mAppConfig.getCellphone_partern());
                     }
                 } catch (JSONException e) {

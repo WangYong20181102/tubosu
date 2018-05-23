@@ -18,10 +18,10 @@
             android:layout_height="48dp"
             android:layout_alignParentTop="true"
             app:tabGravity="center"
-            app:tabIndicatorColor="#ff6f20"
+            app:tabIndicatorColor="@color/app_theme_color"
             app:tabIndicatorHeight="4dp"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="#ff6f20"
+            app:tabSelectedTextColor="@color/app_theme_color"
             app:tabTextAppearance="@style/TabLayoutTextStyle"
             app:tabTextColor="#242424">
 

@@ -201,7 +201,7 @@ public class PushAppNotStartWebActivity extends BaseActivity {
             case R.id.push_not_start_fadan:
                 //跳转到发单页面
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.QUOTE);
+                intent.putExtra("mLoadingUrl", SpUtil.getTbsAj31(mContext));
                 mContext.startActivity(intent);
                 break;
         }

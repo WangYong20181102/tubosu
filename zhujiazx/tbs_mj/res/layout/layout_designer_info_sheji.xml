@@ -41,7 +41,7 @@
                 android:layout_height="28dp"
                 android:background="@drawable/shape_get_this_design"
                 android:gravity="center"
-                android:textColor="#ff630f"
+                android:textColor="@color/app_theme_color"
                 android:textSize="12sp"
                 android:text="获取此设计"/>
 

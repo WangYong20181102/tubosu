@@ -626,7 +626,8 @@
         <activity android:name=".activity.ChangeRongYuImageActivity" />
         <activity android:name=".activity.BigImageLookActivity" />
         <activity android:name=".activity.CoChangeBussinessLicenseActivity" />
-        <activity android:name=".activity.ChangeCoAddressActivity"></activity>
+        <activity android:name=".activity.ChangeCoAddressActivity" />
+        <activity android:name=".activity.GuideOneActivity"></activity>
     </application>
 
 </manifest>

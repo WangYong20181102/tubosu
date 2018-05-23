@@ -293,7 +293,7 @@ public class NewImageSFragment extends BaseFragment {
                  * 2.选中的按钮字体颜色的变化
                  */
                 Glide.with(mContext).load(R.drawable.img_san_up).into(fragNewImgSingleFenggeSan);
-                fragNewImgSingleFengge.setTextColor(Color.parseColor("#ff882e"));
+                fragNewImgSingleFengge.setTextColor(Color.parseColor("#54b3b3"));
 //                if (myGridViewAdapterStyle == null) {
                 myGridViewAdapterStyle = new MyGridViewAdapter(mContext, popStyleList, mPositionStyle);
                 mGridView.setAdapter(myGridViewAdapterStyle);
@@ -323,7 +323,7 @@ public class NewImageSFragment extends BaseFragment {
                  * 2.选中的按钮字体颜色的变化
                  */
                 Glide.with(mContext).load(R.drawable.img_san_up).into(fragNewImgSingleKongjianSan);
-                fragNewImgSingleKongjian.setTextColor(Color.parseColor("#ff882e"));
+                fragNewImgSingleKongjian.setTextColor(Color.parseColor("#54b3b3"));
                 myGridViewAdapterSpace = new MyGridViewAdapter(mContext, popSpaceList, mPositionSpace);
                 mGridView.setAdapter(myGridViewAdapterSpace);
                 mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -353,7 +353,7 @@ public class NewImageSFragment extends BaseFragment {
                  * 4.重新请求数据
                  */
                 Glide.with(mContext).load(R.drawable.img_san_up).into(fragNewImgSingleJubuSan);
-                fragNewImgSingleJubu.setTextColor(Color.parseColor("#ff882e"));
+                fragNewImgSingleJubu.setTextColor(Color.parseColor("#54b3b3"));
                 myGridViewAdapterPart = new MyGridViewAdapter(mContext, popPartList, mPositionPart);
                 mGridView.setAdapter(myGridViewAdapterPart);
                 mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -383,7 +383,7 @@ public class NewImageSFragment extends BaseFragment {
                  * 4.重新请求数据
                  */
                 Glide.with(mContext).load(R.drawable.img_san_up).into(fragNewImgSingleYanseSan);
-                fragNewImgSingleYanse.setTextColor(Color.parseColor("#ff882e"));
+                fragNewImgSingleYanse.setTextColor(Color.parseColor("#54b3b3"));
                 myGridViewAdapterColor = new MyGridViewAdapter(mContext, popColorList, mPositionColor);
                 mGridView.setAdapter(myGridViewAdapterColor);
                 mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

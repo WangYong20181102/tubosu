@@ -187,7 +187,7 @@ public class Constant {
      * 3效果图
      */
 //    public static final String PIPE = "https://m.tobosu.com/app/pub?channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "&app_type=1";
-    public static final String PIPE = M_TOBOSU_URL + "app/pub?channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE;
+    public static final String PIPE = M_TOBOSU_URL + "app/pub?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE;
 
     public static final String WANGJIANLIN = "&tbsfrom=share";
 
@@ -236,7 +236,6 @@ public class Constant {
         Toast.makeText(mContext, "网络断开，请检查网络~", Toast.LENGTH_SHORT).show();
     }
 
-
     //新的装修案例 获取案例列表
     public static final String CASE_LIST = TOBOSU_URL + "resapp/case/case_list";
     //新的装修案例详情
@@ -247,7 +246,7 @@ public class Constant {
 
 
     // TODO: 2018/5/14 App全栈通一发单地址*****************************************************************************************************
-//免费报价 配置App类型
+    //免费报价 配置App类型
     public static final String FREE_PRICE_PAGE = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE;
     //免费设计
     public static final String QUOTE = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE;

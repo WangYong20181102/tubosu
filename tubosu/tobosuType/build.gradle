@@ -107,6 +107,7 @@ android {
         appvivo {}
         appxiaomi {}
         appyyb {}
+        yybff {}
         jinli {}
         leshi {}
         sougou {}

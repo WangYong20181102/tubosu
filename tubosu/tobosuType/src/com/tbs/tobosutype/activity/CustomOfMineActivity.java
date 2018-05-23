@@ -254,7 +254,7 @@ public class CustomOfMineActivity extends BaseActivity {
                 //跳转到发单页面
                 Intent intentToWeb = new Intent(mContext, NewWebViewActivity.class);
                 // TODO: 2018/1/11 发单地址
-                intentToWeb.putExtra("mLoadingUrl", Constant.COMPANY_GIFT);
+                intentToWeb.putExtra("mLoadingUrl", SpUtil.getTbsAj28(mContext));
                 mContext.startActivity(intentToWeb);
                 break;
             case R.id.custom_of_mine_kefu_rl:
@@ -341,7 +341,7 @@ public class CustomOfMineActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 //打电话
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "4006062221"));
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + SpUtil.getCustom_service_tel(mContext)));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 popupWindow.dismiss();
@@ -366,7 +366,7 @@ public class CustomOfMineActivity extends BaseActivity {
     //复制微信号
     private void copyWeChat() {
         ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        cmb.setText("itobosu");
+        cmb.setText("" + SpUtil.getPublic_number(mContext));
         ToastUtil.showShort(this, "已复制微信公众号");
     }
 

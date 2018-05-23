@@ -20,6 +20,7 @@ import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 
 import org.json.JSONArray;
@@ -166,9 +167,9 @@ public class CoYouHuiActivity extends com.tbs.tobosutype.base.BaseActivity {
             /// TODO: 2017/12/5 跳转到Web页面 进行发单处理
             Intent intent = new Intent(mContext, NewWebViewActivity.class);
 //            String mUrl = "http://m.tobosu.com/free_price_page/";
-            String mUrl = mYouHuiArrayList.get(position).getOrder_page_url() + "channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext())+ "&app_type=1";
+            String mUrl = mYouHuiArrayList.get(position).getOrder_page_url() + "channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "&app_type=1";
             Log.e(TAG, "返回的url========" + mUrl);
-            intent.putExtra("mLoadingUrl", mUrl);
+            intent.putExtra("mLoadingUrl", SpUtil.getTbsAj22(mContext));
             mContext.startActivity(intent);
         }
     };

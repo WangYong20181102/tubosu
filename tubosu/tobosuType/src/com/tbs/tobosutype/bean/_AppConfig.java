@@ -1,7 +1,12 @@
 package com.tbs.tobosutype.bean;
 
+import java.util.List;
+
 /**
  * Created by Mr.Lin on 2018/1/20 17:25.
+ * 获取后台的配置信息
+ * 1.基本的信息配置
+ * 2.获取报价相关的信息
  */
 
 public class _AppConfig {
@@ -11,7 +16,8 @@ public class _AppConfig {
      * custom_service_tel : 400-696-2221
      * custom_service_qq : 4006062221
      * applets_name : 土拨鼠查订单
-     * public_number : itobosu
+     * official_accounts : itobosu
+     * order_links : [{"code":"tbsaj01","url":""},{"code":"tbsaj02","url":""},{"code":"tbsaj03","url":""},{"code":"tbsaj04","url":""},{"code":"tbsaj05","url":""},{"code":"tbsaj06","url":""},{"code":"tbsaj07","url":""},{"code":"tbsaj08","url":""},{"code":"tbsaj09","url":""},{"code":"tbsaj10","url":""},{"code":"tbsaj11","url":""},{"code":"tbsaj12","url":""},{"code":"tbsaj13","url":""},{"code":"tbsaj14","url":""},{"code":"tbsaj15","url":""},{"code":"tbsaj16","url":""},{"code":"tbsaj17","url":""},{"code":"tbsaj18","url":""},{"code":"tbsaj19","url":""},{"code":"tbsaj20","url":""},{"code":"tbsaj21","url":""},{"code":"tbsaj22","url":""},{"code":"tbsaj23","url":""},{"code":"tbsaj24","url":""},{"code":"tbsaj25","url":""},{"code":"tbsaj26","url":""},{"code":"tbsaj27","url":""},{"code":"tbsaj28","url":""},{"code":"tbsaj29","url":""},{"code":"tbsaj30","url":""},{"code":"tbsaj31","url":"http://www.google.com?channel=app&subchannel=android&chcode=ali&app_type=1"},{"code":"tbsaj32","url":"http://www.baidu.com?channel=app&subchannel=android&chcode=ali&app_type=1"},{"code":"tbsaj33","url":""}]
      */
 
     private String cellphone_partern;
@@ -19,6 +25,7 @@ public class _AppConfig {
     private String custom_service_qq;
     private String applets_name;
     private String official_accounts;
+    private List<OrderLinksBean> order_links;
 
     public String getCellphone_partern() {
         return cellphone_partern;
@@ -52,11 +59,45 @@ public class _AppConfig {
         this.applets_name = applets_name;
     }
 
-    public String getPublic_number() {
+    public String getOfficial_accounts() {
         return official_accounts;
     }
 
-    public void setPublic_number(String public_number) {
-        this.official_accounts = public_number;
+    public void setOfficial_accounts(String official_accounts) {
+        this.official_accounts = official_accounts;
+    }
+
+    public List<OrderLinksBean> getOrder_links() {
+        return order_links;
+    }
+
+    public void setOrder_links(List<OrderLinksBean> order_links) {
+        this.order_links = order_links;
+    }
+
+    public static class OrderLinksBean {
+        /**
+         * code : tbsaj01
+         * url :
+         */
+
+        private String code;
+        private String url;
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
     }
 }

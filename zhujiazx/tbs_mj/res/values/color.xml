@@ -4,6 +4,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="app_theme_color">#54b3b3</color>
+    <color name="app_theme_color_dan">#FFEEF7F7</color>
 
     <color name="bg_title">#e6e6e6</color>
     <color name="bg_fd_title">#ff882e</color>

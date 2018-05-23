@@ -102,7 +102,7 @@ public class MyGridViewAdapter extends BaseAdapter {
         if (position == mPosition) {
             holder.BtntextView.setTextColor(Color.parseColor("#ffffff"));
             GradientDrawable gradientDrawable = new GradientDrawable();
-            gradientDrawable.setColor(Color.parseColor("#ff882e"));
+            gradientDrawable.setColor(Color.parseColor("#54b3b3"));
             gradientDrawable.setCornerRadius(10);
 //            holder.BtntextView.setBackgroundColor(Color.parseColor("#ff882e"));
             holder.BtntextView.setBackgroundDrawable(gradientDrawable);
