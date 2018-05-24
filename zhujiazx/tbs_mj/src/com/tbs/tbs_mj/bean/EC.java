@@ -47,6 +47,8 @@ public class EC {
         public static final int NOTICE_CO_NET_STORE_CHANGE_ADDRESS = 0x000038;//通知装修公司网店管理修改了地址信息
         public static final int NOTICE_CO_NET_STORE_CHANGE_FUWUQUYU_MSG = 0x000039;//通知装修公司网店管理修改了地址信息
         public static final int NOTICE_CO_NET_STORE_CHANGE_SERVICE_MSG = 0x000040;//通知装修公司网店管理修改了服务区域
+        public static final int SELECE_CITY_IN_GUIDE_ON_ACTIVITY = 0x000041;//新手引导页第一页更换城市页面
+        public static final int FINISH_GUIDE_ACTIVITY = 0x000042;//销毁引导页
 
 
         public static final int DELETE_TAOTU_CODE = 0x100000;//删除收藏

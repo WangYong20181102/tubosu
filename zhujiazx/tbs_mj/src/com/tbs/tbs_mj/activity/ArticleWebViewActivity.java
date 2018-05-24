@@ -159,7 +159,7 @@ public class ArticleWebViewActivity extends com.tbs.tbs_mj.base.BaseActivity {
             case R.id.art_webview_fadan:
                 //跳转发单
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.QUOTE);
+                intent.putExtra("mLoadingUrl",SpUtil.getzjzxaj29(mContext));
                 mContext.startActivity(intent);
                 break;
         }

@@ -765,12 +765,12 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
                 relfindComLayout.setVisibility(View.GONE);
                 CacheManager.setCompanyFlag(mContext, 1);
                 Intent webIntent = new Intent(mContext, NewWebViewActivity.class);
-                webIntent.putExtra("mLoadingUrl", Constant.REC_COMPANY);
+                webIntent.putExtra("mLoadingUrl", SpUtil.getzjzxaj14(mContext));
                 startActivity(webIntent);
                 break;
             case R.id.findComIcon:
                 Intent web = new Intent(mContext, NewWebViewActivity.class);
-                web.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
+                web.putExtra("mLoadingUrl", SpUtil.getzjzxaj13(mContext));
                 startActivity(web);
                 relfindComLayout.setVisibility(View.GONE);
                 CacheManager.setCompanyFlag(mContext, 1);
@@ -849,7 +849,7 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
                 if (!isChooseShiTiRenZheng) {
                     // 未选中， 就选中
                     shitirenzheng.setBackgroundResource(R.drawable.select_item_textview_bg_selected);
-                    shitirenzheng.setTextColor(Color.parseColor("#FF6F20"));
+                    shitirenzheng.setTextColor(Color.parseColor("#54b3b3"));
                     certification = "1";
                 } else {
                     // 已选中， 就别选中
@@ -869,7 +869,7 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
             case R.id.ctuijian:
                 if (!isChooseTuijian) {
                     ctuijian.setBackgroundResource(R.drawable.select_item_textview_bg_selected);
-                    ctuijian.setTextColor(Color.parseColor("#FF6F20"));
+                    ctuijian.setTextColor(Color.parseColor("#54b3b3"));
                     recommend = "1";
                 } else {
                     ctuijian.setBackgroundResource(R.drawable.select_item_textview_bg);
@@ -913,7 +913,7 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
                             page = 1;
                             if (i > 0) {
                                 fuwuquyu.setText(discList.get(i).getDistrict_name());
-                                fuwuquyu.setTextColor(Color.parseColor("#FF6F20"));
+                                fuwuquyu.setTextColor(Color.parseColor("#54b3b3"));
                                 reSearvice.setBackgroundResource(R.drawable.selected_servicearea_textview_bg);
                                 ivFuwuquyu.setBackgroundResource(R.drawable.sanjiaoxia34);
                             } else {
@@ -1075,7 +1075,7 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
                     //如果显示了蒙层则将不显示发单的弹窗
                     if (!isShowingInput) {
                         relfindComLayout.setVisibility(View.VISIBLE);
-                        findComIcon.setImageResource(R.drawable.gongsifree);
+                        findComIcon.setImageResource(R.drawable.image_free_design);
                         findComIcon.setVisibility(View.VISIBLE);
                     }
 

@@ -189,9 +189,115 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     SpUtil.setCustom_service_tel(mContext, mAppConfig.getCustom_service_tel());
                     SpUtil.setCustom_service_qq(mContext, mAppConfig.getCustom_service_qq());
                     SpUtil.setApplets_name(mContext, mAppConfig.getApplets_name());
-                    SpUtil.setPublic_number(mContext, mAppConfig.getPublic_number());
+                    SpUtil.setPublic_number(mContext, mAppConfig.getOfficial_accounts());
                     Log.e(TAG, "电话号码========" + SpUtil.getCustom_service_tel(mContext) + "=======QQ=======" + SpUtil.getCustom_service_qq(mContext) + "=======小程序=====" + SpUtil.getApplets_name(mContext));
-
+                    //存储发单链接信息
+                    HashMap<String, String> urlMap = new HashMap<>();
+                    for (int i = 0; i < mAppConfig.getOrder_links().size(); i++) {
+                        urlMap.put(mAppConfig.getOrder_links().get(i).getCode(), mAppConfig.getOrder_links().get(i).getUrl());
+                    }
+                    //存储
+                    if (urlMap.containsKey("zjzxaj01") &&
+                            !TextUtils.isEmpty(urlMap.get("zjzxaj01"))) {
+                        SpUtil.setzjzxaj01(mContext, urlMap.get("zjzxaj01"));
+                    }
+                    if (urlMap.containsKey("zjzxaj02") &&
+                            !TextUtils.isEmpty(urlMap.get("zjzxaj02"))) {
+                        SpUtil.setzjzxaj02(mContext, urlMap.get("zjzxaj02"));
+                    }
+                    if (urlMap.containsKey("zjzxaj03") &&
+                            !TextUtils.isEmpty(urlMap.get("zjzxaj03"))) {
+                        SpUtil.setzjzxaj03(mContext, urlMap.get("zjzxaj03"));
+                    }
+                    if (urlMap.containsKey("zjzxaj04") &&
+                            !TextUtils.isEmpty(urlMap.get("zjzxaj04"))) {
+                        SpUtil.setzjzxaj04(mContext, urlMap.get("zjzxaj04"));
+                    }
+                    if (urlMap.containsKey("zjzxaj05") &&
+                            !TextUtils.isEmpty(urlMap.get("zjzxaj05"))) {
+                        SpUtil.setzjzxaj05(mContext, urlMap.get("zjzxaj05"));
+                    }
+                    if (urlMap.containsKey("zjzxaj06")
+                            && !TextUtils.isEmpty(urlMap.get("zjzxaj06"))) {
+                        SpUtil.setzjzxaj06(mContext, urlMap.get("zjzxaj06"));
+                    }
+                    if (urlMap.containsKey("zjzxaj07")
+                            && !TextUtils.isEmpty(urlMap.get("zjzxaj07"))) {
+                        SpUtil.setzjzxaj07(mContext, urlMap.get("zjzxaj07"));
+                    }
+                    if (urlMap.containsKey("zjzxaj08")
+                            && !TextUtils.isEmpty(urlMap.get("zjzxaj08"))) {
+                        SpUtil.setzjzxaj08(mContext, urlMap.get("zjzxaj08"));
+                    }
+                    if (urlMap.containsKey("zjzxaj09") && !TextUtils.isEmpty(urlMap.get("zjzxaj09"))) {
+                        SpUtil.setzjzxaj09(mContext, urlMap.get("zjzxaj09"));
+                    }
+                    if (urlMap.containsKey("zjzxaj10") && !TextUtils.isEmpty(urlMap.get("zjzxaj10"))) {
+                        SpUtil.setzjzxaj10(mContext, urlMap.get("zjzxaj10"));
+                    }
+                    if (urlMap.containsKey("zjzxaj11") && !TextUtils.isEmpty(urlMap.get("zjzxaj11"))) {
+                        SpUtil.setzjzxaj11(mContext, urlMap.get("zjzxaj11"));
+                    }
+                    if (urlMap.containsKey("zjzxaj12") && !TextUtils.isEmpty(urlMap.get("zjzxaj12"))) {
+                        SpUtil.setzjzxaj12(mContext, urlMap.get("zjzxaj12"));
+                    }
+                    if (urlMap.containsKey("zjzxaj13") && !TextUtils.isEmpty(urlMap.get("zjzxaj13"))) {
+                        SpUtil.setzjzxaj13(mContext, urlMap.get("zjzxaj13"));
+                    }
+                    if (urlMap.containsKey("zjzxaj14") && !TextUtils.isEmpty(urlMap.get("zjzxaj14"))) {
+                        SpUtil.setzjzxaj14(mContext, urlMap.get("zjzxaj14"));
+                    }
+                    if (urlMap.containsKey("zjzxaj15") && !TextUtils.isEmpty(urlMap.get("zjzxaj15"))) {
+                        SpUtil.setzjzxaj15(mContext, urlMap.get("zjzxaj15"));
+                    }
+                    if (urlMap.containsKey("zjzxaj16") && !TextUtils.isEmpty(urlMap.get("zjzxaj16"))) {
+                        SpUtil.setzjzxaj16(mContext, urlMap.get("zjzxaj16"));
+                    }
+                    if (urlMap.containsKey("zjzxaj17") && !TextUtils.isEmpty(urlMap.get("zjzxaj17"))) {
+                        SpUtil.setzjzxaj17(mContext, urlMap.get("zjzxaj17"));
+                    }
+                    if (urlMap.containsKey("zjzxaj18") && !TextUtils.isEmpty(urlMap.get("zjzxaj18"))) {
+                        SpUtil.setzjzxaj18(mContext, urlMap.get("zjzxaj18"));
+                    }
+                    if (urlMap.containsKey("zjzxaj19") && !TextUtils.isEmpty(urlMap.get("zjzxaj19"))) {
+                        SpUtil.setzjzxaj19(mContext, urlMap.get("zjzxaj19"));
+                    }
+                    if (urlMap.containsKey("zjzxaj20") && !TextUtils.isEmpty(urlMap.get("zjzxaj20"))) {
+                        SpUtil.setzjzxaj20(mContext, urlMap.get("zjzxaj20"));
+                    }
+                    if (urlMap.containsKey("zjzxaj21") && !TextUtils.isEmpty(urlMap.get("zjzxaj21"))) {
+                        SpUtil.setzjzxaj21(mContext, urlMap.get("zjzxaj21"));
+                    }
+                    if (urlMap.containsKey("zjzxaj22") && !TextUtils.isEmpty(urlMap.get("zjzxaj22"))) {
+                        SpUtil.setzjzxaj22(mContext, urlMap.get("zjzxaj22"));
+                    }
+                    if (urlMap.containsKey("zjzxaj23") && !TextUtils.isEmpty(urlMap.get("zjzxaj23"))) {
+                        SpUtil.setzjzxaj23(mContext, urlMap.get("zjzxaj23"));
+                    }
+                    if (urlMap.containsKey("zjzxaj24") && !TextUtils.isEmpty(urlMap.get("zjzxaj24"))) {
+                        SpUtil.setzjzxaj24(mContext, urlMap.get("zjzxaj24"));
+                    }
+                    if (urlMap.containsKey("zjzxaj25") && !TextUtils.isEmpty(urlMap.get("zjzxaj25"))) {
+                        SpUtil.setzjzxaj25(mContext, urlMap.get("zjzxaj25"));
+                    }
+                    if (urlMap.containsKey("zjzxaj26") && !TextUtils.isEmpty(urlMap.get("zjzxaj26"))) {
+                        SpUtil.setzjzxaj26(mContext, urlMap.get("zjzxaj26"));
+                    }
+                    if (urlMap.containsKey("zjzxaj27") && !TextUtils.isEmpty(urlMap.get("zjzxaj27"))) {
+                        SpUtil.setzjzxaj27(mContext, urlMap.get("zjzxaj27"));
+                    }
+                    if (urlMap.containsKey("zjzxaj28") && !TextUtils.isEmpty(urlMap.get("zjzxaj28"))) {
+                        SpUtil.setzjzxaj28(mContext, urlMap.get("zjzxaj28"));
+                    }
+                    if (urlMap.containsKey("zjzxaj29") && !TextUtils.isEmpty(urlMap.get("zjzxaj29"))) {
+                        SpUtil.setzjzxaj29(mContext, urlMap.get("zjzxaj29"));
+                    }
+                    if (urlMap.containsKey("zjzxaj30") && !TextUtils.isEmpty(urlMap.get("zjzxaj30"))) {
+                        SpUtil.setzjzxaj30(mContext, urlMap.get("zjzxaj30"));
+                    }
+                    if (urlMap.containsKey("zjzxaj31") && !TextUtils.isEmpty(urlMap.get("zjzxaj31"))) {
+                        SpUtil.setzjzxaj31(mContext, urlMap.get("zjzxaj31"));
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -360,9 +466,9 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-//                Intent gotoLearnActivity = new Intent(mContext, AllOrderActivity.class);
-////                gotoLearnActivity.putExtra("mLoadingUrl", "http://m.dev.tobosu.com/szs/zx/?app_type=1");
-//                mContext.startActivity(gotoLearnActivity);
+                Intent gotoLearnActivity = new Intent(mContext, GuideOneActivity.class);
+//                gotoLearnActivity.putExtra("mLoadingUrl", "http://m.dev.tobosu.com/szs/zx/?app_type=1");
+                mContext.startActivity(gotoLearnActivity);
                 return true;
             }
         });

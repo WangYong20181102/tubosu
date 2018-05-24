@@ -187,7 +187,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="确定"
-                    android:background="#FF6F20"
+                    android:background="@color/app_theme_color"
                     android:textSize="14sp"
                     android:gravity="center"
                     android:textColor="#FFFFFF"

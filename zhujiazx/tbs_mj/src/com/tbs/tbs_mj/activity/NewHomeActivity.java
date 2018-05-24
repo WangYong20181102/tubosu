@@ -163,12 +163,12 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
             SpUtil.setTodayToken(mContext, Util.getDateToken());
             SpUtil.cleanDialogInfo(mContext);
         }
-//        if (TextUtils.isEmpty(SpUtil.getIsShowUpdataDialog(mContext))) {
-//            // TODO: 2018/5/14 马甲包注释了App更新
-//            //没有开启过更新提示
-////            HttpCheckAppUpdata();//检测更新与否  在检测完成之后设置更新弹窗的flag（有强制更新的时候不设置flag） 如果没有更新提示 走 getHuoDongPicture()方法
-//            return;
-//        }
+        if (TextUtils.isEmpty(SpUtil.getIsShowUpdataDialog(mContext))) {
+            // TODO: 2018/5/14 马甲包注释了App更新
+            //没有开启过更新提示
+            HttpCheckAppUpdata();//检测更新与否  在检测完成之后设置更新弹窗的flag（有强制更新的时候不设置flag） 如果没有更新提示 走 getHuoDongPicture()方法
+            return;
+        }
         if (TextUtils.isEmpty(SpUtil.getIsShowActivityDialog(mContext))) {
             //今天还没有开启过运营弹窗
             getHuoDongPicture();//开启运营弹窗 有运营弹窗时设置flag 没有运营弹窗时 走  notifyOpenNotice() 方法

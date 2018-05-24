@@ -209,7 +209,7 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:text="综合"
-                                android:textColor="@color/gongsi_selected"
+                                android:textColor="@color/app_theme_color"
                                 android:textSize="12sp" />
 
                             <TextView
@@ -495,7 +495,7 @@
                 android:layout_marginRight="14dp"
                 android:gravity="center"
                 android:text="取消"
-                android:textColor="#FF6F20" />
+                android:textColor="@color/app_theme_color" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -621,7 +621,7 @@
                 android:id="@+id/findComIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/gongsifree" />
+                android:src="@drawable/image_free_design" />
 
             <ImageView
                 android:id="@+id/cancelFindComIcon"

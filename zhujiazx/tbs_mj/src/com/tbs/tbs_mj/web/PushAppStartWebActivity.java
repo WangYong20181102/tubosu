@@ -113,21 +113,21 @@ public class PushAppStartWebActivity extends com.tbs.tbs_mj.base.BaseActivity {
             if (mEnableStatistics != null && mEnableStatistics.equals("0")) {
                 //不拼接
                 pasWebviewWeb.loadUrl(mLoadingUrl);
-                Log.e(TAG, "bu拼接==============="+mEnableStatistics);
+                Log.e(TAG, "bu拼接===============" + mEnableStatistics);
             } else {
                 //拼接
                 pasWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
-                Log.e(TAG, "拼接==============="+mEnableStatistics);
+                Log.e(TAG, "拼接===============" + mEnableStatistics);
             }
         } else {
             if (mEnableStatistics != null && mEnableStatistics.equals("0")) {
                 //不拼接
                 pasWebviewWeb.loadUrl(mLoadingUrl);
-                Log.e(TAG, "bu拼接==============="+mEnableStatistics);
+                Log.e(TAG, "bu拼接===============" + mEnableStatistics);
             } else {
                 //拼接
                 pasWebviewWeb.loadUrl(mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
-                Log.e(TAG, "拼接==============="+mEnableStatistics);
+                Log.e(TAG, "拼接===============" + mEnableStatistics);
             }
         }
         Log.e(TAG, "测试传值和H5交互========" + mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
@@ -191,7 +191,7 @@ public class PushAppStartWebActivity extends com.tbs.tbs_mj.base.BaseActivity {
             case R.id.push_start_fadan:
                 //跳转到发单页面
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.QUOTE);
+                intent.putExtra("mLoadingUrl", SpUtil.getzjzxaj29(mContext));
                 mContext.startActivity(intent);
                 break;
         }

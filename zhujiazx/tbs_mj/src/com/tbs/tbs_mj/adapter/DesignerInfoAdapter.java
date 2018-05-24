@@ -20,6 +20,7 @@ import com.tbs.tbs_mj.bean._CompanyDetail;
 import com.tbs.tbs_mj.customview.ExpandableTextView;
 import com.tbs.tbs_mj.global.Constant;
 import com.tbs.tbs_mj.utils.GlideUtils;
+import com.tbs.tbs_mj.utils.SpUtil;
 import com.tbs.tbs_mj.utils.TRoundView;
 import com.tbs.tbs_mj.utils.Util;
 
@@ -258,7 +259,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         @Override
                         public void onClick(View view) {
                             Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                            webIntent.putExtra("mLoadingUrl", Constant.QUOTE);
+                            webIntent.putExtra("mLoadingUrl", SpUtil.getzjzxaj25(context));
                             context.startActivity(webIntent);
                         }
                     });
@@ -279,7 +280,7 @@ public class DesignerInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         @Override
                         public void onClick(View view) {
                             Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                            webIntent.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
+                            webIntent.putExtra("mLoadingUrl",SpUtil.getzjzxaj26(context));
                             context.startActivity(webIntent);
                         }
                     });

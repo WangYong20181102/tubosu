@@ -19,6 +19,7 @@ import com.tbs.tbs_mj.activity.NewWebViewActivity;
 import com.tbs.tbs_mj.bean._DecoCaseDetail;
 import com.tbs.tbs_mj.global.Constant;
 import com.tbs.tbs_mj.utils.ImageLoaderUtil;
+import com.tbs.tbs_mj.utils.SpUtil;
 
 import java.util.ArrayList;
 
@@ -106,7 +107,7 @@ public class DecoCaseDetailAdapter
                 ((HeadViewHolder) holder).item_deco_detail_share.setVisibility(View.GONE);
                 ((HeadViewHolder) holder).item_deco_detail_back.setVisibility(View.GONE);
             } else {
-                ((HeadViewHolder) holder).item_deco_detail_share.setVisibility(View.VISIBLE);
+                ((HeadViewHolder) holder).item_deco_detail_share.setVisibility(View.GONE);
                 ((HeadViewHolder) holder).item_deco_detail_back.setVisibility(View.VISIBLE);
             }
             //布局头部展示的信息
@@ -144,7 +145,7 @@ public class DecoCaseDetailAdapter
                     public void onClick(View v) {
                         //跳转到免费设计的H5页面
                         Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                        intent.putExtra("mLoadingUrl", Constant.QUOTE);
+                        intent.putExtra("mLoadingUrl", SpUtil.getzjzxaj19(mContext));
                         mContext.startActivity(intent);
                     }
                 });

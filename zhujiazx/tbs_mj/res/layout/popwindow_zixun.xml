@@ -50,10 +50,10 @@
                 android:layout_width="0dp"
                 android:layout_height="44dp"
                 android:layout_weight="1"
-                android:background="#ffc410"
+                android:background="#ffffff"
                 android:gravity="center"
                 android:text="QQ联系"
-                android:textColor="#ffffff" />
+                android:textColor="#000000" />
 
             <View
                 android:layout_width="1dp"
@@ -65,10 +65,10 @@
                 android:layout_width="0dp"
                 android:layout_height="44dp"
                 android:layout_weight="1"
-                android:background="#ff801a"
+                android:background="#ffffff"
                 android:gravity="center"
                 android:text="电话联系"
-                android:textColor="#ffffff" />
+                android:textColor="@color/app_theme_color" />
         </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>

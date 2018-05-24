@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back_white"
+    tools:context=".activity.GuideThreeActivity">
+    <!--选择装修风格页面-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"></ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!--顶部的图片-->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/top_banner" />
+        <!--选择城市的文案-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="43dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="03.请选择您喜欢的效果图"
+                android:textColor="#010101"
+                android:textSize="19sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="9dp"
+                android:text="(多选)"
+                android:textColor="#999999"
+                android:textSize="13sp" />
+        </LinearLayout>
+        <!--选择的图层-->
+        <!--第一行-->
+        <RelativeLayout
+            android:layout_width="250dp"
+            android:layout_height="68dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="18dp">
+            <!--第一张图-->
+            <RelativeLayout
+                android:layout_width="68dp"
+                android:layout_height="68dp">
+
+                <ImageView
+                    android:id="@+id/guide_three_select_iv_01"
+                    android:layout_width="62dp"
+                    android:layout_height="63dp"
+                    android:src="@drawable/select1" />
+                <!--选中框-->
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/guide_three_select_kuang_iv_01"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/select_kuang" />
+            </RelativeLayout>
+            <!--第二张-->
+            <RelativeLayout
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_centerInParent="true">
+
+                <ImageView
+                    android:id="@+id/guide_three_select_iv_02"
+                    android:layout_width="62dp"
+                    android:layout_height="63dp"
+                    android:src="@drawable/select2" />
+                <!--选中框-->
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/guide_three_select_kuang_iv_02"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/select_kuang" />
+            </RelativeLayout>
+            <!--第三张-->
+            <RelativeLayout
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_alignParentRight="true">
+
+                <ImageView
+                    android:id="@+id/guide_three_select_iv_03"
+                    android:layout_width="62dp"
+                    android:layout_height="63dp"
+                    android:src="@drawable/select3" />
+                <!--选中框-->
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/guide_three_select_kuang_iv_03"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/select_kuang" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <!--第二行-->
+        <RelativeLayout
+            android:layout_width="250dp"
+            android:layout_height="68dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="18dp">
+            <!--第一张图-->
+            <RelativeLayout
+                android:layout_width="68dp"
+                android:layout_height="68dp">
+
+                <ImageView
+                    android:id="@+id/guide_three_select_iv_04"
+                    android:layout_width="62dp"
+                    android:layout_height="63dp"
+                    android:src="@drawable/select4" />
+                <!--选中框-->
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/guide_three_select_kuang_iv_04"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/select_kuang" />
+            </RelativeLayout>
+            <!--第二张-->
+            <RelativeLayout
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_centerInParent="true">
+
+                <ImageView
+                    android:id="@+id/guide_three_select_iv_05"
+                    android:layout_width="62dp"
+                    android:layout_height="63dp"
+                    android:src="@drawable/select5" />
+                <!--选中框-->
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/guide_three_select_kuang_iv_05"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/select_kuang" />
+            </RelativeLayout>
+            <!--第三张-->
+            <RelativeLayout
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_alignParentRight="true">
+
+                <ImageView
+                    android:id="@+id/guide_three_select_iv_06"
+                    android:layout_width="62dp"
+                    android:layout_height="63dp"
+                    android:src="@drawable/select6" />
+                <!--选中框-->
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/guide_three_select_kuang_iv_06"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/select_kuang" />
+            </RelativeLayout>
+        </RelativeLayout>
+        <!--第三行-->
+        <RelativeLayout
+            android:layout_width="250dp"
+            android:layout_height="68dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="18dp">
+            <!--第一张图-->
+            <RelativeLayout
+                android:layout_width="68dp"
+                android:layout_height="68dp">
+
+                <ImageView
+                    android:id="@+id/guide_three_select_iv_07"
+                    android:layout_width="62dp"
+                    android:layout_height="63dp"
+                    android:src="@drawable/select7" />
+                <!--选中框-->
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/guide_three_select_kuang_iv_07"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/select_kuang" />
+            </RelativeLayout>
+            <!--第二张-->
+            <RelativeLayout
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_centerInParent="true">
+
+                <ImageView
+                    android:id="@+id/guide_three_select_iv_08"
+                    android:layout_width="62dp"
+                    android:layout_height="63dp"
+                    android:src="@drawable/select8" />
+                <!--选中框-->
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/guide_three_select_kuang_iv_08"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/select_kuang" />
+            </RelativeLayout>
+            <!--第三张-->
+            <RelativeLayout
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_alignParentRight="true">
+
+                <ImageView
+                    android:id="@+id/guide_three_select_iv_09"
+                    android:layout_width="62dp"
+                    android:layout_height="63dp"
+                    android:src="@drawable/select9" />
+                <!--选中框-->
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/guide_three_select_kuang_iv_09"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/select_kuang" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+    <!--返回按钮-->
+    <RelativeLayout
+        android:id="@+id/guide_three_back_rl"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentLeft="true">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/back_white" />
+    </RelativeLayout>
+    <!--关闭按钮-->
+    <RelativeLayout
+        android:id="@+id/guide_three_close_rl"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentRight="true">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/x2" />
+    </RelativeLayout>
+    <!--下一步的按钮-->
+    <TextView
+        android:id="@+id/guide_three_next_step_tv"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/app_theme_color"
+        android:gravity="center"
+        android:text="我选好了"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+</RelativeLayout>

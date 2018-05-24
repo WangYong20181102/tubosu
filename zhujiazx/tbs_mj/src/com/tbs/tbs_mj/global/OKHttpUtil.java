@@ -2,6 +2,7 @@ package com.tbs.tbs_mj.global;
 import android.content.Context;
 import android.util.Log;
 
+import com.tbs.tbs_mj.utils.AppInfoUtil;
 import com.tbs.tbs_mj.utils.CacheManager;
 
 import java.io.File;
@@ -83,6 +84,8 @@ public class OKHttpUtil {
      */
     public static void post(String url, HashMap<String, Object> params, Callback callback) {
         FormBody.Builder builder = new FormBody.Builder();
+        params.put("subchannel", "android");
+        params.put("chcode", AppInfoUtil.getChannType(MyApplication.getContext()));
         for (String key : params.keySet()) {
             builder.add(key, String.valueOf(params.get(key)));
         }

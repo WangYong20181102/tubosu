@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activity.GuideTwoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!--顶部的图片-->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@drawable/top_banner" />
+        <!--选择城市的文案-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="43dp"
+            android:text="02.请选择您的年龄阶段"
+            android:textColor="#010101"
+            android:textSize="19sp" />
+        <!--30-->
+        <TextView
+            android:id="@+id/guide_two_nl_1_tv"
+            android:layout_width="260dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/selector_guide_btn_bg"
+            android:clickable="true"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="30岁以下"
+            android:textColor="@drawable/selector_guide_text"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/guide_two_nl_2_tv"
+            android:layout_width="260dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/selector_guide_btn_bg"
+            android:clickable="true"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="30岁~45岁"
+            android:textColor="@drawable/selector_guide_text"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/guide_two_nl_3_tv"
+            android:layout_width="260dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/selector_guide_btn_bg"
+            android:clickable="true"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="45岁以上"
+            android:textColor="@drawable/selector_guide_text"
+            android:textSize="14sp" />
+    </LinearLayout>
+    <!--返回按钮-->
+    <RelativeLayout
+        android:id="@+id/guide_two_back_rl"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentLeft="true">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/back_white" />
+    </RelativeLayout>
+    <!--关闭按钮-->
+    <RelativeLayout
+        android:id="@+id/guide_two_close_rl"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentRight="true">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/x2" />
+    </RelativeLayout>
+    <!--下一步的按钮-->
+    <TextView
+        android:id="@+id/guide_two_next_step_tv"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/app_theme_color"
+        android:gravity="center"
+        android:text="下一步"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+</RelativeLayout>

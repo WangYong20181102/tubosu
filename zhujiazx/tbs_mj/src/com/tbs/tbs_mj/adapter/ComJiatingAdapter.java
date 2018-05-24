@@ -69,7 +69,7 @@ public class ComJiatingAdapter extends BaseAdapter {
 
         holder.tv.setText(dataList.get(i).getName());
         if(selectedPosition == i){
-            holder.tv.setTextColor(Color.parseColor("#FF6F20"));
+            holder.tv.setTextColor(Color.parseColor("#54b3b3"));
             holder.tv.setBackgroundResource(R.drawable.selected_servicearea_textview_bg);
         }else {
             holder.tv.setTextColor(Color.parseColor("#666666"));

@@ -58,6 +58,7 @@
         <!--android:layout_marginBottom="60dp"-->
         <!--android:background="@drawable/shape_xu_xian" />-->
         <TextView
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

@@ -28,27 +28,50 @@
             android:textSize="19sp" />
         <!--城市的获取框-->
         <RelativeLayout
-            android:layout_width="322dp"
-            android:layout_height="53dp"
+            android:layout_width="match_parent"
+            android:layout_height="79dp"
             android:layout_gravity="center"
             android:layout_marginBottom="15dp"
-            android:layout_marginTop="43dp"
-            android:background="@drawable/shadow">
-
+            android:layout_marginTop="43dp">
+            <ImageView
+                android:scaleType="fitXY"
+                android:src="@drawable/case_bg"
+                android:layout_width="match_parent"
+                android:layout_height="79dp" />
             <TextView
                 android:id="@+id/guide_one_city_tv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="20dp"
                 android:gravity="center_vertical"
                 android:hint="请选择您所在的城市"
                 android:textColor="#010101"
                 android:textColorHint="#aaaaaa"
                 android:textSize="13sp" />
+            <ImageView
+                android:layout_marginRight="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/youjiantou"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </RelativeLayout>
     </LinearLayout>
+    <!--关闭的按钮-->
+    <RelativeLayout
+        android:id="@+id/guide_one_close_rl"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentRight="true">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/x2" />
+    </RelativeLayout>
+    <!--下一步的按钮-->
     <TextView
         android:id="@+id/guide_one_next_step_tv"
         android:layout_width="match_parent"

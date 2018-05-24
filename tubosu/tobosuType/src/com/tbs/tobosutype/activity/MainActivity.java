@@ -196,104 +196,112 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                         urlMap.put(mAppConfig.getOrder_links().get(i).getCode(), mAppConfig.getOrder_links().get(i).getUrl());
                     }
                     //存储
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj01"))) {
-                        SpUtil.setTbsAj01(mContext,urlMap.get("tbsaj01"));
+                    if (urlMap.containsKey("tbsaj01") &&
+                            !TextUtils.isEmpty(urlMap.get("tbsaj01"))) {
+                        SpUtil.setTbsAj01(mContext, urlMap.get("tbsaj01"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj02"))) {
-                        SpUtil.setTbsAj02(mContext,urlMap.get("tbsaj02"));
+                    if (urlMap.containsKey("tbsaj02") &&
+                            !TextUtils.isEmpty(urlMap.get("tbsaj02"))) {
+                        SpUtil.setTbsAj02(mContext, urlMap.get("tbsaj02"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj03"))) {
-                        SpUtil.setTbsAj03(mContext,urlMap.get("tbsaj03"));
+                    if (urlMap.containsKey("tbsaj03") &&
+                            !TextUtils.isEmpty(urlMap.get("tbsaj03"))) {
+                        SpUtil.setTbsAj03(mContext, urlMap.get("tbsaj03"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj04"))) {
-                        SpUtil.setTbsAj04(mContext,urlMap.get("tbsaj04"));
+                    if (urlMap.containsKey("tbsaj04") &&
+                            !TextUtils.isEmpty(urlMap.get("tbsaj04"))) {
+                        SpUtil.setTbsAj04(mContext, urlMap.get("tbsaj04"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj05"))) {
-                        SpUtil.setTbsAj05(mContext,urlMap.get("tbsaj05"));
+                    if (urlMap.containsKey("tbsaj05") &&
+                            !TextUtils.isEmpty(urlMap.get("tbsaj05"))) {
+                        SpUtil.setTbsAj05(mContext, urlMap.get("tbsaj05"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj06"))) {
-                        SpUtil.setTbsAj06(mContext,urlMap.get("tbsaj06"));
+                    if (urlMap.containsKey("tbsaj06")
+                            && !TextUtils.isEmpty(urlMap.get("tbsaj06"))) {
+                        SpUtil.setTbsAj06(mContext, urlMap.get("tbsaj06"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj07"))) {
-                        SpUtil.setTbsAj07(mContext,urlMap.get("tbsaj07"));
+                    if (urlMap.containsKey("tbsaj07")
+                            && !TextUtils.isEmpty(urlMap.get("tbsaj07"))) {
+                        SpUtil.setTbsAj07(mContext, urlMap.get("tbsaj07"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj08"))) {
-                        SpUtil.setTbsAj08(mContext,urlMap.get("tbsaj08"));
+                    if (urlMap.containsKey("tbsaj08")
+                            && !TextUtils.isEmpty(urlMap.get("tbsaj08"))) {
+                        SpUtil.setTbsAj08(mContext, urlMap.get("tbsaj08"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj09"))) {
-                        SpUtil.setTbsAj09(mContext,urlMap.get("tbsaj09"));
+                    if (urlMap.containsKey("tbsaj09") && !TextUtils.isEmpty(urlMap.get("tbsaj09"))) {
+                        SpUtil.setTbsAj09(mContext, urlMap.get("tbsaj09"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj10"))) {
-                        SpUtil.setTbsAj10(mContext,urlMap.get("tbsaj10"));
+                    if (urlMap.containsKey("tbsaj10") && !TextUtils.isEmpty(urlMap.get("tbsaj10"))) {
+                        SpUtil.setTbsAj10(mContext, urlMap.get("tbsaj10"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj11"))) {
-                        SpUtil.setTbsAj11(mContext,urlMap.get("tbsaj11"));
+                    if (urlMap.containsKey("tbsaj11") && !TextUtils.isEmpty(urlMap.get("tbsaj11"))) {
+                        SpUtil.setTbsAj11(mContext, urlMap.get("tbsaj11"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj12"))) {
-                        SpUtil.setTbsAj12(mContext,urlMap.get("tbsaj12"));
+                    if (urlMap.containsKey("tbsaj12") && !TextUtils.isEmpty(urlMap.get("tbsaj12"))) {
+                        SpUtil.setTbsAj12(mContext, urlMap.get("tbsaj12"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj13"))) {
-                        SpUtil.setTbsAj13(mContext,urlMap.get("tbsaj13"));
+                    if (urlMap.containsKey("tbsaj13") && !TextUtils.isEmpty(urlMap.get("tbsaj13"))) {
+                        SpUtil.setTbsAj13(mContext, urlMap.get("tbsaj13"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj14"))) {
-                        SpUtil.setTbsAj14(mContext,urlMap.get("tbsaj14"));
+                    if (urlMap.containsKey("tbsaj14") && !TextUtils.isEmpty(urlMap.get("tbsaj14"))) {
+                        SpUtil.setTbsAj14(mContext, urlMap.get("tbsaj14"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj15"))) {
-                        SpUtil.setTbsAj15(mContext,urlMap.get("tbsaj15"));
+                    if (urlMap.containsKey("tbsaj15") && !TextUtils.isEmpty(urlMap.get("tbsaj15"))) {
+                        SpUtil.setTbsAj15(mContext, urlMap.get("tbsaj15"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj16"))) {
-                        SpUtil.setTbsAj16(mContext,urlMap.get("tbsaj16"));
+                    if (urlMap.containsKey("tbsaj16") && !TextUtils.isEmpty(urlMap.get("tbsaj16"))) {
+                        SpUtil.setTbsAj16(mContext, urlMap.get("tbsaj16"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj17"))) {
-                        SpUtil.setTbsAj17(mContext,urlMap.get("tbsaj17"));
+                    if (urlMap.containsKey("tbsaj17") && !TextUtils.isEmpty(urlMap.get("tbsaj17"))) {
+                        SpUtil.setTbsAj17(mContext, urlMap.get("tbsaj17"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj18"))) {
-                        SpUtil.setTbsAj18(mContext,urlMap.get("tbsaj18"));
+                    if (urlMap.containsKey("tbsaj18") && !TextUtils.isEmpty(urlMap.get("tbsaj18"))) {
+                        SpUtil.setTbsAj18(mContext, urlMap.get("tbsaj18"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj19"))) {
-                        SpUtil.setTbsAj19(mContext,urlMap.get("tbsaj19"));
+                    if (urlMap.containsKey("tbsaj19") && !TextUtils.isEmpty(urlMap.get("tbsaj19"))) {
+                        SpUtil.setTbsAj19(mContext, urlMap.get("tbsaj19"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj20"))) {
-                        SpUtil.setTbsAj20(mContext,urlMap.get("tbsaj20"));
+                    if (urlMap.containsKey("tbsaj20") && !TextUtils.isEmpty(urlMap.get("tbsaj20"))) {
+                        SpUtil.setTbsAj20(mContext, urlMap.get("tbsaj20"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj21"))) {
-                        SpUtil.setTbsAj21(mContext,urlMap.get("tbsaj21"));
+                    if (urlMap.containsKey("tbsaj21") && !TextUtils.isEmpty(urlMap.get("tbsaj21"))) {
+                        SpUtil.setTbsAj21(mContext, urlMap.get("tbsaj21"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj22"))) {
-                        SpUtil.setTbsAj22(mContext,urlMap.get("tbsaj22"));
+                    if (urlMap.containsKey("tbsaj22") && !TextUtils.isEmpty(urlMap.get("tbsaj22"))) {
+                        SpUtil.setTbsAj22(mContext, urlMap.get("tbsaj22"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj23"))) {
-                        SpUtil.setTbsAj23(mContext,urlMap.get("tbsaj23"));
+                    if (urlMap.containsKey("tbsaj23") && !TextUtils.isEmpty(urlMap.get("tbsaj23"))) {
+                        SpUtil.setTbsAj23(mContext, urlMap.get("tbsaj23"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj24"))) {
-                        SpUtil.setTbsAj24(mContext,urlMap.get("tbsaj24"));
+                    if (urlMap.containsKey("tbsaj24") && !TextUtils.isEmpty(urlMap.get("tbsaj24"))) {
+                        SpUtil.setTbsAj24(mContext, urlMap.get("tbsaj24"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj25"))) {
-                        SpUtil.setTbsAj25(mContext,urlMap.get("tbsaj25"));
+                    if (urlMap.containsKey("tbsaj25") && !TextUtils.isEmpty(urlMap.get("tbsaj25"))) {
+                        SpUtil.setTbsAj25(mContext, urlMap.get("tbsaj25"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj26"))) {
-                        SpUtil.setTbsAj26(mContext,urlMap.get("tbsaj26"));
+                    if (urlMap.containsKey("tbsaj26") && !TextUtils.isEmpty(urlMap.get("tbsaj26"))) {
+                        SpUtil.setTbsAj26(mContext, urlMap.get("tbsaj26"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj27"))) {
-                        SpUtil.setTbsAj27(mContext,urlMap.get("tbsaj27"));
+                    if (urlMap.containsKey("tbsaj27") && !TextUtils.isEmpty(urlMap.get("tbsaj27"))) {
+                        SpUtil.setTbsAj27(mContext, urlMap.get("tbsaj27"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj28"))) {
-                        SpUtil.setTbsAj28(mContext,urlMap.get("tbsaj28"));
+                    if (urlMap.containsKey("tbsaj28") && !TextUtils.isEmpty(urlMap.get("tbsaj28"))) {
+                        SpUtil.setTbsAj28(mContext, urlMap.get("tbsaj28"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj29"))) {
-                        SpUtil.setTbsAj29(mContext,urlMap.get("tbsaj29"));
+                    if (urlMap.containsKey("tbsaj29") && !TextUtils.isEmpty(urlMap.get("tbsaj29"))) {
+                        SpUtil.setTbsAj29(mContext, urlMap.get("tbsaj29"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj30"))) {
-                        SpUtil.setTbsAj30(mContext,urlMap.get("tbsaj30"));
+                    if (urlMap.containsKey("tbsaj30") && !TextUtils.isEmpty(urlMap.get("tbsaj30"))) {
+                        SpUtil.setTbsAj30(mContext, urlMap.get("tbsaj30"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj31"))) {
-                        SpUtil.setTbsAj31(mContext,urlMap.get("tbsaj31"));
+                    if (urlMap.containsKey("tbsaj31") && !TextUtils.isEmpty(urlMap.get("tbsaj31"))) {
+                        SpUtil.setTbsAj31(mContext, urlMap.get("tbsaj31"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj32"))) {
-                        SpUtil.setTbsAj32(mContext,urlMap.get("tbsaj32"));
+                    if (urlMap.containsKey("tbsaj32") && !TextUtils.isEmpty(urlMap.get("tbsaj32"))) {
+                        SpUtil.setTbsAj32(mContext, urlMap.get("tbsaj32"));
                     }
-                    if (!TextUtils.isEmpty(urlMap.get("tbsaj33"))) {
-                        SpUtil.setTbsAj33(mContext,urlMap.get("tbsaj33"));
+                    if (urlMap.containsKey("tbsaj33") && !TextUtils.isEmpty(urlMap.get("tbsaj33"))) {
+                        SpUtil.setTbsAj33(mContext, urlMap.get("tbsaj33"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

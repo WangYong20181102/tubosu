@@ -273,10 +273,10 @@ public class DecComActivity extends com.tbs.tbs_mj.base.BaseActivity {
                 if (AppInfoUtil.getTypeid(mContext).equals("3")){
                     decComShoucangLl.setVisibility(View.GONE);
                 }else {
-                    decComShoucangLl.setVisibility(View.VISIBLE);
+                    decComShoucangLl.setVisibility(View.GONE);
                 }
                 decComBackLl.setVisibility(View.VISIBLE);
-                decComShareLl.setVisibility(View.VISIBLE);
+                decComShareLl.setVisibility(View.GONE);
             }
             //设置控件的透明度
             if (scrollY <= 450) {
@@ -410,7 +410,7 @@ public class DecComActivity extends com.tbs.tbs_mj.base.BaseActivity {
             case R.id.dec_com_find_price_rl:
                 //跳转到发单页面
                 Intent intentToFadan = new Intent(mContext, NewWebViewActivity.class);
-                intentToFadan.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
+                intentToFadan.putExtra("mLoadingUrl", SpUtil.getzjzxaj15(mContext));
                 mContext.startActivity(intentToFadan);
                 break;
         }
@@ -816,8 +816,8 @@ public class DecComActivity extends com.tbs.tbs_mj.base.BaseActivity {
             decComBannerShoucang.setVisibility(View.GONE);
             decComShareLl.setVisibility(View.GONE);
         }else {
-            decComBannerShoucang.setVisibility(View.VISIBLE);
-            decComShareLl.setVisibility(View.VISIBLE);
+            decComBannerShoucang.setVisibility(View.GONE);
+            decComShareLl.setVisibility(View.GONE);
         }
     }
 

@@ -487,6 +487,12 @@ public class SelectCtiyActivity extends com.tbs.tbs_mj.base.BaseActivity impleme
             finish();
             return;
         }
+        if (!TextUtils.isEmpty(mWhereFrom) && mWhereFrom.equals("GuideOneActivity")) {
+            //来着引导页的第一页
+            EventBusUtil.sendEvent(new Event(EC.EventCode.SELECE_CITY_IN_GUIDE_ON_ACTIVITY, cityName));
+            finish();
+            return;
+        }
         if (from == 31) {
             // 来自poporder页面
             Intent cityData = new Intent();
@@ -527,7 +533,7 @@ public class SelectCtiyActivity extends com.tbs.tbs_mj.base.BaseActivity impleme
 
         if (fromFindDecorateCompany.equals("64")) {
             // 来自找装修公司页面
-            _SelectCity mSelectCity=new _SelectCity(cityName,cid);
+            _SelectCity mSelectCity = new _SelectCity(cityName, cid);
             EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_CODE, mSelectCity));
             System.gc();
             finish();
@@ -569,7 +575,7 @@ public class SelectCtiyActivity extends com.tbs.tbs_mj.base.BaseActivity impleme
             // 首次安装
             if (FIRST_INSTALL.equals(getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).getString("go_poporder_string", "0"))) {
                 countDownloadNum();
-                startActivity(new Intent(mContext, PopOrderActivity.class));
+                startActivity(new Intent(mContext, GuideOneActivity.class));
             } else {
                 // 进入选择装修类型和面积发单入口
                 startActivity(new Intent(mContext, MainActivity.class));
@@ -621,6 +627,10 @@ public class SelectCtiyActivity extends com.tbs.tbs_mj.base.BaseActivity impleme
                     finish();
                     return;
                 }
+                if (!TextUtils.isEmpty(mWhereFrom) && mWhereFrom.equals("GuideOneActivity")) {
+                    finish();
+                    return;
+                }
                 if (fromFreeDesign.equals("66")) {
                     // 来自 智能报价
                     finish();
@@ -658,7 +668,7 @@ public class SelectCtiyActivity extends com.tbs.tbs_mj.base.BaseActivity impleme
     private void operEdit() {
 
         if (FIRST_INSTALL.equals(getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).getString("go_poporder_string", "0"))) {
-            startActivity(new Intent(mContext, PopOrderActivity.class));
+            startActivity(new Intent(mContext, GuideOneActivity.class));
         } else {
             // 进入选择装修类型和面积发单入口
             startActivity(new Intent(mContext, MainActivity.class));
@@ -905,6 +915,12 @@ public class SelectCtiyActivity extends com.tbs.tbs_mj.base.BaseActivity impleme
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
+        if (keyCode == KeyEvent.KEYCODE_BACK && !TextUtils.isEmpty(mWhereFrom) && mWhereFrom.equals("GuideOneActivity")) {
+            // 引导页
+            finish();
+            return true;
+        }
+
         if (keyCode == KeyEvent.KEYCODE_BACK && fromFindDecorateCompany.equals("64")) {
             // 来自 找公司
             finish();
@@ -934,7 +950,7 @@ public class SelectCtiyActivity extends com.tbs.tbs_mj.base.BaseActivity impleme
         if (keyCode == KeyEvent.KEYCODE_BACK && "welcome".equals(CacheManager.getPageFlag(mContext))) {
             // 来自welcome
             CacheManager.setPageFlag(mContext, "not_welcome");
-            startActivity(new Intent(mContext, PopOrderActivity.class));
+            startActivity(new Intent(mContext, GuideOneActivity.class));
             //现在无法获取，则标记为 1 ，即在首再次显示让用户获取
             getSharedPreferences("Cancel_Get_Design", Context.MODE_PRIVATE).edit().putInt("cancel_String", 1).commit();
             finish();

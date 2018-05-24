@@ -627,7 +627,10 @@
         <activity android:name=".activity.BigImageLookActivity" />
         <activity android:name=".activity.CoChangeBussinessLicenseActivity" />
         <activity android:name=".activity.ChangeCoAddressActivity" />
-        <activity android:name=".activity.GuideOneActivity"></activity>
+        <activity android:name=".activity.GuideOneActivity" />
+        <activity android:name=".activity.GuideTwoActivity" />
+        <activity android:name=".activity.GuideThreeActivity" />
+        <activity android:name=".activity.GuideFourActivity"></activity>
     </application>
 
 </manifest>

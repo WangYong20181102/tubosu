@@ -105,7 +105,7 @@ public class MyApplication extends MultiDexApplication {
         //初始化友盟
         UMShareAPI.get(this);
         //小米推送初始化
-//        initXiaomiPush();
+        initXiaomiPush();
         //极光推送
         //initJpush();
         //百度定位相关
@@ -151,7 +151,7 @@ public class MyApplication extends MultiDexApplication {
         if (shouldInit()) {
             Log.e(TAG, "初始化小米推送======================！！！！");
             //AppID   AppKey
-            MiPushClient.registerPush(this, "2882303761517437446", "5821743785446");
+            MiPushClient.registerPush(this, "2882303761517797216", "5371779762216");
         }
 
         LoggerInterface newLogger = new LoggerInterface() {

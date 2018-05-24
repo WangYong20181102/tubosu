@@ -57,7 +57,7 @@
                 android:layout_width="92dp"
                 android:layout_height="28dp"
                 android:gravity="center"
-                android:textColor="#FF6F20"
+                android:textColor="@color/app_theme_color"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/selected_servicearea_textview_bg"

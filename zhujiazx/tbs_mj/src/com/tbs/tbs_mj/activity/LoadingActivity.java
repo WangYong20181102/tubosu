@@ -100,7 +100,7 @@ public class LoadingActivity extends BaseActivity {
                         if ("".equals(CacheManager.getAppEntryOrderPre(mContext))) {
                             CacheManager.setAppEntryOrderPre(mContext, "abc"); // 标识已经进入过发单页面
                             getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).edit().putString("go_poporder_string", "5").commit();
-                            Intent intent = new Intent(mContext, PopOrderActivity.class);
+                            Intent intent = new Intent(mContext, GuideOneActivity.class);
                             startActivity(intent);
                         } else {
                             CacheManager.setPageFlag(mContext, "welcome");
@@ -120,7 +120,7 @@ public class LoadingActivity extends BaseActivity {
         if ("".equals(CacheManager.getAppEntryOrderPre(mContext))) {
             //初次进入我们的App进入发单页面
             CacheManager.setAppEntryOrderPre(mContext, "abc"); // 标识已经进入过发单页面
-            Intent intent = new Intent(mContext, PopOrderActivity.class);
+            Intent intent = new Intent(mContext, GuideOneActivity.class);
             startActivity(intent);
         } else {
             startActivity(new Intent(mContext, MainActivity.class));

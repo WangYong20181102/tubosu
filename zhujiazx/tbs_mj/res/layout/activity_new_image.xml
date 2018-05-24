@@ -72,11 +72,11 @@
     <!--悬浮贴边-->
     <ImageView
         android:id="@+id/new_image_gif"
-        android:layout_width="40dp"
-        android:layout_height="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="48dp"
-        android:src="@drawable/free_design_anim_01"
+        android:src="@drawable/aaa_lin"
         android:visibility="gone" />
 </RelativeLayout>

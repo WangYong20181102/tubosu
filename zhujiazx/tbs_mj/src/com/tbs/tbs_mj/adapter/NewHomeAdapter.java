@@ -223,7 +223,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     fadanClick("1009", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
+                    webIntent.putExtra("mLoadingUrl", SpUtil.getzjzxaj01(context));
                     context.startActivity(webIntent);
                 }
             });
@@ -232,7 +232,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     fadanClick("950", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.QUOTE);
+                    webIntent.putExtra("mLoadingUrl", SpUtil.getzjzxaj02(context));
                     context.startActivity(webIntent);
                 }
             });
@@ -241,7 +241,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     fadanClick("1010", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.REC_COMPANY);
+                    webIntent.putExtra("mLoadingUrl", SpUtil.getzjzxaj03(context));
                     context.startActivity(webIntent);
                 }
             });
@@ -250,7 +250,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     fadanClick("1011", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", Constant.FREE_DESIGN);
+                    webIntent.putExtra("mLoadingUrl",SpUtil.getzjzxaj04(context));
                     context.startActivity(webIntent);
                 }
             });

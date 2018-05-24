@@ -13,14 +13,17 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.bumptech.glide.Glide;
 import com.tbs.tbs_mj.R;
 import com.tbs.tbs_mj.activity.NewWebViewActivity;
 import com.tbs.tbs_mj.global.Constant;
+import com.tbs.tbs_mj.utils.SpUtil;
 import com.tbs.tbs_mj.utils.Util;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Created by Lie on 2017/10/28.
  */
@@ -164,14 +167,14 @@ public class MarqueeView extends ViewFlipper {
                 Intent webIntent = new Intent(context, NewWebViewActivity.class);
                 webIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 String text = tvMarquee.getText().toString();
-                if(text.contains("设计")){
-                    webIntent.putExtra("mLoadingUrl", Constant.QUOTE);
-                }else if (text.contains("报价")){
-                    webIntent.putExtra("mLoadingUrl", Constant.FREE_PRICE_PAGE);
-                }else if(text.contains("推荐")){
-                    webIntent.putExtra("mLoadingUrl", Constant.REC_COMPANY);
-                }else if(text.contains("礼包")){
-                    webIntent.putExtra("mLoadingUrl", Constant.COMPANY_GIFT);
+                if (text.contains("设计")) {
+                    webIntent.putExtra("mLoadingUrl", SpUtil.getzjzxaj05(context));
+                } else if (text.contains("报价")) {
+                    webIntent.putExtra("mLoadingUrl", SpUtil.getzjzxaj06(context));
+                } else if (text.contains("推荐")) {
+                    webIntent.putExtra("mLoadingUrl", SpUtil.getzjzxaj08(context));
+                } else if (text.contains("礼包")) {
+                    webIntent.putExtra("mLoadingUrl", SpUtil.getzjzxaj07(context));
                 }
                 context.startActivity(webIntent);
             }

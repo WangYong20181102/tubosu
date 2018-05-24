@@ -35,6 +35,7 @@ import com.tbs.tbs_mj.fragment.NewImageSFragment;
 import com.tbs.tbs_mj.global.Constant;
 import com.tbs.tbs_mj.utils.AppInfoUtil;
 import com.tbs.tbs_mj.utils.EventBusUtil;
+import com.tbs.tbs_mj.utils.SpUtil;
 import com.tbs.tbs_mj.utils.Util;
 
 import java.lang.reflect.Field;
@@ -191,14 +192,14 @@ public class NewImageActivity extends com.tbs.tbs_mj.base.BaseActivity {
             case R.id.new_image_gif:
                 //右侧gif点击进发单页
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", Constant.QUOTE);
+                intent.putExtra("mLoadingUrl", SpUtil.getzjzxaj09(mContext));
                 startActivity(intent);
                 break;
             case R.id.new_image_free_design_img:
                 //跳转到发单页
                 Log.e(TAG, "点击了发单按钮===================");
                 Intent intent2 = new Intent(mContext, NewWebViewActivity.class);
-                intent2.putExtra("mLoadingUrl", Constant.QUOTE);
+                intent2.putExtra("mLoadingUrl", SpUtil.getzjzxaj09(mContext));
                 startActivity(intent2);
                 dismissTanChuang();
                 break;
@@ -261,9 +262,9 @@ public class NewImageActivity extends com.tbs.tbs_mj.base.BaseActivity {
 
     //加载右侧的帧动画
     private void LoadingRightGifAnim() {
-        newImageGif.setImageResource(R.drawable.anim_free_design_right);
-        AnimationDrawable animationDrawable = (AnimationDrawable) newImageGif.getDrawable();
-        animationDrawable.start();
+//        newImageGif.setImageResource(R.drawable.anim_free_design_right);
+//        AnimationDrawable animationDrawable = (AnimationDrawable) newImageGif.getDrawable();
+//        animationDrawable.start();
     }
 
     //弹出右侧的Gif动画
