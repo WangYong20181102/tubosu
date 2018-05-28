@@ -48,7 +48,7 @@
                 android:layout_height="20dp"/>
             <TextView
                 android:id="@+id/open_phone"
-                android:textColor="#ff6f12"
+                android:textColor="@color/app_theme_color"
                 android:gravity="center"
                 android:text="拨打"
                 android:layout_weight="1"

@@ -466,9 +466,9 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Intent gotoLearnActivity = new Intent(mContext, GuideOneActivity.class);
-//                gotoLearnActivity.putExtra("mLoadingUrl", "http://m.dev.tobosu.com/szs/zx/?app_type=1");
-                mContext.startActivity(gotoLearnActivity);
+//                Intent gotoLearnActivity = new Intent(mContext, GuideOneActivity.class);
+////                gotoLearnActivity.putExtra("mLoadingUrl", "http://m.dev.tobosu.com/szs/zx/?app_type=1");
+//                mContext.startActivity(gotoLearnActivity);
                 return true;
             }
         });

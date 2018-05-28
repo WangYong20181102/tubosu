@@ -250,7 +250,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onClick(View v) {
                     fadanClick("1011", Utils.getIp(context));
                     Intent webIntent = new Intent(context, NewWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl",SpUtil.getzjzxaj04(context));
+                    webIntent.putExtra("mLoadingUrl", SpUtil.getzjzxaj04(context));
                     context.startActivity(webIntent);
                 }
             });
@@ -510,9 +510,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (bannerList != null && bannerList.size() > 0) {
             for (int i = 0; i < bannerList.size(); i++) {
                 if (bannerList.get(i).getContent_url().contains("?")) {
-                    urlList.add(bannerList.get(i).getContent_url() + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + Constant.APP_TYPE);
+                    urlList.add(bannerList.get(i).getContent_url() + "&channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + Constant.APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext()));
                 } else {
-                    urlList.add(bannerList.get(i).getContent_url() + "?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + Constant.APP_TYPE);
+                    urlList.add(bannerList.get(i).getContent_url() + "?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + Constant.APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext()));
                 }
                 ImageView view = new ImageView(context);
                 view.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -653,7 +653,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private void initCheatText(final MarqueeView cheatView) {
         String[] datas = new String[64];
         for (int i = 0; i < datas.length; i++) {
-            datas[i] = " " + getSecond() + "秒前," + getRandomText(citys) + getRandomText(familyName) + getLadyOrGentalman() + getBigBagText(fares, i) + "。";
+            datas[i] = " " + getSecond() + "秒前," + getRandomText(citys) + getRandomText(familyName) + getLadyOrGentalman() + getBigBagText(fares, i) + "";
         }
 
         List<Marquee> marquees = new ArrayList<>();

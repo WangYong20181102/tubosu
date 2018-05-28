@@ -271,7 +271,11 @@ public class OrderNoteActivity extends BaseActivity {
         intent.putExtra("mShowingOrderId", mNoticeArrayList.get(position).getOrder_id());
         startActivity(intent);
         //标记消息已读
-        HttpReadSmsPush(mNoticeArrayList.get(position).getId(), position);
+        if (!mNoticeArrayList.isEmpty() && mNoticeArrayList.get(position) != null) {
+            mNoticeArrayList.get(position).setIs_read("1");
+            mOrderNoticeAdapter.notifyDataSetChanged();
+        }
+//        HttpReadSmsPush(mNoticeArrayList.get(position).getId(), position);
     }
 
     //标记消息已读

@@ -55,7 +55,6 @@ public class WelcomeActivity extends BaseActivity {
     ImageView welcomeImage;
     @BindView(R.id.welcome_slogan)
     ImageView welcomeSlogan;
-    private String SURVIVAL_URL = Constant.TOBOSU_URL + "resapp/DataCount/survival_count";
 
     private Context mContext;
 
@@ -235,7 +234,7 @@ public class WelcomeActivity extends BaseActivity {
         map.put("mac_code", MAC_CODE);
         map.put("type", "1");
         map.put("_token", _TOKEN);
-        OKHttpUtil.post(SURVIVAL_URL, map, new Callback() {
+        OKHttpUtil.post(Constant.SURVIVAL_URL, map, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }

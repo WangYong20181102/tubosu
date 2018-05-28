@@ -15,9 +15,11 @@ import com.tbs.tbs_mj.base.BaseActivity;
 import com.tbs.tbs_mj.bean.EC;
 import com.tbs.tbs_mj.bean.Event;
 import com.tbs.tbs_mj.customview.CustomWaitDialog;
+import com.tbs.tbs_mj.global.AppClickEventCode;
 import com.tbs.tbs_mj.global.Constant;
 import com.tbs.tbs_mj.global.OKHttpUtil;
 import com.tbs.tbs_mj.utils.AppInfoUtil;
+import com.tbs.tbs_mj.utils.AppManager;
 import com.tbs.tbs_mj.utils.EventBusUtil;
 import com.tbs.tbs_mj.utils.SpUtil;
 import com.tbs.tbs_mj.utils.Util;
@@ -96,6 +98,7 @@ public class GuideFourActivity extends BaseActivity {
                 //请求发单
                 if (!TextUtils.isEmpty(guideFourPhoneNumTv.getText().toString())
                         && guideFourPhoneNumTv.getText().toString().length() == 11) {
+                    Util.useStatisticsEventClickEvent(AppClickEventCode.X_EVENT_CODE_00, AppManager.currentActivityName());
                     HttpGetOrder(guideFourPhoneNumTv.getText().toString());
                 } else {
                     Toast.makeText(mContext, "请输入正确的手机号码~", Toast.LENGTH_SHORT).show();
