@@ -182,6 +182,8 @@ public class WelcomeActivity extends BaseActivity {
         Glide.with(mContext).load(R.drawable.app_bottom)
                 .asBitmap().centerCrop().placeholder(R.drawable.app_bottom)
                 .error(R.drawable.app_bottom).into(welcomeSlogan);
+
+
 //        welcomeImage.setImageResource(R.drawable.welcome_image);
         //区分市场
 //        if("appxiaomi".equals(AppInfoUtil.getChannType(MyApplication.getContext()))){

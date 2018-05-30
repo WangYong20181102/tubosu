@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="03.请选择您喜欢的效果图"
+                android:text="03.选择您喜欢的效果图"
                 android:textColor="#010101"
                 android:textSize="19sp" />
 

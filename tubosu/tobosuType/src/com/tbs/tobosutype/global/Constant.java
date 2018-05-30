@@ -23,7 +23,7 @@ public class Constant {
     //数据流上传接口 正式
     public static final String TBS_DATA_STREAM = "https://www.tobosu.com/trace";
     //M站 发单跳转 线上环境
-//    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
+    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
 
 
     /**
@@ -36,7 +36,7 @@ public class Constant {
     //M站test接口
 //    public static final String M_TOBOSU_URL = "http://m.test.tobosu.com/szs/";
     //M站dev接口
-    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
+//    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
 
     //拼接在链接后面的字符串标识App的类别
     public static final String APP_TYPE = "&app_type=1";
@@ -192,7 +192,7 @@ public class Constant {
     public static final String WANGJIANLIN = "&tbsfrom=share";
 
     public static final String POP_URL = M_TOBOSU_URL + "class/?from=app";
-    public static final String M_POP_PARAM = "&channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext())+ APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
+    public static final String M_POP_PARAM = "&channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
 
     public static final String ANDROID_SHARE = "&channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "&tbsfrom=share";
 
@@ -258,15 +258,15 @@ public class Constant {
     public static final String PROMOTIONS = M_TOBOSU_URL + "promotions?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
 
 
-    //新的逛图库 套图 3.5版本 add time 20171111
+    //新的逛图库 套图  add time 20171111
     public static final String SUITE_LIST = TOBOSU_URL + "mapp/impression/suite_list";
-    //新的逛图库 3.5版本 套图筛选条件
+    //新的逛图库 套图筛选条件
     public static final String SUITE_CLASS = TOBOSU_URL + "mapp/impressionClass/suite_class";
     //收藏或者取消收藏套图或者单图
     public static final String IMAGE_COLLECT = TOBOSU_URL + "mapp/collect/collect";
-    //新的逛图库 单图 3.5版本 add time 20171114
+    //新的逛图库 单图 add time 20171114
     public static final String SINGLE_MAP_LIST = TOBOSU_URL + "mapp/impressionSingle/single_map_list";
-    //新的逛图库 3.5版本 单图筛选条件
+    //新的逛图库  单图筛选条件
     public static final String SINGLE_CLASS = TOBOSU_URL + "mapp/impressionClass/single_class";
     //收藏或者取消收藏装修公司
     public static final String COMPANY_COLLECT = TOBOSU_URL + "mapp/collect/collect";
@@ -280,63 +280,63 @@ public class Constant {
     public static final String COMPANY_CASE_LIST = TOBOSU_URL + "mapp/company/case_list";
     //装修公司的设计师列表
     public static final String DESIGNER_LIST = TOBOSU_URL + "mapp/designer/designer_list";
-    //获取学装修的分类  3.7版本新增
+    //获取学装修的分类
     public static final String Z_ARTICLE_GET_TYPE = TOBOSU_URL + "mapp/ZArticle/get_type";
-    //获取学装修列表数据  3.7版本新增
+    //获取学装修列表数据
     public static final String Z_ARTICLE_LIST = TOBOSU_URL + "mapp/ZArticle/article_list";
-    //装修详情点击量  3.7版本新增
+    //装修详情点击量
     public static final String Z_ARTICLE_CLICK_COUNT = TOBOSU_URL + "mapp/ZArticle/click_count";
-    //短信验证码登录  3.7版本新增
+    //短信验证码登录
     public static final String SMS_CODE_LOGIN = TOBOSU_URL + "mapp/user/sms_code_login";
-    //微信登录  3.7版本新增
+    //微信登录
     public static final String WECHAT_LOGIN = TOBOSU_URL + "mapp/user/wechat_login";
-    //账号密码登录  3.7版本新增
+    //账号密码登录
     public static final String ACCOUNT_LOGIN = TOBOSU_URL + "mapp/user/login";
-    //校验手机号和验证码的正确性  3.7版本新增
+    //校验手机号和验证码的正确性
     public static final String VERIFY_SMS_CODE = TOBOSU_URL + "mapp/smsCode/verify_sms_code";
-    //忘记密码  3.7版本新增
+    //忘记密码
     public static final String FORGET_PASSWORD = TOBOSU_URL + "mapp/user/forget_password";
-    //图片上传的地址 3.7新增
+    //图片上传的地址
     public static final String UPLOAD_DYNAMIC_IMAGE = TOBOSU_URL + "cloud/upload/app_upload";
-    // 用户反馈 3.7新增
+    // 用户反馈
     public static final String ADD_FEEDBACK = TOBOSU_URL + "mapp/feedback/add_feedback";
-    //用户信息 3.7新增
+    //用户信息
     public static final String USER_INFO = TOBOSU_URL + "mapp/user/user_info";
-    //修改用户信息 3.7新增
+    //修改用户信息
     public static final String MODIFY_USER_INFO = TOBOSU_URL + "mapp/user/modify_user_info";
-    //绑定手机号码 3.7新增
+    //绑定手机号码
     public static final String BIND_CELLPHONE = TOBOSU_URL + "mapp/user/bind_cellphone";
-    //绑定微信 3.7新增
+    //绑定微信
     public static final String BIND_WE_CHAT = TOBOSU_URL + "mapp/user/bind_wechat";
-    //绑定微信 3.7新增
+    //绑定微信
     public static final String CHECK_ORDER_PWD = TOBOSU_URL + "mapp/company/check_order_pwd";
     //App配置信息
     public static final String GET_CONFIG = TOBOSU_URL + "mapp/public/get_config";
-    //检查用户是否存在 3.7新增
+    //检查用户是否存在
     public static final String IS_EXIST_USER = TOBOSU_URL + "mapp/user/is_exist_user";
     //检查当前App是否需要更新
     public static final String CHECK_APP_IS_UPDATA = TOBOSU_URL + "mapp/public/is_update_app";
     //检查当前登录的用户是否修改了密码
     public static final String CHECK_USER_PASSWORD_IS_CHANGE = TOBOSU_URL + "mapp/user/check_password";
-    //获取订单列表  3.7.2版本新增
+    //获取订单列表
     public static final String GET_ORDER_LIST = TOBOSU_URL + "mapp/companyOrder/order_list";
-    //改变订单的状态  3.7.2版本新增
+    //改变订单的状态
     public static final String CHANGE_ORDER_STATE = TOBOSU_URL + "mapp/companyOrder/change_state";
-    //获取订单详情  3.7.2版本新增
+    //获取订单详情
     public static final String GET_ORDER_DETAIL = TOBOSU_URL + "mapp/companyOrder/order_detail";
-    //获取订单消息通知  3.7.2版本新增
+    //获取订单消息通知
     public static final String GET_ORDER_NOTICE = TOBOSU_URL + "mapp/smsPushRecord/company_sms_push";
-    //已读消息标记  3.7.2版本新增
+    //已读消息标记
     public static final String READ_SMS_PUSH = TOBOSU_URL + "mapp/smsPushRecord/read_sms_push";
-    //推送上线  3.7.2版本新增
+    //推送上线
     public static final String FLUSH_SMS_PUSH = TOBOSU_URL + "mapp/public/flush_sms_push";
-    //推送下线  3.7.2版本新增
+    //推送下线
     public static final String SMS_PUSH_OFFLINE = TOBOSU_URL + "mapp/public/sms_push_offline";
-    //反馈消息列表  3.7.2版本新增
+    //反馈消息列表
     public static final String FEEDBACK_LIST = TOBOSU_URL + "mapp/CompanyFeedback/feedback_list";
-    //添加反馈  3.7.2版本新增
+    //添加反馈
     public static final String ADD_FEEDBACK_MSG = TOBOSU_URL + "mapp/CompanyFeedback/add_feedback";
-    //网店管理  3.7.3版本新增
+    //网店管理
     public static final String COMPANY_MY_STORE = TOBOSU_URL + "mapp/company/my_store";
     //网店管理修改网店管理
     public static final String COMPANY_MODIFY_STORE = TOBOSU_URL + "mapp/company/modify_store";

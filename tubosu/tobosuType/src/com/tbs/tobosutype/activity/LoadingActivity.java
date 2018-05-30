@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -52,6 +53,7 @@ public class LoadingActivity extends BaseActivity {
         public void onClick(View v) {
             if (mJumpUrl != null && !TextUtils.isEmpty(mJumpUrl)) {
                 Intent intentToWebActivity = new Intent(mContext, AdvWebActivity.class);
+                Log.e(TAG, "跳转的链接===============" + mJumpUrl);
                 intentToWebActivity.putExtra("mLoadingUrl", mJumpUrl);
                 startActivity(intentToWebActivity);
                 timer.cancel();

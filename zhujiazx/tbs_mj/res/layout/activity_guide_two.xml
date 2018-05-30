@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="43dp"
-            android:text="02.请选择您的年龄阶段"
+            android:text="02.选择您的年龄阶段"
             android:textColor="#010101"
             android:textSize="19sp" />
         <!--30-->

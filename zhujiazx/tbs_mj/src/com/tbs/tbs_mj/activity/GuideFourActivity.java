@@ -100,8 +100,11 @@ public class GuideFourActivity extends BaseActivity {
                         && guideFourPhoneNumTv.getText().toString().length() == 11) {
                     Util.useStatisticsEventClickEvent(AppClickEventCode.X_EVENT_CODE_00, AppManager.currentActivityName());
                     HttpGetOrder(guideFourPhoneNumTv.getText().toString());
+                } else if (TextUtils.isEmpty(guideFourPhoneNumTv.getText().toString())) {
+                    Toast.makeText(mContext, "请输入您的手机号码", Toast.LENGTH_SHORT).show();
+                    return;
                 } else {
-                    Toast.makeText(mContext, "请输入正确的手机号码~", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -114,9 +117,9 @@ public class GuideFourActivity extends BaseActivity {
         param.put("device", "android");
         param.put("source", "1222");
         param.put("device_id", Util.getDeviceID());
-        if(TextUtils.isEmpty(AppInfoUtil.getCityName(mContext))){
+        if (TextUtils.isEmpty(AppInfoUtil.getCityName(mContext))) {
             param.put("city", SpUtil.getCity(mContext));
-        }else {
+        } else {
             param.put("city", AppInfoUtil.getCityName(mContext));
         }
         param.put("version", AppInfoUtil.getAppVersionName(mContext));
@@ -145,7 +148,7 @@ public class GuideFourActivity extends BaseActivity {
                             @Override
                             public void run() {
                                 hideLoadingView();
-                                Util.setToast(mContext, "领取成功 我们会尽快以0574开头座机联系您");
+                                Util.setToast(mContext, "结果将发送到您手机");
                                 gotoMianActivity();
                                 EventBusUtil.sendEvent(new Event(EC.EventCode.FINISH_GUIDE_ACTIVITY));
                             }

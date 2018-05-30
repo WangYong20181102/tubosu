@@ -42,7 +42,12 @@ public class GuideOneActivity extends BaseActivity {
 
     //城市定位
     private void initEvent() {
-        guideOneCityTv.setText("" + SpUtil.getCity(mContext));
+        if (TextUtils.isEmpty(SpUtil.getCity(mContext))) {
+            guideOneCityTv.setText("");
+        } else {
+            guideOneCityTv.setText("" + SpUtil.getCity(mContext));
+        }
+
     }
 
     @Override
