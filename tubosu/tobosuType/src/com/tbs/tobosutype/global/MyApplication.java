@@ -107,7 +107,7 @@ public class MyApplication extends MultiDexApplication {
         //小米推送初始化
         initXiaomiPush();
         //极光推送
-        //initJpush();
+//        initJpush();
         //百度定位相关
         mLocationClient = new LocationClient(this.getApplicationContext());
         mMyLocationListener = new MyLocationListener();

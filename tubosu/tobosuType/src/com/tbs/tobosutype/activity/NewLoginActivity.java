@@ -36,7 +36,7 @@ import butterknife.OnClick;
  * 宿主承载页面：承载账号登录以及微信快捷登录
  */
 
-public class NewLoginActivity extends com.tbs.tobosutype.base.BaseActivity{
+public class NewLoginActivity extends com.tbs.tobosutype.base.BaseActivity {
     @BindView(R.id.new_login_close)
     RelativeLayout newLoginClose;
     @BindView(R.id.new_login_left_sanjiao)
@@ -56,11 +56,6 @@ public class NewLoginActivity extends com.tbs.tobosutype.base.BaseActivity{
     private MyFragmentPagerAdapter myFragmentPagerAdapter;
     private Intent mIntent;
     private String mWhereComeFrom = "";
-
-    // TODO: 2018/2/27 点击流相关的属性
-    private String mFrom = "";//从那个界面进来的
-    private String mNowActivity = "NewLoginActivity";//当前页面的名称
-    private String mTo = "";// TODO: 2018/2/27  要去的界面 作用：在另一个界面回退时 mTo转换成mFrom 使得回退时可以知道从哪回到这个界面的
 
 
     @Override
@@ -181,8 +176,6 @@ public class NewLoginActivity extends com.tbs.tobosutype.base.BaseActivity{
                 newLoginViewpager.setCurrentItem(1);
                 break;
             case R.id.new_login_close:
-                Log.e(TAG, "执行==点击关闭按钮====");
-                // TODO: 2018/2/27 设置点击了关闭按钮事件码
                 finish();
                 break;
         }

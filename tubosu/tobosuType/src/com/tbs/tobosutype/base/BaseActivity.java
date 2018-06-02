@@ -112,7 +112,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * 页面包含的属性id
+     * 页面包含的属性id  web页面使用传值 当前浏览的网页
      *
      * @return
      */
@@ -151,12 +151,13 @@ public class BaseActivity extends AppCompatActivity {
     protected void receiveStickyEvent(Event event) {
 
     }
+
     //home键监听事件
     private HomeListener.KeyFun keyFun = new HomeListener.KeyFun() {
         @Override
         public void home() {
 //            Log.e(TAG,"按键监听_lin=======点击了home键");
-            if(!MyApplication.evBeanArrayList.isEmpty()){
+            if (!MyApplication.evBeanArrayList.isEmpty()) {
                 Util.HttpPostUserUseInfo();
             }
         }
@@ -164,7 +165,7 @@ public class BaseActivity extends AppCompatActivity {
         @Override
         public void recent() {
 //            Log.e(TAG,"按键监听_lin=======点击了任务键");
-            if(!MyApplication.evBeanArrayList.isEmpty()){
+            if (!MyApplication.evBeanArrayList.isEmpty()) {
                 Util.HttpPostUserUseInfo();
             }
         }
@@ -172,7 +173,7 @@ public class BaseActivity extends AppCompatActivity {
         @Override
         public void longHome() {
 //            Log.e(TAG,"按键监听_lin=======长按了home键");
-            if(!MyApplication.evBeanArrayList.isEmpty()){
+            if (!MyApplication.evBeanArrayList.isEmpty()) {
                 Util.HttpPostUserUseInfo();
             }
         }
