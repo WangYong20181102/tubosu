@@ -5,13 +5,14 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".config.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
@@ -64,7 +65,17 @@
         </receiver>
         <!-- 极光推送 服务以及广播 ↑↑↑↑↑↑↑↑↑↑↑↑ -->
 
-        <activity android:name=".activity.MainActivity">
+        <activity
+            android:name=".activity.MainActivity"
+            android:configChanges="orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -72,13 +83,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".wxapi.WXEntryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity android:name=".activity.WelcomeActivity" />
-        <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".fragment.LoginFragmentPhone"></activity>
+            android:name=".activity.LoginActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".activity.CheckPhoneNumActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".activity.ChangePassWordActivity"
+            android:configChanges="orientation|keyboardHidden" />
+        <activity
+            android:name=".activity.OrderActivity"
+            android:configChanges="orientation"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activity.MessageActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activity.MineActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTask" />
+        <activity android:name=".activity.OrderDetailActivity" />
+        <activity android:name=".activity.OrderSeacherActivity" />
+        <activity android:name=".activity.OrderSearchResultActivity"></activity>
     </application>
 
 </manifest>

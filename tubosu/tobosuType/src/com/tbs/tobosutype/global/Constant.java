@@ -308,7 +308,7 @@ public class Constant {
     public static final String BIND_CELLPHONE = TOBOSU_URL + "mapp/user/bind_cellphone";
     //绑定微信
     public static final String BIND_WE_CHAT = TOBOSU_URL + "mapp/user/bind_wechat";
-    //绑定微信
+    //检测订单密码
     public static final String CHECK_ORDER_PWD = TOBOSU_URL + "mapp/company/check_order_pwd";
     //App配置信息
     public static final String GET_CONFIG = TOBOSU_URL + "mapp/public/get_config";

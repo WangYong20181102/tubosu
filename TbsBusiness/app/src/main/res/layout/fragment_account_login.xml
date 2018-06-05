@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/colorWhite"
+    android:layout_height="match_parent">
+    <!--账号登录-->
+    <!--输入手机号-->
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="53dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp">
+        <!--头像贴图-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/zhanghao" />
+        <!--号码的输入框-->
+        <EditText
+            android:id="@+id/fal_account"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="36dp"
+            android:background="@null"
+            android:hint="请输入您的用户名/手机号"
+            android:textColor="#333333"
+            android:textColorHint="#b3b3b3"
+            android:textSize="13sp" />
+        <!--删除按钮-->
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/fal_clean_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/login_close" />
+        <!--底部的分割线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.6dp"
+            android:layout_alignParentBottom="true"
+            android:background="#dbdbdb" />
+    </RelativeLayout>
+    <!--输入验证码-->
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="53dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="96dp">
+        <!--头像贴图-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/mima" />
+        <!--号码的输入框-->
+        <EditText
+            android:id="@+id/fal_password"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="36dp"
+            android:background="@null"
+            android:hint="请输入密码"
+            android:inputType="textPassword"
+            android:textColor="#333333"
+            android:textColorHint="#b3b3b3"
+            android:textSize="13sp" />
+        <!--删除按钮-->
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/fal_clean_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/login_close" />
+        <!--底部的分割线-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.6dp"
+            android:layout_alignParentBottom="true"
+            android:background="#dbdbdb" />
+    </RelativeLayout>
+    <!--忘记密码-->
+    <TextView
+        android:id="@+id/fal_forget_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="166dp"
+        android:text="忘记密码？"
+        android:textColor="#808080"
+        android:textSize="12sp" />
+    <!--登录的按钮-->
+    <TextView
+        android:id="@+id/fal_login_btn"
+        android:layout_width="280dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="207dp"
+        android:background="@drawable/shape_login_btn"
+        android:gravity="center"
+        android:text="登录"
+        android:textColor="#ffffff"
+        android:textSize="12sp" />
+    <!--其他的登录方式分割线-->
+    <RelativeLayout
+        android:layout_width="280dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="260dp">
+
+        <View
+            android:layout_width="90dp"
+            android:layout_height="0.5dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="#dbdbdb" />
+
+        <View
+            android:layout_width="90dp"
+            android:layout_height="0.5dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="#dbdbdb" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="其他登录方式"
+            android:textColor="#bfbfbf"
+            android:textSize="11sp" />
+    </RelativeLayout>
+    <!--微信登录-->
+    <RelativeLayout
+        android:id="@+id/fal_weixin_login_btn"
+        android:layout_width="280dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="300dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/weixin" />
+
+    </RelativeLayout>
+</RelativeLayout>

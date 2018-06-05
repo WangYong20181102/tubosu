@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorWhite"
+    android:layout_height="match_parent">
+    <!--没有任何订单的占位图-->
+    <RelativeLayout
+        android:id="@+id/frag_null_order_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="130dp"
+            android:src="@drawable/zanwuxiangguan" />
+    </RelativeLayout>
+
+    <!--下拉刷新控件-->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/frag_order_swip_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--列表-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/frag_order_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

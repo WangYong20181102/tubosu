@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/phone_pop_window_rl"
+    android:background="#b4353332"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/phone_pop_window_ll"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="查看订单"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:layout_marginTop="50dp"
+            android:background="@color/dividing_line_bg" />
+
+        <RelativeLayout
+            android:layout_width="240dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/shape_input_kuan">
+
+            <EditText
+                android:inputType="textPassword"
+                android:id="@+id/pop_check_pw_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@null"
+                android:hint="请输入查看订单的密码"
+                android:textColorHint="#cccccc"
+                android:textSize="12sp" />
+        </RelativeLayout>
+        <!--修改说明-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="20sp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="66dp"
+            android:text="* 修改密码,请在土拨鼠官网上登录并修改"
+            android:textColor="#b3b3b3"
+            android:textSize="10sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="44dp"
+            android:background="@color/dividing_line_bg" />
+        <!--按钮-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/pop_check_pw_quxiao"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="#000000" />
+
+            <View
+                android:layout_gravity="center"
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:background="@color/dividing_line_bg" />
+
+            <TextView
+                android:id="@+id/pop_check_pw_ok"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="#ff6f12" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

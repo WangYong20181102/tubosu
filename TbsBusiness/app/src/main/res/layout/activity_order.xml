@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".activity.OrderActivity">
+
+    <RelativeLayout
+        android:id="@+id/all_order_banner_rl"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+        <!--返回按钮-->
+        <RelativeLayout
+            android:layout_width="48dp"
+            android:layout_height="48dp">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="32dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/tbs_logo" />
+        </RelativeLayout>
+        <!--搜索层-->
+        <RelativeLayout
+            android:layout_width="289dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50dp"
+            android:background="@drawable/shape_order_search">
+            <!--文本说明-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:text="订单号/业主称呼/小区名称"
+                android:textColor="@color/textColor999"
+                android:textSize="13dp" />
+            <!--搜索图标-->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/sousuo_order" />
+        </RelativeLayout>
+    </RelativeLayout>
+    <!--tab选项卡-->
+    <com.androidkun.xtablayout.XTabLayout
+        android:id="@+id/all_order_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="48dp"
+        app:xTabDisplayNum="6"
+        app:xTabIndicatorColor="#ff6f20"
+        app:xTabIndicatorHeight="2dp"
+        app:xTabIndicatorWidth="36dp"
+        app:xTabMode="scrollable"
+        app:xTabSelectedTextColor="#ff6f20"
+        app:xTabTextColor="#242424">
+
+    </com.androidkun.xtablayout.XTabLayout>
+    <!--选项卡下边的分割线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="93dp"
+        android:background="@color/divide_gray_color" />
+    <!--滑动显示的页面-->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/all_order_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="94dp">
+
+    </android.support.v4.view.ViewPager>
+    <!--阴影-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_below="@+id/all_order_banner_rl"
+        android:background="@drawable/yinying4" />
+</RelativeLayout>

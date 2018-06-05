@@ -22,11 +22,20 @@ android {
                 JPUSH_APPKEY : "e893587e97e55eafda716e25", //JPush上注册的包名对应的appkey.
                 JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
         ]
+        multiDexEnabled true
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        signingConfigs {
+            debug {
+                storeFile file('debug.keystore')
+                storePassword "android"
+                keyAlias "androiddebugkey"
+                keyPassword "android"
+            }
         }
     }
 }
@@ -34,29 +43,33 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     //极光推送
     implementation 'cn.jiguang.sdk:jpush:3.1.1'
     // 此处以JPush 3.1.1 版本为例。
     implementation 'cn.jiguang.sdk:jcore:1.1.9'
     // 此处以JCore 1.1.9 版本为例。
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     //友盟相关
-    implementation 'com.umeng.sdk:common:latest.integration'
-    implementation 'com.umeng.sdk:analytics:latest.integration'
+    implementation 'com.umeng.sdk:utdid:1.1.5.3'
+    implementation 'com.umeng.sdk:analytics:7.5.0'
     implementation files('libs/umeng-common-1.5.3.jar')
     implementation files('libs/umeng-share-core-6.9.2.jar')
     implementation files('libs/umeng-share-QQ-simplify-6.9.2.jar')
     implementation files('libs/umeng-share-wechat-simplify-6.9.2.jar')
     implementation files('libs/umeng-shareboard-widget-6.9.2.jar')
     implementation files('libs/umeng-sharetool-6.9.2.jar')
-    implementation 'com.android.support:design:27.0.1'
+    //okhttp
     implementation 'com.squareup.okhttp3:okhttp:3.9.0'
     implementation 'com.google.code.gson:gson:2.8.1'
     implementation 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation files('libs/glide-3.7.0.jar')
+    implementation 'com.android.support:multidex:1.0.1'
+    implementation 'com.allenliu.versionchecklib:library:2.0.0'
+    implementation 'com.androidkun:XTabLayout:1.1.3'
 }

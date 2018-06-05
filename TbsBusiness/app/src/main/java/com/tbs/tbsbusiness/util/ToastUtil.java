@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 /**
- * Created by Mr.Lin on 2018/6/2 17:12.
+ * Created by Mr.Lin on 2018/6/5 10:15.
  */
 public class ToastUtil {
     private static boolean isShowToast = true;
