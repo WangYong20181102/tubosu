@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
     <color name="appThemeColor">#ff6c20</color>
     <color name="colorHui">#d9d9d9</color>
     <color name="textColor999">#999999</color>
@@ -11,4 +12,5 @@
     <color name="color_black">#000</color>
     <color name="divide_gray_color">#F7F7F7</color>
     <color name="dividing_line_bg">#e5e5e5</color>
+    <color name="color_red">#ff1919</color>
 </resources>

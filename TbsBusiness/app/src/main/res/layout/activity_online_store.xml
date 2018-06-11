@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activity.OnlineStoreActivity">
+    <!--标题-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+        <!--返回键-->
+        <LinearLayout
+            android:id="@+id/ns_back_ll"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/activity_back" />
+        </LinearLayout>
+        <!--标题-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="店铺管理"
+            android:textColor="#333333"
+            android:textSize="17sp" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/ns_goto_detail_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:text="网店主页"
+            android:textColor="#333333"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="48dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!--顶部的分割线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#f7f7f7" />
+            <!--基本信息模块-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+                <!--标题-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="基本信息"
+                    android:textColor="#333333"
+                    android:textSize="15sp" />
+                <!--公司全称-->
+                <RelativeLayout
+                    android:id="@+id/ns_co_full_name_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+                    <!--文字说明-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="公司全称"
+                        android:textColor="#9a9a9a"
+                        android:textSize="14sp" />
+                    <!--说明内容-->
+                    <TextView
+                        android:textColor="#333"
+                        android:ellipsize="marquee"
+                        android:ems="15"
+                        android:singleLine="true"
+                        android:id="@+id/ns_co_full_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="75dp"
+                        android:hint="必填，请控制在2-24个字"
+                        android:textColorHint="#cccccc"
+                        android:textSize="14sp" />
+                    <!--右侧箭头-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/youjiantou" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="#f4f4f4" />
+                </RelativeLayout>
+                <!--公司简称-->
+                <RelativeLayout
+                    android:id="@+id/ns_co_simple_name_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+                    <!--文字说明-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="公司简称"
+                        android:textColor="#9a9a9a"
+                        android:textSize="14sp" />
+                    <!--说明内容-->
+                    <TextView
+                        android:textColor="#333"
+                        android:ellipsize="marquee"
+                        android:ems="15"
+                        android:singleLine="true"
+                        android:id="@+id/ns_co_simple_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="75dp"
+                        android:hint="必填，请控制在2-24个字"
+                        android:textColorHint="#cccccc"
+                        android:textSize="14sp" />
+                    <!--右侧箭头-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/youjiantou" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="#f4f4f4" />
+                </RelativeLayout>
+                <!--网店logo-->
+                <RelativeLayout
+                    android:id="@+id/ns_shop_logo_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+                    <!--文字说明-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="网店LOGO"
+                        android:textColor="#9a9a9a"
+                        android:textSize="14sp" />
+                    <!--说明内容-->
+                    <TextView
+                        android:textColor="#333"
+                        android:id="@+id/ns_shop_logo_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="75dp"
+                        android:hint="必填，限上传1张"
+                        android:textColorHint="#cccccc"
+                        android:textSize="14sp" />
+                    <!--右侧箭头-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/youjiantou" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="#f4f4f4" />
+                </RelativeLayout>
+                <!--品牌logo-->
+                <RelativeLayout
+                    android:id="@+id/ns_pinpai_logo_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+                    <!--文字说明-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="品牌LOGO"
+                        android:textColor="#9a9a9a"
+                        android:textSize="14sp" />
+                    <!--说明内容-->
+                    <TextView
+                        android:textColor="#333"
+                        android:id="@+id/ns_pinpai_logo_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="75dp"
+                        android:hint="必填，限上传1张"
+                        android:textColorHint="#cccccc"
+                        android:textSize="14sp" />
+                    <!--右侧箭头-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/youjiantou" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="#f4f4f4" />
+                </RelativeLayout>
+                <!--公司地址-->
+                <RelativeLayout
+                    android:id="@+id/ns_co_address_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+                    <!--文字说明-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="公司地址"
+                        android:textColor="#9a9a9a"
+                        android:textSize="14sp" />
+                    <!--说明内容-->
+                    <TextView
+                        android:textColor="#333"
+                        android:ellipsize="marquee"
+                        android:ems="13"
+                        android:singleLine="true"
+                        android:id="@+id/ns_co_address_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="75dp"
+                        android:hint="必填，请填写详细地址"
+                        android:textColorHint="#cccccc"
+                        android:textSize="14sp" />
+                    <!--右侧箭头-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/youjiantou" />
+                </RelativeLayout>
+            </LinearLayout>
+            <!--经营信息-->
+            <!--顶部的分割线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#f7f7f7" />
+            <!--基本信息模块-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+                <!--标题-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="经营信息"
+                    android:textColor="#333333"
+                    android:textSize="15sp" />
+                <!--服务区域-->
+                <RelativeLayout
+                    android:id="@+id/ns_fuwuquyu_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+                    <!--服务区域-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="服务区域"
+                        android:textColor="#9a9a9a"
+                        android:textSize="14sp" />
+                    <!--说明内容-->
+                    <TextView
+                        android:textColor="#333"
+                        android:ellipsize="marquee"
+                        android:ems="15"
+                        android:singleLine="true"
+                        android:id="@+id/ns_fuwuquyu_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="75dp"
+                        android:hint="必填，请选择服务区域"
+                        android:textColorHint="#cccccc"
+                        android:textSize="14sp" />
+                    <!--右侧箭头-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/youjiantou" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="#f4f4f4" />
+                </RelativeLayout>
+                <!--家装范围-->
+                <RelativeLayout
+                    android:id="@+id/ns_jiazhuangfanwei_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+                    <!--文字说明-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="装修范围"
+                        android:textColor="#9a9a9a"
+                        android:textSize="14sp" />
+                    <!--说明内容-->
+                    <TextView
+                        android:textColor="#333"
+                        android:ellipsize="marquee"
+                        android:ems="15"
+                        android:singleLine="true"
+                        android:id="@+id/ns_jiazhuangfanwei_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="75dp"
+                        android:hint="必填，请选择装修范围"
+                        android:textColorHint="#cccccc"
+                        android:textSize="14sp" />
+                    <!--右侧箭头-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/youjiantou" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="#f4f4f4" />
+                </RelativeLayout>
+                <!--公装范围-->
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/ns_gongzhuangfanwei_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+                    <!--文字说明-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="公装范围"
+                        android:textColor="#9a9a9a"
+                        android:textSize="14sp" />
+                    <!--说明内容-->
+                    <TextView
+                        android:textColor="#333"
+                        android:ellipsize="marquee"
+                        android:ems="15"
+                        android:singleLine="true"
+                        android:id="@+id/ns_gongzhuangfanwei_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="75dp"
+                        android:hint="必填，请选择公装范围"
+                        android:textColorHint="#cccccc"
+                        android:textSize="14sp" />
+                    <!--右侧箭头-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/youjiantou" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="#f4f4f4" />
+                </RelativeLayout>
+                <!--擅长风格-->
+                <RelativeLayout
+                    android:id="@+id/ns_shanchangfengge_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+                    <!--文字说明-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="擅长风格"
+                        android:textColor="#9a9a9a"
+                        android:textSize="14sp" />
+                    <!--说明内容-->
+                    <TextView
+                        android:textColor="#333"
+                        android:ellipsize="marquee"
+                        android:ems="15"
+                        android:singleLine="true"
+                        android:id="@+id/ns_shanchangfengge_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="75dp"
+                        android:hint="必填，请选择擅长风格"
+                        android:textColorHint="#cccccc"
+                        android:textSize="14sp" />
+                    <!--右侧箭头-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/youjiantou" />
+                </RelativeLayout>
+            </LinearLayout>
+            <!--拓展信息-->
+            <!--顶部的分割线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="#f7f7f7" />
+            <!--基本信息模块-->
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ns_tuozhanxinxi_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+                <!--标题-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="拓展信息"
+                    android:textColor="#333333"
+                    android:textSize="15sp" />
+                <!--营业执照-->
+                <RelativeLayout
+                    android:id="@+id/ns_yingyezhizhao_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+                    <!--营业执照-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="营业执照"
+                        android:textColor="#9a9a9a"
+                        android:textSize="14sp" />
+                    <!--说明内容-->
+                    <TextView
+                        android:textColor="#333"
+                        android:id="@+id/ns_yingyezhizhao_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="75dp"
+                        android:hint="选填，有证则请上传"
+                        android:textColorHint="#cccccc"
+                        android:textSize="14sp" />
+                    <!--右侧箭头-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/youjiantou" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="#f4f4f4" />
+                </RelativeLayout>
+                <!--前台图片-->
+                <RelativeLayout
+                    android:id="@+id/ns_qiantaitupian_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+                    <!--文字说明-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="前台图片"
+                        android:textColor="#9a9a9a"
+                        android:textSize="14sp" />
+                    <!--说明内容-->
+                    <TextView
+                        android:textColor="#333"
+                        android:id="@+id/ns_qiantaitupian_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="75dp"
+                        android:hint="选填，限上传1张"
+                        android:textColorHint="#cccccc"
+                        android:textSize="14sp" />
+                    <!--右侧箭头-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/youjiantou" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="#f4f4f4" />
+                </RelativeLayout>
+                <!--荣誉资质-->
+                <RelativeLayout
+                    android:id="@+id/ns_rongyuzizhi_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp">
+                    <!--文字说明-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="荣誉资质"
+                        android:textColor="#9a9a9a"
+                        android:textSize="14sp" />
+                    <!--说明内容-->
+                    <TextView
+                        android:textColor="#333"
+                        android:id="@+id/ns_rongyuzizhi_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="75dp"
+                        android:hint="选填，请上传1张以上"
+                        android:textColorHint="#cccccc"
+                        android:textSize="14sp" />
+                    <!--右侧箭头-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/youjiantou" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:layout_marginBottom="70dp"
+                android:background="#f7f7f7" />
+        </LinearLayout>
+    </ScrollView>
+    <!--提交按钮-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/ns_send_btn"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/shape_login_btn"
+            android:gravity="center"
+            android:text="提交"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -230,6 +230,9 @@ public class OrderFragment extends BaseFragment {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, "链接失败===========" + e.getMessage());
+                if (mAllOrderActivity == null) {
+                    return;
+                }
                 mAllOrderActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -358,7 +361,11 @@ public class OrderFragment extends BaseFragment {
                 intent.putExtra("mOrderId", mOrderItemArrayList.get(position).getId());
                 intent.putExtra("mShowingOrderId", mOrderItemArrayList.get(position).getOrder_id());//显示的订单id
                 intent.putExtra("mOrderType", mOrderType);
+                Log.e(TAG, "进入详情的参数==========mOrderId=====" + mOrderItemArrayList.get(position).getId() + "=====mShowingOrderId=====" + mOrderItemArrayList.get(position).getOrder_id() + "=====mOrderType=====" + mOrderType);
                 startActivity(intent);
+                if (mOrderType.equals("1")) {
+                    EventBusUtil.sendEvent(new Event(EC.EventCode.NOTE_ORDER_FRAGMENT_UPDATE_DATA));
+                }
                 break;
             case 1:
                 //最右侧按钮处理事件
@@ -373,6 +380,7 @@ public class OrderFragment extends BaseFragment {
                     startActivity(intentToOrderDetail);
                     //通知刷新 并改变订单的状态
                     HttpChangeOrderState(mOrderItemArrayList.get(position).getId(), mOrderItemArrayList.get(position).getState(), 1, position, "");
+                    EventBusUtil.sendEvent(new Event(EC.EventCode.NOTE_ORDER_FRAGMENT_UPDATE_DATA));
                 } else if (mOrderItemArrayList.get(position).getState().equals("2")) {
                     //未量房处理模式
 //                        Toast.makeText(mContext, "确认量房", Toast.LENGTH_SHORT).show();
@@ -469,6 +477,9 @@ public class OrderFragment extends BaseFragment {
                     OKHttpUtil.post(Constant.CHECK_ORDER_PWD, param, new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
+                            if (mAllOrderActivity == null) {
+                                return;
+                            }
                             mAllOrderActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -486,6 +497,9 @@ public class OrderFragment extends BaseFragment {
                                 String status = jsonObject.optString("status");
                                 final String msg = jsonObject.optString("msg");
                                 if (status.equals("200")) {
+                                    if (mAllOrderActivity == null) {
+                                        return;
+                                    }
                                     //验证密码成功 跳转查单页
                                     mAllOrderActivity.runOnUiThread(new Runnable() {
                                         @Override
@@ -511,6 +525,9 @@ public class OrderFragment extends BaseFragment {
                                     });
 
                                 } else {
+                                    if (mAllOrderActivity == null) {
+                                        return;
+                                    }
                                     mAllOrderActivity.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activity.SuggestionActivity">
+    <!--顶部显示的标题-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/suggestion_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/activity_back" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="反馈与建议"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+    </RelativeLayout>
+    <!--输入反馈与建议-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:layout_marginTop="48dp"
+        android:background="@color/white"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+        <!--文本输入框-->
+        <EditText
+            android:id="@+id/suggestion_input"
+            android:layout_width="match_parent"
+            android:layout_height="128dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="18dp"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="请简要描述您的问题和建议"
+            android:maxLength="500"
+            android:text=""
+            android:textColor="#333333"
+            android:textColorHint="#b3b3b3"
+            android:textSize="13sp" />
+        <!--图片展示页面-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/suggestion_image_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="156dp">
+
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
+    <!--选填提示-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="340dp"
+        android:text="联系方式(选填)"
+        android:textColor="#333333"
+        android:textSize="13sp" />
+    <!--文字剩余描述-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="325dp"
+        android:orientation="horizontal">
+        <!--输入的字数-->
+        <TextView
+            android:id="@+id/suggestion_input_text_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="#b3b3b3"
+            android:textSize="11sp" />
+        <!--总字数-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/500"
+            android:textColor="#b3b3b3"
+            android:textSize="11sp" />
+    </LinearLayout>
+    <!--输入手机号码-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="378dp"
+        android:background="@color/white">
+
+        <EditText
+            android:id="@+id/suggestion_input_phone_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:background="@null"
+            android:hint="请输入手机号，方便我们联系您解决问题。"
+            android:inputType="number"
+            android:maxLength="11"
+            android:textColorHint="#b3b3b3"
+            android:textSize="12sp" />
+    </RelativeLayout>
+    <!--提交反馈按钮-->
+    <TextView
+        android:id="@+id/suggestion_comite"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#ff6c20"
+        android:gravity="center"
+        android:text="提交反馈"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+
+    <!--阴影-->
+    <View
+        android:id="@+id/banner_dever"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/yinying4"
+        android:visibility="visible" />
+
+</RelativeLayout>

@@ -236,6 +236,7 @@ public class LoginFragmentPhone extends BaseFragment {
                             @Override
                             public void run() {
                                 Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+                                UMShareAPI.get(mContext).deleteOauth(getActivity(), SHARE_MEDIA.WEIXIN, null);
                             }
                         });
                     }
@@ -308,10 +309,13 @@ public class LoginFragmentPhone extends BaseFragment {
         SpUtil.setCompany_id(mContext, mUser.getCompany_id());
         SpUtil.setCellphone(mContext, mUser.getCellphone());
         SpUtil.setCellphone_check(mContext, mUser.getCellphone_check());
+        SpUtil.setWechat_check(mContext,mUser.getWechat_check());
         SpUtil.setNickname(mContext, mUser.getNickname());
         SpUtil.setIcon(mContext, mUser.getIcon());
+        SpUtil.setGender(mContext,mUser.getGender());
         SpUtil.setOrder_count(mContext, String.valueOf(mUser.getOrder_count()));
         SpUtil.setGrade(mContext, String.valueOf(mUser.getGrade()));
+        SpUtil.setCommunity(mContext, mUser.getCommunity());
         SpUtil.setCity_name(mContext, mUser.getCity_name());
         SpUtil.setProvince_name(mContext, mUser.getProvince_name());
         SpUtil.setNew_order_count(mContext, String.valueOf(mUser.getNew_order_count()));

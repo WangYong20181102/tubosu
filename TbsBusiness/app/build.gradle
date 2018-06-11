@@ -8,8 +8,9 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
+        flavorDimensions "versionCode"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "ali"]//多渠道打包标识 默认爱思 到时候可以修改
 
         ndk {
             //选择要添加的对应cpu类型的.so库。
@@ -24,6 +25,53 @@ android {
         ]
         multiDexEnabled true
     }
+
+    productFlavors {
+        ali {}
+        anzhi {}
+        appbaidu {}
+        apphuawei {}
+        applenovo {}
+        appmeizu {}
+        appoppo {}
+        appqihu {}
+        appttt {}
+        appvivo {}
+        appxiaomi {}
+        appyyb {}
+        yybff {}
+        jinli {}
+        leshi {}
+        sougou {}
+        sumsung {}
+        youyi {}
+        zhuanghaojia {}
+        tbspc {}
+    }
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                File outputDirectory = new File(outputFile.parent);
+                def fileName
+                if (variant.buildType.name == "release") {
+//                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_${variant.productFlavors[0].name}.apk"
+                    fileName = "tbsbusiness_v1.0.0_${variant.productFlavors[0].name}.apk"
+                } else {
+//                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_beta.apk"
+                    fileName = "tbsbusiness_v1.0.0_${variant.productFlavors[0].name}_beta.apk"
+                }
+//            output.outputFile = new File(outputDirectory, fileName)
+//            outputFileName="${variant.applicationId}-${ buildType.name}-${variant.productFlavors[0].name}.apk"
+                outputFileName = fileName
+            }
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -72,4 +120,6 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.1'
     implementation 'com.allenliu.versionchecklib:library:2.0.0'
     implementation 'com.androidkun:XTabLayout:1.1.3'
+    implementation 'com.github.lovetuzitong:MultiImageSelector:1.2'
+    implementation 'com.contrarywind:Android-PickerView:4.1.3'
 }

@@ -48,7 +48,7 @@ public class SpUtil {
         context.getSharedPreferences("userInfo", 0).edit().putString("mCellphone", mCellphone).commit();
     }
 
-    //存储用户的mCellphone 用户的手机号码
+    //存储用户的mCellphone 用户的手机号码是否验证
     public static String getCellphone_check(Context context) {
         return context.getSharedPreferences("userInfo", 0).getString("mCellphone_check", "");
     }
@@ -56,6 +56,17 @@ public class SpUtil {
     //获取用户的mCellphone
     public static void setCellphone_check(Context context, String mCellphone_check) {
         context.getSharedPreferences("userInfo", 0).edit().putString("mCellphone_check", mCellphone_check).commit();
+    }
+
+
+    //存储用户的微信是否验证
+    public static String getWechat_check(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("mWechat_check", "");
+    }
+
+    //获取用户的微信是否验证
+    public static void setWechat_check(Context context, String mWechat_check) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("mWechat_check", mWechat_check).commit();
     }
 
     //存储用户的Nickname 用户的昵称
@@ -77,7 +88,15 @@ public class SpUtil {
     public static void setIcon(Context context, String mIcon) {
         context.getSharedPreferences("userInfo", 0).edit().putString("mIcon", mIcon).commit();
     }
+    //存储用户的性别
+    public static String getGender(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("mGender", "");
+    }
 
+    //获取用户的性别
+    public static void setGender(Context context, String mGender) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("mGender", mGender).commit();
+    }
     //存储用户的订单数量
     public static String getOrder_count(Context context) {
         return context.getSharedPreferences("userInfo", 0).getString("mOrder_count", "");
@@ -96,6 +115,16 @@ public class SpUtil {
     //获取用户的等级
     public static void setGrade(Context context, String mGrade) {
         context.getSharedPreferences("userInfo", 0).edit().putString("mGrade", mGrade).commit();
+    }
+
+    //存储用户所在的小区
+    public static String getCommunity(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("mCommunity", "");
+    }
+
+    //获取用户所在的小区
+    public static void setCommunity(Context context, String mCommunity) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("mCommunity", mCommunity).commit();
     }
 
     //存储用户所在的城市
@@ -165,4 +194,103 @@ public class SpUtil {
         context.getSharedPreferences("userInfo", 0).edit().putString("user_md5_password", user_md5_password).commit();
     }
     // TODO: 2018/6/4 存储用户的相关信息↑↑↑↑
+
+    //获取官网电话
+    public static String getCustom_service_tel(Context context) {
+        return context.getSharedPreferences("CustomServiceTel", 0).getString("custom_service_tel", "400-696-2221");
+    }
+
+    //存储官网电话
+    public static void setCustom_service_tel(Context context, String custom_service_tel) {
+        context.getSharedPreferences("CustomServiceTel", 0).edit().putString("custom_service_tel", custom_service_tel).commit();
+    }
+
+
+    //获取官网QQ
+    public static String getCustom_service_qq(Context context) {
+        return context.getSharedPreferences("CustomServiceQQ", 0).getString("custom_service_qq", "4006062221");
+    }
+
+    //存储官网QQ
+    public static void setCustom_service_qq(Context context, String custom_service_qq) {
+        context.getSharedPreferences("CustomServiceQQ", 0).edit().putString("custom_service_qq", custom_service_qq).commit();
+    }
+
+    //获取小程序
+    public static String getApplets_name(Context context) {
+        return context.getSharedPreferences("AppletsName", 0).getString("applets_name", "土拨鼠查订单");
+    }
+
+    //存储小程序
+    public static void setApplets_name(Context context, String applets_name) {
+        context.getSharedPreferences("AppletsName", 0).edit().putString("applets_name", applets_name).commit();
+    }
+
+
+    //获取公众号
+    public static String getPublic_number(Context context) {
+        return context.getSharedPreferences("Public_number", 0).getString("public_number", "itobosu");
+    }
+
+    //存储公众号
+    public static void setPublic_number(Context context, String public_number) {
+        context.getSharedPreferences("Public_number", 0).edit().putString("public_number", public_number).commit();
+    }
+    //是否弹更新弹窗
+    public static String getIsShowUpdataDialog(Context context) {
+        return context.getSharedPreferences("dialogInfo", 0).getString("updataDialog", "");
+    }
+
+    public static void setIsShowUpdataDialog(Context context, String updataDialog) {
+        context.getSharedPreferences("dialogInfo", 0).edit().putString("updataDialog", updataDialog).commit();
+    }
+    //存储网络端获取的手机正则校验
+    public static void setCellphonePartern(Context context, String mCellphonePartern) {
+        context.getSharedPreferences("mCellphonePartern", 0).edit().putString("mCellphonePartern", mCellphonePartern).commit();
+    }
+
+    //获取网络端获取的手机正则校验
+    public static String getCellphonePartern(Context context) {
+        return context.getSharedPreferences("mCellphonePartern", 0).getString("mCellphonePartern", "");
+    }
+
+    //获取城市JSON
+    public static String getLocalCityJson(Context context) {
+        return context.getSharedPreferences("LocalCityJson", 0).getString("mLocalCityJson", "");
+    }
+
+    //存储城市JSON
+    public static void setLocalCityJson(Context context, String localCityJson) {
+        context.getSharedPreferences("LocalCityJson", 0).edit().putString("mLocalCityJson", localCityJson).commit();
+    }
+
+    //获取省份option
+    public static int getShengOption(Context context) {
+        return context.getSharedPreferences("ShengOption", 0).getInt("mShengOption", 0);
+    }
+
+    //存储省份option
+    public static void setShengOption(Context context, int mShengOption) {
+        context.getSharedPreferences("ShengOption", 0).edit().putInt("mShengOption", mShengOption).commit();
+    }
+
+    //获取城市option
+    public static int getShiOption(Context context) {
+        return context.getSharedPreferences("ShiOption", 0).getInt("mShiOption", 0);
+    }
+
+    //存储城市option
+    public static void setShiOption(Context context, int mShiOption) {
+        context.getSharedPreferences("ShiOption", 0).edit().putInt("mShiOption", mShiOption).commit();
+    }
+
+    //获取区域option
+    public static int getQuOption(Context context) {
+        return context.getSharedPreferences("QuOption", 0).getInt("mQuOption", 0);
+    }
+
+    //存储城市option
+    public static void setQuOption(Context context, int mQuOption) {
+        context.getSharedPreferences("QuOption", 0).edit().putInt("mQuOption", mQuOption).commit();
+    }
 }

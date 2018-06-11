@@ -1,13 +1,287 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/company_of_mine_ll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".activity.MineActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="我的页面" />
-</android.support.constraint.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+            <!--顶部显示的标题-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_alignParentTop="true">
+                <!--标题-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="我的"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+            <!--头像以及名称-->
+            <RelativeLayout
+                android:id="@+id/company_of_mine_msg_rl"
+                android:layout_width="match_parent"
+                android:layout_height="90dp">
+                <!--头像-->
+                <ImageView
+                    android:id="@+id/company_of_mine_icon_iv"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/tbs_logo" />
+                <!--用户名以及会员等级-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="92dp"
+                    android:orientation="vertical">
+                    <!--名称-->
+                    <TextView
+                        android:id="@+id/company_of_mine_name_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="#333333"
+                        android:textSize="16sp" />
+                    <!--会员等级-->
+                    <ImageView
+                        android:id="@+id/company_of_mine_huiyuan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:src="@drawable/zuanshi" />
+                </LinearLayout>
+                <!--跳转箭头-->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="22dp"
+                    android:src="@drawable/shangjiantou" />
+            </RelativeLayout>
+            <!--上边的分割线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:background="#f7f7f7" />
+            <!--第二条分割线-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:background="#f7f7f7"
+                android:visibility="gone" />
+            <!--网店设置-->
+            <RelativeLayout
+                android:id="@+id/company_of_mine_wangdian_rl"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginLeft="16dp"
+                android:visibility="visible">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/store" />
+                <!--文本描述-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="33dp"
+                    android:text="网店管理"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+                <!--右边的箭头-->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/youjiantou" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="30dp"
+                    android:background="#f7f7f7" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:background="#f7f7f7"
+                android:visibility="gone" />
+            <!--客服、公众号  等等-->
+            <!--客服-->
+            <RelativeLayout
+                android:id="@+id/company_of_mine_kefu_rl"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginLeft="16dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/my_kefu" />
+                <!--文本描述-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="33dp"
+                    android:text="土拨鼠客服"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+                <!--电话-->
+                <TextView
+                    android:id="@+id/company_of_mine_kefu_phone_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="38dp"
+                    android:text="400-606-2221"
+                    android:textColor="#b3b3b3"
+                    android:textSize="12sp" />
+                <!--右边的箭头-->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/youjiantou" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="30dp"
+                    android:background="#f7f7f7" />
+            </RelativeLayout>
+            <!--服务号-->
+            <RelativeLayout
+                android:id="@+id/company_of_mine_xiaochengxu_rl"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginLeft="16dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/fuwuhao" />
+                <!--文本描述-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="33dp"
+                    android:text="小程序"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+                <!--服务号-->
+                <TextView
+                    android:id="@+id/company_of_mine_xiaochengxu_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="38dp"
+                    android:text="土拨鼠查订单"
+                    android:textColor="#b3b3b3"
+                    android:textSize="12sp" />
+                <!--右边的箭头-->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/youjiantou" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="30dp"
+                    android:background="#f7f7f7" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:background="#f7f7f7" />
+            <!--设置-->
+            <RelativeLayout
+                android:id="@+id/company_of_mine_shezhi_rl"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginLeft="16dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/shezhi" />
+                <!--文本描述-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="33dp"
+                    android:text="设置"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+                <!--右边的箭头-->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/youjiantou" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="30dp"
+                    android:background="#f7f7f7" />
+            </RelativeLayout>
+            <!--留白-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/white" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

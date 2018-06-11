@@ -11,15 +11,18 @@ public class _User {
      * company_id : 33573
      * cellphone : 17520479595
      * cellphone_check : 1
+     * wechat_check : 0
      * nickname : 飞鱼装饰hh
      * icon : https://back.tobosu.com/app/2018-05-04/5aebd96ae5143.jpg
-     * order_count : 146
-     * grade : 0
-     * city_name : 菏泽
-     * province_name : 山东
+     * gender : 0
+     * community :
+     * order_count : 153
+     * grade : 5
+     * city_name : 黑河
+     * province_name : 黑龙江
      * new_order_count : 0
-     * not_lf_order_count : 0
-     * lf_order_count : 0
+     * not_lf_order_count : 37
+     * lf_order_count : 50
      * is_new_sms : 0
      */
 
@@ -27,8 +30,11 @@ public class _User {
     private String company_id;
     private String cellphone;
     private String cellphone_check;
+    private String wechat_check;
     private String nickname;
     private String icon;
+    private String gender;
+    private String community;
     private int order_count;
     private int grade;
     private String city_name;
@@ -70,6 +76,14 @@ public class _User {
         this.cellphone_check = cellphone_check;
     }
 
+    public String getWechat_check() {
+        return wechat_check;
+    }
+
+    public void setWechat_check(String wechat_check) {
+        this.wechat_check = wechat_check;
+    }
+
     public String getNickname() {
         return nickname;
     }
@@ -84,6 +98,22 @@ public class _User {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getCommunity() {
+        return community;
+    }
+
+    public void setCommunity(String community) {
+        this.community = community;
     }
 
     public int getOrder_count() {

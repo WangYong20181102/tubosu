@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:id="@+id/big_image_pipai_rl"
+    tools:context=".activity.BigImagePinPaiLookActivity">
+    <RelativeLayout
+        android:layout_centerInParent="true"
+        android:layout_width="360dp"
+        android:layout_height="180dp">
+        <ImageView
+            android:id="@+id/big_image_pipai_iamge"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

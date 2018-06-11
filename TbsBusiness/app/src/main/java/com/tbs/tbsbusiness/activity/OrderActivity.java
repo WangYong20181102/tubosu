@@ -65,6 +65,16 @@ public class OrderActivity extends BaseActivity {
         return true;
     }
 
+    @Override
+    protected void receiveEvent(Event event) {
+        switch (event.getCode()) {
+            case EC.EventCode.USER_LOGIN_OUT:
+                Log.e(TAG, "OrderActivity退出====");
+                finish();
+                break;
+        }
+    }
+
     //初始化相关的事务
     private void initEvent() {
         mGson = new Gson();

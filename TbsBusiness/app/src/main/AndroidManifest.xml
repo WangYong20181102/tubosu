@@ -7,15 +7,33 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:name=".config.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
+        <!-- Android 7.0 获取文件 -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.tbs.tbsbusiness.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <!-- 友盟分享mate -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5b120d59a40fa31c5100007a" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
         <!-- 可配置android:process参数将PushService放在其他进程中 -->
         <service
             android:name="cn.jpush.android.service.PushService"
@@ -38,7 +56,7 @@
             <intent-filter>
                 <action android:name="cn.jpush.android.intent.DaemonService" />
 
-                <category android:name="com.tbs.tobosutype" />
+                <category android:name="com.tbs.tbsbusiness" />
             </intent-filter>
         </service>
 
@@ -60,7 +78,7 @@
                 <!-- 接收网络变化 连接/断开 since 1.6.3 -->
                 <!-- <action android:name="cn.jpush.android.intent.CONNECTION" /> -->
 
-                <category android:name="com.tbs.tobosutype" />
+                <category android:name="com.tbs.tbsbusiness" />
             </intent-filter>
         </receiver>
         <!-- 极光推送 服务以及广播 ↑↑↑↑↑↑↑↑↑↑↑↑ -->
@@ -103,9 +121,35 @@
             android:name=".activity.MineActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="singleTask" />
-        <activity android:name=".activity.OrderDetailActivity" />
+        <activity
+            android:name=".activity.OrderDetailActivity"
+            android:configChanges="orientation" />
         <activity android:name=".activity.OrderSeacherActivity" />
-        <activity android:name=".activity.OrderSearchResultActivity"></activity>
+        <activity android:name=".activity.OrderSearchResultActivity" />
+        <activity android:name=".activity.SetingActivity" />
+        <activity android:name=".web.WebViewActivity" />
+        <activity android:name=".activity.SuggestionActivity" />
+        <activity
+            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity android:name=".activity.OnlineStoreActivity" />
+        <activity android:name=".activity.CoChangeFullNameActivity" />
+        <activity android:name=".activity.CoChangeSimpNameActivity" />
+        <activity android:name=".activity.ChangeStoreLogoActivity" />
+        <activity android:name=".activity.BigIconLookActivity" />
+        <activity android:name=".activity.ChangePinPaiLogoActivity" />
+        <activity android:name=".activity.BigImagePinPaiLookActivity" />
+        <activity android:name=".activity.ChangeCoAddressActivity" />
+        <activity android:name=".activity.ChangeRongYuImageActivity" />
+        <activity android:name=".activity.BigImageLookActivity" />
+        <activity android:name=".activity.ChangeQiantaiImageActivity" />
+        <activity android:name=".activity.CoChangeBussinessLicenseActivity" />
+        <activity android:name=".activity.ChangeCoFengGeRangeActivity" />
+        <activity android:name=".activity.ChangeCoServiceActivity" />
+        <activity android:name=".activity.ChangeCoJiaZhuangRange" />
+        <activity android:name=".activity.CoPresonerMsgActivity" />
+        <activity android:name=".activity.BandPhoneActivity" />
+        <activity android:name=".activity.OrderNoteActivity"></activity>
     </application>
 
 </manifest>

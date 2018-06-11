@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tbs.tbsbusiness.R;
+import com.tbs.tbsbusiness.base.BaseActivity;
 import com.tbs.tbsbusiness.config.Constant;
 import com.tbs.tbsbusiness.util.MD5Util;
 import com.tbs.tbsbusiness.util.OKHttpUtil;
@@ -32,7 +33,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class ChangePassWordActivity extends AppCompatActivity {
+public class ChangePassWordActivity extends BaseActivity {
 
     @BindView(R.id.change_pass_word_cancel)
     RelativeLayout changePassWordCancel;
