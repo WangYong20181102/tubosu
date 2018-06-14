@@ -293,4 +293,14 @@ public class SpUtil {
     public static void setQuOption(Context context, int mQuOption) {
         context.getSharedPreferences("QuOption", 0).edit().putInt("mQuOption", mQuOption).commit();
     }
+    //存储用户按的Tab
+    public static void setMainTabPosition(Context context, int mMainTabPosition) {
+        context.getSharedPreferences("mMainTabPosition", 0).edit().putInt("mMainTabPosition", mMainTabPosition).commit();
+    }
+
+    //获取用户按的Tab
+    public static int getMainTabPosition(Context context) {
+        return context.getSharedPreferences("mMainTabPosition", 0).getInt("mMainTabPosition", 0);
+    }
+
 }

@@ -48,7 +48,7 @@ public class Constant {
     //用户使用App的反馈
     public static final String ADD_FEEDBACK = TOBOSU_URL + "comapp/feedback/add_feedback";
     //图片上传
-    public static final String UPLOAD_DYNAMIC_IMAGE = TOBOSU_URL + "cloud/upload/app_upload";
+    public static final String UPLOAD_DYNAMIC_IMAGE = TOBOSU_URL + "/cloud/upload/app_upload";
     //网店管理
     public static final String COMPANY_MY_STORE = TOBOSU_URL + "comapp/company/my_store";
     //网店管理修改网店管理
@@ -58,7 +58,7 @@ public class Constant {
     //用户推送下线
     public static final String SMS_PUSH_OFFLINE = TOBOSU_URL + "comapp/public/sms_push_offline";
     //绑定手机号码
-    public static final String BIND_CELLPHONE = TOBOSU_URL + "mapp/user/bind_cellphone";
+    public static final String BIND_CELLPHONE = TOBOSU_URL + "comapp/login/bind_cellphone";
     //绑定微信
     public static final String BIND_WE_CHAT = TOBOSU_URL + "comapp/user/bind_wechat";
     //获取消息列表信息

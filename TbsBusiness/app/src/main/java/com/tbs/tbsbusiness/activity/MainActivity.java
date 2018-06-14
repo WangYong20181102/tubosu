@@ -96,7 +96,7 @@ public class MainActivity extends BaseTabActivity {
         //检测更新
         checkAppUpdata();
         //用户推送上线
-        Util.initPushEventPushOnline(mContext,TAG);
+        Util.initPushEventPushOnline(mContext, TAG);
     }
 
     @Override
@@ -262,15 +262,14 @@ public class MainActivity extends BaseTabActivity {
         mTabHost.addTab(spec);
         //初始选择
         selectTab(0);
+        //设置标识位
+        SpUtil.setMainTabPosition(mContext, 0);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mIntent = getIntent();
-        mSelect_tab = mIntent.getStringExtra("select_tab");
-        Log.e(TAG, "select_tab==========" + mSelect_tab);
-//        selectTab(mSelect_tab);
+        selectTab(SpUtil.getMainTabPosition(mContext));
     }
 
     private void selectTab(int position) {
@@ -280,18 +279,22 @@ public class MainActivity extends BaseTabActivity {
                 mTabHost.setCurrentTab(position);
                 mTabHost.setCurrentTabByTag("one");
                 tabIconChange(position);
+                SpUtil.setMainTabPosition(mContext, 0);
                 break;
             case 1:
                 //消息
                 mTabHost.setCurrentTab(position);
                 mTabHost.setCurrentTabByTag("two");
                 tabIconChange(position);
+                SpUtil.setMainTabPosition(mContext, 1);
+
                 break;
             case 2:
                 //我的
                 mTabHost.setCurrentTab(position);
                 mTabHost.setCurrentTabByTag("three");
                 tabIconChange(position);
+                SpUtil.setMainTabPosition(mContext, 2);
                 break;
         }
     }
