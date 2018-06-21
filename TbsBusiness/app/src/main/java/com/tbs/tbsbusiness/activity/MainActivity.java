@@ -34,6 +34,7 @@ import com.tbs.tbsbusiness.bean.Event;
 import com.tbs.tbsbusiness.bean._AppConfig;
 import com.tbs.tbsbusiness.bean._UpdateInfo;
 import com.tbs.tbsbusiness.config.Constant;
+import com.tbs.tbsbusiness.util.EventBusUtil;
 import com.tbs.tbsbusiness.util.OKHttpUtil;
 import com.tbs.tbsbusiness.util.SpUtil;
 import com.tbs.tbsbusiness.util.Util;
@@ -273,6 +274,7 @@ public class MainActivity extends BaseTabActivity {
     }
 
     private void selectTab(int position) {
+        EventBusUtil.sendEvent(new Event(EC.EventCode.INIT_MESSAGE_IF_NULL));
         switch (position) {
             case 0:
                 //订单

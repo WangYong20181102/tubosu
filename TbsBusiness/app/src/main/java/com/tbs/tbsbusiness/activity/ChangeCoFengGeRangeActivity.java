@@ -141,6 +141,7 @@ public class ChangeCoFengGeRangeActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.co_change_fengge_ok_rl:
+                clickNum = 0;
                 //遍历选中的数量
                 for (int i = 0; i < mGoodAtStyleBeanArrayList.size(); i++) {
                     if (mGoodAtStyleBeanArrayList.get(i).getIs_selected() == 1) {

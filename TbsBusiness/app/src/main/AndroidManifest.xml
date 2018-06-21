@@ -128,7 +128,9 @@
         <activity android:name=".activity.OrderSearchResultActivity" />
         <activity android:name=".activity.SetingActivity" />
         <activity android:name=".web.WebViewActivity" />
-        <activity android:name=".activity.SuggestionActivity" />
+        <activity
+            android:name=".activity.SuggestionActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
             android:configChanges="orientation|screenSize" />

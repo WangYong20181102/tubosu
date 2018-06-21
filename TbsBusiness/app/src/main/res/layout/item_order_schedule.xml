@@ -53,11 +53,12 @@
         android:textSize="12sp" />
     <!--底部的分割线-->
     <View
-        android:layerType="software"
+        android:id="@+id/item_order_sd_button_xuxian"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="27dp"
         android:layout_marginRight="15dp"
-        android:background="@drawable/shape_xu_xian" />
+        android:background="@drawable/shape_xu_xian"
+        android:layerType="software" />
 </RelativeLayout>

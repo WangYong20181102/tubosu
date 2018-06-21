@@ -58,6 +58,7 @@
                     android:textSize="14sp" />
 
                 <View
+                    android:visibility="gone"
                     android:id="@+id/new_order_detail_tab_sign_view"
                     android:layout_width="55dp"
                     android:layout_height="3dp"

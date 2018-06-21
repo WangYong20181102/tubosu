@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -32,6 +33,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -83,6 +86,7 @@ public class OrderSeacherActivity extends BaseActivity {
 
             }
         });
+        initInput();
     }
 
     @OnClick({R.id.order_seach_back, R.id.order_seach_clean_iv,
@@ -101,6 +105,21 @@ public class OrderSeacherActivity extends BaseActivity {
         }
     }
 
+    //唤起键盘
+    private void initInput() {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+
+            @Override
+            public void run() {
+                InputMethodManager imm = (InputMethodManager) mContext
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+            }
+
+        }, 200);
+    }
+
     private void intoSearchResult(String searchInfo) {
         if (!TextUtils.isEmpty(searchInfo)) {
             if (MyApplication.IS_CHECK_COMPANY_ORDER_PASSWORD) {
@@ -116,6 +135,7 @@ public class OrderSeacherActivity extends BaseActivity {
             Toast.makeText(mContext, "请输入搜索的内容~", Toast.LENGTH_SHORT).show();
         }
     }
+
     //处理类型
     private void showChadanPassWordPop(final String searchInfo) {
         /**

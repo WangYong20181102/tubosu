@@ -46,6 +46,11 @@ public class OrderScheduleAdapter extends RecyclerView.Adapter<RecyclerView.View
                 ((OrderScheduleItemViewHolder) holder).item_order_sd_sigin_iv.setImageResource(R.drawable.weixuanzhong);
                 ((OrderScheduleItemViewHolder) holder).item_order_sd_up_dev_view.setVisibility(View.VISIBLE);
             }
+//            if (position == getItemCount()) {
+//                //隐藏底部的虚线以及下部的线
+//                ((OrderScheduleItemViewHolder) holder).item_order_sd_down_dev_view.setVisibility(View.GONE);
+//                ((OrderScheduleItemViewHolder) holder).item_order_sd_button_xuxian.setVisibility(View.GONE);
+//            }
             //设置订单状态
             ((OrderScheduleItemViewHolder) holder).item_order_sd_state_tv.setText("" + mOrderTrackBeanList.get(position).getTitle());
             //设置时间
@@ -61,6 +66,7 @@ public class OrderScheduleAdapter extends RecyclerView.Adapter<RecyclerView.View
     private class OrderScheduleItemViewHolder extends RecyclerView.ViewHolder {
         private View item_order_sd_up_dev_view;//进度上方的分割线标识
         private View item_order_sd_down_dev_view;//进度左下方的分割线标识
+        private View item_order_sd_button_xuxian;//底部虚线
         private ImageView item_order_sd_sigin_iv;//进度图标
         private TextView item_order_sd_state_tv;//显示进度状态
         private TextView item_order_sd_time_tv;//进度时间
@@ -69,6 +75,7 @@ public class OrderScheduleAdapter extends RecyclerView.Adapter<RecyclerView.View
             super(itemView);
             item_order_sd_up_dev_view = itemView.findViewById(R.id.item_order_sd_up_dev_view);
             item_order_sd_down_dev_view = itemView.findViewById(R.id.item_order_sd_down_dev_view);
+            item_order_sd_button_xuxian = itemView.findViewById(R.id.item_order_sd_button_xuxian);
             item_order_sd_sigin_iv = itemView.findViewById(R.id.item_order_sd_sigin_iv);
             item_order_sd_state_tv = itemView.findViewById(R.id.item_order_sd_state_tv);
             item_order_sd_time_tv = itemView.findViewById(R.id.item_order_sd_time_tv);

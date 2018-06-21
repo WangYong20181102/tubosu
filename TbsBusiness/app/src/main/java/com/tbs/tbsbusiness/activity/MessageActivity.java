@@ -90,6 +90,7 @@ public class MessageActivity extends BaseActivity {
         return true;
     }
 
+
     private void initViewEvent() {
         mGson = new Gson();
         //初始化下拉刷新控件
@@ -368,6 +369,12 @@ public class MessageActivity extends BaseActivity {
             case EC.EventCode.USER_LOGIN_OUT:
                 Log.e(TAG, "MessageActivity退出====");
                 finish();
+                break;
+            case EC.EventCode.INIT_MESSAGE_IF_NULL:
+                //当消息数量为空时进行数据刷新
+                if (mNoticeArrayList != null && mNoticeArrayList.isEmpty()) {
+                    initNetDate();
+                }
                 break;
         }
     }

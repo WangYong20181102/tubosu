@@ -792,12 +792,12 @@ public class OnlineStoreActivity extends BaseActivity {
             param.put("honor_add_img", mUploadImageUrl);
         }
 
-        //参数输出
-        Iterator iterator = param.entrySet().iterator();
-        while (iterator.hasNext()) {
-            Map.Entry entry = (Map.Entry) iterator.next();
-            Log.e(TAG + "请求的参数:", "==key==" + entry.getKey() + "==val==" + entry.getValue());
-        }
+//        //参数输出
+//        Iterator iterator = param.entrySet().iterator();
+//        while (iterator.hasNext()) {
+//            Map.Entry entry = (Map.Entry) iterator.next();
+//            Log.e(TAG + "请求的参数:", "==key==" + entry.getKey() + "==val==" + entry.getValue());
+//        }
 
         OKHttpUtil.post(Constant.COMPANY_MODIFY_STORE, param, new Callback() {
             @Override

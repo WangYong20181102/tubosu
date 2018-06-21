@@ -33,6 +33,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -187,6 +188,7 @@ public class CoPresonerMsgActivity extends BaseActivity {
             case R.id.co_pre_bind_wechat_rl:
                 //绑定微信
                 if (coPreBindWechat.getText().toString().equals("未绑定")) {
+                    Log.e(TAG, "点击绑定微信");
                     bindWeChat();
                 } else {
                     Toast.makeText(mContext, "您已绑定微信", Toast.LENGTH_SHORT).show();
@@ -300,6 +302,12 @@ public class CoPresonerMsgActivity extends BaseActivity {
         param.put("unionid", unionid);
         param.put("nickname", nickname);
         param.put("icon", icon);
+        //参数输出
+//        Iterator iterator = param.entrySet().iterator();
+//        while (iterator.hasNext()) {
+//            Map.Entry entry = (Map.Entry) iterator.next();
+//            Log.e(TAG + "请求的参数:", "==key==" + entry.getKey() + "==val==" + entry.getValue());
+//        }
         OKHttpUtil.post(Constant.BIND_WE_CHAT, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

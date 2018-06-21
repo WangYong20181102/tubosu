@@ -28,6 +28,7 @@ public class EC {
         public static final int INIT_CITY_DATA_IS_OK = 0x000021;//初始化城市信息ok
         public static final int BAND_PHONE_SUCCESS = 0x000022;//用户绑定手机号码成功
         public static final int USER_LOGIN_OUT = 0x000023;//用户登出
+        public static final int INIT_MESSAGE_IF_NULL = 0x000024;//刷新消息数据  当消息数为空的时候
 
     }
 }

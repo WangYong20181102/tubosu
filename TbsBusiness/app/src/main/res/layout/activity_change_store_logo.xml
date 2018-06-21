@@ -144,7 +144,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:lineSpacingExtra="5dp"
-            android:text="建议尺寸：800*800px，网店LOGO将用户装修公司主页以及其他相关页面展示。"
+            android:text="建议尺寸：800*800px，网店LOGO将用于装修公司主页以及其他相关页面展示。"
             android:textColor="#999"
             android:textSize="12sp" />
     </LinearLayout>

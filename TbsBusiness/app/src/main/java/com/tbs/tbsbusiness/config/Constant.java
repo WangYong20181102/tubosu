@@ -60,7 +60,7 @@ public class Constant {
     //绑定手机号码
     public static final String BIND_CELLPHONE = TOBOSU_URL + "comapp/login/bind_cellphone";
     //绑定微信
-    public static final String BIND_WE_CHAT = TOBOSU_URL + "comapp/user/bind_wechat";
+    public static final String BIND_WE_CHAT = TOBOSU_URL + "comapp/login/bind_wechat";
     //获取消息列表信息
     public static final String GET_ORDER_NOTICE = TOBOSU_URL + "comapp/smsPushRecord/index";
     //消息已读

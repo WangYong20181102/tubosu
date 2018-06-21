@@ -34,7 +34,11 @@ public class MyApplication extends MultiDexApplication {
     private void initUm() {
         UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, "");
         UMConfigure.setLogEnabled(false);
-//        UMShareAPI.get(this);
+        UMShareAPI.get(this);
+//        PlatformConfig.setWeixin("wxf35d53207d312279", "7417d440a885a0435b815e09e5d8d6f3");
+    }
+
+    {
         PlatformConfig.setWeixin("wxf35d53207d312279", "7417d440a885a0435b815e09e5d8d6f3");
     }
 

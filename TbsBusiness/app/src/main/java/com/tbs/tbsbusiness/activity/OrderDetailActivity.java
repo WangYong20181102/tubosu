@@ -80,7 +80,7 @@ public class OrderDetailActivity extends BaseActivity {
                 newOrderDetailTabTv.setTextColor(Color.parseColor("#666666"));
                 newOrderDetailFeedbackTabTv.setTextColor(Color.parseColor("#ff6c14"));
                 newOrderDetailTabSignView.setVisibility(View.GONE);
-                newOrderDetailFeedbackTabSignView.setVisibility(View.VISIBLE);
+                newOrderDetailFeedbackTabSignView.setVisibility(View.GONE);
                 newOrderDetailViewpager.setCurrentItem(1);
                 break;
         }
@@ -110,7 +110,7 @@ public class OrderDetailActivity extends BaseActivity {
             newOrderDetailTabTv.setTextColor(Color.parseColor("#666666"));
             newOrderDetailFeedbackTabTv.setTextColor(Color.parseColor("#ff6c14"));
             newOrderDetailTabSignView.setVisibility(View.GONE);
-            newOrderDetailFeedbackTabSignView.setVisibility(View.VISIBLE);
+            newOrderDetailFeedbackTabSignView.setVisibility(View.GONE);
         }
     }
 
@@ -126,13 +126,13 @@ public class OrderDetailActivity extends BaseActivity {
                 //显示
                 newOrderDetailTabTv.setTextColor(Color.parseColor("#ff6c14"));
                 newOrderDetailFeedbackTabTv.setTextColor(Color.parseColor("#666666"));
-                newOrderDetailTabSignView.setVisibility(View.VISIBLE);
+                newOrderDetailTabSignView.setVisibility(View.GONE);
                 newOrderDetailFeedbackTabSignView.setVisibility(View.GONE);
             } else {
                 newOrderDetailTabTv.setTextColor(Color.parseColor("#666666"));
                 newOrderDetailFeedbackTabTv.setTextColor(Color.parseColor("#ff6c14"));
                 newOrderDetailTabSignView.setVisibility(View.GONE);
-                newOrderDetailFeedbackTabSignView.setVisibility(View.VISIBLE);
+                newOrderDetailFeedbackTabSignView.setVisibility(View.GONE);
             }
         }
 
@@ -153,7 +153,7 @@ public class OrderDetailActivity extends BaseActivity {
             case R.id.new_order_detail_tab_rl:
                 newOrderDetailTabTv.setTextColor(Color.parseColor("#ff6c14"));
                 newOrderDetailFeedbackTabTv.setTextColor(Color.parseColor("#666666"));
-                newOrderDetailTabSignView.setVisibility(View.VISIBLE);
+                newOrderDetailTabSignView.setVisibility(View.GONE);
                 newOrderDetailFeedbackTabSignView.setVisibility(View.GONE);
                 newOrderDetailViewpager.setCurrentItem(0);
                 break;
@@ -161,7 +161,7 @@ public class OrderDetailActivity extends BaseActivity {
                 newOrderDetailTabTv.setTextColor(Color.parseColor("#666666"));
                 newOrderDetailFeedbackTabTv.setTextColor(Color.parseColor("#ff6c14"));
                 newOrderDetailTabSignView.setVisibility(View.GONE);
-                newOrderDetailFeedbackTabSignView.setVisibility(View.VISIBLE);
+                newOrderDetailFeedbackTabSignView.setVisibility(View.GONE);
                 newOrderDetailViewpager.setCurrentItem(1);
                 break;
         }

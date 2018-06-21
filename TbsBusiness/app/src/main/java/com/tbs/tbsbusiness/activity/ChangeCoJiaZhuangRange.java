@@ -29,6 +29,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ *修改装修范围
+ */
 public class ChangeCoJiaZhuangRange extends BaseActivity {
 
     @BindView(R.id.co_change_jiazhuang_dissmiss_rl)
