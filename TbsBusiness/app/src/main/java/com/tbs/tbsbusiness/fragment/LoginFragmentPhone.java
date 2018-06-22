@@ -151,6 +151,10 @@ public class LoginFragmentPhone extends BaseFragment {
                 break;
             case R.id.fpl_phone_login_btn:
                 //手机号登录按钮
+                if (TextUtils.isEmpty(fplPhoneNum.getText().toString())) {
+                    Toast.makeText(mContext, "请输入手机号码", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (!TextUtils.isEmpty(fplPhoneNum.getText().toString()) && (fplPhoneNum.getText().toString().length() == 11)) {
                     if (!TextUtils.isEmpty(fplCodeNum.getText().toString()) && (fplCodeNum.getText().toString().length() == 6)) {
                         //手机号码以及验证码的格式均正确 进行手机号码登录
@@ -309,10 +313,10 @@ public class LoginFragmentPhone extends BaseFragment {
         SpUtil.setCompany_id(mContext, mUser.getCompany_id());
         SpUtil.setCellphone(mContext, mUser.getCellphone());
         SpUtil.setCellphone_check(mContext, mUser.getCellphone_check());
-        SpUtil.setWechat_check(mContext,mUser.getWechat_check());
+        SpUtil.setWechat_check(mContext, mUser.getWechat_check());
         SpUtil.setNickname(mContext, mUser.getNickname());
         SpUtil.setIcon(mContext, mUser.getIcon());
-        SpUtil.setGender(mContext,mUser.getGender());
+        SpUtil.setGender(mContext, mUser.getGender());
         SpUtil.setOrder_count(mContext, String.valueOf(mUser.getOrder_count()));
         SpUtil.setGrade(mContext, String.valueOf(mUser.getGrade()));
         SpUtil.setCommunity(mContext, mUser.getCommunity());

@@ -80,7 +80,6 @@ public class MyJpushReceiver extends BroadcastReceiver {
                         //进入订单列表
                         Intent intentToNotice = new Intent(context, OrderNoteActivity.class);
                         intentToNotice.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
                         context.startActivity(intentToNotice);
                     }
                 }
