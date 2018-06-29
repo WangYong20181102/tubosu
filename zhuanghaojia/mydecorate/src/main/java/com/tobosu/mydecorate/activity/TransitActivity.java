@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -37,7 +38,7 @@ import static com.tobosu.mydecorate.global.Constant.TRANSMIT_TO_LOGIN_REQUESTCOD
  * 过渡Activity
  */
 
-public class TransitActivity extends AppCompatActivity {
+public class TransitActivity extends BaseActivity {
     private static final String TAG = TransitActivity.class.getSimpleName();
     private Context mContext;
 

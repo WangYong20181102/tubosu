@@ -19,6 +19,7 @@ import com.squareup.okhttp.Response;
 import com.squareup.picasso.Picasso;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.adapter.ActicleAdapter;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.database.DBManager;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
@@ -39,7 +40,7 @@ import java.util.HashMap;
  * Created by dec on 2016/10/14.
  */
 
-public class WriterActivity extends AppCompatActivity {
+public class WriterActivity extends BaseActivity {
     private static final String TAG = WriterActivity.class.getSimpleName();
     private Context mContext;
 

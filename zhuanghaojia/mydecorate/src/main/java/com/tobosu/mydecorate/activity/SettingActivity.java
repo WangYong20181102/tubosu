@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.application.MyApplication;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.database.DBManager;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.util.CacheManager;
@@ -29,7 +30,7 @@ import com.umeng.analytics.MobclickAgent;
  * Created by dec on 2016/9/27.
  */
 
-public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
+public class SettingActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = SettingActivity.class.getSimpleName();
     private Context mContext;
     private RelativeLayout rel_setting_back;

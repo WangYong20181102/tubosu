@@ -13,6 +13,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.adapter.CollectionAdapter;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.tobosu.mydecorate.util.Util;
@@ -30,7 +31,7 @@ import java.util.HashMap;
  * Created by dec on 2016/9/27.
  */
 
-public class MyCollectionActivity extends AppCompatActivity {
+public class MyCollectionActivity extends BaseActivity {
     private static final String TAG = MyCollectionActivity.class.getSimpleName();
     private Context mContext;
 

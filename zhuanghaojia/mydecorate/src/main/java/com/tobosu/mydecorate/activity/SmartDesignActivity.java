@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.tobosu.mydecorate.util.CacheManager;
@@ -34,7 +35,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class SmartDesignActivity extends Activity {
+public class SmartDesignActivity extends BaseActivity {
     private Context mContext;
     private String TAG = "SmartDesignActivity";
     private String mCityName = "";

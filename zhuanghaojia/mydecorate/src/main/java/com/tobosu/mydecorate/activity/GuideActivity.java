@@ -10,6 +10,7 @@ import android.view.Window;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -19,7 +20,7 @@ import java.io.IOException;
 /**
  * Created by dec on 2016/9/12.
  */
-public class GuideActivity extends AppCompatActivity {
+public class GuideActivity extends BaseActivity {
     // 由于不需要引导页 该城市列表的请求放在WelcomeActivity中
     private String city_url = Constant.ZHJ + "tapp/util/getCityList";
 

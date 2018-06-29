@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.tbs.tbs_mj.R;
 import com.tbs.tbs_mj.activity.GuideOneActivity;
 import com.tbs.tbs_mj.activity.MainActivity;
+import com.tbs.tbs_mj.activity.PopOrderActivity;
 import com.tbs.tbs_mj.base.BaseActivity;
 import com.tbs.tbs_mj.bean._AppEvent;
 import com.tbs.tbs_mj.utils.AppManager;
@@ -123,7 +124,8 @@ public class AdvWebActivity extends BaseActivity {
         if ("".equals(CacheManager.getAppEntryOrderPre(mContext))) {
             //初次进入我们的App进入发单页面
             CacheManager.setAppEntryOrderPre(mContext, "abc"); // 标识已经进入过发单页面
-            Intent intent = new Intent(mContext, GuideOneActivity.class);
+//            Intent intent = new Intent(mContext, GuideOneActivity.class);
+            Intent intent = new Intent(mContext, PopOrderActivity.class);
             startActivity(intent);
         } else {
             startActivity(new Intent(mContext, MainActivity.class));

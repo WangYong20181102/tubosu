@@ -50,7 +50,7 @@ import java.util.HashMap;
  * Created by Lie on 2017/6/2.
  */
 
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends com.tobosu.mydecorate.activity.BaseActivity {
     private TextView tvOperate;
     private EditText etSearch;
     private RelativeLayout relDeleteWord;

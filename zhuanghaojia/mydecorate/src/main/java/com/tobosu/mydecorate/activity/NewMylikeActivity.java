@@ -23,6 +23,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.adapter.MyLikeAdapter;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.entity.Mylike;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
@@ -38,7 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class NewMylikeActivity extends AppCompatActivity {
+public class NewMylikeActivity extends BaseActivity {
     /**
      * 我的点赞
      */

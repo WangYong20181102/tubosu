@@ -66,8 +66,7 @@
                         android:id="@+id/company_of_mine_huiyuan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:src="@drawable/zuanshi" />
+                        android:layout_marginTop="6dp" />
                 </LinearLayout>
                 <!--跳转箭头-->
                 <ImageView

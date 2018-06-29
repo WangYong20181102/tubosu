@@ -17,6 +17,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.adapter.TempChildAdapter;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.entity.BibleEntity;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class NewMyHistory extends AppCompatActivity {
+public class NewMyHistory extends BaseActivity {
     private Context mContext;
     private String TAG = "NewMyHistory";
     private int mPage = 1;

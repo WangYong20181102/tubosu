@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.global.AppUtil;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
@@ -30,7 +31,7 @@ import java.util.HashMap;
  * Created by dec on 2016/9/27.
  */
 
-public class FeedBackActivity extends AppCompatActivity {
+public class FeedBackActivity extends BaseActivity {
     private static final String TAG = FeedBackActivity.class.getSimpleName();
     private Context mContext;
     private RelativeLayout rel_feedback_back;

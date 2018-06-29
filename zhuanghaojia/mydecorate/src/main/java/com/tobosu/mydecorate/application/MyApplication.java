@@ -4,7 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.tobosu.mydecorate.bean._AppEvent;
 import com.tobosu.mydecorate.database.SQLHelper;
+
+import java.util.ArrayList;
 
 
 /**
@@ -30,14 +33,18 @@ public class MyApplication extends Application {
     public static int ISMUSTUPDATE = -1;
     public static String NEW_VERSION_NAME = "";
     public static String NEW_VERSION_DOWNPATH = "";
-
+    // TODO: 2018/2/27 事件统计的全局集合
+    public static ArrayList<_AppEvent.EvBean> evBeanArrayList;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
         mApplication = MyApplication.this;
+        evBeanArrayList = new ArrayList<>();
     }
+
+
 
     public static Context getContexts() {
         return mApplication;

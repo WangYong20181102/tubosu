@@ -24,6 +24,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.application.MyApplication;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.tobosu.mydecorate.util.Util;
@@ -41,7 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class FreeDesignPrice extends Activity {
+public class FreeDesignPrice extends BaseActivity {
     private String TAG = "FreeDesignPrice";
     private Intent intent;
     private Context mContext;

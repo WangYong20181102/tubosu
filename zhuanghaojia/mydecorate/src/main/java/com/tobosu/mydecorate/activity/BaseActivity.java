@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
  * Created by dec on 2017/2/16.
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends com.tobosu.mydecorate.base.BaseActivity {
     protected String TAG = BaseActivity.class.getSimpleName();
     protected Context mContext;
 

@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.fragment.CurtainFragment;
 import com.tobosu.mydecorate.fragment.FloorBrickFragment;
 import com.tobosu.mydecorate.fragment.FloorFragment;
@@ -25,7 +26,7 @@ import com.tobosu.mydecorate.view.ViewPagerIndicator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CalculaterActivity extends AppCompatActivity {
+public class CalculaterActivity extends BaseActivity {
 
     private static final String TAG = CalculaterActivity.class.getSimpleName();
     private Context context;

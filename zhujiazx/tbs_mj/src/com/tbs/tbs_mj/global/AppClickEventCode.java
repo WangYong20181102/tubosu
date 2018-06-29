@@ -6,7 +6,7 @@ package com.tbs.tbs_mj.global;
  */
 
 public class AppClickEventCode {
-    public static final String X_EVENT_CODE_00 = "6_2_33_1_1";//引导发单的按钮事件码
+    public static final String X_EVENT_CODE_00 = "6_2_2_1_1";//引导发单的按钮事件码
     public static final String X_EVENT_CODE_01 = "4_1_1_1_0";//闪屏广告	广告页	跳过	点击
     public static final String X_EVENT_CODE_02 = "4_1_1_2_0";//闪屏广告	广告页	主体页面	点击
     public static final String X_EVENT_CODE_03 = "4_2_1_1_0";//新手引导	引导页	准备装修	点击

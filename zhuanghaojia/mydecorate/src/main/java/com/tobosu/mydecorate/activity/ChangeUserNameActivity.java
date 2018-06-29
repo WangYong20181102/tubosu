@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.tobosu.mydecorate.util.Util;
@@ -30,7 +31,7 @@ import java.util.HashMap;
 /**
  * Created by dec on 2016/9/26.
  */
-public class ChangeUserNameActivity extends AppCompatActivity{
+public class ChangeUserNameActivity extends BaseActivity{
     private Context mContext;
     private RelativeLayout rel_changeusername_back;
 

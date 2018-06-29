@@ -19,12 +19,13 @@ import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.view.BackDialog;
 import com.umeng.analytics.MobclickAgent;
 
 
 
-public class FreeActivity extends Activity {
+public class FreeActivity extends BaseActivity {
 	private Context mContext;
 	private WebView webView;
 	private RelativeLayout rel_free_back;

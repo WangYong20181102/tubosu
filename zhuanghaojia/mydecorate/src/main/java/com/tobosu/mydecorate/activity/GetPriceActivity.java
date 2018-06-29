@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.tobosu.mydecorate.util.DensityUtil;
@@ -36,7 +37,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 
-public class GetPriceActivity extends AppCompatActivity implements OnClickListener {
+public class GetPriceActivity extends BaseActivity implements OnClickListener {
     private static final String TAG = GetPriceActivity.class.getSimpleName();
 
     private final int[] imgIdList = {R.mipmap.vp1, R.mipmap.vp2, R.mipmap.vp3};

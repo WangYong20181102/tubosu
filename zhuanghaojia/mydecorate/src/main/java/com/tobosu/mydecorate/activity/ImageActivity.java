@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.global.Constant;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -37,7 +38,7 @@ import java.util.ArrayList;
  * Created by dec on 2016/10/21.
  */
 
-public class ImageActivity extends AppCompatActivity{
+public class ImageActivity extends BaseActivity{
     private static final String TAG = ImageActivity.class.getSimpleName();
     private Context mContext;
 

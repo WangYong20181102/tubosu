@@ -14,6 +14,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.adapter.MyAttentionAdapter;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.entity._MyAttention;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MyAttentionActivity extends AppCompatActivity {
+public class MyAttentionActivity extends BaseActivity {
     private Context mContext;
     private String TAG = "MyAttentionActivity";
     private ImageView attentionBack;//返回按钮

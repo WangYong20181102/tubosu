@@ -30,8 +30,11 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.adapter.PopAdapter;
+import com.tobosu.mydecorate.base.BaseActivity;
+import com.tobosu.mydecorate.global.AppClickEventCode;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
+import com.tobosu.mydecorate.util.AppManager;
 import com.tobosu.mydecorate.util.CacheManager;
 import com.tobosu.mydecorate.util.Util;
 import com.tobosu.mydecorate.view.CustomWaitDialog;
@@ -53,7 +56,7 @@ import static com.tobosu.mydecorate.util.CacheManager.getOngoingStyle;
  * Created by dec on 2017/2/14.
  */
 
-public class PopOrderActivity extends AppCompatActivity {
+public class PopOrderActivity extends BaseActivity {
     private static final String TAG = PopOrderActivity.class.getSimpleName();
     private static final String popOrderUrl = Constant.ZHJ + "tapi/order/pub_order";
     private static final String pipe_code = Constant.PIPE_CODE; // 渠道代码
@@ -592,6 +595,8 @@ public class PopOrderActivity extends AppCompatActivity {
         tvSummitOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Util.useStatisticsEventClickEvent(AppClickEventCode.X_EVENT_CODE_00, AppManager.currentActivityName());
+
                 if (!isCellPhone(etCellphone.getText().toString().trim())) {
 
                 } else {
@@ -603,6 +608,7 @@ public class PopOrderActivity extends AppCompatActivity {
         tvSummitOrder1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Util.useStatisticsEventClickEvent(AppClickEventCode.X_EVENT_CODE_00, AppManager.currentActivityName());
                 if (!isCellPhone(etCellphone1.getText().toString().trim())) {
 
                 } else {

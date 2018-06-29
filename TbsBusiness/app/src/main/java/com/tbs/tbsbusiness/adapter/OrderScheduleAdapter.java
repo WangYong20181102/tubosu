@@ -3,6 +3,7 @@ package com.tbs.tbsbusiness.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,11 +47,11 @@ public class OrderScheduleAdapter extends RecyclerView.Adapter<RecyclerView.View
                 ((OrderScheduleItemViewHolder) holder).item_order_sd_sigin_iv.setImageResource(R.drawable.weixuanzhong);
                 ((OrderScheduleItemViewHolder) holder).item_order_sd_up_dev_view.setVisibility(View.VISIBLE);
             }
-//            if (position == getItemCount()) {
-//                //隐藏底部的虚线以及下部的线
-//                ((OrderScheduleItemViewHolder) holder).item_order_sd_down_dev_view.setVisibility(View.GONE);
-//                ((OrderScheduleItemViewHolder) holder).item_order_sd_button_xuxian.setVisibility(View.GONE);
-//            }
+            if (mOrderTrackBeanList != null && position == mOrderTrackBeanList.size() - 1) {
+                //隐藏底部的虚线以及下部的线
+                ((OrderScheduleItemViewHolder) holder).item_order_sd_down_dev_view.setVisibility(View.GONE);
+                ((OrderScheduleItemViewHolder) holder).item_order_sd_button_xuxian.setVisibility(View.GONE);
+            }
             //设置订单状态
             ((OrderScheduleItemViewHolder) holder).item_order_sd_state_tv.setText("" + mOrderTrackBeanList.get(position).getTitle());
             //设置时间

@@ -14,12 +14,13 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.umeng.socialize.utils.Log;
 
 /**
  * 有问题 废弃  不再使用
  */
-public class MyWebViewActivity extends Activity {
+public class MyWebViewActivity extends BaseActivity {
 	private static final String TAG = MyWebViewActivity.class.getSimpleName();
 	private Context mContext;
 

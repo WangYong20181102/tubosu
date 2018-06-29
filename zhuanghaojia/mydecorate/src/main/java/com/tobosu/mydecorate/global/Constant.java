@@ -1,6 +1,7 @@
 package com.tobosu.mydecorate.global;
 
 import com.tobosu.mydecorate.application.MyApplication;
+import com.tobosu.mydecorate.util.AppInfoUtil;
 import com.tobosu.mydecorate.util.Util;
 
 /**
@@ -32,14 +33,19 @@ public class Constant {
      */
 //        public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
 
+
+    //数据点击流上传地址
+    public static final String TBS_DATA_STREAM = "https://www.tobosu.com/trace";
     /**
      * 免费设计发单链接
      */
-    public static final String FREE_DISIGN_FADAN = M_TOBOSU_URL + "quote?channel=app&subchannel=zhjandroid&chcode=" + Util.getChannType(MyApplication.getContexts())+"&app_type=2";
+    public static final String FREE_DISIGN_FADAN = M_TOBOSU_URL + "quote?channel=app&subchannel=zhjandroid&chcode=" + Util.getChannType(MyApplication.getContexts()) + "&app_type=2";
     /**
      * 免费报价链接
      */
-    public static final String FREE_BAOJIA_FADAN = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=zhjandroid&chcode=" + Util.getChannType(MyApplication.getContexts())+"&app_type=2";
+    public static final String FREE_BAOJIA_FADAN = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=zhjandroid&chcode=" + Util.getChannType(MyApplication.getContexts()) + "&app_type=2";
+
+    public static final String APP_TYPE = "&app_type=2";
 
     public static final int CHANGE_USERNAME_RESULTCODE = 0x000014;
     public static final int CHANGE_USERNAME_REQUESTCODE = 0x000015;
@@ -245,5 +251,17 @@ public class Constant {
      * 进入作者详情
      */
     public static final String AUTHOR_DETAIL_URL = ZHJ + "zapp/index/author_detail";
+    /**
+     * 获取APP的配置信息
+     */
+    public static final String GET_APP_CONFIG = ZHJ + "zapp/public/get_config";
+
+
+    // TODO: 2018/6/26 发单页地址******************************************
+    //免费报价
+    public static final String FREE_PRICE_PAGE = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContexts()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContexts());
+    //免费设计
+    public static final String QUOTE = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContexts()) + APP_TYPE+ "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContexts());;
+
 
 }

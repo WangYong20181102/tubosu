@@ -20,6 +20,7 @@ import com.squareup.okhttp.Response;
 import com.squareup.picasso.Picasso;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.adapter.RelatedAdapter;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.tobosu.mydecorate.util.DensityUtil;
@@ -59,7 +60,7 @@ import java.util.regex.Pattern;
  * Created by dec on 2016/10/12.
  */
 
-public class ArticleDetailActivity extends AppCompatActivity {
+public class ArticleDetailActivity extends BaseActivity {
     private static final String TAG = ArticleDetailActivity.class.getSimpleName();
     private Context mContext;
     private boolean isGetData = true;

@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/image_free_design" />
+            android:src="@drawable/sheji_tanchuang" />
 
         <ImageView
             android:id="@+id/new_image_free_design_img_close"

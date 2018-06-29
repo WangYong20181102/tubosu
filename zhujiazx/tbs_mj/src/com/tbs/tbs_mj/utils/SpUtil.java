@@ -10,6 +10,18 @@ import com.tbs.tbs_mj.global.Constant;
  */
 
 public class SpUtil {
+
+    //存储引导发单城市信息
+    public static void setFdCity(Context context, String City) {
+        context.getSharedPreferences("mFdCity", 0).edit().putString("mFdCity", City).commit();
+    }
+
+    //获取引导发单城市信息
+    public static String getFdCity(Context context) {
+        return context.getSharedPreferences("mFdCity", 0).getString("mFdCity", "");
+    }
+
+
     //单图列表进入详情时的大数据过度 存储
     public static void setSingImageListJson(Context context, String mSingImageListJson) {
         context.getSharedPreferences("SingImageListJson", 0).edit().putString("mSingImageListJson", mSingImageListJson).commit();
@@ -370,7 +382,7 @@ public class SpUtil {
     public static void setzjzxaj04(Context context, String zjzxaj04) {
         context.getSharedPreferences("BjAj", 0).edit().putString("zjzxaj04", zjzxaj04).commit();
     }
-    
+
     //todo 5.首页-滚动信息-免费设计    zjzxaj05
     public static String getzjzxaj05(Context context) {
         return context.getSharedPreferences("BjAj", 0).getString("zjzxaj05", Constant.QUOTE);

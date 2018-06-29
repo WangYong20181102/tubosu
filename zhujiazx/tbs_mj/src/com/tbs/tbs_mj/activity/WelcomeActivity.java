@@ -344,7 +344,8 @@ public class WelcomeActivity extends BaseActivity {
             if ("".equals(CacheManager.getAppEntryOrderPre(mContext))) {
                 //初次进入我们的App进入发单页面
                 CacheManager.setAppEntryOrderPre(mContext, "abc"); // 标识已经进入过发单页面
-                intent = new Intent(mContext, GuideOneActivity.class);
+//                intent = new Intent(mContext, GuideOneActivity.class);
+                intent = new Intent(mContext, PopOrderActivity.class);
             } else {
                 intent = new Intent(mContext, MainActivity.class);
             }
@@ -361,7 +362,8 @@ public class WelcomeActivity extends BaseActivity {
                 // 图片正在下载中，还没有下载好
                 if ("".equals(CacheManager.getAppEntryOrderPre(mContext))) {
                     CacheManager.setAppEntryOrderPre(mContext, "abc"); // 标识已经进入过发单页面
-                    intent = new Intent(mContext, GuideOneActivity.class);
+//                    intent = new Intent(mContext, GuideOneActivity.class);
+                    intent = new Intent(mContext, PopOrderActivity.class);
                 } else {
                     intent = new Intent(mContext, MainActivity.class);
                 }

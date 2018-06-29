@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.tobosu.mydecorate.util.CacheManager;
@@ -33,7 +34,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class SmartQuote extends AppCompatActivity {
+public class SmartQuote extends BaseActivity {
     private Context mContext;
     private String TAG = "SmartQuote";
     private String mCityName = "";

@@ -37,6 +37,7 @@ import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.adapter.CityAdapter;
 import com.tobosu.mydecorate.application.MyApplication;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.entity.City;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
@@ -63,7 +64,7 @@ import java.util.Map;
  *
  * @author dec
  */
-public class SelectCityActivity extends Activity implements OnClickListener {
+public class SelectCityActivity extends BaseActivity implements OnClickListener {
     private static final String TAG = "SelectCityActivity";
     private Context context;
     private View mSearchContainer;

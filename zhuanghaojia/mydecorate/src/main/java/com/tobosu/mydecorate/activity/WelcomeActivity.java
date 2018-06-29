@@ -14,6 +14,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Window;
 
@@ -31,11 +32,15 @@ import com.tencent.android.tpush.XGPushManager;
 import com.tencent.android.tpush.service.XGPushService;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.application.MyApplication;
+import com.tobosu.mydecorate.base.BaseActivity;
+import com.tobosu.mydecorate.bean._AppConfig;
 import com.tobosu.mydecorate.database.ChannelManage;
 import com.tobosu.mydecorate.entity.DecorateTitleEntity;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
+import com.tobosu.mydecorate.util.AppInfoUtil;
 import com.tobosu.mydecorate.util.CacheManager;
+import com.tobosu.mydecorate.util.SpUtil;
 import com.tobosu.mydecorate.util.Util;
 import com.tobosu.mydecorate.view.CustomDialog;
 import com.umeng.analytics.MobclickAgent;
@@ -58,9 +63,11 @@ import java.util.Map;
  * 2.新版本检测
  * 修改好的
  */
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends BaseActivity {
     private static final String TAG = WelcomeActivity.class.getSimpleName();
     private Context context;
+    private OKHttpUtil okHttpUtil;
+    private Gson mGson;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +75,8 @@ public class WelcomeActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_welcome);
         context = WelcomeActivity.this;
-
+        okHttpUtil = new OKHttpUtil();
+        mGson = new Gson();
         initBaidu();
         needPermissions();
     }
@@ -128,7 +136,71 @@ public class WelcomeActivity extends AppCompatActivity {
     private void allInit() {
         initUmemgSettings();
         initRegisterXinGe();
+        // TODO: 2018/3/6 App点击流统计初始化
+        // TODO: 2018/3/5 初始化上报数据
+        initStatisticsEvent();
+        // TODO: 2018/2/27 开始倒计时传数据
+        Util.sendEventByTimeKill();
+
         initData();
+    }
+
+    //获取连接
+    private void getAppConfig() {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("type", "1");
+        param.put("subchannel", "android");
+        param.put("chcode", AppInfoUtil.getChannType(mContext));
+        okHttpUtil.post(Constant.GET_APP_CONFIG, param, new OKHttpUtil.BaseCallBack() {
+            @Override
+            public void onSuccess(Response response, String json) {
+                Log.e(TAG, "获取App配置信息连接成功=======" + json);
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String data = jsonObject.optString("data");
+                    _AppConfig mAppConfig = mGson.fromJson(data, _AppConfig.class);
+                    //存储发单链接
+                    HashMap<String, String> urlMap = new HashMap<>();
+                    for (int i = 0; i < mAppConfig.getOrder_links().size(); i++) {
+                        urlMap.put(mAppConfig.getOrder_links().get(i).getCode(), mAppConfig.getOrder_links().get(i).getUrl());
+                    }
+                    //存储数据
+                    if (urlMap.containsKey("zhjaj01") && !TextUtils.isEmpty(urlMap.get("zhjaj01"))) {
+                        SpUtil.setzhjaj01(mContext,urlMap.get("zhjaj01"));
+                    }
+                    if (urlMap.containsKey("zhjaj02") && !TextUtils.isEmpty(urlMap.get("zhjaj02"))) {
+                        SpUtil.setzhjaj02(mContext,urlMap.get("zhjaj02"));
+                    }
+                    if (urlMap.containsKey("zhjaj03") && !TextUtils.isEmpty(urlMap.get("zhjaj03"))) {
+                        SpUtil.setzhjaj03(mContext,urlMap.get("zhjaj03"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFail(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onError(Response response, int code) {
+
+            }
+        });
+    }
+
+    /**
+     * 初始化App事件统计
+     * 1.清空之前存储的数据
+     * 2.上报一条数据
+     */
+
+    private void initStatisticsEvent() {
+        Log.e(TAG, "_lin启动App时上传数据===========");
+        getSharedPreferences("StatisticsEvent", 0).edit().clear().commit();
+        Util.HttpFristPostUserUseInfo();
     }
 
     private void initData() {
@@ -601,6 +673,8 @@ public class WelcomeActivity extends AppCompatActivity {
             sb.append("\nlontitude : ");
             sb.append(location.getLongitude());
             sb.append("\nradius : ");
+            AppInfoUtil.setLat(context, location.getLatitude() + "");
+            AppInfoUtil.setLng(context, location.getLongitude() + "");
             locationCity = location.getCity();
             if (locationCity != null) {
                 locationCity = locationCity.replaceAll("[^\u4E00-\u9FA5]", "");

@@ -23,6 +23,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.adapter.MyCollentAdapter;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.entity._Collect;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
@@ -42,7 +43,7 @@ import java.util.List;
 /**
  * 我的收藏界面
  */
-public class NewMycollectActivity extends AppCompatActivity {
+public class NewMycollectActivity extends BaseActivity {
     private Context mContext;
     private String TAG = "NewMycollectActivity";
     private int mPage = 1;

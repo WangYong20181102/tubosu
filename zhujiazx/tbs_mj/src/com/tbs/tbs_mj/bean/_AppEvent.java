@@ -61,7 +61,7 @@ public class _AppEvent {
         this.ct = Util.getUnixTime();
         this.uid = AppInfoUtil.getUserid(MyApplication.getContext());
         this.pn = "zjzx_and";
-        this.pv = AppInfoUtil.getAppVersionName(MyApplication.getContext()) + "/" + AppInfoUtil.getChannType(MyApplication.getContext());
+        this.pv = AppInfoUtil.getAppVersionName(MyApplication.getContext()) + "/" + AppInfoUtil.getNewChannType(MyApplication.getContext());
         this.di = Util.getDeviceID();
         this.si = Util.getSessionID();
         this.sr = Util.getPixels();
@@ -80,8 +80,8 @@ public class _AppEvent {
     public _AppEvent() {
         this.ct = Util.getUnixTime();
         this.uid = AppInfoUtil.getUserid(MyApplication.getContext());
-        this.pn = "tbs_and";
-        this.pv = AppInfoUtil.getAppVersionName(MyApplication.getContext())+ "/" + AppInfoUtil.getChannType(MyApplication.getContext());
+        this.pn = "zjzx_and";
+        this.pv = AppInfoUtil.getAppVersionName(MyApplication.getContext())+ "/" + AppInfoUtil.getNewChannType(MyApplication.getContext());
         this.di = Util.getDeviceID();
         this.si = Util.getSessionID();
         this.sr = Util.getPixels();

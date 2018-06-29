@@ -28,6 +28,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.squareup.picasso.Picasso;
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.entity._UserInfo;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
@@ -62,7 +63,7 @@ import static com.tobosu.mydecorate.global.Constant.TAKE_PHOTO_REQUEST_CODE;
 /**
  * Created by dec on 2016/9/26.
  */
-public class UserInfoActivity extends AppCompatActivity {
+public class UserInfoActivity extends BaseActivity {
     private static final String TAG = UserInfoActivity.class.getSimpleName();
     private Context mContext;
 

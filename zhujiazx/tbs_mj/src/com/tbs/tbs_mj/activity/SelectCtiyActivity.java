@@ -575,7 +575,8 @@ public class SelectCtiyActivity extends com.tbs.tbs_mj.base.BaseActivity impleme
             // 首次安装
             if (FIRST_INSTALL.equals(getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).getString("go_poporder_string", "0"))) {
                 countDownloadNum();
-                startActivity(new Intent(mContext, GuideOneActivity.class));
+//                startActivity(new Intent(mContext, GuideOneActivity.class));
+                startActivity(new Intent(mContext, PopOrderActivity.class));
             } else {
                 // 进入选择装修类型和面积发单入口
                 startActivity(new Intent(mContext, MainActivity.class));
@@ -668,7 +669,8 @@ public class SelectCtiyActivity extends com.tbs.tbs_mj.base.BaseActivity impleme
     private void operEdit() {
 
         if (FIRST_INSTALL.equals(getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).getString("go_poporder_string", "0"))) {
-            startActivity(new Intent(mContext, GuideOneActivity.class));
+//            startActivity(new Intent(mContext, GuideOneActivity.class));
+            startActivity(new Intent(mContext, PopOrderActivity.class));
         } else {
             // 进入选择装修类型和面积发单入口
             startActivity(new Intent(mContext, MainActivity.class));
@@ -950,7 +952,8 @@ public class SelectCtiyActivity extends com.tbs.tbs_mj.base.BaseActivity impleme
         if (keyCode == KeyEvent.KEYCODE_BACK && "welcome".equals(CacheManager.getPageFlag(mContext))) {
             // 来自welcome
             CacheManager.setPageFlag(mContext, "not_welcome");
-            startActivity(new Intent(mContext, GuideOneActivity.class));
+//            startActivity(new Intent(mContext, GuideOneActivity.class));
+            startActivity(new Intent(mContext, PopOrderActivity.class));
             //现在无法获取，则标记为 1 ，即在首再次显示让用户获取
             getSharedPreferences("Cancel_Get_Design", Context.MODE_PRIVATE).edit().putInt("cancel_String", 1).commit();
             finish();

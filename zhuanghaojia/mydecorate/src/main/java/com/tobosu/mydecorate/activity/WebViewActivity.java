@@ -14,127 +14,152 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.base.BaseActivity;
+import com.tobosu.mydecorate.bean._AppEvent;
+import com.tobosu.mydecorate.util.AppManager;
+import com.tobosu.mydecorate.util.SpUtil;
 import com.umeng.socialize.utils.Log;
 
 /**
  * 用来加载h5页面
  * WebViewActivity走的不是安卓发单入口
- * @author dec
  *
+ * @author dec
  */
-public class WebViewActivity extends Activity {
-	private static final String TAG = WebViewActivity.class.getSimpleName();
-	private Context mContext;
+public class WebViewActivity extends BaseActivity {
+    private static final String TAG = WebViewActivity.class.getSimpleName();
+    private Context mContext;
 
-	private WebView webView;
-	private TextView viewTitle;
-	private String title;
-	private ImageView iv_back;
-	private String url;
+    private WebView webView;
+    private TextView viewTitle;
+    private String title;
+    private ImageView iv_back;
+    private String url;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_webview);
+    private Gson mGson;
+    private _AppEvent mAppEvent;
 
-		mContext = WebViewActivity.this;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_webview);
 
-		initView();
-		initData();
-		initEvent();
-	}
+        mContext = WebViewActivity.this;
+        mGson = new Gson();
+        mAppEvent = new _AppEvent();
 
-	private void initView() {
+        initView();
+        initData();
+        initEvent();
+    }
 
-		webView = (WebView) findViewById(R.id.my_webview);
-		viewTitle = (TextView) findViewById(R.id.web_title);
-		iv_back = (ImageView) findViewById(R.id.iv_back_webview_activity);
-	}
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SpUtil.setStatisticsEventPageId(mContext, url);
+    }
 
+    @Override
+    protected boolean havePageId() {
+        return true;
+    }
 
+    private void initView() {
 
-	private void initData() {
-		Intent intent = getIntent();
-		Bundle bundle = intent.getBundleExtra("WebView_Bundle");
-		url = bundle.getString("link") + "?channel=seo&subchannel=zhjandroid&from=banner";
-		Log.d(TAG, "传过来的url是" + url);
-
-		webView.getSettings().setJavaScriptEnabled(true);
-		webView.setWebViewClient(new WebViewClient());
-		webView.setWebChromeClient(new WebChromeClient());
-		webView.loadUrl(url);
-	}
-
-
-	private void initEvent() {
-
-		webView.setWebViewClient(new WebViewClient() {
-
-			@Override
-			public void onPageFinished(WebView view, String url) {
-				viewTitle.setText(view.getTitle());
-
-				System.out.println("webview======="+url);
-				if (url.contains("http://m.tobosu.com/app/success")) { // 原来是 equals的
-					Intent intent = new Intent(mContext, ApplyforSuccessActivity.class);
-					startActivityForResult(intent, 10);
-					finish();
-				}
-
-			}
+        webView = (WebView) findViewById(R.id.my_webview);
+        viewTitle = (TextView) findViewById(R.id.web_title);
+        iv_back = (ImageView) findViewById(R.id.iv_back_webview_activity);
+    }
 
 
-			@Override
-			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				view.loadUrl(url);
-				return true;
-			}
+    private void initData() {
+        Intent intent = getIntent();
+        Bundle bundle = intent.getBundleExtra("WebView_Bundle");
+        url = bundle.getString("link") + "?channel=seo&subchannel=zhjandroid&from=banner";
+        Log.d(TAG, "传过来的url是" + url);
 
-			@Override
-			public void onPageStarted(WebView view, String url, Bitmap favicon) {
+
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient());
+        webView.setWebChromeClient(new WebChromeClient());
+        if (url.contains("?")) {
+            webView.loadUrl(url + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+        } else {
+            webView.loadUrl(url + "?equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+        }
+        webView.loadUrl(url);
+    }
+
+
+    private void initEvent() {
+
+        webView.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                viewTitle.setText(view.getTitle());
+
+                System.out.println("webview=======" + url);
+                if (url.contains("http://m.tobosu.com/app/success")) { // 原来是 equals的
+                    Intent intent = new Intent(mContext, ApplyforSuccessActivity.class);
+                    startActivityForResult(intent, 10);
+                    finish();
+                }
+
+            }
+
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
 //				System.out.println("webview======="+url);
 //				if (url.contains("http://m.tobosu.com/app/success")) { // 原来是 equals的
 //					Intent intent = new Intent(mContext, ApplyforSuccessActivity.class);
 //					startActivity(intent);
 //					finish();
 //				}
-			}
-
-			
-			
-		});
-		
-		webView.setWebChromeClient(new WebChromeClient());
-		
-		iv_back.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if(webView.canGoBack()){
-					webView.goBack();
-				}else{
-					finish();
-				}
-			}
-		});
-	}
+            }
 
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if(resultCode==66){
-			finish();
-		}
-	}
+        });
 
-	public boolean onKeyDown(int keyCode, KeyEvent event){
-		if((keyCode==KeyEvent.KEYCODE_BACK)&&webView.canGoBack()){
-			webView.goBack();
-			return true;
-		}
-		return super.onKeyDown(keyCode, event);
-	} 
-	
+        webView.setWebChromeClient(new WebChromeClient());
+
+        iv_back.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (webView.canGoBack()) {
+                    webView.goBack();
+                } else {
+                    finish();
+                }
+            }
+        });
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 66) {
+            finish();
+        }
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
+            webView.goBack();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }

@@ -421,6 +421,7 @@ public class PopOrderActivity extends com.tbs.tbs_mj.base.BaseActivity {
         tvCityLocation = (TextView) findViewById(R.id.tv_city_location);
         if (!"".equals(SpUtil.getCity(mContext))) {
             tvCityLocation.setText(" 当前位置 " + SpUtil.getCity(mContext));
+            SpUtil.setFdCity(mContext, SpUtil.getCity(mContext));
         } else {
             tvCityLocation.setText("定位失败 点击选择城市");
         }
@@ -729,6 +730,7 @@ public class PopOrderActivity extends com.tbs.tbs_mj.base.BaseActivity {
                 CacheManager.setCity(mContext, city);
                 tvCityLocation.setText(" 当前位置 " + city);
                 tvCityLocation1.setText(" 当前位置 " + city);
+                SpUtil.setFdCity(mContext, city);
                 break;
         }
         if (Constant.HOMEFRAGMENT_REQUESTCODE == requestCode) {
@@ -1375,9 +1377,9 @@ public class PopOrderActivity extends com.tbs.tbs_mj.base.BaseActivity {
             hashMap.put("orderprice", orderprice); // 预算
             hashMap.put("style", style); // 风格
             hashMap.put("device", "android");
-            hashMap.put("source", "942");
+            hashMap.put("source", "1234");
             hashMap.put("device_id", Util.getDeviceID());
-            hashMap.put("city", SpUtil.getCity(mContext));
+            hashMap.put("city", SpUtil.getFdCity(mContext));
             hashMap.put("version", AppInfoUtil.getAppVersionName(mContext));
             hashMap.put("urlhistory", Constant.PIPE); // 渠道代码
             hashMap.put("comeurl", Constant.PIPE); //订单发布页面

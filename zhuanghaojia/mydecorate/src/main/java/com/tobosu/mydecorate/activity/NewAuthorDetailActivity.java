@@ -17,6 +17,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.adapter.NewAuthorDetailAdapter;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.entity._AuthorDetail;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class NewAuthorDetailActivity extends AppCompatActivity {
+public class NewAuthorDetailActivity extends BaseActivity {
     private Context mContext;
     private String TAG = "NewAuthorDetailActivity";
     private _AuthorDetail authorDetail;

@@ -19,12 +19,14 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.squareup.picasso.Picasso;
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.entity._ArticleDetail;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.tobosu.mydecorate.util.DensityUtil;
 import com.tobosu.mydecorate.util.GlideUtils;
 import com.tobosu.mydecorate.util.HtmlUtil;
+import com.tobosu.mydecorate.util.SpUtil;
 import com.tobosu.mydecorate.util.Util;
 import com.tobosu.mydecorate.view.CustomWaitDialog;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -48,7 +50,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class NewArticleDetailActivity extends AppCompatActivity {
+public class NewArticleDetailActivity extends BaseActivity {
     private Context mContext;
     private String TAG = "NewArticleDetailActivi";
     private Intent mIntent;//跳转及传递媒介
@@ -160,7 +162,7 @@ public class NewArticleDetailActivity extends AppCompatActivity {
                 case R.id.new_detail_need_zx:
                     //我要装修发单请求
                     Intent intent1 = new Intent(mContext, NewWebViewActivity.class);
-                    intent1.putExtra("mLoadingUrl", Constant.FREE_BAOJIA_FADAN);
+                    intent1.putExtra("mLoadingUrl", SpUtil.getzhjaj03(mContext));
                     startActivity(intent1);
                     break;
                 case R.id.new_detail_collect:

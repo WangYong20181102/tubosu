@@ -35,6 +35,7 @@ import com.tobosu.mydecorate.entity._NewHomePage;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.tobosu.mydecorate.pagclass.GlideImageLoader;
+import com.tobosu.mydecorate.util.SpUtil;
 import com.tobosu.mydecorate.util.Util;
 import com.tobosu.mydecorate.view.ScrollViewExtend;
 import com.youth.banner.Banner;
@@ -297,13 +298,13 @@ public class NewHomeFragment extends Fragment {
                 case R.id.nhf_mianfeisheji:
                     //进入免费设计
                     intent = new Intent(mContext, NewWebViewActivity.class);
-                    intent.putExtra("mLoadingUrl", Constant.FREE_DISIGN_FADAN);
+                    intent.putExtra("mLoadingUrl", SpUtil.getzhjaj01(mContext));
                     startActivity(intent);
                     break;
                 case R.id.nhf_zhinengbaojia:
                     //进入装修报价
                     intent = new Intent(mContext, NewWebViewActivity.class);
-                    intent.putExtra("mLoadingUrl", Constant.FREE_BAOJIA_FADAN);
+                    intent.putExtra("mLoadingUrl", SpUtil.getzhjaj02(mContext));
                     startActivity(intent);
                     break;
                 case R.id.nhf_zhuangxiujisuanqi:

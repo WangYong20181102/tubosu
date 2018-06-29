@@ -27,6 +27,7 @@ import com.tobosu.mydecorate.adapter.DragAdapter;
 import com.tobosu.mydecorate.adapter.DragAdapter1;
 import com.tobosu.mydecorate.adapter.OtherAdapter;
 import com.tobosu.mydecorate.application.MyApplication;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.database.ChannelManage;
 import com.tobosu.mydecorate.entity.BibleEntity;
 import com.tobosu.mydecorate.entity.DecorateTitleEntity.ChannelItem;
@@ -47,7 +48,7 @@ import java.util.List;
  * Created by dec on 2016/9/27.
  */
 
-public class ChannelActivity extends Activity implements AdapterView.OnItemClickListener{
+public class ChannelActivity extends BaseActivity implements AdapterView.OnItemClickListener{
     private static final String TAG = ChannelActivity.class.getSimpleName();
     private Context mContext;
     private RelativeLayout rel_change_channel_back;

@@ -57,7 +57,7 @@ public class OKHttpUtil {
      * @param params
      * @param baseCallBack
      */
-    public void post(String url, HashMap<String, Object> params, BaseCallBack baseCallBack) {
+    public  void post(String url, HashMap<String, Object> params, BaseCallBack baseCallBack) {
         Request request = buildRequest(url, params, HttpMethodType.POST);
         sendRequest(request, baseCallBack);
 

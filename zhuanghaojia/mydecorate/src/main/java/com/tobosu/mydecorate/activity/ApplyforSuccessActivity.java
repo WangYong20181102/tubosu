@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.base.BaseActivity;
 
 
 /**
@@ -14,7 +15,7 @@ import com.tobosu.mydecorate.R;
  * @author
  *
  */
-public class ApplyforSuccessActivity extends Activity{
+public class ApplyforSuccessActivity extends BaseActivity{
 	private ImageView applyfor_back;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

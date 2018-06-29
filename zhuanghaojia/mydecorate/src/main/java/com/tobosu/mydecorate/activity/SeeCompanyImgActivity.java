@@ -24,6 +24,7 @@ import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.adapter.DragAdapter;
 import com.tobosu.mydecorate.adapter.OtherAdapter;
 import com.tobosu.mydecorate.application.MyApplication;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.database.ChannelManage;
 import com.tobosu.mydecorate.entity.DecorateTitleEntity.ChannelItem;
 import com.tobosu.mydecorate.fragment.DecorateArticleListFragment;
@@ -41,7 +42,7 @@ import java.util.List;
  * Created by dec on 2016/9/27.
  */
 
-public class SeeCompanyImgActivity extends Activity{
+public class SeeCompanyImgActivity extends BaseActivity{
     private static final String TAG = SeeCompanyImgActivity.class.getSimpleName();
     private Context mContext;
     private TouchImageView see_img;

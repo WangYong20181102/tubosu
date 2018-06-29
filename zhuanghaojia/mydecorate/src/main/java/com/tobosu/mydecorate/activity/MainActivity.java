@@ -18,6 +18,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.fragment.DecorateArticleListFragment;
 import com.tobosu.mydecorate.fragment.NewHomeFragment;
 import com.tobosu.mydecorate.fragment.NewMineFragment;
@@ -28,7 +29,7 @@ import com.umeng.analytics.MobclickAgent;
 
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private static String TAG = MainActivity.class.getSimpleName();
 
     private Context context;
@@ -161,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
+                                    Util.HttpPostUserUseInfo();
                                     finish();
                                     System.exit(0);
                                 }

@@ -17,13 +17,18 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.base.BaseActivity;
+import com.tobosu.mydecorate.bean._AppEvent;
+import com.tobosu.mydecorate.util.AppManager;
+import com.tobosu.mydecorate.util.SpUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NewWebViewActivity extends AppCompatActivity {
+public class NewWebViewActivity extends BaseActivity {
 
     @BindView(R.id.iv_back_webview_activity)
     ImageView ivBackWebviewActivity;
@@ -41,6 +46,8 @@ public class NewWebViewActivity extends AppCompatActivity {
     private Context mContext;
     private Intent mIntent;
     private String mLoadingUrl = "";//加载数据的URL
+    private Gson mGson;
+    private _AppEvent mAppEvent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +60,8 @@ public class NewWebViewActivity extends AppCompatActivity {
 
     private void initViewEvent() {
         mIntent = getIntent();
+        mGson = new Gson();
+        mAppEvent = new _AppEvent();
         webTitle.setBackgroundColor(Color.parseColor("#ffffff"));
         newWebViewRl.setBackgroundColor(Color.parseColor("#ffffff"));
         mLoadingUrl = mIntent.getStringExtra("mLoadingUrl");
@@ -69,8 +78,24 @@ public class NewWebViewActivity extends AppCompatActivity {
 
         myWebview.setWebChromeClient(webChromeClient);
         myWebview.setWebViewClient(webViewClient);
-        myWebview.loadUrl(mLoadingUrl);
+        //传值统计用
+        if (mLoadingUrl.contains("?")) {
+            myWebview.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+        } else {
+            myWebview.loadUrl(mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+        }
         Log.e(TAG, "加载数据的url================" + mLoadingUrl);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SpUtil.setStatisticsEventPageId(mContext, mLoadingUrl);
+    }
+
+    @Override
+    protected boolean havePageId() {
+        return true;
     }
 
     private WebViewClient webViewClient = new WebViewClient() {

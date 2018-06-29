@@ -14,6 +14,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
 import com.tobosu.mydecorate.adapter.MessageAdapter;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.database.DBManager;
 import com.tobosu.mydecorate.entity.MessageData;
 import com.tobosu.mydecorate.global.Constant;
@@ -33,7 +34,7 @@ import java.util.HashMap;
  * Created by dec on 2016/9/27.
  */
 
-public class MessageCenterActivity extends AppCompatActivity{
+public class MessageCenterActivity extends BaseActivity{
     private static final String TAG = MessageCenterActivity.class.getSimpleName();
     private Context mContext;
     private RelativeLayout rel_messagecenter_back;

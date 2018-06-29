@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.tobosu.mydecorate.util.CacheManager;
@@ -30,7 +31,7 @@ import java.util.HashMap;
 /**
  * Created by dec on 2016/9/26.
  */
-public class UserLoginActivity extends AppCompatActivity {
+public class UserLoginActivity extends BaseActivity {
     private static final String TAG = UserLoginActivity.class.getSimpleName();
     private Context mContext;
     private RelativeLayout rel_username_login_back;
