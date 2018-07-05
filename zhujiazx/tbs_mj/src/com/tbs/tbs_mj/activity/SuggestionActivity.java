@@ -280,7 +280,7 @@ public class SuggestionActivity extends com.tbs.tbs_mj.base.BaseActivity {
                         fileparams = new HashMap<String, File>();
                         token = new HashMap<String, String>();
                         File file = new File(mCompressImageUriPath.get(i));
-                        token.put("token", Util.getDateToken());
+                        token.put("token", Util.getTbsDateToken());
                         fileparams.put("filedata", file);
                         textParams.put("app_type", "1");
                         HttpURLConnection conn = (HttpURLConnection) url.openConnection();

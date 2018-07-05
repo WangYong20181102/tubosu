@@ -1,6 +1,7 @@
 package com.tbs.tbs_mj.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tbs_mj.R;
+import com.tbs.tbs_mj.activity.BandPhoneActivity;
 import com.tbs.tbs_mj.activity.CoPresonerMsgActivity;
 import com.tbs.tbs_mj.activity.NewLoginActivity;
 import com.tbs.tbs_mj.activity.PresonerMsgActivity;
@@ -234,6 +236,9 @@ public class NewLoginFragmentPhone extends BaseFragment {
 
     //微信号登录
     private void weiXinLogin() {
+        //清除之前的微信用户的信息
+        umShareAPI.deleteOauth(getActivity(), SHARE_MEDIA.WEIXIN, null);
+        //调用微信登录
         umShareAPI.getPlatformInfo(getActivity(), SHARE_MEDIA.WEIXIN, new UMAuthListener() {
             @Override
             public void onStart(SHARE_MEDIA share_media) {
@@ -245,7 +250,7 @@ public class NewLoginFragmentPhone extends BaseFragment {
                 Log.e(TAG, "");
                 String weiXinUserName = map.get("name");//微信的昵称
                 String weiXinImageUrl = map.get("iconurl");//微信的头像
-                String weiXinUserId = map.get("unionid");//微信的openid
+                String weiXinUserId = map.get("unionid");//微信的unionid
                 HttpWeixinLogin(weiXinUserId, weiXinUserName, weiXinImageUrl);
             }
 
@@ -266,10 +271,10 @@ public class NewLoginFragmentPhone extends BaseFragment {
     }
 
     //微信登录
-    private void HttpWeixinLogin(String openid, String nickname, String icon) {
+    private void HttpWeixinLogin(String unionid, String nickname, String icon) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
-        param.put("openid", openid);
+        param.put("unionid", unionid);
         param.put("nickname", nickname);
         param.put("icon", icon);
         param.put("version", AppInfoUtil.getAppVersionName(mContext));
@@ -277,7 +282,7 @@ public class NewLoginFragmentPhone extends BaseFragment {
         param.put("chcode", AppInfoUtil.getChannType(mContext));
         param.put("device_id", SpUtil.getPushRegisterId(mContext));
         param.put("system_type", "1");
-        Log.e(TAG, "微信登录的参数=============openid====" + openid + "===nickname===" + nickname + "===version===" + AppInfoUtil.getAppVersionName(mContext) + "==city_name==" + SpUtil.getCity(mContext) + "==icon==" + icon);
+        Log.e(TAG, "微信登录的参数=============openid====" + unionid + "===nickname===" + nickname + "===version===" + AppInfoUtil.getAppVersionName(mContext) + "==city_name==" + SpUtil.getCity(mContext) + "==icon==" + icon);
         OKHttpUtil.post(Constant.WECHAT_LOGIN, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -304,6 +309,18 @@ public class NewLoginFragmentPhone extends BaseFragment {
                             @Override
                             public void run() {
                                 saveUserInfo(data);
+                            }
+                        });
+                    } else if (status.equals("206")) {
+                        //用户未绑定手机号码
+                        //用户未绑定手机号码跳转到绑定页面
+                        JSONObject data = jsonObject.optJSONObject("data");
+                        AppInfoUtil.setUserBindId(mContext, data.optString("uid"));
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.e(TAG, "用户绑定所用的id======" + AppInfoUtil.getUserBindId(mContext));
+                                startActivity(new Intent(mContext, BandPhoneActivity.class));
                             }
                         });
                     } else if (status.equals("0")) {
@@ -349,36 +366,10 @@ public class NewLoginFragmentPhone extends BaseFragment {
 
         // TODO: 2018/1/10 登录成功并且将数据存储成功之后通知将这个页面销毁
         Log.e(TAG, "发送登录成功的通知====================" + AppInfoUtil.getMark(mContext));
-        //推送上线
-        initPushEvent();
         //关闭页面
         EventBusUtil.sendEvent(new Event(EC.EventCode.CLOSE_NEW_LOGIN_ACTIVITY));
     }
 
-    //定点推送相关
-    private void initPushEvent() {
-        if (!TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {
-            //用户已经登录
-            HashMap<String, Object> param = new HashMap<>();
-            param.put("user_id", AppInfoUtil.getId(mContext));
-            param.put("user_type", AppInfoUtil.getTypeid(mContext));
-            param.put("system_type", "1");
-            param.put("app_type", "4");
-            param.put("device_id", SpUtil.getPushRegisterId(mContext));
-            OKHttpUtil.post(Constant.FLUSH_SMS_PUSH, param, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.e(TAG, "链接失败===============" + e.getMessage());
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    String json = new String(response.body().string());
-                    Log.e(TAG, "推送相关数据链接成功===========" + json);
-                }
-            });
-        }
-    }
 
     //获取验证码
     private void HttpGetYanZhengCode(String phoneNum) {
@@ -475,12 +466,12 @@ public class NewLoginFragmentPhone extends BaseFragment {
             } else {
                 isTimeDown = false;
                 if (fplGetCode != null) {
-                    fplGetCode.setTextColor(Color.parseColor("#ff6c20"));
+                    fplGetCode.setTextColor(Color.parseColor("#54b3b3"));
                     fplGetCode.setTextSize(12);
                     GradientDrawable gradientDrawable = new GradientDrawable();
                     gradientDrawable.setColor(Color.parseColor("#ffffff"));
                     gradientDrawable.setCornerRadius(2);
-                    gradientDrawable.setStroke(1, Color.parseColor("#ff6c20"));
+                    gradientDrawable.setStroke(1, Color.parseColor("#54b3b3"));
                     fplGetCode.setBackground(gradientDrawable);
                     fplGetCode.setText("重新获取");
                     fplGetCode.setEnabled(true);

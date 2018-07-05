@@ -513,9 +513,13 @@ public class PresonerMsgActivity extends com.tbs.tbs_mj.base.BaseActivity {
         pop_change_icon_look_big_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, BigIconLookActivity.class);
-                intent.putExtra("mImageIconUrl", presonerInfo.getIcon());
-                mContext.startActivity(intent);
+                if(presonerInfo.getIcon()==null){
+                    Toast.makeText(mContext,"用户的头像为空！",Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent intent = new Intent(mContext, BigIconLookActivity.class);
+                    intent.putExtra("mImageIconUrl", presonerInfo.getIcon());
+                    mContext.startActivity(intent);
+                }
                 popupWindow.dismiss();
             }
         });
@@ -558,7 +562,7 @@ public class PresonerMsgActivity extends com.tbs.tbs_mj.base.BaseActivity {
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("image/*");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//如果大于等于7.0使用FileProvider
-            Uri uriForFile = FileProvider.getUriForFile(mContext, "com.tbs.tobosutype.fileprovider", mGalleryFile);
+            Uri uriForFile = FileProvider.getUriForFile(mContext, "com.tbs.tbs_mj.fileprovider", mGalleryFile);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, uriForFile);
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -574,7 +578,7 @@ public class PresonerMsgActivity extends com.tbs.tbs_mj.base.BaseActivity {
         Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (Util.hasSDCard()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//7.0及以上
-                Uri uriForFile = FileProvider.getUriForFile(mContext, "com.tbs.tobosutype.fileprovider", mCameraFile);
+                Uri uriForFile = FileProvider.getUriForFile(mContext, "com.tbs.tbs_mj.fileprovider", mCameraFile);
                 intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT, uriForFile);
                 intentFromCapture.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 intentFromCapture.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -600,7 +604,7 @@ public class PresonerMsgActivity extends com.tbs.tbs_mj.base.BaseActivity {
                 }
                 if (Util.hasSDCard()) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        Uri inputUri = FileProvider.getUriForFile(mContext, "com.tbs.tobosutype.fileprovider", mCameraFile);//通过FileProvider创建一个content类型的Uri
+                        Uri inputUri = FileProvider.getUriForFile(mContext, "com.tbs.tbs_mj.fileprovider", mCameraFile);//通过FileProvider创建一个content类型的Uri
                         startPhotoZoom(inputUri);//设置输入类型
                     } else {
                         Uri inputUri = Uri.fromFile(mCameraFile);
@@ -637,7 +641,7 @@ public class PresonerMsgActivity extends com.tbs.tbs_mj.base.BaseActivity {
                     return;
                 }
                 File imgUri = new File(GetImagePath.getPath(mContext, data.getData()));
-                Uri dataUri = FileProvider.getUriForFile(mContext, "com.tbs.tobosutype.fileprovider", imgUri);
+                Uri dataUri = FileProvider.getUriForFile(mContext, "com.tbs.tbs_mj.fileprovider", imgUri);
                 startPhotoZoom(dataUri);
                 break;
 
@@ -650,7 +654,7 @@ public class PresonerMsgActivity extends com.tbs.tbs_mj.base.BaseActivity {
         MediaType IMG_TYPE = MediaType.parse("image/*");
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         builder.addFormDataPart("filedata", mImageFile.getName(), RequestBody.create(IMG_TYPE, mImageFile));
-        builder.addFormDataPart("token", Util.getDateToken());
+        builder.addFormDataPart("token", Util.getTbsDateToken());
         builder.addFormDataPart("app_type", "1");
         MultipartBody requestBody = builder.build();
         Request request = new Request.Builder()

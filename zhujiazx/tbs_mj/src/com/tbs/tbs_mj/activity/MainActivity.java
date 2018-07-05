@@ -33,7 +33,6 @@ import com.tbs.tbs_mj.R;
 
 import com.tbs.tbs_mj.bean._AppConfig;
 import com.tbs.tbs_mj.global.Constant;
-import com.tbs.tbs_mj.global.HomeListener;
 import com.tbs.tbs_mj.global.MyApplication;
 import com.tbs.tbs_mj.global.OKHttpUtil;
 import com.tbs.tbs_mj.utils.AppInfoUtil;
@@ -305,40 +304,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         });
     }
 
-    //初始化极光推送
-    private void initJpush() {
-        Log.e(TAG, "注册极光推送=================");
-        JPushInterface.setDebugMode(true);
-        JPushInterface.init(this);
-        //将推送的唯一标识存入本地
-        SpUtil.setPushRegisterId(MyApplication.getContext(), JPushInterface.getRegistrationID(MyApplication.getContext()));
-        Log.e(TAG, "获取的极光推送注册id=================" + JPushInterface.getRegistrationID(MyApplication.getContext()));
-    }
-
-    //定点推送相关
-    private void initPushEvent() {
-        if (!TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {
-            //用户已经登录
-            HashMap<String, Object> param = new HashMap<>();
-            param.put("user_id", AppInfoUtil.getId(mContext));
-            param.put("user_type", AppInfoUtil.getTypeid(mContext));
-            param.put("system_type", "1");
-            param.put("app_type", "4");
-            param.put("device_id", SpUtil.getPushRegisterId(mContext));
-            OKHttpUtil.post(Constant.FLUSH_SMS_PUSH, param, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.e(TAG, "链接失败===============" + e.getMessage());
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    String json = new String(response.body().string());
-                    Log.e(TAG, "推送相关数据链接成功===========" + json);
-                }
-            });
-        }
-    }
 
     // TODO: 2018/2/27 点击事件流所需要的执行的操作
     @Override
@@ -614,7 +579,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     img_home.setBackgroundResource(R.drawable.home_black);
                     img_image.setBackgroundResource(R.drawable.tu_black);
                     img_decorate.setBackgroundResource(R.drawable.company_black);
-                    img_my.setBackgroundResource(R.drawable.me_orange);
+                    img_my.setBackgroundResource(R.drawable.me_tab);
 
                     tv_home_textview.setTextColor(Color.parseColor("#666666"));
                     tv_image_textview.setTextColor(Color.parseColor("#666666"));
@@ -627,7 +592,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     img_home.setBackgroundResource(R.drawable.home_black);
                     img_image.setBackgroundResource(R.drawable.tu_black);
                     img_decorate.setBackgroundResource(R.drawable.company_black);
-                    img_my.setBackgroundResource(R.drawable.me_orange);
+                    img_my.setBackgroundResource(R.drawable.me_tab);
 
                     tv_home_textview.setTextColor(Color.parseColor("#666666"));
                     tv_image_textview.setTextColor(Color.parseColor("#666666"));
@@ -641,7 +606,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     img_home.setBackgroundResource(R.drawable.home_black);
                     img_image.setBackgroundResource(R.drawable.tu_black);
                     img_decorate.setBackgroundResource(R.drawable.company_black);
-                    img_my.setBackgroundResource(R.drawable.me_orange);
+                    img_my.setBackgroundResource(R.drawable.me_tab);
 
                     tv_home_textview.setTextColor(Color.parseColor("#666666"));
                     tv_image_textview.setTextColor(Color.parseColor("#666666"));

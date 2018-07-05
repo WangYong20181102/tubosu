@@ -189,8 +189,8 @@ public class MyApplication extends MultiDexApplication {
 
     //平台信息配置
     {
-        PlatformConfig.setWeixin("wxc542d3b8fe58cd17", "d4624c36b6795d1d99dcf0547af5443d");
-        PlatformConfig.setQQZone("1104958391", "M0L4G2G3SEgFNP35");
+        PlatformConfig.setWeixin("wxc633f1c5d3759f46", "94224e4e0bd7e3d9caa755c1004ad878");
+        PlatformConfig.setQQZone("1106905252", "YvkeNjVtsx1wMxOL");
     }
 
     public static Context getContext() {

@@ -346,6 +346,14 @@ public class AppInfoUtil {
         context.getSharedPreferences("userInfo", 0).edit().putString("is_new_sms", is_new_sms).commit();
     }
 
+    //用户未绑定手机号时用的uid
+    public static String getUserBindId(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("user_bind_id", "");
+    }
+
+    public static void setUserBindId(Context context, String user_bind_id) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("user_bind_id", user_bind_id).commit();
+    }
     // TODO: 2018/1/10  用户的基本信息↑↑↑↑
     public static String getImageActivityCatch(Context context) {
         return context.getSharedPreferences("IsImageCache", 0).getString("result", "");

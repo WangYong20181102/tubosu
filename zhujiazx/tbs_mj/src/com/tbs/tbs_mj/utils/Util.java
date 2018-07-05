@@ -122,7 +122,15 @@ public class Util {
         String dataToken = Base64Util.getBase64(s);
         return dataToken;
     }
-
+    public static String getTbsDateToken() {
+        String md5ZHJ = MD5Util.md5("tbs");//加密后的zjzx
+        Date date = new Date();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String mTime = format.format(date);
+        String s = MD5Util.md5(md5ZHJ + mTime);
+        String dataToken = Base64Util.getBase64(s);
+        return dataToken;
+    }
     //获取当前的时间
     public static String getNowTime() {
         Date date = new Date();

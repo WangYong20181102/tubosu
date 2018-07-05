@@ -23,6 +23,7 @@ import com.tbs.tbs_mj.R;
 import com.tbs.tbs_mj.base.BaseActivity;
 import com.tbs.tbs_mj.customview.CustomDialog;
 import com.tbs.tbs_mj.global.Constant;
+import com.tbs.tbs_mj.utils.AppInfoUtil;
 import com.tbs.tbs_mj.utils.SpUtil;
 import com.tbs.tbs_mj.utils.ToastUtil;
 import com.tbs.tbs_mj.utils.Util;
@@ -55,10 +56,6 @@ public class NoneLoginOfMineActivity extends BaseActivity {
     RelativeLayout noneLoginKefuRl;
     @BindView(R.id.none_login_fuwuhao_rl)
     RelativeLayout noneLoginFuwuhaoRl;
-    @BindView(R.id.none_login_share_rl)
-    RelativeLayout noneLoginShareRl;
-    @BindView(R.id.none_login_pingjia_rl)
-    RelativeLayout noneLoginPingjiaRl;
     @BindView(R.id.none_login_setting_rl)
     RelativeLayout noneLoginSettingRl;
     @BindView(R.id.none_login_company_of_mine_all_ll)
@@ -67,6 +64,14 @@ public class NoneLoginOfMineActivity extends BaseActivity {
     TextView noneLoginTelTv;
     @BindView(R.id.none_login_wc_serive_num_tv)
     TextView noneLoginWcSeriveNumTv;
+    @BindView(R.id.none_login_fankui_rl)
+    RelativeLayout noneLoginFankuiRl;
+    @BindView(R.id.none_login_banben_tv)
+    TextView noneLoginBanbenTv;
+    @BindView(R.id.none_login_banben_rl)
+    RelativeLayout noneLoginBanbenRl;
+    @BindView(R.id.none_login_dingdan_rl)
+    RelativeLayout noneLoginDingdanRl;
     private String TAG = "NoneLoginOfMineActivity";
     private Context mContext;
     private UMShareAPI umShareAPI;
@@ -126,12 +131,13 @@ public class NoneLoginOfMineActivity extends BaseActivity {
         umShareAPI = UMShareAPI.get(mContext);
         noneLoginTelTv.setText("" + SpUtil.getCustom_service_tel(mContext));
         noneLoginWcSeriveNumTv.setText("" + SpUtil.getPublic_number(mContext));
+        noneLoginBanbenTv.setText("" + AppInfoUtil.getAppVersionName(mContext));
     }
 
     @OnClick({R.id.none_login_setting, R.id.none_login_register_rl,
             R.id.none_login_goto_login_rl, R.id.none_login_dalibao_iv,
             R.id.none_login_kefu_rl, R.id.none_login_fuwuhao_rl,
-            R.id.none_login_share_rl, R.id.none_login_pingjia_rl, R.id.none_login_setting_rl})
+            R.id.none_login_setting_rl, R.id.none_login_fankui_rl, R.id.none_login_dingdan_rl})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.none_login_setting:
@@ -143,9 +149,9 @@ public class NoneLoginOfMineActivity extends BaseActivity {
             case R.id.none_login_goto_login_rl:
                 //跳转到注册界面
                 //跳转到登录页面
-//                Intent intentToRegister = new Intent(mContext, NewLoginActivity.class);
-//                intentToRegister.putExtra("mWhereComeFrom", "NoneLoginOfMineActivity");
-//                mContext.startActivity(intentToRegister);
+                Intent intentToRegister = new Intent(mContext, NewLoginActivity.class);
+                intentToRegister.putExtra("mWhereComeFrom", "NoneLoginOfMineActivity");
+                mContext.startActivity(intentToRegister);
                 break;
             case R.id.none_login_dalibao_iv:
                 //点击大礼包发单条 跳转到发单页面
@@ -162,13 +168,12 @@ public class NoneLoginOfMineActivity extends BaseActivity {
                 //复制服务服务号 在微信中开启
                 copyWeChat();
                 break;
-            case R.id.none_login_share_rl:
-                //分享App下载
-                shareAppToFriend();
+            case R.id.none_login_fankui_rl:
+                //点击反馈按钮 进入反馈页面
+                startActivity(new Intent(mContext, SuggestionActivity.class));
                 break;
-            case R.id.none_login_pingjia_rl:
-                //进入应用市场评价我们的App
-                praiseApp();
+            case R.id.none_login_dingdan_rl:
+                startActivity(new Intent(mContext, NewLoginActivity.class));
                 break;
         }
     }
@@ -302,4 +307,6 @@ public class NoneLoginOfMineActivity extends BaseActivity {
 
         return super.onKeyDown(keyCode, event);
     }
+
+
 }

@@ -128,7 +128,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:background="#ff6c20"
+        android:background="@color/app_theme_color"
         android:gravity="center"
         android:text="提交反馈"
         android:textColor="@color/white"

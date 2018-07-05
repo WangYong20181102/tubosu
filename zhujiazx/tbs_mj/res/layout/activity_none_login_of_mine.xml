@@ -39,7 +39,8 @@
                     android:layout_height="45dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp">
+                    android:layout_marginRight="5dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/none_login_setting"
@@ -86,12 +87,14 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="7dp"
-                android:background="#f7f7f7" />
+                android:background="#f7f7f7"
+                android:visibility="gone" />
             <!--收藏、记账、订单按钮-->
             <RelativeLayout
                 android:id="@+id/none_login_goto_login_rl"
                 android:layout_width="match_parent"
-                android:layout_height="84dp">
+                android:layout_height="84dp"
+                android:visibility="gone">
                 <!--收藏-->
                 <LinearLayout
                     android:layout_width="35dp"
@@ -178,6 +181,51 @@
                 android:src="@drawable/libao" />
 
             <View
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:background="#f7f7f7" />
+            <!--我的订单-->
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/none_login_dingdan_rl"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginLeft="16dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/dingdan_mine" />
+                <!--文本描述-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="33dp"
+                    android:text="我的订单"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+                <!--右边的箭头-->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/youjiantou" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="30dp"
+                    android:background="#f7f7f7" />
+            </RelativeLayout>
+
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="7dp"
                 android:background="#f7f7f7" />
@@ -201,7 +249,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="33dp"
-                    android:text="土拨鼠客服"
+                    android:text="客服热线"
                     android:textColor="#333333"
                     android:textSize="14sp" />
                 <!--电话-->
@@ -236,7 +284,8 @@
                 android:id="@+id/none_login_fuwuhao_rl"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_marginLeft="16dp">
+                android:layout_marginLeft="16dp"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="16dp"
@@ -281,9 +330,8 @@
                     android:background="#f7f7f7" />
             </RelativeLayout>
             <!--分享-->
-            <!--客服-->
             <RelativeLayout
-                android:id="@+id/none_login_share_rl"
+                android:id="@+id/none_login_fankui_rl"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginLeft="16dp">
@@ -292,7 +340,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/my_fenxiang" />
+                    android:src="@drawable/fannkui_mine" />
                 <!--文本描述-->
                 <TextView
                     android:layout_width="wrap_content"
@@ -300,7 +348,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="33dp"
-                    android:text="分享给好友"
+                    android:text="反馈与建议"
                     android:textColor="#333333"
                     android:textSize="14sp" />
                 <!--右边的箭头-->
@@ -319,9 +367,9 @@
                     android:layout_marginLeft="30dp"
                     android:background="#f7f7f7" />
             </RelativeLayout>
-            <!--评价-->
+            <!--当前版本-->
             <RelativeLayout
-                android:id="@+id/none_login_pingjia_rl"
+                android:id="@+id/none_login_banben_rl"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginLeft="16dp">
@@ -330,7 +378,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/haoping" />
+                    android:src="@drawable/banben_mine" />
                 <!--文本描述-->
                 <TextView
                     android:layout_width="wrap_content"
@@ -338,9 +386,20 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="33dp"
-                    android:text="给小鼠一个好评~"
+                    android:text="当前版本"
                     android:textColor="#333333"
                     android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/none_login_banben_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="38dp"
+                    android:text=""
+                    android:textColor="#b3b3b3"
+                    android:textSize="12sp" />
                 <!--右边的箭头-->
                 <ImageView
                     android:layout_width="wrap_content"

@@ -86,7 +86,7 @@
             android:background="@drawable/shape_login_get_code"
             android:gravity="center"
             android:text="获取验证码"
-            android:textColor="#ff6c20"
+            android:textColor="@color/app_theme_color"
             android:textSize="12sp" />
         <!--底部的分割线-->
         <View

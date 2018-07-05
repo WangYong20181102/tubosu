@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/denglubeijing" />
+            android:src="@drawable/picture_mine" />
         <!--左右切换的滑块-->
         <!--手机登录-->
         <RelativeLayout

@@ -58,7 +58,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="确定"
-                android:textColor="#ff6f12" />
+                android:textColor="@color/app_theme_color" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

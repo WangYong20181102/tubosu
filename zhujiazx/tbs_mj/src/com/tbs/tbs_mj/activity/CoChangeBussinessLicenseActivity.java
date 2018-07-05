@@ -327,7 +327,7 @@ public class CoChangeBussinessLicenseActivity extends BaseActivity {
         MediaType IMG_TYPE = MediaType.parse("image/*");
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         builder.addFormDataPart("filedata", mImageFile.getName(), RequestBody.create(IMG_TYPE, mImageFile));
-        builder.addFormDataPart("token", Util.getDateToken());
+        builder.addFormDataPart("token", Util.getTbsDateToken());
         builder.addFormDataPart("app_type", "1");
         MultipartBody requestBody = builder.build();
         Request request = new Request.Builder()

@@ -326,7 +326,7 @@ public class  ChangeRongYuImageActivity extends BaseActivity {
                     fileparams = new HashMap<String, File>();
                     token = new HashMap<String, String>();
                     File file = new File(mCompressImageUriPath.get(i));
-                    token.put("token", Util.getDateToken());
+                    token.put("token", Util.getTbsDateToken());
                     fileparams.put("filedata", file);
                     textParams.put("s_code", "app");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();

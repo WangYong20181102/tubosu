@@ -131,7 +131,7 @@
 
 
                 <RelativeLayout
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:id="@+id/main_tab_my"
                     style="@style/MMTabButton"
                     android:layout_weight="1.0">

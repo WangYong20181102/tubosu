@@ -119,6 +119,7 @@ public class NewLoginActivity extends com.tbs.tbs_mj.base.BaseActivity{
     protected void receiveEvent(Event event) {
         switch (event.getCode()) {
             case EC.EventCode.CLOSE_NEW_LOGIN_ACTIVITY:
+            case EC.EventCode.BAND_PHONE_SUCCESS:
                 //处理在两个fragment中用户登录之后将这个页面关闭
                 if (!TextUtils.isEmpty(mWhereComeFrom) && mWhereComeFrom.equals("NoneLoginOfMineActivity")) {
                     AppInfoUtil.ISJUSTLOGIN = true;

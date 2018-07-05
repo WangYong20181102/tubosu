@@ -89,6 +89,14 @@ public class CustomOfMineActivity extends BaseActivity {
     LinearLayout customOfMineLl;
     @BindView(R.id.custom_of_mine_fuwuhao_tv)
     TextView customOfMineFuwuhaoTv;
+    @BindView(R.id.custom_of_mine_dingdan_rl)
+    RelativeLayout customOfMineDingdanRl;
+    @BindView(R.id.custom_of_mine_fankui_rl)
+    RelativeLayout customOfMineFankuiRl;
+    @BindView(R.id.custom_of_mine_banben_tv)
+    TextView customOfMineBanbenTv;
+    @BindView(R.id.custom_of_mine_banben_rl)
+    RelativeLayout customOfMineBanbenRl;
 
     private Context mContext;
     private String TAG = "CustomOfMineActivity";
@@ -108,6 +116,7 @@ public class CustomOfMineActivity extends BaseActivity {
     private void initViewEvent() {
         mGson = new Gson();
         customOfMineFuwuhaoTv.setText("" + SpUtil.getPublic_number(mContext));
+        customOfMineBanbenTv.setText("" + AppInfoUtil.getAppVersionName(mContext));
     }
 
 
@@ -216,7 +225,8 @@ public class CustomOfMineActivity extends BaseActivity {
             R.id.custom_of_mine_shoucang_ll, R.id.custom_of_mine_jizhang_ll,
             R.id.custom_of_mine_dingdan_ll, R.id.custom_of_mine_fadan_iv,
             R.id.custom_of_mine_kefu_rl, R.id.custom_of_mine_fuwuhao_rl,
-            R.id.custom_of_mine_share_rl, R.id.custom_of_mine_pingjia_rl})
+            R.id.custom_of_mine_share_rl, R.id.custom_of_mine_pingjia_rl,
+            R.id.custom_of_mine_dingdan_rl, R.id.custom_of_mine_fankui_rl})
     public void onViewClickedInCustomOfMineActivity(View view) {
         switch (view.getId()) {
             case R.id.custom_of_mine_setting_rl:
@@ -272,6 +282,14 @@ public class CustomOfMineActivity extends BaseActivity {
             case R.id.custom_of_mine_pingjia_rl:
                 //进入App评价
                 praiseApp();
+                break;
+            case R.id.custom_of_mine_dingdan_rl:
+                //进入订单页面
+                chaKanDingdan();
+                break;
+            case R.id.custom_of_mine_fankui_rl:
+                //进入反馈页面
+                startActivity(new Intent(mContext, SuggestionActivity.class));
                 break;
         }
     }
@@ -453,4 +471,5 @@ public class CustomOfMineActivity extends BaseActivity {
 
         return super.onKeyDown(keyCode, event);
     }
+
 }

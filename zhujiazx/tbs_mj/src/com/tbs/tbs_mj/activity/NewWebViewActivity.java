@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -18,10 +19,15 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.tbs.tbs_mj.R;
-import com.tbs.tbs_mj.base.*;
+import com.tbs.tbs_mj.base.BaseActivity;
 import com.tbs.tbs_mj.bean._AppEvent;
 import com.tbs.tbs_mj.utils.AppManager;
 import com.tbs.tbs_mj.utils.SpUtil;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +37,7 @@ import butterknife.OnClick;
  * creat by lin  发单跳转页面
  * 新的webview页面
  */
-public class NewWebViewActivity extends com.tbs.tbs_mj.base.BaseActivity {
+public class NewWebViewActivity extends BaseActivity {
 
     @BindView(R.id.new_webview_back)
     LinearLayout newWebviewBack;
@@ -41,6 +47,8 @@ public class NewWebViewActivity extends com.tbs.tbs_mj.base.BaseActivity {
     WebView newWebviewWeb;
     @BindView(R.id.new_webview_banner_rl)
     RelativeLayout newWebviewBannerRl;
+    @BindView(R.id.new_webview_share)
+    RelativeLayout newWebviewShare;
 
     private Context mContext;
     private String TAG = "NewWebViewActivity";
@@ -48,6 +56,7 @@ public class NewWebViewActivity extends com.tbs.tbs_mj.base.BaseActivity {
     private String mLoadingUrl = "";//加载数据的URL
     private Gson mGson;
     private _AppEvent mAppEvent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,11 +123,76 @@ public class NewWebViewActivity extends com.tbs.tbs_mj.base.BaseActivity {
         }
     };
 
-    @OnClick(R.id.new_webview_back)
-    public void onViewClickedInNewWebView() {
-        //返回按钮
-        finish();
+    @OnClick({R.id.new_webview_back, R.id.new_webview_share})
+    public void onViewClickedInNewWebView(View view) {
+        switch (view.getId()) {
+            case R.id.new_webview_back:
+                //返回按钮
+                finish();
+                break;
+            case R.id.new_webview_share:
+                //进行页面的分享
+                shareWeb();
+                break;
+        }
+
     }
+
+    private void shareWeb() {
+        UMWeb web = new UMWeb(mLoadingUrl);
+        web.setThumb(new UMImage(mContext, R.drawable.app_share));
+        //分享相关的标题以及描述
+        if (mLoadingUrl.contains("free_price_page")) {
+            //免费报价
+            web.setTitle("免费获取装修预算");
+            web.setDescription("10秒估算装修报价，给您专业、公正、透明的装修报价！");
+        } else if (mLoadingUrl.contains("quote")) {
+            //免费设计
+            web.setTitle("4套装修设计方案，0元领");
+            web.setDescription("现在预约，即可免费获得4套装修设计方案！");
+        } else if (mLoadingUrl.contains("rec_company")) {
+            //专业推荐
+            web.setTitle("智能推荐装修公司");
+            web.setDescription("无法分辨装修公司好坏？专业顾问，为您推荐！");
+        } else if (mLoadingUrl.contains("free_design")) {
+            //装修秘籍
+            web.setTitle("0元搞定全屋设计");
+            web.setDescription("全国限额2000名，免费进行全屋设计！");
+        } else if (mLoadingUrl.contains("company_gift")) {
+            //装修礼包
+            web.setTitle("装修大礼包");
+            web.setDescription("土拨鼠10周年庆，三重装修大礼回馈业主！");
+        } else {
+            web.setTitle("住家装修");
+            web.setDescription("" + newWebviewTitle.getText());
+        }
+
+        new ShareAction(this).withMedia(web)
+                .setDisplayList(SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.WEIXIN, SHARE_MEDIA.QQ)
+                .setCallback(umShareListener).open();
+    }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onStart(SHARE_MEDIA share_media) {
+
+        }
+
+        @Override
+        public void onResult(SHARE_MEDIA share_media) {
+
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA share_media) {
+
+        }
+    };
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

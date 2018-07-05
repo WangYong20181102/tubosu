@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tbs_mj.R;
+import com.tbs.tbs_mj.activity.BandPhoneActivity;
 import com.tbs.tbs_mj.activity.CheckPhoneNumActivity;
 import com.tbs.tbs_mj.activity.NewLoginActivity;
 import com.tbs.tbs_mj.base.BaseFragment;
@@ -216,7 +217,7 @@ public class NewLoginFragmentAccount extends BaseFragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String json = new String(response.body().string());
-                Log.e(TAG, "数据获取成功=========" + json);
+                Log.e(TAG, "登录数据获取成功=========" + json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     final String msg = jsonObject.optString("msg");
@@ -227,6 +228,19 @@ public class NewLoginFragmentAccount extends BaseFragment {
                         AppInfoUtil.setUserMd5PassWord(mContext, Md5Password);
                         String data = jsonObject.optString("data");
                         saveUserInfo(data);
+                    } else if (status.equals("206")) {
+                        //用户未绑定手机号码跳转到绑定页面
+                        JSONObject data = jsonObject.optJSONObject("data");
+                        AppInfoUtil.setUserBindId(mContext, data.optString("uid"));
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.e(TAG, "用户绑定所用的id======" + AppInfoUtil.getUserBindId(mContext));
+                                startActivity(new Intent(mContext, BandPhoneActivity.class));
+                            }
+                        });
+
+
                     } else {
                         umShareAPI.deleteOauth(getActivity(), SHARE_MEDIA.WEIXIN, null);
                         getActivity().runOnUiThread(new Runnable() {
@@ -246,6 +260,8 @@ public class NewLoginFragmentAccount extends BaseFragment {
 
     //微信号登录
     private void weiXinLogin() {
+        //清除之前的微信用户的信息
+        umShareAPI.deleteOauth(getActivity(), SHARE_MEDIA.WEIXIN, null);
         umShareAPI.getPlatformInfo(getActivity(), SHARE_MEDIA.WEIXIN, new UMAuthListener() {
             @Override
             public void onStart(SHARE_MEDIA share_media) {
@@ -256,7 +272,7 @@ public class NewLoginFragmentAccount extends BaseFragment {
             public void onComplete(SHARE_MEDIA share_media, int i, Map<String, String> map) {
                 String weiXinUserName = map.get("name");//微信的昵称
                 String weiXinImageUrl = map.get("iconurl");//微信的头像
-                String weiXinUserId = map.get("unionid");//微信的openid  unionid打通用户在同一平台开发
+                String weiXinUserId = map.get("unionid");//微信的 unionid打通用户在同一平台开发
                 Log.e("微信的配置信息", "==================" + map.toString());
                 HttpWeixinLogin(weiXinUserId, weiXinUserName, weiXinImageUrl);
             }
@@ -277,10 +293,10 @@ public class NewLoginFragmentAccount extends BaseFragment {
     }
 
     //微信登录
-    private void HttpWeixinLogin(String openid, String nickname, String icon) {
+    private void HttpWeixinLogin(String unionid, String nickname, String icon) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
-        param.put("openid", openid);
+        param.put("unionid", unionid);
         param.put("nickname", nickname);
         param.put("icon", icon);
         param.put("version", AppInfoUtil.getAppVersionName(mContext));
@@ -288,7 +304,7 @@ public class NewLoginFragmentAccount extends BaseFragment {
         param.put("chcode", AppInfoUtil.getChannType(mContext));
         param.put("system_type", "1");
         param.put("device_id", SpUtil.getPushRegisterId(mContext));
-        Log.e(TAG, "微信登录的参数=============openid====" + openid + "===nickname===" + nickname + "===version===" + AppInfoUtil.getAppVersionName(mContext) + "==city_name==" + SpUtil.getCity(mContext) + "==icon==" + icon);
+        Log.e(TAG, "微信登录的参数=============openid====" + unionid + "===nickname===" + nickname + "===version===" + AppInfoUtil.getAppVersionName(mContext) + "==city_name==" + SpUtil.getCity(mContext) + "==icon==" + icon);
         OKHttpUtil.post(Constant.WECHAT_LOGIN, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -312,6 +328,18 @@ public class NewLoginFragmentAccount extends BaseFragment {
                         //微信登录成功 解析数据
                         String data = jsonObject.optString("data");
                         saveUserInfo(data);
+                    } else if (status.equals("206")) {
+                        //用户未绑定手机号码
+                        //用户未绑定手机号码跳转到绑定页面
+                        JSONObject data = jsonObject.optJSONObject("data");
+                        AppInfoUtil.setUserBindId(mContext, data.optString("uid"));
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.e(TAG, "用户绑定所用的id======" + AppInfoUtil.getUserBindId(mContext));
+                                startActivity(new Intent(mContext, BandPhoneActivity.class));
+                            }
+                        });
                     } else if (status.equals("0")) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -350,38 +378,12 @@ public class NewLoginFragmentAccount extends BaseFragment {
         AppInfoUtil.setUserIsNewSms(getActivity(), mUser.getIs_new_sms() + "");//用户是否有新消息  1-有  0-无
 
         Log.e(TAG, "获取用户的订单数量=========mUser.getOrder_count()=======" + mUser.getOrder_count());
+        Log.e(TAG, "获取用户的mUser.getToken()=========mUser.getToken()=======" + mUser.getToken());
         Log.e(TAG, "获取用户的订单数量=========AppInfoUtil.getUserOrder_count=======" + AppInfoUtil.getUserOrder_count(mContext));
         CacheManager.setDecorateBudget(getActivity(), mUser.getExpected_cost());//装修日志的花费
 
-        //推送上线
-        initPushEvent();
         // TODO: 2018/1/10 登录成功并且将数据存储成功之后通知将这个页面销毁
         EventBusUtil.sendEvent(new Event(EC.EventCode.CLOSE_NEW_LOGIN_ACTIVITY));
     }
 
-
-    //定点推送相关
-    private void initPushEvent() {
-        if (!TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {
-            //用户已经登录
-            HashMap<String, Object> param = new HashMap<>();
-            param.put("user_id", AppInfoUtil.getId(mContext));
-            param.put("user_type", AppInfoUtil.getTypeid(mContext));
-            param.put("system_type", "1");
-            param.put("app_type", "4");
-            param.put("device_id", SpUtil.getPushRegisterId(mContext));
-            OKHttpUtil.post(Constant.FLUSH_SMS_PUSH, param, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.e(TAG, "链接失败===============" + e.getMessage());
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    String json = new String(response.body().string());
-                    Log.e(TAG, "推送相关数据链接成功===========" + json);
-                }
-            });
-        }
-    }
 }

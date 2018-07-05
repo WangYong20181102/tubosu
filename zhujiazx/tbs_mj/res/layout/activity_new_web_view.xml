@@ -10,9 +10,9 @@
 
     <RelativeLayout
         android:id="@+id/new_webview_banner_rl"
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/new_webview_back"
@@ -38,6 +38,19 @@
             android:text=""
             android:textColor="#000000"
             android:textSize="17sp" />
+        <!--分享-->
+        <RelativeLayout
+            android:id="@+id/new_webview_share"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/share_mine" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <View

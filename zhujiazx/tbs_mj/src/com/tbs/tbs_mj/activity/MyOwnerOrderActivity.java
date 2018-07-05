@@ -92,7 +92,9 @@ public class MyOwnerOrderActivity extends Activity {
         rel_myowner_order_bar = (RelativeLayout) findViewById(R.id.rel_myowner_order_bar);
         myownerorder_loading = (LinearLayout) findViewById(R.id.ll_loading);
         token = AppInfoUtil.getToekn(getApplicationContext());
+        Log.e(TAG, "业主查看订单所需要的token=========" + token);
         if (!TextUtils.isEmpty(token)) {
+            Log.e(TAG, "进入请求数据方法=======================");
             params = AppInfoUtil.getPublicHashMapParams(getApplicationContext());
             params.put("token", token);
             requestMyOwnerOderPost();
@@ -239,11 +241,11 @@ public class MyOwnerOrderActivity extends Activity {
      * 获取业主订单列表接口的请求方法
      */
     private void requestMyOwnerOderPost() {
-
+        Log.e(TAG, "已进入请求数据的方法================");
         OKHttpUtil.post(Constant.MY_OWNER_ODER_URL, params, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                Log.e(TAG, "获取业主订单失败=============" + e.getMessage());
             }
 
             @Override
@@ -252,7 +254,7 @@ public class MyOwnerOrderActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-//						Log.d("MyOwnerOrderActivity", result);
+                        Log.d("MyOwnerOrderActivity", "获取的数据==========================" + result);
                         ArrayList<HashMap<String, String>> temDataList = new ArrayList<HashMap<String, String>>();
                         Log.d(TAG, result);
                         //解析json成数据
