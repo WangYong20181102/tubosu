@@ -62,6 +62,7 @@ import com.tbs.tbs_mj.utils.EventBusUtil;
 import com.tbs.tbs_mj.utils.SpUtil;
 import com.tbs.tbs_mj.utils.ToastUtil;
 import com.tbs.tbs_mj.utils.Util;
+import com.tbs.tbs_mj.web.AcWebActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1031,7 +1032,12 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                     if (!"".equals(h5Url)) {
                         Bundle b = new Bundle();
                         b.putString("link", h5Url);
-                        it = new Intent(mContext, WebViewActivity.class);
+                        // TODO: 2018/7/6 10周年活动所需要的跳转
+                        if (h5Url.contains(Constant.TEN_YEARS_ACTIVITY)) {
+                            it = new Intent(mContext, AcWebActivity.class);
+                        } else {
+                            it = new Intent(mContext, WebViewActivity.class);
+                        }
                         it.putExtras(b);
                     } else {
                         it = new Intent(mContext, GetPriceActivity.class);

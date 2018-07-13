@@ -90,7 +90,9 @@ public class CheckPhoneNumActivity extends com.tbs.tbs_mj.base.BaseActivity {
                 break;
             case R.id.check_next_step_btn:
                 //下一步 （在此之前校验手机号和验证码的正确性）
-                if (!TextUtils.isEmpty(checkPhoneNum.getText().toString())) {
+                if (!TextUtils.isEmpty(checkPhoneNum.getText().toString())
+                        && checkPhoneNum.getText().toString().length() == 11) {
+
                     if (!TextUtils.isEmpty(checkCodeNum.getText().toString())) {
                         if (checkCodeNum.getText().toString().length() == 6) {
                             HttpCheckPhoneNumAndCode(checkPhoneNum.getText().toString(), checkCodeNum.getText().toString());
@@ -100,8 +102,10 @@ public class CheckPhoneNumActivity extends com.tbs.tbs_mj.base.BaseActivity {
                     } else {
                         Toast.makeText(mContext, "请输入验证码", Toast.LENGTH_SHORT).show();
                     }
-                } else {
+                } else if (TextUtils.isEmpty(checkPhoneNum.getText().toString())) {
                     Toast.makeText(mContext, "请输入您的手机号", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(mContext, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -305,12 +309,12 @@ public class CheckPhoneNumActivity extends com.tbs.tbs_mj.base.BaseActivity {
             } else {
                 isTimeDown = false;
                 if (checkGetCode != null) {
-                    checkGetCode.setTextColor(Color.parseColor("#ff6c20"));
+                    checkGetCode.setTextColor(Color.parseColor("#54b3b3"));
                     checkGetCode.setTextSize(12);
                     GradientDrawable gradientDrawable = new GradientDrawable();
                     gradientDrawable.setColor(Color.parseColor("#ffffff"));
                     gradientDrawable.setCornerRadius(2);
-                    gradientDrawable.setStroke(1, Color.parseColor("#ff6c20"));
+                    gradientDrawable.setStroke(1, Color.parseColor("#54b3b3"));
                     checkGetCode.setBackground(gradientDrawable);
                     checkGetCode.setText("重新获取");
                     checkGetCode.setEnabled(true);

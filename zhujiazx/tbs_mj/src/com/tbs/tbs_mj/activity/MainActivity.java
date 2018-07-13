@@ -39,6 +39,7 @@ import com.tbs.tbs_mj.utils.AppInfoUtil;
 
 import com.tbs.tbs_mj.utils.SpUtil;
 import com.tbs.tbs_mj.utils.Util;
+import com.tbs.tbs_mj.web.AcWebActivity;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -428,15 +429,15 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         main_tab_image = (RelativeLayout) this.findViewById(R.id.main_tab_image);
         main_tab_image.setOnClickListener(this);
         // TODO: 2017/12/16  专门用来做测试
-        main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-//                Intent gotoLearnActivity = new Intent(mContext, GuideOneActivity.class);
-////                gotoLearnActivity.putExtra("mLoadingUrl", "http://m.dev.tobosu.com/szs/zx/?app_type=1");
+//        main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                Intent gotoLearnActivity = new Intent(mContext, AcWebActivity.class);
+//                gotoLearnActivity.putExtra("mLoadingUrl", Constant.TEN_YEARS_ACTIVITY);
 //                mContext.startActivity(gotoLearnActivity);
-                return true;
-            }
-        });
+//                return true;
+//            }
+//        });
         main_tab_decorate = (RelativeLayout) this.findViewById(R.id.main_tab_decorate);
         main_tab_decorate.setOnClickListener(this);
         main_tab_my = (RelativeLayout) this.findViewById(R.id.main_tab_my);

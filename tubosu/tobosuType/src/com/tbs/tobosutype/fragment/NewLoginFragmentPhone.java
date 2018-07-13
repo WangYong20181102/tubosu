@@ -1,6 +1,7 @@
 package com.tbs.tobosutype.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.activity.BandPhoneActivity;
 import com.tbs.tobosutype.activity.CoPresonerMsgActivity;
 import com.tbs.tobosutype.activity.NewLoginActivity;
 import com.tbs.tobosutype.activity.PresonerMsgActivity;
@@ -234,6 +236,9 @@ public class NewLoginFragmentPhone extends BaseFragment {
 
     //微信号登录
     private void weiXinLogin() {
+        //清除之前的微信用户的信息
+        umShareAPI.deleteOauth(getActivity(), SHARE_MEDIA.WEIXIN, null);
+        //开始微信登录
         umShareAPI.getPlatformInfo(getActivity(), SHARE_MEDIA.WEIXIN, new UMAuthListener() {
             @Override
             public void onStart(SHARE_MEDIA share_media) {
@@ -304,6 +309,18 @@ public class NewLoginFragmentPhone extends BaseFragment {
                             @Override
                             public void run() {
                                 saveUserInfo(data);
+                            }
+                        });
+                    } else if (status.equals("206")) {
+                        //用户未绑定手机号码
+                        //用户未绑定手机号码跳转到绑定页面
+                        JSONObject data = jsonObject.optJSONObject("data");
+                        AppInfoUtil.setUserBindId(mContext, data.optString("uid"));
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.e(TAG, "用户绑定所用的id======" + AppInfoUtil.getUserBindId(mContext));
+                                startActivity(new Intent(mContext, BandPhoneActivity.class));
                             }
                         });
                     } else if (status.equals("0")) {

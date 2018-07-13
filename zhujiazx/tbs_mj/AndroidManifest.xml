@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.tbs.tbs_mj"
-    android:versionCode="3"
-    android:versionName="1.1.1">
+    android:versionCode="4"
+    android:versionName="1.2.0">
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -630,7 +630,8 @@
         <activity android:name=".activity.GuideOneActivity" />
         <activity android:name=".activity.GuideTwoActivity" />
         <activity android:name=".activity.GuideThreeActivity" />
-        <activity android:name=".activity.GuideFourActivity"></activity>
+        <activity android:name=".activity.GuideFourActivity" />
+        <activity android:name=".web.AcWebActivity"></activity>
     </application>
 
 </manifest>

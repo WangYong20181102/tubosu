@@ -19,10 +19,10 @@ public class Constant {
      * todo 全局正式环境**********************************************************************************
      */
 //    //接口地址
-//    public static final String TOBOSU_URL = "https://www.tobosu.com/";
-//    //数据流上传接口 正式
+    public static final String TOBOSU_URL = "https://www.tobosu.com/";
+    //    //数据流上传接口 正式
     public static final String TBS_DATA_STREAM = "https://www.tobosu.com/trace";
-//    //M站 发单跳转 线上环境
+    //    //M站 发单跳转 线上环境
     public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
 
 
@@ -30,7 +30,7 @@ public class Constant {
      * todo 全局测试dev环境**********************************************************************************
      */
     //接口地址
-    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
     //dev点击流上传接口
 //    public static final String TBS_DATA_STREAM = "http://trace.dev.tobosu.com/";
     //M站test接口
@@ -66,7 +66,7 @@ public class Constant {
     public static final String IMG_PATH = Environment.getExternalStorageDirectory() + "/tbs_adpic/";
 
     //欢迎页
-    public static final  String SURVIVAL_URL =TOBOSU_URL + "resapp/DataCount/survival_count";
+    public static final String SURVIVAL_URL = TOBOSU_URL + "resapp/DataCount/survival_count";
 
 
     //下载存储路径
@@ -258,16 +258,22 @@ public class Constant {
     //免费报价 配置App类型
     public static final String FREE_PRICE_PAGE = M_TOBOSU_URL + "zjfree_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
     //免费设计
-    public static final String QUOTE = M_TOBOSU_URL + "zjquote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE+ "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());;
+    public static final String QUOTE = M_TOBOSU_URL + "zjquote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
+    ;
     //装修公司推荐
-    public static final String REC_COMPANY = M_TOBOSU_URL + "zjrec_company?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE+ "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());;
+    public static final String REC_COMPANY = M_TOBOSU_URL + "zjrec_company?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
+    ;
     //装修大礼包  这个在住家装修中没有用到  免费量房去掉了
-    public static final String COMPANY_GIFT = M_TOBOSU_URL + "zjcompany_gift?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE+ "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());;
+    public static final String COMPANY_GIFT = M_TOBOSU_URL + "zjcompany_gift?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
+    ;
     //发单地址
-    public static final String FREE_DESIGN = M_TOBOSU_URL + "zjfree_design?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE+ "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());;
+    public static final String FREE_DESIGN = M_TOBOSU_URL + "zjfree_design?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
+    ;
     //优惠活动
-    public static final String PROMOTIONS = M_TOBOSU_URL + "zjpromotions?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE+ "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());;
-
+    public static final String PROMOTIONS = M_TOBOSU_URL + "zjpromotions?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
+    ;
+    //10周年活动   测试连接http://m.dev.tobosu.com/test_app/
+    public static final String TEN_YEARS_ACTIVITY = M_TOBOSU_URL + "signing_gifts/";
 
     //新的逛图库 套图
     public static final String SUITE_LIST = TOBOSU_URL + "resapp/impression/suite_list";

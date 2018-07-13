@@ -6,7 +6,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.tbs.tbs_mj.global.Constant;
 import com.tbs.tbs_mj.utils.Util;
+import com.tbs.tbs_mj.web.AcWebActivity;
 import com.tbs.tbs_mj.web.PushAppNotStartWebActivity;
 import com.tbs.tbs_mj.web.PushAppStartWebActivity;
 import com.xiaomi.mipush.sdk.ErrorCode;
@@ -94,7 +96,14 @@ public class MyXiaomiPushReceiver extends PushMessageReceiver {
                 } else if (notice_type.equals("2")) {
                     //推送文章页
                     if (message.getExtra().containsKey("url")) {
-                        Intent intentToNotStartWebActivity = new Intent(context, PushAppNotStartWebActivity.class);
+                        // TODO: 2018/7/6 10周年活动
+                        Intent intentToNotStartWebActivity;
+                        if (message.getExtra().get("url").contains(Constant.TEN_YEARS_ACTIVITY)) {
+                            intentToNotStartWebActivity = new Intent(context, AcWebActivity.class);
+                            intentToNotStartWebActivity.putExtra("mWhereFrom", "MyXiaomiPushReceiver");
+                        } else {
+                            intentToNotStartWebActivity = new Intent(context, PushAppNotStartWebActivity.class);
+                        }
                         //有url链接才能启动
                         intentToNotStartWebActivity.putExtra("mLoadingUrl", message.getExtra().get("url"));
                         //是否包含tag
@@ -159,7 +168,13 @@ public class MyXiaomiPushReceiver extends PushMessageReceiver {
                 } else if (notice_type.equals("2")) {
                     //推送文章页
                     if (message.getExtra().containsKey("url")) {
-                        Intent intentToStartWebActivity = new Intent(context, PushAppStartWebActivity.class);
+                        Intent intentToStartWebActivity;
+                        // TODO: 2018/7/6 10周年活动
+                        if (message.getExtra().get("url").contains(Constant.TEN_YEARS_ACTIVITY)) {
+                            intentToStartWebActivity = new Intent(context, AcWebActivity.class);
+                        } else {
+                            intentToStartWebActivity = new Intent(context, PushAppStartWebActivity.class);
+                        }
                         //有url链接才能启动
                         intentToStartWebActivity.putExtra("mLoadingUrl", message.getExtra().get("url"));
                         //是否包含tag

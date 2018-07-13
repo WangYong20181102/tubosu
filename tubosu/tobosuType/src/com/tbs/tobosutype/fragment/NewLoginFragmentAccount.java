@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.activity.BandPhoneActivity;
 import com.tbs.tobosutype.activity.CheckPhoneNumActivity;
 import com.tbs.tobosutype.activity.NewLoginActivity;
 import com.tbs.tobosutype.base.BaseFragment;
@@ -227,6 +228,19 @@ public class NewLoginFragmentAccount extends BaseFragment {
                         AppInfoUtil.setUserMd5PassWord(mContext, Md5Password);
                         String data = jsonObject.optString("data");
                         saveUserInfo(data);
+                    } else if (status.equals("206")) {
+                        //用户未绑定手机号码跳转到绑定页面
+                        JSONObject data = jsonObject.optJSONObject("data");
+                        AppInfoUtil.setUserBindId(mContext, data.optString("uid"));
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.e(TAG, "用户绑定所用的id======" + AppInfoUtil.getUserBindId(mContext));
+                                startActivity(new Intent(mContext, BandPhoneActivity.class));
+                            }
+                        });
+
+
                     } else {
                         umShareAPI.deleteOauth(getActivity(), SHARE_MEDIA.WEIXIN, null);
                         getActivity().runOnUiThread(new Runnable() {
@@ -312,6 +326,18 @@ public class NewLoginFragmentAccount extends BaseFragment {
                         //微信登录成功 解析数据
                         String data = jsonObject.optString("data");
                         saveUserInfo(data);
+                    } else if (status.equals("206")) {
+                        //用户未绑定手机号码
+                        //用户未绑定手机号码跳转到绑定页面
+                        JSONObject data = jsonObject.optJSONObject("data");
+                        AppInfoUtil.setUserBindId(mContext, data.optString("uid"));
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.e(TAG, "用户绑定所用的id======" + AppInfoUtil.getUserBindId(mContext));
+                                startActivity(new Intent(mContext, BandPhoneActivity.class));
+                            }
+                        });
                     } else if (status.equals("0")) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override

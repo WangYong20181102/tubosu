@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AndroidWeb联调测试页面</title>
+    <script>
+
+        //一开始执行的代码获取App的userId
+        function getUserIdFromApp(){
+            linkAppGetUserId.sendUserIdToWeb();
+        }
+        //App端调用前端的方法，把userId传给前端
+        function userIsLogin(userId){
+            alert("用户已经登录====="+userId);
+        }
+        //调起App的原生登录功能
+        function callAppLogin(){
+            linkAppCallAppLogin.callAppLogin();
+        }
+
+
+    </script>
+</head>
+<body>
+
+<button type="button" id="button1" onclick="callAppLogin()">调用Android登录</button>
+
+</body>
+</html>

@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tbs.tbs_mj.R;
+import com.tbs.tbs_mj.global.Constant;
 import com.tbs.tbs_mj.utils.AppInfoUtil;
 import com.tbs.tbs_mj.utils.CacheManager;
 import com.tbs.tbs_mj.utils.Util;
+import com.tbs.tbs_mj.web.AcWebActivity;
 import com.tbs.tbs_mj.web.AdvWebActivity;
 
 import java.util.Timer;
@@ -51,7 +53,14 @@ public class LoadingActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             if (mJumpUrl != null && !TextUtils.isEmpty(mJumpUrl)) {
-                Intent intentToWebActivity = new Intent(mContext, AdvWebActivity.class);
+                Intent intentToWebActivity;
+                // TODO: 2018/7/6 10周年活动跳转
+                if (mJumpUrl.contains(Constant.TEN_YEARS_ACTIVITY)) {
+                    intentToWebActivity = new Intent(mContext, AcWebActivity.class);
+                    intentToWebActivity.putExtra("mWhereFrom", "LoadingActivity");
+                } else {
+                    intentToWebActivity = new Intent(mContext, AdvWebActivity.class);
+                }
                 intentToWebActivity.putExtra("mLoadingUrl", mJumpUrl);
                 startActivity(intentToWebActivity);
                 timer.cancel();

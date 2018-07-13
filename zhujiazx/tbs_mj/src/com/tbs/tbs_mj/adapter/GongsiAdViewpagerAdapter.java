@@ -1,4 +1,5 @@
 package com.tbs.tbs_mj.adapter;
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -40,7 +41,7 @@ public class GongsiAdViewpagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        if(position<viewList.size()){
+        if (position < viewList.size()) {
             ((ViewPager) container).removeView(viewList.get(position));
         }
 
@@ -53,9 +54,14 @@ public class GongsiAdViewpagerAdapter extends PagerAdapter {
 
             @Override
             public void onClick(View v) {
-                if(position<urlStrings.size()){
+                if (position < urlStrings.size()) {
                     setClickRequest(clickId.get(position));
-                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
+                    Intent webIntent;
+                    if (urlStrings.get(position).contains(Constant.TEN_YEARS_ACTIVITY)) {
+                        webIntent = new Intent(context, NewWebViewActivity.class);
+                    } else {
+                        webIntent = new Intent(context, NewWebViewActivity.class);
+                    }
                     webIntent.putExtra("mLoadingUrl", urlStrings.get(position));
                     Util.setErrorLog("装修公司viewpagerAdapter", urlStrings.get(position));
                     context.startActivity(webIntent);
@@ -67,7 +73,7 @@ public class GongsiAdViewpagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return viewList == null? 0:viewList.size();
+        return viewList == null ? 0 : viewList.size();
     }
 
     @Override
@@ -75,8 +81,8 @@ public class GongsiAdViewpagerAdapter extends PagerAdapter {
         return view == object;
     }
 
-    private void setClickRequest(String id){
-        if(Util.isNetAvailable(context)){
+    private void setClickRequest(String id) {
+        if (Util.isNetAvailable(context)) {
             HashMap<String, Object> para = new HashMap<String, Object>();
             para.put("token", Util.getDateToken());
             para.put("id", id);

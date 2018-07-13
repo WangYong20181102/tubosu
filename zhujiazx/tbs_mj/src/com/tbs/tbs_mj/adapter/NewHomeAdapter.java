@@ -62,6 +62,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 import com.tbs.tbs_mj.bean._ImageD;
+import com.tbs.tbs_mj.web.AcWebActivity;
 
 /**
  * Created by Lie on 2017/04/23.
@@ -249,7 +250,12 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     fadanClick("1011", Utils.getIp(context));
-                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
+                    Intent webIntent;
+                    if (SpUtil.getzjzxaj04(context).contains(Constant.TEN_YEARS_ACTIVITY)) {
+                        webIntent =new Intent(context, AcWebActivity.class);
+                    } else {
+                        webIntent =new Intent(context, NewWebViewActivity.class);
+                    }
                     webIntent.putExtra("mLoadingUrl", SpUtil.getzjzxaj04(context));
                     context.startActivity(webIntent);
                 }
@@ -630,7 +636,13 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onClick(View v) {
                     bannerClick(dataSource.getBanner().get(position).getId());
-                    Intent webIntent = new Intent(context, NewWebViewActivity.class);
+                    Intent webIntent;
+                    // TODO: 2018/7/6 10周年活动跳转
+                    if (urlStrings.get(position).contains(Constant.TEN_YEARS_ACTIVITY)) {
+                        webIntent = new Intent(context, AcWebActivity.class);
+                    } else {
+                        webIntent = new Intent(context, NewWebViewActivity.class);
+                    }
                     webIntent.putExtra("mLoadingUrl", urlStrings.get(position));
                     context.startActivity(webIntent);
                 }

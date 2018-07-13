@@ -90,7 +90,8 @@ public class CheckPhoneNumActivity extends com.tbs.tobosutype.base.BaseActivity 
                 break;
             case R.id.check_next_step_btn:
                 //下一步 （在此之前校验手机号和验证码的正确性）
-                if (!TextUtils.isEmpty(checkPhoneNum.getText().toString())) {
+                if (!TextUtils.isEmpty(checkPhoneNum.getText().toString())
+                        && checkPhoneNum.getText().toString().length() == 11) {
                     if (!TextUtils.isEmpty(checkCodeNum.getText().toString())) {
                         if (checkCodeNum.getText().toString().length() == 6) {
                             HttpCheckPhoneNumAndCode(checkPhoneNum.getText().toString(), checkCodeNum.getText().toString());
@@ -100,8 +101,10 @@ public class CheckPhoneNumActivity extends com.tbs.tobosutype.base.BaseActivity 
                     } else {
                         Toast.makeText(mContext, "请输入验证码", Toast.LENGTH_SHORT).show();
                     }
-                } else {
+                } else if (TextUtils.isEmpty(checkPhoneNum.getText().toString())) {
                     Toast.makeText(mContext, "请输入您的手机号", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(mContext, "请输入正确的手机号", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
