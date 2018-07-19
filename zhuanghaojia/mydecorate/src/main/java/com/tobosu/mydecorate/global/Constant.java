@@ -13,16 +13,16 @@ public class Constant {
     /**
      * 正式环境
      */
-    public static final String ZHJ = "https://www.tobosu.com/";
+//    public static final String ZHJ = "https://www.tobosu.com/";
     /**
      * 测试环境
      */
-//    public static final String ZHJ = "http://www.dev.tobosu.com/";
+    public static final String ZHJ = "http://www.dev.tobosu.com/";
 
     /**
      * M站 发单跳转 线上环境
      */
-    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
+//    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
     /**
      * test 环境
      */
@@ -31,7 +31,7 @@ public class Constant {
     /**
      * M站 发单跳转 dev环境
      */
-//        public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
+        public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
 
 
     //数据点击流上传地址
@@ -39,11 +39,11 @@ public class Constant {
     /**
      * 免费设计发单链接
      */
-    public static final String FREE_DISIGN_FADAN = M_TOBOSU_URL + "quote?channel=app&subchannel=zhjandroid&chcode=" + Util.getChannType(MyApplication.getContexts()) + "&app_type=2";
+    public static final String FREE_DISIGN_FADAN = M_TOBOSU_URL + "quote?channel=app&subchannel=android&tsbchcode=" + Util.getChannType(MyApplication.getContexts()) + "&app_type=2";
     /**
      * 免费报价链接
      */
-    public static final String FREE_BAOJIA_FADAN = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=zhjandroid&chcode=" + Util.getChannType(MyApplication.getContexts()) + "&app_type=2";
+    public static final String FREE_BAOJIA_FADAN = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&tbschcode=" + Util.getChannType(MyApplication.getContexts()) + "&app_type=2";
 
     public static final String APP_TYPE = "&app_type=2";
 
@@ -111,7 +111,7 @@ public class Constant {
     public static final String _SHARE_URL = "http://m.tobosu.com/mt/";
 
     //    public static final String SOCAIL_SHARE = "?channel=seo&subchannel=zhjandroid&chcode="+ Constant.CHANNEL_TYPE +"&tbsfrom=share";
-    public static final String SOCAIL_SHARE = "?channel=seo&subchannel=zhjandroid&chcode=" + Util.getChannType(MyApplication.getContexts()) + "&tbsfrom=share";
+    public static final String SOCAIL_SHARE = "?channel=app&subchannel=android&tbschcode=" + Util.getChannType(MyApplication.getContexts()) + "&tbsfrom=share";
 
     public static final String XINGE_APP_ACCESS_ID = "2100240588";
     public static final String XINGE_APP_ACCESS_KEY = "APX5Z466T2YA";
@@ -127,11 +127,11 @@ public class Constant {
      * app_type 1是土拨鼠
      * 2是装好家
      */
-    public static final String PIPE_CODE = "http://m.tobosu.com/app/pub?channel=seo&subchannel=zhjandroid&chcode=" + Util.getChannType(MyApplication.getContexts()) + "&app_type=2";
+    public static final String PIPE_CODE = M_TOBOSU_URL + "app/pub?channel=app&subchannel=android&tbschcode=" + Util.getChannType(MyApplication.getContexts()) + "&app_type=2";
     //****************************************************** creat by lin
     public static final String DESCRIPTOR = "com.umeng.share";
-    public static final String ANDROID_SHARE = "&channel=seo&subchannel=android&chcode=" + Util.getChannType(MyApplication.getContexts()) + "&tbsfrom=share";
-    public static final String CALCULATER_SHARE_URL = "http://m.tobosu.com/app/share_h5?";
+    public static final String ANDROID_SHARE = "&channel=app&subchannel=android&tbschcode=" + Util.getChannType(MyApplication.getContexts()) + "&tbsfrom=share";
+    public static final String CALCULATER_SHARE_URL = M_TOBOSU_URL+"app/share_h5?";
     /**
      * 装好家首页请求的接口
      */
@@ -261,7 +261,8 @@ public class Constant {
     //免费报价
     public static final String FREE_PRICE_PAGE = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContexts()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContexts());
     //免费设计
-    public static final String QUOTE = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContexts()) + APP_TYPE+ "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContexts());;
+    public static final String QUOTE = M_TOBOSU_URL + "quote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContexts()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContexts());
+    ;
 
 
 }

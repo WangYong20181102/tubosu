@@ -106,7 +106,7 @@ public class WebViewActivity extends com.tbs.tbs_mj.base.BaseActivity {
     private void initData() {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        url = bundle.getString("link");
+        url = bundle.getString("mLoadingUrl");
         Log.d(TAG, "传过来的url是" + url);
         webView.getSettings().setJavaScriptEnabled(true);
 //		webView.setWebViewClient(new WebViewClient());

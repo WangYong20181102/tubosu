@@ -1031,7 +1031,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                     Intent it = null;
                     if (!"".equals(h5Url)) {
                         Bundle b = new Bundle();
-                        b.putString("link", h5Url);
+                        b.putString("mLoadingUrl", h5Url);
                         // TODO: 2018/7/6 10周年活动所需要的跳转
                         if (h5Url.contains(Constant.TEN_YEARS_ACTIVITY)) {
                             it = new Intent(mContext, AcWebActivity.class);

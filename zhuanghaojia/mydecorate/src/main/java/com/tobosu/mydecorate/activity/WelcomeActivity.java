@@ -141,7 +141,9 @@ public class WelcomeActivity extends BaseActivity {
         initStatisticsEvent();
         // TODO: 2018/2/27 开始倒计时传数据
         Util.sendEventByTimeKill();
-
+        //获取配置信息
+        getAppConfig();
+        //初始化数据
         initData();
     }
 
@@ -166,13 +168,13 @@ public class WelcomeActivity extends BaseActivity {
                     }
                     //存储数据
                     if (urlMap.containsKey("zhjaj01") && !TextUtils.isEmpty(urlMap.get("zhjaj01"))) {
-                        SpUtil.setzhjaj01(mContext,urlMap.get("zhjaj01"));
+                        SpUtil.setzhjaj01(mContext, urlMap.get("zhjaj01"));
                     }
                     if (urlMap.containsKey("zhjaj02") && !TextUtils.isEmpty(urlMap.get("zhjaj02"))) {
-                        SpUtil.setzhjaj02(mContext,urlMap.get("zhjaj02"));
+                        SpUtil.setzhjaj02(mContext, urlMap.get("zhjaj02"));
                     }
                     if (urlMap.containsKey("zhjaj03") && !TextUtils.isEmpty(urlMap.get("zhjaj03"))) {
-                        SpUtil.setzhjaj03(mContext,urlMap.get("zhjaj03"));
+                        SpUtil.setzhjaj03(mContext, urlMap.get("zhjaj03"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
