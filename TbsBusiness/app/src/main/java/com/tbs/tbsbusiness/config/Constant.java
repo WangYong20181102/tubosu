@@ -5,11 +5,14 @@ package com.tbs.tbsbusiness.config;
  */
 public class Constant {
     // TODO: 2018/6/2 正式环境
-    public static final String TOBOSU_URL = "https://www.tobosu.com/";
+//    public static final String TOBOSU_URL = "https://www.tobosu.com/";
 
     // TODO: 2018/6/2 dev环境
-//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
+
+    //微信的Appid
+    public static final String WEIXIN_APP_ID = "wxf35d53207d312279";
 
     //获取短信验证码
     public static final String DUANXIN_URL = TOBOSU_URL + "comapp/SmsCode/send_sms_code";
@@ -65,5 +68,6 @@ public class Constant {
     public static final String GET_ORDER_NOTICE = TOBOSU_URL + "comapp/smsPushRecord/index";
     //消息已读
     public static final String READ_SMS_PUSH = TOBOSU_URL + "comapp/smsPushRecord/read_sms_push";
-
+    //登录信息是否已修改
+    public static final String LOGIN_CHECK_INFO = TOBOSU_URL + "comapp/login/check_info";
 }

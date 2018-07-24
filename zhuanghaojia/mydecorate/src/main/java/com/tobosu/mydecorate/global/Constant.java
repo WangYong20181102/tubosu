@@ -13,16 +13,16 @@ public class Constant {
     /**
      * 正式环境
      */
-//    public static final String ZHJ = "https://www.tobosu.com/";
+    public static final String ZHJ = "https://www.tobosu.com/";
     /**
      * 测试环境
      */
-    public static final String ZHJ = "http://www.dev.tobosu.com/";
+//    public static final String ZHJ = "http://www.dev.tobosu.com/";
 
     /**
      * M站 发单跳转 线上环境
      */
-//    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
+    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
     /**
      * test 环境
      */
@@ -31,7 +31,7 @@ public class Constant {
     /**
      * M站 发单跳转 dev环境
      */
-        public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
+//    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
 
 
     //数据点击流上传地址
@@ -121,17 +121,17 @@ public class Constant {
     /**
      * banner链接拼接的内容
      */
-    public static final String BANNER_STRING = "?channel=seo&subchannel=zhjandroid&from=banner";
+    public static final String BANNER_STRING = "?channel=app&subchannel=zhjandroid&from=banner";
 
     /**
      * app_type 1是土拨鼠
      * 2是装好家
      */
-    public static final String PIPE_CODE = M_TOBOSU_URL + "app/pub?channel=app&subchannel=android&tbschcode=" + Util.getChannType(MyApplication.getContexts()) + "&app_type=2";
+    public static final String PIPE_CODE = M_TOBOSU_URL + "app/pub?channel=app&subchannel=android&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContexts()) + "&app_type=2" + "&chcode=" + Util.getChannType(MyApplication.getContexts());
     //****************************************************** creat by lin
     public static final String DESCRIPTOR = "com.umeng.share";
     public static final String ANDROID_SHARE = "&channel=app&subchannel=android&tbschcode=" + Util.getChannType(MyApplication.getContexts()) + "&tbsfrom=share";
-    public static final String CALCULATER_SHARE_URL = M_TOBOSU_URL+"app/share_h5?";
+    public static final String CALCULATER_SHARE_URL = M_TOBOSU_URL + "app/share_h5?";
     /**
      * 装好家首页请求的接口
      */

@@ -205,7 +205,7 @@ public class LoginFragmentPhone extends BaseFragment {
     }
 
     //微信登录
-    private void HttpWeixinLogin(String unionid) {
+    private void HttpWeixinLogin(final String unionid) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         param.put("unionid", unionid);
@@ -234,6 +234,8 @@ public class LoginFragmentPhone extends BaseFragment {
                     if (status.equals("200")) {
                         //微信登录成功 解析数据
                         String data = jsonObject.optString("data");
+                        SpUtil.setUserLoginType(mContext, "2");
+                        SpUtil.setUserLoginAccount(mContext, unionid);
                         saveUserInfo(data);
                     } else if (status.equals("0")) {
                         getActivity().runOnUiThread(new Runnable() {
@@ -253,7 +255,7 @@ public class LoginFragmentPhone extends BaseFragment {
 
 
     // TODO: 2018/6/4  手机号码登录  有关参数以及逻辑待完善
-    private void HttpPhoneNumLogin(String phoneNum, String msgCode) {
+    private void HttpPhoneNumLogin(final String phoneNum, String msgCode) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         param.put("cellphone", phoneNum);
@@ -283,6 +285,8 @@ public class LoginFragmentPhone extends BaseFragment {
                         //获取数成功
                         String data = jsonObject.optString("data");
                         // TODO: 2018/6/4  存储用户的信息
+                        SpUtil.setUserLoginType(mContext, "3");
+                        SpUtil.setUserLoginAccount(mContext, phoneNum);
                         saveUserInfo(data);
                     } else {
                         getActivity().runOnUiThread(new Runnable() {

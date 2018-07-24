@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -160,6 +161,18 @@ public class WebViewActivity extends BaseActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+    @Override
+    protected void onDestroy() {
+        if (webView != null) {
+            webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+            webView.clearHistory();
+
+            ((ViewGroup) webView.getParent()).removeView(webView);
+            webView.destroy();
+            webView = null;
+        }
+        super.onDestroy();
     }
 
 }

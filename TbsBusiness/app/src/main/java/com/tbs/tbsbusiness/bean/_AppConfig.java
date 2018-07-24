@@ -9,6 +9,7 @@ public class _AppConfig {
      * custom_service_tel : 400-696-2221
      * custom_service_qq : 4006062221
      * applets_name : 土拨鼠查订单
+     *  "applets_id": "gh_1a5495aba500",
      * official_accounts : itobosu
      * order_links : [{"code":"tbsaj01","url":""},{"code":"tbsaj02","url":""},{"code":"tbsaj03","url":""},{"code":"tbsaj04","url":""},{"code":"tbsaj05","url":""},{"code":"tbsaj06","url":""},{"code":"tbsaj07","url":""},{"code":"tbsaj08","url":""},{"code":"tbsaj09","url":""},{"code":"tbsaj10","url":""},{"code":"tbsaj11","url":""},{"code":"tbsaj12","url":""},{"code":"tbsaj13","url":""},{"code":"tbsaj14","url":""},{"code":"tbsaj15","url":""},{"code":"tbsaj16","url":""},{"code":"tbsaj17","url":""},{"code":"tbsaj18","url":""},{"code":"tbsaj19","url":""},{"code":"tbsaj20","url":""},{"code":"tbsaj21","url":""},{"code":"tbsaj22","url":""},{"code":"tbsaj23","url":""},{"code":"tbsaj24","url":""},{"code":"tbsaj25","url":""},{"code":"tbsaj26","url":""},{"code":"tbsaj27","url":""},{"code":"tbsaj28","url":""},{"code":"tbsaj29","url":""},{"code":"tbsaj30","url":""},{"code":"tbsaj31","url":"http://www.google.com?channel=app&subchannel=android&chcode=ali&app_type=1"},{"code":"tbsaj32","url":"http://www.baidu.com?channel=app&subchannel=android&chcode=ali&app_type=1"},{"code":"tbsaj33","url":""}]
      */
@@ -17,6 +18,7 @@ public class _AppConfig {
     private String custom_service_tel;
     private String custom_service_qq;
     private String applets_name;
+    private String applets_id;
     private String official_accounts;
 
     public String getCellphone_partern() {
@@ -57,5 +59,13 @@ public class _AppConfig {
 
     public void setOfficial_accounts(String official_accounts) {
         this.official_accounts = official_accounts;
+    }
+
+    public String getApplets_id() {
+        return applets_id;
+    }
+
+    public void setApplets_id(String applets_id) {
+        this.applets_id = applets_id;
     }
 }

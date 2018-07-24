@@ -238,6 +238,7 @@ public class MainActivity extends BaseTabActivity {
                     SpUtil.setApplets_name(mContext, mAppConfig.getApplets_name());//土拨鼠查单小程序
                     SpUtil.setPublic_number(mContext, mAppConfig.getOfficial_accounts());//土拨鼠微信公众号
                     SpUtil.setCellphonePartern(mContext, mAppConfig.getCellphone_partern());//存储手机号的正则
+                    SpUtil.setApplets_id(mContext, mAppConfig.getApplets_id());//存储小程序的id
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -274,7 +275,6 @@ public class MainActivity extends BaseTabActivity {
     }
 
     private void selectTab(int position) {
-        EventBusUtil.sendEvent(new Event(EC.EventCode.INIT_MESSAGE_IF_NULL));
         switch (position) {
             case 0:
                 //订单
@@ -282,6 +282,7 @@ public class MainActivity extends BaseTabActivity {
                 mTabHost.setCurrentTabByTag("one");
                 tabIconChange(position);
                 SpUtil.setMainTabPosition(mContext, 0);
+                EventBusUtil.sendEvent(new Event(EC.EventCode.INIT_MESSAGE_IF_NULL));
                 break;
             case 1:
                 //消息
@@ -297,6 +298,7 @@ public class MainActivity extends BaseTabActivity {
                 mTabHost.setCurrentTabByTag("three");
                 tabIconChange(position);
                 SpUtil.setMainTabPosition(mContext, 2);
+                EventBusUtil.sendEvent(new Event(EC.EventCode.INIT_MESSAGE_IF_NULL));
                 break;
         }
     }

@@ -214,8 +214,9 @@ public class LoginFragmentAccount extends BaseFragment {
                     String status = jsonObject.optString("status");
                     if (status.equals("200")) {
                         //登录成功
-                        //存储Md5密码
-                        SpUtil.setUserMd5PassWord(mContext, Md5Password);
+                        //存储相关信息
+                        SpUtil.setUserLoginType(mContext, "1");
+                        SpUtil.setUserLoginAccount(mContext, Md5Password);
                         String data = jsonObject.optString("data");
                         saveUserInfo(data);
                     } else {
@@ -268,7 +269,7 @@ public class LoginFragmentAccount extends BaseFragment {
     }
 
     //微信登录
-    private void HttpWeixinLogin(String unionid) {
+    private void HttpWeixinLogin(final String unionid) {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         param.put("unionid", unionid);
@@ -295,6 +296,8 @@ public class LoginFragmentAccount extends BaseFragment {
                     final String msg = jsonObject.optString("msg");
                     if (status.equals("200")) {
                         //微信登录成功 解析数据
+                        SpUtil.setUserLoginType(mContext, "2");
+                        SpUtil.setUserLoginAccount(mContext, unionid);
                         String data = jsonObject.optString("data");
                         saveUserInfo(data);
                     } else if (status.equals("0")) {
@@ -321,10 +324,10 @@ public class LoginFragmentAccount extends BaseFragment {
         SpUtil.setCompany_id(mContext, mUser.getCompany_id());
         SpUtil.setCellphone(mContext, mUser.getCellphone());
         SpUtil.setCellphone_check(mContext, mUser.getCellphone_check());
-        SpUtil.setWechat_check(mContext,mUser.getWechat_check());
+        SpUtil.setWechat_check(mContext, mUser.getWechat_check());
         SpUtil.setNickname(mContext, mUser.getNickname());
         SpUtil.setIcon(mContext, mUser.getIcon());
-        SpUtil.setGender(mContext,mUser.getGender());
+        SpUtil.setGender(mContext, mUser.getGender());
         SpUtil.setOrder_count(mContext, String.valueOf(mUser.getOrder_count()));
         SpUtil.setGrade(mContext, String.valueOf(mUser.getGrade()));
         SpUtil.setCommunity(mContext, mUser.getCommunity());

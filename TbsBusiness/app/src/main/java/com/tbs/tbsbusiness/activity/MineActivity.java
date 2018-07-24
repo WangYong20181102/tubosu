@@ -32,6 +32,9 @@ import com.tbs.tbsbusiness.util.OKHttpUtil;
 import com.tbs.tbsbusiness.util.SpUtil;
 import com.tbs.tbsbusiness.util.ToastUtil;
 import com.tbs.tbsbusiness.util.Util;
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -298,13 +301,31 @@ public class MineActivity extends BaseActivity {
                 break;
             case R.id.company_of_mine_xiaochengxu_rl:
                 //复制小程序的名称
-                copyWeChat();
+//                copyWeChat();
+                intoXiaoChengXu();
                 break;
             case R.id.company_of_mine_shezhi_rl:
                 //进入设置页面
                 startActivity(new Intent(mContext, SetingActivity.class));
                 break;
         }
+    }
+
+    //唤起微信小程序
+    private void intoXiaoChengXu() {
+        IWXAPI iwxapi = WXAPIFactory.createWXAPI(mContext, Constant.WEIXIN_APP_ID);
+        WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
+        req.userName = SpUtil.getApplets_id(mContext); // 填小程序原始id（官方实例请填写自己的小程序id）
+//        req.path = path; //拉起小程序页面的可带参路径，不填默认拉起小程序首页
+
+        req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;// 可选打开 正式版
+
+//req.miniprogramType = WXLaunchMiniProgram.Req.MINIPROGRAM_TYPE_TEST;// 可选打开 开发版
+
+//req.miniprogramType = WXLaunchMiniProgram.Req.MINIPROGRAM_TYPE_PREVIEW;// 可选打开 体验版
+
+
+        iwxapi.sendReq(req);
     }
 
 

@@ -372,7 +372,7 @@ public class MessageActivity extends BaseActivity {
                 break;
             case EC.EventCode.INIT_MESSAGE_IF_NULL:
                 //当消息数量为空时进行数据刷新
-                if (mNoticeArrayList != null && mNoticeArrayList.isEmpty()) {
+                if (mNoticeArrayList != null && mNoticeArrayList.isEmpty()&&!isLoading) {
                     initNetDate();
                 }
                 break;

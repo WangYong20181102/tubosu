@@ -87,7 +87,12 @@ public class WelcomeActivity extends BaseActivity {
 
     //初始化相关的事务  顺带着跳转
     private void welcomeInit() {
+        //初始化极光推送
         initJpush();
+        //验证用户的信息是否改动
+        clearUserInfoWithAppUpdata();
+        Log.e(TAG, "装修公司的id号=====" + SpUtil.getCompany_id(mContext));
+        //执行跳转
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -95,6 +100,16 @@ public class WelcomeActivity extends BaseActivity {
                 runOnUiThread(new IntoTask());
             }
         }, 3000);
+    }
+
+    //版本更新清除之前的用户信息
+    private void clearUserInfoWithAppUpdata() {
+        if (Util.getAppVersionName(mContext).equals("1.0.1")) {
+            if (TextUtils.isEmpty(SpUtil.getCleanUserInfoFlag(mContext))) {
+                Util.cleanUserInfo(this);
+                SpUtil.setCleanUserInfoFlag(mContext, "isClear");
+            }
+        }
     }
 
     private class IntoTask implements Runnable {

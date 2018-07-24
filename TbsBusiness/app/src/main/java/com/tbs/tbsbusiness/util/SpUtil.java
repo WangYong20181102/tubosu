@@ -193,6 +193,22 @@ public class SpUtil {
     public static void setUserMd5PassWord(Context context, String user_md5_password) {
         context.getSharedPreferences("userInfo", 0).edit().putString("user_md5_password", user_md5_password).commit();
     }
+    //用户的登录方式
+    public static String getUserLoginType(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("userLoginType", "");
+    }
+
+    public static void setUserLoginType(Context context, String userLoginType) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("userLoginType", userLoginType).commit();
+    }
+    //记录用户登录的account信息
+    public static String getUserLoginAccount(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("userLoginAccount", "");
+    }
+
+    public static void setUserLoginAccount(Context context, String userLoginAccount) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("userLoginAccount", userLoginAccount).commit();
+    }
     // TODO: 2018/6/4 存储用户的相关信息↑↑↑↑
 
     //获取官网电话
@@ -225,7 +241,15 @@ public class SpUtil {
     public static void setApplets_name(Context context, String applets_name) {
         context.getSharedPreferences("AppletsName", 0).edit().putString("applets_name", applets_name).commit();
     }
+    //获取小程序id
+    public static String getApplets_id(Context context) {
+        return context.getSharedPreferences("AppletsId", 0).getString("applets_id", "gh_1a5495aba500");
+    }
 
+    //存储小程序id
+    public static void setApplets_id(Context context, String applets_id) {
+        context.getSharedPreferences("AppletsId", 0).edit().putString("applets_id", applets_id).commit();
+    }
 
     //获取公众号
     public static String getPublic_number(Context context) {
@@ -236,6 +260,7 @@ public class SpUtil {
     public static void setPublic_number(Context context, String public_number) {
         context.getSharedPreferences("Public_number", 0).edit().putString("public_number", public_number).commit();
     }
+
     //是否弹更新弹窗
     public static String getIsShowUpdataDialog(Context context) {
         return context.getSharedPreferences("dialogInfo", 0).getString("updataDialog", "");
@@ -302,5 +327,13 @@ public class SpUtil {
     public static int getMainTabPosition(Context context) {
         return context.getSharedPreferences("mMainTabPosition", 0).getInt("mMainTabPosition", 0);
     }
+    //存储用户在App升级是做的删除信息操作
+    public static void setCleanUserInfoFlag(Context context, String flag) {
+        context.getSharedPreferences("mCleanUserInfoFlag", 0).edit().putString("mCleanUserInfoFlag", flag).commit();
+    }
 
+    //获取用户在App升级是做的删除信息操作
+    public static String getCleanUserInfoFlag(Context context) {
+        return context.getSharedPreferences("mCleanUserInfoFlag", 0).getString("mCleanUserInfoFlag", "");
+    }
 }

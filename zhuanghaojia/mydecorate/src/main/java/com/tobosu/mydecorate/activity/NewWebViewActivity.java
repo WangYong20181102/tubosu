@@ -16,6 +16,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tobosu.mydecorate.R;
@@ -79,6 +80,10 @@ public class NewWebViewActivity extends BaseActivity {
         myWebview.setWebChromeClient(webChromeClient);
         myWebview.setWebViewClient(webViewClient);
         //传值统计用
+        if (mLoadingUrl.isEmpty() || mLoadingUrl == null) {
+            Toast.makeText(mContext, "传入地址为空!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (mLoadingUrl.contains("?")) {
             myWebview.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
         } else {

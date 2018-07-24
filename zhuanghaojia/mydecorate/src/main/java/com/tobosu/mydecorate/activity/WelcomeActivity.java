@@ -152,7 +152,7 @@ public class WelcomeActivity extends BaseActivity {
         HashMap<String, Object> param = new HashMap<>();
         param.put("type", "1");
         param.put("subchannel", "android");
-        param.put("chcode", AppInfoUtil.getChannType(mContext));
+        param.put("chcode", AppInfoUtil.getChannType(context));
         okHttpUtil.post(Constant.GET_APP_CONFIG, param, new OKHttpUtil.BaseCallBack() {
             @Override
             public void onSuccess(Response response, String json) {

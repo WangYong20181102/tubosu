@@ -1,6 +1,7 @@
 package com.tbs.tbsbusiness.util;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AppOpsManager;
 import android.content.Context;
@@ -16,6 +17,9 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.tbs.tbsbusiness.config.Constant;
+import com.tbs.tbsbusiness.config.MyApplication;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +35,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cn.jpush.android.api.JPushInterface;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -42,6 +47,9 @@ import static android.content.Context.ACTIVITY_SERVICE;
  * 工具
  */
 public class Util {
+
+    private static String TAG = "Util";
+
     /**
      * 用户是否开启推送通知
      */
@@ -282,6 +290,8 @@ public class Util {
         return isMatch;
     }
 
+    //清除缓存
+
     public static void clearAllCache(Context context) {
         deleteDir(context.getCacheDir());
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
@@ -333,5 +343,41 @@ public class Util {
             }
             return 3;//栈里找不到，返回3
         }
+    }
+
+    //清除用户的信息
+    public static void cleanUserInfo(Activity activity) {
+        //极光推送下线
+        jpushOffline(activity);
+        //清除微信登录信息
+        UMShareAPI umShareAPI = UMShareAPI.get(MyApplication.getContext());
+        umShareAPI.deleteOauth(activity, SHARE_MEDIA.WEIXIN, null);
+        //清除本地用户信息
+        MyApplication.getContext().getSharedPreferences("userInfo", 0).edit().clear().commit();
+    }
+
+    //极光推送下线
+    public static void jpushOffline(final Activity activity) {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("device_id", SpUtil.getPushRegisterId(MyApplication.getContext()));
+        param.put("company_id", SpUtil.getCompany_id(MyApplication.getContext()));
+        OKHttpUtil.post(Constant.SMS_PUSH_OFFLINE, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "链接失败============" + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                Log.e("Util", "推送线下链接成功===============" + json);
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        JPushInterface.clearAllNotifications(MyApplication.getContext());
+                    }
+                });
+            }
+        });
     }
 }

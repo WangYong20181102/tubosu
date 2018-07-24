@@ -1,4 +1,4 @@
-package com.tbs.tbs_mj.utils;
+package com.tbs.tbsbusiness.util;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -7,9 +7,8 @@ import android.content.Context;
 import java.util.Stack;
 
 /**
- * Created by Mr.Lin on 2018/3/5 10:12.
+ * Created by Mr.Lin on 2018/7/21 15:55.
  */
-
 public class AppManager {
     private static Stack<Activity> activityStack = new Stack<Activity>();
 
@@ -38,11 +37,12 @@ public class AppManager {
 
     /**
      * 获取倒数第二个Activity
+     *
      * @return
      */
     public static String lastSecoundActivityName() {
         if (activityStack.size() >= 2) {
-            return activityStack.get(activityStack.size()-2).getLocalClassName();
+            return activityStack.get(activityStack.size() - 2).getLocalClassName();
         } else {
             return null;
         }
@@ -90,6 +90,17 @@ public class AppManager {
         }
         activityStack.clear();
     }
+
+    //销毁除LoginActivity的页面
+    public static void finishOutLoginActivity() {
+        for (Activity activity : activityStack) {
+            if (activity != null && !activity.getPackageName().contains("LoginActivity")) {
+                activity.finish();
+            }
+        }
+        activityStack.clear();
+    }
+
     /**
      * 退出应用程序
      */
