@@ -163,12 +163,12 @@
         </RelativeLayout>
         <!--装修课堂 换成免费量房-->
         <RelativeLayout
-            android:visibility="gone"
             android:id="@+id/relFreeLiangFang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/iv_newhome5"
@@ -190,9 +190,9 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="155dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -200,11 +200,12 @@
         android:background="@color/white">
 
         <ImageView
-            android:layout_centerInParent="true"
             android:id="@+id/price_img"
             android:layout_width="340dp"
             android:layout_height="155dp"
-            android:src="@drawable/fadan1"/>
+            android:layout_centerInParent="true"
+            android:src="@drawable/fadan1"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="340dp"
@@ -215,7 +216,15 @@
                 android:id="@+id/relFreeBaojia"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></RelativeLayout>
+                android:layout_weight="1">
+                <!--显示图片的位置 免费报价-->
+                <ImageView
+                    android:id="@+id/fa_dan_01_img"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -227,13 +236,31 @@
                     android:id="@+id/relFreeSheji"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"></RelativeLayout>
+                    android:layout_weight="1">
+                    <!--显示免费设计的页面-->
+                    <ImageView
+                        android:id="@+id/fa_dan_02_img"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginLeft="4dp"
+                        android:src="@drawable/fadan_02"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/relProfessalTuiJian"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"></RelativeLayout>
+                    android:layout_weight="1">
+                    <!--显示专业推荐的页面-->
+                    <ImageView
+                        android:id="@+id/fa_dan_03_img"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginLeft="4dp"
+                        android:src="@drawable/fadan_03"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -249,66 +276,67 @@
         android:background="@color/white">
         <!--礼包-->
         <ImageView
-            android:layout_centerInParent="true"
-            android:src="@drawable/dalibao"
+            android:id="@+id/fa_dan_04_img"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/dalibao" />
+
         <TextView
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:background="#FFFCFB" />
+            android:background="#FFFCFB"
+            android:visibility="gone" />
 
         <ImageView
-            android:visibility="gone"
             android:id="@+id/ivRedBag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="2dp"
-            android:background="@drawable/red_bag" />
+            android:background="@drawable/red_bag"
+            android:visibility="gone" />
 
         <RelativeLayout
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="8dp"
-            android:layout_toRightOf="@+id/ivRedBag">
+            android:layout_toRightOf="@+id/ivRedBag"
+            android:visibility="gone">
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/tvDaLibao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="装修大礼包"
                 android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:visibility="gone" />
 
             <ImageView
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="6dp"
                 android:layout_toRightOf="@+id/tvDaLibao"
-                android:background="@drawable/nine_years" />
+                android:background="@drawable/nine_years"
+                android:visibility="gone" />
 
             <TextView
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvDaLibao"
                 android:layout_marginTop="2dp"
                 android:text="土拨鼠装修10周年庆，回馈千万业主!"
                 android:textColor="#888888"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/tvGoGet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -319,7 +347,8 @@
             android:gravity="center"
             android:text="GO >"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <View

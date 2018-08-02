@@ -19,7 +19,7 @@ public class Constant {
      * todo 全局正式环境**********************************************************************************
      */
 //    //接口地址
-    public static final String TOBOSU_URL = "https://www.tobosu.com/";
+//    public static final String TOBOSU_URL = "https://www.tobosu.com/";
     //    //数据流上传接口 正式
     public static final String TBS_DATA_STREAM = "https://www.tobosu.com/trace";
     //    //M站 发单跳转 线上环境
@@ -30,7 +30,7 @@ public class Constant {
      * todo 全局测试dev环境**********************************************************************************
      */
     //接口地址
-//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
     //dev点击流上传接口
 //    public static final String TBS_DATA_STREAM = "http://trace.dev.tobosu.com/";
     //M站test接口
@@ -357,5 +357,9 @@ public class Constant {
     public static final String COMPANY_MY_STORE = TOBOSU_URL + "resapp/company/my_store";
     //网店管理修改网店管理
     public static final String COMPANY_MODIFY_STORE = TOBOSU_URL + "resapp/company/modify_store";
+    //获取闪屏的url
+    public static final String GET_SHAN_PIN_URL = TOBOSU_URL + "resapp/Advert/get_advert_new";
+    //获取首页的四个发单按钮的图片地址
+    public static final String GET_NEW_HOME_FADAN_URL = TOBOSU_URL + "";
 
 }

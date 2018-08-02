@@ -156,6 +156,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 
         userInfo = getSharedPreferences("userInfo", 0);
         mGson = new Gson();
+        getAppConfigOnNet();//获取相关的配置
         needPermissions();//权限的遍历
         initReceiver();
         initView();//初始化信息
@@ -164,13 +165,14 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         clearUserInfoWithAppUpdata();//App更新清除数据
 //        initJpush();
 //        initPushEvent();//推送
-        getAppConfigOnNet();//获取相关的配置
     }
 
     //获取App配置信息
     private void getAppConfigOnNet() {
         HashMap<String, Object> param = new HashMap<>();
         param.put("type", "1");
+        param.put("subchannel", "android");
+        param.put("chcode", AppInfoUtil.getChannType(mContext));
         OKHttpUtil.post(Constant.GET_CONFIG, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -190,11 +192,31 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     SpUtil.setCustom_service_qq(mContext, mAppConfig.getCustom_service_qq());
                     SpUtil.setApplets_name(mContext, mAppConfig.getApplets_name());
                     SpUtil.setPublic_number(mContext, mAppConfig.getOfficial_accounts());
-                    Log.e(TAG, "电话号码========" + SpUtil.getCustom_service_tel(mContext) + "=======QQ=======" + SpUtil.getCustom_service_qq(mContext) + "=======小程序=====" + SpUtil.getApplets_name(mContext));
+//                    Log.e(TAG, "电话号码========" + SpUtil.getCustom_service_tel(mContext) + "=======QQ=======" + SpUtil.getCustom_service_qq(mContext) + "=======小程序=====" + SpUtil.getApplets_name(mContext));
                     //存储发单链接信息
                     HashMap<String, String> urlMap = new HashMap<>();
                     for (int i = 0; i < mAppConfig.getOrder_links().size(); i++) {
                         urlMap.put(mAppConfig.getOrder_links().get(i).getCode(), mAppConfig.getOrder_links().get(i).getUrl());
+                        if (mAppConfig.getOrder_links().get(i).getCode().equals("zjzxaj01")) {
+//                            Log.e(TAG, "存储发单的图片地址========1");
+                            //存储图片 免费报价
+                            SpUtil.setNewHomeMianfeibaojiaImgUrl(mContext, mAppConfig.getOrder_links().get(i).getImg_url());
+                        }
+                        if (mAppConfig.getOrder_links().get(i).getCode().equals("zjzxaj02")) {
+//                            Log.e(TAG, "存储发单的图片地址========2");
+                            //存储图片 免费设计
+                            SpUtil.setNewHomeMianfeishejiImgUrl(mContext, mAppConfig.getOrder_links().get(i).getImg_url());
+                        }
+                        if (mAppConfig.getOrder_links().get(i).getCode().equals("zjzxaj03")) {
+//                            Log.e(TAG, "存储发单的图片地址========3");
+                            //存储图片 专业推荐
+                            SpUtil.setNewHomeMianfeishejiImgUrl(mContext, mAppConfig.getOrder_links().get(i).getImg_url());
+                        }
+                        if (mAppConfig.getOrder_links().get(i).getCode().equals("zjzxaj04")) {
+//                            Log.e(TAG, "存储发单的图片地址========4");
+                            //存储图片
+                            SpUtil.setNewHomeXianshihaoliImgUrl(mContext, mAppConfig.getOrder_links().get(i).getImg_url());
+                        }
                     }
                     //存储
                     if (urlMap.containsKey("zjzxaj01") &&
@@ -429,15 +451,16 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         main_tab_image = (RelativeLayout) this.findViewById(R.id.main_tab_image);
         main_tab_image.setOnClickListener(this);
         // TODO: 2017/12/16  专门用来做测试
-//        main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
+        main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
 //                Intent gotoLearnActivity = new Intent(mContext, AcWebActivity.class);
-//                gotoLearnActivity.putExtra("mLoadingUrl", Constant.TEN_YEARS_ACTIVITY);
-//                mContext.startActivity(gotoLearnActivity);
-//                return true;
-//            }
-//        });
+////                gotoLearnActivity.putExtra("mLoadingUrl", Constant.TEN_YEARS_ACTIVITY);
+////                mContext.startActivity(gotoLearnActivity);
+                startActivity(new Intent(mContext, GifActivity.class));
+                return true;
+            }
+        });
         main_tab_decorate = (RelativeLayout) this.findViewById(R.id.main_tab_decorate);
         main_tab_decorate.setOnClickListener(this);
         main_tab_my = (RelativeLayout) this.findViewById(R.id.main_tab_my);

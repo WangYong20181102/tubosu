@@ -21,8 +21,10 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.tbs.tbs_mj.R;
 import com.tbs.tbs_mj.base.BaseActivity;
+import com.tbs.tbs_mj.bean._QiDongTu;
 import com.tbs.tbs_mj.global.Constant;
 import com.tbs.tbs_mj.global.OKHttpUtil;
 import com.tbs.tbs_mj.utils.AppInfoUtil;
@@ -57,6 +59,7 @@ public class WelcomeActivity extends BaseActivity {
     ImageView welcomeSlogan;
 
     private Context mContext;
+    private Gson mGson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +67,11 @@ public class WelcomeActivity extends BaseActivity {
         setContentView(R.layout.activity_welcome_bg);
         ButterKnife.bind(this);
         mContext = WelcomeActivity.this;
+        mGson = new Gson();
         initBaiduMap();
+        // TODO: 2018/8/1   初始化布局 显示闪屏页面  考虑要不要在接口请求的时候做闪屏的显示的处理
         initView();
-        //获取权限 执行下一步
+        //获取敏感权限 执行下一步
         needPermissions();
     }
 
@@ -80,6 +85,101 @@ public class WelcomeActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         Log.e(TAG, "WelcomeActivity执行的生命周期========onPause()");
+    }
+
+    // TODO: 2018/7/31  获取闪屏页面的图片地址
+    private void getShanPinImageUrl() {
+        //传递不同的分辨率值获取对应的图片
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Util.getDateToken());
+        param.put("system_type", "1");
+        param.put("app_type", "3");
+        param.put("img_size", Util.getPixels());//获取分辨率   这个参数应该是机器的分辨率
+        Log.e(TAG, "参数分辨率=====" + Util.getPixels());
+        OKHttpUtil.post(Constant.GET_SHAN_PIN_URL, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "链接失败====" + e.getMessage());
+                //获取失败显示默认的图
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //闪屏 以后变成可替换的广告
+                        Glide.with(mContext).load(R.drawable.welcome_image)
+                                .asBitmap().centerCrop().placeholder(R.drawable.welcome_image)
+                                .error(R.drawable.welcome_image).into(welcomeImage);
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                Log.e(TAG, "获取闪屏成功======" + json);
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.optString("status");
+                    if (status.equals("200")) {
+                        //数据获取成功
+                        String data = jsonObject.optString("data");
+                        final _QiDongTu qiDongTu = mGson.fromJson(data, _QiDongTu.class);
+                        if (qiDongTu.getImg_url() != null
+                                && !TextUtils.isEmpty(qiDongTu.getImg_url())) {
+                            //显示网络获取的启动图
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Glide.with(mContext).load(qiDongTu.getImg_url())
+                                            .asBitmap().centerCrop().placeholder(R.drawable.welcome_image)
+                                            .error(R.drawable.welcome_image).into(welcomeImage);
+                                }
+                            });
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //闪屏 以后变成可替换的广告
+                                    Glide.with(mContext).load(R.drawable.welcome_image)
+                                            .asBitmap().centerCrop().placeholder(R.drawable.welcome_image)
+                                            .error(R.drawable.welcome_image).into(welcomeImage);
+                                }
+                            });
+                        }
+                    } else {
+                        //数据获取失败
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //闪屏 以后变成可替换的广告
+                                Glide.with(mContext).load(R.drawable.welcome_image)
+                                        .asBitmap().centerCrop().placeholder(R.drawable.welcome_image)
+                                        .error(R.drawable.welcome_image).into(welcomeImage);
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    // TODO: 2018/8/1 获取首页四个发单按钮的图片地址
+    private void getNewHomeFadanImageUrl() {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Util.getDateToken());
+        OKHttpUtil.post(Constant.GET_NEW_HOME_FADAN_URL, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e(TAG, "链接失败====" + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                //将获取的数据存在本地
+            }
+        });
     }
 
     //欢迎页的初始化
@@ -174,26 +274,14 @@ public class WelcomeActivity extends BaseActivity {
     }
 
     private void initView() {
-        //闪屏 以后变成可替换的广告
-        Glide.with(mContext).load(R.drawable.welcome_image)
-                .asBitmap().centerCrop().placeholder(R.drawable.welcome_image)
-                .error(R.drawable.welcome_image).into(welcomeImage);
         //slogan
         Glide.with(mContext).load(R.drawable.app_bottom)
                 .asBitmap().centerCrop().placeholder(R.drawable.app_bottom)
                 .error(R.drawable.app_bottom).into(welcomeSlogan);
-
-
-//        welcomeImage.setImageResource(R.drawable.welcome_image);
-        //区分市场
-//        if("appxiaomi".equals(AppInfoUtil.getChannType(MyApplication.getContext()))){
-//            Glide.with(mContext).load(R.drawable.wel_xiaomi).placeholder(R.drawable.wel_xiaomi).error(R.drawable.wel_xiaomi).into(welcomeImage);
-//        }else if("ali".equals(AppInfoUtil.getChannType(MyApplication.getContext()))){
-//            Glide.with(mContext).load(R.drawable.wel_new_ali_img).placeholder(R.drawable.wel_new_ali_img).error(R.drawable.wel_new_ali_img).into(welcomeImage);
-//        }else{
-//            Glide.with(mContext).load(R.drawable.welcome_image).placeholder(R.drawable.welcome_image).error(R.drawable.welcome_image).into(welcomeImage);
-//        }
+        //获取网络的图片
+        getShanPinImageUrl();
     }
+
 
     private String MAC_CODE = "";
     private String _TOKEN = "";

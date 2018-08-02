@@ -662,4 +662,56 @@ public class SpUtil {
 //    public static void setzjzxaj33(Context context, String zjzxaj33) {
 //        context.getSharedPreferences("BjAj", 0).edit().putString("zjzxaj33", zjzxaj33).commit();
 //    }
+
+    //首页的四个发单的图片地址 由后台获取  网络获取存入本地
+    //存储1-免费报价 图片地址  fadan01
+    public static String getNewHomeMianfeibaojiaImgUrl(Context context) {
+        return context.getSharedPreferences("NewHomeImgUrl", 0).getString("mianfeibaojia_url", "");
+    }
+
+    //获取1-免费报价 图片地址
+    public static void setNewHomeMianfeibaojiaImgUrl(Context context, String mianfeibaojia_url) {
+        context.getSharedPreferences("NewHomeImgUrl", 0).edit().putString("mianfeibaojia_url", mianfeibaojia_url).commit();
+    }
+
+    //免费设计的url地址  fadan02
+    public static String getNewHomeMianfeishejiImgUrl(Context context) {
+        return context.getSharedPreferences("NewHomeImgUrl", 0).getString("mianfeisheji_url", "");
+    }
+
+    //获取1-免费报价 图片地址
+    public static void setNewHomeMianfeishejiImgUrl(Context context, String mianfeisheji_url) {
+        context.getSharedPreferences("NewHomeImgUrl", 0).edit().putString("mianfeisheji_url", mianfeisheji_url).commit();
+    }
+
+    //专业推荐  fadan03
+    public static String getNewHomeZhuanyetuijianImgUrl(Context context) {
+        return context.getSharedPreferences("NewHomeImgUrl", 0).getString("zhuanyetuijian_url", "");
+    }
+
+    //获取1-专业推荐 图片地址
+    public static void setNewHomeZhuanyetuijianImgUrl(Context context, String zhuanyetuijian_url) {
+        context.getSharedPreferences("NewHomeImgUrl", 0).edit().putString("zhuanyetuijian_url", zhuanyetuijian_url).commit();
+    }
+
+
+    //限时豪礼
+    public static String getNewHomeXianshihaoliImgUrl(Context context) {
+        return context.getSharedPreferences("NewHomeImgUrl", 0).getString("xianshihaoli_url", "");
+    }
+
+    //获取1-专业推荐 图片地址
+    public static void setNewHomeXianshihaoliImgUrl(Context context, String xianshihaoli_url) {
+        context.getSharedPreferences("NewHomeImgUrl", 0).edit().putString("xianshihaoli_url", xianshihaoli_url).commit();
+    }
+
+    //启动图地址
+    public static String getStartAppImageUrl(Context context) {
+        return context.getSharedPreferences("StartAppImageUrl", 0).getString("startappimage_url", "");
+    }
+
+    //获取启动图的图片地址 图片地址
+    public static void setStartAppImageUrl(Context context, String startappimage_url) {
+        context.getSharedPreferences("StartAppImageUrl", 0).edit().putString("startappimage_url", startappimage_url).commit();
+    }
 }

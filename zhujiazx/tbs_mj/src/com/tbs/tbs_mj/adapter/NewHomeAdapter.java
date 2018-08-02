@@ -2,7 +2,6 @@ package com.tbs.tbs_mj.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
@@ -10,6 +9,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.tbs.tbs_mj.R;
 import com.tbs.tbs_mj.activity.ArticleWebViewActivity;
@@ -42,7 +43,6 @@ import com.tbs.tbs_mj.global.Constant;
 import com.tbs.tbs_mj.global.MyApplication;
 import com.tbs.tbs_mj.global.OKHttpUtil;
 import com.tbs.tbs_mj.utils.AppInfoUtil;
-import com.tbs.tbs_mj.utils.CacheManager;
 import com.tbs.tbs_mj.utils.EndlessRecyclerOnScrollListener;
 import com.tbs.tbs_mj.utils.SpUtil;
 import com.tbs.tbs_mj.utils.Util;
@@ -164,10 +164,101 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             initCheatText(headHolder.cheatText);
 //
-            //显示gif动画
-            ((NewHomeHead) holder).priceBackgroud.setImageResource(R.drawable.anim_home_gif);
-            AnimationDrawable animationDrawable = (AnimationDrawable) ((NewHomeHead) holder).priceBackgroud.getDrawable();
-            animationDrawable.start();
+            // TODO: 2018/8/2
+//
+//            ((NewHomeHead) holder).priceBackgroud.setImageResource(R.drawable.anim_home_gif);
+//            AnimationDrawable animationDrawable = (AnimationDrawable) ((NewHomeHead) holder).priceBackgroud.getDrawable();
+//            animationDrawable.start();
+            //发单01
+//            Log.e(TAG, "获取发单的图片地址========10086");
+            if (SpUtil.getNewHomeMianfeibaojiaImgUrl(context) != null
+                    && !TextUtils.isEmpty(SpUtil.getNewHomeMianfeibaojiaImgUrl(context))) {
+                //设置网络图片
+                //如果是gif图要单独处理
+                if (SpUtil.getNewHomeMianfeibaojiaImgUrl(context).contains(".gif")) {
+                    Glide.with(context)
+                            .load(SpUtil.getNewHomeMianfeibaojiaImgUrl(context))
+                            .asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .into(((NewHomeHead) holder).fa_dan_01_img);
+                } else {
+                    Glide.with(context)
+                            .load(SpUtil.getNewHomeMianfeibaojiaImgUrl(context))
+                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .into(((NewHomeHead) holder).fa_dan_01_img);
+                }
+            } else {
+                //设置本地的图片
+                Glide.with(context)
+                        .load(R.drawable.fadan_01)
+                        .into(((NewHomeHead) holder).fa_dan_01_img);
+            }
+            //发单02
+            if (SpUtil.getNewHomeMianfeishejiImgUrl(context) != null
+                    && !TextUtils.isEmpty(SpUtil.getNewHomeMianfeishejiImgUrl(context))) {
+                //设置网络图片
+                //如果是gif图要单独处理
+                if (SpUtil.getNewHomeMianfeishejiImgUrl(context).contains(".gif")) {
+                    Glide.with(context)
+                            .load(SpUtil.getNewHomeMianfeishejiImgUrl(context))
+                            .asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .into(((NewHomeHead) holder).fa_dan_02_img);
+                } else {
+                    Glide.with(context)
+                            .load(SpUtil.getNewHomeMianfeishejiImgUrl(context))
+                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .into(((NewHomeHead) holder).fa_dan_02_img);
+                }
+            } else {
+                //设置本地的图片
+                Glide.with(context)
+                        .load(R.drawable.fadan_02)
+                        .into(((NewHomeHead) holder).fa_dan_02_img);
+            }
+            //发单03
+            if (SpUtil.getNewHomeZhuanyetuijianImgUrl(context) != null
+                    && !TextUtils.isEmpty(SpUtil.getNewHomeZhuanyetuijianImgUrl(context))) {
+                //设置网络图片
+                //如果是gif图要单独处理
+                if (SpUtil.getNewHomeZhuanyetuijianImgUrl(context).contains(".gif")) {
+                    Glide.with(context)
+                            .load(SpUtil.getNewHomeZhuanyetuijianImgUrl(context))
+                            .asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .into(((NewHomeHead) holder).fa_dan_03_img);
+                } else {
+                    Glide.with(context)
+                            .load(SpUtil.getNewHomeZhuanyetuijianImgUrl(context))
+                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .into(((NewHomeHead) holder).fa_dan_03_img);
+                }
+            } else {
+                //设置本地的图片
+                Glide.with(context)
+                        .load(R.drawable.fadan_03)
+                        .into(((NewHomeHead) holder).fa_dan_03_img);
+            }
+
+            //发单04
+            if (SpUtil.getNewHomeXianshihaoliImgUrl(context) != null
+                    && !TextUtils.isEmpty(SpUtil.getNewHomeXianshihaoliImgUrl(context))) {
+                //设置网络图片
+                //如果是gif图要单独处理
+                if (SpUtil.getNewHomeXianshihaoliImgUrl(context).contains(".gif")) {
+                    Glide.with(context)
+                            .load(SpUtil.getNewHomeXianshihaoliImgUrl(context))
+                            .asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .into(((NewHomeHead) holder).fa_dan_04_img);
+                } else {
+                    Glide.with(context)
+                            .load(SpUtil.getNewHomeXianshihaoliImgUrl(context))
+                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .into(((NewHomeHead) holder).fa_dan_04_img);
+                }
+            } else {
+                //设置本地的图片
+                Glide.with(context)
+                        .load(R.drawable.dalibao)
+                        .into(((NewHomeHead) holder).fa_dan_04_img);
+            }
 
             headHolder.relFreeLiangFang.setOnClickListener(new View.OnClickListener() {
 
@@ -206,7 +297,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     context.sendBroadcast(it);
                 }
             });
-            // TODO: 2017/12/29 这个跳转改为学装修  跳转到学装列表
+            // 这个跳转改为学装修  跳转到学装列表
             headHolder.relZhuangXiuKetang.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -252,9 +343,9 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     fadanClick("1011", Utils.getIp(context));
                     Intent webIntent;
                     if (SpUtil.getzjzxaj04(context).contains(Constant.TEN_YEARS_ACTIVITY)) {
-                        webIntent =new Intent(context, AcWebActivity.class);
+                        webIntent = new Intent(context, AcWebActivity.class);
                     } else {
-                        webIntent =new Intent(context, NewWebViewActivity.class);
+                        webIntent = new Intent(context, NewWebViewActivity.class);
                     }
                     webIntent.putExtra("mLoadingUrl", SpUtil.getzjzxaj04(context));
                     context.startActivity(webIntent);
@@ -468,6 +559,12 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         BetterRecyclerView newhomeRecyclerviewClass;
         MyListView newhomeRecyclerviewKetang;
 
+        //对应的原始发单图片
+        ImageView fa_dan_01_img;
+        ImageView fa_dan_02_img;
+        ImageView fa_dan_03_img;
+        ImageView fa_dan_04_img;
+
 
         public NewHomeHead(View itemView) {
             super(itemView);
@@ -501,6 +598,11 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             relMoreClass = (RelativeLayout) itemView.findViewById(R.id.rel_more_class);
             newhomeRecyclerviewClass = (BetterRecyclerView) itemView.findViewById(R.id.newhome_recyclerview_class);
             newhomeRecyclerviewKetang = (MyListView) itemView.findViewById(R.id.newhome_ketang_recyclerview);
+
+            fa_dan_01_img = itemView.findViewById(R.id.fa_dan_01_img);
+            fa_dan_02_img = itemView.findViewById(R.id.fa_dan_02_img);
+            fa_dan_03_img = itemView.findViewById(R.id.fa_dan_03_img);
+            fa_dan_04_img = itemView.findViewById(R.id.fa_dan_04_img);
         }
     }
 

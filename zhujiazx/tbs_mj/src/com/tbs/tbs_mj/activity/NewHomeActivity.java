@@ -165,8 +165,6 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
             SpUtil.cleanDialogInfo(mContext);
         }
         if (TextUtils.isEmpty(SpUtil.getIsShowUpdataDialog(mContext))) {
-            // TODO: 2018/5/14 马甲包注释了App更新
-            //没有开启过更新提示
             HttpCheckAppUpdata();//检测更新与否  在检测完成之后设置更新弹窗的flag（有强制更新的时候不设置flag） 如果没有更新提示 走 getHuoDongPicture()方法
             return;
         }
@@ -680,7 +678,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
     private void getDataFromNet(boolean more) {
         if (Util.isNetAvailable(mContext)) {
             isLoading = true;
-            // start 1 选择过城市，  start 0 未选择过城市
+            // start 1 选择过城市，  start 0 未选择过城市4
             int start = CacheManager.getStartFlag(NewHomeActivity.this);
             Util.setErrorLog(TAG, "---zengzhaozhong--start>>" + start);
             if (more) {
@@ -762,7 +760,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                         String result = new String(response.body().string());
                         // 有数据 这样处理是不至于无数据的时候出现app闪退
                         if (result.contains("data")) {
-//                            Log.e(TAG, "首页数据链接成功============" + result);
+                            Log.e(TAG, "首页数据链接成功============" + result);
                             CacheManager.setNewhomeJson(mContext, result);
                             Gson gson = new Gson();
                             final NewHomeDataItem dataItem = gson.fromJson(result, NewHomeDataItem.class);

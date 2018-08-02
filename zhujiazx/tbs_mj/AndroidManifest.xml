@@ -631,7 +631,8 @@
         <activity android:name=".activity.GuideTwoActivity" />
         <activity android:name=".activity.GuideThreeActivity" />
         <activity android:name=".activity.GuideFourActivity" />
-        <activity android:name=".web.AcWebActivity"></activity>
+        <activity android:name=".web.AcWebActivity" />
+        <activity android:name=".activity.GifActivity"></activity>
     </application>
 
 </manifest>

@@ -7,13 +7,12 @@
     <ImageView
         android:id="@+id/welcome_image"
         android:layout_width="match_parent"
-        android:layout_weight="107"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/welcome_image" />
     <ImageView
         android:id="@+id/welcome_slogan"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_alignParentBottom="true"
         android:src="@drawable/app_bottom"
         android:layout_width="match_parent"
