@@ -201,6 +201,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 //                            Log.e(TAG, "存储发单的图片地址========1");
                             //存储图片 免费报价
                             SpUtil.setNewHomeMianfeibaojiaImgUrl(mContext, mAppConfig.getOrder_links().get(i).getImg_url());
+//                            SpUtil.setNewHomeMianfeibaojiaImgUrl(mContext, "https://media.giphy.com/media/5Zesu5VPNGJlm/giphy.gif");
                         }
                         if (mAppConfig.getOrder_links().get(i).getCode().equals("zjzxaj02")) {
 //                            Log.e(TAG, "存储发单的图片地址========2");
@@ -210,7 +211,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                         if (mAppConfig.getOrder_links().get(i).getCode().equals("zjzxaj03")) {
 //                            Log.e(TAG, "存储发单的图片地址========3");
                             //存储图片 专业推荐
-                            SpUtil.setNewHomeMianfeishejiImgUrl(mContext, mAppConfig.getOrder_links().get(i).getImg_url());
+                            SpUtil.setNewHomeZhuanyetuijianImgUrl(mContext, mAppConfig.getOrder_links().get(i).getImg_url());
                         }
                         if (mAppConfig.getOrder_links().get(i).getCode().equals("zjzxaj04")) {
 //                            Log.e(TAG, "存储发单的图片地址========4");
@@ -872,12 +873,6 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                 setFragmentPosition(position);
             }
 
-//            // 以下跟网络无关 只是我不想再写一个广播类了
-//            else if (intent.getAction().equals(Constant.LOGOUT_ACTION)) {
-//                setFragmentPosition(0);
-//            } else if (intent.getAction().equals(Constant.LOGIN_ACTION)) {
-//                setFragmentPosition(3);
-//            }
         }
     }
 

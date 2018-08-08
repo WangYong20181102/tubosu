@@ -94,11 +94,15 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private boolean zhuantiMore = false;
     private List<NewHomeDataItem.NewhomeDataBean.TopicBean> topicList = new ArrayList<NewHomeDataItem.NewhomeDataBean.TopicBean>();
+    private List<NewHomeDataItem.NewhomeDataBean.TopicBean> mTempTopicList = new ArrayList<NewHomeDataItem.NewhomeDataBean.TopicBean>();
 
     public NewHomeAdapter(Context context, NewHomeDataItem.NewhomeDataBean dataSource, ArrayList<_ImageD> shejiList, List<NewHomeDataItem.NewhomeDataBean.TopicBean> topList) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.dataSource = dataSource;
+        if (!mTempTopicList.isEmpty()) {
+            mTempTopicList.clear();
+        }
         if (shejiList != null && shejiList.size() > 0) {
             this.shejiList = shejiList;
         }
@@ -108,11 +112,14 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         } else {
             this.topicList = dataSource.getTopic();
         }
+        mTempTopicList.addAll(this.topicList);
 
     }
 
     public void setTopicData(List<NewHomeDataItem.NewhomeDataBean.TopicBean> topList) {
         if (topList != null && topList.size() > 0) {
+            this.topicList.clear();
+            this.topicList.addAll(mTempTopicList);
             this.topicList.addAll(topList);
         }
     }
@@ -149,28 +156,18 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof NewHomeHead) {
             NewHomeHead headHolder = (NewHomeHead) holder;
-//            if(CacheManager.getChentaoFlag(context) == 0){
             newhomeViewPager.setFocusable(true);
             newhomeViewPager.setFocusableInTouchMode(true);
             newhomeViewPager.requestFocus();
-//                Util.setToast(context, "获得焦点");
-//            }else {
-//                newhomeViewPager.setFocusable(false);
-//                newhomeViewPager.setFocusableInTouchMode(false);
-//                newhomeViewPager.clearFocus();
-////                Util.setToast(context, "失去焦点");
-//            }
+
             initBannerAdapter(newhomeViewPager, headHolder.layoutDot, dataSource.getBanner());
 
             initCheatText(headHolder.cheatText);
 //
             // TODO: 2018/8/2
-//
-//            ((NewHomeHead) holder).priceBackgroud.setImageResource(R.drawable.anim_home_gif);
-//            AnimationDrawable animationDrawable = (AnimationDrawable) ((NewHomeHead) holder).priceBackgroud.getDrawable();
-//            animationDrawable.start();
             //发单01
 //            Log.e(TAG, "获取发单的图片地址========10086");
+            Log.e(TAG, "获取免费报价url=======" + SpUtil.getNewHomeMianfeibaojiaImgUrl(context));
             if (SpUtil.getNewHomeMianfeibaojiaImgUrl(context) != null
                     && !TextUtils.isEmpty(SpUtil.getNewHomeMianfeibaojiaImgUrl(context))) {
                 //设置网络图片
@@ -179,11 +176,13 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     Glide.with(context)
                             .load(SpUtil.getNewHomeMianfeibaojiaImgUrl(context))
                             .asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE)
+//                            .centerCrop()
                             .into(((NewHomeHead) holder).fa_dan_01_img);
                 } else {
                     Glide.with(context)
                             .load(SpUtil.getNewHomeMianfeibaojiaImgUrl(context))
                             .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+//                            .centerCrop()
                             .into(((NewHomeHead) holder).fa_dan_01_img);
                 }
             } else {

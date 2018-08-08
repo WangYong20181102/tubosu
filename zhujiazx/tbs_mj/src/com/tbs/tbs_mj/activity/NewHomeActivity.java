@@ -123,7 +123,6 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
         super.onCreate(savedInstanceState);
         Log.e(TAG, "NewHomeActivity执行的生命周期========onCreate()");
         mContext = NewHomeActivity.this;
-        TAG = NewHomeActivity.class.getSimpleName();
         setContentView(R.layout.layout_new_activity);
         ButterKnife.bind(this);
         initView();
@@ -406,7 +405,6 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
 
                     if (newHomeAdapter != null) {
                         newHomeAdapter.setLoadMoreFlag(true);
-                        page++;
                         getDataFromNet(true);
                     }
                 }
@@ -594,7 +592,6 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            //处于下拉刷新时列表不允许点击  死锁问题
             if (swipeRefreshLayout.isRefreshing()) {
                 return true;
             } else {
@@ -660,7 +657,6 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
         param.put("uid", uid);
         param.put("user_type", user_type);
         String city = newhomeCity.getText().toString();
-        Log.e(TAG, "切换城市后获取的城市名=====" + city + "============当所用的num==========" + num);
         if (num == 0) {
             param.put("city_id", "0");
             param.put("city_name", city);
@@ -670,7 +666,6 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
             param.put("city_id", chooseId);
             param.put("city_name", choose);
             param.put("type", "1");
-            Util.setErrorLog("-zengzhaozhong-", "#id = " + chooseId + "    cityname = " + city);
         }
         return param;
     }
@@ -680,19 +675,19 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
             isLoading = true;
             // start 1 选择过城市，  start 0 未选择过城市4
             int start = CacheManager.getStartFlag(NewHomeActivity.this);
-            Util.setErrorLog(TAG, "---zengzhaozhong--start>>" + start);
+//            Util.setErrorLog(TAG, "---zengzhaozhong--start>>" + start);
             if (more) {
                 // 加载更多
+                page = page + 1;
+                Log.e(TAG, "专题的数据====page====" + page);
                 HashMap<String, Object> hashMap = new HashMap<String, Object>();
                 hashMap.put("token", Util.getDateToken());
                 hashMap.put("page", page);
-                hashMap.put("type", "1");
-                hashMap.put("page_size", 5);
+                hashMap.put("page_size", "5");
                 OKHttpUtil.post(Constant.ZHUANTI_URL, hashMap, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         isLoading = false;
-                        Util.setErrorLog(TAG, "请求失败");
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -705,8 +700,8 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                     public void onResponse(Call call, Response response) throws IOException {
 
                         final String json = new String(response.body().string());
-                        Util.setErrorLog(TAG, json);
-                        // 有数据 这样处理是不至于无数据的时候出现app闪退
+
+                        // 有数据
                         if (json.contains("data")) {
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -716,20 +711,26 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                                         JSONObject zhuantiObject = new JSONObject(json);
                                         int status = zhuantiObject.getInt("status");
                                         String msg = zhuantiObject.getString("msg");
+
                                         if (status == 200) {
                                             JSONArray arr = zhuantiObject.getJSONArray("data");
+
                                             for (int i = 0; i < arr.length(); i++) {
                                                 NewHomeDataItem.NewhomeDataBean.TopicBean bean = mGson.fromJson(arr.get(i).toString(), NewHomeDataItem.NewhomeDataBean.TopicBean.class);
-                                                zhuantiList.add(bean);
+                                                if (!topicBeansList.contains(bean)) {
+                                                    zhuantiList.add(bean);
+                                                }
                                             }
                                             topicBeansList.addAll(zhuantiList);
+
+                                            zhuantiList.clear();
                                             initData();
                                         } else if (status == 0) {
                                             Util.setToast(mContext, msg);
                                         } else if (status == 201) {
                                             Util.setToast(mContext, msg);
                                         } else {
-                                            Util.setErrorLog(TAG, " 错误请求码是 [" + status + "]");
+//                                            Util.setErrorLog(TAG, " 错误请求码是 [" + status + "]");
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -738,7 +739,6 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                             });
                         } else {
                             // 无数据 这样处理是不至于无数据的时候出现app闪退
-                            Util.setErrorLog(TAG, "后台无数据返回给我===1===如下：" + json);
                         }
                     }
                 });
@@ -765,7 +765,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                             Gson gson = new Gson();
                             final NewHomeDataItem dataItem = gson.fromJson(result, NewHomeDataItem.class);
                             final String msg = dataItem.getMsg();
-                            Util.setErrorLog(TAG, dataItem.getMsg());
+//                            Util.setErrorLog(TAG, dataItem.getMsg());
 
                             try {
                                 JSONObject resultJson = new JSONObject(result);
@@ -817,7 +817,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                 });
             }
         } else {
-            Util.setErrorLog(TAG, "无网络");
+//            Util.setErrorLog(TAG, "无网络");
         }
 
     }
@@ -918,7 +918,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         final String json = response.body().string();
-                        Util.setErrorLog(TAG, json);
+//                        Util.setErrorLog(TAG, json);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -973,7 +973,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                 isSheji = false;
                 if (intent.getAction().equals("anli_list_is_empty")) {
 //                    getDataFromNet(false);
-                    Util.setErrorLog(TAG, "重新请求案例了");
+//                    Util.setErrorLog(TAG, "重新请求案例了");
                 }
             }
         }
@@ -1005,7 +1005,6 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
             ImageView adIv = (ImageView) dialog.findViewById(R.id.iv_main_ad);
             RelativeLayout adIvClose = (RelativeLayout) dialog.findViewById(R.id.iv_main_ad_close);
             Glide.with(NewHomeActivity.this).load(adUrl).into(adIv);
-            Util.setErrorLog(TAG, adUrl);
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

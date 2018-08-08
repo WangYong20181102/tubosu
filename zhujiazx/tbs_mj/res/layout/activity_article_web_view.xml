@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="50dp"
-        android:src="@drawable/art_web_free_design"
+        android:layout_marginBottom="48dp"
+        android:src="@drawable/aaa_lin"
         android:visibility="gone" />
 </RelativeLayout>

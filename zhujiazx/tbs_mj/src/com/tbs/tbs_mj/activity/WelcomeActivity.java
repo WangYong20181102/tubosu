@@ -21,6 +21,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.tbs.tbs_mj.R;
 import com.tbs.tbs_mj.base.BaseActivity;
@@ -93,7 +94,7 @@ public class WelcomeActivity extends BaseActivity {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         param.put("system_type", "1");
-        param.put("app_type", "3");
+        param.put("app_type", "4");
         param.put("img_size", Util.getPixels());//获取分辨率   这个参数应该是机器的分辨率
         Log.e(TAG, "参数分辨率=====" + Util.getPixels());
         OKHttpUtil.post(Constant.GET_SHAN_PIN_URL, param, new Callback() {
@@ -106,8 +107,11 @@ public class WelcomeActivity extends BaseActivity {
                     public void run() {
                         //闪屏 以后变成可替换的广告
                         Glide.with(mContext).load(R.drawable.welcome_image)
-                                .asBitmap().centerCrop().placeholder(R.drawable.welcome_image)
-                                .error(R.drawable.welcome_image).into(welcomeImage);
+                                .asBitmap()
+                                .centerCrop()
+                                .placeholder(R.drawable.welcome_image)
+                                .error(R.drawable.welcome_image)
+                                .into(welcomeImage);
                     }
                 });
             }
@@ -130,8 +134,12 @@ public class WelcomeActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     Glide.with(mContext).load(qiDongTu.getImg_url())
-                                            .asBitmap().centerCrop().placeholder(R.drawable.welcome_image)
-                                            .error(R.drawable.welcome_image).into(welcomeImage);
+                                            .asBitmap()
+                                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                                            .centerCrop()
+                                            .placeholder(R.drawable.welcome_image)
+                                            .error(R.drawable.welcome_image)
+                                            .into(welcomeImage);
                                 }
                             });
                         } else {
@@ -160,24 +168,6 @@ public class WelcomeActivity extends BaseActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
-        });
-    }
-
-    // TODO: 2018/8/1 获取首页四个发单按钮的图片地址
-    private void getNewHomeFadanImageUrl() {
-        HashMap<String, Object> param = new HashMap<>();
-        param.put("token", Util.getDateToken());
-        OKHttpUtil.post(Constant.GET_NEW_HOME_FADAN_URL, param, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "链接失败====" + e.getMessage());
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String json = new String(response.body().string());
-                //将获取的数据存在本地
             }
         });
     }

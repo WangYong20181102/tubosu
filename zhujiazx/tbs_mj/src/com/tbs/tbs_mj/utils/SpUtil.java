@@ -705,13 +705,4 @@ public class SpUtil {
         context.getSharedPreferences("NewHomeImgUrl", 0).edit().putString("xianshihaoli_url", xianshihaoli_url).commit();
     }
 
-    //启动图地址
-    public static String getStartAppImageUrl(Context context) {
-        return context.getSharedPreferences("StartAppImageUrl", 0).getString("startappimage_url", "");
-    }
-
-    //获取启动图的图片地址 图片地址
-    public static void setStartAppImageUrl(Context context, String startappimage_url) {
-        context.getSharedPreferences("StartAppImageUrl", 0).edit().putString("startappimage_url", startappimage_url).commit();
-    }
 }

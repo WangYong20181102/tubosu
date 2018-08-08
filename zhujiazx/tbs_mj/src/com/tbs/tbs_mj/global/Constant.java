@@ -23,7 +23,7 @@ public class Constant {
     //    //数据流上传接口 正式
     public static final String TBS_DATA_STREAM = "https://www.tobosu.com/trace";
     //    //M站 发单跳转 线上环境
-    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
+//    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
 
 
     /**
@@ -36,7 +36,7 @@ public class Constant {
     //M站test接口
 //    public static final String M_TOBOSU_URL = "http://m.test.tobosu.com/szs/";
     //M站dev接口
-//    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
+    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
 
 
     public static final String APP_TYPE = "&app_type=4";
@@ -359,7 +359,4 @@ public class Constant {
     public static final String COMPANY_MODIFY_STORE = TOBOSU_URL + "resapp/company/modify_store";
     //获取闪屏的url
     public static final String GET_SHAN_PIN_URL = TOBOSU_URL + "resapp/Advert/get_advert_new";
-    //获取首页的四个发单按钮的图片地址
-    public static final String GET_NEW_HOME_FADAN_URL = TOBOSU_URL + "";
-
 }
