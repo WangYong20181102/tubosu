@@ -176,13 +176,13 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         OKHttpUtil.post(Constant.GET_CONFIG, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e(TAG, "获取配置信息失败==========" + e.getMessage());
+//                Log.e(TAG, "获取配置信息失败==========" + e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String json = new String(response.body().string());
-                Log.e(TAG, "获取App配置信息=================" + json);
+//                Log.e(TAG, "获取App配置信息=================" + json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     String data = jsonObject.optString("data");
@@ -458,7 +458,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 //                Intent gotoLearnActivity = new Intent(mContext, AcWebActivity.class);
 ////                gotoLearnActivity.putExtra("mLoadingUrl", Constant.TEN_YEARS_ACTIVITY);
 ////                mContext.startActivity(gotoLearnActivity);
-                startActivity(new Intent(mContext, GifActivity.class));
+//                startActivity(new Intent(mContext, GifActivity.class));
                 return true;
             }
         });

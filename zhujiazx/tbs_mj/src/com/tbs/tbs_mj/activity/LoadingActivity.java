@@ -78,7 +78,7 @@ public class LoadingActivity extends BaseActivity {
             mJumpUrl = intent.getStringExtra("jump_url");
             if (url != null && !"".equals(url)) {
                 stayTime = intent.getIntExtra("staytime", 4);
-                tvCountDownText.setText(stayTime + " 点击跳过");
+                tvCountDownText.setText(stayTime + " 跳过");
                 Glide.with(mContext).load(url).into(ivImg);
             }
         }
@@ -103,7 +103,7 @@ public class LoadingActivity extends BaseActivity {
                 @Override
                 public void run() {
                     stayTime--;
-                    tvCountDownText.setText(stayTime + " 点击跳过");
+                    tvCountDownText.setText(stayTime + " 跳过");
                     if (stayTime <= 0) {
                         timer.cancel();
                         if ("".equals(CacheManager.getAppEntryOrderPre(mContext))) {

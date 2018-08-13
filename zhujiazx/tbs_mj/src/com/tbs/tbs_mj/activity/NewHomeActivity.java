@@ -146,7 +146,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Log.e(TAG, "NewHomeActivity执行的生命周期========onPause()");
+//        Log.e(TAG, "NewHomeActivity执行的生命周期========onPause()");
     }
 
     /**
@@ -185,7 +185,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
         param.put("system_plat", "1");
         param.put("chcode", AppInfoUtil.getChannType(mContext));
         param.put("version", AppInfoUtil.getAppVersionName(mContext));
-        Log.e(TAG, "检测用户的更新数据=====参数=====chcode====" + AppInfoUtil.getChannType(mContext) + "=====version=====" + AppInfoUtil.getAppVersionName(mContext));
+//        Log.e(TAG, "检测用户的更新数据=====参数=====chcode====" + AppInfoUtil.getChannType(mContext) + "=====version=====" + AppInfoUtil.getAppVersionName(mContext));
         OKHttpUtil.post(Constant.CHECK_APP_IS_UPDATA, param, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -195,7 +195,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String json = new String(response.body().string());
-                Log.e(TAG, "检测用户的更新数据==========" + json);
+//                Log.e(TAG, "检测用户的更新数据==========" + json);
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.optString("status");
