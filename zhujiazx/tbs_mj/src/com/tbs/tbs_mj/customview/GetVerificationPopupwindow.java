@@ -17,20 +17,22 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.tbs.tbs_mj.R;
 import com.tbs.tbs_mj.activity.BindingPhoneActivity;
-import com.tbs.tbs_mj.activity.FindPwdActivity2;
 import com.tbs.tbs_mj.activity.FreeDesignPrice;
-import com.tbs.tbs_mj.activity.RegisterActivity2;
 import com.tbs.tbs_mj.global.Constant;
 import com.tbs.tbs_mj.global.OKHttpUtil;
 import com.tbs.tbs_mj.utils.HintInput;
 import com.tbs.tbs_mj.utils.Util;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -55,10 +57,10 @@ public class GetVerificationPopupwindow extends PopupWindow {
     public String version = null;
     public EditText et_input;
 
-    private Handler mhandler = new Handler(){
+    private Handler mhandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 444:
                     Bitmap bitmap = BitmapFactory.decodeStream(imgStream);
                     iv_imageverif.setImageBitmap(bitmap);
@@ -95,7 +97,7 @@ public class GetVerificationPopupwindow extends PopupWindow {
             }
         });
 
-        if(Util.isNetAvailable(mContext)){
+        if (Util.isNetAvailable(mContext)) {
             OKHttpUtil.get(urlBase, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -113,7 +115,7 @@ public class GetVerificationPopupwindow extends PopupWindow {
         tv_another.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Util.isNetAvailable(mContext)){
+                if (Util.isNetAvailable(mContext)) {
                     OKHttpUtil.get(urlBase, new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
@@ -202,19 +204,10 @@ public class GetVerificationPopupwindow extends PopupWindow {
                 if (errorCode == 0) {
                     dismiss();
                     Activity activity = (Activity) mContext;
-                    if (activity instanceof RegisterActivity2) {
-                        ((RegisterActivity2) activity).startCount();
-                    } else if (activity instanceof FindPwdActivity2) {
-                        ((FindPwdActivity2) activity).startCount();
-
-                    } else if (activity instanceof BindingPhoneActivity) {
+                    if (activity instanceof BindingPhoneActivity) {
                         ((BindingPhoneActivity) activity).startCount();
-                    }
-//                    else if (activity instanceof LoginActivity) {
-//                        ((LoginActivity) activity).startCount();
-//                    }
-                    else if (activity instanceof FreeDesignPrice) {
-//						((ApplyforSuccessActivity) activity).startCount();
+                    } else if (activity instanceof FreeDesignPrice) {
+
                         ((FreeDesignPrice) activity).startCount();
                     }
                 } else {

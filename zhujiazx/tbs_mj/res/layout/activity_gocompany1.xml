@@ -15,7 +15,6 @@
         android:layout_height="match_parent">
 
         <android.support.design.widget.CoordinatorLayout
-            android:id="@+id/coordview"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -96,14 +95,12 @@
 
                 <!--中间栏-->
                 <android.support.design.widget.CollapsingToolbarLayout
-                    android:id="@+id/mainCollapsing"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                     <RelativeLayout
-                        android:id="@+id/showOrNotLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/white">
@@ -275,7 +272,6 @@
                     </LinearLayout>
 
                     <View
-                        android:id="@+id/vsdfaedfa"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_below="@+id/headLayoutSelectUp"
@@ -442,7 +438,6 @@
                 android:background="@drawable/shape_company_edittext_bg">
 
                 <RelativeLayout
-                    android:id="@+id/searche_bar"
                     android:layout_width="match_parent"
                     android:layout_height="27dp"
                     android:layout_centerVertical="true"

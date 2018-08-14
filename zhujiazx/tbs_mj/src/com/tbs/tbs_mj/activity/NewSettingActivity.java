@@ -143,7 +143,6 @@ public class NewSettingActivity extends com.tbs.tbs_mj.base.BaseActivity {
                 break;
             case R.id.new_setting_about_our:
                 //跳转到关于我们
-//                startActivity(new Intent(mContext, AboutTbsActivity.class));
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
                 intent.putExtra("mLoadingUrl", "http://m.tobosu.com/introduce");
                 mContext.startActivity(intent);

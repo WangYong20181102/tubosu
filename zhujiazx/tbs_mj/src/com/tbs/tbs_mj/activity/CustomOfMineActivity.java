@@ -258,7 +258,7 @@ public class CustomOfMineActivity extends BaseActivity {
                 break;
             case R.id.custom_of_mine_dingdan_ll:
                 //进入查看订单界面
-                chaKanDingdan();
+//                chaKanDingdan();
                 break;
             case R.id.custom_of_mine_fadan_iv:
                 //跳转到发单页面
@@ -285,7 +285,7 @@ public class CustomOfMineActivity extends BaseActivity {
                 break;
             case R.id.custom_of_mine_dingdan_rl:
                 //进入订单页面
-                chaKanDingdan();
+//                chaKanDingdan();
                 break;
             case R.id.custom_of_mine_fankui_rl:
                 //进入反馈页面
@@ -294,17 +294,6 @@ public class CustomOfMineActivity extends BaseActivity {
         }
     }
 
-    //业主查看订单
-    private void chaKanDingdan() {
-        if (AppInfoUtil.getUserCellphone_check(mContext).equals("1")) {
-            //用户已经绑定手机号
-            Intent myOwnerOrderIntent = new Intent(mContext, MyOwnerOrderActivity.class);
-            startActivity(myOwnerOrderIntent);
-        } else if (AppInfoUtil.getUserCellphone_check(mContext).equals("0")) {
-            //用户未绑定手机号码弹窗绑定
-            showBindPhone();
-        }
-    }
 
     //绑定弹窗
     private void showBindPhone() {

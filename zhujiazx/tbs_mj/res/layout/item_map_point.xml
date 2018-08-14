@@ -10,7 +10,6 @@
         android:layout_height="70dp">
 
     <LinearLayout
-        android:id="@+id/item_map_ll"
         android:layout_width="318dp"
         android:layout_height="70dp"
         android:orientation="horizontal">

@@ -129,38 +129,6 @@ public class MyXiaomiPushReceiver extends PushMessageReceiver {
             }
         } else {
             //程序已经启动
-//            if (!TextUtils.isEmpty(message.getExtra().get("url"))) {
-//                Intent intent = new Intent(context, PushAppStartWebActivity.class);
-//                intent.putExtra("mLoadingUrl", message.getExtra().get("url"));
-//                Log.e(TAG, "收到消息=========消息中包含的tag=====" + message.getExtra().get("tag"));
-//                if (message.getExtra().containsKey("tag")) {
-//                    //包含推送发单的key  传值通知下一个页面  展示发单的key
-//                    if (message.getExtra().get("tag").equals("1")) {
-//                        //显示发标按钮
-//                        intent.putExtra("mShowing", "1");
-//                    } else {
-//                        intent.putExtra("mShowing", "0");
-//                    }
-//                } else {
-//                    intent.putExtra("mShowing", "0");
-//                }
-//                //是否拼接点击流信息
-//                if (message.getExtra().containsKey("enable_statistics")) {
-//                    if (message.getExtra().get("enable_statistics").equals("1")) {
-//                        //带入点击流
-//                        intent.putExtra("mEnableStatistics", "1");
-//                    } else {
-//                        intent.putExtra("mEnableStatistics", "0");
-//                    }
-//                } else {
-//                    intent.putExtra("mEnableStatistics", "0");
-//                }
-//
-//
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                context.startActivity(intent);
-//            }
-
             if (message.getExtra().containsKey("notice_type")) {
                 String notice_type = message.getExtra().get("notice_type");
                 if (notice_type.equals("1")) {
@@ -205,10 +173,10 @@ public class MyXiaomiPushReceiver extends PushMessageReceiver {
 
     @Override
     public void onNotificationMessageArrived(Context context, MiPushMessage message) {
-        System.out.println("通知消息到达了");
-        System.out.println("通知消息是" + message.toString());
-        System.out.println("通知消息到达了,拿到的url==================" + message.getExtra().get("url"));
-        Log.e(TAG, "收到小米发送的消息======拿到的URL=====" + message.getExtra().get("url"));
+//        System.out.println("通知消息到达了");
+//        System.out.println("通知消息是" + message.toString());
+//        System.out.println("通知消息到达了,拿到的url==================" + message.getExtra().get("url"));
+//        Log.e(TAG, "收到小米发送的消息======拿到的URL=====" + message.getExtra().get("url"));
     }
 
     @Override
@@ -220,7 +188,7 @@ public class MyXiaomiPushReceiver extends PushMessageReceiver {
         if (MiPushClient.COMMAND_REGISTER.equals(command)) {
             if (message.getResultCode() == ErrorCode.SUCCESS) {
                 mRegId = cmdArg1;
-                Log.e(TAG, "小米推送注册测Regid=================" + mRegId);
+//                Log.e(TAG, "小米推送注册测Regid=================" + mRegId);
             }
         }
     }

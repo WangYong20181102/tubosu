@@ -9,11 +9,9 @@
             android:layout_height="match_parent">
 
             <ScrollView
-                android:id="@+id/cityScrollview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
-                    android:id="@+id/abc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -45,7 +43,6 @@
                                 android:layout_toRightOf="@+id/shuaixuanCityIcon"
                                 android:text="深圳"/>
                             <TextView
-                                android:id="@+id/chosenDist"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="6dp"
@@ -167,7 +164,6 @@
                 android:layout_alignParentBottom="true"
                 android:layout_height="49dp">
                 <RelativeLayout
-                    android:id="@+id/sd"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/chongzhi_shape"

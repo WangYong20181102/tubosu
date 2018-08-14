@@ -50,7 +50,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import cn.jpush.android.api.JPushInterface;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -431,17 +430,14 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
          *                         FOUR2.登陆的是装修公司界面
          *                         FOUR3.登陆的是业主界面
          **/
-//        intent = new Intent().setClass(this, MyActivity.class);
         intent = new Intent().setClass(this, NoneLoginOfMineActivity.class);//3.7新增
         spec = tabHost.newTabSpec("FOUR").setIndicator("我").setContent(intent);
         tabHost.addTab(spec);
 
-//        intent = new Intent().setClass(this, MyCompanyActivity.class);
         intent = new Intent().setClass(this, CompanyOfMineActivity.class);//3.7新增
         spec = tabHost.newTabSpec("FOUR2").setIndicator("我").setContent(intent);
         tabHost.addTab(spec);
 
-//        intent = new Intent().setClass(this, MyOwnerActivity.class);
         intent = new Intent().setClass(this, CustomOfMineActivity.class);//3.7新增
         spec = tabHost.newTabSpec("FOUR3").setIndicator("我").setContent(intent);
         tabHost.addTab(spec);

@@ -45,7 +45,6 @@ public class Constant {
     /*----------以下是新增加的------------*/
 
 
-    public static final int UNLOGIN_TO_LOGIN_RESULTCODE = 0x000018;
     public static final int POP_RESULTCODE = 0x0000027;
     public static final int HOMEFRAGMENT_REQUESTCODE = 0x0000028;
     public static final int FINISH_MAINACTIVITY = 0x0000030;

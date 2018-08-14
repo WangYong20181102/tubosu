@@ -84,7 +84,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jpush.android.api.JPushInterface;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -921,7 +921,7 @@ public class PresonerMsgActivity extends com.tbs.tbs_mj.base.BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        JPushInterface.clearAllNotifications(mContext);
+//                        JPushInterface.clearAllNotifications(mContext);
                     }
                 });
             }

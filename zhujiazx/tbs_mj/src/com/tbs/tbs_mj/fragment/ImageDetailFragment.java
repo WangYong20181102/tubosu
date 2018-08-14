@@ -154,7 +154,7 @@ public class ImageDetailFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.e(TAG, "请求成功=====" + json);
+//                        Log.e(TAG, "请求成功=====" + json);
                         disposeJson(json);
                     }
                 });
@@ -316,7 +316,6 @@ public class ImageDetailFragment extends Fragment {
         token = AppInfoUtil.getToekn(mContext);
         if (TextUtils.isEmpty(token)) {
 //            Toast.makeText(mContext, "您还没有登陆,请登陆后再来收藏!", Toast.LENGTH_SHORT).show();
-////            Intent intent = new Intent(mContext, LoginActivity.class);
 //            Intent intent = new Intent(mContext, NewLoginActivity.class);
 ////            intent.putExtra("isFav", true);
 //            startActivityForResult(intent, 0);

@@ -46,7 +46,6 @@ import com.xiaomi.channel.commonutils.logger.LoggerInterface;
 import com.xiaomi.mipush.sdk.Logger;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
-import cn.jpush.android.api.JPushInterface;
 
 
 public class MyApplication extends MultiDexApplication {

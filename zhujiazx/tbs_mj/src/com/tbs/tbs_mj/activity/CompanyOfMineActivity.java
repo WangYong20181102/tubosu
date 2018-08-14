@@ -383,11 +383,6 @@ public class CompanyOfMineActivity extends BaseActivity {
     }
 
     public void goAllOrder(String kind) {
-//        Intent allOrderIntent = new Intent(mContext, AllOrderListActivity.class);
-//        Bundle allOrderBundle = new Bundle();
-//        allOrderBundle.putString("kind", kind);
-//        allOrderIntent.putExtras(allOrderBundle);
-//        mContext.startActivity(allOrderIntent);
         Intent intentIntoAllOrderActivity = new Intent(mContext, AllOrderActivity.class);
         intentIntoAllOrderActivity.putExtra("mIndex", kind);
         startActivity(intentIntoAllOrderActivity);

@@ -227,7 +227,6 @@ public class ImageDetailsFullScreenActivity extends Activity implements OnPageCh
                 if (token == null || token.length() == 0) {
 //                    Toast.makeText(mContext, "您还没有登陆,请登陆后再来收藏!", Toast.LENGTH_SHORT).show();
 //                    Intent intent = new Intent(mContext, NewLoginActivity.class);
-////                    Intent intent = new Intent(mContext, LoginActivity.class);
 ////                    intent.putExtra("isFav", true);
 //                    startActivityForResult(intent, 0);
                     return;

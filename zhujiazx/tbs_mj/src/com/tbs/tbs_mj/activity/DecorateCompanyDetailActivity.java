@@ -375,13 +375,6 @@ public class DecorateCompanyDetailActivity extends com.tbs.tbs_mj.base.BaseActiv
 
 				@Override
 				public void onClick(View v) {
-					try {
-						Intent intent = new Intent(mContext,LocalDiscountDetailActivity.class);
-						intent.putExtra("activityid", object2.getString("activityid"));
-						startActivity(intent);
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
 				}
 			});
 		} else {
@@ -685,7 +678,7 @@ public class DecorateCompanyDetailActivity extends com.tbs.tbs_mj.base.BaseActiv
 		token = AppInfoUtil.getToekn(getApplicationContext());
 		if (TextUtils.isEmpty(token)) {
 //			Util.setToast(mContext, "亲请先登陆后再来收藏！");
-////			Intent intent = new Intent(mContext, LoginActivity.class);
+
 //			Intent intent = new Intent(mContext, NewLoginActivity.class);
 ////			intent.putExtra("isFav", true);
 //			startActivityForResult(intent, 0);
