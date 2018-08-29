@@ -135,7 +135,6 @@ public class WelcomeActivity extends BaseActivity {
                                 public void run() {
                                     Glide.with(mContext).load(qiDongTu.getImg_url())
                                             .asBitmap()
-                                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                                             .centerCrop()
                                             .placeholder(R.drawable.welcome_image)
                                             .error(R.drawable.welcome_image)

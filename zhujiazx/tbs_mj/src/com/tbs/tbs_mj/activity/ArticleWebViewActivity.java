@@ -24,6 +24,7 @@ import com.tbs.tbs_mj.R;
 import com.tbs.tbs_mj.base.*;
 import com.tbs.tbs_mj.bean._AppEvent;
 import com.tbs.tbs_mj.global.Constant;
+import com.tbs.tbs_mj.utils.AppInfoUtil;
 import com.tbs.tbs_mj.utils.AppManager;
 import com.tbs.tbs_mj.utils.SpUtil;
 
@@ -93,8 +94,14 @@ public class ArticleWebViewActivity extends com.tbs.tbs_mj.base.BaseActivity {
 
         artWebviewWeb.setWebChromeClient(webChromeClient);
         artWebviewWeb.setWebViewClient(webViewClient);
-        artWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent)+ "&app_ref=" + AppManager.lastSecoundActivityName());
-        Log.e(TAG, "统计传值=====" + mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent));
+        //统计用
+        if (mLoadingUrl.contains("?")) {
+            artWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName()+"&channel=app&subchannel=android&chcode="+ AppInfoUtil.getChannType(mContext)+"&tbschcode="+AppInfoUtil.getNewChannType(mContext));
+
+        } else {
+            artWebviewWeb.loadUrl(mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName()+"&channel=app&subchannel=android&chcode="+ AppInfoUtil.getChannType(mContext)+"&tbschcode="+AppInfoUtil.getNewChannType(mContext));
+        }
+        Log.e(TAG, "文章统计传值=====" +mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName()+"&channel=app&subchannel=android&chcode="+ AppInfoUtil.getChannType(mContext)+"&tbschcode="+AppInfoUtil.getNewChannType(mContext));
     }
 
     private WebViewClient webViewClient = new WebViewClient() {
@@ -159,7 +166,7 @@ public class ArticleWebViewActivity extends com.tbs.tbs_mj.base.BaseActivity {
             case R.id.art_webview_fadan:
                 //跳转发单
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl",SpUtil.getzjzxaj29(mContext));
+                intent.putExtra("mLoadingUrl", SpUtil.getzjzxaj29(mContext));
                 mContext.startActivity(intent);
                 break;
         }

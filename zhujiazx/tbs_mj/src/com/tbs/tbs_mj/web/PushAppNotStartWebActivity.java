@@ -26,6 +26,7 @@ import com.tbs.tbs_mj.activity.WelcomeActivity;
 import com.tbs.tbs_mj.base.BaseActivity;
 import com.tbs.tbs_mj.bean._AppEvent;
 import com.tbs.tbs_mj.global.Constant;
+import com.tbs.tbs_mj.utils.AppInfoUtil;
 import com.tbs.tbs_mj.utils.AppManager;
 import com.tbs.tbs_mj.utils.SpUtil;
 
@@ -117,21 +118,21 @@ public class PushAppNotStartWebActivity extends BaseActivity {
         if (mLoadingUrl.contains("?")) {
             if (mEnableStatistics != null && mEnableStatistics.equals("0")) {
                 //不拼接
-                pansWebviewWeb.loadUrl(mLoadingUrl);
+                pansWebviewWeb.loadUrl(mLoadingUrl+"&channel=app&subchannel=android&chcode="+ AppInfoUtil.getChannType(mContext)+"&tbschcode="+AppInfoUtil.getNewChannType(mContext));
                 Log.e(TAG, "bu拼接==============="+mEnableStatistics);
             } else {
                 //拼接
-                pansWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+                pansWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName()+"&channel=app&subchannel=android&chcode="+ AppInfoUtil.getChannType(mContext)+"&tbschcode="+AppInfoUtil.getNewChannType(mContext));
                 Log.e(TAG, "拼接==============="+mEnableStatistics);
             }
         } else {
             if (mEnableStatistics != null && mEnableStatistics.equals("0")) {
                 //不拼接
-                pansWebviewWeb.loadUrl(mLoadingUrl);
+                pansWebviewWeb.loadUrl(mLoadingUrl+"?channel=app&subchannel=android&chcode="+ AppInfoUtil.getChannType(mContext)+"&tbschcode="+AppInfoUtil.getNewChannType(mContext));
                 Log.e(TAG, "bu拼接==============="+mEnableStatistics);
             } else {
                 //拼接
-                pansWebviewWeb.loadUrl(mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+                pansWebviewWeb.loadUrl(mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName()+"&channel=app&subchannel=android&chcode="+ AppInfoUtil.getChannType(mContext)+"&tbschcode="+AppInfoUtil.getNewChannType(mContext));
                 Log.e(TAG, "拼接==============="+mEnableStatistics);
             }
         }

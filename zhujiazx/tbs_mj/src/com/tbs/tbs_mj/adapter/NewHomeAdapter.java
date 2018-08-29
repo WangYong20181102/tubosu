@@ -175,13 +175,12 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 if (SpUtil.getNewHomeMianfeibaojiaImgUrl(context).contains(".gif")) {
                     Glide.with(context)
                             .load(SpUtil.getNewHomeMianfeibaojiaImgUrl(context))
-                            .asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .asGif()
 //                            .centerCrop()
                             .into(((NewHomeHead) holder).fa_dan_01_img);
                 } else {
                     Glide.with(context)
                             .load(SpUtil.getNewHomeMianfeibaojiaImgUrl(context))
-                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
 //                            .centerCrop()
                             .into(((NewHomeHead) holder).fa_dan_01_img);
                 }
@@ -199,12 +198,11 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 if (SpUtil.getNewHomeMianfeishejiImgUrl(context).contains(".gif")) {
                     Glide.with(context)
                             .load(SpUtil.getNewHomeMianfeishejiImgUrl(context))
-                            .asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .asGif()
                             .into(((NewHomeHead) holder).fa_dan_02_img);
                 } else {
                     Glide.with(context)
                             .load(SpUtil.getNewHomeMianfeishejiImgUrl(context))
-                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                             .into(((NewHomeHead) holder).fa_dan_02_img);
                 }
             } else {
@@ -221,12 +219,11 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 if (SpUtil.getNewHomeZhuanyetuijianImgUrl(context).contains(".gif")) {
                     Glide.with(context)
                             .load(SpUtil.getNewHomeZhuanyetuijianImgUrl(context))
-                            .asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .asGif()
                             .into(((NewHomeHead) holder).fa_dan_03_img);
                 } else {
                     Glide.with(context)
                             .load(SpUtil.getNewHomeZhuanyetuijianImgUrl(context))
-                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                             .into(((NewHomeHead) holder).fa_dan_03_img);
                 }
             } else {
@@ -244,12 +241,11 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 if (SpUtil.getNewHomeXianshihaoliImgUrl(context).contains(".gif")) {
                     Glide.with(context)
                             .load(SpUtil.getNewHomeXianshihaoliImgUrl(context))
-                            .asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .asGif()
                             .into(((NewHomeHead) holder).fa_dan_04_img);
                 } else {
                     Glide.with(context)
                             .load(SpUtil.getNewHomeXianshihaoliImgUrl(context))
-                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                             .into(((NewHomeHead) holder).fa_dan_04_img);
                 }
             } else {

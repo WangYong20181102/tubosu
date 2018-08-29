@@ -179,7 +179,7 @@ public class ArticleTypeFragment extends BaseFragment {
         }
     };
 
-    //子项的店家事件
+    //子项的点击事件
     private ArticleTypeAdapter.OnArticleTypeItemClickLister onArticleTypeItemClickLister = new ArticleTypeAdapter.OnArticleTypeItemClickLister() {
         @Override
         public void onItemClick(View view, int position) {
