@@ -165,6 +165,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
             SpUtil.setLatitude(mContext, location.getLatitude() + "");//设置纬度
             SpUtil.setLongitude(mContext, location.getLongitude() + "");//设置经度
             SpUtil.setCity(mContext, location.getCity() + "");//设置城市
+            AppInfoUtil.setCityName(mContext, location.getCity() + "");//设置城市
             SpUtil.setRadius(mContext, location.getRadius() + "");
             SpUtil.setHomeAndCompanyUsingCity(mContext, "");
 //            ToastUtil.showShort(mContext, "触发百度定位=====" + location.getCity() + "获取的本地真实的存储定位信息====" + SpUtil.getCity(mContext));

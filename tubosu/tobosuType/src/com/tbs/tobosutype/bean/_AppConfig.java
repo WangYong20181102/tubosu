@@ -83,6 +83,7 @@ public class _AppConfig {
 
         private String code;
         private String url;
+        private String img_url;
 
         public String getCode() {
             return code;
@@ -98,6 +99,14 @@ public class _AppConfig {
 
         public void setUrl(String url) {
             this.url = url;
+        }
+
+        public String getImg_url() {
+            return img_url;
+        }
+
+        public void setImg_url(String img_url) {
+            this.img_url = img_url;
         }
     }
 }

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_marginTop="8dp"
+    android:visibility="visible">
+    <!--免费设计-->
+    <android.support.v7.widget.CardView
+        android:id="@+id/ihph_mianfeisheji_cv_new"
+        android:layout_width="105dp"
+        android:layout_height="150dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="2dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="5dp">
+
+        <ImageView
+            android:id="@+id/ihph_mianfeisheji_img_new"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/home_page_mianfeisheji" />
+    </android.support.v7.widget.CardView>
+    <!--急速报价-->
+    <android.support.v7.widget.CardView
+        android:id="@+id/ihph_jisubaojia_cv_new"
+        android:layout_width="105dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="5dp">
+
+        <ImageView
+            android:id="@+id/ihph_jisubaojia_img_new"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/home_page_jisubaojia" />
+    </android.support.v7.widget.CardView>
+    <!--专业量房-->
+    <android.support.v7.widget.CardView
+        android:id="@+id/ihph_zhuanyeliangfang_cv_new"
+        android:layout_width="105dp"
+        android:layout_height="150dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="2dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="5dp">
+
+        <ImageView
+            android:id="@+id/ihph_zhuanyeliangfang_img_new"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/home_page_zhuangyeliangfang" />
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

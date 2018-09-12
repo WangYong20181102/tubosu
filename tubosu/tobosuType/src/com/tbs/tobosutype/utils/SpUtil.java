@@ -661,4 +661,180 @@ public class SpUtil {
     public static void setTbsAj33(Context context, String tbsaj33) {
         context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj33", tbsaj33).commit();
     }
+
+    // TODO: 2018/9/4 土拨鼠4.0版本 新的按键名称 
+    // TODO: 2018/9/4 首页顶部 
+    public static String getTbsAj34(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj34", Constant.BUDGET_TEST);
+    }
+
+    //存储
+    public static void setTbsAj34(Context context, String tbsaj34) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj34", tbsaj34).commit();
+    }
+
+    // TODO: 2018/9/4 装修大礼包
+    public static String getTbsAj35(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj35", Constant.COMPANY_GIFT);
+    }
+
+    //存储
+    public static void setTbsAj35(Context context, String tbsaj35) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj35", tbsaj35).commit();
+    }
+
+    // TODO: 2018/9/4 免费设计
+    public static String getTbsAj36(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj36", Constant.QUOTE);
+    }
+
+    //存储
+    public static void setTbsAj36(Context context, String tbsaj36) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj36", tbsaj36).commit();
+    }
+
+    // TODO: 2018/9/4 免费报价
+    public static String getTbsAj37(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj37", Constant.FREE_PRICE_PAGE);
+    }
+
+    //存储
+    public static void setTbsAj37(Context context, String tbsaj37) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj37", tbsaj37).commit();
+    }
+
+    // TODO: 2018/9/4 专业量房
+    public static String getTbsAj38(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj38", Constant.COMPANY_GIFT);
+    }
+
+    //存储
+    public static void setTbsAj38(Context context, String tbsaj38) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj38", tbsaj38).commit();
+    }
+
+    // TODO: 2018/9/4 装修公司免费报价
+    public static String getTbsAj39(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj39", Constant.FREE_PRICE_PAGE);
+    }
+
+    //存储
+    public static void setTbsAj39(Context context, String tbsaj39) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj39", tbsaj39).commit();
+    }
+
+    // TODO: 2018/9/4 装修公司0元设计
+    public static String getTbsAj40(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj40", Constant.FREE_DESIGN);
+    }
+
+    //存储
+    public static void setTbsAj40(Context context, String tbsaj40) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj40", tbsaj40).commit();
+    }
+
+    // TODO: 2018/9/4 装修公司专业推荐
+    public static String getTbsAj41(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj41", Constant.REC_COMPANY);
+    }
+
+    //存储
+    public static void setTbsAj41(Context context, String tbsaj41) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj41", tbsaj41).commit();
+    }
+
+    // TODO: 2018/9/4 装修公司预算测试
+    public static String getTbsAj42(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj42", Constant.BUDGET_TEST);
+    }
+
+    //存储
+    public static void setTbsAj42(Context context, String tbsaj42) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj42", tbsaj42).commit();
+    }
+
+    //todo 首页的四个发单的图片地址 由后台获取  网络获取存入本地
+    //存储1-免费设计图片地址  fadan01
+    public static String getNewHomeMianfeishejiImgUrl(Context context) {
+        return context.getSharedPreferences("NewHomeImgUrl", 0).getString("mianfeisheji_url", "");
+    }
+
+    //获取
+    public static void setNewHomeMianfeishejiImgUrl(Context context, String mianfeibaojia_url) {
+        context.getSharedPreferences("NewHomeImgUrl", 0).edit().putString("mianfeisheji_url", mianfeibaojia_url).commit();
+    }
+
+    //急速报价的url地址  fadan02
+    public static String getNewHomeJisubaojiaImgUrl(Context context) {
+        return context.getSharedPreferences("NewHomeImgUrl", 0).getString("jisubaojia_url", "");
+    }
+
+    //获取
+    public static void setNewHomeJisubaojiaImgUrl(Context context, String mianfeisheji_url) {
+        context.getSharedPreferences("NewHomeImgUrl", 0).edit().putString("jisubaojia_url", mianfeisheji_url).commit();
+    }
+
+    //专业量房  fadan03
+    public static String getNewHomeZhuanyeliangfangImgUrl(Context context) {
+        return context.getSharedPreferences("NewHomeImgUrl", 0).getString("zhuanyeliangfang_url", "");
+    }
+
+    public static void setNewHomeZhuanyeliangfangImgUrl(Context context, String zhuanyetuijian_url) {
+        context.getSharedPreferences("NewHomeImgUrl", 0).edit().putString("zhuanyeliangfang_url", zhuanyetuijian_url).commit();
+    }
+
+
+    //大礼包 限时豪礼
+    public static String getNewHomeXianshihaoliImgUrl(Context context) {
+        return context.getSharedPreferences("NewHomeImgUrl", 0).getString("xianshihaoli_url", "");
+    }
+
+    public static void setNewHomeXianshihaoliImgUrl(Context context, String xianshihaoli_url) {
+        context.getSharedPreferences("NewHomeImgUrl", 0).edit().putString("xianshihaoli_url", xianshihaoli_url).commit();
+    }
+
+    //装修公司模块 免费报价图片的url
+    public static String getDecComMianFeiBaoJiaImgUrl(Context context) {
+        return context.getSharedPreferences("DecComImgUrl", 0).getString("mianfeibaojia_url", "");
+    }
+
+    public static void setDecComMianFeiBaoJiaImgUrl(Context context, String mianfeibaojia_url) {
+        context.getSharedPreferences("DecComImgUrl", 0).edit().putString("mianfeibaojia_url", mianfeibaojia_url).commit();
+    }
+
+    //装修公司模块 零元设计图片的url
+    public static String getDecComLingYuanSheJiImgUrl(Context context) {
+        return context.getSharedPreferences("DecComImgUrl", 0).getString("lingyuansheji_url", "");
+    }
+
+    public static void setDecComLingYuanSheJiImgUrl(Context context, String lingyuansheji_url) {
+        context.getSharedPreferences("DecComImgUrl", 0).edit().putString("lingyuansheji_url", lingyuansheji_url).commit();
+    }
+
+    //装修公司模块 专业推荐图片的url
+    public static String getDecComZhuanYeTuiJianImgUrl(Context context) {
+        return context.getSharedPreferences("DecComImgUrl", 0).getString("zhuanyetuijian_url", "");
+    }
+
+    public static void setDecComZhuanYeTuiJianImgUrl(Context context, String zhuanyetuijian_url) {
+        context.getSharedPreferences("DecComImgUrl", 0).edit().putString("zhuanyetuijian_url", zhuanyetuijian_url).commit();
+    }
+
+    //预算测试
+    public static String getDecComYuSuanCeiShiImgUrl(Context context) {
+        return context.getSharedPreferences("DecComImgUrl", 0).getString("yusuanceshi_url", "");
+    }
+
+    public static void setDecComYuSuanCeiShiImgUrl(Context context, String yusuanceshi_url) {
+        context.getSharedPreferences("DecComImgUrl", 0).edit().putString("yusuanceshi_url", yusuanceshi_url).commit();
+    }
+
+    //装修公司页面的筛选条件
+    public static String getDecComCheckInfo(Context context) {
+        return context.getSharedPreferences("DecComCheckInfo", 0).getString("DecComCheckInfo", "");
+    }
+
+    public static void setDecComCheckInfo(Context context, String mDecComCheckInfo) {
+        context.getSharedPreferences("DecComCheckInfo", 0).edit().putString("DecComCheckInfo", mDecComCheckInfo).commit();
+    }
 }

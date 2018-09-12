@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="utf-8"?><!--土拨鼠App4.0版本新首页的头部信息-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <!--暂时用Scroll↑-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--首页轮播图-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:visibility="gone">
+
+            <View
+                android:id="@+id/ihph_banner_bg_view"
+                android:layout_width="match_parent"
+                android:layout_height="174dp"
+                android:background="#5abaa7" />
+            <!--底部背景-->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/hp_banner_bg" />
+            <!--轮播的banner-->
+            <com.zhouwei.mzbanner.MZBannerView
+                android:id="@+id/ihph_banner_mz_banner_view"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp"
+                app:canLoop="true"
+                app:open_mz_mode="true">
+
+            </com.zhouwei.mzbanner.MZBannerView>
+        </RelativeLayout>
+        <!--选设计、看案例、找装修、学装修等-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+            <!--选设计-->
+            <RelativeLayout
+                android:id="@+id/ihph_xuansheji_rl"
+                android:layout_width="45dp"
+                android:layout_height="70dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/newxuansheji" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:text="选设计"
+                    android:textColor="#363650"
+                    android:textSize="15dp" />
+            </RelativeLayout>
+            <!--看案例-->
+            <RelativeLayout
+                android:id="@+id/ihph_kananli_rl"
+                android:layout_width="45dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="44dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/newxuansheji" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:text="看案例"
+                    android:textColor="#363650"
+                    android:textSize="15dp" />
+            </RelativeLayout>
+            <!--找装修-->
+            <RelativeLayout
+                android:id="@+id/ihph_zhaozhuangxiu_rl"
+                android:layout_width="45dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="44dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/newxuansheji" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:text="找装修"
+                    android:textColor="#363650"
+                    android:textSize="15dp" />
+            </RelativeLayout>
+            <!--学装修-->
+            <RelativeLayout
+                android:id="@+id/ihph_xuezhuangxiu_rl"
+                android:layout_width="45dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="44dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/newxuansheji" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:text="学装修"
+                    android:textColor="#363650"
+                    android:textSize="15dp" />
+            </RelativeLayout>
+        </LinearLayout>
+        <!--装修大礼包-->
+        <android.support.v7.widget.CardView
+            android:id="@+id/ihph_zhuangxiudalibao_cv"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="25dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:visibility="gone"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="5dp">
+
+            <ImageView
+                android:id="@+id/ihph_zhuangxiudalibao_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/home_pager_dalibao" />
+        </android.support.v7.widget.CardView>
+        <!--免费设计、极速报价、专业量房模块-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="155dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone">
+            <!--免费设计-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/ihph_mianfeisheji_cv"
+                android:layout_width="105dp"
+                android:layout_height="150dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="2dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="5dp">
+
+                <ImageView
+                    android:id="@+id/ihph_mianfeisheji_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/home_page_mianfeisheji" />
+            </android.support.v7.widget.CardView>
+            <!--急速报价-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/ihph_jisubaojia_cv"
+                android:layout_width="105dp"
+                android:layout_height="150dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="5dp">
+
+                <ImageView
+                    android:id="@+id/ihph_jisubaojia_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/home_page_jisubaojia" />
+            </android.support.v7.widget.CardView>
+            <!--专业量房-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/ihph_zhuanyeliangfang_cv"
+                android:layout_width="105dp"
+                android:layout_height="150dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="2dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="5dp">
+
+                <ImageView
+                    android:id="@+id/ihph_zhuanyeliangfang_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/home_page_zhuangyeliangfang" />
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+        <!--选设计模块-->
+        <TextView
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="45dp"
+            android:text="选设计"
+            android:textColor="#363650"
+            android:textSize="28dp"
+            android:textStyle="bold" />
+        <!--选设计的图层-->
+        <!--简约和田园-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="123dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="13dp"
+            android:layout_marginTop="25dp"
+            android:visibility="gone">
+            <!--简约-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/ihph_jianyue_cv"
+                android:layout_width="180dp"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="3dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/ihph_jianyue_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/home_style" />
+                    <!--覆盖物-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/style01" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+            <!--田园-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/ihph_tianyuan_cv"
+                android:layout_width="135dp"
+                android:layout_height="120dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="3dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/ihph_tianyuan_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/home_style" />
+                    <!--覆盖物-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/style02" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+        <!--现代、中式、美式-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="143dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="13dp"
+            android:layout_marginTop="15dp"
+            android:visibility="gone">
+            <!--现代-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/ihph_xiandai_cv"
+                android:layout_width="100dp"
+                android:layout_height="140dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="3dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/ihph_xiandai_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/home_style" />
+                    <!--覆盖物-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/style03" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+            <!--中式-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/ihph_zhongshi_cv"
+                android:layout_width="100dp"
+                android:layout_height="140dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="3dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/ihph_zhongshi_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/home_style" />
+                    <!--覆盖物-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/style04" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+            <!--美式-->
+            <android.support.v7.widget.CardView
+                android:id="@+id/ihph_meishi_cv"
+                android:layout_width="100dp"
+                android:layout_height="140dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="3dp"
+                android:clickable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/ihph_meishi_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/home_style" />
+                    <!--覆盖物-->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/style05" />
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+        <!--更多设计风格-->
+        <RelativeLayout
+            android:id="@+id/ihph_more_design_style_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="更多设计风格"
+                    android:textColor="#999"
+                    android:textSize="12dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="2dp"
+                    android:src="@drawable/more" />
+            </LinearLayout>
+        </RelativeLayout>
+        <!--看案例模块-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="404dp"
+            android:layout_marginTop="25dp"
+            android:visibility="gone">
+            <!--背景图层-->
+            <ImageView
+                android:id="@+id/ihph_case_bg_img"
+                android:layout_width="match_parent"
+                android:layout_height="360dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/home_style" />
+            <!--弧形背景图层-->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="291dp"
+                android:src="@drawable/case_bg" />
+            <!--文字-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="25dp"
+                android:text="看案例"
+                android:textColor="#fff"
+                android:textSize="28dp"
+                android:textStyle="bold" />
+            <!--滑动模块-->
+            <android.support.v4.view.ViewPager
+                android:id="@+id/ihph_case_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="320dp"
+                android:layout_alignParentBottom="true">
+
+            </android.support.v4.view.ViewPager>
+            <!--查看更多案例-->
+            <LinearLayout
+                android:id="@+id/ihph_more_case_ll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="13dp"
+                    android:layout_height="wrap_content"
+
+                    android:text="更多案例"
+                    android:textColor="@color/white"
+                    android:textSize="13dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/more" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+        <!--第一处广告图-->
+        <RelativeLayout
+            android:id="@+id/ihph_adv1_rl"
+            android:layout_width="match_parent"
+            android:layout_height="83dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="45dp">
+            <!--广告轮播-->
+            <com.zhouwei.mzbanner.MZBannerView
+                android:id="@+id/ihph_adv1_mzbanner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:canLoop="true"
+                app:open_mz_mode="true">
+
+            </com.zhouwei.mzbanner.MZBannerView>
+        </RelativeLayout>
+        <!--学装修模块-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="45dp"
+            android:orientation="vertical">
+            <!--文字模块-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="学装修"
+                android:textColor="#363650"
+                android:textSize="28dp"
+                android:textStyle="bold" />
+            <!--滑块模块-->
+            <net.lucode.hackware.magicindicator.MagicIndicator
+                android:id="@+id/ihph_learnzx_indicator"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="25dp">
+
+            </net.lucode.hackware.magicindicator.MagicIndicator>
+            <!--轮播的banner-->
+            <com.zhouwei.mzbanner.MZBannerView
+                android:id="@+id/ihph_adv2_mzbanner"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="25dp"
+                app:canLoop="true"
+                app:open_mz_mode="true">
+
+            </com.zhouwei.mzbanner.MZBannerView>
+            <!--滑动的页面-->
+            <android.support.v4.view.ViewPager
+                android:id="@+id/ihph_learnzx_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="452dp">
+
+            </android.support.v4.view.ViewPager>
+            <!--更多-->
+            <LinearLayout
+                android:id="@+id/ihph_more_learnzx_lr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="45dp"
+                android:layout_marginTop="25dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="更多装修知识"
+                    android:textColor="#999"
+                    android:textSize="12dp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="2dp"
+                    android:src="@drawable/more" />
+            </LinearLayout>
+        </LinearLayout>
+        <!--装修专题模块-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="装修专题"
+                android:textColor="#363650"
+                android:textSize="28dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

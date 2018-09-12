@@ -194,6 +194,47 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     HashMap<String, String> urlMap = new HashMap<>();
                     for (int i = 0; i < mAppConfig.getOrder_links().size(); i++) {
                         urlMap.put(mAppConfig.getOrder_links().get(i).getCode(), mAppConfig.getOrder_links().get(i).getUrl());
+                        if (mAppConfig.getOrder_links().get(i).getCode().equals("tbsaj35")) {
+//                            Log.e(TAG, "存储发单的图片地址========1");
+                            //存储图片 大礼包
+                            SpUtil.setNewHomeXianshihaoliImgUrl(mContext, mAppConfig.getOrder_links().get(i).getImg_url());
+//                            SpUtil.setNewHomeMianfeibaojiaImgUrl(mContext, "https://media.giphy.com/media/5Zesu5VPNGJlm/giphy.gif");
+                        }
+                        if (mAppConfig.getOrder_links().get(i).getCode().equals("tbsaj36")) {
+//                            Log.e(TAG, "存储发单的图片地址========2");
+                            //存储图片 免费设计
+                            SpUtil.setNewHomeMianfeishejiImgUrl(mContext, mAppConfig.getOrder_links().get(i).getImg_url());
+                        }
+                        if (mAppConfig.getOrder_links().get(i).getCode().equals("tbsaj37")) {
+//                            Log.e(TAG, "存储发单的图片地址========3");
+                            //存储图片 免费报价
+                            SpUtil.setNewHomeJisubaojiaImgUrl(mContext, mAppConfig.getOrder_links().get(i).getImg_url());
+                        }
+                        if (mAppConfig.getOrder_links().get(i).getCode().equals("tbsaj38")) {
+//                            Log.e(TAG, "存储发单的图片地址========4");
+                            //存储图片
+                            SpUtil.setNewHomeZhuanyeliangfangImgUrl(mContext, mAppConfig.getOrder_links().get(i).getImg_url());
+                        }
+                        if (mAppConfig.getOrder_links().get(i).getCode().equals("tbsaj39")) {
+//                            Log.e(TAG, "存储发单的图片地址========4");
+                            //存储图片
+                            SpUtil.setDecComMianFeiBaoJiaImgUrl(mContext, mAppConfig.getOrder_links().get(i).getImg_url());
+                        }
+                        if (mAppConfig.getOrder_links().get(i).getCode().equals("tbsaj40")) {
+//                            Log.e(TAG, "存储发单的图片地址========4");
+                            //存储图片
+                            SpUtil.setDecComLingYuanSheJiImgUrl(mContext, mAppConfig.getOrder_links().get(i).getImg_url());
+                        }
+                        if (mAppConfig.getOrder_links().get(i).getCode().equals("tbsaj41")) {
+//                            Log.e(TAG, "存储发单的图片地址========4");
+                            //存储图片
+                            SpUtil.setDecComZhuanYeTuiJianImgUrl(mContext, mAppConfig.getOrder_links().get(i).getImg_url());
+                        }
+                        if (mAppConfig.getOrder_links().get(i).getCode().equals("tbsaj42")) {
+//                            Log.e(TAG, "存储发单的图片地址========4");
+                            //存储图片
+                            SpUtil.setDecComYuSuanCeiShiImgUrl(mContext, mAppConfig.getOrder_links().get(i).getImg_url());
+                        }
                     }
                     //存储
                     if (urlMap.containsKey("tbsaj01") &&
@@ -302,6 +343,33 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     }
                     if (urlMap.containsKey("tbsaj33") && !TextUtils.isEmpty(urlMap.get("tbsaj33"))) {
                         SpUtil.setTbsAj33(mContext, urlMap.get("tbsaj33"));
+                    }
+                    if (urlMap.containsKey("tbsaj34") && !TextUtils.isEmpty(urlMap.get("tbsaj34"))) {
+                        SpUtil.setTbsAj34(mContext, urlMap.get("tbsaj34"));
+                    }
+                    if (urlMap.containsKey("tbsaj35") && !TextUtils.isEmpty(urlMap.get("tbsaj35"))) {
+                        SpUtil.setTbsAj35(mContext, urlMap.get("tbsaj35"));
+                    }
+                    if (urlMap.containsKey("tbsaj36") && !TextUtils.isEmpty(urlMap.get("tbsaj36"))) {
+                        SpUtil.setTbsAj36(mContext, urlMap.get("tbsaj36"));
+                    }
+                    if (urlMap.containsKey("tbsaj37") && !TextUtils.isEmpty(urlMap.get("tbsaj37"))) {
+                        SpUtil.setTbsAj37(mContext, urlMap.get("tbsaj37"));
+                    }
+                    if (urlMap.containsKey("tbsaj38") && !TextUtils.isEmpty(urlMap.get("tbsaj38"))) {
+                        SpUtil.setTbsAj38(mContext, urlMap.get("tbsaj38"));
+                    }
+                    if (urlMap.containsKey("tbsaj39") && !TextUtils.isEmpty(urlMap.get("tbsaj39"))) {
+                        SpUtil.setTbsAj39(mContext, urlMap.get("tbsaj39"));
+                    }
+                    if (urlMap.containsKey("tbsaj40") && !TextUtils.isEmpty(urlMap.get("tbsaj40"))) {
+                        SpUtil.setTbsAj40(mContext, urlMap.get("tbsaj40"));
+                    }
+                    if (urlMap.containsKey("tbsaj41") && !TextUtils.isEmpty(urlMap.get("tbsaj41"))) {
+                        SpUtil.setTbsAj41(mContext, urlMap.get("tbsaj41"));
+                    }
+                    if (urlMap.containsKey("tbsaj42") && !TextUtils.isEmpty(urlMap.get("tbsaj42"))) {
+                        SpUtil.setTbsAj42(mContext, urlMap.get("tbsaj42"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -425,7 +493,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         tabHost = this.getTabHost();
         TabHost.TabSpec spec;
 
-        Intent intent = new Intent().setClass(this, NewHomeActivity.class);
+//        Intent intent = new Intent().setClass(this, NewHomeActivity.class);
+        Intent intent = new Intent().setClass(this, HomePageActivity.class);
 
         spec = tabHost.newTabSpec("ONE").setIndicator("首页").setContent(intent);
         tabHost.addTab(spec);
@@ -438,7 +507,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         spec = tabHost.newTabSpec("TWO").setIndicator("效果图").setContent(intent);
         tabHost.addTab(spec);
 
-        intent = new Intent().setClass(this, NewGongSiAcitivity.class);
+        intent = new Intent().setClass(this, DecorateComActivity.class);
         spec = tabHost.newTabSpec("THREE").setIndicator("装修公司").setContent(intent);
         tabHost.addTab(spec);
 
@@ -471,8 +540,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         main_tab_image.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-//                Intent gotoLearnActivity = new Intent(mContext, AllOrderActivity.class);
-////                gotoLearnActivity.putExtra("mLoadingUrl", "http://m.dev.tobosu.com/szs/zx/?app_type=1");
+//                Intent gotoLearnActivity = new Intent(mContext, DecorateComActivity.class);
+//              gotoLearnActivity.putExtra("mLoadingUrl", "http://m.dev.tobosu.com/szs/zx/?app_type=1");
 //                mContext.startActivity(gotoLearnActivity);
                 return true;
             }

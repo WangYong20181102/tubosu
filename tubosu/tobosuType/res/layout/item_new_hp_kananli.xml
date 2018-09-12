@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="465dp"
+        android:layout_marginTop="20dp"
+        android:visibility="visible">
+        <!--背景图层-->
+        <ImageView
+            android:id="@+id/ihph_case_bg_img_new"
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/home_style" />
+        <!--弧形背景图层-->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="291dp"
+            android:src="@drawable/case_bg" />
+        <!--文字-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:text="看案例"
+            android:textColor="#fff"
+            android:textSize="28dp"
+            android:textStyle="bold" />
+        <!--滑动模块-->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/ihph_case_viewpager_new"
+            android:layout_width="match_parent"
+            android:layout_height="370dp"
+            android:layout_marginTop="75dp"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingLeft="25dp"
+            android:paddingBottom="15dp"
+            android:paddingRight="25dp">
+
+        </android.support.v4.view.ViewPager>
+        <!--查看更多案例-->
+        <LinearLayout
+            android:id="@+id/ihph_more_case_ll_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="3dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="13dp"
+                android:layout_height="wrap_content"
+
+                android:text="更多案例"
+                android:textColor="@color/white"
+                android:textSize="13dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/more" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

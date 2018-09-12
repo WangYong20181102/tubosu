@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?><!--首页文章的布局-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+    <!--显示布局-->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/frag_hp_article_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="9dp">
+
+    </android.support.v7.widget.RecyclerView>
+</RelativeLayout>

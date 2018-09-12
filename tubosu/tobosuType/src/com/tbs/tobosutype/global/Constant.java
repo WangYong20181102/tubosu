@@ -23,7 +23,7 @@ public class Constant {
     //数据流上传接口 正式
     public static final String TBS_DATA_STREAM = "https://www.tobosu.com/trace";
     //M站 发单跳转 线上环境
-    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
+//    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
 
 
     /**
@@ -36,7 +36,7 @@ public class Constant {
     //M站test接口
 //    public static final String M_TOBOSU_URL = "http://m.test.tobosu.com/szs/";
     //M站dev接口
-//    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
+    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
 
     //拼接在链接后面的字符串标识App的类别
     public static final String APP_TYPE = "&app_type=1";
@@ -243,6 +243,7 @@ public class Constant {
     public static final String CASE_DETAIL = TOBOSU_URL + "mapp/case/case_detail";
     //新的装修案例详情
     public static final String TOPIC_DETAIL = TOBOSU_URL + "mapp/topic/topic_detail";
+    //专题列表数据
     public static final String ZHUANTI_URL = TOBOSU_URL + "mapp/topic/topic_list";
 
     // TODO: 2018/5/14 App全栈通一发单地址*****************************************************************************************************
@@ -256,6 +257,10 @@ public class Constant {
     public static final String COMPANY_GIFT = M_TOBOSU_URL + "company_gift?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
     //优惠活动 立即领取
     public static final String PROMOTIONS = M_TOBOSU_URL + "promotions?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
+    //装修效果测试
+    public static final String BUDGET_TEST = M_TOBOSU_URL + "budget_test?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
+    //零元设计
+    public static final String FREE_DESIGN = M_TOBOSU_URL + "free_design?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
 
 
     //新的逛图库 套图  add time 20171111
@@ -340,4 +345,13 @@ public class Constant {
     public static final String COMPANY_MY_STORE = TOBOSU_URL + "mapp/company/my_store";
     //网店管理修改网店管理
     public static final String COMPANY_MODIFY_STORE = TOBOSU_URL + "mapp/company/modify_store";
+    //4.0版本的新首页接口
+    public static final String NEWVERSION_INDEX = TOBOSU_URL + "mapp/index/newVersion_index";
+    //4.0版本广告位统计
+    public static final String ADV_CLICK_COUNT = TOBOSU_URL + "mapp/appIndexAdvert/click_count_index";
+    //4.0装修公司列表
+    public static final String COMPANY_LIST_NEW = TOBOSU_URL + "mapp/company/company_list_new";
+    //4.0装修公司筛选条件
+    public static final String COMPANY_GETCHECKINFO = TOBOSU_URL + "mapp/company/getCheckInfo";
+
 }

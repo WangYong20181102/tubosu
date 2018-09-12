@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+        <!--文字模块-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="学装修"
+            android:textColor="#363650"
+            android:textSize="28dp"
+            android:textStyle="bold" />
+        <!--滑块模块-->
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/ihph_learnzx_indicator_new"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="16dp">
+
+        </net.lucode.hackware.magicindicator.MagicIndicator>
+        <!--轮播的banner-->
+        <com.zhouwei.mzbanner.MZBannerView
+            android:id="@+id/ihph_adv2_mzbanner_new"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="15dp"
+            app:canLoop="true"
+            app:open_mz_mode="false">
+
+        </com.zhouwei.mzbanner.MZBannerView>
+        <!--滑动的页面-->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/ihph_learnzx_viewpager_new"
+            android:layout_width="match_parent"
+            android:layout_height="470dp">
+
+        </android.support.v4.view.ViewPager>
+        <!--更多-->
+        <LinearLayout
+            android:id="@+id/ihph_more_learnzx_lr_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="45dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="更多装修知识"
+                android:textColor="#999"
+                android:textSize="12dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="2dp"
+                android:src="@drawable/more" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

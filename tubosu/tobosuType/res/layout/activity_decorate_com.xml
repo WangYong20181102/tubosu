@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/findCompanyLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activity.DecorateComActivity">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants"
+        android:background="@color/white">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:fitsSystemWindows="true">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                app:contentScrim="@color/white"
+                app:expandedTitleMarginEnd="10dp"
+                app:expandedTitleMarginStart="10dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                <!--标题栏以及四个按钮-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white">
+                    <!--顶部栏-->
+                    <RelativeLayout
+                        android:id="@+id/hp_title_rl"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_alignParentTop="true"
+                        android:background="@color/white"
+                        android:visibility="visible">
+                        <!--城市选择-->
+                        <LinearLayout
+                            android:id="@+id/decorate_com_city_ll"
+                            android:layout_width="80dp"
+                            android:layout_height="48dp"
+                            android:layout_alignParentLeft="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/decorate_com_city_name_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="11dp"
+                                android:gravity="end"
+                                android:text=""
+                                android:textColor="#363650"
+                                android:textSize="13dp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="2dp"
+                                android:src="@drawable/drop_down_p" />
+                        </LinearLayout>
+                        <!--搜索框-->
+                        <RelativeLayout
+                            android:id="@+id/decorate_com_search_rl"
+                            android:layout_width="233dp"
+                            android:layout_height="26dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="78dp"
+                            android:background="@drawable/shape_homepage_seach_black">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="12dp"
+                                android:src="@drawable/search_p" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="28dp"
+                                android:text="请输入装修公司关键字"
+                                android:textColor="#a3a3a3"
+                                android:textSize="12dp" />
+
+                        </RelativeLayout>
+                        <!--分享按钮-->
+                        <LinearLayout
+                            android:id="@+id/decorate_com_kefu_ll"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="17dp"
+                                android:layout_height="17dp"
+                                android:src="@drawable/tel_p" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                    <!--四个按钮-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="58dp"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <RelativeLayout
+                                android:layout_width="165dp"
+                                android:layout_height="62dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="11dp"
+                                android:background="@color/white">
+
+                                <android.support.v7.widget.CardView
+                                    android:id="@+id/decorate_com_free_cv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="4dp"
+                                    android:clickable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    app:cardCornerRadius="4dp"
+                                    app:cardElevation="4dp">
+
+                                    <ImageView
+                                        android:id="@+id/decorate_com_free_img"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/banner_free" />
+                                </android.support.v7.widget.CardView>
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="165dp"
+                                android:layout_height="62dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="11dp"
+                                android:background="@color/white">
+
+                                <android.support.v7.widget.CardView
+                                    android:id="@+id/decorate_com_zero_cv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="4dp"
+                                    android:clickable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    app:cardCornerRadius="4dp"
+                                    app:cardElevation="4dp">
+
+                                    <ImageView
+                                        android:id="@+id/decorate_com_zero_img"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/banner_zero" />
+                                </android.support.v7.widget.CardView>
+                            </RelativeLayout>
+                        </RelativeLayout>
+                        <!--下边两个按钮-->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp">
+
+                            <RelativeLayout
+                                android:layout_width="165dp"
+                                android:layout_height="62dp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginLeft="11dp"
+                                android:background="@color/white">
+
+                                <android.support.v7.widget.CardView
+                                    android:id="@+id/decorate_com_hot_cv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="4dp"
+                                    android:clickable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    app:cardCornerRadius="4dp"
+                                    app:cardElevation="4dp">
+
+                                    <ImageView
+                                        android:id="@+id/decorate_com_hot_img"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/banner_hot" />
+                                </android.support.v7.widget.CardView>
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="165dp"
+                                android:layout_height="62dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="11dp"
+                                android:background="@color/white">
+
+                                <android.support.v7.widget.CardView
+                                    android:id="@+id/decorate_com_test_cv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_margin="4dp"
+                                    android:clickable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    app:cardCornerRadius="4dp"
+                                    app:cardElevation="4dp">
+
+                                    <ImageView
+                                        android:id="@+id/decorate_com_test_img"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:src="@drawable/banner_test" />
+                                </android.support.v7.widget.CardView>
+                            </RelativeLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+            <!--下拉选框-->
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/decorate_com_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                app:layout_collapseMode="pin">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white">
+                    <!--综合排序-->
+                    <LinearLayout
+                        android:id="@+id/decorate_com_zonghe_ll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="综合排序"
+                            android:textColor="#6f6f8f"
+                            android:textSize="15dp" />
+
+                        <ImageView
+                            android:id="@+id/decorate_com_zonghe_jiantou_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="2dp"
+                            android:src="@drawable/drop_down_p" />
+                    </LinearLayout>
+                    <!--全部区域-->
+                    <LinearLayout
+                        android:id="@+id/decorate_com_quanbu_ll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="全部区域"
+                            android:textColor="#6f6f8f"
+                            android:textSize="15dp" />
+
+                        <ImageView
+                            android:id="@+id/decorate_com_quanbu_jiantou_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="15dp"
+                            android:src="@drawable/drop_down_p" />
+                    </LinearLayout>
+                    <!--更多筛选-->
+                    <LinearLayout
+                        android:id="@+id/decorate_com_gengduo_ll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="15dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="更多筛选"
+                            android:textColor="#6f6f8f"
+                            android:textSize="15dp" />
+
+                        <ImageView
+                            android:id="@+id/decorate_com_gengduo_jiantou_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="2dp"
+                            android:src="@drawable/drop_down_p" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
+
+            <View
+                android:id="@+id/decorate_com_device_view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#eee" />
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/decorate_com_recycler"
+            android:layout_width="match_parent"
+            android:overScrollMode="never"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        </android.support.v7.widget.RecyclerView>
+    </android.support.design.widget.CoordinatorLayout>
+
+    <ImageView
+        android:id="@+id/decorate_com_dec_push_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="200dp"
+        android:src="@drawable/dec_push" />
+
+    <!--点击搜索之后的页面-->
+    <!-- 搜索布局 -->
+    <RelativeLayout
+        android:id="@+id/searchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/topSearch"
+            android:layout_width="match_parent"
+            android:layout_height="43dp"
+            android:background="@drawable/wht">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="28dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:layout_toLeftOf="@+id/tvCancelSearch"
+                android:background="@drawable/shape_company_edittext_bg">
+
+                <RelativeLayout
+                    android:id="@+id/searche_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="27dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/kiksezchdfa">
+
+                    <EditText
+                        android:id="@+id/etSearchGongsi"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/transparent"
+                        android:hint="请输入装修公司关键字"
+                        android:singleLine="true"
+                        android:lines="1"
+                        android:maxLines="1"
+                        android:textColorHint="#999999"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/ivGongSiDelete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignRight="@+id/etSearchGongsi"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/delete_cancel"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/kiksezchdfa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/ssearch" />
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/tvCancelSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="14dp"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="#FF6F20" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relYouxuan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/topSearch"
+            android:background="@color/white"
+            android:visibility="gone">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/noSearchData1"
+                        android:layout_width="match_parent"
+                        android:layout_height="244dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@drawable/sousuo" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/ifyouxuan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/noSearchData1">
+
+                        <View
+                            android:layout_width="120dp"
+                            android:layout_height="1dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="16dp"
+                            android:layout_toLeftOf="@+id/sdfgddafsdaer"
+                            android:background="#dedede" />
+
+                        <TextView
+                            android:id="@+id/sdfgddafsdaer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:text="为你优选"
+                            android:textColor="#060606"
+                            android:textSize="14sp" />
+
+                        <View
+                            android:layout_width="120dp"
+                            android:layout_height="1dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="16dp"
+                            android:layout_toRightOf="@+id/sdfgddafsdaer"
+                            android:background="#dedede" />
+                    </RelativeLayout>
+
+                    <com.tbs.tobosutype.customview.MyListView
+                        android:id="@+id/youxuanList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ifyouxuan"
+                        android:divider="@null"></com.tbs.tobosutype.customview.MyListView>
+                </RelativeLayout>
+            </ScrollView>
+        </RelativeLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/searchSwip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/topSearch">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/searchList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <RelativeLayout
+            android:id="@+id/nothingData"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/topSearch"
+            android:background="@color/white"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/sousuo" />
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/mengceng4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/topSearch"
+            android:background="#49767676"
+            android:visibility="gone" />
+    </RelativeLayout>
+</RelativeLayout>

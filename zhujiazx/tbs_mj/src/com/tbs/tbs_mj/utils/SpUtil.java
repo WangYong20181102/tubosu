@@ -689,7 +689,6 @@ public class SpUtil {
         return context.getSharedPreferences("NewHomeImgUrl", 0).getString("zhuanyetuijian_url", "");
     }
 
-    //获取1-专业推荐 图片地址
     public static void setNewHomeZhuanyetuijianImgUrl(Context context, String zhuanyetuijian_url) {
         context.getSharedPreferences("NewHomeImgUrl", 0).edit().putString("zhuanyetuijian_url", zhuanyetuijian_url).commit();
     }
@@ -700,7 +699,6 @@ public class SpUtil {
         return context.getSharedPreferences("NewHomeImgUrl", 0).getString("xianshihaoli_url", "");
     }
 
-    //获取1-专业推荐 图片地址
     public static void setNewHomeXianshihaoliImgUrl(Context context, String xianshihaoli_url) {
         context.getSharedPreferences("NewHomeImgUrl", 0).edit().putString("xianshihaoli_url", xianshihaoli_url).commit();
     }

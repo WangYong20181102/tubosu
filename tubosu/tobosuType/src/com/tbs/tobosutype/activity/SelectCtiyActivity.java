@@ -67,6 +67,7 @@ import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.EventBusUtil;
 import com.tbs.tobosutype.utils.MD5Util;
 import com.tbs.tobosutype.utils.NetUtil;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
 
@@ -487,6 +488,20 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
             finish();
             return;
         }
+
+        if (!TextUtils.isEmpty(mWhereFrom) && mWhereFrom.equals("HomePageActivity")) {
+            EventBusUtil.sendEvent(new Event(EC.EventCode.NOTICE_HOME_PAGE_CHANGE_CITY_NAME, cityName));
+            SpUtil.setCity(mContext,cityName);
+            finish();
+            return;
+        }
+
+        if (!TextUtils.isEmpty(mWhereFrom) && mWhereFrom.equals("DecorateComActivity")) {
+            EventBusUtil.sendEvent(new Event(EC.EventCode.NOTICE_HOME_PAGE_CHANGE_CITY_NAME, cityName));
+            SpUtil.setCity(mContext,cityName);
+            finish();
+            return;
+        }
         if (from == 31) {
             // 来自poporder页面
             Intent cityData = new Intent();
@@ -527,7 +542,7 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
 
         if (fromFindDecorateCompany.equals("64")) {
             // 来自找装修公司页面
-            _SelectCity mSelectCity=new _SelectCity(cityName,cid);
+            _SelectCity mSelectCity = new _SelectCity(cityName, cid);
             EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_CITY_CODE, mSelectCity));
             System.gc();
             finish();
@@ -618,6 +633,14 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
         switch (v.getId()) {
             case R.id.city_title_back:
                 if (!TextUtils.isEmpty(mWhereFrom) && mWhereFrom.equals("PresonerMsgActivity")) {
+                    finish();
+                    return;
+                }
+                if (!TextUtils.isEmpty(mWhereFrom) && mWhereFrom.equals("HomePageActivity")) {
+                    finish();
+                    return;
+                }
+                if (!TextUtils.isEmpty(mWhereFrom) && mWhereFrom.equals("DecorateComActivity")) {
                     finish();
                     return;
                 }
@@ -911,7 +934,19 @@ public class SelectCtiyActivity extends com.tbs.tobosutype.base.BaseActivity imp
             return true;
         }
 
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && !TextUtils.isEmpty(mWhereFrom)
+                && mWhereFrom.equals("HomePageActivity")) {
+            finish();
+            return true;
+        }
 
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && !TextUtils.isEmpty(mWhereFrom)
+                && mWhereFrom.equals("DecorateComActivity")) {
+            finish();
+            return true;
+        }
         if (keyCode == KeyEvent.KEYCODE_BACK && fromFreeDesign.equals("66")) {
             // 来自 智能报价
             finish();

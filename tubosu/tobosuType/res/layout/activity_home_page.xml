@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activity.HomePageActivity">
+    <!--hp==>homepage-->
+    <!--数据下拉刷新模块-->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/hp_swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants">
+        <!--显示的内容-->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/hp_recycle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <!--顶部的状态栏无色状态-->
+    <RelativeLayout
+        android:id="@+id/hp_title_tm_rl"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:visibility="visible">
+        <!--返回键-->
+        <LinearLayout
+            android:id="@+id/hp_city_tm_ll"
+            android:layout_width="80dp"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/hp_city_name_tm_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:gravity="end"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="13dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:src="@drawable/drop_down" />
+        </LinearLayout>
+        <!--搜索框-->
+        <RelativeLayout
+            android:id="@+id/hp_search_tm_rl"
+            android:layout_width="233dp"
+            android:layout_height="26dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="78dp"
+            android:background="@drawable/shape_homepage_seach_white">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/search" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="28dp"
+                android:text="测测我的预算能装成什么样？"
+                android:textColor="@color/white"
+                android:textSize="12dp" />
+
+        </RelativeLayout>
+        <!--分享按钮-->
+        <LinearLayout
+            android:id="@+id/hp_kefu_tm_ll"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/tel" />
+        </LinearLayout>
+    </RelativeLayout>
+    <!--顶部的状态栏有色状态-->
+    <RelativeLayout
+        android:id="@+id/hp_title_rl"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/white"
+        android:visibility="gone">
+        <!--返回键-->
+        <LinearLayout
+            android:id="@+id/hp_city_ll"
+            android:layout_width="80dp"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/hp_city_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="11dp"
+                android:gravity="end"
+                android:text=""
+                android:textColor="#363650"
+                android:textSize="13dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:src="@drawable/drop_down_p" />
+        </LinearLayout>
+        <!--搜索框-->
+        <RelativeLayout
+            android:id="@+id/hp_search_rl"
+            android:layout_width="233dp"
+            android:layout_height="26dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="78dp"
+            android:background="@drawable/shape_homepage_seach_black">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/search_p" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="28dp"
+                android:text="测测我的预算能装成什么样？"
+                android:textColor="#a3a3a3"
+                android:textSize="12dp" />
+
+        </RelativeLayout>
+        <!--分享按钮-->
+        <LinearLayout
+            android:id="@+id/hp_kefu_ll"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/tel_p" />
+        </LinearLayout>
+    </RelativeLayout>
+    <!--上拉时显示的部分阴影-->
+    <View
+        android:id="@+id/banner_dever"
+        android:layout_width="match_parent"
+        android:layout_height="12dp"
+        android:layout_below="@+id/hp_title_rl"
+        android:background="@drawable/yinying4"
+        android:visibility="visible" />
+
+    <!--推送3.7版本新增-->
+    <RelativeLayout
+        android:id="@+id/tuisong_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#7f000000"
+        android:visibility="gone">
+
+
+        <RelativeLayout
+            android:layout_width="250dp"
+            android:layout_height="350dp"
+            android:layout_centerInParent="true">
+            <!--图片显示-->
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="290dp"
+                android:layout_alignParentTop="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/tuisongtanchuang" />
+            <!--去开启的按钮-->
+            <TextView
+                android:id="@+id/tuisong_kaiqi_tv"
+                android:layout_width="160dp"
+                android:layout_height="32dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="85dp"
+                android:background="@drawable/shape_open_tuisong"
+                android:gravity="center"
+                android:text="去开启"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+            <!--关闭的按钮-->
+            <RelativeLayout
+                android:id="@+id/tuisong_guanbi_rl"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/image_free_design_close" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

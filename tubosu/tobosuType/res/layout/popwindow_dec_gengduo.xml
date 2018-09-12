@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:id="@+id/pop_gengduo_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/pop_gengduo_jiatingzx_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="25dp"
+            android:text="家庭装修"
+            android:textColor="#363650"
+            android:textSize="14dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/pop_gengduo_jiatingzx_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="15dp">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/pop_gengduo_shangyezx_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="商业装修"
+            android:textColor="#363650"
+            android:textSize="14dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/pop_gengduo_shangyezx_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="15dp">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+</ScrollView>
