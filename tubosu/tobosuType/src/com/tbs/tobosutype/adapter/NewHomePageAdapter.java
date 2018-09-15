@@ -195,9 +195,9 @@ public class NewHomePageAdapter
             //展示轮播图信息
             if (mHomePage.getData().getBanner() != null
                     && !mHomePage.getData().getBanner().isEmpty()
-                    && mHomePage.getData().getBanner().get(position).getBgcolor() != null
-                    && !TextUtils.isEmpty(mHomePage.getData().getBanner().get(position).getBgcolor())) {
-                ((BannerViewHolder) holder).new_ihph_banner_bg_view.setBackgroundColor(Color.parseColor(mHomePage.getData().getBanner().get(position).getBgcolor()));
+                    && mHomePage.getData().getBanner().get(0).getBgcolor() != null
+                    && !TextUtils.isEmpty(mHomePage.getData().getBanner().get(0).getBgcolor())) {
+                ((BannerViewHolder) holder).new_ihph_banner_bg_view.setBackgroundColor(Color.parseColor(mHomePage.getData().getBanner().get(0).getBgcolor()));
             }
 
             //设置点击事件
@@ -554,7 +554,12 @@ public class NewHomePageAdapter
                     || mHomePage.getData().getIndex_advert_1().isEmpty()) {
                 //没有时不显示
                 ((Adv1ViewHolder) holder).ihph_adv1_rl.setVisibility(View.GONE);
+                ((Adv1ViewHolder) holder).ihph_adv1_mzbanner.setVisibility(View.GONE);
+                ((Adv1ViewHolder) holder).ihph_adv1_rl_2.setVisibility(View.GONE);
             } else {
+                ((Adv1ViewHolder) holder).ihph_adv1_rl.setVisibility(View.VISIBLE);
+                ((Adv1ViewHolder) holder).ihph_adv1_mzbanner.setVisibility(View.VISIBLE);
+                ((Adv1ViewHolder) holder).ihph_adv1_rl_2.setVisibility(View.VISIBLE);
                 //设置点击事件
                 ((Adv1ViewHolder) holder).ihph_adv1_mzbanner.setBannerPageClickListener(Adv1bannerPageClickListener);
                 //设置适配器
@@ -633,6 +638,7 @@ public class NewHomePageAdapter
                 ((XueZhuangXiuViewHolder) holder).ihph_adv2_mzbanner.setVisibility(View.GONE);
             } else {
                 //显示该层
+                ((XueZhuangXiuViewHolder) holder).ihph_adv2_mzbanner.setVisibility(View.VISIBLE);
                 ((XueZhuangXiuViewHolder) holder).ihph_adv2_mzbanner.setBannerPageClickListener(Adv2bannerPageClickListener);
                 //设置适配器
                 ((XueZhuangXiuViewHolder) holder).ihph_adv2_mzbanner.setPages(mHomePage.getData().getIndex_advert_2(), new MZHolderCreator<ADV2MZBannerViewHolder>() {
@@ -897,11 +903,13 @@ public class NewHomePageAdapter
     //第一处广告
     private class Adv1ViewHolder extends RecyclerView.ViewHolder {
         private RelativeLayout ihph_adv1_rl;//第一处广告图
+        private RelativeLayout ihph_adv1_rl_2;//第一处广告图
         private MZBannerView ihph_adv1_mzbanner;//第一处广告图
 
         public Adv1ViewHolder(View itemView) {
             super(itemView);
             ihph_adv1_rl = itemView.findViewById(R.id.ihph_adv1_rl_new);
+            ihph_adv1_rl_2 = itemView.findViewById(R.id.ihph_adv1_rl_2_new);
             ihph_adv1_mzbanner = itemView.findViewById(R.id.ihph_adv1_mzbanner_new);
         }
     }

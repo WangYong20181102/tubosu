@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
@@ -49,6 +51,7 @@ import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.customview.MyListView;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.CacheManager;
 import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.Util;
 
@@ -156,6 +159,20 @@ public class DecorateComActivity extends BaseActivity {
     RelativeLayout searchLayout;
     @BindView(R.id.findCompanyLayout)
     RelativeLayout findCompanyLayout;
+
+    @BindView(R.id.findComIcon)
+    ImageView findComIcon;
+    @BindView(R.id.cancelFindComIcon)
+    ImageView cancelFindComIcon;
+    @BindView(R.id.relfindComLayout)
+    RelativeLayout relfindComLayout;
+    @BindView(R.id.decorate_com_zonghe_tv)
+    TextView decorateComZongheTv;
+    @BindView(R.id.decorate_com_quanbu_tv)
+    TextView decorateComQuanbuTv;
+    @BindView(R.id.decorate_com_gengduo_tv)
+    TextView decorateComGengduoTv;
+    private PopupWindow popWnd;
 
     private Context mContext;
     private String TAG = "DecorateComActivity";
@@ -290,6 +307,8 @@ public class DecorateComActivity extends BaseActivity {
         HttpGetCheckInfo();
         //初始化数据
         initData();
+        //弹窗
+        showFadan();
 
         //搜索页面的控件
         etSearchGongsi.addTextChangedListener(new TextWatcher() {
@@ -378,6 +397,10 @@ public class DecorateComActivity extends BaseActivity {
         mQuyuPosition = -1;
         mJiatingPosition = -1;
         mShangyePosition = -1;
+
+        decorateComZongheTv.setText("综合排序");
+        decorateComQuanbuTv.setText("全部区域");
+        decorateComGengduoTv.setText("更多筛选");
     }
 
     private void initData() {
@@ -515,7 +538,8 @@ public class DecorateComActivity extends BaseActivity {
             R.id.decorate_com_hot_cv, R.id.decorate_com_test_cv,
             R.id.decorate_com_zonghe_ll, R.id.decorate_com_quanbu_ll,
             R.id.decorate_com_gengduo_ll, R.id.decorate_com_dec_push_img,
-            R.id.ivGongSiDelete, R.id.mengceng4, R.id.tvCancelSearch})
+            R.id.ivGongSiDelete, R.id.mengceng4, R.id.tvCancelSearch,
+            R.id.findComIcon, R.id.relfindComLayout, R.id.cancelFindComIcon})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvCancelSearch:
@@ -580,6 +604,8 @@ public class DecorateComActivity extends BaseActivity {
                 tvCancelSearch.setText("取消");
                 break;
             case R.id.decorate_com_dec_push_img:
+                relfindComLayout.setVisibility(View.GONE);
+                CacheManager.setCompanyFlag(mContext, 1);
                 mIntent = new Intent(mContext, NewWebViewActivity.class);
                 mIntent.putExtra("mLoadingUrl", SpUtil.getTbsAj15(mContext));
                 startActivity(mIntent);
@@ -633,6 +659,19 @@ public class DecorateComActivity extends BaseActivity {
             case R.id.decorate_com_gengduo_ll:
                 //更多筛选条件
                 showGengduoPopWindow();
+                break;
+            case R.id.findComIcon:
+                Intent web = new Intent(mContext, NewWebViewActivity.class);
+                web.putExtra("mLoadingUrl", SpUtil.getTbsAj14(mContext));
+                startActivity(web);
+                relfindComLayout.setVisibility(View.GONE);
+                CacheManager.setCompanyFlag(mContext, 1);
+                break;
+            case R.id.cancelFindComIcon:
+                relfindComLayout.setVisibility(View.GONE);
+                CacheManager.setCompanyFlag(mContext, 1);
+                break;
+            case R.id.relfindComLayout:
                 break;
         }
     }
@@ -865,6 +904,7 @@ public class DecorateComActivity extends BaseActivity {
             public void onItemClick(View view, int position) {
                 home_id = checkInfo.getData().getMore().get(0).getSub_title().get(position).getId();
                 business_id = "";
+                decorateComGengduoTv.setText(""+checkInfo.getData().getMore().get(0).getSub_title().get(position).getName());
                 mJiatingPosition = position;
                 mShangyePosition = -1;
                 gengduoPopupWindow.dismiss();
@@ -877,6 +917,7 @@ public class DecorateComActivity extends BaseActivity {
             public void onItemClick(View view, int position) {
                 home_id = "";
                 business_id = checkInfo.getData().getMore().get(1).getSub_title().get(position).getId();
+                decorateComGengduoTv.setText(""+checkInfo.getData().getMore().get(1).getSub_title().get(position).getName());
                 mJiatingPosition = -1;
                 mShangyePosition = position;
                 gengduoPopupWindow.dismiss();
@@ -922,6 +963,7 @@ public class DecorateComActivity extends BaseActivity {
             public void onItemClick(View view, int position) {
                 //更改筛选参数
                 district_id = checkInfo.getData().getDistrict_id().get(position).getId();
+                decorateComQuanbuTv.setText("" + checkInfo.getData().getDistrict_id().get(position).getName());
                 quanbuquyuPopupWindow.dismiss();
                 mQuyuPosition = position;
                 initData();
@@ -996,6 +1038,8 @@ public class DecorateComActivity extends BaseActivity {
             public void onClick(View v) {
                 //条件更换
                 sort_type = "1";
+                //设置顶部按钮的名称
+                decorateComZongheTv.setText("距离");
                 //箭头回弹
                 decorateComZongheJiantouImg.setImageResource(R.drawable.drop_down_p);
                 //请求数据
@@ -1010,6 +1054,7 @@ public class DecorateComActivity extends BaseActivity {
             public void onClick(View v) {
                 //条件更换
                 sort_type = "2";
+                decorateComZongheTv.setText("方案数");
                 //箭头回弹
                 decorateComZongheJiantouImg.setImageResource(R.drawable.drop_down_p);
                 //请求数据
@@ -1024,6 +1069,7 @@ public class DecorateComActivity extends BaseActivity {
             public void onClick(View v) {
                 //条件更换
                 sort_type = "3";
+                decorateComZongheTv.setText("效果图数量");
                 //箭头回弹
                 decorateComZongheJiantouImg.setImageResource(R.drawable.drop_down_p);
                 //请求数据
@@ -1038,6 +1084,7 @@ public class DecorateComActivity extends BaseActivity {
             public void onClick(View v) {
                 //条件更换
                 sort_type = "4";
+                decorateComZongheTv.setText("浏览热度");
                 //箭头回弹
                 decorateComZongheJiantouImg.setImageResource(R.drawable.drop_down_p);
                 //请求数据
@@ -1152,6 +1199,44 @@ public class DecorateComActivity extends BaseActivity {
         });
         popupWindow.showAtLocation(popview, Gravity.CENTER, 0, 0);
     }
+
+
+    private void showFadan() {
+        if (CacheManager.getCompanyFlag(mContext) == 0) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(10000);
+                        uihandler.sendEmptyMessage(4);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
+    }
+
+    private Handler uihandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 4:
+                    if (popWnd != null) {
+                        popWnd.dismiss();
+                    }
+                    //如果显示了蒙层则将不显示发单的弹窗
+                    if (!isShowingInput) {
+                        relfindComLayout.setVisibility(View.VISIBLE);
+                        findComIcon.setImageResource(R.drawable.gongsifree);
+                        findComIcon.setVisibility(View.VISIBLE);
+                    }
+
+                    break;
+            }
+        }
+    };
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
