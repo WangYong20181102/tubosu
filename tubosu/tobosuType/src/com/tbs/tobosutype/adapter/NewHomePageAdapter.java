@@ -49,6 +49,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigat
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
 import java.io.IOException;
@@ -84,6 +85,7 @@ public class NewHomePageAdapter
     private MyFragmentPagerStateAdapter myFragmentPagerStateAdapter;
     private Gson mGson;
     private FragmentManager mFragmentManager;
+    private int mSelectPosition = 0;
 
     public NewHomePageAdapter(Context context, _HomePage homePage, FragmentManager fragmentManager) {
         this.mContext = context;
@@ -585,6 +587,7 @@ public class NewHomePageAdapter
             //设置学装修数据
             // TODO: 2018/9/5 学装修的列表页
             //将数据注入
+
             mFragmentArrayList = new ArrayList<>();
             for (int i = 0; i < mHomePage.getData().getArticle().size(); i++) {
                 String homepageArticleJson = mGson.toJson(mHomePage.getData().getArticle().get(i));
@@ -594,6 +597,22 @@ public class NewHomePageAdapter
             ((XueZhuangXiuViewHolder) holder).ihph_learnzx_viewpager.setAdapter(myFragmentPagerStateAdapter);
             ((XueZhuangXiuViewHolder) holder).ihph_learnzx_viewpager.setOffscreenPageLimit(mHomePage.getData().getArticle().size());
             myFragmentPagerStateAdapter.notifyDataSetChanged();
+            ((XueZhuangXiuViewHolder) holder).ihph_learnzx_viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    mSelectPosition = position;
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
 
             //顶部的滑块
             ((XueZhuangXiuViewHolder) holder).ihph_learnzx_indicator.setBackgroundColor(Color.WHITE);
@@ -606,9 +625,9 @@ public class NewHomePageAdapter
 
                 @Override
                 public IPagerTitleView getTitleView(Context context, final int i) {
-                    SimplePagerTitleView simplePagerTitleView = new ScaleTransitionPagerTitleView(context);
+                    SimplePagerTitleView simplePagerTitleView = new ColorTransitionPagerTitleView(context);
                     simplePagerTitleView.setText("" + mHomePage.getData().getArticle_type().get(i).getTitle());
-                    simplePagerTitleView.setTextSize(18);
+                    simplePagerTitleView.setTextSize(16);
                     simplePagerTitleView.setNormalColor(Color.parseColor("#999999"));
                     simplePagerTitleView.setSelectedColor(Color.parseColor("#ff882e"));
                     simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
@@ -661,8 +680,10 @@ public class NewHomePageAdapter
             ((XueZhuangXiuViewHolder) holder).ihph_more_learnzx_lr.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent gotoLearnActivity = new Intent(mContext, LearnRenovationActivity.class);
-                    mContext.startActivity(gotoLearnActivity);
+                    Intent intent = new Intent(mContext, LearnRenovationActivity.class);
+//                    intent.putExtra("mIndex", dataSource.getArticle_type().get(position).getIndex());
+                    intent.putExtra("mIndex", mHomePage.getData().getArticle_type().get(mSelectPosition).getIndex());
+                    mContext.startActivity(intent);
                 }
             });
         } else if (holder instanceof ZhuanTiViewHolder) {

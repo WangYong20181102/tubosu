@@ -8,6 +8,7 @@
 
 
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="180dp">
 
@@ -242,6 +243,7 @@
 
 
     <RelativeLayout
+        android:visibility="gone"
         android:id="@+id/rel_cuiying"
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -319,6 +321,7 @@
 
     <!-- 以下是装修案例 -->
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -389,6 +392,7 @@
 
     <!-- 装修设计 -->
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">

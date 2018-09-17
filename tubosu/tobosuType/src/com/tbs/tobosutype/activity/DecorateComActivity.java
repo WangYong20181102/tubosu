@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
@@ -172,6 +174,22 @@ public class DecorateComActivity extends BaseActivity {
     TextView decorateComQuanbuTv;
     @BindView(R.id.decorate_com_gengduo_tv)
     TextView decorateComGengduoTv;
+    @BindView(R.id.decorate_com_collapsing_toolbar)
+    CollapsingToolbarLayout decorateComCollapsingToolbar;
+    @BindView(R.id.decorate_com_appbar)
+    AppBarLayout decorateComAppbar;
+
+    @BindView(R.id.decorate_com_city_name_tv_1)
+    TextView decorateComCityNameTv1;
+    @BindView(R.id.decorate_com_city_ll_1)
+    LinearLayout decorateComCityLl1;
+    @BindView(R.id.decorate_com_search_rl_1)
+    RelativeLayout decorateComSearchRl1;
+    @BindView(R.id.decorate_com_kefu_ll_1)
+    LinearLayout decorateComKefuLl1;
+    @BindView(R.id.hp_title_rl_1)
+    RelativeLayout hpTitleRl1;
+
     private PopupWindow popWnd;
 
     private Context mContext;
@@ -230,6 +248,7 @@ public class DecorateComActivity extends BaseActivity {
             case EC.EventCode.NOTICE_HOME_PAGE_CHANGE_CITY_NAME:
                 if (!TextUtils.isEmpty((String) event.getData())) {
                     decorateComCityNameTv.setText("" + (String) event.getData());
+                    decorateComCityNameTv1.setText("" + (String) event.getData());
                     city_name = (String) event.getData();
                     initCondition();
                     HttpGetCheckInfo();
@@ -245,8 +264,10 @@ public class DecorateComActivity extends BaseActivity {
         decorateComRecycler.setLayoutManager(mLinearLayoutManager);
         decorateComRecycler.setOnTouchListener(onTouchListener);
         decorateComRecycler.addOnScrollListener(onScrollListener);
+        decorateComAppbar.addOnOffsetChangedListener(appBarStateChangeListener);
         //设置城市的名称
         decorateComCityNameTv.setText("" + SpUtil.getCity(mContext));
+        decorateComCityNameTv1.setText("" + SpUtil.getCity(mContext));
         city_name = SpUtil.getCity(mContext);
         //设置发单按钮的图片
         //免费报价
@@ -367,6 +388,21 @@ public class DecorateComActivity extends BaseActivity {
 
     }
 
+
+    private AppBarLayout.OnOffsetChangedListener appBarStateChangeListener = new AppBarLayout.OnOffsetChangedListener() {
+        @Override
+        public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+            Log.e(TAG, "偏移量==================" + verticalOffset);
+            hpTitleRl1.setBackgroundColor(Color.WHITE);
+            if (verticalOffset <=0 && verticalOffset >= -490) {
+                //显示bar中的banner
+                hpTitleRl1.setVisibility(View.VISIBLE);
+            } else {
+                hpTitleRl1.setVisibility(View.GONE);
+            }
+        }
+    };
+
     //下拉刷新监听事件
     private SwipeRefreshLayout.OnRefreshListener searchSwipeLister = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
@@ -428,6 +464,7 @@ public class DecorateComActivity extends BaseActivity {
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
+            Log.e(TAG, "列表的滑动状态=======" + newState);
             int lastVisiableItem = mLinearLayoutManager.findLastVisibleItemPosition();
             if (newState == 0
                     && lastVisiableItem + 8 >= mLinearLayoutManager.getItemCount()
@@ -435,7 +472,17 @@ public class DecorateComActivity extends BaseActivity {
                 //加载更多
                 loadMore();
             }
+            if (newState == 0) {
+                decorateComDecPushImg.setVisibility(View.VISIBLE);
+            } else {
+                decorateComDecPushImg.setVisibility(View.GONE);
+            }
+        }
 
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            Log.e(TAG, "装修公司模块滑动=====" + dy);
         }
     };
 
@@ -532,8 +579,9 @@ public class DecorateComActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.decorate_com_city_ll, R.id.decorate_com_search_rl,
-            R.id.decorate_com_kefu_ll, R.id.hp_title_rl,
+    @OnClick({R.id.decorate_com_city_ll, R.id.decorate_com_city_ll_1,
+            R.id.decorate_com_search_rl, R.id.decorate_com_search_rl_1,
+            R.id.decorate_com_kefu_ll, R.id.decorate_com_kefu_ll_1, R.id.hp_title_rl,
             R.id.decorate_com_free_cv, R.id.decorate_com_zero_cv,
             R.id.decorate_com_hot_cv, R.id.decorate_com_test_cv,
             R.id.decorate_com_zonghe_ll, R.id.decorate_com_quanbu_ll,
@@ -611,16 +659,19 @@ public class DecorateComActivity extends BaseActivity {
                 startActivity(mIntent);
                 break;
             case R.id.decorate_com_city_ll:
+            case R.id.decorate_com_city_ll_1:
                 //城市选择
                 mIntent = new Intent(mContext, SelectCtiyActivity.class);
                 mIntent.putExtra("mWhereFrom", "DecorateComActivity");
                 startActivity(mIntent);
                 break;
             case R.id.decorate_com_search_rl:
+            case R.id.decorate_com_search_rl_1:
                 //搜索
                 showSearchView();
                 break;
             case R.id.decorate_com_kefu_ll:
+            case R.id.decorate_com_kefu_ll_1:
                 //客服
                 showZixunPopwindow();
                 break;
@@ -904,7 +955,7 @@ public class DecorateComActivity extends BaseActivity {
             public void onItemClick(View view, int position) {
                 home_id = checkInfo.getData().getMore().get(0).getSub_title().get(position).getId();
                 business_id = "";
-                decorateComGengduoTv.setText(""+checkInfo.getData().getMore().get(0).getSub_title().get(position).getName());
+                decorateComGengduoTv.setText("" + checkInfo.getData().getMore().get(0).getSub_title().get(position).getName());
                 mJiatingPosition = position;
                 mShangyePosition = -1;
                 gengduoPopupWindow.dismiss();
@@ -917,7 +968,7 @@ public class DecorateComActivity extends BaseActivity {
             public void onItemClick(View view, int position) {
                 home_id = "";
                 business_id = checkInfo.getData().getMore().get(1).getSub_title().get(position).getId();
-                decorateComGengduoTv.setText(""+checkInfo.getData().getMore().get(1).getSub_title().get(position).getName());
+                decorateComGengduoTv.setText("" + checkInfo.getData().getMore().get(1).getSub_title().get(position).getName());
                 mJiatingPosition = -1;
                 mShangyePosition = position;
                 gengduoPopupWindow.dismiss();
