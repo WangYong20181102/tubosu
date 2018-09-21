@@ -130,7 +130,7 @@ public class ArticleTypeFragment extends BaseFragment {
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            if (fragArticleSwipeLayout.isRefreshing() || isLoading) {
+            if (fragArticleSwipeLayout != null && fragArticleSwipeLayout.isRefreshing() || isLoading) {
                 return true;
             } else {
                 return false;

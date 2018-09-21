@@ -110,6 +110,8 @@ public class HomePageActivity extends BaseActivity {
     TextView hpCityNameTmTv;
     @BindView(R.id.hp_city_name_tv)
     TextView hpCityNameTv;
+    @BindView(R.id.home_page_click_rl)
+    RelativeLayout homePageClickRl;
     private String TAG = "HomePageActivity";
     private Context mContext;
     private Intent mIntent;
@@ -457,6 +459,8 @@ public class HomePageActivity extends BaseActivity {
 
     //初始化相关的配置
     private void initView() {
+        homePageClickRl.setVisibility(View.GONE);
+
         hpSwipe.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE);
         hpSwipe.setBackgroundColor(Color.WHITE);
         hpSwipe.setSize(SwipeRefreshLayout.DEFAULT);
@@ -468,8 +472,14 @@ public class HomePageActivity extends BaseActivity {
         hpRecycle.addOnScrollListener(onScrollListener);
 
         //设置城市
-        hpCityNameTmTv.setText("" + SpUtil.getCity(mContext));
-        hpCityNameTv.setText("" + SpUtil.getCity(mContext));
+        if (SpUtil.getCity(mContext).contains("市")) {
+            hpCityNameTmTv.setText("" + SpUtil.getCity(mContext).replace("市", ""));
+            hpCityNameTv.setText("" + SpUtil.getCity(mContext).replace("市", ""));
+        } else {
+            hpCityNameTmTv.setText("" + SpUtil.getCity(mContext));
+            hpCityNameTv.setText("" + SpUtil.getCity(mContext));
+        }
+
 
         //设置标题栏
         hpTitleRl.getBackground().setAlpha(0);
@@ -485,6 +495,7 @@ public class HomePageActivity extends BaseActivity {
         @Override
         public void onRefresh() {
             //下拉刷新
+            homePageClickRl.setVisibility(View.VISIBLE);
             initData();
         }
     };
@@ -546,8 +557,6 @@ public class HomePageActivity extends BaseActivity {
             }
         }
     };
-
-
 
 
     //初始化数据  在下拉刷新时也调用  所以在初始化的时候要将数据清空
@@ -631,6 +640,7 @@ public class HomePageActivity extends BaseActivity {
                     public void run() {
                         isLoading = false;
                         hpSwipe.setRefreshing(false);
+                        homePageClickRl.setVisibility(View.GONE);
                     }
                 });
 
@@ -656,6 +666,7 @@ public class HomePageActivity extends BaseActivity {
                             }
                             isLoading = false;
                             hpSwipe.setRefreshing(false);
+                            homePageClickRl.setVisibility(View.GONE);
                         }
                     });
 
@@ -667,6 +678,7 @@ public class HomePageActivity extends BaseActivity {
                             Toast.makeText(mContext, "当前没有数据~", Toast.LENGTH_SHORT).show();
                             isLoading = false;
                             hpSwipe.setRefreshing(false);
+                            homePageClickRl.setVisibility(View.GONE);
                         }
                     });
 
@@ -788,7 +800,7 @@ public class HomePageActivity extends BaseActivity {
             R.id.hp_city_tm_ll, R.id.hp_search_tm_rl,
             R.id.hp_kefu_tm_ll, R.id.hp_title_tm_rl,
             R.id.hp_city_ll, R.id.hp_search_rl,
-            R.id.hp_kefu_ll, R.id.hp_title_rl})
+            R.id.hp_kefu_ll, R.id.hp_title_rl, R.id.home_page_click_rl})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tuisong_kaiqi_tv:
@@ -820,6 +832,8 @@ public class HomePageActivity extends BaseActivity {
             case R.id.hp_kefu_tm_ll:
             case R.id.hp_kefu_ll:
                 showZixunPopwindow();
+                break;
+            case R.id.home_page_click_rl:
                 break;
         }
     }

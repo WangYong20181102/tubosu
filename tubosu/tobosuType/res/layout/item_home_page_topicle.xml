@@ -2,71 +2,91 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="450dp"
+    android:layout_height="wrap_content"
     android:background="@color/white">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/item_hp_foot_cv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="9dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="10dp"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        app:cardCornerRadius="6dp"
-        app:cardElevation="5dp">
+        android:background="@drawable/shape_yin_ying"
+        android:padding="1dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <!--时间-->
-            <TextView
-                android:id="@+id/item_hp_foot_time_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="20dp"
-                android:text="2018/0816"
-                android:textColor="#999"
-                android:textSize="12dp" />
-            <!--标题-->
-            <TextView
-                android:id="@+id/item_hp_foot_title_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="10dp"
-                android:ellipsize="marquee"
-                android:ems="12"
-                android:singleLine="true"
-                android:text="简约餐厅"
-                android:textColor="#363650"
-                android:textSize="18dp" />
-            <!--图片-->
-            <ImageView
-                android:id="@+id/item_hp_foot_image_img"
+        <android.support.v7.widget.CardView
+            android:id="@+id/item_hp_foot_cv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="0dp">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="248dp"
-                android:layout_marginTop="18dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/home_style" />
-            <!--w文字描述-->
-            <TextView
-                android:id="@+id/item_hp_foot_dec_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="20dp"
-                android:lineSpacingExtra="2dp"
-                android:maxLines="3"
-                android:text="水电费看见哈圣诞节开发哈三联的发挥空间撒大黄蜂尽快哈撒地方科技哈市的浪费哈数据库等回复了就开始打恢复健康和撒旦"
-                android:textColor="#6f6f8f"
-                android:textSize="15dp" />
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <!--时间-->
+                <TextView
+                    android:id="@+id/item_hp_foot_time_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:text="2018/0816"
+                    android:textColor="#999"
+                    android:textSize="12dp" />
+                <!--标题-->
+                <TextView
+                    android:id="@+id/item_hp_foot_title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="5dp"
+                    android:ellipsize="marquee"
+                    android:ems="20"
+                    android:maxLines="2"
+                    android:text="简计师大会将反馈哈刻到货方会计师"
+                    android:textColor="#363650"
+                    android:textSize="18dp" />
+                <!--图片-->
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="20dp"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="0dp">
+
+                    <ImageView
+                        android:id="@+id/item_hp_foot_image_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/home_style" />
+                </android.support.v7.widget.CardView>
+
+
+                <!--w文字描述-->
+                <TextView
+                    android:id="@+id/item_hp_foot_dec_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="20dp"
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="2"
+                    android:text="水电费看见哈圣诞节开发哈三联的发挥空间撒大黄蜂尽快哈撒地方科技哈市的浪费哈数据库等回复了就开始打恢复健康和撒旦"
+                    android:textColor="#6f6f8f"
+                    android:textSize="15dp" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
 </RelativeLayout>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="285dp"
-    android:layout_height="315dp"
+    android:layout_height="318dp"
     android:layout_gravity="center"
     android:background="@color/white"
     app:cardCornerRadius="6dp"
@@ -23,6 +23,7 @@
 
         <!--装修类型-->
         <ImageView
+            android:src="@drawable/all"
             android:id="@+id/item_view_card_dec_type_img"
             android:layout_width="32dp"
             android:layout_height="15dp"
@@ -105,10 +106,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="13dp"
             android:layout_marginRight="16dp"
-            android:layout_marginTop="250dp"
+            android:layout_marginTop="258dp"
             android:ellipsize="marquee"
             android:gravity="top"
-            android:text=""
+            android:text="是大法官斯冯小刚和法规和豆腐干"
             android:textColor="#363650"
             android:textSize="14dp" />
     </RelativeLayout>

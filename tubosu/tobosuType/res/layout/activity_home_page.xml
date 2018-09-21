@@ -18,8 +18,7 @@
             android:id="@+id/hp_recycle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never">
-        </android.support.v7.widget.RecyclerView>
+            android:overScrollMode="never"></android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <!--顶部的状态栏无色状态-->
@@ -42,7 +41,7 @@
                 android:id="@+id/hp_city_name_tm_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="11dp"
+                android:layout_marginLeft="15dp"
                 android:gravity="end"
                 android:text=""
                 android:textColor="@color/white"
@@ -116,10 +115,10 @@
                 android:id="@+id/hp_city_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="11dp"
+                android:layout_marginLeft="15dp"
                 android:gravity="end"
                 android:text=""
-                android:textColor="#363650"
+                android:textColor="#6f6f8f"
                 android:textSize="13dp" />
 
             <ImageView
@@ -227,4 +226,11 @@
         </RelativeLayout>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/home_page_click_rl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+    </RelativeLayout>
 </RelativeLayout>

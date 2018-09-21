@@ -19,24 +19,24 @@ public class Constant {
      * todo 全局正式环境**********************************************************************************
      */
     //接口地址
-//    public static final String TOBOSU_URL = "https://www.tobosu.com/";
+    public static final String TOBOSU_URL = "https://www.tobosu.com/";
     //数据流上传接口 正式
     public static final String TBS_DATA_STREAM = "https://www.tobosu.com/trace";
     //M站 发单跳转 线上环境
-//    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
+    public static final String M_TOBOSU_URL = "https://m.tobosu.com/";
 
 
     /**
      * todo 全局测试dev环境**********************************************************************************
      */
     //接口地址
-    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
     //dev点击流上传接口
 //    public static final String TBS_DATA_STREAM = "http://trace.dev.tobosu.com/";
     //M站test接口
 //    public static final String M_TOBOSU_URL = "http://m.test.tobosu.com/szs/";
     //M站dev接口
-    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
+//    public static final String M_TOBOSU_URL = "http://m.dev.tobosu.com/";
 
     //拼接在链接后面的字符串标识App的类别
     public static final String APP_TYPE = "&app_type=1";
@@ -141,7 +141,8 @@ public class Constant {
     public static final String DECORATION_COMPANY_PREFERENTIAL_APPLYFOR = TOBOSU_URL + "tapp/company/activitySignupList";
 
     public static final String clickUrl = TOBOSU_URL + "mapp/companyBanner/click_count";
-    /**
+
+    public static final String CLICKURL_BANNER = TOBOSU_URL + "mapp/banner/click_count"; /**
      * -
      * 第三方绑定接口
      */
@@ -187,7 +188,7 @@ public class Constant {
      * 3效果图
      */
 //    public static final String PIPE = "https://m.tobosu.com/app/pub?channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + "&app_type=1";
-    public static final String PIPE = M_TOBOSU_URL + "app/pub?channel=seo&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
+    public static final String PIPE = M_TOBOSU_URL + "app/pub?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
 
     public static final String WANGJIANLIN = "&tbsfrom=share";
 

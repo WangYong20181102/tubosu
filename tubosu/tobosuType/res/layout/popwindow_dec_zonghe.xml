@@ -2,9 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pop_dec_zonghe_ll"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="270dp"
     android:background="@color/white"
     android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/pop_dec_zonghe_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/pop_dec_zhonghe_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="30dp"
+            android:text="综合排序"
+            android:textColor="#363650"
+            android:textSize="14dp" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/pop_dec_juli_rl"
@@ -73,6 +89,6 @@
     <!--阴影-->
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="4dp"
         android:background="#f9f9f9" />
 </LinearLayout>

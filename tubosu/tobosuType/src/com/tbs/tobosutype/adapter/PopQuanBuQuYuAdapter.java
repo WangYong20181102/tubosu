@@ -55,14 +55,15 @@ public class PopQuanBuQuYuAdapter
         if (holder instanceof PopQuanBuViewHolder) {
             ((PopQuanBuViewHolder) holder).item_pop_quanbu_tv.setTag(position);
             ((PopQuanBuViewHolder) holder).item_pop_quanbu_tv.setText("" + mDistrictIdBeanList.get(position).getName());
-            if (mPosition != -1 && mPosition == position) {
+            if (mPosition != -1 && mPosition == position
+                    && ((PopQuanBuViewHolder) holder).item_pop_quanbu_tv.getTag().equals(mPosition)) {
                 ((PopQuanBuViewHolder) holder).item_pop_quanbu_tv.setTextColor(Color.parseColor("#ff6b14"));
                 GradientDrawable gradientDrawable = new GradientDrawable();
                 gradientDrawable.setStroke(1, Color.parseColor("#ff6b14"));
                 gradientDrawable.setCornerRadius(40);
                 gradientDrawable.setColor(Color.parseColor("#FFFFF4ED"));
                 ((PopQuanBuViewHolder) holder).item_pop_quanbu_tv.setBackgroundDrawable(gradientDrawable);
-            } else if (mPosition == -1) {
+            } else {
                 ((PopQuanBuViewHolder) holder).item_pop_quanbu_tv.setTextColor(Color.parseColor("#999999"));
                 GradientDrawable gradientDrawable = new GradientDrawable();
                 gradientDrawable.setStroke(1, Color.parseColor("#FFEEEEEE"));

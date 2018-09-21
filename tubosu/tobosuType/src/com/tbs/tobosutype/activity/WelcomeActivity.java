@@ -56,6 +56,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     private String SURVIVAL_URL = Constant.TOBOSU_URL + "tapp/DataCount/survival_count";
 
     private Context mContext;
+    private String cityName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,8 +169,6 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
             AppInfoUtil.setCityName(mContext, location.getCity() + "");//设置城市
             SpUtil.setRadius(mContext, location.getRadius() + "");
             SpUtil.setHomeAndCompanyUsingCity(mContext, "");
-//            ToastUtil.showShort(mContext, "触发百度定位=====" + location.getCity() + "获取的本地真实的存储定位信息====" + SpUtil.getCity(mContext));
-//            Log.e(TAG, "百度定位监听==========" + location.getCity());
         }
 
     }

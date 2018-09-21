@@ -24,6 +24,7 @@
             android:id="@+id/ihph_learnzx_indicator_new"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="16dp">
 
         </net.lucode.hackware.magicindicator.MagicIndicator>
@@ -39,10 +40,10 @@
         </com.zhouwei.mzbanner.MZBannerView>
         <!--滑动的页面-->
         <android.support.v4.view.ViewPager
-            android:layout_marginTop="8dp"
             android:id="@+id/ihph_learnzx_viewpager_new"
             android:layout_width="match_parent"
             android:layout_height="470dp"
+            android:layout_marginTop="8dp"
             android:visibility="visible">
 
         </android.support.v4.view.ViewPager>
@@ -68,17 +69,18 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="2dp"
+                android:layout_marginTop="1dp"
                 android:src="@drawable/more" />
         </LinearLayout>
 
         <TextView
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="15dp"
-            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="15dp"
             android:text="装修专题"
             android:textColor="#363650"
-            android:textSize="28dp" />
+            android:textSize="28dp"
+            android:textStyle="bold" />
     </LinearLayout>
 </RelativeLayout>

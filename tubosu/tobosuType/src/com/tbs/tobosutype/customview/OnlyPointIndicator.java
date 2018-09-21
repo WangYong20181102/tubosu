@@ -113,21 +113,14 @@ public class OnlyPointIndicator extends View implements IPagerIndicator {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-//        Log.e(TAG, "在onLayout是的getHight======" + getHeight());
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         // TODO: 绘制两条曲线的方式 公式B(t)=(1-t)²p0+2t(1-t)p1+t²p2
-        /**
-         * 运动的点的坐标满足曲线的方程
-         * B(t)=(1-t)²p0+2t(1-t)p1+t²p2
-         */
         myPath.reset();
         for (int i = 0; i < 100; i++) {
             mPointT = (mViewPagerOffset + (XD_T * i)) * 2;
-            Log.e(TAG, "==mPointT==" + mPointT + "==mViewPagerOffset==" + mViewPagerOffset);
             if (0 <= mPointT && mPointT <= 1) {
                 //点所在第一条曲线上
                 if (i == 0) {
@@ -167,9 +160,7 @@ public class OnlyPointIndicator extends View implements IPagerIndicator {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        Log.e(TAG, "ViewPage偏移量======" + positionOffset);
 
-        // 计算颜色
         if (mColors != null && mColors.size() > 0) {
             int currentColor = mColors.get(Math.abs(position) % mColors.size());
             int nextColor = mColors.get(Math.abs(position + 1) % mColors.size());
@@ -177,51 +168,42 @@ public class OnlyPointIndicator extends View implements IPagerIndicator {
             mPaint.setColor(color);
         }
 
-        // 计算锚点位置
+
         PositionData current = FragmentContainerHelper.getImitativePositionData(mPositionDataList, position);
         PositionData next = FragmentContainerHelper.getImitativePositionData(mPositionDataList, position + 1);
 
         mViewPagerOffset = positionOffset;
-        //todo 第一条曲线起点
-//        mBezierStartPointX1 = current.mLeft + current.width() / 3f;
+
         mBezierStartPointX1 = current.mLeft + current.width() / 5f;
-//        mBezierStartPointY1 = 2 * current.height() / 3f;
         mBezierStartPointY1 = 4 * current.height() / 5f;
-        //控制点
+
         mBezierContentX1 = current.mLeft + current.width() / 2f;
         mBezierContentY1 = current.height();
-        //终点
-//        mBezierEndPointX1 = current.mLeft + 2 * current.width() / 3f;
+
         mBezierEndPointX1 = current.mLeft + 4 * current.width() / 5f;
-//        mBezierEndPointY1 = 2 * current.height() / 3f;
         mBezierEndPointY1 = 4 * current.height() / 5f;
-        //todo 第二条 曲线起点
-//        mBezierStartPointX2 = current.mLeft + 2 * current.width() / 3f;
+
         mBezierStartPointX2 = current.mLeft + 4 * current.width() / 5f;
-//        mBezierStartPointY2 = 2 * current.height() / 3f;
+
         mBezierStartPointY2 = 4 * current.height() / 5f;
-        //控制点
+
         mBezierContentX2 = ((current.mLeft + 2 * current.width() / 3f) + (next.mLeft + next.width() / 3f)) / 2f;
-//        mBezierContentY2 = 0;
+
         mBezierContentY2 = 2 * current.height() / 3f;
-        //终点
-//        mBezierEndPointX2 = next.mLeft + next.width() / 3f;
+
         mBezierEndPointX2 = next.mLeft + next.width() / 5f;
-//        mBezierEndPointY2 = 2 * next.height() / 3f;
+
         mBezierEndPointY2 = 4 * next.height() / 5f;
-        //todo 第三条曲线 起点
-//        mBezierStartPointX3 = next.mLeft + next.width() / 3f;
+
         mBezierStartPointX3 = next.mLeft + next.width() / 5f;
-//        mBezierStartPointY3 = 2 * next.height() / 3f;
+
         mBezierStartPointY3 = 4 * next.height() / 5f;
-        //控制点
         mBezierContentX3 = next.mLeft + next.width() / 2;
         mBezierContentY3 = next.height();
-        //终点
+
         mBezierEndPointX3 = next.mLeft + 4 * next.width() / 5f;
-//        mBezierEndPointY3 = 2 * next.height() / 3f;
+
         mBezierEndPointY3 = 4 * next.height() / 5f;
-        //刷新界面
         invalidate();
     }
 

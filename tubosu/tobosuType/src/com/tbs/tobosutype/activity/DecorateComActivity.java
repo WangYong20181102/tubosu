@@ -39,6 +39,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.DecorateComAdapter;
+import com.tbs.tobosutype.adapter.PopGengduoAdapter;
 import com.tbs.tobosutype.adapter.PopJiatingAdapter;
 import com.tbs.tobosutype.adapter.PopQuanBuQuYuAdapter;
 import com.tbs.tobosutype.adapter.SearchGongSiAdapter;
@@ -210,7 +211,7 @@ public class DecorateComActivity extends BaseActivity {
     private String business_id;
     private Intent mIntent;
     private _CheckInfo mCheckInfo;
-    private int mQuyuPosition = -1;
+    private int mQuyuPosition = 0;
     private int mJiatingPosition = -1;
     private int mShangyePosition = -1;
     //是否显示键盘
@@ -266,8 +267,13 @@ public class DecorateComActivity extends BaseActivity {
         decorateComRecycler.addOnScrollListener(onScrollListener);
         decorateComAppbar.addOnOffsetChangedListener(appBarStateChangeListener);
         //设置城市的名称
-        decorateComCityNameTv.setText("" + SpUtil.getCity(mContext));
-        decorateComCityNameTv1.setText("" + SpUtil.getCity(mContext));
+        if (SpUtil.getCity(mContext).contains("市")) {
+            decorateComCityNameTv.setText("" + SpUtil.getCity(mContext).replace("市", ""));
+            decorateComCityNameTv1.setText("" + SpUtil.getCity(mContext).replace("市", ""));
+        } else {
+            decorateComCityNameTv.setText("" + SpUtil.getCity(mContext));
+            decorateComCityNameTv1.setText("" + SpUtil.getCity(mContext));
+        }
         city_name = SpUtil.getCity(mContext);
         //设置发单按钮的图片
         //免费报价
@@ -394,7 +400,7 @@ public class DecorateComActivity extends BaseActivity {
         public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
             Log.e(TAG, "偏移量==================" + verticalOffset);
             hpTitleRl1.setBackgroundColor(Color.WHITE);
-            if (verticalOffset <=0 && verticalOffset >= -490) {
+            if (verticalOffset <= 0 && verticalOffset >= -490) {
                 //显示bar中的banner
                 hpTitleRl1.setVisibility(View.VISIBLE);
             } else {
@@ -425,12 +431,12 @@ public class DecorateComActivity extends BaseActivity {
     private void initCondition() {
         //筛选条件
         name = "";
-        sort_type = "";
+        sort_type = "0";
         district_id = "";
         home_id = "";
         business_id = "";
 
-        mQuyuPosition = -1;
+        mQuyuPosition = 0;
         mJiatingPosition = -1;
         mShangyePosition = -1;
 
@@ -705,11 +711,17 @@ public class DecorateComActivity extends BaseActivity {
                 break;
             case R.id.decorate_com_quanbu_ll:
                 //全部区域筛选条件
-                showQuanbuquyuPopWindow();
+                if (quanbuquyuPopupWindow != null && quanbuquyuPopupWindow.isShowing()) {
+                    Log.e(TAG, "触发关闭=========");
+                    quanbuquyuPopupWindow.dismiss();
+                } else {
+                    showQuanbuquyuPopWindow();
+                }
                 break;
             case R.id.decorate_com_gengduo_ll:
                 //更多筛选条件
                 showGengduoPopWindow();
+//                showGengDuoPop();
                 break;
             case R.id.findComIcon:
                 Intent web = new Intent(mContext, NewWebViewActivity.class);
@@ -924,6 +936,31 @@ public class DecorateComActivity extends BaseActivity {
     private View gengduoPopView;
     private PopupWindow gengduoPopupWindow;
 
+    private void showGengDuoPop() {
+        decorateComGengduoJiantouImg.setImageResource(R.drawable.drop_down_c);
+        gengduoPopView = View.inflate(mContext, R.layout.pop_dec_gengduo, null);
+        LinearLayout pop_dec_gengduo_1_ll = gengduoPopView.findViewById(R.id.pop_dec_gengduo_1_ll);
+        RecyclerView pop_dec_gengduo_recycler = gengduoPopView.findViewById(R.id.pop_dec_gengduo_recycler);
+        pop_dec_gengduo_1_ll.setBackgroundColor(Color.parseColor("#ffffff"));
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        pop_dec_gengduo_recycler.setLayoutManager(mLinearLayoutManager);
+        final _CheckInfo checkInfo = mGson.fromJson(SpUtil.getDecComCheckInfo(mContext), _CheckInfo.class);
+        PopGengduoAdapter popGengduoAdapter = new PopGengduoAdapter(mContext, checkInfo);
+        pop_dec_gengduo_recycler.setAdapter(popGengduoAdapter);
+        popGengduoAdapter.notifyDataSetChanged();
+        gengduoPopupWindow = new PopupWindow(gengduoPopView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        gengduoPopupWindow.setFocusable(true);
+        gengduoPopupWindow.setOutsideTouchable(true);
+        gengduoPopupWindow.update();
+        gengduoPopupWindow.showAsDropDown(decorateComDeviceView);
+        gengduoPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                decorateComGengduoJiantouImg.setImageResource(R.drawable.drop_down_p);
+            }
+        });
+    }
+
     private void showGengduoPopWindow() {
         decorateComGengduoJiantouImg.setImageResource(R.drawable.drop_down_c);
         gengduoPopView = View.inflate(mContext, R.layout.popwindow_dec_gengduo, null);
@@ -1003,11 +1040,6 @@ public class DecorateComActivity extends BaseActivity {
         popQuanBuQuYuAdapter.notifyDataSetChanged();
 
         pop_dec_quanbuquyu_rl.setBackgroundColor(Color.parseColor("#ffffff"));
-        quanbuquyuPopupWindow = new PopupWindow(quanbuquyuPopView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        quanbuquyuPopupWindow.setFocusable(true);
-        quanbuquyuPopupWindow.setOutsideTouchable(true);
-        quanbuquyuPopupWindow.update();
-
         //设置点击事件
         popQuanBuQuYuAdapter.setOnPopQuanBuItemClickLister(new PopQuanBuQuYuAdapter.onPopQuanBuItemClickLister() {
             @Override
@@ -1021,7 +1053,10 @@ public class DecorateComActivity extends BaseActivity {
             }
         });
 
-
+        quanbuquyuPopupWindow = new PopupWindow(quanbuquyuPopView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        quanbuquyuPopupWindow.setFocusable(true);
+        quanbuquyuPopupWindow.setOutsideTouchable(true);
+        quanbuquyuPopupWindow.update();
         quanbuquyuPopupWindow.showAsDropDown(decorateComDeviceView);
         quanbuquyuPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -1045,6 +1080,9 @@ public class DecorateComActivity extends BaseActivity {
         RelativeLayout pop_dec_xiaoguotushuliang_rl = zonghePopView.findViewById(R.id.pop_dec_xiaoguotushuliang_rl);
         RelativeLayout pop_dec_redu_rl = zonghePopView.findViewById(R.id.pop_dec_redu_rl);
 
+        RelativeLayout pop_dec_zonghe_rl = zonghePopView.findViewById(R.id.pop_dec_zonghe_rl);
+        TextView pop_dec_zhonghe_tv = zonghePopView.findViewById(R.id.pop_dec_zhonghe_tv);
+
         TextView pop_dec_juli_tv = zonghePopView.findViewById(R.id.pop_dec_juli_tv);
         TextView pop_dec_fanganshu_tv = zonghePopView.findViewById(R.id.pop_dec_fanganshu_tv);
         TextView pop_dec_xiaoguotushuliang_tv = zonghePopView.findViewById(R.id.pop_dec_xiaoguotushuliang_tv);
@@ -1056,33 +1094,54 @@ public class DecorateComActivity extends BaseActivity {
         zonghePopupWindow.setOutsideTouchable(true);
         zonghePopupWindow.update();
         //选择按钮颜色变化
-        if (TextUtils.isEmpty(sort_type)) {
+        if (sort_type.equals("0")) {
             //全灰
+            pop_dec_zhonghe_tv.setTextColor(Color.parseColor("#ff6b14"));
             pop_dec_juli_tv.setTextColor(Color.parseColor("#363650"));
             pop_dec_fanganshu_tv.setTextColor(Color.parseColor("#363650"));
             pop_dec_xiaoguotushuliang_tv.setTextColor(Color.parseColor("#363650"));
             pop_dec_redu_tv.setTextColor(Color.parseColor("#363650"));
         } else if (sort_type.equals("1")) {
             pop_dec_juli_tv.setTextColor(Color.parseColor("#ff6b14"));
+            pop_dec_zhonghe_tv.setTextColor(Color.parseColor("#363650"));
             pop_dec_fanganshu_tv.setTextColor(Color.parseColor("#363650"));
             pop_dec_xiaoguotushuliang_tv.setTextColor(Color.parseColor("#363650"));
             pop_dec_redu_tv.setTextColor(Color.parseColor("#363650"));
         } else if (sort_type.equals("2")) {
             pop_dec_juli_tv.setTextColor(Color.parseColor("#363650"));
+            pop_dec_zhonghe_tv.setTextColor(Color.parseColor("#363650"));
             pop_dec_fanganshu_tv.setTextColor(Color.parseColor("#ff6b14"));
             pop_dec_xiaoguotushuliang_tv.setTextColor(Color.parseColor("#363650"));
             pop_dec_redu_tv.setTextColor(Color.parseColor("#363650"));
         } else if (sort_type.equals("3")) {
+            pop_dec_zhonghe_tv.setTextColor(Color.parseColor("#363650"));
             pop_dec_juli_tv.setTextColor(Color.parseColor("#363650"));
             pop_dec_fanganshu_tv.setTextColor(Color.parseColor("#363650"));
             pop_dec_xiaoguotushuliang_tv.setTextColor(Color.parseColor("#ff6b14"));
             pop_dec_redu_tv.setTextColor(Color.parseColor("#363650"));
         } else if (sort_type.equals("4")) {
+            pop_dec_zhonghe_tv.setTextColor(Color.parseColor("#363650"));
             pop_dec_juli_tv.setTextColor(Color.parseColor("#363650"));
             pop_dec_fanganshu_tv.setTextColor(Color.parseColor("#363650"));
             pop_dec_xiaoguotushuliang_tv.setTextColor(Color.parseColor("#363650"));
             pop_dec_redu_tv.setTextColor(Color.parseColor("#ff6b14"));
         }
+        //综合
+        pop_dec_zonghe_rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //条件更换
+                sort_type = "0";
+                //设置顶部按钮的名称
+                decorateComZongheTv.setText("综合排序");
+                //箭头回弹
+                decorateComZongheJiantouImg.setImageResource(R.drawable.drop_down_p);
+                //请求数据
+                initData();
+                //关闭pop
+                zonghePopupWindow.dismiss();
+            }
+        });
         //距离
         pop_dec_juli_rl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1275,6 +1334,18 @@ public class DecorateComActivity extends BaseActivity {
                 case 4:
                     if (popWnd != null) {
                         popWnd.dismiss();
+                    }
+                    if (zixunPopupWindow != null) {
+                        zixunPopupWindow.dismiss();
+                    }
+                    if (gengduoPopupWindow != null) {
+                        gengduoPopupWindow.dismiss();
+                    }
+                    if (quanbuquyuPopupWindow != null) {
+                        quanbuquyuPopupWindow.dismiss();
+                    }
+                    if (zonghePopupWindow != null) {
+                        zonghePopupWindow.dismiss();
                     }
                     //如果显示了蒙层则将不显示发单的弹窗
                     if (!isShowingInput) {

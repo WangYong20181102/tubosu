@@ -234,7 +234,17 @@ public class NewHomePageAdapter
                     return new MZBannerViewHolder();
                 }
             });
-            ((BannerViewHolder) holder).new_ihph_banner_mz_banner_view.start();
+
+            if (!mHomePage.getData().getBanner().isEmpty()) {
+                if (mHomePage.getData().getBanner().size() > 1) {
+                    ((BannerViewHolder) holder).new_ihph_banner_mz_banner_view.setCanLoop(true);
+                    ((BannerViewHolder) holder).new_ihph_banner_mz_banner_view.start();
+                } else {
+                    ((BannerViewHolder) holder).new_ihph_banner_mz_banner_view.setCanLoop(false);
+                    ((BannerViewHolder) holder).new_ihph_banner_mz_banner_view.pause();
+                }
+            }
+
         } else if (holder instanceof XuanShejiBannerViewHolder) {
             //绑定选设计等的数据
             //学装修
@@ -627,7 +637,7 @@ public class NewHomePageAdapter
                 public IPagerTitleView getTitleView(Context context, final int i) {
                     SimplePagerTitleView simplePagerTitleView = new ColorTransitionPagerTitleView(context);
                     simplePagerTitleView.setText("" + mHomePage.getData().getArticle_type().get(i).getTitle());
-                    simplePagerTitleView.setTextSize(16);
+                    simplePagerTitleView.setTextSize(13);
                     simplePagerTitleView.setNormalColor(Color.parseColor("#999999"));
                     simplePagerTitleView.setSelectedColor(Color.parseColor("#ff882e"));
                     simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
@@ -804,6 +814,7 @@ public class NewHomePageAdapter
         public void onPageClick(View view, int i) {
             //点击进入
             Log.e(TAG, "点击事件");
+            setClickRequest(mHomePage.getData().getBanner().get(i).getId());
             Intent webIntent = new Intent(mContext, NewWebViewActivity.class);
             webIntent.putExtra("mLoadingUrl", mHomePage.getData().getBanner().get(i).getContent_url());
             mContext.startActivity(webIntent);
@@ -814,6 +825,25 @@ public class NewHomePageAdapter
     @Override
     public int getItemCount() {
         return mHomePage.getData().getTopic() != null ? mHomePage.getData().getTopic().size() + 7 : 7;
+    }
+
+    private void setClickRequest(String id) {
+        if (Util.isNetAvailable(mContext)) {
+            HashMap<String, Object> para = new HashMap<String, Object>();
+            para.put("token", Util.getDateToken());
+            para.put("id", id);
+            OKHttpUtil.post(Constant.CLICKURL_BANNER, para, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+
+                }
+            });
+        }
     }
 
     //首页banner的viewHolder

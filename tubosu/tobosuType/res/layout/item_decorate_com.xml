@@ -12,6 +12,7 @@
         android:orientation="horizontal">
         <!--公司图标-->
         <RelativeLayout
+            android:background="@drawable/shape_dec_icon_bg"
             android:layout_width="80dp"
             android:layout_height="60dp"
             android:layout_marginLeft="15dp">

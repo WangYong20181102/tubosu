@@ -25,7 +25,6 @@
                 android:id="@+id/decorate_com_collapsing_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
                 app:contentScrim="@color/white"
                 app:expandedTitleMarginEnd="10dp"
                 app:expandedTitleMarginStart="10dp"
@@ -128,22 +127,30 @@
                                 android:layout_marginLeft="11dp"
                                 android:background="@color/white">
 
-                                <android.support.v7.widget.CardView
-                                    android:id="@+id/decorate_com_free_cv"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                <RelativeLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:layout_margin="4dp"
-                                    android:clickable="true"
-                                    android:foreground="?android:attr/selectableItemBackground"
-                                    app:cardCornerRadius="4dp"
-                                    app:cardElevation="4dp">
+                                    android:background="@drawable/shape_yin_ying"
+                                    android:padding="1dp">
 
-                                    <ImageView
-                                        android:id="@+id/decorate_com_free_img"
+                                    <android.support.v7.widget.CardView
+                                        android:id="@+id/decorate_com_free_cv"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:src="@drawable/banner_free" />
-                                </android.support.v7.widget.CardView>
+
+                                        android:clickable="true"
+                                        android:foreground="?android:attr/selectableItemBackground"
+                                        app:cardCornerRadius="4dp"
+                                        app:cardElevation="0dp">
+
+                                        <ImageView
+                                            android:id="@+id/decorate_com_free_img"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:src="@drawable/banner_free" />
+                                    </android.support.v7.widget.CardView>
+                                </RelativeLayout>
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -153,22 +160,30 @@
                                 android:layout_marginRight="11dp"
                                 android:background="@color/white">
 
-                                <android.support.v7.widget.CardView
-                                    android:id="@+id/decorate_com_zero_cv"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                <RelativeLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:layout_margin="4dp"
-                                    android:clickable="true"
-                                    android:foreground="?android:attr/selectableItemBackground"
-                                    app:cardCornerRadius="4dp"
-                                    app:cardElevation="4dp">
+                                    android:background="@drawable/shape_yin_ying"
+                                    android:padding="1dp">
 
-                                    <ImageView
-                                        android:id="@+id/decorate_com_zero_img"
+                                    <android.support.v7.widget.CardView
+                                        android:id="@+id/decorate_com_zero_cv"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:src="@drawable/banner_zero" />
-                                </android.support.v7.widget.CardView>
+
+                                        android:clickable="true"
+                                        android:foreground="?android:attr/selectableItemBackground"
+                                        app:cardCornerRadius="4dp"
+                                        app:cardElevation="0dp">
+
+                                        <ImageView
+                                            android:id="@+id/decorate_com_zero_img"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:src="@drawable/banner_zero" />
+                                    </android.support.v7.widget.CardView>
+                                </RelativeLayout>
                             </RelativeLayout>
                         </RelativeLayout>
                         <!--下边两个按钮-->
@@ -184,22 +199,30 @@
                                 android:layout_marginLeft="11dp"
                                 android:background="@color/white">
 
-                                <android.support.v7.widget.CardView
-                                    android:id="@+id/decorate_com_hot_cv"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                <RelativeLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:layout_margin="4dp"
-                                    android:clickable="true"
-                                    android:foreground="?android:attr/selectableItemBackground"
-                                    app:cardCornerRadius="4dp"
-                                    app:cardElevation="4dp">
+                                    android:background="@drawable/shape_yin_ying"
+                                    android:padding="1dp">
 
-                                    <ImageView
-                                        android:id="@+id/decorate_com_hot_img"
+                                    <android.support.v7.widget.CardView
+                                        android:id="@+id/decorate_com_hot_cv"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:src="@drawable/banner_hot" />
-                                </android.support.v7.widget.CardView>
+
+                                        android:clickable="true"
+                                        android:foreground="?android:attr/selectableItemBackground"
+                                        app:cardCornerRadius="4dp"
+                                        app:cardElevation="0dp">
+
+                                        <ImageView
+                                            android:id="@+id/decorate_com_hot_img"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:src="@drawable/banner_hot" />
+                                    </android.support.v7.widget.CardView>
+                                </RelativeLayout>
                             </RelativeLayout>
 
                             <RelativeLayout
@@ -209,22 +232,29 @@
                                 android:layout_marginRight="11dp"
                                 android:background="@color/white">
 
-                                <android.support.v7.widget.CardView
-                                    android:id="@+id/decorate_com_test_cv"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                <RelativeLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:layout_margin="4dp"
-                                    android:clickable="true"
-                                    android:foreground="?android:attr/selectableItemBackground"
-                                    app:cardCornerRadius="4dp"
-                                    app:cardElevation="4dp">
+                                    android:background="@drawable/shape_yin_ying"
+                                    android:padding="1dp">
 
-                                    <ImageView
-                                        android:id="@+id/decorate_com_test_img"
+                                    <android.support.v7.widget.CardView
+                                        android:id="@+id/decorate_com_test_cv"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:src="@drawable/banner_test" />
-                                </android.support.v7.widget.CardView>
+                                        android:clickable="true"
+                                        android:foreground="?android:attr/selectableItemBackground"
+                                        app:cardCornerRadius="4dp"
+                                        app:cardElevation="0dp">
+
+                                        <ImageView
+                                            android:id="@+id/decorate_com_test_img"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:src="@drawable/banner_test" />
+                                    </android.support.v7.widget.CardView>
+                                </RelativeLayout>
                             </RelativeLayout>
                         </RelativeLayout>
                     </LinearLayout>
@@ -239,7 +269,6 @@
                 android:layout_height="40dp"
                 android:layout_gravity="bottom"
                 android:layout_marginTop="10dp"
-                android:background="@color/white"
                 app:layout_collapseMode="pin">
 
                 <RelativeLayout
@@ -355,7 +384,6 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_alignParentTop="true"
-        android:background="@color/white"
         android:visibility="visible">
         <!--城市选择-->
         <LinearLayout
