@@ -165,7 +165,6 @@ public class HomePageActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.e(TAG, "首页=====onStart");
     }
 
     //初始化相关事件

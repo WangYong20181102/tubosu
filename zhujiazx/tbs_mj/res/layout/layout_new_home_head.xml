@@ -9,18 +9,20 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp">
-
+        android:layout_height="200dp">
+        <!--之前的vp轮播-->
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp">
+            android:layout_height="180dp"
+            android:visibility="gone">
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/newhome_head_viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"></android.support.v4.view.ViewPager>
+                android:layout_height="180dp"
+                android:visibility="gone"></android.support.v4.view.ViewPager>
         </FrameLayout>
-
+        <!--1.2.3轮播的点-->
         <LinearLayout
             android:id="@+id/newHomeDotLayout"
             android:layout_width="match_parent"
@@ -28,14 +30,48 @@
             android:layout_alignParentBottom="true"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="10dp"></LinearLayout>
+            android:padding="10dp"
+            android:visibility="gone"></LinearLayout>
 
+        <!--新的轮播图-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/white">
+            <View
+                android:id="@+id/new_ihph_banner_bg_view"
+                android:layout_width="match_parent"
+                android:layout_height="174dp"
+                android:background="#5abaa7" />
+            <!--底部背景-->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/banner_bg" />
+            <!--轮播的banner-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="145dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dp">
+
+                <com.zhouwei.mzbanner.MZBannerView
+                    android:id="@+id/new_ihph_banner_mz_banner_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    app:canLoop="true"
+                    app:open_mz_mode="false"></com.zhouwei.mzbanner.MZBannerView>
+            </RelativeLayout>
+
+        </RelativeLayout>
+        <!--顶部的蒙层-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/meng_ceng_bg"></RelativeLayout>
     </RelativeLayout>
-
+    <!--1.2.3版本的用户轮播-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -43,7 +79,8 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="8dp"
-        android:gravity="center">
+        android:gravity="center"
+        android:visibility="gone">
 
         <com.tbs.tbs_mj.customview.MarqueeView
             android:id="@+id/newhome_cheat_text"
@@ -220,10 +257,10 @@
                 <!--显示图片的位置 免费报价-->
                 <ImageView
                     android:id="@+id/fa_dan_01_img"
-                    android:layout_marginBottom="1dp"
-                    android:layout_marginTop="4dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="4dp" />
             </RelativeLayout>
 
             <LinearLayout
@@ -240,11 +277,11 @@
                     <!--显示免费设计的页面-->
                     <ImageView
                         android:id="@+id/fa_dan_02_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_marginBottom="1dp"
                         android:layout_marginLeft="4dp"
-                        android:src="@drawable/fadan_02"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:src="@drawable/fadan_02" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -255,11 +292,11 @@
                     <!--显示专业推荐的页面-->
                     <ImageView
                         android:id="@+id/fa_dan_03_img"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginLeft="4dp"
-                        android:src="@drawable/fadan_03"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginTop="2dp"
+                        android:src="@drawable/fadan_03" />
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

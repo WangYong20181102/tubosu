@@ -320,6 +320,9 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     if (urlMap.containsKey("zjzxaj31") && !TextUtils.isEmpty(urlMap.get("zjzxaj31"))) {
                         SpUtil.setzjzxaj31(mContext, urlMap.get("zjzxaj31"));
                     }
+                    if (urlMap.containsKey("zjzxaj32") && !TextUtils.isEmpty(urlMap.get("zjzxaj32"))) {
+                        SpUtil.setzjzxaj32(mContext, urlMap.get("zjzxaj32"));
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

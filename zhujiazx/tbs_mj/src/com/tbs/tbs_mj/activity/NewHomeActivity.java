@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,16 +36,13 @@ import com.allenliu.versionchecklib.v2.builder.NotificationBuilder;
 import com.allenliu.versionchecklib.v2.builder.UIData;
 import com.allenliu.versionchecklib.v2.callback.CustomVersionDialogListener;
 import com.allenliu.versionchecklib.v2.callback.ForceUpdateListener;
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tbs.tbs_mj.R;
 import com.tbs.tbs_mj.adapter.NewHomeAdapter;
 import com.tbs.tbs_mj.adapter.UpdateDialogAdapter;
-import com.tbs.tbs_mj.base.*;
+import com.tbs.tbs_mj.base.BaseActivity;
+import com.tbs.tbs_mj.base.BaseDialog;
 import com.tbs.tbs_mj.bean.EC;
 import com.tbs.tbs_mj.bean.Event;
 import com.tbs.tbs_mj.bean.NewHomeDataItem;
@@ -60,7 +56,6 @@ import com.tbs.tbs_mj.utils.AppInfoUtil;
 import com.tbs.tbs_mj.utils.CacheManager;
 import com.tbs.tbs_mj.utils.EventBusUtil;
 import com.tbs.tbs_mj.utils.SpUtil;
-import com.tbs.tbs_mj.utils.ToastUtil;
 import com.tbs.tbs_mj.utils.Util;
 import com.tbs.tbs_mj.web.AcWebActivity;
 
@@ -83,13 +78,17 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 
-public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
+public class NewHomeActivity extends BaseActivity {
     @BindView(R.id.tuisong_kaiqi_tv)
     TextView tuisongKaiqiTv;
     @BindView(R.id.tuisong_guanbi_rl)
     RelativeLayout tuisongGuanbiRl;
     @BindView(R.id.tuisong_rl)
     RelativeLayout tuisongRl;
+    @BindView(R.id.hp_search_tm_rl)
+    RelativeLayout hpSearchTmRl;
+    @BindView(R.id.hp_search_rl)
+    RelativeLayout hpSearchRl;
     private ImageView home_view;
     private ImageView ivYingying;
     private View rel_newhomebar;
@@ -121,7 +120,6 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e(TAG, "NewHomeActivity执行的生命周期========onCreate()");
         mContext = NewHomeActivity.this;
         setContentView(R.layout.layout_new_activity);
         ButterKnife.bind(this);
@@ -429,7 +427,12 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                         newhomeCity.setTextColor(Color.parseColor("#000000"));
                         app_title_text.setTextColor(Color.parseColor("#000000"));
                         rel_newhomebar.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+                        hpSearchTmRl.setVisibility(View.GONE);
+                        hpSearchRl.setVisibility(View.VISIBLE);
                     } else {
+                        hpSearchTmRl.setVisibility(View.VISIBLE);
+                        hpSearchRl.setVisibility(View.GONE);
 
                         ivYingying.setVisibility(View.GONE);
                         home_view.setVisibility(View.VISIBLE);
@@ -656,6 +659,8 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
         String user_type = getSharedPreferences("userInfo", Context.MODE_PRIVATE).getString("mark", "");
         param.put("uid", uid);
         param.put("user_type", user_type);
+        param.put("subchannel", "android");
+        param.put("chcode", AppInfoUtil.getChannType(mContext));
         String city = newhomeCity.getText().toString();
         if (num == 0) {
             param.put("city_id", "0");
@@ -738,7 +743,6 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                                 }
                             });
                         } else {
-                            // 无数据 这样处理是不至于无数据的时候出现app闪退
                         }
                     }
                 });
@@ -747,7 +751,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                 bigData = null;
 
                 // 第一次加载
-                OKHttpUtil.post(Constant.NEWHOME_URL, getParam(start), new Callback() {
+                OKHttpUtil.post(Constant.NEW_HOME_PAGE_URL, getParam(start), new Callback() {
 
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -869,7 +873,7 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
         }
     }
 
-    @OnClick({R.id.tuisong_kaiqi_tv, R.id.tuisong_guanbi_rl, R.id.tuisong_rl})
+    @OnClick({R.id.tuisong_kaiqi_tv, R.id.tuisong_guanbi_rl, R.id.tuisong_rl, R.id.hp_search_rl, R.id.hp_search_tm_rl})
     public void onViewClickedInNewHomeActivity(View view) {
         switch (view.getId()) {
             case R.id.tuisong_kaiqi_tv:
@@ -883,6 +887,13 @@ public class NewHomeActivity extends com.tbs.tbs_mj.base.BaseActivity {
                 break;
             case R.id.tuisong_rl:
                 //不做任何处理只是为了防点击事件穿透
+                break;
+            case R.id.hp_search_rl:
+            case R.id.hp_search_tm_rl:
+                //进行跳转
+                Intent mIntent = new Intent(mContext, NewWebViewActivity.class);
+                mIntent.putExtra("mLoadingUrl", SpUtil.getzjzxaj32(mContext));
+                startActivity(mIntent);
                 break;
         }
     }

@@ -83,4 +83,37 @@
         android:layout_height="12dp"
         android:layout_below="@+id/all_order_banner_rl"
         android:background="@drawable/yinying4" />
+    <!--提示信息-->
+    <RelativeLayout
+        android:id="@+id/all_order_tishi_rl"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/shape_tishi"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/all_order_tishi_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="52dp"
+            android:layout_marginTop="10dp"
+            android:text=""
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/all_order_tishi_down_img"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/drop_down" />
+
+    </RelativeLayout>
 </RelativeLayout>

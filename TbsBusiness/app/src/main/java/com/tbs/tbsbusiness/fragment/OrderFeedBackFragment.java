@@ -26,6 +26,7 @@ import com.tbs.tbsbusiness.base.BaseFragment;
 import com.tbs.tbsbusiness.bean._OrderFeedBackMsg;
 import com.tbs.tbsbusiness.config.Constant;
 import com.tbs.tbsbusiness.util.OKHttpUtil;
+import com.tbs.tbsbusiness.util.SpUtil;
 import com.tbs.tbsbusiness.util.Util;
 
 import org.json.JSONArray;
@@ -226,6 +227,7 @@ public class OrderFeedBackFragment extends BaseFragment {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         param.put("id", mOrderId);
+        param.put("comid", SpUtil.getCompany_id(mContext));
         param.put("page", mPage);
         param.put("page_size", mPageSize);
         OKHttpUtil.post(Constant.FEEDBACK_LIST, param, new Callback() {

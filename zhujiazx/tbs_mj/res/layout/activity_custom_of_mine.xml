@@ -189,17 +189,17 @@
                 android:src="@drawable/libao" />
 
             <View
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="7dp"
-                android:background="#f7f7f7" />
+                android:background="#f7f7f7"
+                android:visibility="gone" />
             <!--我的订单-->
             <RelativeLayout
-                android:visibility="gone"
                 android:id="@+id/custom_of_mine_dingdan_rl"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:layout_marginLeft="16dp">
+                android:layout_marginLeft="16dp"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="16dp"
@@ -492,7 +492,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/youjiantou" />
+                    android:src="@drawable/youjiantou"
+                    android:visibility="gone" />
 
                 <View
                     android:layout_width="match_parent"

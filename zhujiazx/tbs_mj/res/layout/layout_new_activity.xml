@@ -6,12 +6,14 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/newhome_swiprefreshlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/newhome_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent"
+            android:overScrollMode="never"></android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <RelativeLayout
@@ -49,7 +51,61 @@
                 android:layout_centerInParent="true"
                 android:text="住家"
                 android:textColor="@color/white"
-                android:textSize="17sp" />
+                android:textSize="17sp"
+                android:visibility="gone" />
+            <!--透明搜索框-->
+            <RelativeLayout
+                android:id="@+id/hp_search_tm_rl"
+                android:layout_width="233dp"
+                android:layout_height="26dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="78dp"
+                android:background="@drawable/shape_homepage_seach_white">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:src="@drawable/search" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="28dp"
+                    android:text="测测我的预算能装成什么样？"
+                    android:textColor="@color/white"
+                    android:textSize="12dp" />
+
+            </RelativeLayout>
+            <!--搜索框-->
+            <RelativeLayout
+                android:id="@+id/hp_search_rl"
+                android:layout_width="233dp"
+                android:layout_height="26dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="78dp"
+                android:background="@drawable/shape_homepage_seach_black"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:src="@drawable/search_p" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="28dp"
+                    android:text="测测我的预算能装成什么样？"
+                    android:textColor="#a3a3a3"
+                    android:textSize="12dp" />
+
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/home_kefu"
@@ -72,7 +128,7 @@
 
         <ImageView
             android:id="@+id/iv_add"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="14dp"
@@ -83,18 +139,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="6dp"
+            android:layout_marginLeft="2dp"
             android:layout_toRightOf="@+id/iv_add"
             android:text=""
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
 
         <ImageView
             android:id="@+id/iv_sanjiaoxing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="6dp"
+            android:layout_marginLeft="4dp"
             android:layout_toRightOf="@+id/newhomeCity"
             android:background="@drawable/sanjiaoxing" />
     </RelativeLayout>

@@ -2,11 +2,13 @@ package com.tbs.tbs_mj.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -44,6 +46,7 @@ import com.tbs.tbs_mj.global.MyApplication;
 import com.tbs.tbs_mj.global.OKHttpUtil;
 import com.tbs.tbs_mj.utils.AppInfoUtil;
 import com.tbs.tbs_mj.utils.EndlessRecyclerOnScrollListener;
+import com.tbs.tbs_mj.utils.GlideUtils;
 import com.tbs.tbs_mj.utils.SpUtil;
 import com.tbs.tbs_mj.utils.Util;
 import com.tbs.tbs_mj.utils.Utils;
@@ -63,6 +66,9 @@ import okhttp3.Response;
 
 import com.tbs.tbs_mj.bean._ImageD;
 import com.tbs.tbs_mj.web.AcWebActivity;
+import com.zhouwei.mzbanner.MZBannerView;
+import com.zhouwei.mzbanner.holder.MZHolderCreator;
+import com.zhouwei.mzbanner.holder.MZViewHolder;
 
 /**
  * Created by Lie on 2017/04/23.
@@ -153,7 +159,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof NewHomeHead) {
             NewHomeHead headHolder = (NewHomeHead) holder;
             newhomeViewPager.setFocusable(true);
@@ -163,11 +169,62 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             initBannerAdapter(newhomeViewPager, headHolder.layoutDot, dataSource.getBanner());
 
             initCheatText(headHolder.cheatText);
-//
+
+            // TODO: 2018/10/15 重新写的banner
+            //展示轮播图信息
+            if (dataSource.getBanner() != null
+                    && !dataSource.getBanner().isEmpty()
+                    && dataSource.getBanner().get(0).getBgcolor() != null
+                    && !TextUtils.isEmpty(dataSource.getBanner().get(0).getBgcolor())) {
+                ((NewHomeHead) holder).new_ihph_banner_bg_view.setBackgroundColor(Color.parseColor(dataSource.getBanner().get(0).getBgcolor()));
+            }
+            //设置点击事件
+            ((NewHomeHead) holder).new_ihph_banner_mz_banner_view.setBannerPageClickListener(bannerPageClickListener);
+            //设置页面滑动事件
+            ((NewHomeHead) holder).new_ihph_banner_mz_banner_view.addPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+
+                    if (dataSource.getBanner() != null
+                            && dataSource.getBanner().size() >= position + 1
+                            && dataSource.getBanner().get(position).getBgcolor() != null
+                            && !TextUtils.isEmpty(dataSource.getBanner().get(position).getBgcolor())) {
+                        ((NewHomeHead) holder).new_ihph_banner_bg_view.setBackgroundColor(Color.parseColor(dataSource.getBanner().get(position).getBgcolor()));
+
+                    }
+
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
+            //设置适配器
+            ((NewHomeHead) holder).new_ihph_banner_mz_banner_view.setPages(dataSource.getBanner(), new MZHolderCreator<MZBannerViewHolder>() {
+                @Override
+                public MZBannerViewHolder createViewHolder() {
+                    return new MZBannerViewHolder();
+                }
+            });
+            if (!dataSource.getBanner().isEmpty()) {
+                if (dataSource.getBanner().size() > 1) {
+                    ((NewHomeHead) holder).new_ihph_banner_mz_banner_view.setCanLoop(true);
+                    ((NewHomeHead) holder).new_ihph_banner_mz_banner_view.start();
+                } else {
+                    ((NewHomeHead) holder).new_ihph_banner_mz_banner_view.setCanLoop(false);
+                    ((NewHomeHead) holder).new_ihph_banner_mz_banner_view.pause();
+                }
+            }
+
             // TODO: 2018/8/2
             //发单01
-//            Log.e(TAG, "获取发单的图片地址========10086");
-            Log.e(TAG, "获取免费报价url=======" + SpUtil.getNewHomeMianfeibaojiaImgUrl(context));
+//            Log.e(TAG, "获取免费报价url=======" + SpUtil.getNewHomeMianfeibaojiaImgUrl(context));
             if (SpUtil.getNewHomeMianfeibaojiaImgUrl(context) != null
                     && !TextUtils.isEmpty(SpUtil.getNewHomeMianfeibaojiaImgUrl(context))) {
                 //设置网络图片
@@ -517,11 +574,63 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         notifyDataSetChanged();
     }
 
+    private MZBannerView.BannerPageClickListener bannerPageClickListener = new MZBannerView.BannerPageClickListener() {
+        @Override
+        public void onPageClick(View view, int i) {
+            setClickRequest(dataSource.getBanner().get(i).getId());
+            Intent webIntent = new Intent(context, NewWebViewActivity.class);
+            webIntent.putExtra("mLoadingUrl", dataSource.getBanner().get(i).getContent_url());
+            context.startActivity(webIntent);
+        }
+    };
+
+    private void setClickRequest(String id) {
+        if (Util.isNetAvailable(context)) {
+            HashMap<String, Object> para = new HashMap<String, Object>();
+            para.put("token", Util.getDateToken());
+            para.put("id", id);
+            OKHttpUtil.post(Constant.BANNER_CLICK_URL, para, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+
+                }
+            });
+        }
+    }
+
+    //todo  banner轮播图的适配器
+    public static class MZBannerViewHolder implements MZViewHolder<NewHomeDataItem.NewhomeDataBean.BannerBean> {
+
+        private CardView item_home_page_mz_banner_cv;
+        private ImageView item_home_page_mz_banner_img;
+
+        @Override
+        public View createView(Context context) {
+            View view = LayoutInflater.from(context).inflate(R.layout.item_home_page_mz_banner, null);
+            item_home_page_mz_banner_cv = view.findViewById(R.id.item_home_page_mz_banner_cv);
+            item_home_page_mz_banner_img = view.findViewById(R.id.item_home_page_mz_banner_img);
+            return view;
+        }
+
+        @Override
+        public void onBind(Context context, int i, NewHomeDataItem.NewhomeDataBean.BannerBean bannerBean) {
+            GlideUtils.glideLoader(context, bannerBean.getImg_url(), item_home_page_mz_banner_img);
+        }
+    }
+
 
     /**
      * 头部类
      */
     class NewHomeHead extends RecyclerView.ViewHolder {
+        View new_ihph_banner_bg_view;
+        MZBannerView new_ihph_banner_mz_banner_view;
+
         // 上部
         LinearLayout layoutDot;
         MarqueeView cheatText;
@@ -598,6 +707,11 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             fa_dan_02_img = itemView.findViewById(R.id.fa_dan_02_img);
             fa_dan_03_img = itemView.findViewById(R.id.fa_dan_03_img);
             fa_dan_04_img = itemView.findViewById(R.id.fa_dan_04_img);
+
+            new_ihph_banner_bg_view = itemView.findViewById(R.id.new_ihph_banner_bg_view);
+            new_ihph_banner_mz_banner_view = itemView.findViewById(R.id.new_ihph_banner_mz_banner_view);
+
+
         }
     }
 

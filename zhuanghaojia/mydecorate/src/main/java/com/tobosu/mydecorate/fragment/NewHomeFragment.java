@@ -35,6 +35,7 @@ import com.tobosu.mydecorate.entity._NewHomePage;
 import com.tobosu.mydecorate.global.Constant;
 import com.tobosu.mydecorate.global.OKHttpUtil;
 import com.tobosu.mydecorate.pagclass.GlideImageLoader;
+import com.tobosu.mydecorate.util.AppInfoUtil;
 import com.tobosu.mydecorate.util.SpUtil;
 import com.tobosu.mydecorate.util.Util;
 import com.tobosu.mydecorate.view.ScrollViewExtend;
@@ -112,6 +113,8 @@ public class NewHomeFragment extends Fragment {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("token", Util.getDateToken());
         hashMap.put("is_default", "4");
+        hashMap.put("subchannel", "android");
+        hashMap.put("chcode", AppInfoUtil.getChannType(mContext ));
         okHttpUtil.post(Constant.HOME_FRAGMENT_URL, hashMap, new OKHttpUtil.BaseCallBack() {
 
             @Override

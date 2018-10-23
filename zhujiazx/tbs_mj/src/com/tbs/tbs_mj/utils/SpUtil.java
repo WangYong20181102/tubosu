@@ -653,15 +653,14 @@ public class SpUtil {
         context.getSharedPreferences("BjAj", 0).edit().putString("zjzxaj31", zjzxaj31).commit();
     }
 
-//    //todo 33.看案例列表页-底部    zjzxaj33 和按键19一致
-//    public static String getzjzxaj33(Context context) {
-//        return context.getSharedPreferences("BjAj", 0).getString("zjzxaj33", Constant.QUOTE);
-//    }
-//
-//    //存储
-//    public static void setzjzxaj33(Context context, String zjzxaj33) {
-//        context.getSharedPreferences("BjAj", 0).edit().putString("zjzxaj33", zjzxaj33).commit();
-//    }
+    public static String getzjzxaj32(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("zjzxaj32", Constant.BUDGET_TEST);
+    }
+
+    //存储
+    public static void setzjzxaj32(Context context, String zjzxaj32) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("zjzxaj32", zjzxaj32).commit();
+    }
 
     //首页的四个发单的图片地址 由后台获取  网络获取存入本地
     //存储1-免费报价 图片地址  fadan01

@@ -6,9 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.androidkun.xtablayout.XTabLayout;
 import com.google.gson.Gson;
@@ -18,15 +24,25 @@ import com.tbs.tbsbusiness.base.BaseActivity;
 import com.tbs.tbsbusiness.bean.EC;
 import com.tbs.tbsbusiness.bean.Event;
 import com.tbs.tbsbusiness.bean._AllOrderTab;
+import com.tbs.tbsbusiness.bean._IsOpenShengming;
+import com.tbs.tbsbusiness.config.Constant;
 import com.tbs.tbsbusiness.customview.CustomDialog;
 import com.tbs.tbsbusiness.fragment.OrderFragment;
 import com.tbs.tbsbusiness.util.EventBusUtil;
+import com.tbs.tbsbusiness.util.OKHttpUtil;
+import com.tbs.tbsbusiness.util.SpUtil;
+import com.tbs.tbsbusiness.util.Util;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * 订单页面
@@ -39,6 +55,12 @@ public class OrderActivity extends BaseActivity {
     XTabLayout allOrderTabLayout;
     @BindView(R.id.all_order_viewpager)
     ViewPager allOrderViewpager;
+    @BindView(R.id.all_order_tishi_tv)
+    TextView allOrderTishiTv;
+    @BindView(R.id.all_order_tishi_down_img)
+    ImageView allOrderTishiDownImg;
+    @BindView(R.id.all_order_tishi_rl)
+    RelativeLayout allOrderTishiRl;
     private Context mContext;
     private String TAG = "OrderActivity";
     private Gson mGson;
@@ -57,7 +79,14 @@ public class OrderActivity extends BaseActivity {
         ButterKnife.bind(this);
         mContext = this;
         Log.e(TAG, "==onCreate==");
+        initView();
         initEvent();
+    }
+
+    private void initView() {
+        String htmlText = "<font color='#ff6b14'>温馨提醒：</font><font color='#ffffff'>订单分配后48小时内没有反馈的视为有效订单；反馈信息与客服回访不符的视为有效订单，以客服核实业主内容为准！</font>";
+        allOrderTishiTv.setText(Html.fromHtml(htmlText));
+        HttpOpenShengming();
     }
 
     @Override
@@ -209,9 +238,95 @@ public class OrderActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    @OnClick(R.id.all_order_banner_rl)
-    public void onViewClicked() {
-        //进入搜索页面
-        startActivity(new Intent(mContext, OrderSeacherActivity.class));
+    @OnClick({R.id.all_order_banner_rl, R.id.all_order_tishi_down_img})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.all_order_banner_rl:
+                startActivity(new Intent(mContext, OrderSeacherActivity.class));
+                break;
+            case R.id.all_order_tishi_down_img:
+                //动画消失
+                dimissAnimation();
+                break;
+        }
+    }
+
+    private void dimissAnimation() {
+        TranslateAnimation mAnimBanner = new TranslateAnimation(
+                Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 1.5f);
+        mAnimBanner.setDuration(600);
+        allOrderTishiRl.setAnimation(mAnimBanner);
+        allOrderTishiRl.setVisibility(View.GONE);
+        HttpCloseShengming();
+    }
+
+    //关闭免责声明
+    private void HttpCloseShengming() {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Util.getDateToken());
+        param.put("comid", SpUtil.getCompany_id(mContext));
+        OKHttpUtil.post(Constant.CLOSE_SHENGMING, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+            }
+        });
+    }
+
+    //是否开启免责申明
+    private void HttpOpenShengming() {
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Util.getDateToken());
+        param.put("comid", SpUtil.getCompany_id(mContext));
+        OKHttpUtil.post(Constant.IS_OPEN_SHENGMING, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                Log.e(TAG, "是否开启免责声明==========" + json);
+                final _IsOpenShengming isOpenShengming = mGson.fromJson(json, _IsOpenShengming.class);
+                if (isOpenShengming.getStatus() == 200) {
+                    //请求成功
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (isOpenShengming.getData().getStatus() == 1) {
+                                //开启
+                                showAnimation();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    //显示动画
+    private void showAnimation() {
+        TranslateAnimation mAnimBanner = new TranslateAnimation(
+                Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 1.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f);
+        mAnimBanner.setDuration(600);
+        allOrderTishiRl.setAnimation(mAnimBanner);
+        allOrderTishiRl.setVisibility(View.VISIBLE);
     }
 }

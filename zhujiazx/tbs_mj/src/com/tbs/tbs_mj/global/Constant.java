@@ -180,6 +180,7 @@ public class Constant {
     public static final String MY_OWNER_ODER_URL = TOBOSU_URL + "tapp/order/user_order_list";
 
     public static final String NEWHOME_URL = TOBOSU_URL + "resapp/index/new_index";
+    public static final String NEW_HOME_PAGE_URL = TOBOSU_URL + "resapp/index/newVersion_index";
 
     /**
      * 发单接口地址
@@ -258,7 +259,9 @@ public class Constant {
     public static final String FREE_PRICE_PAGE = M_TOBOSU_URL + "zjfree_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
     //免费设计
     public static final String QUOTE = M_TOBOSU_URL + "zjquote?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
-    ;
+    //顶部测试的链接
+    public static final String BUDGET_TEST = M_TOBOSU_URL + "budget_test?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
+
     //装修公司推荐
     public static final String REC_COMPANY = M_TOBOSU_URL + "zjrec_company?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
     ;

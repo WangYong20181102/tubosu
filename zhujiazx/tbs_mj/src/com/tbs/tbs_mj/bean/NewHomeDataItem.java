@@ -128,6 +128,15 @@ public class NewHomeDataItem {
             private String id;
             private String img_url;
             private String content_url;
+            private String bgcolor;
+
+            public String getBgcolor() {
+                return bgcolor;
+            }
+
+            public void setBgcolor(String bgcolor) {
+                this.bgcolor = bgcolor;
+            }
 
             public String getId() {
                 return id;
@@ -335,7 +344,7 @@ public class NewHomeDataItem {
                 this.sub_images = sub_images;
             }
         }
-        
+
         public static class ArticleTypeBean {
             /**
              * id : 1
@@ -362,6 +371,7 @@ public class NewHomeDataItem {
             public void setTitle(String title) {
                 this.title = title;
             }
+
             public String getIndex() {
                 return index;
             }

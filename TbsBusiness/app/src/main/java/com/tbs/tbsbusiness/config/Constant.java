@@ -5,10 +5,10 @@ package com.tbs.tbsbusiness.config;
  */
 public class Constant {
     // TODO: 2018/6/2 正式环境
-//    public static final String TOBOSU_URL = "https://www.tobosu.com/";
+    public static final String TOBOSU_URL = "https://www.tobosu.com/";
 
     // TODO: 2018/6/2 dev环境
-    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
 
     //微信的Appid
@@ -39,7 +39,7 @@ public class Constant {
     //获取订单详情
     public static final String GET_ORDER_DETAIL = TOBOSU_URL + "comapp/companyOrder/detail";
     //反馈消息
-    public static final String FEEDBACK_LIST = TOBOSU_URL + "comapp/CompanyFeedback/index";
+    public static final String FEEDBACK_LIST = TOBOSU_URL + "comapp/CompanyFeedback/new_index";
     //发送反馈消息
     public static final String ADD_FEEDBACK_MSG = TOBOSU_URL + "comapp/CompanyFeedback/add_feedback";
     //获取配置信息
@@ -65,9 +65,13 @@ public class Constant {
     //绑定微信
     public static final String BIND_WE_CHAT = TOBOSU_URL + "comapp/login/bind_wechat";
     //获取消息列表信息
-    public static final String GET_ORDER_NOTICE = TOBOSU_URL + "comapp/smsPushRecord/index";
+    public static final String GET_ORDER_NOTICE = TOBOSU_URL + "comapp/smsPushRecord/new_index";
     //消息已读
     public static final String READ_SMS_PUSH = TOBOSU_URL + "comapp/smsPushRecord/read_sms_push";
     //登录信息是否已修改
     public static final String LOGIN_CHECK_INFO = TOBOSU_URL + "comapp/login/check_info";
+    //关闭免责申明
+    public static final String CLOSE_SHENGMING = TOBOSU_URL + "comapp/disclaimer/ChangeStatus";
+    //是否开启免责申明
+    public static final String IS_OPEN_SHENGMING = TOBOSU_URL + "comapp/disclaimer/Disclaimer";
 }

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.tbs.tbs_mj.R;
 
 import java.io.File;
 
@@ -32,6 +33,9 @@ public class GlideUtils {
      */
     public static void glideLoader(Context context, String imgUrl, int erroImg, int emptyImg, ImageView imageView) {
         Glide.with(context).load(imgUrl).asBitmap().placeholder(emptyImg).error(erroImg).centerCrop().into(imageView);
+    }
+    public static void glideLoader(Context context, String imgUrl, ImageView imageView) {
+        Glide.with(context).load(imgUrl).asBitmap().placeholder(R.drawable.iamge_loading).error(R.drawable.iamge_loading).centerCrop().into(imageView);
     }
     public static void glideLoaderUriImage(Context context, Uri imgUri, int erroImg, int emptyImg, ImageView imageView) {
         Glide.with(context).load(imgUri).asBitmap().placeholder(emptyImg).error(erroImg).into(imageView);
