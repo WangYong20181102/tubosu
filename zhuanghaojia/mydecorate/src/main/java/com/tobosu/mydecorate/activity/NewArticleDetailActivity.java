@@ -19,6 +19,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.squareup.picasso.Picasso;
 import com.tobosu.mydecorate.R;
+import com.tobosu.mydecorate.application.MyApplication;
 import com.tobosu.mydecorate.base.BaseActivity;
 import com.tobosu.mydecorate.entity._ArticleDetail;
 import com.tobosu.mydecorate.global.Constant;
@@ -491,7 +492,7 @@ public class NewArticleDetailActivity extends BaseActivity {
                 iv.setLayoutParams(lp);
                 iv.setAdjustViewBounds(true);
                 iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                GlideUtils.glideLoader(mContext, _stringArrayList.get(n), R.mipmap.occupied1, R.mipmap.occupied1, iv);
+                GlideUtils.glideLoader(MyApplication.getContexts(), _stringArrayList.get(n), R.mipmap.occupied1, R.mipmap.occupied1, iv);
                 newLayoutHtmlContent.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
                 newLayoutHtmlContent.addView(iv);
                 seePicture(iv, imageUrlList);

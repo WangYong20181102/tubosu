@@ -517,7 +517,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
          *                         FOUR3.登陆的是业主界面
          **/
 //        intent = new Intent().setClass(this, MyActivity.class);
-        intent = new Intent().setClass(this, NoneLoginOfMineActivity.class);//3.7新增
+//        intent = new Intent().setClass(this, NoneLoginOfMineActivity.class);//3.7新增
+        intent = new Intent().setClass(this, NewMineNoneLoginActivity.class);//新增
         spec = tabHost.newTabSpec("FOUR").setIndicator("我").setContent(intent);
         tabHost.addTab(spec);
 
@@ -527,7 +528,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
         tabHost.addTab(spec);
 
 //        intent = new Intent().setClass(this, MyOwnerActivity.class);
-        intent = new Intent().setClass(this, CustomOfMineActivity.class);//3.7新增
+//        intent = new Intent().setClass(this, CustomOfMineActivity.class);//3.7新增
+        intent = new Intent().setClass(this, NewMineActivity.class);//新增
         spec = tabHost.newTabSpec("FOUR3").setIndicator("我").setContent(intent);
         tabHost.addTab(spec);
         /*---------------------------------------*/

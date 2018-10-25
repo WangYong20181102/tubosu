@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.tbs.tobosutype"
-    android:versionCode="33"
-    android:versionName="4.0">
+    android:versionCode="34"
+    android:versionName="4.1.0">
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -628,7 +628,9 @@
         <activity android:name=".activity.CoChangeBussinessLicenseActivity" />
         <activity android:name=".activity.ChangeCoAddressActivity" />
         <activity android:name=".activity.HomePageActivity" />
-        <activity android:name=".activity.DecorateComActivity"></activity>
+        <activity android:name=".activity.DecorateComActivity" />
+        <activity android:name=".activity.NewMineActivity" />
+        <activity android:name=".activity.NewMineNoneLoginActivity"></activity>
     </application>
 
 </manifest>

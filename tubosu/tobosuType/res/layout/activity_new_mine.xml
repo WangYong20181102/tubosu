@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/new_mine_ll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".activity.NewMineActivity">
+    <!--头部-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="202dp"
+        android:background="#f7f7f7">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg" />
+        <!--头像-->
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="30dp">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/avatar" />
+
+            <ImageView
+                android:id="@+id/new_mine_icon_img"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:layout_centerInParent="true" />
+        </RelativeLayout>
+        <!--名称-->
+        <TextView
+            android:id="@+id/new_mine_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="92dp"
+            android:layout_marginTop="35dp"
+            android:text=""
+            android:textColor="#ffffff"
+            android:textSize="19sp" />
+        <!--用户的地址-->
+        <TextView
+            android:id="@+id/new_mine_address_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="92dp"
+            android:layout_marginTop="64dp"
+            android:background="@drawable/shape_address"
+            android:gravity="center"
+            android:paddingBottom="3dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="3dp"
+            android:text=""
+            android:textColor="#ffffff"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/new_mine_next_img"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="52dp"
+            android:src="@drawable/next" />
+        <!--选项按钮-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="79dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/shape_mine_three">
+            <!--三个选项卡-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <!--收藏夹-->
+                <LinearLayout
+                    android:id="@+id/new_mine_shoucang_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="42dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/collect" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="收藏夹"
+                        android:textColor="#363650"
+                        android:textSize="15sp" />
+                </LinearLayout>
+                <!--记账本-->
+                <LinearLayout
+                    android:id="@+id/new_mine_jizhang_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="137dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/tally" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="记账本"
+                        android:textColor="#363650"
+                        android:textSize="15sp" />
+                </LinearLayout>
+                <!--我的订单-->
+                <LinearLayout
+                    android:id="@+id/new_mine_dingdan_ll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/indent" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="我的订单"
+                        android:textColor="#363650"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:background="@drawable/yinying4"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="12dp" />
+    </RelativeLayout>
+    <!--底部选项-->
+    <!--客服-->
+    <RelativeLayout
+        android:id="@+id/new_mine_kefu_rl"
+        android:layout_width="match_parent"
+        android:layout_height="55dp">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/service" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="52dp"
+            android:text="土拨鼠客服"
+            android:textColor="#363650"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/new_mine_kefu_num_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="32dp"
+            android:text="400-696-2221"
+            android:textColor="#6f6f8f"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/mine_right" />
+
+        <View
+            android:layout_width="308dp"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="#f7f7f7" />
+    </RelativeLayout>
+    <!--服务号-->
+    <RelativeLayout
+        android:id="@+id/new_mine_fuwuhao_rl"
+        android:layout_width="match_parent"
+        android:layout_height="55dp">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/wechat" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="52dp"
+            android:text="土拨鼠服务号"
+            android:textColor="#363650"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/new_mine_fuwuhao_num_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="32dp"
+            android:text="itobosu"
+            android:textColor="#6f6f8f"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/mine_right" />
+
+        <View
+            android:layout_width="308dp"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="#f7f7f7" />
+    </RelativeLayout>
+    <!--分享-->
+    <RelativeLayout
+        android:id="@+id/new_mine_fenxiang_rl"
+        android:layout_width="match_parent"
+        android:layout_height="55dp">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/share" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="52dp"
+            android:text="分享给好友"
+            android:textColor="#363650"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/mine_right" />
+
+        <View
+            android:layout_width="308dp"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="#f7f7f7" />
+    </RelativeLayout>
+    <!--评价-->
+    <RelativeLayout
+        android:id="@+id/new_mine_pingjia_rl"
+        android:layout_width="match_parent"
+        android:layout_height="55dp">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/praise" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="52dp"
+            android:text="给小鼠好评"
+            android:textColor="#363650"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/mine_right" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:background="#f7f7f7" />
+    <!--设置-->
+    <RelativeLayout
+        android:id="@+id/new_mine_shezhi_rl"
+        android:layout_width="match_parent"
+        android:layout_height="55dp">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/set" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="52dp"
+            android:text="设置"
+            android:textColor="#363650"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/mine_right" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f7f7f7" />
+</LinearLayout>

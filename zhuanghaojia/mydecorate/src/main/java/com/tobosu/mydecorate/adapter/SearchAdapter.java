@@ -120,18 +120,18 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //            }
 //        }
 
-        if(position<data.size()){
+        if (position < data.size()) {
             type = data.get(position).getStyle();
             if ("1".equals(type)) {
                 return TYPE_ITEM6;
             } else if ("2".equals(type)) {
                 return TYPE_ITEM7;
-            } else if("3".equals(type)){
+            } else if ("3".equals(type)) {
                 return TYPE_ITEM8;
-            }else {
+            } else {
                 return TYPE_FOOTER;
             }
-        }else {
+        } else {
             return TYPE_FOOTER;
         }
 
@@ -140,7 +140,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(position<data.size()){
+        if (position < data.size()) {
             BibleEntity item = data.get(position);
 
 
@@ -151,15 +151,17 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //            String newKeyWord = "<font color=\"#FC4141\">" + keyWord + "</font>";
 //            itemTitle6.replaceAll(keyWord, newKeyWord);
 //            newHolder.tv_item6_title.setText(Html.fromHtml(itemTitle6));
-                if(itemTitle6.contains(keyWord)){
-                    String head6 = itemTitle6.substring(0,itemTitle6.indexOf(keyWord));
+                if (itemTitle6 != null
+                        && !itemTitle6.isEmpty()
+                        && itemTitle6.contains(keyWord)) {
+                    String head6 = itemTitle6.substring(0, itemTitle6.indexOf(keyWord));
                     Util.setErrorLog("测试 head", head6);
                     String tail6 = itemTitle6.substring(head6.length() + keyWord.length());
                     Util.setErrorLog("测试 tail", tail6);
                     String html6 = head6 + "<font color=\"#FC4141\">" + keyWord + "</font>" + tail6;
 
                     newHolder.tv_item6_title.setText(Html.fromHtml(html6));
-                }else{
+                } else {
                     newHolder.tv_item6_title.setText(itemTitle6);
                 }
 
@@ -170,8 +172,8 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 newHolder.tv_item6_fav_num.setText(item.getCollect_count());
                 newHolder.tv_item6_good_num.setText(item.getTup_count());
 
-                if (item.getImg_url()!=null && item.getImg_url().size()>0 && item.getImg_url().get(0) != null) {
-                    GlideUtils.glideLoader(mContext,item.getImg_url().get(0),R.mipmap.occupied1,R.mipmap.occupied1,newHolder.iv_item6_image,1);
+                if (item.getImg_url() != null && item.getImg_url().size() > 0 && item.getImg_url().get(0) != null) {
+                    GlideUtils.glideLoader(mContext, item.getImg_url().get(0), R.mipmap.occupied1, R.mipmap.occupied1, newHolder.iv_item6_image, 1);
                 }
 
                 newHolder.itemView.setTag(data.get(position));
@@ -181,13 +183,15 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                 String itemTitle7 = item.getTitle();
 
-                if(itemTitle7.contains(keyWord)){
-                    String head7 = itemTitle7.substring(0,itemTitle7.indexOf(keyWord));
+                if (itemTitle7 != null
+                        && !itemTitle7.isEmpty()
+                        &&itemTitle7.contains(keyWord)) {
+                    String head7 = itemTitle7.substring(0, itemTitle7.indexOf(keyWord));
                     String tail7 = itemTitle7.substring(head7.length() + keyWord.length());
                     String html7 = head7 + "<font color=\"#FC4141\">" + keyWord + "</font>" + tail7;
 
                     newHolder.tv_item7_title.setText(Html.fromHtml(html7));
-                }else{
+                } else {
                     newHolder.tv_item7_title.setText(itemTitle7);
                 }
 
@@ -197,14 +201,14 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 newHolder.tv_item7_fav_num.setText(item.getCollect_count());
                 newHolder.tv_item7_good_num.setText(item.getTup_count());
 
-                if (item.getImg_url()!=null && item.getImg_url().size()>0 && item.getImg_url().get(0) != null) {
-                    GlideUtils.glideLoader(mContext,item.getImg_url().get(0),R.mipmap.occupied1,R.mipmap.occupied1,newHolder.iv_item7_image_left,1);
+                if (item.getImg_url() != null && item.getImg_url().size() > 0 && item.getImg_url().get(0) != null) {
+                    GlideUtils.glideLoader(mContext, item.getImg_url().get(0), R.mipmap.occupied1, R.mipmap.occupied1, newHolder.iv_item7_image_left, 1);
                 }
-                if (item.getImg_url()!=null && item.getImg_url().size()>0 && item.getImg_url().get(1) != null) {
-                    GlideUtils.glideLoader(mContext,item.getImg_url().get(1),R.mipmap.occupied1,R.mipmap.occupied1,newHolder.iv_item7_image_mid,1);
+                if (item.getImg_url() != null && item.getImg_url().size() > 0 && item.getImg_url().get(1) != null) {
+                    GlideUtils.glideLoader(mContext, item.getImg_url().get(1), R.mipmap.occupied1, R.mipmap.occupied1, newHolder.iv_item7_image_mid, 1);
                 }
-                if (item.getImg_url()!=null && item.getImg_url().size()>0 && item.getImg_url().get(2) != null) {
-                    GlideUtils.glideLoader(mContext,item.getImg_url().get(2),R.mipmap.occupied1,R.mipmap.occupied1,newHolder.iv_item7_image_right,1);
+                if (item.getImg_url() != null && item.getImg_url().size() > 0 && item.getImg_url().get(2) != null) {
+                    GlideUtils.glideLoader(mContext, item.getImg_url().get(2), R.mipmap.occupied1, R.mipmap.occupied1, newHolder.iv_item7_image_right, 1);
                 }
 
                 newHolder.itemView.setTag(data.get(position));
@@ -212,13 +216,15 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 Item8Holder newHolder = (Item8Holder) holder;
 
                 String itemTitle8 = item.getTitle();
-                if(itemTitle8.contains(keyWord)){
-                    String head8 = itemTitle8.substring(0,itemTitle8.indexOf(keyWord));
+                if (itemTitle8 != null
+                        && !itemTitle8.isEmpty()
+                        &&itemTitle8.contains(keyWord)) {
+                    String head8 = itemTitle8.substring(0, itemTitle8.indexOf(keyWord));
                     String tail8 = itemTitle8.substring(head8.length() + keyWord.length());
                     String html8 = head8 + "<font color=\"#FC4141\">" + keyWord + "</font>" + tail8;
 
                     newHolder.tv_item8_title.setText(Html.fromHtml(html8));
-                }else{
+                } else {
                     newHolder.tv_item8_title.setText(itemTitle8);
                 }
 
@@ -228,8 +234,8 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 newHolder.tv_item8_fav_num.setText(item.getCollect_count());
                 newHolder.tv_item8_good_num.setText(item.getTup_count());
 
-                if(item.getImg_url()!=null && item.getImg_url().size()>0 && item.getImg_url().get(0)!=null){
-                    GlideUtils.glideLoader(mContext,item.getImg_url().get(0),R.mipmap.occupied1,R.mipmap.occupied1,newHolder.iv_item8_image_large,1);
+                if (item.getImg_url() != null && item.getImg_url().size() > 0 && item.getImg_url().get(0) != null) {
+                    GlideUtils.glideLoader(mContext, item.getImg_url().get(0), R.mipmap.occupied1, R.mipmap.occupied1, newHolder.iv_item8_image_large, 1);
                 }
                 newHolder.itemView.setTag(data.get(position));
             } else if (holder instanceof FootViewHolder) {
