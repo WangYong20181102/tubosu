@@ -26,6 +26,7 @@ import com.tbs.tbs_mj.bean._ArticleTypeItem;
 import com.tbs.tbs_mj.customview.MyLinearLayoutManager;
 import com.tbs.tbs_mj.global.Constant;
 import com.tbs.tbs_mj.global.OKHttpUtil;
+import com.tbs.tbs_mj.utils.AppInfoUtil;
 import com.tbs.tbs_mj.utils.Util;
 
 import org.json.JSONArray;
@@ -202,6 +203,8 @@ public class ArticleTypeFragment extends BaseFragment {
         HashMap<String, Object> param = new HashMap<>();
         param.put("token", Util.getDateToken());
         param.put("type_id", mArticleTypeId);
+        param.put("subchannel", "android");
+        param.put("chcode", AppInfoUtil.getChannType(mContext));
         param.put("page", mPage);
         param.put("page_size", mPageSize);
         OKHttpUtil.post(Constant.Z_ARTICLE_LIST, param, new Callback() {

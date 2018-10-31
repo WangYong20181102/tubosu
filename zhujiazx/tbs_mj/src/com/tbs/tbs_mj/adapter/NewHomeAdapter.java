@@ -526,7 +526,7 @@ public class NewHomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Intent webIntent = new Intent(context, ArticleWebViewActivity.class);
-                    webIntent.putExtra("mLoadingUrl", dataSource.getCourse().get(position).getJump_url() + "?app_type=1");
+                    webIntent.putExtra("mLoadingUrl", dataSource.getCourse().get(position).getJump_url() + "?app_type=4");
                     context.startActivity(webIntent);
                 }
             });

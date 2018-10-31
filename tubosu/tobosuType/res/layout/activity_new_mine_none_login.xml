@@ -184,10 +184,10 @@
 
         <View
             android:layout_width="308dp"
-            android:layout_height="2dp"
+            android:layout_height="1dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:background="#f7f7f7" />
+            android:background="#eee" />
     </RelativeLayout>
     <!--服务号-->
     <RelativeLayout
@@ -232,10 +232,10 @@
 
         <View
             android:layout_width="308dp"
-            android:layout_height="2dp"
+            android:layout_height="1dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:background="#f7f7f7" />
+            android:background="#eee" />
     </RelativeLayout>
     <!--分享-->
     <RelativeLayout
@@ -269,10 +269,10 @@
 
         <View
             android:layout_width="308dp"
-            android:layout_height="2dp"
+            android:layout_height="1dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:background="#f7f7f7" />
+            android:background="#eee" />
     </RelativeLayout>
     <!--评价-->
     <RelativeLayout

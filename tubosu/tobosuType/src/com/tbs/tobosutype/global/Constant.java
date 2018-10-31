@@ -142,7 +142,8 @@ public class Constant {
 
     public static final String clickUrl = TOBOSU_URL + "mapp/companyBanner/click_count";
 
-    public static final String CLICKURL_BANNER = TOBOSU_URL + "mapp/banner/click_count"; /**
+    public static final String CLICKURL_BANNER = TOBOSU_URL + "mapp/banner/click_count";
+    /**
      * -
      * 第三方绑定接口
      */

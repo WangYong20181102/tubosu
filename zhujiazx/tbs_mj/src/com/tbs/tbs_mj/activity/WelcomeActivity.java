@@ -176,7 +176,7 @@ public class WelcomeActivity extends BaseActivity {
         CacheManager.setStartFlag(WelcomeActivity.this, 0);
         getSetting();
         //todo 新的welcome处理逻辑 creat by lin  20180103
-        countDownloadNum();//新增用户的数据统计
+//        countDownloadNum();//新增用户的数据统计
         // TODO: 2018/3/6 App点击流统计初始化
         // TODO: 2018/3/5 初始化上报数据
         initStatisticsEvent();
@@ -311,7 +311,7 @@ public class WelcomeActivity extends BaseActivity {
     private void countDownloadNum() {
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("mac_code", MAC_CODE);
-        map.put("type", "1");
+        map.put("type", "4");
         map.put("_token", _TOKEN);
         OKHttpUtil.post(Constant.SURVIVAL_URL, map, new Callback() {
             @Override
