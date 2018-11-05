@@ -252,7 +252,8 @@ public class NewMineActivity extends BaseActivity {
                 praiseApp();
                 break;
             case R.id.new_mine_shezhi_rl:
-                startActivity(new Intent(mContext, NewSettingActivity.class));
+//                startActivity(new Intent(mContext, NewSettingActivity.class));
+                startActivity(new Intent(mContext, DecorationQuestionActivity.class));
                 break;
         }
     }

@@ -273,7 +273,7 @@ public class CustomHttpRequest
 		if(iResponseMap != null && iResponseMap.containsKey("body_obj"))
 		{
 			//asda//Log.d("test",(String)iResponseMap.get("header_obj"));
-			//Map<String, String> map = new HashMap();     
+			//Map<String, String> map = new HashMap();
 
 			for (@SuppressWarnings("rawtypes") Map.Entry entry : iResponseMap.entrySet()) {
 

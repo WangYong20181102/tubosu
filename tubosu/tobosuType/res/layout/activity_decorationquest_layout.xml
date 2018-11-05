@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/tl_top_title"
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:background="@drawable/white_bg">
+
+        <RelativeLayout
+            android:id="@+id/relBackShoucang"
+            android:layout_width="39dp"
+            android:layout_height="39dp">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="17dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/activity_back" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="装修问答"
+            android:textColor="@color/color_black"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/image_top_search"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/tel_p" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/topSearch"
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:background="@drawable/wht"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/rl_iamge_back"
+            android:layout_width="39dp"
+            android:layout_height="39dp">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="17dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/activity_back" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_toLeftOf="@+id/tvCancelSearch"
+            android:layout_toRightOf="@+id/rl_iamge_back"
+            android:background="@drawable/shape_company_edittext_bg">
+
+            <RelativeLayout
+                android:id="@+id/searche_bar"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/kiksezchdfa">
+
+                <EditText
+                    android:id="@+id/etSearchGongsi"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerVertical="true"
+                    android:background="@color/transparent"
+                    android:hint="请输入你感兴趣的内容"
+                    android:lines="1"
+                    android:maxLength="20"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColorHint="#999999"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:id="@+id/ivGongSiDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignRight="@+id/etSearchGongsi"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/delete_cancel"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/kiksezchdfa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="9dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/ssearch" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tvCancelSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="14dp"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="#FF6F20" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/dq_mid_rl"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="39dp"
+        android:background="@color/white">
+
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/dq_mid"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_toLeftOf="@+id/rl_more">
+
+        </net.lucode.hackware.magicindicator.MagicIndicator>
+        <RelativeLayout
+            android:id="@+id/rl_more"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:id="@+id/image_dq_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:src="@drawable/drop_down_p"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/dq_swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/dq_mid_rl"
+        android:descendantFocusability="blocksDescendants">
+
+       <android.support.v4.view.ViewPager
+           android:id="@+id/dq_viewpager"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+
+       </android.support.v4.view.ViewPager>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <View
+        android:id="@+id/frag_shardow_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/dq_mid_rl"
+        android:background="#b4353332"
+        android:visibility="gone" />
+
+</RelativeLayout>

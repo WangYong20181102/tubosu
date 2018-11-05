@@ -36,7 +36,7 @@ public class HttpPost {
 	public static void setRequestEncoding(String requestEncoding) {
 		HttpPost.requestEncoding = requestEncoding;
 	}
-	
+
 	public static String doGet(String requrl,Map<?,?> parameters,String recvEndcoding){
 		HttpURLConnection url_con=null;
 		String responseContent = null;
@@ -57,7 +57,7 @@ public class HttpPost {
 				url_con=(HttpURLConnection) url.openConnection();
 				url_con.setRequestMethod("GET");
 				System.setProperty("连接超时：", String.valueOf(HttpPost.connectTimeOut));
-				System.setProperty("访问超时：", String.valueOf(HttpPost.readTimeOut)); 
+				System.setProperty("访问超时：", String.valueOf(HttpPost.readTimeOut));
 				url_con.setDoOutput(true);//
 				byte[] b=params.toString().getBytes();
 				url_con.getOutputStream().write(b, 0,b.length);
@@ -79,9 +79,9 @@ public class HttpPost {
 			}
 		}
 		return responseContent;
-		
+
 	}
-	
+
 	public static String doGet(String reqUrl, String recvEncoding) {
 		HttpURLConnection url_con = null;
 		String responseContent = null;
@@ -90,7 +90,7 @@ public class HttpPost {
 				StringBuffer params = new StringBuffer();
 				String queryUrl = reqUrl;
 				int paramIndex = reqUrl.indexOf("?");
-				
+
 				if (paramIndex > 0) {
 					queryUrl = reqUrl.substring(0, paramIndex);
 					String parameters = reqUrl.substring(paramIndex + 1, reqUrl.length());
@@ -136,9 +136,9 @@ public class HttpPost {
 			}
 		}
 		return responseContent;
-		
+
 	}
-	
+
 	public static String doPost(String reqUrl, Map<String, String> parameters, String recvEncoding) {
 		HttpURLConnection url_con = null;
 		String responseContent = "";
@@ -169,39 +169,39 @@ public class HttpPost {
 			url_con.getOutputStream().close();
 
 			InputStream in = url_con.getInputStream();
-			
+
 			ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
-			
+
 			byte[] dataBuffer=new byte[1024];
 			int nLen=0;
-			
-			
-			
-			while ((nLen=in.read(dataBuffer))>-1) 
+
+
+
+			while ((nLen=in.read(dataBuffer))>-1)
 			{
 				swapStream.write(dataBuffer, 0, nLen);
 			}
-			
+
 			responseContent=new String(swapStream.toByteArray(),Charset.forName(recvEncoding));
-			
+
 			swapStream.close();
 			in.close();
-			
+
 			int code = url_con.getResponseCode();
-			if (code != 200) 
+			if (code != 200)
 			{
 				responseContent ="{\"status\":\"FALSE\"}";
 				Log.d("test_ZhaobiaoActivity_doPost", responseContent);
 			}
 
 		}
-		catch (IOException e) 
+		catch (IOException e)
 		{
 			System.out.println("网络故障:"+ e.toString());
 		}
-		finally 
+		finally
 		{
-			if (url_con != null) 
+			if (url_con != null)
 			{
 				url_con.disconnect();
 			}
@@ -209,5 +209,5 @@ public class HttpPost {
 		return responseContent;
 	}
 
-	
+
 }
