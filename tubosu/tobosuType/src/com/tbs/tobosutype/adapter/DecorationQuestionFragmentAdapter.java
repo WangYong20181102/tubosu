@@ -51,7 +51,7 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
             } else {
                 ((DQViewHolder) holder).imageAdPhoto.setVisibility(View.GONE);
             }
-            ((DQViewHolder) holder).imageAdPhoto.setOnClickListener(new View.OnClickListener() {
+            ((DQViewHolder) holder).imageAdPhoto.setOnClickListener(new View.OnClickListener() {    //广告图片点击事件
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context, "点击image", Toast.LENGTH_LONG).show();
