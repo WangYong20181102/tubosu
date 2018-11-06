@@ -120,6 +120,7 @@ public class DecorationQuestionActivity extends BaseActivity {
         mGridView = quanbuquyuPopView.findViewById(R.id.pop_window_show);
 
         decorationQuestionViewPagerAdapter = new DecorationQuestionViewPagerAdapter(getSupportFragmentManager(), this, dqList);
+        dqViewPager.setOffscreenPageLimit(dqList.size());
         dqViewPager.setAdapter(decorationQuestionViewPagerAdapter);
         decorationQuestionViewPagerAdapter.notifyDataSetChanged();
         dqViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

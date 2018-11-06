@@ -45,17 +45,18 @@ public class DecorationQuestionFragment extends BaseFragment {
     }
 
     private void initViewEvent() {
-        list.add("设计");
-        list.add("设计1");
-        list.add("设计2");
-        list.add("设计3");
-        list.add("设计4");
-        list.add("设计5");
-        list.add("设计6");
-        list.add("设计7");
-        list.add("设计8");
-        list.add("设计9");
-        list.add("设计10");
+        list.clear();
+        list.add("34");
+        list.add("56");
+        list.add("24");
+        list.add("31");
+        list.add("78");
+        list.add("90");
+        list.add("123");
+        list.add("5647");
+        list.add("75");
+        list.add("12");
+        list.add("80");
         decorationQuestionFragmentAdapter = new DecorationQuestionFragmentAdapter(getActivity(),list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

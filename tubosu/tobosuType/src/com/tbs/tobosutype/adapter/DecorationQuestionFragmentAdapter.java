@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.ArticleWebViewActivity;
@@ -24,7 +27,7 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
 
     private Context context;
     private List<String> stringList;
-
+    private int n = 4;
     public DecorationQuestionFragmentAdapter(Context context, List<String> list) {
         this.context = context;
         this.stringList = list;
@@ -32,16 +35,34 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_hp_article, parent, false);
-        DQViewHolder dqViewHolder = new DQViewHolder(view);
-        return dqViewHolder;
+        View view = LayoutInflater.from(context).inflate(R.layout.item_dq_recycleview, parent, false);
+        return new DQViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof DQViewHolder) {
+            String str = "<font color = \"#00ff00\">" + stringList.get(position) + "</font>" + "问答";
             //设置文本
-            ((DQViewHolder) holder).item_hp_article_dec_tv.setText(stringList.get(position));
+            ((DQViewHolder) holder).tvNumAnswer.setText(Html.fromHtml(str));
+            if (position == n && position >= 4) {
+                ((DQViewHolder) holder).imageAdPhoto.setVisibility(View.VISIBLE);
+                n =  n + 5;
+            } else {
+                ((DQViewHolder) holder).imageAdPhoto.setVisibility(View.GONE);
+            }
+            ((DQViewHolder) holder).imageAdPhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "点击image", Toast.LENGTH_LONG).show();
+                }
+            });
+            ((DQViewHolder) holder).rlRvLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, "点击父布局" + position, Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 
@@ -51,17 +72,23 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
     }
 
     class DQViewHolder extends RecyclerView.ViewHolder {
-        private CardView item_hp_article_cv;
-        private TextView item_hp_article_time_tv;
-        private TextView item_hp_article_dec_tv;
-        private ImageView item_hp_article_bg_img;
+        private TextView tvTittle;  //标题
+        private TextView tvContext; //内容
+        private TextView tvNumAnswer;   //问答个数
+        private TextView tvDateTime;    //日期
+        private ImageView imageRvRight;    //右侧图片
+        private ImageView imageAdPhoto;    //广告图片
+        private RelativeLayout rlRvLayout;    //item父布局
 
         public DQViewHolder(View itemView) {
             super(itemView);
-            item_hp_article_cv = itemView.findViewById(R.id.item_hp_article_cv);
-            item_hp_article_time_tv = itemView.findViewById(R.id.item_hp_article_time_tv);
-            item_hp_article_dec_tv = itemView.findViewById(R.id.item_hp_article_dec_tv);
-            item_hp_article_bg_img = itemView.findViewById(R.id.item_hp_article_bg_img);
+            tvTittle = itemView.findViewById(R.id.tv_tittle);
+            tvContext = itemView.findViewById(R.id.tv_context);
+            tvNumAnswer = itemView.findViewById(R.id.tv_num_answer);
+            tvDateTime = itemView.findViewById(R.id.tv_datetime);
+            imageRvRight = itemView.findViewById(R.id.image_rv_right);
+            imageAdPhoto = itemView.findViewById(R.id.image_ad_photo);
+            rlRvLayout = itemView.findViewById(R.id.rl_rv_layout);
         }
     }
 
