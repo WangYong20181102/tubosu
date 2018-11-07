@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.activity.AnswerItemDetailsActivity;
 import com.tbs.tobosutype.activity.ArticleWebViewActivity;
 import com.tbs.tobosutype.utils.GlideUtils;
 import com.tbs.tobosutype.utils.Util;
@@ -60,7 +61,8 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
             ((DQViewHolder) holder).rlRvLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "点击父布局" + position, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(context, "点击父布局" + position, Toast.LENGTH_LONG).show();
+                    context.startActivity(new Intent(context, AnswerItemDetailsActivity.class));
                 }
             });
         }
