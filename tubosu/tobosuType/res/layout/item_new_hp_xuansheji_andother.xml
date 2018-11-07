@@ -8,96 +8,130 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_gravity="center"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginTop="16dp"
+        android:weightSum="5"
         android:orientation="horizontal">
         <!--选设计-->
         <RelativeLayout
             android:id="@+id/newihph_xuansheji_rl"
-            android:layout_width="45dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="70dp"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:src="@drawable/select" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:text="选设计"
-                android:textColor="#363650"
-                android:textSize="15dp" />
+                android:textColor="#353560"
+                android:textSize="14sp" />
         </RelativeLayout>
         <!--看案例-->
         <RelativeLayout
             android:id="@+id/newihph_kananli_rl"
-            android:layout_width="45dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="70dp"
-            android:layout_marginLeft="44dp"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:src="@drawable/see" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:text="看案例"
-                android:textColor="#363650"
-                android:textSize="15dp" />
+                android:textColor="#353560"
+                android:textSize="14sp" />
         </RelativeLayout>
         <!--找装修-->
         <RelativeLayout
             android:id="@+id/newihph_zhaozhuangxiu_rl"
-            android:layout_width="45dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="70dp"
-            android:layout_marginLeft="44dp"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:src="@drawable/found" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:text="找装修"
-                android:textColor="#363650"
-                android:textSize="15dp" />
+                android:textColor="#353560"
+                android:textSize="14sp" />
+        </RelativeLayout>
+        <!--装修问答-->
+        <RelativeLayout
+            android:id="@+id/newihph_zhuangxiuwenda_rl"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="70dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="装修问答"
+                android:textColor="#353560"
+                android:textSize="14sp" />
         </RelativeLayout>
         <!--学装修-->
         <RelativeLayout
             android:id="@+id/newihph_xuezhuangxiu_rl"
-            android:layout_width="45dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="70dp"
-            android:layout_marginLeft="44dp"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:src="@drawable/learn" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:text="学装修"
-                android:textColor="#363650"
-                android:textSize="15dp" />
+                android:textColor="#353560"
+                android:textSize="14sp" />
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

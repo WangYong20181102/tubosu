@@ -25,6 +25,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.DImageLookingActivity;
 import com.tbs.tobosutype.activity.DecorationCaseActivity;
 import com.tbs.tobosutype.activity.DecorationCaseDetailActivity;
+import com.tbs.tobosutype.activity.DecorationQuestionActivity;
 import com.tbs.tobosutype.activity.LearnRenovationActivity;
 import com.tbs.tobosutype.activity.NewWebViewActivity;
 import com.tbs.tobosutype.activity.TopicDetailActivity;
@@ -271,6 +272,13 @@ public class NewHomePageAdapter
                     Intent it = new Intent("goto_activity_zhuangxiu");
                     it.putExtra("position", 2);
                     mContext.sendBroadcast(it);
+                }
+            });
+            //装修问答
+            ((XuanShejiBannerViewHolder) holder).newihph_zhuangxiuwenda_rl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mContext.startActivity(new Intent(mContext, DecorationQuestionActivity.class));
                 }
             });
             //学装修
@@ -864,12 +872,14 @@ public class NewHomePageAdapter
         private RelativeLayout newihph_kananli_rl;//看案例
         private RelativeLayout newihph_zhaozhuangxiu_rl;//找装修
         private RelativeLayout newihph_xuezhuangxiu_rl;//学装修
+        private RelativeLayout newihph_zhuangxiuwenda_rl;//装修问答
 
         public XuanShejiBannerViewHolder(View itemView) {
             super(itemView);
             newihph_xuansheji_rl = itemView.findViewById(R.id.newihph_xuansheji_rl);
             newihph_kananli_rl = itemView.findViewById(R.id.newihph_kananli_rl);
             newihph_zhaozhuangxiu_rl = itemView.findViewById(R.id.newihph_zhaozhuangxiu_rl);
+            newihph_zhuangxiuwenda_rl = itemView.findViewById(R.id.newihph_zhuangxiuwenda_rl);
             newihph_xuezhuangxiu_rl = itemView.findViewById(R.id.newihph_xuezhuangxiu_rl);
         }
     }
