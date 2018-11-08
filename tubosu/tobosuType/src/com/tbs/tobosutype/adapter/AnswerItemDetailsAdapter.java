@@ -35,20 +35,19 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        if (viewType == 0) {
-//        }
-        View view = LayoutInflater.from(context).inflate(R.layout.anwser_detail1, parent, false);
-        AnswerDetailsViewHolder1 holder1 = new AnswerDetailsViewHolder1(view);
-        return holder1;
-//        else if (viewType == 1) {
-//            View view = LayoutInflater.from(context).inflate(R.layout.anwser_detail2, parent, false);
-//            AnswerDetailsViewHolder2 holder2 = new AnswerDetailsViewHolder2(view);
-//            return holder2;
-//        } else {
-//            View view = LayoutInflater.from(context).inflate(R.layout.anwser_detail3, parent, false);
-//            AnswerDetailsViewHolder3 holder3 = new AnswerDetailsViewHolder3(view);
-//            return holder3;
-//        }
+        if (viewType == 0) {
+            View view = LayoutInflater.from(context).inflate(R.layout.anwser_detail1, parent, false);
+            AnswerDetailsViewHolder1 holder1 = new AnswerDetailsViewHolder1(view);
+            return holder1;
+        } else if (viewType == 1) {
+            View view = LayoutInflater.from(context).inflate(R.layout.anwser_detail2, parent, false);
+            AnswerDetailsViewHolder2 holder2 = new AnswerDetailsViewHolder2(view);
+            return holder2;
+        } else {
+            View view = LayoutInflater.from(context).inflate(R.layout.anwser_detail3, parent, false);
+            AnswerDetailsViewHolder3 holder3 = new AnswerDetailsViewHolder3(view);
+            return holder3;
+        }
     }
 
     @Override
@@ -63,7 +62,7 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
             integerList.add("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2471469961,958377768&fm=26&gp=0.jpg");
             //用户的头像
             GlideUtils.glideLoader(context, AppInfoUtil.getUserIcon(context), R.drawable.iamge_loading, R.drawable.iamge_loading, ((AnswerDetailsViewHolder1) holder).imageDetailsIcon, 0);
-            gridViewAdapter = new AnswerDetailsGridViewAdapter(context,integerList);
+            gridViewAdapter = new AnswerDetailsGridViewAdapter(context, integerList);
             ((AnswerDetailsViewHolder1) holder).gvDetails.setAdapter(gridViewAdapter);
             gridViewAdapter.notifyDataSetChanged();
 
