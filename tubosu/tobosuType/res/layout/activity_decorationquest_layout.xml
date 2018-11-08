@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <RelativeLayout
         android:id="@+id/tl_top_title"
@@ -13,18 +14,20 @@
             android:id="@+id/rl_top_serach"
             android:layout_width="match_parent"
             android:layout_height="39dp"
-            android:background="@drawable/white_bg">
+            android:background="@drawable/white_bg"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
 
             <RelativeLayout
                 android:id="@+id/relBackShoucang"
-                android:layout_width="39dp"
+                android:layout_width="wrap_content"
                 android:layout_height="39dp">
 
                 <ImageView
-                    android:layout_width="14dp"
-                    android:layout_height="17dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/activity_back" />
+                    android:src="@drawable/back" />
             </RelativeLayout>
 
             <TextView
@@ -32,23 +35,33 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="装修问答"
-                android:textColor="@color/color_black"
-                android:textSize="14sp" />
+                android:textColor="@color/FC_363650"
+                android:textSize="19sp" />
 
             <ImageView
                 android:id="@+id/image_top_search"
-                android:layout_width="17dp"
-                android:layout_height="17dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/image_quesition"
+                android:layout_toStartOf="@+id/image_quesition"
+                android:src="@drawable/search_or" />
+
+            <ImageView
+                android:id="@+id/image_quesition"
+                android:layout_width="32dp"
+                android:layout_height="24dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/tel_p" />
+                android:src="@drawable/nav_question" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/dq_mid_rl"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
             android:layout_marginTop="39dp"
             android:background="@color/white"
             android:visibility="visible">
@@ -56,43 +69,40 @@
             <net.lucode.hackware.magicindicator.MagicIndicator
                 android:id="@+id/dq_mid"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="45dp"
                 android:layout_toLeftOf="@+id/rl_more">
 
             </net.lucode.hackware.magicindicator.MagicIndicator>
 
             <RelativeLayout
                 android:id="@+id/rl_more"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="42dp"
+                android:layout_height="45dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true">
 
                 <ImageView
                     android:id="@+id/image_dq_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:layout_centerInParent="true"
-                    android:layout_marginLeft="2dp"
                     android:src="@drawable/drop_down_p" />
             </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#eeeeee"
+                android:layout_alignParentBottom="true"/>
 
         </RelativeLayout>
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/dq_swipe"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/dq_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/dq_mid_rl"
-            android:descendantFocusability="blocksDescendants">
+            android:layout_below="@+id/dq_mid_rl">
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/dq_viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </android.support.v4.view.ViewPager>
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </android.support.v4.view.ViewPager>
 
         <View
             android:id="@+id/frag_shardow_view"
@@ -115,19 +125,33 @@
             android:layout_height="39dp"
             android:background="@drawable/wht">
 
+            <LinearLayout
+                android:id="@+id/ll_image_back"
+                android:layout_width="42dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/back" />
+
+            </LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="28dp"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="14dp"
                 android:layout_marginRight="14dp"
                 android:layout_toLeftOf="@+id/tvCancelSearch"
-                android:background="@drawable/shape_company_edittext_bg">
+                android:layout_toRightOf="@+id/ll_image_back"
+                android:background="@drawable/shape_company_edittext_bg1">
 
                 <RelativeLayout
                     android:id="@+id/searche_bar"
                     android:layout_width="match_parent"
-                    android:layout_height="27dp"
+                    android:layout_height="30dp"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/kiksezchdfa">
 
@@ -153,19 +177,19 @@
                         android:layout_alignRight="@+id/etSearchGongsi"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
-                        android:background="@drawable/delete_cancel"
+                        android:background="@drawable/nav_cancel"
                         android:visibility="gone" />
 
                 </RelativeLayout>
 
                 <ImageView
                     android:id="@+id/kiksezchdfa"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="9dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/ssearch" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/search_p" />
 
             </RelativeLayout>
 
@@ -265,7 +289,9 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/searchList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
 
         <RelativeLayout

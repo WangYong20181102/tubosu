@@ -1,87 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <RelativeLayout
         android:id="@+id/tl_top_title"
         android:layout_width="match_parent"
         android:layout_height="39dp"
-        android:background="@drawable/white_bg">
+        android:background="@drawable/white_bg"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
 
         <RelativeLayout
             android:id="@+id/relBackShoucang"
-            android:layout_width="39dp"
+            android:layout_width="wrap_content"
             android:layout_height="39dp">
 
             <ImageView
-                android:layout_width="14dp"
-                android:layout_height="17dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/activity_back" />
+                android:src="@drawable/back" />
         </RelativeLayout>
 
 
         <ImageView
             android:id="@+id/image_top_share"
-            android:layout_width="17dp"
-            android:layout_height="17dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/tel_p" />
+            android:src="@drawable/share_black" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_answerdetail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/ll_bottom"
         android:layout_below="@+id/tl_top_title"
-        android:layout_above="@+id/ll_bottom">
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
 
     </android.support.v7.widget.RecyclerView>
 
     <LinearLayout
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
+        android:layout_height="49dp"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:weightSum="2">
+
         <LinearLayout
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/tel_p"/>
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/reply" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:text="我要回答"/>
+                android:layout_marginLeft="6dp"
+                android:text="我要回答"
+                android:textColor="@color/FC_363650"
+                android:textSize="16sp" />
         </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="27dp"
+            android:background="#eeeeee" />
+
         <LinearLayout
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/tel_p"/>
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/question" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:text="我要提问"/>
+                android:layout_marginLeft="6dp"
+                android:text="我要提问"
+                android:textColor="@color/FC_363650"
+                android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/rl_cover_ad_bg"
         android:layout_width="match_parent"
@@ -98,25 +119,28 @@
             android:layout_centerInParent="true">
 
         </android.support.v4.view.ViewPager>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="15dp">
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/tv_current_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
+
             <TextView
                 android:id="@+id/tv_total_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="/3"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
         </LinearLayout>
 

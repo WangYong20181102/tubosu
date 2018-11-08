@@ -2,51 +2,73 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/tv_details_tittlt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="家里如何装修才会更好呢？家里如何装修才会更好呢？家里如何装修才会更好呢？"
-            android:textSize="15dp"/>
+            android:textColor="@color/FC_363650"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/tv_details_context"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="我想要装修，装修好点的，有什么推荐的"/>
+            android:layout_marginTop="15dp"
+            android:text="我想要装修，装修好点的，有什么推荐的"
+            android:textColor="@color/FC_363650"
+            android:textSize="14sp" />
+
         <GridView
             android:id="@+id/gv_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:numColumns="3"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
             android:horizontalSpacing="5dp"
-            android:scrollbars="none"
-            android:layout_gravity="center">
+            android:numColumns="3"
+            android:scrollbars="none">
 
         </GridView>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
             <ImageView
                 android:id="@+id/image_details_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher"/>
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/ic_launcher" />
+
             <TextView
                 android:id="@+id/tv_details_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="name"/>
+                android:layout_marginLeft="5dp"
+                android:text="name"
+                android:textColor="@color/FC_363650"
+                android:textSize="12sp" />
+
             <TextView
                 android:id="@+id/tv_details_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2018.11.6"/>
+                android:layout_marginLeft="5dp"
+                android:text="提问于2018.11.6"
+                android:textColor="#999999"
+                android:textSize="12sp" />
         </LinearLayout>
 
     </LinearLayout>

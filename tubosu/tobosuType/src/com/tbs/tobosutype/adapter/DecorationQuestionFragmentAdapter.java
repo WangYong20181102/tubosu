@@ -43,16 +43,18 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof DQViewHolder) {
-            String str = "<font color = \"#00ff00\">" + stringList.get(position) + "</font>" + "问答";
+//            String str = "<font color = \"#00ff00\">" + stringList.get(position) + "</font>" + "问答";
             //设置文本
-            ((DQViewHolder) holder).tvNumAnswer.setText(Html.fromHtml(str));
+            ((DQViewHolder) holder).tvNumAnswer.setText(stringList.get(position));
             if (position == n && position >= 4) {
-                ((DQViewHolder) holder).imageAdPhoto.setVisibility(View.VISIBLE);
+                ((DQViewHolder) holder).viewBottomLine.setVisibility(View.GONE);
+                ((DQViewHolder) holder).cardViewAdImage.setVisibility(View.VISIBLE);
                 n =  n + 5;
             } else {
-                ((DQViewHolder) holder).imageAdPhoto.setVisibility(View.GONE);
+                ((DQViewHolder) holder).viewBottomLine.setVisibility(View.VISIBLE);
+                ((DQViewHolder) holder).cardViewAdImage.setVisibility(View.GONE);
             }
-            ((DQViewHolder) holder).imageAdPhoto.setOnClickListener(new View.OnClickListener() {    //广告图片点击事件
+            ((DQViewHolder) holder).cardViewAdImage.setOnClickListener(new View.OnClickListener() {    //广告图片点击事件
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context, "点击image", Toast.LENGTH_LONG).show();
@@ -79,8 +81,11 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
         private TextView tvNumAnswer;   //问答个数
         private TextView tvDateTime;    //日期
         private ImageView imageRvRight;    //右侧图片
+        private CardView cardViewImage;    //右侧图片   父布局
         private ImageView imageAdPhoto;    //广告图片
+        private CardView cardViewAdImage;    //广告图片父布局
         private RelativeLayout rlRvLayout;    //item父布局
+        private View viewBottomLine;    //下划线
 
         public DQViewHolder(View itemView) {
             super(itemView);
@@ -89,8 +94,11 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
             tvNumAnswer = itemView.findViewById(R.id.tv_num_answer);
             tvDateTime = itemView.findViewById(R.id.tv_datetime);
             imageRvRight = itemView.findViewById(R.id.image_rv_right);
+            cardViewImage = itemView.findViewById(R.id.cardview_image);
             imageAdPhoto = itemView.findViewById(R.id.image_ad_photo);
+            cardViewAdImage = itemView.findViewById(R.id.cardview_ad_image);
             rlRvLayout = itemView.findViewById(R.id.rl_rv_layout);
+            viewBottomLine = itemView.findViewById(R.id.view_bottom_line);
         }
     }
 
