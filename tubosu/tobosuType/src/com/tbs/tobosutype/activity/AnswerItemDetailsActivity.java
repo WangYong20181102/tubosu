@@ -62,6 +62,9 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
         stringList.add("q");
         stringList.add("2");
         stringList.add("3");
+        stringList.add("4");
+        stringList.add("5");
+        stringList.add("6");
         adapter = new AnswerItemDetailsAdapter(this, stringList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

@@ -52,6 +52,9 @@
     <string name="free_yuyue_input_obtainphone">输入手机获取到的验证码</string>
     <string name="free_yuyue_submit">确认预约</string>
 
+    <string name="to_expand_hint">展开</string>
+    <string name="to_shrink_hint">收起</string>
+
     <!-- 我 -装修公司 -->
     <string name="my_all_order">全部订单</string>
     <string name="my_store">收藏</string>

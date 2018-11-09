@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+    <TextView
+        android:id="@+id/tv_xiangguan_question_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="家里卧室如何装修才会更好"
+        android:textSize="14sp"
+        android:textColor="@color/FC_363650"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="20dp"
+        android:maxLines="1"
+        android:ellipsize="end"/>
+</RelativeLayout>

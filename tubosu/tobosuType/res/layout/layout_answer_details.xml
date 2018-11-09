@@ -2,15 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="#f7f7f7">
 
     <RelativeLayout
         android:id="@+id/tl_top_title"
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:background="@drawable/white_bg"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp">
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
 
         <RelativeLayout
             android:id="@+id/relBackShoucang"
@@ -39,9 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/ll_bottom"
-        android:layout_below="@+id/tl_top_title"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp">
+        android:layout_below="@+id/tl_top_title">
 
     </android.support.v7.widget.RecyclerView>
 
