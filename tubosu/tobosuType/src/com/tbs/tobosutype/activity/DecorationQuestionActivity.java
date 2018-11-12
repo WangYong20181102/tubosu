@@ -1,6 +1,7 @@
 package com.tbs.tobosutype.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -328,7 +329,7 @@ public class DecorationQuestionActivity extends BaseActivity {
                 tvCancelSearch.setText("取消");
                 break;
             case R.id.image_quesition:  //提问
-
+                startActivity(new Intent(this, AskQuestionActivity.class));
                 break;
             case R.id.tl_top_title:
 

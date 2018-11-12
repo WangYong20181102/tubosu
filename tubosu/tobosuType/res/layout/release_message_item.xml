@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="111dp"
+    android:layout_height="111dp">
+    <ImageView
+        android:id="@+id/image_photo_item"
+        android:layout_width="111dp"
+        android:layout_height="111dp"
+        android:src="@drawable/b_home_space"/>
+    <ImageView
+        android:id="@+id/image_delete"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:src="@drawable/delete"
+        android:layout_alignParentRight="true"/>
+
+</RelativeLayout>

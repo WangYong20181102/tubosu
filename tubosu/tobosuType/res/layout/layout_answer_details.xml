@@ -54,6 +54,7 @@
         android:weightSum="2">
 
         <LinearLayout
+            android:id="@+id/linear_askquestion"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -80,6 +81,7 @@
             android:background="#eeeeee" />
 
         <LinearLayout
+            android:id="@+id/linear_reply"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"

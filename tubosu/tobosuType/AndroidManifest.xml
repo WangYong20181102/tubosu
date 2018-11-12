@@ -286,6 +286,14 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.AskQuestionActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ReplyActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.HomeActivity"
             android:configChanges="orientation|keyboardHidden"
             android:launchMode="singleTask"
@@ -300,6 +308,14 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.foamtrace.photopicker.PhotoPickerActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.foamtrace.photopicker.PhotoPreviewActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.WebViewActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
@@ -310,6 +326,7 @@
         <activity
             android:name=".activity.AnswerItemDetailsActivity"
             android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SelectCtiyActivity"

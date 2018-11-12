@@ -124,7 +124,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="20"
+                    android:text="回复"
                     android:textColor="#6f6f8f"
                     android:textSize="12sp" />
 
@@ -145,13 +145,6 @@
                     android:textSize="12sp" />
             </LinearLayout>
         </RelativeLayout>
-
-        <View
-            android:id="@+id/view_bottom_line"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="15dp"
-            android:background="#eeeeee" />
     </LinearLayout>
 
 </RelativeLayout>

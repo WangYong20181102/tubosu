@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_bottom_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:id="@+id/ll_bottom_edit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="回复"
+            android:textColor="#999999"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="周杰伦"
+            android:textColor="#6f6f8f"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/edit_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_bottom_edit"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@null"
+        android:hint="这一刻的想法是评论这个问题"
+        android:textColor="@color/FC_363650"
+        android:textColorHint="#999999"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/text_bottom_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/edit_bottom"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:text="发布"
+        android:textColor="#ff6b14"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+</RelativeLayout>

@@ -1,11 +1,13 @@
 package com.tbs.tobosutype.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -41,6 +43,10 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
     TextView tvCurrentNum;
     @BindView(R.id.tv_total_num)
     TextView tvTotalNum;
+    @BindView(R.id.linear_askquestion)
+    LinearLayout linearAskQuestion;
+    @BindView(R.id.linear_reply)
+    LinearLayout linearReply;
 
     private AnswerDetailsViewPagerAdapter viewPagerAdapter;
 
@@ -76,7 +82,7 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
 
     }
 
-    @OnClick({R.id.relBackShoucang, R.id.image_top_share})
+    @OnClick({R.id.relBackShoucang, R.id.image_top_share,R.id.linear_askquestion,R.id.linear_reply})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.relBackShoucang:  //返回
@@ -84,6 +90,12 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
                 break;
             case R.id.image_top_share:  //分享
                 new ShareUtil(this, "装修tittle", "zhaugnxiu", Constant.PIPE);
+                break;
+            case R.id.linear_askquestion:   //我要回答
+                startActivity(new Intent(AnswerItemDetailsActivity.this,ReplyActivity.class));
+                break;
+            case R.id.linear_reply:     //  我要提问
+                startActivity(new Intent(AnswerItemDetailsActivity.this,AskQuestionActivity.class));
                 break;
         }
     }
