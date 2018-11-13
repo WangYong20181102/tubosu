@@ -5,15 +5,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -28,15 +27,20 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.DecorationQuestionFragmentAdapter;
 import com.tbs.tobosutype.adapter.DecorationQuestionViewPagerAdapter;
 import com.tbs.tobosutype.adapter.QuestionGridViewAdapter;
 import com.tbs.tobosutype.base.BaseActivity;
+import com.tbs.tobosutype.bean.AskQuestionBean;
 import com.tbs.tobosutype.bean.Event;
-import com.tbs.tobosutype.bean._SelectMsg;
+import com.tbs.tobosutype.bean.QuestionTypeListBean;
 import com.tbs.tobosutype.customview.OnlyPointIndicator;
 import com.tbs.tobosutype.fragment.DecorationQuestionFragment;
+import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.Util;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -47,17 +51,26 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by Mr.Wang on 2018/11/5 10:34.
  */
-public class DecorationQuestionActivity extends BaseActivity {
+public class DecorationQuestionActivity extends BaseActivity implements ViewPager.OnPageChangeListener, TextWatcher {
 
     @BindView(R.id.tl_top_title)
     RelativeLayout tlTopTitle;      //标题父布局
@@ -107,19 +120,25 @@ public class DecorationQuestionActivity extends BaseActivity {
     View mengceng4;
 
     private DecorationQuestionViewPagerAdapter decorationQuestionViewPagerAdapter;
-    private DecorationQuestionFragmentAdapter decorationQuestionFragmentAdapter;
 
-    private List<Fragment> dqList = new ArrayList<>();
-    private List<String> stringList = new ArrayList<>();
-    private List<String> list = new ArrayList<>();
+    private List<DecorationQuestionFragment> fragmentList = new ArrayList<>();
+    private List<QuestionTypeListBean> questionTypeListBeanList = new ArrayList<>();
+    private List<AskQuestionBean> askQuestionBeanList = new ArrayList<>();
     private Gson gson;
-    private int mQuyuPosition = 0;
+    private int mQuyuPosition = 0;  //当前位置
     private View quanbuquyuPopView;
     private PopupWindow quanbuquyuPopupWindow;
     private GridView mGridView;
     private boolean isDownRefresh = false;
     private LinearLayoutManager layoutManager;
     private int mPage = 1;//用于分页的数据
+    private int mPageSearch = 1;//用于分页的数据
+    private int mPageSize = 15;
+    private String keyword = "";   //搜索关键字
+
+    private DecorationQuestionFragment questionFragment = null;
+
+    private DecorationQuestionFragmentAdapter fragmentAdapter = null;   //用于搜索适配器
 
 
     @Override
@@ -128,6 +147,7 @@ public class DecorationQuestionActivity extends BaseActivity {
         setContentView(R.layout.activity_decorationquest_layout);
         ButterKnife.bind(this);
         gson = new Gson();
+
         initViewEvent();
         initSerachViewData();
 
@@ -137,26 +157,34 @@ public class DecorationQuestionActivity extends BaseActivity {
      * 搜索栏初始化
      */
     private void initSerachViewData() {
-        list.clear();
-        list.add("34");
-        list.add("56");
-        list.add("24");
-        list.add("31");
-        list.add("78");
-        list.add("90");
-        list.add("123");
-        list.add("5647");
-        list.add("75");
-        list.add("12");
-        list.add("80");
 
         layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         searchList.setLayoutManager(layoutManager);
         searchSwip.setOnRefreshListener(onRefreshListener);
         searchList.setOnScrollListener(onScrollListener);
+//        searchList.setOnTouchListener(onTouchListener);
         searchSwip.setEnabled(false);
+        etSearchGongsi.addTextChangedListener(this);
+    }
 
+    //上拉加载更多
+    private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if (fragmentAdapter != null) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && layoutManager.findLastVisibleItemPosition() + 1 == fragmentAdapter.getItemCount()) {
+                    LoadMore();
+                }
+            }
+        }
+    };
+
+    //加载更多数据
+    private void LoadMore() {
+        mPageSearch++;
+        HttpPostSearchResult(mPageSearch);
     }
 
     //下拉刷新
@@ -169,81 +197,14 @@ public class DecorationQuestionActivity extends BaseActivity {
 
     //初始化
     private void initViewEvent() {
-
+        initHttpRequest();
         mQuyuPosition = 0;
-        stringList.add("推荐");
-        stringList.add("装修流程");
-        stringList.add("装修建材");
-        stringList.add("家装设计");
-        stringList.add("家居家电");
-        stringList.add("工装设计");
-        stringList.add("装饰搭配");
-        stringList.add("房产知识");
-        stringList.add("风水知识");
-
-        for (int i = 0; i < stringList.size(); i++) {
-            dqList.add(DecorationQuestionFragment.newInstance(stringList, i));
-        }
 
         quanbuquyuPopView = LayoutInflater.from(this).inflate(R.layout.pop_window_layout, null);
         mGridView = quanbuquyuPopView.findViewById(R.id.pop_window_show);
-
-        decorationQuestionViewPagerAdapter = new DecorationQuestionViewPagerAdapter(getSupportFragmentManager(), this, dqList);
-//        dqViewPager.setOffscreenPageLimit(0);
-        dqViewPager.setAdapter(decorationQuestionViewPagerAdapter);
-        decorationQuestionViewPagerAdapter.notifyDataSetChanged();
-        dqViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
         dqMid.setBackgroundColor(Color.WHITE);
-        CommonNavigator commonNavigator = new CommonNavigator(this);
-        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
-            @Override
-            public int getCount() {
-                return stringList.size();
-            }
 
-            @Override
-            public IPagerTitleView getTitleView(Context context, final int i) {
-                SimplePagerTitleView simplePagerTitleView = new ColorTransitionPagerTitleView(context);
-                simplePagerTitleView.setText(stringList.get(i));
-                simplePagerTitleView.setTextSize(14);
-                simplePagerTitleView.setNormalColor(Color.parseColor("#363650"));
-                simplePagerTitleView.setSelectedColor(Color.parseColor("#ff6b14"));
-                simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dqViewPager.setCurrentItem(i);
-                    }
-                });
-
-                return simplePagerTitleView;
-            }
-
-            @Override
-            public IPagerIndicator getIndicator(Context context) {
-                OnlyPointIndicator indicator = new OnlyPointIndicator(context);
-                indicator.setColors(Color.parseColor("#ff6b14"));
-                return indicator;
-            }
-        });
-
-        dqMid.setNavigator(commonNavigator);
-        ViewPagerHelper.bind(dqMid, dqViewPager);
+        dqViewPager.setOnPageChangeListener(this);
 
 
 //        文本输入框加入监听事件
@@ -270,24 +231,11 @@ public class DecorationQuestionActivity extends BaseActivity {
 
     }
 
-    //上拉加载更多
-    private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
-        @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            super.onScrollStateChanged(recyclerView, newState);
-            if (newState == RecyclerView.SCROLL_STATE_IDLE && decorationQuestionFragmentAdapter != null) {
-                if (layoutManager.findLastVisibleItemPosition() + 1 == decorationQuestionFragmentAdapter.getItemCount()) {
-                    LoadMore();
-                }
-            }
-        }
-    };
-
     /**
-     * 加载更多
+     * 网络请求
      */
-    private void LoadMore() {
-        mPage++;
+    private void initHttpRequest() {
+        mPage = 1;
         HttpGetImageList(mPage);
     }
 
@@ -355,9 +303,74 @@ public class DecorationQuestionActivity extends BaseActivity {
 
     //显示搜索结果
     private void showSearchResultView() {
-        mPage = 1;
+        mPageSearch = 1;
         isDownRefresh = true;
-        HttpGetImageList(mPage);
+        if (fragmentAdapter != null) {
+            fragmentAdapter = null;
+        }
+        if (!askQuestionBeanList.isEmpty()) {
+            askQuestionBeanList.clear();
+        }
+
+        HttpPostSearchResult(mPageSearch);
+    }
+
+    /**
+     * 搜索页网络请求
+     *
+     * @param mPageSearch
+     */
+    private void HttpPostSearchResult(final int mPageSearch) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("token", Util.getDateToken());
+        params.put("keyword", keyword);
+        params.put("system_plat", 1);
+        params.put("page", mPageSearch);
+        params.put("pagesize", mPageSize);
+        OKHttpUtil.post(Constant.ASK_QUESTION_SEARCH, params, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                isDownRefresh = false;
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.optString("status");
+                    if (status.equals("200")) {
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        JSONArray jsonArray = data.optJSONArray("searchInfo");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            AskQuestionBean askQuestionBean = gson.fromJson(jsonArray.get(i).toString(), AskQuestionBean.class);
+                            askQuestionBeanList.add(askQuestionBean);
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (fragmentAdapter == null) {
+                                    fragmentAdapter = new DecorationQuestionFragmentAdapter(DecorationQuestionActivity.this, askQuestionBeanList);
+                                    searchList.setAdapter(fragmentAdapter);
+                                    searchList.setItemAnimator(null);
+                                    fragmentAdapter.notifyDataSetChanged();
+                                }
+                                if (isDownRefresh) {
+                                    isDownRefresh = false;
+                                    fragmentAdapter.notifyDataSetChanged();
+                                } else {
+                                    fragmentAdapter.notifyItemInserted(askQuestionBeanList.size() - mPageSize);
+                                }
+
+
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -366,38 +379,97 @@ public class DecorationQuestionActivity extends BaseActivity {
      * @param mPage
      */
     private void HttpGetImageList(int mPage) {
-        if (isDownRefresh) {
-            list.clear();
-            list.add("34");
-            list.add("56");
-            list.add("24");
-            list.add("31");
-            list.add("78");
-            list.add("90");
-            list.add("123");
-            list.add("5647");
-            list.add("75");
-            list.add("12");
-            list.add("80");
-        } else {
-            list.add("001");
-            list.add("002");
-            list.add("003");
-            list.add("004");
-            list.add("005");
-        }
-        if (decorationQuestionFragmentAdapter == null) {
-            decorationQuestionFragmentAdapter = new DecorationQuestionFragmentAdapter(this, list);
-            searchList.setAdapter(decorationQuestionFragmentAdapter);
-            decorationQuestionFragmentAdapter.notifyDataSetChanged();
-        }
-        if (isDownRefresh) {
-            isDownRefresh = false;
-            searchList.scrollToPosition(0);
-            decorationQuestionFragmentAdapter.notifyDataSetChanged();
-        } else {
-            decorationQuestionFragmentAdapter.notifyDataSetChanged();
-        }
+
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("token", Util.getDateToken());
+        param.put("system_plat", "1");
+        param.put("page", mPage);
+        param.put("pagesize", mPageSize);
+        OKHttpUtil.post(Constant.ASK_QUESTION_HOME, param, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = new String(response.body().string());
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.optString("status");
+                    if (status.equals("200")) {
+                        JSONObject data = jsonObject.getJSONObject("data");
+                        questionTypeListBeanList = gson.fromJson(data.getString("category"), new TypeToken<List<QuestionTypeListBean>>() {
+                        }.getType());
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                CommonNavigator commonNavigator = new CommonNavigator(DecorationQuestionActivity.this);
+                                commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+                                    @Override
+                                    public int getCount() {
+                                        return questionTypeListBeanList.size();
+                                    }
+
+                                    @Override
+                                    public IPagerTitleView getTitleView(Context context, final int i) {
+                                        SimplePagerTitleView simplePagerTitleView = new ColorTransitionPagerTitleView(context);
+                                        simplePagerTitleView.setText(questionTypeListBeanList.get(i).getCategory_name());
+                                        simplePagerTitleView.setTextSize(14);
+                                        simplePagerTitleView.setNormalColor(Color.parseColor("#363650"));
+                                        simplePagerTitleView.setSelectedColor(Color.parseColor("#ff6b14"));
+                                        simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                dqViewPager.setCurrentItem(i);
+                                            }
+                                        });
+
+                                        return simplePagerTitleView;
+                                    }
+
+                                    @Override
+                                    public IPagerIndicator getIndicator(Context context) {
+                                        OnlyPointIndicator indicator = new OnlyPointIndicator(context);
+                                        indicator.setColors(Color.parseColor("#ff6b14"));
+                                        return indicator;
+                                    }
+                                });
+
+                                dqMid.setNavigator(commonNavigator);
+                                ViewPagerHelper.bind(dqMid, dqViewPager);
+
+                                for (int i = 0; i < questionTypeListBeanList.size(); i++) {
+                                    questionFragment = DecorationQuestionFragment.newInstance(questionTypeListBeanList.get(i).getId());
+                                    fragmentList.add(questionFragment);
+                                }
+
+                                if (decorationQuestionViewPagerAdapter == null) {
+                                    decorationQuestionViewPagerAdapter = new DecorationQuestionViewPagerAdapter(getSupportFragmentManager(), DecorationQuestionActivity.this, fragmentList);
+                                    dqViewPager.setAdapter(decorationQuestionViewPagerAdapter);
+                                    dqViewPager.setOffscreenPageLimit(0);
+                                    decorationQuestionViewPagerAdapter.notifyDataSetChanged();
+                                } else {
+                                    decorationQuestionViewPagerAdapter.notifyDataSetChanged();
+                                }
+
+
+                            }
+                        });
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
     /*搜索界面*/
@@ -418,31 +490,22 @@ public class DecorationQuestionActivity extends BaseActivity {
         nothingData.setVisibility(View.GONE);
         searchLayout.setVisibility(View.VISIBLE);
 
-        if (decorationQuestionFragmentAdapter != null) {
-            list.clear();
-            decorationQuestionFragmentAdapter.notifyDataSetChanged();
-            decorationQuestionFragmentAdapter = null;
-        }
         System.gc();
     }
 
 
-    private ArrayList<_SelectMsg> popStyleList = new ArrayList<>();
     private QuestionGridViewAdapter myGridViewAdapterStyle;//风格
 
     private void showPopSelect() {
         Glide.with(this).load(R.drawable.drop_down_c).into(imageDqMore);
-        popStyleList.clear();
-        _SelectMsg districtIdBean = null;
-        for (int i = 0; i < stringList.size(); i++) {
-            districtIdBean = new _SelectMsg();
-            districtIdBean.setId("0");
-            districtIdBean.setName(stringList.get(i));
-            popStyleList.add(districtIdBean);
-        }
 
-        myGridViewAdapterStyle = new QuestionGridViewAdapter(this, popStyleList, mQuyuPosition);
-        mGridView.setAdapter(myGridViewAdapterStyle);
+        if (myGridViewAdapterStyle == null) {
+            myGridViewAdapterStyle = new QuestionGridViewAdapter(this, questionTypeListBeanList, mQuyuPosition);
+            mGridView.setAdapter(myGridViewAdapterStyle);
+        }else {
+            myGridViewAdapterStyle.setSelectPosition(mQuyuPosition);
+            myGridViewAdapterStyle.notifyDataSetChanged();
+        }
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -473,5 +536,39 @@ public class DecorationQuestionActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (quanbuquyuPopupWindow != null) {
+            quanbuquyuPopupWindow = null;
+            quanbuquyuPopupWindow.dismiss();
+        }
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        mQuyuPosition = position;
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        keyword = s.toString().trim();
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }

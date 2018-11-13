@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.bean.QuestionTypeListBean;
 import com.tbs.tobosutype.bean._SelectMsg;
 
 import java.util.List;
@@ -22,12 +23,11 @@ import java.util.List;
 
 public class QuestionGridViewAdapter extends BaseAdapter {
     private Context mContext;
-    private List<_SelectMsg> btnName;
+    private List<QuestionTypeListBean> btnName;
     private LayoutInflater inflater;
     private int mPosition;//用于回显的下标位置
 
-
-    public QuestionGridViewAdapter(Context context, List<_SelectMsg> btnnames, int mPosition) {
+    public QuestionGridViewAdapter(Context context, List<QuestionTypeListBean> btnnames, int mPosition) {
         this.mContext = context;
         this.btnName = btnnames;
         this.mPosition = mPosition;
@@ -40,7 +40,7 @@ public class QuestionGridViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public _SelectMsg getItem(int position) {
+    public QuestionTypeListBean getItem(int position) {
         return btnName.get(position);
     }
 
@@ -60,7 +60,7 @@ public class QuestionGridViewAdapter extends BaseAdapter {
         } else {
             holder = (MyViewHolder) convertView.getTag();
         }
-        holder.BtntextView.setText("" + btnName.get(position).getName());
+        holder.BtntextView.setText("" + btnName.get(position).getCategory_name());
         if (position == mPosition && mPosition != -1) {
             holder.BtntextView.setTextColor(Color.parseColor("#ff6b14"));
             GradientDrawable gradientDrawable = new GradientDrawable();
@@ -77,6 +77,11 @@ public class QuestionGridViewAdapter extends BaseAdapter {
             holder.BtntextView.setBackgroundDrawable(gradientDrawable);
         }
         return convertView;
+    }
+
+    public void setSelectPosition(int selectPosition) {
+        this.mPosition = selectPosition;
+
     }
 
     class MyViewHolder {

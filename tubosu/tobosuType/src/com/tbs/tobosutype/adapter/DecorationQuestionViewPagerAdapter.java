@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
+import com.tbs.tobosutype.bean.QuestionTypeListBean;
+import com.tbs.tobosutype.fragment.DecorationQuestionFragment;
+
 import java.util.List;
 
 /**
@@ -14,8 +17,8 @@ import java.util.List;
 public class DecorationQuestionViewPagerAdapter extends FragmentStatePagerAdapter{
 
     private Context context;
-    private List<Fragment> fragmentList;
-    public DecorationQuestionViewPagerAdapter(FragmentManager fm, Context context, List<Fragment> fragmentList){
+    private List<DecorationQuestionFragment> fragmentList;
+    public DecorationQuestionViewPagerAdapter(FragmentManager fm, Context context, List<DecorationQuestionFragment> fragmentList){
         super(fm);
         this.context = context;
         this.fragmentList = fragmentList;
@@ -23,7 +26,7 @@ public class DecorationQuestionViewPagerAdapter extends FragmentStatePagerAdapte
 
 
     @Override
-    public Fragment getItem(int position) {
+    public DecorationQuestionFragment getItem(int position) {
         return fragmentList.get(position);
     }
 

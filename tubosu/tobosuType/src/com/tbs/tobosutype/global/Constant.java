@@ -19,7 +19,7 @@ public class Constant {
      * todo 全局正式环境**********************************************************************************
      */
     //接口地址
-    public static final String TOBOSU_URL = "https://www.tobosu.com/";
+//    public static final String TOBOSU_URL = "https://www.tobosu.com/";
     //数据流上传接口 正式
     public static final String TBS_DATA_STREAM = "https://www.tobosu.com/trace";
     //M站 发单跳转 线上环境
@@ -30,7 +30,7 @@ public class Constant {
      * todo 全局测试dev环境**********************************************************************************
      */
     //接口地址
-//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
     //dev点击流上传接口
 //    public static final String TBS_DATA_STREAM = "http://trace.dev.tobosu.com/";
     //M站test接口
@@ -355,5 +355,13 @@ public class Constant {
     public static final String COMPANY_LIST_NEW = TOBOSU_URL + "mapp/company/company_list_new";
     //4.0装修公司筛选条件
     public static final String COMPANY_GETCHECKINFO = TOBOSU_URL + "mapp/company/getCheckInfo";
+    //问答首页
+    public static final String ASK_QUESTION_HOME = TOBOSU_URL + "mapp/question/index";
+    //问题列表页
+    public static final String ASK_QUESTION_LIST = TOBOSU_URL + "mapp/question/question_list";
+    //问题搜索
+    public static final String ASK_QUESTION_SEARCH = TOBOSU_URL + "mapp/question/searchInfo";
+
+
 
 }

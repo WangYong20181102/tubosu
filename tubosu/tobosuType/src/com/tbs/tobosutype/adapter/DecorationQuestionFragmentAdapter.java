@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.AnswerItemDetailsActivity;
 import com.tbs.tobosutype.activity.ArticleWebViewActivity;
+import com.tbs.tobosutype.bean.AskQuestionBean;
 import com.tbs.tobosutype.utils.GlideUtils;
 import com.tbs.tobosutype.utils.Util;
 
@@ -27,9 +28,9 @@ import java.util.List;
 public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
-    private List<String> stringList;
-    private int n = 4;
-    public DecorationQuestionFragmentAdapter(Context context, List<String> list) {
+    private List<AskQuestionBean> stringList;
+
+    public DecorationQuestionFragmentAdapter(Context context, List<AskQuestionBean> list) {
         this.context = context;
         this.stringList = list;
     }
@@ -43,17 +44,17 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof DQViewHolder) {
-//            String str = "<font color = \"#00ff00\">" + stringList.get(position) + "</font>" + "问答";
             //设置文本
-            ((DQViewHolder) holder).tvNumAnswer.setText(stringList.get(position));
-            if (position == n && position >= 4) {
-                ((DQViewHolder) holder).viewBottomLine.setVisibility(View.GONE);
-                ((DQViewHolder) holder).cardViewAdImage.setVisibility(View.VISIBLE);
-                n =  n + 5;
-            } else {
-                ((DQViewHolder) holder).viewBottomLine.setVisibility(View.VISIBLE);
-                ((DQViewHolder) holder).cardViewAdImage.setVisibility(View.GONE);
-            }
+            ((DQViewHolder) holder).tvNumAnswer.setText(stringList.get(position).getAnswer_count());
+            ((DQViewHolder) holder).tvTittle.setText(stringList.get(position).getTitle());
+            ((DQViewHolder) holder).tvContext.setText(stringList.get(position).getContent());
+//            if (stringList.get(position).getImg_url().trim().isEmpty()) {
+//                ((DQViewHolder) holder).cardViewImage.setVisibility(View.GONE);
+//            } else {
+//                ((DQViewHolder) holder).cardViewImage.setVisibility(View.VISIBLE);
+//            }
+            ((DQViewHolder) holder).tvDateTime.setText(stringList.get(position).getAdd_time());
+
             ((DQViewHolder) holder).cardViewAdImage.setOnClickListener(new View.OnClickListener() {    //广告图片点击事件
                 @Override
                 public void onClick(View v) {

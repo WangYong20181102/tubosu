@@ -117,7 +117,7 @@ public class AskQuestionActivity extends BaseActivity {
                 }).launch();//启动压缩
     }
 
-    @OnClick({R.id.image_add_photo, R.id.tv_cancel})
+    @OnClick({R.id.image_add_photo, R.id.tv_cancel,R.id.image_next})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_add_photo:
@@ -130,6 +130,9 @@ public class AskQuestionActivity extends BaseActivity {
                 if (adapter != null) {
                     adapter = null;
                 }
+                break;
+            case R.id.image_next:   //下一步
+                startActivity(new Intent(AskQuestionActivity.this,SelectTypeActivity.class));
                 break;
         }
     }
