@@ -2,6 +2,7 @@ package com.tbs.tobosutype.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -20,6 +21,8 @@ import com.tbs.tobosutype.bean.AskQuestionBean;
 import com.tbs.tobosutype.utils.GlideUtils;
 import com.tbs.tobosutype.utils.Util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -46,13 +49,17 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
         if (holder instanceof DQViewHolder) {
             //设置文本
             ((DQViewHolder) holder).tvNumAnswer.setText(stringList.get(position).getAnswer_count());
+            //设置标题
             ((DQViewHolder) holder).tvTittle.setText(stringList.get(position).getTitle());
+            //设置内容
             ((DQViewHolder) holder).tvContext.setText(stringList.get(position).getContent());
-//            if (stringList.get(position).getImg_url().trim().isEmpty()) {
-//                ((DQViewHolder) holder).cardViewImage.setVisibility(View.GONE);
-//            } else {
-//                ((DQViewHolder) holder).cardViewImage.setVisibility(View.VISIBLE);
-//            }
+            //设置图片
+            if (!stringList.get(position).getImg_urls()[0].trim().isEmpty() && stringList.get(position).getImg_urls() != null) {
+                ((DQViewHolder) holder).cardViewImage.setVisibility(View.VISIBLE);
+                GlideUtils.glideLoader(context, stringList.get(position).getImg_urls()[0], ((DQViewHolder) holder).imageRvRight);
+            } else {
+                ((DQViewHolder) holder).cardViewImage.setVisibility(View.GONE);
+            }
             ((DQViewHolder) holder).tvDateTime.setText(stringList.get(position).getAdd_time());
 
             ((DQViewHolder) holder).cardViewAdImage.setOnClickListener(new View.OnClickListener() {    //广告图片点击事件
@@ -65,7 +72,10 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
                 @Override
                 public void onClick(View v) {
 //                    Toast.makeText(context, "点击父布局" + position, Toast.LENGTH_LONG).show();
-                    context.startActivity(new Intent(context, AnswerItemDetailsActivity.class));
+                    Intent intent = new Intent(context, AnswerItemDetailsActivity.class);
+                    intent.putExtra(AskQuestionBean.class.getName(), stringList.get(position));
+                    context.startActivity(intent);
+
                 }
             });
         }

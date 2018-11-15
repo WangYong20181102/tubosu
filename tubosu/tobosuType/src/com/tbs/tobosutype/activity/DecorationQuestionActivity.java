@@ -350,9 +350,9 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
                             @Override
                             public void run() {
                                 if (fragmentAdapter == null) {
+                                    searchList.setVisibility(View.VISIBLE);
                                     fragmentAdapter = new DecorationQuestionFragmentAdapter(DecorationQuestionActivity.this, askQuestionBeanList);
                                     searchList.setAdapter(fragmentAdapter);
-                                    searchList.setItemAnimator(null);
                                     fragmentAdapter.notifyDataSetChanged();
                                 }
                                 if (isDownRefresh) {
@@ -476,6 +476,7 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
     private void showSearchView() {
         searchLayout.setBackgroundResource(R.color.cal_pressed_color_trancspar);
         mengceng4.setVisibility(View.VISIBLE);
+        searchList.setVisibility(View.INVISIBLE);
         // 点击 跳转去搜索页面
         etSearchGongsi.setText("");
 
@@ -496,6 +497,9 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
 
     private QuestionGridViewAdapter myGridViewAdapterStyle;//风格
 
+    /**
+     * 下拉按钮
+     */
     private void showPopSelect() {
         Glide.with(this).load(R.drawable.drop_down_c).into(imageDqMore);
 

@@ -52,8 +52,6 @@ public class DecorationQuestionFragment extends BaseFragment {
     private DecorationQuestionFragmentAdapter decorationQuestionFragmentAdapter;
     private List<AskQuestionBean> asklist = new ArrayList<>();
     private Context context;
-    //    private List<String> stringList;
-    private int position;
     private int mPage = 1;//用于分页的数据
     private boolean isDownRefresh = false;//是否是下拉刷新
     private int mPageSize = 15;//用于分页的数据

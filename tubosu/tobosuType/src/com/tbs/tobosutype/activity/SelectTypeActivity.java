@@ -29,14 +29,29 @@ public class SelectTypeActivity extends BaseActivity {
     private SelectTypeRightAdapter adapterRight;
     private List<String> listLeft;
     private List<String> listRight;
+    private String inputTittle; //标题
+    private String inputContent;    //内容
+    private List<String> listImagePath;//图片路径
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_type);
         ButterKnife.bind(this);
+        initData();
         initAdapter();
 
+    }
+
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        Bundle bundle = getIntent().getBundleExtra("bundle");
+        inputTittle = bundle.getString("inputTittle");
+        inputContent = bundle.getString("inputContent");
+        listImagePath = bundle.getStringArrayList("listImagePath");
     }
 
     //初始化适配器

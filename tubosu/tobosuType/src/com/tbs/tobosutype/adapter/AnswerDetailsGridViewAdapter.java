@@ -2,23 +2,19 @@ package com.tbs.tobosutype.adapter;
 
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.AnswerItemDetailsActivity;
 import com.tbs.tobosutype.utils.GlideUtils;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -27,17 +23,18 @@ import java.util.List;
 public class AnswerDetailsGridViewAdapter extends BaseAdapter {
 
     private Context context;
-    private List<String> integerList;
+    private List<String> stringList;
     private AnswerItemDetailsActivity activity;
-    public AnswerDetailsGridViewAdapter(Context context, List<String> integerList) {
+
+    public AnswerDetailsGridViewAdapter(Context context, String[] integerList) {
         this.context = context;
-        this.integerList = integerList;
+        this.stringList = Arrays.asList(integerList);
         activity = (AnswerItemDetailsActivity) context;
     }
 
     @Override
     public int getCount() {
-        return integerList.size() > 3 ? 3 : integerList.size();
+        return stringList.size() > 3 ? 3 : stringList.size();
     }
 
     @Override
@@ -60,13 +57,13 @@ public class AnswerDetailsGridViewAdapter extends BaseAdapter {
             myViewHolder.rlAddNum = convertView.findViewById(R.id.rl_add_num);
             myViewHolder.tvAddNum = convertView.findViewById(R.id.tv_add_num);
             convertView.setTag(myViewHolder);
-        }else {
+        } else {
             myViewHolder = (MyViewHolder) convertView.getTag();
         }
-        GlideUtils.glideLoader(context,integerList.get(position),myViewHolder.imageItem);
-        if (position == 2){
+        GlideUtils.glideLoader(context, stringList.get(position), myViewHolder.imageItem);
+        if (position == 2) {
             myViewHolder.rlAddNum.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             myViewHolder.rlAddNum.setVisibility(View.GONE);
         }
         myViewHolder.rlAddNum.setOnClickListener(new View.OnClickListener() {
@@ -87,7 +84,7 @@ public class AnswerDetailsGridViewAdapter extends BaseAdapter {
     }
 
     private void showViewPagerImage(int position) {
-        activity.showBigPhoto(integerList,position);
+        activity.showBigPhoto(stringList, position);
 
     }
 

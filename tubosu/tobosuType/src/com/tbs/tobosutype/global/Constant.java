@@ -361,6 +361,16 @@ public class Constant {
     public static final String ASK_QUESTION_LIST = TOBOSU_URL + "mapp/question/question_list";
     //问题搜索
     public static final String ASK_QUESTION_SEARCH = TOBOSU_URL + "mapp/question/searchInfo";
+    //问题详情页
+    public static final String ASK_QUESTION_DETAIL = TOBOSU_URL + "mapp/question/detail";
+    //回答列表
+    public static final String ASK_QUESTION_GETLIST = TOBOSU_URL + "mapp/answerComments/getList";
+    //答案点赞
+    public static final String ASK_ANSWER_AGREE = TOBOSU_URL + "mapp/answer/answer_agree";
+    //评论点赞
+    public static final String ASK_ANSWER_COMMENT_AGREE = TOBOSU_URL + "mapp/answerComments/comment_agree";
+    //回答发布
+    public static final String ASK_ANSWER_ADDANSWER = TOBOSU_URL + "mapp/answer/addAnswer";
 
 
 

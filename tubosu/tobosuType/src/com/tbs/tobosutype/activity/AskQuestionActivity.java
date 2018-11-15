@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -25,11 +27,14 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
 /**
  * Created by Mr.Wang on 2018/11/12 10:15.
+ * 提问界面
  */
 public class AskQuestionActivity extends BaseActivity {
     @BindView(R.id.tv_cancel)
@@ -47,13 +52,64 @@ public class AskQuestionActivity extends BaseActivity {
     private AskQuestionActivityAdapter adapter;
     private ArrayList<String> listImagePath;
     private ArrayList<String> list;
+    private MediaType MEDA_TYPE = MediaType.parse("image/*");
+    private OkHttpClient okHttpClient;
+    /**
+     * 标题
+     */
+    private String inputTittle;
+
+    /**
+     * 内容
+     */
+    private String inputContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_askquestion_layout);
         ButterKnife.bind(this);
+        initData();
         setRecyclerview();
+    }
+
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        okHttpClient = new OkHttpClient();
+        etTittle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                inputTittle = s.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        etContent.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                inputContent = s.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
 
@@ -117,13 +173,11 @@ public class AskQuestionActivity extends BaseActivity {
                 }).launch();//启动压缩
     }
 
-    @OnClick({R.id.image_add_photo, R.id.tv_cancel,R.id.image_next})
+    @OnClick({R.id.image_add_photo, R.id.tv_cancel, R.id.image_next})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_add_photo:
-
                 CommonUtil.uploadPictures(this, 0, listImagePath);
-
                 break;
             case R.id.tv_cancel:
                 finish();
@@ -132,7 +186,13 @@ public class AskQuestionActivity extends BaseActivity {
                 }
                 break;
             case R.id.image_next:   //下一步
-                startActivity(new Intent(AskQuestionActivity.this,SelectTypeActivity.class));
+                Intent intent = new Intent(AskQuestionActivity.this,SelectTypeActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("listImagePath",listImagePath);
+                bundle.putString("inputTittle",inputTittle);
+                bundle.putString("inputContent",inputContent);
+                intent.putExtra("bundle",bundle);
+                startActivity(intent);
                 break;
         }
     }
@@ -151,5 +211,4 @@ public class AskQuestionActivity extends BaseActivity {
     public void deleteResult(ArrayList<String> stringArrayList) {
         listImagePath = stringArrayList;
     }
-
 }

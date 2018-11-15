@@ -23,10 +23,10 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="周杰伦"
             android:textColor="#6f6f8f"
             android:textSize="15sp" />
     </LinearLayout>

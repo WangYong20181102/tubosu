@@ -22,7 +22,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="全部20条评论"
             android:textColor="@color/FC_363650"
             android:textSize="17sp" />
     </RelativeLayout>
