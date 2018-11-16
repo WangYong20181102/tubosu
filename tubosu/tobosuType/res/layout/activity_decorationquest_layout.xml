@@ -88,11 +88,12 @@
                     android:layout_centerInParent="true"
                     android:src="@drawable/drop_down_p" />
             </RelativeLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#eeeeee"
-                android:layout_alignParentBottom="true"/>
+                android:layout_alignParentBottom="true"
+                android:background="#eeeeee" />
 
         </RelativeLayout>
 
@@ -111,6 +112,19 @@
             android:layout_below="@+id/dq_mid_rl"
             android:background="#b4353332"
             android:visibility="gone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_no_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/none_content" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -162,7 +176,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_centerVertical="true"
                         android:background="@color/transparent"
-                        android:hint="请输入装修公司关键字"
+                        android:hint="@string/ask_question_search_hint"
                         android:lines="1"
                         android:maxLength="20"
                         android:maxLines="1"
@@ -205,80 +219,6 @@
                 android:text="取消"
                 android:textColor="#FF6F20" />
         </RelativeLayout>
-
-        <!--
-                <RelativeLayout
-                    android:id="@+id/relYouxuan"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/topSearch"
-                    android:background="@color/white"
-                    android:visibility="visible">
-
-                    <ScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <RelativeLayout
-                                android:id="@+id/noSearchData1"
-                                android:layout_width="match_parent"
-                                android:layout_height="244dp">
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerInParent="true"
-                                    android:background="@drawable/sousuo" />
-                            </RelativeLayout>
-
-                            <RelativeLayout
-                                android:id="@+id/ifyouxuan"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/noSearchData1"
-                                android:visibility="gone">
-
-                                <View
-                                    android:layout_width="120dp"
-                                    android:layout_height="1dp"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginRight="16dp"
-                                    android:layout_toLeftOf="@+id/sdfgddafsdaer"
-                                    android:background="#dedede" />
-
-                                <TextView
-                                    android:id="@+id/sdfgddafsdaer"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:text="为你优选"
-                                    android:textColor="#060606"
-                                    android:textSize="14sp" />
-
-                                <View
-                                    android:layout_width="120dp"
-                                    android:layout_height="1dp"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginLeft="16dp"
-                                    android:layout_toRightOf="@+id/sdfgddafsdaer"
-                                    android:background="#dedede" />
-                            </RelativeLayout>
-
-                            &lt;!&ndash;<com.tbs.tobosutype.customview.MyListView&ndash;&gt;
-                                &lt;!&ndash;android:id="@+id/youxuanList"&ndash;&gt;
-                                &lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;
-                                &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
-                                &lt;!&ndash;android:layout_below="@+id/ifyouxuan"&ndash;&gt;
-                                &lt;!&ndash;android:divider="@null"></com.tbs.tobosutype.customview.MyListView>&ndash;&gt;
-                        </RelativeLayout>
-                    </ScrollView>
-                </RelativeLayout>
-        -->
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/searchSwip"

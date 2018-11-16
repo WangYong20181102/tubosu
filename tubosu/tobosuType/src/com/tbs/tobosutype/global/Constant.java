@@ -371,6 +371,12 @@ public class Constant {
     public static final String ASK_ANSWER_COMMENT_AGREE = TOBOSU_URL + "mapp/answerComments/comment_agree";
     //回答发布
     public static final String ASK_ANSWER_ADDANSWER = TOBOSU_URL + "mapp/answer/addAnswer";
+    //选择分类
+    public static final String SELECT_CATEGORYLIST = TOBOSU_URL + "mapp/question/getCategoryList";
+    //提出问题
+    public static final String ASK_ADDQUESTION = TOBOSU_URL + "mapp/question/addQuestion";
+    //发布评论
+    public static final String ASK_ADDANSWERCOMMMENT = TOBOSU_URL + "mapp/answerComments/addAnswerCommment";
 
 
 

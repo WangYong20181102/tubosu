@@ -1,18 +1,5 @@
 package com.tbs.tobosutype.bean;
 
-/**
- * Created by Carbs.Wang on 2016/7/16.
- * website: https://github.com/Carbs0126/
- * <p>
- * Thanks to :
- * 1.ReadMoreTextView
- * https://github.com/borjabravo10/ReadMoreTextView
- * 2.TouchableSpan
- * http://stackoverflow.com/questions
- * /20856105/change-the-text-color-of-a-single-clickablespan-when-pressed-without-affecting-o
- * 3.FlatUI
- * http://www.bootcss.com/p/flat-ui/
- */
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -48,7 +35,7 @@ public class ExpandableTextView extends TextView {
     public static final int STATE_EXPAND = 1;
     private static final String ELLIPSIS_HINT = "...";
     private static final String GAP_TO_EXPAND_HINT = " ";
-    private static final int MAX_LINES_ON_SHRINK = 2;
+    private static final int MAX_LINES_ON_SHRINK = 10;
     private static final boolean TOGGLE_ENABLE = true;
     private static final boolean SHOW_TO_EXPAND_HINT = true;
     private static final boolean SHOW_TO_SHRINK_HINT = true;

@@ -177,5 +177,11 @@
     <string name="preferential_applyfor_text">优惠报名</string>
 
     <string name="my_behavior">com.tbs.tobosutype.customview.DownSelectBarBehavior</string>
+    <!--装修问答-->
+    <string name="ask_question_search_hint">请输入您感兴趣的内容</string>
+    <string name="ask_question_tittle_hint">请输入您的问题（30个字以内）</string>
+    <string name="next">下一步</string>
+    <string name="ask_question_content_hint">添加问题描述，限定最多150个字，超出不可继续输入</string>
+    <string name="reply_content_hint">请输入回答内容（不少于10个字）</string>
 
 </resources>

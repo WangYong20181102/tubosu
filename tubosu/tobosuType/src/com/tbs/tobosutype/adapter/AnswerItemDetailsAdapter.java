@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -100,6 +102,8 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
     private boolean isLooper = false;
     private View view1; //回复文本输入框视图
     private View view;  //所有评论对话框视图
+    private String message = "";    //回复内容
+    private int iPosition = 0;  //要回复当前位置
 
     public AnswerItemDetailsAdapter(Context context, AskDetailDataBean beanList) {
         this.context = context;
@@ -131,6 +135,62 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
         editBottom = view1.findViewById(R.id.edit_bottom);
         textBottomSend = view1.findViewById(R.id.text_bottom_send);
         tvName = view1.findViewById(R.id.tv_name);
+        //文本框输入监听
+        editBottom.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                message = s.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        //发布
+        textBottomSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashMap<String, Object> params = new HashMap<>();
+                params.put("token", Util.getDateToken());
+                params.put("message", message);
+                params.put("answer_id", askListBeanList.getCommentList().get(iPosition).getAnswer_id());
+                params.put("comment_uid", askListBeanList.getCommentList().get(iPosition).getComment_uid());
+                params.put("recomment_uid", askListBeanList.getCommentList().get(iPosition).getRecomment_uid());
+                OKHttpUtil.post(Constant.ASK_ADDANSWERCOMMMENT, params, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String json = Objects.requireNonNull(response.body()).string();
+                        try {
+                            JSONObject jsonObject = new JSONObject(json);
+                            String status = jsonObject.optString("status");
+                            if (status.equals("200")) {
+                                activity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ToastUtil.showShort(context, "评论发布成功");
+                                    }
+                                });
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+            }
+        });
 
     }
 
@@ -173,7 +233,7 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         currentPosition = position > answerListBeanList.size() - 1 ? answerListBeanList.size() - 1 : position;
         if (holder instanceof AnswerDetailsViewHolder1) {
-            if (!answerListBeanList.isEmpty() && answerListBeanList != null) {
+            if (!answerListBeanList.isEmpty()) {
                 ((AnswerDetailsViewHolder1) holder).llNoAnswer.setVisibility(View.GONE);
             } else {
                 ((AnswerDetailsViewHolder1) holder).llNoAnswer.setVisibility(View.VISIBLE);
@@ -256,11 +316,16 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
 
         } else if (holder instanceof AnswerDetailsViewHolder3) {
 
-            viewPagerAdapter = new ViewPagerBottomAdapter(context, strAdList);
-            ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setOffscreenPageLimit(3);
-            ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setCurrentItem(Integer.MAX_VALUE / 2);  //开始为中间位置，实现左右滑动轮播
-            ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setAdapter(viewPagerAdapter);
-            startViewPagerThread(holder);
+            if (strAdList.isEmpty()) {
+                ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setVisibility(View.GONE);
+            } else {
+                ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setVisibility(View.VISIBLE);
+                viewPagerAdapter = new ViewPagerBottomAdapter(context, strAdList);
+                ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setOffscreenPageLimit(3);
+                ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setCurrentItem(Integer.MAX_VALUE / 2);  //开始为中间位置，实现左右滑动轮播
+                ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setAdapter(viewPagerAdapter);
+                startViewPagerThread(holder);
+            }
 
         } else if (holder instanceof AnswerDetailsViewHolder4) {
             ((AnswerDetailsViewHolder4) holder).tvRHZXQuestionItem.setText(relationListBeanList.get(position - (answerListBeanList.size() + 2)).getTitle());
@@ -392,6 +457,7 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
      * 点击弹出回复文本框
      */
     private void showHuiFuEdit(int position) {
+        iPosition = position;
         dialogLlBottom.setVisibility(View.GONE);
 
         if (position == -1) {
@@ -449,7 +515,7 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public int getItemCount() {
-        return !answerListBeanList.isEmpty() ? answerListBeanList.size() + 12 : 12;
+        return !answerListBeanList.isEmpty() ? answerListBeanList.size() + 2 + relationListBeanList.size() : relationListBeanList.size() + 2;
     }
 
     @Override

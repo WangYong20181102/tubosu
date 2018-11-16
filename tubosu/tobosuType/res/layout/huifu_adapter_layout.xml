@@ -51,7 +51,6 @@
                         android:id="@+id/tv_answer_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="土拨鼠"
                         android:textColor="@color/FC_363650"
                         android:textSize="15sp" />
 
@@ -75,7 +74,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:text="游客"
                             android:textColor="@color/FC_363650"
                             android:textSize="15sp" />
                     </LinearLayout>
@@ -93,7 +91,7 @@
                 android:layout_marginRight="25dp"
                 android:layout_marginTop="10dp"
                 android:textSize="15sp"
-                app:etv_MaxLinesOnShrink="5" />
+                app:etv_MaxLinesOnShrink="10" />
 
             <GridView
                 android:id="@+id/gv_answer_details"

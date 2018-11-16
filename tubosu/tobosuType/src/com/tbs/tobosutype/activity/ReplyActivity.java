@@ -1,5 +1,6 @@
 package com.tbs.tobosutype.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,8 +16,10 @@ import com.foamtrace.photopicker.PhotoPickerActivity;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.ReplyActivityAdapter;
 import com.tbs.tobosutype.base.BaseActivity;
+import com.tbs.tobosutype.customview.CustomDialog;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.CommonUtil;
+import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
 
 import java.io.File;
@@ -149,6 +152,22 @@ public class ReplyActivity extends BaseActivity implements TextWatcher {
                 finish();
                 break;
             case R.id.tv_send:  //发布
+
+                CustomDialog.Builder builder = new CustomDialog.Builder(this);
+                builder.setMessage("发不成功").setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create().show();
+
+
+
+                if (currentContent.length() < 10) {
+                    ToastUtil.showShort(this, "问题至少10个字哟");
+                    return;
+                }
                 sendAnswerRequest();
                 break;
             case R.id.image_add_photo:  // 添加图片
@@ -164,7 +183,7 @@ public class ReplyActivity extends BaseActivity implements TextWatcher {
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         for (int i = 0; i < listImagePath.size(); i++) {
             File file = new File(listImagePath.get(i));
-            builder.addFormDataPart("img_url[]", file.getName(), RequestBody.create(MEDIA_TYPE_PNG, file));
+            builder.addFormDataPart("img_url", file.getName(), RequestBody.create(MEDIA_TYPE_PNG, file));
         }
         builder.addFormDataPart("token", Util.getDateToken());
         builder.addFormDataPart("answer_content", currentContent);

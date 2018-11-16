@@ -35,7 +35,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:text="下一步"
+            android:text="@string/next"
             android:textColor="@color/FC_FF6B14"
             android:textSize="15sp" />
 
@@ -63,9 +63,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="请输入你的问题"
+            android:hint="@string/ask_question_tittle_hint"
             android:textColor="@color/FC_363650"
             android:textColorHint="#999999"
+            android:maxLength="30"
             android:textSize="17sp" />
 
         <View
@@ -81,9 +82,10 @@
             android:background="@null"
             android:paddingBottom="15dp"
             android:paddingTop="15dp"
-            android:hint="添加问题描述(选填)"
+            android:hint="@string/ask_question_content_hint"
             android:textColor="@color/FC_363650"
             android:textColorHint="#cbcbcb"
+            android:maxLength="150"
             android:textSize="14sp" />
 
 

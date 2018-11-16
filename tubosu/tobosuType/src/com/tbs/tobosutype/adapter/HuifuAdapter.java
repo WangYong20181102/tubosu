@@ -71,6 +71,9 @@ public class HuifuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         HuifuViewHolder holder = new HuifuViewHolder(view);
         holder.llDianzan.setOnClickListener(this);
         holder.llPinglun.setOnClickListener(this);
+        holder.tv_answer_name.setOnClickListener(this);
+        holder.image_answer_icon.setOnClickListener(this);
+        holder.expandable_text.setOnClickListener(this);
         return holder;
     }
 
@@ -96,6 +99,9 @@ public class HuifuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             GlideUtils.glideLoader(context, stringList.get(position).getIcon(), ((HuifuViewHolder) holder).image_answer_icon);
             ((HuifuViewHolder) holder).llDianzan.setTag(position);
             ((HuifuViewHolder) holder).llPinglun.setTag(position);
+            ((HuifuViewHolder) holder).tv_answer_name.setTag(position);
+            ((HuifuViewHolder) holder).image_answer_icon.setTag(position);
+            ((HuifuViewHolder) holder).expandable_text.setTag(position);
             if (stringList.get(position).getIs_agree() == 1) {   //是否点赞：1、是 2、否
                 ((HuifuViewHolder) holder).image_dianzan_icon.setImageResource(R.drawable.like_selected);
                 ((HuifuViewHolder) holder).tv_dianzan_num.setTextColor(Color.parseColor("#ff6b14"));
@@ -133,6 +139,9 @@ public class HuifuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.ll_huifu: //回复按钮
+            case R.id.tv_answer_name://评论者
+            case R.id.image_answer_icon://评论者头像
+            case R.id.expandable_text://内容
                 ToastUtil.showShort(context, "点击回复按钮" + v.getTag());
                 if (onHuifuClickListener != null) {
                     onHuifuClickListener.onHuifuClickListen((Integer) v.getTag());

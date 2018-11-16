@@ -59,11 +59,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
-            android:hint="请输入你的回答（至少10个字）"
+            android:hint="@string/reply_content_hint"
             android:paddingBottom="7dp"
             android:paddingTop="7dp"
             android:textColor="@color/FC_363650"
             android:textColorHint="#cbcbcb"
+            android:maxLength="1000"
             android:textSize="14sp" />
     </LinearLayout>
 

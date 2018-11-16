@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.bean.SelectTypeBean;
 
 import java.util.List;
 
@@ -18,15 +19,26 @@ import java.util.List;
  */
 public class SelectTypeRightAdapter extends BaseAdapter {
     private Context context;
-    private List<String> listRight;
+    private List<SelectTypeBean.Child> listRight;
     private LayoutInflater inflater;
     private int selectItem = 0;
 
-    public SelectTypeRightAdapter(Context context, List<String> listRight) {
+    public SelectTypeRightAdapter(Context context, List<SelectTypeBean.Child> listRight) {
         this.context = context;
         this.listRight = listRight;
         inflater = LayoutInflater.from(context);
     }
+
+    /**
+     * 更新数据
+     * @param list
+     */
+    public void updateData(List<SelectTypeBean.Child> list,int selectItem) {
+        listRight = list;
+        this.selectItem = selectItem;
+        this.notifyDataSetChanged();
+    }
+
 
     @Override
     public int getCount() {
@@ -54,7 +66,7 @@ public class SelectTypeRightAdapter extends BaseAdapter {
         } else {
             holder = (MyHolder) convertView.getTag();
         }
-        holder.tvRightContent.setText(listRight.get(position));
+        holder.tvRightContent.setText(listRight.get(position).getCategory_name());
 
         if (selectItem == position) {
             holder.tvRightContent.setTextColor(Color.parseColor("#ff6b14"));

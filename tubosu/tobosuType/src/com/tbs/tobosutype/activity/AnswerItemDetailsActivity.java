@@ -232,7 +232,13 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
                 finish();
                 break;
             case R.id.image_top_share:  //分享
-                new ShareUtil(this, "装修tittle", "zhaugnxiu", Constant.PIPE);
+//                String strImage;
+//                if (!beanList.getQuestionList().getImg_urls()[0].trim().isEmpty()){
+//                    strImage = beanList.getQuestionList().getImg_urls()[0];
+//                }else {
+//                    strImage = "";
+//                }
+//                new ShareUtil(this, beanList.getQuestionList().getTitle(), beanList.getQuestionList().getContent(), strImage);
                 break;
             case R.id.linear_askquestion:   //我要回答
                 startActivity(new Intent(AnswerItemDetailsActivity.this, ReplyActivity.class));

@@ -72,10 +72,6 @@ import okhttp3.Response;
  */
 public class DecorationQuestionActivity extends BaseActivity implements ViewPager.OnPageChangeListener, TextWatcher {
 
-    @BindView(R.id.tl_top_title)
-    RelativeLayout tlTopTitle;      //标题父布局
-    @BindView(R.id.topSearch)
-    RelativeLayout topSearch;       //搜索栏
     @BindView(R.id.searchLayout)
     RelativeLayout searchLayout;
     @BindView(R.id.rl_top_serach)
@@ -112,6 +108,8 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
     ImageView imageDqMore;
     @BindView(R.id.searchList)
     RecyclerView searchList;    //搜索栏recycleView
+    @BindView(R.id.rl_no_result)
+    RelativeLayout rlNoResult;    //搜索栏暂无结果
     @BindView(R.id.dq_mid_rl)
     RelativeLayout dqMidRl;
     @BindView(R.id.etSearchGongsi)
@@ -121,9 +119,9 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
 
     private DecorationQuestionViewPagerAdapter decorationQuestionViewPagerAdapter;
 
-    private List<DecorationQuestionFragment> fragmentList = new ArrayList<>();
-    private List<QuestionTypeListBean> questionTypeListBeanList = new ArrayList<>();
-    private List<AskQuestionBean> askQuestionBeanList = new ArrayList<>();
+    private List<DecorationQuestionFragment> fragmentList;
+    private List<QuestionTypeListBean> questionTypeListBeanList;
+    private List<AskQuestionBean> askQuestionBeanList;
     private Gson gson;
     private int mQuyuPosition = 0;  //当前位置
     private View quanbuquyuPopView;
@@ -148,9 +146,19 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
         ButterKnife.bind(this);
         gson = new Gson();
 
+        initData();
         initViewEvent();
         initSerachViewData();
 
+    }
+
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        fragmentList = new ArrayList<>();
+        questionTypeListBeanList = new ArrayList<>();
+        askQuestionBeanList = new ArrayList<>();
     }
 
     /**
@@ -216,16 +224,15 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (etSearchGongsi.getText().toString().trim().length() > 0) {
+                if (s.toString().trim().length() > 0) {
                     tvCancelSearch.setText("搜索");
                 } else {
                     tvCancelSearch.setText("取消");
                 }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
             }
         });
 
@@ -249,7 +256,7 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
         super.receiveEvent(event);
     }
 
-    @OnClick({R.id.image_top_search, R.id.tl_top_title, R.id.topSearch, R.id.relBackShoucang, R.id.tvCancelSearch, R.id.rl_more, R.id.image_quesition, R.id.ll_image_back})
+    @OnClick({R.id.image_top_search,R.id.relBackShoucang, R.id.tvCancelSearch, R.id.rl_more, R.id.image_quesition, R.id.ll_image_back,R.id.ivGongSiDelete})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_top_search:
@@ -263,7 +270,6 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
                     ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(DecorationQuestionActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     mengceng4.setVisibility(View.GONE);
                     searchLayout.setBackgroundResource(R.drawable.wht);
-//                    dqViewPager.setFocusable(false);
                     showSearchResultView();
                     System.gc();
 
@@ -271,19 +277,12 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
                     ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(DecorationQuestionActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     rlTopSerach.setVisibility(View.VISIBLE);
                     searchLayout.setVisibility(View.GONE);
-//                    dqViewPager.setFocusable(true);
                     System.gc();
                 }
                 tvCancelSearch.setText("取消");
                 break;
             case R.id.image_quesition:  //提问
                 startActivity(new Intent(this, AskQuestionActivity.class));
-                break;
-            case R.id.tl_top_title:
-
-                break;
-            case R.id.topSearch:
-
                 break;
             case R.id.relBackShoucang:  //返回
                 finish();
@@ -297,6 +296,9 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
                 break;
             case R.id.rl_more:  //下拉展开箭头
                 showPopSelect();
+                break;
+            case R.id.ivGongSiDelete://输入框清除文字按钮
+                etSearchGongsi.setText("");
                 break;
         }
     }
@@ -350,6 +352,7 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
                             @Override
                             public void run() {
                                 if (fragmentAdapter == null) {
+                                    rlNoResult.setVisibility(View.GONE);
                                     searchList.setVisibility(View.VISIBLE);
                                     fragmentAdapter = new DecorationQuestionFragmentAdapter(DecorationQuestionActivity.this, askQuestionBeanList);
                                     searchList.setAdapter(fragmentAdapter);
@@ -363,6 +366,14 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
                                 }
 
 
+                            }
+                        });
+                    }else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                rlNoResult.setVisibility(View.VISIBLE);
+                                searchList.setVisibility(View.GONE);
                             }
                         });
                     }
@@ -569,6 +580,11 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         keyword = s.toString().trim();
+        if (!s.toString().trim().isEmpty()){
+            ivGongSiDelete.setVisibility(View.VISIBLE);
+        }else {
+            ivGongSiDelete.setVisibility(View.GONE);
+        }
     }
 
     @Override

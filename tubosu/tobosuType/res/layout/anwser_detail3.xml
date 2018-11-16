@@ -9,6 +9,7 @@
         android:id="@+id/viewpager_bottom"
         android:layout_width="match_parent"
         android:layout_marginTop="25dp"
+        android:layout_marginBottom="30dp"
         android:layout_height="88dp">
     </android.support.v4.view.ViewPager>
 
@@ -18,7 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/viewpager_bottom"
         android:layout_marginBottom="15dp"
-        android:layout_marginTop="30dp"
         android:layout_marginLeft="15dp"
         android:text="相关问题"
         android:textColor="@color/FC_363650"

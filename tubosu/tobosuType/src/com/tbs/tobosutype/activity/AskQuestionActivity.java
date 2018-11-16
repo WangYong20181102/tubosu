@@ -19,6 +19,7 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.AskQuestionActivityAdapter;
 import com.tbs.tobosutype.base.BaseActivity;
 import com.tbs.tobosutype.utils.CommonUtil;
+import com.tbs.tobosutype.utils.ToastUtil;
 
 import java.io.File;
 import java.net.URI;
@@ -52,17 +53,15 @@ public class AskQuestionActivity extends BaseActivity {
     private AskQuestionActivityAdapter adapter;
     private ArrayList<String> listImagePath;
     private ArrayList<String> list;
-    private MediaType MEDA_TYPE = MediaType.parse("image/*");
-    private OkHttpClient okHttpClient;
     /**
      * 标题
      */
-    private String inputTittle;
+    private String inputTittle ="";
 
     /**
      * 内容
      */
-    private String inputContent;
+    private String inputContent="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +76,6 @@ public class AskQuestionActivity extends BaseActivity {
      * 初始化数据
      */
     private void initData() {
-        okHttpClient = new OkHttpClient();
         etTittle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -186,6 +184,13 @@ public class AskQuestionActivity extends BaseActivity {
                 }
                 break;
             case R.id.image_next:   //下一步
+                if (inputTittle.trim().isEmpty()){
+                    ToastUtil.showShort(this,"请输入您的问题");
+                    return;
+                }else if (inputTittle.length() < 5){
+                    ToastUtil.showShort(this,"问题至少5个字哟");
+                    return;
+                }
                 Intent intent = new Intent(AskQuestionActivity.this,SelectTypeActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putStringArrayList("listImagePath",listImagePath);

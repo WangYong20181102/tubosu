@@ -23,7 +23,6 @@
                 android:id="@+id/tv_answer_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3"
                 android:textColor="@color/FC_FF6B14"
                 android:textSize="17sp" />
 
@@ -31,6 +30,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@+id/tv_answer_num"
                 android:layout_toRightOf="@+id/tv_answer_num"
                 android:text="回答"
                 android:textColor="@color/FC_363650"
@@ -63,8 +64,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/cardview_answer"
                 android:layout_toRightOf="@+id/cardview_answer"
-                android:text="土拨鼠"
                 android:textColor="@color/FC_363650"
                 android:textSize="15sp" />
         </RelativeLayout>
@@ -73,12 +75,12 @@
             android:id="@+id/expandable_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:lineSpacingExtra="5dp"
             android:textColor="@color/FC_363650"
-            android:layout_marginTop="5dp"
             android:textSize="15sp"
-            app:etv_MaxLinesOnShrink="5" />
+            app:etv_MaxLinesOnShrink="10" />
 
         <GridView
             android:id="@+id/gv_answer_details"
@@ -102,7 +104,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="2018.11.9"
                 android:textColor="#999999"
                 android:textSize="12sp" />
 
@@ -131,7 +132,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="20"
                         android:textColor="#6f6f8f"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -154,7 +154,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="20"
                         android:textColor="#6f6f8f"
                         android:textSize="12sp" />
                 </LinearLayout>

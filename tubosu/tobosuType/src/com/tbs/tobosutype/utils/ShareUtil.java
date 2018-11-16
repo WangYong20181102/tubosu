@@ -35,7 +35,6 @@ public class ShareUtil {
     /***
      * 分享方法
      * @param context 上下文
-     * @param view 分享按钮
      * @param title 分享标题
      * @param desc 描述
      * @param url 分享url
