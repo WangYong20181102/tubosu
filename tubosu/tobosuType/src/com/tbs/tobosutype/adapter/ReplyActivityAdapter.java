@@ -82,7 +82,7 @@ public class ReplyActivityAdapter extends RecyclerView.Adapter<RecyclerView.View
             stringList.remove(position);
             notifyItemRemoved(position);
             notifyDataSetChanged();
-            context.deleteResult(stringList);
+            context.deleteResult(stringList,position);
         }
     }
 

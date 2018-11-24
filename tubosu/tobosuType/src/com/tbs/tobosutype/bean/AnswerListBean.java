@@ -5,16 +5,25 @@ package com.tbs.tobosutype.bean;
  * 问答列表类
  */
 public class AnswerListBean {
+    private String name;    //姓名
     private String answer_id;   //回答ID号
     private String question_id;     //问题ID号
     private String answer_content;  //回答的内容
-    private String agree_count; //赞同数
+    private String agree_count = ""; //赞同数
     private String answer_uid;  //回答者ID号
     private String comment_count;   //回答评论数
     private String[] img_urls; //回答内容图片url
     private String add_time;    //回答添加时间
     private String icon;    //回答者头像
     private int is_agree;    //是否点赞：1、是 2、否
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getAnswer_id() {
         return answer_id;

@@ -7,14 +7,23 @@ public class AskListBean {
     private String answer_comment_id;   //评论ID号
     private String answer_id;   //答案ID号
     private String comment_uid;   //评论人ID号
+    private String comment_id;
     private String message;   //评论内容
     private String recomment_uid;   //评论对象ID号
     private String add_time;   //答案添加时间
     private String icon;   //回答者头像
     private int is_agree;   //是否点赞：1、是 2、否
-    private String agree_count; //点赞总数
+    private String agree_count = ""; //点赞总数
     private String comment_name;    //评论人
     private String recomment_name;  //被评论人
+
+    public String getComment_id() {
+        return comment_id;
+    }
+
+    public void setComment_id(String comment_id) {
+        this.comment_id = comment_id;
+    }
 
     public String getComment_name() {
         return comment_name;

@@ -1,9 +1,12 @@
 package com.tbs.tobosutype.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -18,20 +21,17 @@ import com.foamtrace.photopicker.PhotoPickerActivity;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.AskQuestionActivityAdapter;
 import com.tbs.tobosutype.base.BaseActivity;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.utils.CommonUtil;
+import com.tbs.tobosutype.utils.ImgCompressUtils;
 import com.tbs.tobosutype.utils.ToastUtil;
 
-import java.io.File;
-import java.net.URI;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import top.zibin.luban.Luban;
-import top.zibin.luban.OnCompressListener;
 
 /**
  * Created by Mr.Wang on 2018/11/12 10:15.
@@ -52,16 +52,20 @@ public class AskQuestionActivity extends BaseActivity {
     ImageView imageAdd;
     private AskQuestionActivityAdapter adapter;
     private ArrayList<String> listImagePath;
-    private ArrayList<String> list;
+    private ArrayList<String> listPath;//压缩后的图片路径
     /**
      * 标题
      */
-    private String inputTittle ="";
+    private String inputTittle = "";
 
     /**
      * 内容
      */
-    private String inputContent="";
+    private String inputContent = "";
+    /**
+     * 入口（1问答首页）
+     */
+    private int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +80,7 @@ public class AskQuestionActivity extends BaseActivity {
      * 初始化数据
      */
     private void initData() {
+        type = getIntent().getIntExtra("type", 0);
         etTittle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -110,12 +115,34 @@ public class AskQuestionActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    /**
+     * 回调
+     *
+     * @param event 事件
+     */
+    @Override
+    protected void receiveEvent(Event event) {
+        super.receiveEvent(event);
+        switch (event.getCode()) {
+            case EC.EventCode.SEND_SUCCESS_CLOSE_ASKANSWER: //详情页进入
+                finish();
+                break;
+            case EC.EventCode.SEND_SUCCESS_CLOSE_ASKANSWER_HOME:    //问答首页进入
+                finish();
+                break;
+        }
+    }
 
     /**
      * 初始化图片
      */
     private void setRecyclerview() {
-        list = new ArrayList<String>();
+        listPath = new ArrayList<String>();
         listImagePath = new ArrayList<>();
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         rvAskQuestion.setLayoutManager(layoutManager);
@@ -131,6 +158,9 @@ public class AskQuestionActivity extends BaseActivity {
             if (!listImagePath.isEmpty() || listImagePath.size() != 0) {
                 listImagePath.clear();
             }
+            if (!listPath.isEmpty() || listPath.size() != 0) {
+                listPath.clear();
+            }
             listImagePath = data.getStringArrayListExtra(PhotoPickerActivity.EXTRA_RESULT);
             compress(listImagePath);
         }
@@ -138,44 +168,29 @@ public class AskQuestionActivity extends BaseActivity {
 
     //压缩 拿到返回选中图片的集合url，然后转换成file文件
     private void compress(ArrayList<String> list) {
-        for (String imageUrl : list) {
-            File file = new File(imageUrl);
-            compressImage(file);
+        for (int i = 0; i < list.size(); i++) { //图片压缩
+            listPath.add(ImgCompressUtils.CompressAndGetPath(mContext, listImagePath.get(i)));
         }
         adapter.addMoreItem(list);
-    }
-
-    //压缩
-    private void compressImage(File file) {
-
-        Luban.get(this)//用的第三方的压缩，开源库
-                .load(file)                     //传人要压缩的图片
-                .putGear(Luban.THIRD_GEAR)      //设定压缩档次，默认三挡
-                .setCompressListener(new OnCompressListener() { //设置回调
-                    @Override
-                    public void onStart() {
-                        //TODO 压缩开始前调用，可以在方法内启动 loading UI
-                    }
-
-                    @Override
-                    public void onSuccess(final File file) {
-                        URI uri = file.toURI();
-                        String[] split = uri.toString().split(":");
-                        list.add(split[1]);//压缩后返回的文件，带file字样，所以需要截取
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        //TODO 当压缩过去出现问题时调用
-                    }
-                }).launch();//启动压缩
     }
 
     @OnClick({R.id.image_add_photo, R.id.tv_cancel, R.id.image_next})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_add_photo:
-                CommonUtil.uploadPictures(this, 0, listImagePath);
+                if (Build.VERSION.SDK_INT >= 23) {
+                    if (ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        //权限还没有授予，需要在这里写申请权限的代码
+                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
+                    } else {
+                        //权限已经被授予，在这里直接写要执行的相应方法即可
+                        CommonUtil.uploadPictures(this, 0, listImagePath);
+                    }
+                } else {
+                    CommonUtil.uploadPictures(this, 0, listImagePath);
+                }
                 break;
             case R.id.tv_cancel:
                 finish();
@@ -184,36 +199,30 @@ public class AskQuestionActivity extends BaseActivity {
                 }
                 break;
             case R.id.image_next:   //下一步
-                if (inputTittle.trim().isEmpty()){
-                    ToastUtil.showShort(this,"请输入您的问题");
+                if (inputTittle.trim().isEmpty()) {
+                    ToastUtil.showShort(this, "请输入您的问题");
                     return;
-                }else if (inputTittle.length() < 5){
-                    ToastUtil.showShort(this,"问题至少5个字哟");
+                } else if (inputTittle.length() < 5) {
+                    ToastUtil.showShort(this, "问题至少5个字哟");
                     return;
                 }
-                Intent intent = new Intent(AskQuestionActivity.this,SelectTypeActivity.class);
+                Intent intent = new Intent(AskQuestionActivity.this, SelectTypeActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putStringArrayList("listImagePath",listImagePath);
-                bundle.putString("inputTittle",inputTittle);
-                bundle.putString("inputContent",inputContent);
-                intent.putExtra("bundle",bundle);
+                bundle.putStringArrayList("listImagePath", listPath);
+                bundle.putString("inputTittle", inputTittle);
+                bundle.putString("inputContent", inputContent);
+                bundle.putInt("type", type);
+                intent.putExtra("bundle", bundle);
                 startActivity(intent);
                 break;
         }
     }
 
     /**
-     * 启用系统键盘
-     */
-    private void startSystemKey() {
-        InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        im.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-    }
-
-    /**
      * 点击删除按钮后，数据改变
      */
-    public void deleteResult(ArrayList<String> stringArrayList) {
+    public void deleteResult(ArrayList<String> stringArrayList, int position) {
         listImagePath = stringArrayList;
+        listPath.remove(position);
     }
 }

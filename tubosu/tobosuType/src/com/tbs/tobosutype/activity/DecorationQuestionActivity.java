@@ -10,9 +10,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -24,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -34,12 +36,12 @@ import com.tbs.tobosutype.adapter.DecorationQuestionViewPagerAdapter;
 import com.tbs.tobosutype.adapter.QuestionGridViewAdapter;
 import com.tbs.tobosutype.base.BaseActivity;
 import com.tbs.tobosutype.bean.AskQuestionBean;
-import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.bean.QuestionTypeListBean;
 import com.tbs.tobosutype.customview.OnlyPointIndicator;
 import com.tbs.tobosutype.fragment.DecorationQuestionFragment;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.Util;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -116,26 +118,56 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
     EditText etSearchGongsi;    //搜索输入框
     @BindView(R.id.mengceng4)
     View mengceng4;
+    /**
+     * 搜索状态
+     */
+    private boolean bSearchState = false;
 
+    /**
+     * 问答首页viewpager适配器
+     */
     private DecorationQuestionViewPagerAdapter decorationQuestionViewPagerAdapter;
 
+    /**
+     * viewpager滑动fragment集合
+     */
     private List<DecorationQuestionFragment> fragmentList;
+    /**
+     * 下拉type数据集
+     */
     private List<QuestionTypeListBean> questionTypeListBeanList;
     private List<AskQuestionBean> askQuestionBeanList;
+    /**
+     * Gson解析
+     */
     private Gson gson;
-    private int mQuyuPosition = 0;  //当前位置
-    private View quanbuquyuPopView;
-    private PopupWindow quanbuquyuPopupWindow;
+    /**
+     * 下拉选框当前选中位置
+     */
+    private int currentSelectedPosition = 0;
+    /**
+     * 下拉选框pop视图
+     */
+    private View dropDownPopupWindow;
+    /**
+     * 下拉九宫格弹窗
+     */
+    private PopupWindow popupWindow;
+    /**
+     * 九宫格控件
+     */
     private GridView mGridView;
+    /**
+     * 下拉刷新状态
+     */
     private boolean isDownRefresh = false;
     private LinearLayoutManager layoutManager;
     private int mPage = 1;//用于分页的数据
-    private int mPageSearch = 1;//用于分页的数据
+    private int mPageSearch = 1;//搜索分页的数据
     private int mPageSize = 15;
     private String keyword = "";   //搜索关键字
 
     private DecorationQuestionFragment questionFragment = null;
-
     private DecorationQuestionFragmentAdapter fragmentAdapter = null;   //用于搜索适配器
 
 
@@ -171,7 +203,6 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
         searchList.setLayoutManager(layoutManager);
         searchSwip.setOnRefreshListener(onRefreshListener);
         searchList.setOnScrollListener(onScrollListener);
-//        searchList.setOnTouchListener(onTouchListener);
         searchSwip.setEnabled(false);
         etSearchGongsi.addTextChangedListener(this);
     }
@@ -195,7 +226,7 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
         HttpPostSearchResult(mPageSearch);
     }
 
-    //下拉刷新
+    //下拉刷新监听
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
@@ -206,10 +237,10 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
     //初始化
     private void initViewEvent() {
         initHttpRequest();
-        mQuyuPosition = 0;
+        currentSelectedPosition = 0;
 
-        quanbuquyuPopView = LayoutInflater.from(this).inflate(R.layout.pop_window_layout, null);
-        mGridView = quanbuquyuPopView.findViewById(R.id.pop_window_show);
+        dropDownPopupWindow = LayoutInflater.from(this).inflate(R.layout.pop_window_layout, null);
+        mGridView = dropDownPopupWindow.findViewById(R.id.pop_window_show);
         dqMid.setBackgroundColor(Color.WHITE);
 
         dqViewPager.setOnPageChangeListener(this);
@@ -239,27 +270,18 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
     }
 
     /**
-     * 网络请求
+     * 网络请求(初始化加载类别)
      */
     private void initHttpRequest() {
         mPage = 1;
         HttpGetImageList(mPage);
     }
 
-    @Override
-    protected boolean isRegisterEventBus() {
-        return true;
-    }
-
-    @Override
-    protected void receiveEvent(Event event) {
-        super.receiveEvent(event);
-    }
-
-    @OnClick({R.id.image_top_search,R.id.relBackShoucang, R.id.tvCancelSearch, R.id.rl_more, R.id.image_quesition, R.id.ll_image_back,R.id.ivGongSiDelete})
+    @OnClick({R.id.image_top_search, R.id.relBackShoucang, R.id.tvCancelSearch, R.id.rl_more, R.id.image_quesition, R.id.ll_image_back, R.id.ivGongSiDelete})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.image_top_search:
+            case R.id.image_top_search: //搜索按钮
+                bSearchState = true;
                 searchLayout.setVisibility(View.VISIBLE);
                 rlTopSerach.setVisibility(View.GONE);
                 showSearchView();
@@ -272,8 +294,8 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
                     searchLayout.setBackgroundResource(R.drawable.wht);
                     showSearchResultView();
                     System.gc();
-
                 } else {
+                    bSearchState = false;
                     ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(DecorationQuestionActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                     rlTopSerach.setVisibility(View.VISIBLE);
                     searchLayout.setVisibility(View.GONE);
@@ -282,16 +304,24 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
                 tvCancelSearch.setText("取消");
                 break;
             case R.id.image_quesition:  //提问
-                startActivity(new Intent(this, AskQuestionActivity.class));
+                if (TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {
+                    Toast.makeText(mContext, "您还没有登陆", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, NewLoginActivity.class);
+                    startActivityForResult(intent, 0);
+                    return;
+                }
+                Intent intent1 = new Intent(this, AskQuestionActivity.class);
+                intent1.putExtra("type", 1); //从问答首页进入提问
+                startActivity(intent1);
                 break;
             case R.id.relBackShoucang:  //返回
                 finish();
                 break;
-            case R.id.ll_image_back:    //返回
+            case R.id.ll_image_back:    //搜索返回
+                bSearchState = false;
                 ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(DecorationQuestionActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 rlTopSerach.setVisibility(View.VISIBLE);
                 searchLayout.setVisibility(View.GONE);
-//                dqViewPager.setFocusable(true);
                 System.gc();
                 break;
             case R.id.rl_more:  //下拉展开箭头
@@ -299,6 +329,10 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
                 break;
             case R.id.ivGongSiDelete://输入框清除文字按钮
                 etSearchGongsi.setText("");
+                if (fragmentAdapter != null) {
+                    fragmentAdapter = null;
+                    searchList.setAdapter(null);
+                }
                 break;
         }
     }
@@ -309,6 +343,7 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
         isDownRefresh = true;
         if (fragmentAdapter != null) {
             fragmentAdapter = null;
+            searchList.setAdapter(null);
         }
         if (!askQuestionBeanList.isEmpty()) {
             askQuestionBeanList.clear();
@@ -356,7 +391,6 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
                                     searchList.setVisibility(View.VISIBLE);
                                     fragmentAdapter = new DecorationQuestionFragmentAdapter(DecorationQuestionActivity.this, askQuestionBeanList);
                                     searchList.setAdapter(fragmentAdapter);
-                                    fragmentAdapter.notifyDataSetChanged();
                                 }
                                 if (isDownRefresh) {
                                     isDownRefresh = false;
@@ -368,7 +402,7 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
 
                             }
                         });
-                    }else {
+                    } else {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -483,7 +517,9 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
 
     }
 
-    /*搜索界面*/
+    /**
+     * 搜索界面
+     */
     private void showSearchView() {
         searchLayout.setBackgroundResource(R.color.cal_pressed_color_trancspar);
         mengceng4.setVisibility(View.VISIBLE);
@@ -515,29 +551,29 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
         Glide.with(this).load(R.drawable.drop_down_c).into(imageDqMore);
 
         if (myGridViewAdapterStyle == null) {
-            myGridViewAdapterStyle = new QuestionGridViewAdapter(this, questionTypeListBeanList, mQuyuPosition);
+            myGridViewAdapterStyle = new QuestionGridViewAdapter(this, questionTypeListBeanList, currentSelectedPosition);
             mGridView.setAdapter(myGridViewAdapterStyle);
-        }else {
-            myGridViewAdapterStyle.setSelectPosition(mQuyuPosition);
+        } else {
+            myGridViewAdapterStyle.setSelectPosition(currentSelectedPosition);
             myGridViewAdapterStyle.notifyDataSetChanged();
         }
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mQuyuPosition = position;
-                quanbuquyuPopupWindow.dismiss();
+                currentSelectedPosition = position;
+                popupWindow.dismiss();
                 dqViewPager.setCurrentItem(position);
             }
         });
         fragShardowView.setVisibility(View.VISIBLE);
-        quanbuquyuPopupWindow = new PopupWindow(quanbuquyuPopView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        quanbuquyuPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#f5f3f2")));
-        quanbuquyuPopupWindow.setFocusable(true);
-        quanbuquyuPopupWindow.setOutsideTouchable(true);
-        quanbuquyuPopupWindow.update();
-        quanbuquyuPopupWindow.showAsDropDown(dqMidRl, 0, 0);
-        quanbuquyuPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+        popupWindow = new PopupWindow(dropDownPopupWindow, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#f5f3f2")));
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.update();
+        popupWindow.showAsDropDown(dqMidRl, 0, 0);
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
                 fragShardowView.setVisibility(View.GONE);
@@ -551,10 +587,6 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (quanbuquyuPopupWindow != null) {
-            quanbuquyuPopupWindow = null;
-            quanbuquyuPopupWindow.dismiss();
-        }
     }
 
     @Override
@@ -564,7 +596,7 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
 
     @Override
     public void onPageSelected(int position) {
-        mQuyuPosition = position;
+        currentSelectedPosition = position;
     }
 
     @Override
@@ -580,9 +612,9 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         keyword = s.toString().trim();
-        if (!s.toString().trim().isEmpty()){
+        if (!s.toString().trim().isEmpty()) {
             ivGongSiDelete.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             ivGongSiDelete.setVisibility(View.GONE);
         }
     }
@@ -590,5 +622,23 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (bSearchState){
+                bSearchState = false;
+                ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(DecorationQuestionActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                rlTopSerach.setVisibility(View.VISIBLE);
+                searchLayout.setVisibility(View.GONE);
+                System.gc();
+            }else {
+                finish();
+            }
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 }

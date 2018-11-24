@@ -3,12 +3,14 @@ package com.tbs.tobosutype.adapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.SparseArray;
 import android.view.Gravity;
@@ -27,15 +29,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.AnswerItemDetailsActivity;
+import com.tbs.tobosutype.activity.NewLoginActivity;
+import com.tbs.tobosutype.bean.AdvertBean;
 import com.tbs.tobosutype.bean.AnswerListBean;
 import com.tbs.tobosutype.bean.AskDetailDataBean;
-import com.tbs.tobosutype.bean.AskListBean;
 import com.tbs.tobosutype.bean.AskListDataBean;
 import com.tbs.tobosutype.bean.AskQuestionBean;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.bean.ExpandableTextView;
 import com.tbs.tobosutype.bean.RelationListBean;
 import com.tbs.tobosutype.customview.BaseSelectPopupWindow;
@@ -43,16 +47,16 @@ import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DialogUtil;
+import com.tbs.tobosutype.utils.EventBusUtil;
 import com.tbs.tobosutype.utils.GlideUtils;
+import com.tbs.tobosutype.utils.SharePreferenceUtil;
 import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -75,54 +79,43 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
     private Activity activity;
 
     private ImageView dialogImageClose; //对话框关闭按钮
-    private TextView dialogTvPinglunTotal;  //评论总数
+    private TextView dialogTvCommentTotal;  //评论总数
     private RecyclerView dialogRecycle;     //回复按钮弹出对话框的recycleView
     private LinearLayout dialogLinear;  //发表父布局
     private RelativeLayout dialogLlBottom;
-    private TextView dialogTvSend;  //发表按钮
     private View viewBg;    //半透明背景
-    private RelativeLayout rlBottomLayout;
     private EditText editBottom;
     private TextView textBottomSend;
     private TextView tvName;    //被回复人姓名
     private BaseSelectPopupWindow popWiw = null;
     private Animation animation;    //回复输入文本框弹起动画效果
-    private HuifuAdapter huifuAdapter;
-    private List<AnswerListBean> answerListBeanList;
-    private AskQuestionBean askQuestionBean;
-    private List<RelationListBean> relationListBeanList;
+    private ReplyAdapter replyAdapter;
+    private List<AnswerListBean> answerListBeanList;    //详情页所有回答集合
+    private AskQuestionBean askQuestionBean;    //详情页问题
+    private List<RelationListBean> relationListBeanList;    //相关问题集合
+    private List<AdvertBean> advertBeans;//轮播图集合
     private int mPageSize = 10; //一页多少条数据
     private int mPage = 1;  //当前请求页数
     private Gson gson;
     private AskListDataBean askListBeanList;  //回答列表集合
     private ViewPagerBottomAdapter viewPagerAdapter;    //底部广告轮播适配器
-    private List<String> strAdList; //底部广告图片集合
 
-    private AskDetailDataBean beanList;
     private boolean isLooper = false;
-    private View view1; //回复文本输入框视图
-    private View view;  //所有评论对话框视图
+    private View replyView; //回复文本输入框视图
+    private View commentView;  //所有评论对话框视图
     private String message = "";    //回复内容
-    private int iPosition = 0;  //要回复当前位置
+    private int entrancePosition = 0;  //回复入口position
+    private int replyPosition = 0; //回复成功网络请求
 
     public AnswerItemDetailsAdapter(Context context, AskDetailDataBean beanList) {
         this.context = context;
-        this.beanList = beanList;
         askQuestionBean = beanList.getQuestionList();
         answerListBeanList = beanList.getAnswerList();
         relationListBeanList = beanList.getRelationList();
+        advertBeans = beanList.getAdvert();
         gson = new Gson();
         activity = (Activity) context;
         initHuifuEditView();
-
-        strAdList = new ArrayList<>();
-        strAdList.add("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2799867757,3932089809&fm=26&gp=0.jpg");
-        strAdList.add("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3846888849,2108391107&fm=26&gp=0.jpg");
-        strAdList.add("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2152174003,412466376&fm=26&gp=0.jpg");
-        strAdList.add("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=2756413124,951488050&fm=26&gp=0.jpg");
-        strAdList.add("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1131960657,1262646568&fm=26&gp=0.jpg");
-        strAdList.add("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3264861699,2749249450&fm=26&gp=0.jpg");
-
 
     }
 
@@ -130,11 +123,10 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
      * 初始化回复文本框view
      */
     private void initHuifuEditView() {
-        view1 = LayoutInflater.from(context).inflate(R.layout.popupwindow_layout, null);
-        rlBottomLayout = view1.findViewById(R.id.rl_bottom_layout);
-        editBottom = view1.findViewById(R.id.edit_bottom);
-        textBottomSend = view1.findViewById(R.id.text_bottom_send);
-        tvName = view1.findViewById(R.id.tv_name);
+        replyView = LayoutInflater.from(context).inflate(R.layout.popupwindow_layout, null);
+        editBottom = replyView.findViewById(R.id.edit_bottom);
+        textBottomSend = replyView.findViewById(R.id.text_bottom_send);
+        tvName = replyView.findViewById(R.id.tv_name);
         //文本框输入监听
         editBottom.addTextChangedListener(new TextWatcher() {
             @Override
@@ -156,12 +148,24 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
         textBottomSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (message.isEmpty()) {
+                    ToastUtil.showShort(context, "评论内容不能为空");
+                    return;
+                }
                 HashMap<String, Object> params = new HashMap<>();
                 params.put("token", Util.getDateToken());
                 params.put("message", message);
-                params.put("answer_id", askListBeanList.getCommentList().get(iPosition).getAnswer_id());
-                params.put("comment_uid", askListBeanList.getCommentList().get(iPosition).getComment_uid());
-                params.put("recomment_uid", askListBeanList.getCommentList().get(iPosition).getRecomment_uid());
+                params.put("question_id", askQuestionBean.getQuestion_id());
+                params.put("comment_uid", AppInfoUtil.getUserid(activity));
+                if (entrancePosition == -1) {    //-1代表着直接回复评论入口评论人
+                    params.put("answer_id", answerListBeanList.get(replyPosition).getAnswer_id());
+                    params.put("comment_id", 0);
+                    params.put("recomment_uid", answerListBeanList.get(replyPosition).getAnswer_uid());
+                } else {
+                    params.put("answer_id", askListBeanList.getCommentList().get(entrancePosition).getAnswer_id());
+                    params.put("comment_id", askListBeanList.getCommentList().get(entrancePosition).getAnswer_comment_id());
+                    params.put("recomment_uid", askListBeanList.getCommentList().get(entrancePosition).getComment_uid());
+                }
                 OKHttpUtil.post(Constant.ASK_ADDANSWERCOMMMENT, params, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -178,7 +182,13 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
                                 activity.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        ToastUtil.showShort(context, "评论发布成功");
+                                        if (popWiw != null) {
+                                            popWiw.dismiss();
+                                        }
+                                        ToastUtil.customizeToast(context, "评论成功");
+                                        commentTotalNumRequest(replyPosition);   //评论成功再次进行评论总数网络请求
+                                        EventBusUtil.sendEvent(new Event(EC.EventCode.SEND_SUCCESS_REPLY)); //更新详情界面数据
+
                                     }
                                 });
                             }
@@ -231,7 +241,7 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        currentPosition = position > answerListBeanList.size() - 1 ? answerListBeanList.size() - 1 : position;
+        currentPosition = position > answerListBeanList.size() - 1 ? answerListBeanList.size() : position;  //判断当前值是不是第一个，用于隐藏回答个数（同时也是详情页回答的个数）
         if (holder instanceof AnswerDetailsViewHolder1) {
             if (!answerListBeanList.isEmpty()) {
                 ((AnswerDetailsViewHolder1) holder).llNoAnswer.setVisibility(View.GONE);
@@ -240,9 +250,10 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
             }
             //用户的头像
             GlideUtils.glideLoader(context, askQuestionBean.getIcon(), R.drawable.iamge_loading, R.drawable.iamge_loading, ((AnswerDetailsViewHolder1) holder).imageDetailsIcon, 0);
-            ((AnswerDetailsViewHolder1) holder).tvDetailsTittle.setText(askQuestionBean.getTitle());
-            ((AnswerDetailsViewHolder1) holder).tvDetailsContext.setText(askQuestionBean.getContent());
-            ((AnswerDetailsViewHolder1) holder).tvDetailsDate.setText("提问于" + askQuestionBean.getAdd_time());
+            ((AnswerDetailsViewHolder1) holder).tvDetailsTittle.setText(askQuestionBean.getTitle());//标题
+            ((AnswerDetailsViewHolder1) holder).tvDetailsContext.setText(askQuestionBean.getContent());//   内容
+            ((AnswerDetailsViewHolder1) holder).tvDetailsName.setText(askQuestionBean.getName());   //昵称
+            ((AnswerDetailsViewHolder1) holder).tvDetailsDate.setText("提问于" + askQuestionBean.getAdd_time());//日期
 
 
             if (!askQuestionBean.getImg_urls()[0].trim().isEmpty() && askQuestionBean.getImg_urls() != null) {
@@ -274,7 +285,8 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
             }
             setExpandableTextItem(holder, position - 1);
             GlideUtils.glideLoader(context, answerListBeanList.get(position - 1).getIcon(), R.drawable.iamge_loading, R.drawable.iamge_loading, ((AnswerDetailsViewHolder2) holder).imageAnswerIcon, 0);
-            ((AnswerDetailsViewHolder2) holder).tvAnswerName.setText(answerListBeanList.get(position - 1).getAnswer_id());
+            //回答姓名
+            ((AnswerDetailsViewHolder2) holder).tvAnswerName.setText(answerListBeanList.get(position - 1).getName());
             //评论时间
             ((AnswerDetailsViewHolder2) holder).tvTime.setText(answerListBeanList.get(position - 1).getAdd_time());
             //评论总数
@@ -316,11 +328,11 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
 
         } else if (holder instanceof AnswerDetailsViewHolder3) {
 
-            if (strAdList.isEmpty()) {
+            if (advertBeans.isEmpty()) {
                 ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setVisibility(View.GONE);
             } else {
                 ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setVisibility(View.VISIBLE);
-                viewPagerAdapter = new ViewPagerBottomAdapter(context, strAdList);
+                viewPagerAdapter = new ViewPagerBottomAdapter(context, advertBeans);
                 ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setOffscreenPageLimit(3);
                 ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setCurrentItem(Integer.MAX_VALUE / 2);  //开始为中间位置，实现左右滑动轮播
                 ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setAdapter(viewPagerAdapter);
@@ -329,12 +341,12 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
 
         } else if (holder instanceof AnswerDetailsViewHolder4) {
             ((AnswerDetailsViewHolder4) holder).tvRHZXQuestionItem.setText(relationListBeanList.get(position - (answerListBeanList.size() + 2)).getTitle());
-            ((AnswerDetailsViewHolder4) holder).tvRHZXQuestionItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "相关问题" + relationListBeanList.get(position - (answerListBeanList.size() + 2)).getQuestion_id(), Toast.LENGTH_SHORT).show();
-                }
-            });
+//            ((AnswerDetailsViewHolder4) holder).tvRHZXQuestionItem.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Toast.makeText(context, "相关问题" + relationListBeanList.get(position - (answerListBeanList.size() + 2)).getQuestion_id(), Toast.LENGTH_SHORT).show();
+//                }
+//            });
         }
 
 
@@ -373,26 +385,26 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
      * @param position
      */
     private void showAnswerTotalView(int position) {
-        view = LayoutInflater.from(context).inflate(R.layout.dialog_show_pinglun, null);
-        dialogImageClose = view.findViewById(R.id.image_close);
-        dialogTvPinglunTotal = view.findViewById(R.id.tv_pinglun_total_num);
-        dialogRecycle = view.findViewById(R.id.rv_pinglun);
-        dialogLinear = view.findViewById(R.id.ll_bottom);
-        dialogLlBottom = view.findViewById(R.id.rl_bottom);
-        dialogTvSend = view.findViewById(R.id.tv_send);
-        viewBg = view.findViewById(R.id.view_bg);
+        replyPosition = position;
+        commentView = LayoutInflater.from(context).inflate(R.layout.dialog_show_pinglun, null);
+        dialogImageClose = commentView.findViewById(R.id.image_close);
+        dialogTvCommentTotal = commentView.findViewById(R.id.tv_pinglun_total_num);
+        dialogRecycle = commentView.findViewById(R.id.rv_pinglun);
+        dialogLinear = commentView.findViewById(R.id.ll_bottom);
+        dialogLlBottom = commentView.findViewById(R.id.rl_bottom);
+        viewBg = commentView.findViewById(R.id.view_bg);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         dialogRecycle.setLayoutManager(linearLayoutManager);
-        final Dialog dialog = DialogUtil.upSlideDialog(context, view);
+        final Dialog dialog = DialogUtil.upSlideDialog(context, commentView);
         dialogImageClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (dialog.isShowing()) {
                     dialog.dismiss();
                 }
-                if (huifuAdapter != null) {
-                    huifuAdapter = null;
+                if (replyAdapter != null) {
+                    replyAdapter = null;
                 }
             }
         });
@@ -400,15 +412,30 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
         dialogLinear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.isEmpty(AppInfoUtil.getUserid(activity))) {
+                    Toast.makeText(activity, "您还没有登陆", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(activity, NewLoginActivity.class);
+                    activity.startActivityForResult(intent, 0);
+                    return;
+                }
                 showHuiFuEdit(-1);
             }
         });
+
+        commentTotalNumRequest(position);
+
+    }
+
+    /**
+     * 全部评论总数网络请求
+     */
+    private void commentTotalNumRequest(int position) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("token", Util.getDateToken());
-//        params.put("answer_id", answerListBeanList.get(position).getAnswer_id());
-        params.put("answer_id", 677);
+        params.put("answer_id", answerListBeanList.get(position).getAnswer_id());
         params.put("page", mPage);
         params.put("pagesize", mPageSize);
+        params.put("uid", AppInfoUtil.getUserid(activity));
         OKHttpUtil.post(Constant.ASK_QUESTION_GETLIST, params, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -426,10 +453,10 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                dialogTvPinglunTotal.setText("全部" + askListBeanList.getCommentCount() + "条评论");
-                                huifuAdapter = new HuifuAdapter(context, askListBeanList);
-                                huifuAdapter.setOnHuifuClickListener(onHuifuClickListener);
-                                dialogRecycle.setAdapter(huifuAdapter);
+                                dialogTvCommentTotal.setText("全部" + askListBeanList.getCommentCount() + "条评论");
+                                replyAdapter = new ReplyAdapter(context, askListBeanList);
+                                dialogRecycle.setAdapter(replyAdapter);
+                                replyAdapter.setOnReplyClickListener(onReplyClickListener);
                             }
                         });
                     }
@@ -440,13 +467,12 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
                 }
             }
         });
-
     }
 
     /**
      * 评论页点击回复按钮回调事件
      */
-    private HuifuAdapter.OnHuifuClickListener onHuifuClickListener = new HuifuAdapter.OnHuifuClickListener() {
+    private ReplyAdapter.OnReplyClickListener onReplyClickListener = new ReplyAdapter.OnReplyClickListener() {
         @Override
         public void onHuifuClickListen(int position) {
             showHuiFuEdit(position);
@@ -457,13 +483,13 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
      * 点击弹出回复文本框
      */
     private void showHuiFuEdit(int position) {
-        iPosition = position;
+        entrancePosition = position;
         dialogLlBottom.setVisibility(View.GONE);
 
         if (position == -1) {
-            tvName.setText("外层" + position);
+            tvName.setText(answerListBeanList.get(replyPosition).getName());
         } else {
-            tvName.setText(askListBeanList.getCommentList().get(position).getRecomment_name() + position);
+            tvName.setText(askListBeanList.getCommentList().get(position).getComment_name());
         }
         editBottom.setText("");
         editBottom.setFocusable(true);
@@ -475,9 +501,9 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
         viewBg.startAnimation(animation);
         viewBg.setVisibility(View.VISIBLE);
         if (popWiw == null) {
-            popWiw = new BaseSelectPopupWindow(context, view1);
+            popWiw = new BaseSelectPopupWindow(context, replyView);
         }
-        popWiw.showAtLocation(dialogTvPinglunTotal, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+        popWiw.showAtLocation(dialogTvCommentTotal, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         popWiw.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -630,6 +656,18 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
             super(itemView);
             tvRHZXQuestionItem = itemView.findViewById(R.id.tv_xiangguan_question_item);
         }
+    }
+
+    /**
+     * 更新数据
+     *
+     * @param beanList
+     */
+    public void changeList(AskDetailDataBean beanList) {
+        askQuestionBean = beanList.getQuestionList();
+        answerListBeanList = beanList.getAnswerList();
+        relationListBeanList = beanList.getRelationList();
+        advertBeans = beanList.getAdvert();
     }
 
     /**

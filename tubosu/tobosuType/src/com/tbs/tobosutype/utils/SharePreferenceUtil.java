@@ -57,4 +57,23 @@ public class SharePreferenceUtil {
 	public String getTime() {
 		return sp.getString(TIME, "");
 	}
+
+	//未登录情况下点赞状态（详情页）
+	public static boolean getDetailLikeStatus(Context context) {
+		return context.getSharedPreferences("likeStatue", 0).getBoolean("detailLikeStatue", false);
+	}
+	//未登录情况下点赞状态（详情页）
+	public static void setDetailLikeStatus(Context context) {
+		context.getSharedPreferences("likeStatue", 0).edit().putBoolean("detailLikeStatue", true).commit();
+	}
+	//未登录情况下点赞状态（评论页）
+	public static boolean getCommentLikeStatus(Context context) {
+		return context.getSharedPreferences("likeStatue", 0).getBoolean("commentLikeStatus", false);
+	}
+	//未登录情况下点赞状态（评论页）
+	public static void setCommentLikeStatus(Context context) {
+		context.getSharedPreferences("likeStatue", 0).edit().putBoolean("commentLikeStatus", true).commit();
+	}
+
+
 }

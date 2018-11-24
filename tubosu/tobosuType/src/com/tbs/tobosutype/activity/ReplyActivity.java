@@ -1,8 +1,11 @@
 package com.tbs.tobosutype.activity;
 
-import android.content.DialogInterface;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -16,36 +19,38 @@ import com.foamtrace.photopicker.PhotoPickerActivity;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.ReplyActivityAdapter;
 import com.tbs.tobosutype.base.BaseActivity;
-import com.tbs.tobosutype.customview.CustomDialog;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CommonUtil;
+import com.tbs.tobosutype.utils.EventBusUtil;
+import com.tbs.tobosutype.utils.ImgCompressUtils;
+import com.tbs.tobosutype.utils.PhotoUploadUtils;
 import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
 
-import java.io.File;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
-import top.zibin.luban.Luban;
-import top.zibin.luban.OnCompressListener;
 
 /**
  * Created by Mr.Wang on 2018/11/12 17:49.
  * 我要回答界面
  */
-public class ReplyActivity extends BaseActivity implements TextWatcher {
+public class ReplyActivity extends BaseActivity implements TextWatcher, PhotoUploadUtils.OnPhotoUploadListener {
     @BindView(R.id.tv_cancel)
     TextView tvCancle;
     @BindView(R.id.tv_send)
@@ -56,16 +61,20 @@ public class ReplyActivity extends BaseActivity implements TextWatcher {
     ImageView imageAddPhoto;
     @BindView(R.id.et_content)
     EditText etContent;
+    private String question_id = "";
     /**
      * 当前输入文本内容
      */
     private String currentContent = "";
     private ReplyActivityAdapter adapter;
+    /**
+     * 图片路径
+     */
     private ArrayList<String> listImagePath;
-    private ArrayList<String> list;
-    private MediaType MEDIA_TYPE_PNG = MediaType.parse("image/*");    //上传图片类型
-    private OkHttpClient okHttpClient;
-
+    /**
+     * 压缩后的图片路径
+     */
+    private ArrayList<String> listPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +89,7 @@ public class ReplyActivity extends BaseActivity implements TextWatcher {
      * 初始化数据
      */
     private void initData() {
-        okHttpClient = new OkHttpClient();
+        question_id = getIntent().getStringExtra("question_id");
         etContent.addTextChangedListener(this);
     }
 
@@ -88,7 +97,7 @@ public class ReplyActivity extends BaseActivity implements TextWatcher {
      * 初始化图片
      */
     private void setRecyclerview() {
-        list = new ArrayList<String>();
+        listPath = new ArrayList<String>();
         listImagePath = new ArrayList<>();
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         rvReply.setLayoutManager(layoutManager);
@@ -104,6 +113,9 @@ public class ReplyActivity extends BaseActivity implements TextWatcher {
             if (!listImagePath.isEmpty() || listImagePath.size() != 0) {
                 listImagePath.clear();
             }
+            if (!listPath.isEmpty() || listPath.size() != 0) {
+                listPath.clear();
+            }
             listImagePath = data.getStringArrayListExtra(PhotoPickerActivity.EXTRA_RESULT);
             compress(listImagePath);
         }
@@ -111,39 +123,11 @@ public class ReplyActivity extends BaseActivity implements TextWatcher {
 
     //压缩 拿到返回选中图片的集合url，然后转换成file文件
     private void compress(ArrayList<String> list) {
-        for (String imageUrl : list) {
-            File file = new File(imageUrl);
-            compressImage(file);
+        for (int i = 0; i < list.size(); i++) {
+            listPath.add(ImgCompressUtils.CompressAndGetPath(mContext, listImagePath.get(i)));
         }
         adapter.addMoreItem(list);
     }
-
-    //压缩
-    private void compressImage(File file) {
-
-        Luban.get(this)//用的第三方的压缩，开源库
-                .load(file)                     //传人要压缩的图片
-                .putGear(Luban.THIRD_GEAR)      //设定压缩档次，默认三挡
-                .setCompressListener(new OnCompressListener() { //设置回调
-                    @Override
-                    public void onStart() {
-                        //TODO 压缩开始前调用，可以在方法内启动 loading UI
-                    }
-
-                    @Override
-                    public void onSuccess(final File file) {
-                        URI uri = file.toURI();
-                        String[] split = uri.toString().split(":");
-                        list.add(split[1]);//压缩后返回的文件，带file字样，所以需要截取
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        //TODO 当压缩过去出现问题时调用
-                    }
-                }).launch();//启动压缩
-    }
-
 
     @OnClick({R.id.tv_cancel, R.id.tv_send, R.id.image_add_photo})
     public void onViewClicked(View view) {
@@ -152,26 +136,32 @@ public class ReplyActivity extends BaseActivity implements TextWatcher {
                 finish();
                 break;
             case R.id.tv_send:  //发布
-
-                CustomDialog.Builder builder = new CustomDialog.Builder(this);
-                builder.setMessage("发不成功").setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.create().show();
-
-
-
                 if (currentContent.length() < 10) {
                     ToastUtil.showShort(this, "问题至少10个字哟");
                     return;
                 }
-                sendAnswerRequest();
+                if (listPath.isEmpty()) {
+                    sendAnswerRequest("");
+                } else {
+                    PhotoUploadUtils uploadUtils = PhotoUploadUtils.getInstences(ReplyActivity.this, listPath);
+                    uploadUtils.setOnPhotoUploadListener(this);
+                    uploadUtils.startUpload();
+                }
                 break;
             case R.id.image_add_photo:  // 添加图片
-                CommonUtil.uploadPictures(this, 0, listImagePath);
+                if (Build.VERSION.SDK_INT >= 23) {
+                    if (ContextCompat.checkSelfPermission(this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            != PackageManager.PERMISSION_GRANTED) {
+                        //权限还没有授予，需要在这里写申请权限的代码
+                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
+                    } else {
+                        //权限已经被授予，在这里直接写要执行的相应方法即可
+                        CommonUtil.uploadPictures(this, 0, listImagePath);
+                    }
+                } else {
+                    CommonUtil.uploadPictures(this, 0, listImagePath);
+                }
                 break;
         }
     }
@@ -179,22 +169,14 @@ public class ReplyActivity extends BaseActivity implements TextWatcher {
     /**
      * 点击发布网络请求(图文)
      */
-    private void sendAnswerRequest() {
-        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        for (int i = 0; i < listImagePath.size(); i++) {
-            File file = new File(listImagePath.get(i));
-            builder.addFormDataPart("img_url", file.getName(), RequestBody.create(MEDIA_TYPE_PNG, file));
-        }
-        builder.addFormDataPart("token", Util.getDateToken());
-        builder.addFormDataPart("answer_content", currentContent);
-        builder.addFormDataPart("question_id", "");
-        builder.addFormDataPart("answer_uid", "");
-        MultipartBody requestBody = builder.build();
-        Request request = new Request.Builder()
-                .url(Constant.ASK_ANSWER_ADDANSWER)
-                .post(requestBody)
-                .build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
+    private void sendAnswerRequest(String imgUrls) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("img_urls", imgUrls);
+        params.put("token", Util.getDateToken());
+        params.put("answer_content", currentContent);
+        params.put("question_id", question_id);
+        params.put("answer_uid", AppInfoUtil.getUserid(mContext));
+        OKHttpUtil.post(Constant.ASK_ANSWER_ADDANSWER, params, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
 
@@ -202,19 +184,42 @@ public class ReplyActivity extends BaseActivity implements TextWatcher {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-
+                String json = Objects.requireNonNull(response.body()).string();
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.optString("status");
+                    final String msg = jsonObject.optString("msg");
+                    if (status.equals("200")) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.customizeToast(ReplyActivity.this, "回答成功");
+                                EventBusUtil.sendEvent(new Event(EC.EventCode.SEND_SUCCESS_REPLY));
+                                finish();
+                            }
+                        });
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.showShort(ReplyActivity.this, msg);
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
-
-
     }
 
 
     /**
      * 点击删除按钮后，数据改变
      */
-    public void deleteResult(ArrayList<String> stringArrayList) {
+    public void deleteResult(ArrayList<String> stringArrayList, int position) {
         listImagePath = stringArrayList;
+        listPath.remove(position);
     }
 
     @Override
@@ -230,5 +235,10 @@ public class ReplyActivity extends BaseActivity implements TextWatcher {
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+    @Override
+    public void imagePath(String path) {
+        sendAnswerRequest(path);
     }
 }

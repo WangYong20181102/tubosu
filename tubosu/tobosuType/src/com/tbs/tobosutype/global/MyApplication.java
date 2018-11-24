@@ -27,6 +27,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
+import com.bumptech.glide.request.target.ViewTarget;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -119,6 +120,8 @@ public class MyApplication extends MultiDexApplication {
         }
 
         initData();
+
+        ViewTarget.setTagId(R.id.glide_tag);
 
         initImageLoader(getApplicationContext());
         options = new DisplayImageOptions.Builder()

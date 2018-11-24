@@ -1,7 +1,9 @@
 package com.tbs.tobosutype.utils;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
+
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.SelectPicPopupWindow;
 import com.tbs.tobosutype.global.Constant;
@@ -29,9 +31,18 @@ public class ShareUtil {
      */
     private String fenxiang_url;
     /**
+     * 分享图片url
+     */
+    private String imageUrl = "";
+    /**
      * 文字简短描述
      */
     private String desc;
+    /**
+     * 友盟分享图片
+     */
+    private UMImage urlImage;
+
     /***
      * 分享方法
      * @param context 上下文
@@ -46,6 +57,24 @@ public class ShareUtil {
         this.fenxiang_url = url + Constant.ANDROID_SHARE; //加这个链接
         System.out.println("77777====-分享url拼接后 >>" + fenxiang_url);
         this.desc = desc;
+        setShareContent();
+    }
+
+    /**
+     * 分享带图片
+     *
+     * @param context  上下文
+     * @param title    标题
+     * @param desc     内容
+     * @param imageUrl 图片url
+     * @param url      分享url
+     */
+    public ShareUtil(Context context, String title, String desc, String imageUrl, String url) {
+        this.context = context;
+        this.title = title;
+        this.desc = desc;
+        this.imageUrl = imageUrl;
+        this.fenxiang_url = url;
         setShareContent();
     }
 
@@ -73,9 +102,14 @@ public class ShareUtil {
         this.desc = desc;
         setShareContent();
     }
+
     //设置分享内容
     private void setShareContent() {
-        UMImage urlImage = new UMImage(context, R.drawable.app_icon);
+        if (imageUrl.isEmpty()) {
+            urlImage = new UMImage(context, R.drawable.app_icon);   //本地图片
+        } else {
+            urlImage = new UMImage(context, imageUrl);  //网络图片
+        }
         UMWeb web = new UMWeb(fenxiang_url);
         web.setTitle(title);
         web.setThumb(urlImage);

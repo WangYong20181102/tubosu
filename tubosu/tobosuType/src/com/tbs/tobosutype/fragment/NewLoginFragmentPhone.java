@@ -2,7 +2,6 @@ package com.tbs.tobosutype.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -24,9 +23,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.BandPhoneActivity;
-import com.tbs.tobosutype.activity.CoPresonerMsgActivity;
 import com.tbs.tobosutype.activity.NewLoginActivity;
-import com.tbs.tobosutype.activity.PresonerMsgActivity;
 import com.tbs.tobosutype.base.BaseFragment;
 import com.tbs.tobosutype.bean.EC;
 import com.tbs.tobosutype.bean.Event;

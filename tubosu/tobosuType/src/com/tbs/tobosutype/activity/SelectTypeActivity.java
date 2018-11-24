@@ -1,33 +1,50 @@
 package com.tbs.tobosutype.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.google.common.base.Joiner;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.SelectTypeLeftAdapter;
 import com.tbs.tobosutype.adapter.SelectTypeRightAdapter;
 import com.tbs.tobosutype.base.BaseActivity;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.bean.SelectTypeBean;
+import com.tbs.tobosutype.bean._ImageUpload;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.EventBusUtil;
+import com.tbs.tobosutype.utils.PhotoUploadUtils;
+import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
+import com.tbs.tobosutype.utils.WriteUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -46,7 +63,7 @@ import okhttp3.Response;
  * Created by Mr.Wang on 2018/11/13 08:57.
  * 选择分类
  */
-public class SelectTypeActivity extends BaseActivity {
+public class SelectTypeActivity extends BaseActivity implements PhotoUploadUtils.OnPhotoUploadListener {
     @BindView(R.id.lv_left)
     ListView lvLest;
     @BindView(R.id.lv_right)
@@ -55,14 +72,13 @@ public class SelectTypeActivity extends BaseActivity {
     private SelectTypeRightAdapter adapterRight;
     private String inputTittle = ""; //标题
     private String inputContent = "";    //内容
-    private List<String> listImagePath;//图片路径
+    private List<String> listPath;//图片路径
+    private int type = 0;   //进来的入口
     private List<SelectTypeBean> typeBeanList;//选择分类数据集合
     private Gson gson;
     private String first_cate_id;//一级分类id
     private int firstPosition = 0;//一级分类position
     private String second_cate_id;//二级分类id
-    private MediaType MEDA_TYPE = MediaType.parse("image/*");
-    private OkHttpClient okHttpClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +98,9 @@ public class SelectTypeActivity extends BaseActivity {
         Bundle bundle = getIntent().getBundleExtra("bundle");
         inputTittle = bundle.getString("inputTittle");
         inputContent = bundle.getString("inputContent");
-        listImagePath = bundle.getStringArrayList("listImagePath");
+        listPath = bundle.getStringArrayList("listImagePath");
+        type = bundle.getInt("type");
         typeBeanList = new ArrayList<>();
-        okHttpClient = new OkHttpClient();
         initHttpRequest();
 
     }
@@ -109,7 +125,8 @@ public class SelectTypeActivity extends BaseActivity {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.optString("status");
                     if (status.equals("200")) {
-                        typeBeanList = gson.fromJson(jsonObject.optString("data"), new TypeToken<List<SelectTypeBean>>() {}.getType());
+                        typeBeanList = gson.fromJson(jsonObject.optString("data"), new TypeToken<List<SelectTypeBean>>() {
+                        }.getType());
                         Message message = new Message();
                         message.obj = typeBeanList;
                         runOnUiThread(new Runnable() {
@@ -169,32 +186,31 @@ public class SelectTypeActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_send: //发布
-                sendHttpRequest();
+                if (listPath.isEmpty()) {
+                    sendHttpRequest("");
+                } else {
+                    PhotoUploadUtils uploadUtils = PhotoUploadUtils.getInstences(SelectTypeActivity.this, listPath);
+                    uploadUtils.setOnPhotoUploadListener(this);
+                    uploadUtils.startUpload();
+                }
                 break;
         }
     }
 
+
     /**
      * 发布按钮网络请求
      */
-    private void sendHttpRequest() {
-        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        builder.addFormDataPart("token", Util.getDateToken());
-        builder.addFormDataPart("title", inputTittle);
-        builder.addFormDataPart("published_uid", AppInfoUtil.getUserid(mContext));
-        builder.addFormDataPart("first_cate_id", first_cate_id);
-        builder.addFormDataPart("second_cate_id", second_cate_id);
-        builder.addFormDataPart("content", inputContent);
-        for (int i = 0; i < listImagePath.size(); i++) {
-            File file = new File(listImagePath.get(i));
-            builder.addFormDataPart("img_urls",file.getName(), RequestBody.create(MEDA_TYPE,file));
-        }
-        MultipartBody requestBody = builder.build();
-        final Request request = new Request.Builder()
-                .url(Constant.ASK_ADDQUESTION)
-                .post(requestBody)
-                .build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
+    private void sendHttpRequest(String imageUrls) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("img_urls", imageUrls);
+        params.put("token", Util.getDateToken());
+        params.put("title", inputTittle);
+        params.put("published_uid", AppInfoUtil.getUserid(mContext));
+        params.put("first_cate_id", first_cate_id);
+        params.put("second_cate_id", second_cate_id);
+        params.put("content", inputContent);
+        OKHttpUtil.post(Constant.ASK_ADDQUESTION, params, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
 
@@ -202,12 +218,27 @@ public class SelectTypeActivity extends BaseActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                    String json = Objects.requireNonNull(response.body()).string();
+                String json = Objects.requireNonNull(response.body()).string();
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.optString("status");
-                    if (status.equals("200")){
-
+                    if (status.equals("200")) {
+                        final String id = jsonObject.getJSONObject("data").getString("id");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.customizeToast(SelectTypeActivity.this, "提问成功");
+                                if (type == 1) {
+                                    EventBusUtil.sendEvent(new Event(EC.EventCode.SEND_SUCCESS_CLOSE_ASKANSWER_HOME));
+                                    Intent intent = new Intent(SelectTypeActivity.this, AnswerItemDetailsActivity.class);
+                                    intent.putExtra("question_id", id);
+                                    startActivity(intent);
+                                } else {
+                                    EventBusUtil.sendEvent(new Event(EC.EventCode.SEND_SUCCESS_CLOSE_ASKANSWER, id));
+                                }
+                                finish();
+                            }
+                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -217,4 +248,8 @@ public class SelectTypeActivity extends BaseActivity {
 
     }
 
+    @Override
+    public void imagePath(String path) {
+        sendHttpRequest(path);
+    }
 }

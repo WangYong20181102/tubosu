@@ -11,6 +11,7 @@ import java.io.File;
  */
 
 public class ImgCompressUtils {
+
     /**
      * 压缩图片并且获取压缩之后图片的路径
      *
@@ -29,4 +30,5 @@ public class ImgCompressUtils {
         String mNewFilePath = FileUtil.saveFile(mContext, tempFile.getName(), bitmap);
         return mNewFilePath;
     }
+
 }

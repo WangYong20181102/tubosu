@@ -566,7 +566,6 @@ public class PresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity {
         } else {
             startActivityForResult(intent, IMAGE_REQUEST_CODE);
         }
-
     }
 
     //拍照获取照片

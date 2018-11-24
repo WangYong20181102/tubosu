@@ -81,7 +81,7 @@ public class AskQuestionActivityAdapter extends RecyclerView.Adapter<RecyclerVie
             stringList.remove(position);
             notifyItemRemoved(position);
             notifyDataSetChanged();
-            context.deleteResult(stringList);
+            context.deleteResult(stringList,position);
         }
     }
 

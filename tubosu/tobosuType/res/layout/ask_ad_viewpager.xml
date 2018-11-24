@@ -10,8 +10,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
         app:cardCornerRadius="4dp"
-        android:layout_centerInParent="true"
-        app:cardElevation="4dp">
+        android:layout_centerInParent="true">
         <ImageView
             android:id="@+id/image_bottom"
             android:layout_width="match_parent"

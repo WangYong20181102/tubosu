@@ -1,6 +1,7 @@
 package com.tbs.tobosutype.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
@@ -8,7 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.activity.NewWebViewActivity;
+import com.tbs.tobosutype.bean.AdvertBean;
 import com.tbs.tobosutype.utils.GlideUtils;
+import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.ToastUtil;
 
 import java.util.List;
@@ -19,9 +23,9 @@ import java.util.List;
 class ViewPagerBottomAdapter extends PagerAdapter {
 
     private Context context;
-    private List<String> strImageUrlList;
+    private List<AdvertBean> strImageUrlList;
 
-    public ViewPagerBottomAdapter(Context context, List<String> strImageUrlList) {
+    public ViewPagerBottomAdapter(Context context, List<AdvertBean> strImageUrlList) {
         this.context = context;
         this.strImageUrlList = strImageUrlList;
     }
@@ -46,11 +50,14 @@ class ViewPagerBottomAdapter extends PagerAdapter {
         final int newPosition = position % strImageUrlList.size();
         View view = View.inflate(container.getContext(), R.layout.ask_ad_viewpager, null);
         ImageView imageView = view.findViewById(R.id.image_bottom);
-        GlideUtils.glideLoader(context, strImageUrlList.get(newPosition), imageView);
+        GlideUtils.glideLoader(context, strImageUrlList.get(newPosition).getImg_url(), imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.showShort(context, "点击" + newPosition);
+                Intent intent = new Intent(context, NewWebViewActivity.class);
+                intent.putExtra("mLoadingUrl", strImageUrlList.get(position).getJump_url());
+                intent.putExtra("bAnswer",true);
+                context.startActivity(intent);
             }
         });
         container.addView(view);

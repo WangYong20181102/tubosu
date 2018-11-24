@@ -50,13 +50,13 @@ public class DecorationQuestionFragment extends BaseFragment {
     @BindView(R.id.dq_swipe)
     SwipeRefreshLayout dqSwipe;     //刷新
     private DecorationQuestionFragmentAdapter decorationQuestionFragmentAdapter;
-    private List<AskQuestionBean> asklist = new ArrayList<>();
+    private List<AskQuestionBean> asklist;
     private Context context;
     private int mPage = 1;//用于分页的数据
     private boolean isDownRefresh = false;//是否是下拉刷新
     private int mPageSize = 15;//用于分页的数据
     private LinearLayoutManager layoutManager;
-    private String categoryId = "0";
+    private String categoryId = "0";    //当前位置
     private Gson gson;
 
     @Override
@@ -75,6 +75,7 @@ public class DecorationQuestionFragment extends BaseFragment {
         unbinder = ButterKnife.bind(this, view);
         context = getActivity();
         gson = new Gson();
+        asklist = new ArrayList<>();
         initViewEvent();
         return view;
     }
@@ -205,7 +206,6 @@ public class DecorationQuestionFragment extends BaseFragment {
                                 if (decorationQuestionFragmentAdapter == null) {
                                     decorationQuestionFragmentAdapter = new DecorationQuestionFragmentAdapter(getActivity(), asklist);
                                     fragmentDqRv.setAdapter(decorationQuestionFragmentAdapter);
-                                    decorationQuestionFragmentAdapter.notifyDataSetChanged();
                                 }
                                 if (isDownRefresh) {
                                     isDownRefresh = false;
@@ -219,8 +219,7 @@ public class DecorationQuestionFragment extends BaseFragment {
                         });
 
 
-                    }
-                    if (status.equals("201")) {
+                    } else if (status.equals("201")) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

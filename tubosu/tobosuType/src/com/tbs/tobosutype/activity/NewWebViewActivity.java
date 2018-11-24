@@ -46,6 +46,7 @@ public class NewWebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
     private String TAG = "NewWebViewActivity";
     private Intent mIntent;
     private String mLoadingUrl = "";//加载数据的URL
+    private boolean b = false;  //用来区分装饰问答界面传过来url
     private Gson mGson;
     private _AppEvent mAppEvent;
 
@@ -77,6 +78,7 @@ public class NewWebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
         mAppEvent = new _AppEvent();
         newWebviewBannerRl.setBackgroundColor(Color.parseColor("#ffffff"));
         mLoadingUrl = mIntent.getStringExtra("mLoadingUrl");
+        b = mIntent.getBooleanExtra("bAnswer",false);
         newWebviewWeb.getSettings().setJavaScriptEnabled(true);
         newWebviewWeb.getSettings().setBuiltInZoomControls(true);
         newWebviewWeb.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
@@ -90,11 +92,15 @@ public class NewWebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
 
         newWebviewWeb.setWebChromeClient(webChromeClient);
         newWebviewWeb.setWebViewClient(webViewClient);
-        //统计用
-        if (mLoadingUrl.contains("?")) {
-            newWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
-        } else {
-            newWebviewWeb.loadUrl(mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+        if (!b){
+            //统计用
+            if (mLoadingUrl.contains("?")) {
+                newWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+            } else {
+                newWebviewWeb.loadUrl(mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+            }
+        }else {
+            newWebviewWeb.loadUrl(mLoadingUrl);
         }
         Log.e(TAG, "统计传值=====" + mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
     }

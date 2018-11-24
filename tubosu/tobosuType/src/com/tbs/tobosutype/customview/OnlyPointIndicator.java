@@ -117,7 +117,7 @@ public class OnlyPointIndicator extends View implements IPagerIndicator {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        // TODO: 绘制两条曲线的方式 公式B(t)=(1-t)²p0+2t(1-t)p1+t²p2
+        // TODO: 绘制二阶曲线的方式 公式B(t)=(1-t)²p0+2t(1-t)p1+t²p2
         myPath.reset();
         for (int i = 0; i < 100; i++) {
             mPointT = (mViewPagerOffset + (XD_T * i)) * 2;

@@ -2,27 +2,21 @@ package com.tbs.tobosutype.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.AnswerItemDetailsActivity;
-import com.tbs.tobosutype.activity.ArticleWebViewActivity;
+import com.tbs.tobosutype.activity.NewWebViewActivity;
 import com.tbs.tobosutype.bean.AskQuestionBean;
 import com.tbs.tobosutype.utils.GlideUtils;
-import com.tbs.tobosutype.utils.Util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -30,6 +24,9 @@ import java.util.List;
  */
 public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    /**
+     * 上下文
+     */
     private Context context;
     private List<AskQuestionBean> stringList;
 
@@ -60,20 +57,39 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
             } else {
                 ((DQViewHolder) holder).cardViewImage.setVisibility(View.GONE);
             }
+            //判断，如果有广告图片就隐藏广告图上方横线
+            if (position < stringList.size() - 1) {
+                if (stringList.get(position + 1).getTitle().isEmpty()){
+                    ((DQViewHolder) holder).viewBottomLine.setVisibility(View.GONE);
+                }else {
+                    ((DQViewHolder) holder).viewBottomLine.setVisibility(View.VISIBLE);
+                }
+            }
+            //设置广告图片
+            if (stringList.get(position).getTitle().isEmpty()) {
+                ((DQViewHolder) holder).rlRvLayout.setVisibility(View.GONE);
+                ((DQViewHolder) holder).cardViewAdImage.setVisibility(View.VISIBLE);
+                GlideUtils.glideLoader(context, stringList.get(position).getImg_urls()[0], ((DQViewHolder) holder).imageAdPhoto);
+            } else {
+                ((DQViewHolder) holder).rlRvLayout.setVisibility(View.VISIBLE);
+                ((DQViewHolder) holder).cardViewAdImage.setVisibility(View.GONE);
+            }
             ((DQViewHolder) holder).tvDateTime.setText(stringList.get(position).getAdd_time());
 
             ((DQViewHolder) holder).cardViewAdImage.setOnClickListener(new View.OnClickListener() {    //广告图片点击事件
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, "点击image", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(context, NewWebViewActivity.class);
+                    intent.putExtra("mLoadingUrl", stringList.get(position).getContent());
+                    intent.putExtra("bAnswer", true);
+                    context.startActivity(intent);
                 }
             });
             ((DQViewHolder) holder).rlRvLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Toast.makeText(context, "点击父布局" + position, Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(context, AnswerItemDetailsActivity.class);
-                    intent.putExtra(AskQuestionBean.class.getName(), stringList.get(position));
+                    intent.putExtra("question_id", stringList.get(position).getQuestion_id());
                     context.startActivity(intent);
 
                 }

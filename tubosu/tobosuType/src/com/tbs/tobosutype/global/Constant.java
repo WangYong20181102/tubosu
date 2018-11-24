@@ -27,10 +27,10 @@ public class Constant {
 
 
     /**
-     * todo 全局测试dev环境**********************************************************************************
+     * 局测试test环境**********************************************************************************
      */
     //接口地址
-    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+    public static final String TOBOSU_URL = "http://www.test.tobosu.com/";
     //dev点击流上传接口
 //    public static final String TBS_DATA_STREAM = "http://trace.dev.tobosu.com/";
     //M站test接口
@@ -361,6 +361,8 @@ public class Constant {
     public static final String ASK_QUESTION_LIST = TOBOSU_URL + "mapp/question/question_list";
     //问题搜索
     public static final String ASK_QUESTION_SEARCH = TOBOSU_URL + "mapp/question/searchInfo";
+    //问题浏览
+    public static final String ASK_QUESTION_VIEW_COUNT = TOBOSU_URL + "mapp/question/view_count";
     //问题详情页
     public static final String ASK_QUESTION_DETAIL = TOBOSU_URL + "mapp/question/detail";
     //回答列表
@@ -377,6 +379,8 @@ public class Constant {
     public static final String ASK_ADDQUESTION = TOBOSU_URL + "mapp/question/addQuestion";
     //发布评论
     public static final String ASK_ADDANSWERCOMMMENT = TOBOSU_URL + "mapp/answerComments/addAnswerCommment";
+    //我的提问
+    public static final String ASK_MYQUESTIONLIST = TOBOSU_URL + "mapp/question/MyQuestionList";
 
 
 

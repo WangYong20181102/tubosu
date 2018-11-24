@@ -18,7 +18,16 @@ public class AskQuestionBean implements Serializable {
     private String[] img_urls; //问题图片url
     private String icon; //回答者头像
     private String published_uid; //提问者ID
-//    private String answer_count; //问题答案数量
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    //    private String answer_count; //问题答案数量
 
 
     public String[] getImg_urls() {

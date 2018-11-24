@@ -48,6 +48,11 @@ public class EC {
         public static final int NOTICE_CO_NET_STORE_CHANGE_FUWUQUYU_MSG = 0x000039;//通知装修公司网店管理修改了地址信息
         public static final int NOTICE_CO_NET_STORE_CHANGE_SERVICE_MSG = 0x000040;//通知装修公司网店管理修改了服务区域
         public static final int NOTICE_HOME_PAGE_CHANGE_CITY_NAME = 0x000041;//通知新首页和装修公司页面更改显示的城市
+        /*装修问答*/
+        public static final int SEND_SUCCESS_CLOSE_ASKANSWER = 0x000042;    //关闭我要提问界面，同时更新详情界面数据(详情页进入)
+        public static final int SEND_SUCCESS_CLOSE_ASKANSWER_HOME = 0x000043;    //关闭我要提问界面，同时更新详情界面数据(问答首页入口进入)
+        public static final int SEND_SUCCESS_REPLY = 0x000044;  //回答、评论成功，更新详情界面数据
+
 
 
         public static final int DELETE_TAOTU_CODE = 0x100000;//删除收藏
@@ -62,6 +67,8 @@ public class EC {
         public static final int HOMEACTIVITY_CITY_CODE = 0x100009;//确定首页城市
         public static final int CHOOSE_PROVINCE_CODE = 0x100010;//确定首页城市
         public static final int CHOOSE_PROVINCE_CODE1 = 0x100011;//选择城市
+
+
     }
 
 }

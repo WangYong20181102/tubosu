@@ -9,6 +9,15 @@ public class AskDetailDataBean {
     private AskQuestionBean questionList;
     private List<AnswerListBean> answerList;
     private List<RelationListBean> relationList;
+    private List<AdvertBean> advert;
+
+    public List<AdvertBean> getAdvert() {
+        return advert;
+    }
+
+    public void setAdvert(List<AdvertBean> advert) {
+        this.advert = advert;
+    }
 
     public AskQuestionBean getQuestionList() {
         return questionList;
@@ -33,4 +42,5 @@ public class AskDetailDataBean {
     public void setRelationList(List<RelationListBean> relationList) {
         this.relationList = relationList;
     }
+
 }

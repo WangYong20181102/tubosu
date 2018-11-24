@@ -92,20 +92,6 @@
                 android:layout_marginTop="10dp"
                 android:textSize="15sp"
                 app:etv_MaxLinesOnShrink="10" />
-
-            <GridView
-                android:id="@+id/gv_answer_details"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:horizontalSpacing="5dp"
-                android:numColumns="3"
-                android:scrollbars="none"
-                android:visibility="gone">
-
-            </GridView>
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
