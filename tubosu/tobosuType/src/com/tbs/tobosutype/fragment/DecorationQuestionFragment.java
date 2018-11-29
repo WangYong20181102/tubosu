@@ -20,6 +20,8 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.DecorationQuestionFragmentAdapter;
 import com.tbs.tobosutype.base.BaseFragment;
 import com.tbs.tobosutype.bean.AskQuestionBean;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.Util;
@@ -115,6 +117,24 @@ public class DecorationQuestionFragment extends BaseFragment {
 
     }
 
+
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+    @Override
+    protected void receiveEvent(Event event) {
+        super.receiveEvent(event);
+        switch (event.getCode()) {
+            case EC.EventCode.SEND_SUCCESS_CLOSE_ASKANSWER: //详情页进入提问（刷新首页数据）
+                initData();
+                break;
+            case EC.EventCode.SEND_SUCCESS_CLOSE_ASKANSWER_HOME:    //问答首页进入提问（刷新首页数据）
+                initData();
+                break;
+        }
+    }
     //touch
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         @Override

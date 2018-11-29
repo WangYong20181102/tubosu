@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,13 +43,33 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof DQViewHolder) {
-            //设置文本
+            //问答个数
             ((DQViewHolder) holder).tvNumAnswer.setText(stringList.get(position).getAnswer_count());
             //设置标题
             ((DQViewHolder) holder).tvTittle.setText(stringList.get(position).getTitle());
+            //用来获取标题占的行数（标题两行，内容显示两行，标题一行，内容显示3行）
+            ((DQViewHolder) holder).tvTittle.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    //这个回调会调用多次，获取完行数记得注销监听
+                    ((DQViewHolder) holder).tvTittle.getViewTreeObserver().removeOnPreDrawListener(this);
+                    int lineCount = ((DQViewHolder) holder).tvTittle.getLineCount();//行数
+                    if (lineCount >= 2) {
+                        ((DQViewHolder) holder).tvContext.setMaxLines(2);
+                    } else {
+                        ((DQViewHolder) holder).tvContext.setMaxLines(3);
+                    }
+                    return false;
+                }
+            });
             //设置内容
+            if (stringList.get(position).getContent().isEmpty()){
+                ((DQViewHolder) holder).tvContext.setVisibility(View.GONE);
+            }else {
+                ((DQViewHolder) holder).tvContext.setVisibility(View.VISIBLE);
+            }
             ((DQViewHolder) holder).tvContext.setText(stringList.get(position).getContent());
             //设置图片
             if (!stringList.get(position).getImg_urls()[0].trim().isEmpty() && stringList.get(position).getImg_urls() != null) {
@@ -59,9 +80,9 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
             }
             //判断，如果有广告图片就隐藏广告图上方横线
             if (position < stringList.size() - 1) {
-                if (stringList.get(position + 1).getTitle().isEmpty()){
+                if (stringList.get(position + 1).getTitle().isEmpty()) {
                     ((DQViewHolder) holder).viewBottomLine.setVisibility(View.GONE);
-                }else {
+                } else {
                     ((DQViewHolder) holder).viewBottomLine.setVisibility(View.VISIBLE);
                 }
             }

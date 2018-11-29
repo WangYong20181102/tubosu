@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_answer_detail1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -14,10 +15,9 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_details_tittlt"
+            android:id="@+id/tv_details_tittle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="家里如何装修才会更好呢？家里如何装修才会更好呢？家里如何装修才会更好呢？"
             android:textColor="@color/FC_363650"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -27,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="我想要装修，装修好点的，有什么推荐的"
             android:textColor="@color/FC_363650"
             android:textSize="14sp" />
 
@@ -74,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="name"
+                android:layout_marginStart="5dp"
                 android:textColor="@color/FC_363650"
                 android:textSize="12sp" />
 
@@ -83,7 +82,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="提问于2018.11.6"
+                android:layout_marginStart="5dp"
+                android:textStyle="normal"
+                android:fontFamily="sans-serif-thin"
                 android:textColor="#999999"
                 android:textSize="12sp" />
         </LinearLayout>

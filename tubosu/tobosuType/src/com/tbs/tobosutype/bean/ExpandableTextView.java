@@ -5,28 +5,20 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.DynamicLayout;
 import android.text.Layout;
-import android.text.Selection;
-import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.text.style.ImageSpan;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
-
-import java.lang.reflect.Field;
 
 @SuppressLint("AppCompatCustomView")
 public class ExpandableTextView extends TextView {
@@ -241,25 +233,30 @@ public class ExpandableTextView extends TextView {
                 SpannableStringBuilder ssbShrink = new SpannableStringBuilder(fixText)
                         .append(mEllipsisHint);
                 if (mShowToExpandHint) {
-                    ssbShrink.append(getContentOfString(mGapToExpandHint));
-                    //获取图片
-                    Drawable d = getResources().getDrawable(R.drawable.expand);
-                    d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());//设置图片大小
-                    ssbShrink.setSpan(new ImageSpan(d, ImageSpan.ALIGN_BASELINE), ssbShrink.length() - getLengthOfString(mToExpandHint), ssbShrink.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+//                    ssbShrink.append(getContentOfString(mGapToExpandHint));
+//                    //获取图片
+//                    Drawable d = getResources().getDrawable(R.drawable.expand);
+//                    d.setBounds(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());//设置图片大小
+//                    ssbShrink.setSpan(new ImageSpan(d, ImageSpan.ALIGN_BASELINE), ssbShrink.length() - getLengthOfString(mToExpandHint), ssbShrink.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+                    ssbShrink.append(getContentOfString(mGapToExpandHint) + getContentOfString(mToExpandHint));
+                    ssbShrink.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View widget) {
+                            toggle();
+                        }
 
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            super.updateDrawState(ds);
+                            ds.setColor(Color.parseColor("#568bc1"));
+                            ds.setUnderlineText(false);
+                        }
+                    }, ssbShrink.length() - getLengthOfString(mToExpandHint), ssbShrink.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
                 return ssbShrink;
             }
         }
         return mOrigText;
-    }
-
-    /**
-     * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
-     */
-    public int px2dip(float pxValue) {
-        final float scale = this.getResources().getDisplayMetrics().density;
-        return (int) (pxValue / scale + 0.5f);
     }
 
     private String removeEndLineBreak(CharSequence text) {
@@ -323,4 +320,5 @@ public class ExpandableTextView extends TextView {
             toggle();
         }
     }
+
 }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
@@ -31,6 +32,7 @@ public class QuestionGridViewAdapter extends BaseAdapter {
         this.mContext = context;
         this.btnName = btnnames;
         this.mPosition = mPosition;
+        btnName.remove(0);
         inflater = LayoutInflater.from(context);
     }
 
@@ -65,13 +67,13 @@ public class QuestionGridViewAdapter extends BaseAdapter {
             holder.BtntextView.setTextColor(Color.parseColor("#ff6b14"));
             GradientDrawable gradientDrawable = new GradientDrawable();
             gradientDrawable.setColor(Color.parseColor("#fff4ed"));
-            gradientDrawable.setStroke(1,Color.parseColor("#ffa773"));
+            gradientDrawable.setStroke(1, Color.parseColor("#ffa773"));
             gradientDrawable.setCornerRadius(40);
             holder.BtntextView.setBackgroundDrawable(gradientDrawable);
-        }else {
+        } else {
             holder.BtntextView.setTextColor(Color.parseColor("#363650"));
             GradientDrawable gradientDrawable = new GradientDrawable();
-            gradientDrawable.setStroke(1,Color.parseColor("#eeeeee"));
+            gradientDrawable.setStroke(1, Color.parseColor("#eeeeee"));
             gradientDrawable.setColor(Color.parseColor("#ffffff"));
             gradientDrawable.setCornerRadius(40);
             holder.BtntextView.setBackgroundDrawable(gradientDrawable);

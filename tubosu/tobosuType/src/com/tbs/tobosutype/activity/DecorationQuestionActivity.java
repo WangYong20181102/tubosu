@@ -42,6 +42,7 @@ import com.tbs.tobosutype.fragment.DecorationQuestionFragment;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -104,8 +105,6 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
     View fragShardowView;
     @BindView(R.id.rl_more)
     RelativeLayout rlMore;
-    @BindView(R.id.nothingData)
-    RelativeLayout nothingData;
     @BindView(R.id.image_dq_more)
     ImageView imageDqMore;
     @BindView(R.id.searchList)
@@ -119,7 +118,7 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
     @BindView(R.id.mengceng4)
     View mengceng4;
     /**
-     * 搜索状态
+     * 搜索状态（用于物理按键返回操作）
      */
     private boolean bSearchState = false;
 
@@ -144,7 +143,7 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
     /**
      * 下拉选框当前选中位置
      */
-    private int currentSelectedPosition = 0;
+    private int currentSelectedPosition = -1;
     /**
      * 下拉选框pop视图
      */
@@ -237,12 +236,11 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
     //初始化
     private void initViewEvent() {
         initHttpRequest();
-        currentSelectedPosition = 0;
+        currentSelectedPosition = -1;
 
         dropDownPopupWindow = LayoutInflater.from(this).inflate(R.layout.pop_window_layout, null);
         mGridView = dropDownPopupWindow.findViewById(R.id.pop_window_show);
         dqMid.setBackgroundColor(Color.WHITE);
-
         dqViewPager.setOnPageChangeListener(this);
 
 
@@ -289,23 +287,27 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
                 break;
             case R.id.tvCancelSearch:       //取消按钮
                 if (tvCancelSearch.getText().toString().trim().equals("搜索")) {
-                    ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(DecorationQuestionActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    hideSystemKeyBroad();
                     mengceng4.setVisibility(View.GONE);
-                    searchLayout.setBackgroundResource(R.drawable.wht);
+                    if (fragmentAdapter != null) {
+                        fragmentAdapter = null;
+                        searchList.setAdapter(null);
+                    }
                     showSearchResultView();
                     System.gc();
                 } else {
                     bSearchState = false;
-                    ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(DecorationQuestionActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    hideSystemKeyBroad();
                     rlTopSerach.setVisibility(View.VISIBLE);
                     searchLayout.setVisibility(View.GONE);
+                    rlNoResult.setVisibility(View.GONE);
                     System.gc();
                 }
                 tvCancelSearch.setText("取消");
                 break;
             case R.id.image_quesition:  //提问
                 if (TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {
-                    Toast.makeText(mContext, "您还没有登陆", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "您还没有登录", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, NewLoginActivity.class);
                     startActivityForResult(intent, 0);
                     return;
@@ -319,16 +321,21 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
                 break;
             case R.id.ll_image_back:    //搜索返回
                 bSearchState = false;
-                ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(DecorationQuestionActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                hideSystemKeyBroad();
                 rlTopSerach.setVisibility(View.VISIBLE);
                 searchLayout.setVisibility(View.GONE);
+                rlNoResult.setVisibility(View.GONE);
                 System.gc();
+                finish();
                 break;
             case R.id.rl_more:  //下拉展开箭头
                 showPopSelect();
                 break;
             case R.id.ivGongSiDelete://输入框清除文字按钮
                 etSearchGongsi.setText("");
+                rlNoResult.setVisibility(View.GONE);
+                mengceng4.setVisibility(View.VISIBLE);
+                searchLayout.setBackgroundColor(Color.TRANSPARENT);
                 if (fragmentAdapter != null) {
                     fragmentAdapter = null;
                     searchList.setAdapter(null);
@@ -374,7 +381,7 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
             public void onResponse(Call call, Response response) throws IOException {
                 String json = new String(response.body().string());
                 try {
-                    JSONObject jsonObject = new JSONObject(json);
+                    final JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.optString("status");
                     if (status.equals("200")) {
                         JSONObject data = jsonObject.getJSONObject("data");
@@ -389,6 +396,7 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
                                 if (fragmentAdapter == null) {
                                     rlNoResult.setVisibility(View.GONE);
                                     searchList.setVisibility(View.VISIBLE);
+                                    searchLayout.setBackgroundColor(Color.WHITE);
                                     fragmentAdapter = new DecorationQuestionFragmentAdapter(DecorationQuestionActivity.this, askQuestionBeanList);
                                     searchList.setAdapter(fragmentAdapter);
                                 }
@@ -402,12 +410,23 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
 
                             }
                         });
+                    } else if (status.equals("201")) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!askQuestionBeanList.isEmpty()) {    //用来判断是否有数据显示，有数据显示 201 数据加载完
+                                    ToastUtil.showShort(DecorationQuestionActivity.this, jsonObject.optString("msg"));
+                                } else { //无数据显示 201 暂无数据
+                                    rlNoResult.setVisibility(View.VISIBLE);
+                                    searchList.setVisibility(View.GONE);
+                                }
+                            }
+                        });
                     } else {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                rlNoResult.setVisibility(View.VISIBLE);
-                                searchList.setVisibility(View.GONE);
+                                ToastUtil.showShort(DecorationQuestionActivity.this, jsonObject.optString("msg"));
                             }
                         });
                     }
@@ -444,7 +463,7 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
             public void onResponse(Call call, Response response) throws IOException {
                 String json = new String(response.body().string());
                 try {
-                    JSONObject jsonObject = new JSONObject(json);
+                    final JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.optString("status");
                     if (status.equals("200")) {
                         JSONObject data = jsonObject.getJSONObject("data");
@@ -497,17 +516,21 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
 
                                 if (decorationQuestionViewPagerAdapter == null) {
                                     decorationQuestionViewPagerAdapter = new DecorationQuestionViewPagerAdapter(getSupportFragmentManager(), DecorationQuestionActivity.this, fragmentList);
-                                    dqViewPager.setAdapter(decorationQuestionViewPagerAdapter);
                                     dqViewPager.setOffscreenPageLimit(0);
-                                    decorationQuestionViewPagerAdapter.notifyDataSetChanged();
+                                    dqViewPager.setAdapter(decorationQuestionViewPagerAdapter);
                                 } else {
                                     decorationQuestionViewPagerAdapter.notifyDataSetChanged();
                                 }
-
-
                             }
                         });
 
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.showShort(mContext, jsonObject.optString("msg"));
+                            }
+                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -523,20 +546,30 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
     private void showSearchView() {
         searchLayout.setBackgroundResource(R.color.cal_pressed_color_trancspar);
         mengceng4.setVisibility(View.VISIBLE);
+        mengceng4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bSearchState = false;
+                hideSystemKeyBroad();
+                rlTopSerach.setVisibility(View.VISIBLE);
+                searchLayout.setVisibility(View.GONE);
+                System.gc();
+            }
+        });
         searchList.setVisibility(View.INVISIBLE);
+
         // 点击 跳转去搜索页面
         etSearchGongsi.setText("");
-
         etSearchGongsi.setFocusable(true);
         etSearchGongsi.setFocusableInTouchMode(true);
         etSearchGongsi.requestFocus();
+
         InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
 
         tvCancelSearch.setText("取消");
         ivGongSiDelete.setVisibility(View.GONE);
-        nothingData.setVisibility(View.GONE);
-        searchLayout.setVisibility(View.VISIBLE);
+        rlNoResult.setVisibility(View.GONE);
 
         System.gc();
     }
@@ -563,12 +596,12 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 currentSelectedPosition = position;
                 popupWindow.dismiss();
-                dqViewPager.setCurrentItem(position);
+                dqViewPager.setCurrentItem(position + 1);
             }
         });
         fragShardowView.setVisibility(View.VISIBLE);
         popupWindow = new PopupWindow(dropDownPopupWindow, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#f5f3f2")));
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ffffff")));
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
         popupWindow.update();
@@ -596,7 +629,7 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
 
     @Override
     public void onPageSelected(int position) {
-        currentSelectedPosition = position;
+        currentSelectedPosition = position - 1;
     }
 
     @Override
@@ -627,18 +660,26 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (bSearchState){
+            if (bSearchState) {
                 bSearchState = false;
-                ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(DecorationQuestionActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                hideSystemKeyBroad();
                 rlTopSerach.setVisibility(View.VISIBLE);
                 searchLayout.setVisibility(View.GONE);
+                rlNoResult.setVisibility(View.GONE);
                 System.gc();
-            }else {
+            } else {
                 finish();
             }
             return true;
         }
 
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 隐藏系统键盘
+     */
+    private void hideSystemKeyBroad() {
+        ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(DecorationQuestionActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }

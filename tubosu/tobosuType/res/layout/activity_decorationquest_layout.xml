@@ -73,7 +73,12 @@
                 android:layout_toLeftOf="@+id/rl_more">
 
             </net.lucode.hackware.magicindicator.MagicIndicator>
-
+            <RelativeLayout
+                android:layout_width="47dp"
+                android:layout_height="45dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/anwser_top_bg">
+            </RelativeLayout>
             <RelativeLayout
                 android:id="@+id/rl_more"
                 android:layout_width="42dp"
@@ -118,13 +123,15 @@
         android:id="@+id/rl_no_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/white_bg"
+        android:clickable="true"
         android:visibility="gone">
 
         <ImageView
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/none_content" />
+            android:src="@drawable/sousuo" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -233,21 +240,6 @@
 
             </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
-
-        <RelativeLayout
-            android:id="@+id/nothingData"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/topSearch"
-            android:background="@color/white"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:background="@drawable/sousuo" />
-        </RelativeLayout>
 
         <View
             android:id="@+id/mengceng4"

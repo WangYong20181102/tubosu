@@ -78,7 +78,6 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
     private AnswerItemDetailsAdapter adapter;   //适配器
     private AskDetailDataBean beanList; //数据集合类
     private boolean isLike = false;
-    private boolean loginState = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,10 +147,7 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
                 initHttpRequest(question_id);
                 break;
             case EC.EventCode.CLOSE_NEW_LOGIN_ACTIVITY://登录成功
-                if (loginState){
-                    loginState = false;
-                    initHttpRequest(question_id);
-                }
+                initHttpRequest(question_id);
                 break;
         }
     }
@@ -175,7 +171,7 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
             public void onResponse(Call call, Response response) throws IOException {
                 String json = Objects.requireNonNull(response.body()).string();
                 try {
-                    JSONObject jsonObject = new JSONObject(json);
+                    final JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.optString("status");
                     if (status.equals("200")) {
                         String data = jsonObject.optString("data");
@@ -189,11 +185,19 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
                                     adapter.setOnDianZanAdapterClickLister(onDianZanAdapterClickLister);
                                 } else {
                                     adapter.changeList(beanList);
+                                    rvAnswerDetails.scrollToPosition(0);
                                     adapter.notifyDataSetChanged();
                                 }
                             }
                         });
 
+                    }else{
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.showShort(mContext,jsonObject.optString("msg"));
+                            }
+                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -210,8 +214,8 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
         @Override
         public void onDianZanAdapterClick(View view, int position) {
             switch (view.getId()) {
-                case R.id.image_dianzan_icon:   //点赞
-                case R.id.ll_dianzan:   //点赞父布局
+                case R.id.image_like_icon:   //点赞
+                case R.id.ll_like:   //点赞父布局
                     if (TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {   //未登录状态下点赞逻辑处理
                         if (!isLike) {
                             isLike = true;
@@ -345,8 +349,7 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
                 break;
             case R.id.linear_askquestion:   //我要回答
                 if (TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {
-                    loginState = true;
-                    Toast.makeText(mContext, "您还没有登陆", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "您还没有登录", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, NewLoginActivity.class);
                     startActivityForResult(intent, 0);
                     return;
@@ -357,8 +360,7 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
                 break;
             case R.id.linear_reply:     //  我要提问
                 if (TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {
-                    loginState = true;
-                    Toast.makeText(mContext, "您还没有登陆", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "您还没有登录", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, NewLoginActivity.class);
                     startActivityForResult(intent, 0);
                     return;

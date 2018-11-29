@@ -40,8 +40,8 @@ public class GlideUtils {
     public static void glideLoaderUriImage(Context context, Uri imgUri, int erroImg, int emptyImg, ImageView imageView) {
         Glide.with(context).load(imgUri).asBitmap().placeholder(emptyImg).error(erroImg).into(imageView);
     }
-    public static void glideLoaderFileImage(Context context, File imgFile, int erroImg, int emptyImg, ImageView imageView) {
-        Glide.with(context).load(imgFile).asBitmap().placeholder(emptyImg).error(erroImg).centerCrop().into(imageView);
+    public static void glideLoader(Context context, String imgUrl,ImageView imageView,String str) {
+        Glide.with(context).load(imgUrl).asBitmap().placeholder(R.drawable.iamge_loading).error(R.drawable.iamge_loading).into(imageView);
     }
 
     /**

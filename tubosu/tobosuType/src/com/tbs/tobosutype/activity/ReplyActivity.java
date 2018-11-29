@@ -75,6 +75,10 @@ public class ReplyActivity extends BaseActivity implements TextWatcher, PhotoUpl
      * 压缩后的图片路径
      */
     private ArrayList<String> listPath;
+    // 两次点击按钮之间的最小点击间隔时间(单位:ms)
+    private static final int MIN_CLICK_DELAY_TIME = 3000;
+    // 最后一次点击的时间
+    private long lastClickTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,12 +144,18 @@ public class ReplyActivity extends BaseActivity implements TextWatcher, PhotoUpl
                     ToastUtil.showShort(this, "问题至少10个字哟");
                     return;
                 }
-                if (listPath.isEmpty()) {
-                    sendAnswerRequest("");
-                } else {
-                    PhotoUploadUtils uploadUtils = PhotoUploadUtils.getInstences(ReplyActivity.this, listPath);
-                    uploadUtils.setOnPhotoUploadListener(this);
-                    uploadUtils.startUpload();
+
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - lastClickTime > MIN_CLICK_DELAY_TIME) {// 两次点击的时间间隔大于最小限制时间，则触发点击事件
+                    lastClickTime = currentTime;
+                    // 这里触发点击事件
+                    if (listPath.isEmpty()) {
+                        sendAnswerRequest("");
+                    } else {
+                        PhotoUploadUtils uploadUtils = PhotoUploadUtils.getInstences(ReplyActivity.this, listPath);
+                        uploadUtils.setOnPhotoUploadListener(this);
+                        uploadUtils.startUpload();
+                    }
                 }
                 break;
             case R.id.image_add_photo:  // 添加图片
@@ -179,7 +189,6 @@ public class ReplyActivity extends BaseActivity implements TextWatcher, PhotoUpl
         OKHttpUtil.post(Constant.ASK_ANSWER_ADDANSWER, params, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
             }
 
             @Override

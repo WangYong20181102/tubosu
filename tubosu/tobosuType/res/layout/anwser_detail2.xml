@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_answer_detail2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
@@ -97,6 +98,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
             android:layout_marginTop="11dp">
 
             <TextView
@@ -116,7 +118,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/ll_huifu"
+                    android:id="@+id/ll_reply"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -128,7 +130,7 @@
                         android:src="@drawable/comment" />
 
                     <TextView
-                        android:id="@+id/tv_pinglun_num"
+                        android:id="@+id/tv_comment_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -137,20 +139,20 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ll_dianzan"
+                    android:id="@+id/ll_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/image_dianzan_icon"
+                        android:id="@+id/image_like_icon"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_marginLeft="15dp"
                         android:src="@drawable/like" />
 
                     <TextView
-                        android:id="@+id/tv_dianzan_num"
+                        android:id="@+id/tv_like_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -165,7 +167,6 @@
             android:id="@+id/view_bottom_line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="15dp"
             android:background="#eeeeee" />
     </LinearLayout>
 

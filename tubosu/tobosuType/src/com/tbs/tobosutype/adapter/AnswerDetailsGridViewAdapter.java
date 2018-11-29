@@ -61,7 +61,7 @@ public class AnswerDetailsGridViewAdapter extends BaseAdapter {
             myViewHolder = (MyViewHolder) convertView.getTag();
         }
         GlideUtils.glideLoader(context, stringList.get(position), myViewHolder.imageItem);
-        if (position == 2) {
+        if (position == 2 && stringList.size() > 3) {
             myViewHolder.rlAddNum.setVisibility(View.VISIBLE);
         } else {
             myViewHolder.rlAddNum.setVisibility(View.GONE);

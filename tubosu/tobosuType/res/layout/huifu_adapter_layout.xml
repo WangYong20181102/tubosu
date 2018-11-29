@@ -51,7 +51,7 @@
                         android:id="@+id/tv_answer_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/FC_363650"
+                        android:textColor="@color/FC_6F6F8F"
                         android:textSize="15sp" />
 
                     <LinearLayout
@@ -74,7 +74,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
-                            android:textColor="@color/FC_363650"
+                            android:textColor="@color/FC_6F6F8F"
+                            android:maxLines="1"
+                            android:ellipsize="end"
                             android:textSize="15sp" />
                     </LinearLayout>
 

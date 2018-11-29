@@ -1,12 +1,9 @@
 package com.tbs.tobosutype.base;
 
-import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.global.HomeListener;
@@ -14,14 +11,11 @@ import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.utils.AppManager;
 import com.tbs.tobosutype.utils.EventBusUtil;
 import com.tbs.tobosutype.utils.SpUtil;
-import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
 import com.umeng.analytics.MobclickAgent;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.List;
 
 /**
  * Created by Mr.Lin on 2017/10/27 10:29.

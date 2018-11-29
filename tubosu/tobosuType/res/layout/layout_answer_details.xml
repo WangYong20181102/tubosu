@@ -32,7 +32,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/share_black"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -45,11 +45,17 @@
     </android.support.v7.widget.RecyclerView>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/answer_bottom_bg"/>
+
+    <LinearLayout
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
+        android:background="@drawable/white_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:weightSum="2">
@@ -135,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:text="1"
                 android:textColor="@color/white"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_total_num"
@@ -143,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:text="/3"
                 android:textColor="@color/white"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
         </LinearLayout>
 

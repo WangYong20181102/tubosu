@@ -120,7 +120,8 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 ((ReplyViewHolder) holder).image_dianzan_icon.setImageResource(R.drawable.like);
                 ((ReplyViewHolder) holder).tv_dianzan_num.setTextColor(Color.parseColor("#6f6f8f"));
             }
-            ((ReplyViewHolder) holder).tv_dianzan_num.setText(stringList.get(position).getAgree_count());
+            //点赞个数
+            ((ReplyViewHolder) holder).tv_dianzan_num.setText((stringList.get(position).getAgree_count().equals("0") || stringList.get(position).getAgree_count().isEmpty()) ? "点赞" : stringList.get(position).getAgree_count());
 
         }
     }
@@ -152,9 +153,8 @@ public class ReplyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             case R.id.ll_huifu: //回复按钮
             case R.id.tv_answer_name://评论者
             case R.id.image_answer_icon://评论者头像
-            case R.id.expandable_text://内容
                 if (TextUtils.isEmpty(AppInfoUtil.getUserid(activity))) {
-                    Toast.makeText(activity, "您还没有登陆", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "您还没有登录", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(activity, NewLoginActivity.class);
                     activity.startActivityForResult(intent, 0);
                     return;

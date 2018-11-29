@@ -122,7 +122,7 @@ public class SelectTypeActivity extends BaseActivity implements PhotoUploadUtils
                 String json = Objects.requireNonNull(response.body().string());
                 try {
                     Log.i("SelectTypeActivity", "onResponse: 进来请求-------------------");
-                    JSONObject jsonObject = new JSONObject(json);
+                    final JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.optString("status");
                     if (status.equals("200")) {
                         typeBeanList = gson.fromJson(jsonObject.optString("data"), new TypeToken<List<SelectTypeBean>>() {
@@ -147,6 +147,13 @@ public class SelectTypeActivity extends BaseActivity implements PhotoUploadUtils
                             }
                         });
 
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.showShort(mContext, jsonObject.optString("msg"));
+                            }
+                        });
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -220,7 +227,7 @@ public class SelectTypeActivity extends BaseActivity implements PhotoUploadUtils
             public void onResponse(Call call, Response response) throws IOException {
                 String json = Objects.requireNonNull(response.body()).string();
                 try {
-                    JSONObject jsonObject = new JSONObject(json);
+                    final JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.optString("status");
                     if (status.equals("200")) {
                         final String id = jsonObject.getJSONObject("data").getString("id");
@@ -237,6 +244,13 @@ public class SelectTypeActivity extends BaseActivity implements PhotoUploadUtils
                                     EventBusUtil.sendEvent(new Event(EC.EventCode.SEND_SUCCESS_CLOSE_ASKANSWER, id));
                                 }
                                 finish();
+                            }
+                        });
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.showShort(mContext, jsonObject.optString("msg"));
                             }
                         });
                     }

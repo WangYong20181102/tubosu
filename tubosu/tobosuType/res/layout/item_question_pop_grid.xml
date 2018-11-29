@@ -10,10 +10,10 @@
         android:layout_height="28dp"
         android:background="@drawable/radio_select_btn"
         android:gravity="center"
-        android:text="二居室"
         android:button="@null"
+        android:singleLine="true"
+        android:ellipsize="end"
         android:textColor="@color/FC_363650"
-
         android:textSize="14sp" />
 
 </LinearLayout>

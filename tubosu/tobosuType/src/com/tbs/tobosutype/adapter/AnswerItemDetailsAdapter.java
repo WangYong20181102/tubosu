@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -49,7 +48,6 @@ import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DialogUtil;
 import com.tbs.tobosutype.utils.EventBusUtil;
 import com.tbs.tobosutype.utils.GlideUtils;
-import com.tbs.tobosutype.utils.SharePreferenceUtil;
 import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
 
@@ -176,7 +174,7 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
                     public void onResponse(Call call, Response response) throws IOException {
                         String json = Objects.requireNonNull(response.body()).string();
                         try {
-                            JSONObject jsonObject = new JSONObject(json);
+                            final JSONObject jsonObject = new JSONObject(json);
                             String status = jsonObject.optString("status");
                             if (status.equals("200")) {
                                 activity.runOnUiThread(new Runnable() {
@@ -189,6 +187,13 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
                                         commentTotalNumRequest(replyPosition);   //评论成功再次进行评论总数网络请求
                                         EventBusUtil.sendEvent(new Event(EC.EventCode.SEND_SUCCESS_REPLY)); //更新详情界面数据
 
+                                    }
+                                });
+                            } else {
+                                activity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ToastUtil.showShort(context, jsonObject.optString("msg"));
                                     }
                                 });
                             }
@@ -221,20 +226,24 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
         if (viewType == 0) {
             View view = LayoutInflater.from(context).inflate(R.layout.anwser_detail1, parent, false);
             AnswerDetailsViewHolder1 holder1 = new AnswerDetailsViewHolder1(view);
+            holder1.rl_answer_detail1.setBackgroundColor(Color.WHITE);
             return holder1;
         } else if (viewType == 1) {
             View view = LayoutInflater.from(context).inflate(R.layout.anwser_detail2, parent, false);
             AnswerDetailsViewHolder2 holder2 = new AnswerDetailsViewHolder2(view);
-            holder2.imageDianzanIcon.setOnClickListener(this);
-            holder2.llDianzan.setOnClickListener(this);
+            holder2.rl_answer_detail2.setBackgroundColor(Color.WHITE);
+            holder2.imageLikeIcon.setOnClickListener(this);
+            holder2.llLike.setOnClickListener(this);
             return holder2;
         } else if (viewType == 2) {
             View view = LayoutInflater.from(context).inflate(R.layout.anwser_detail3, parent, false);
             AnswerDetailsViewHolder3 holder3 = new AnswerDetailsViewHolder3(view);
+            holder3.rl_answer_detail3.setBackgroundColor(Color.WHITE);
             return holder3;
         } else {
             View view = LayoutInflater.from(context).inflate(R.layout.anwser_detail4, parent, false);
             AnswerDetailsViewHolder4 holder4 = new AnswerDetailsViewHolder4(view);
+            holder4.rl_answer_detail4.setBackgroundColor(Color.WHITE);
             return holder4;
         }
     }
@@ -251,6 +260,11 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
             //用户的头像
             GlideUtils.glideLoader(context, askQuestionBean.getIcon(), R.drawable.iamge_loading, R.drawable.iamge_loading, ((AnswerDetailsViewHolder1) holder).imageDetailsIcon, 0);
             ((AnswerDetailsViewHolder1) holder).tvDetailsTittle.setText(askQuestionBean.getTitle());//标题
+            if (askQuestionBean.getContent().isEmpty()){
+                ((AnswerDetailsViewHolder1) holder).tvDetailsContext.setVisibility(View.GONE);
+            }else {
+                ((AnswerDetailsViewHolder1) holder).tvDetailsContext.setVisibility(View.VISIBLE);
+            }
             ((AnswerDetailsViewHolder1) holder).tvDetailsContext.setText(askQuestionBean.getContent());//   内容
             ((AnswerDetailsViewHolder1) holder).tvDetailsName.setText(askQuestionBean.getName());   //昵称
             ((AnswerDetailsViewHolder1) holder).tvDetailsDate.setText("提问于" + askQuestionBean.getAdd_time());//日期
@@ -290,21 +304,27 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
             //评论时间
             ((AnswerDetailsViewHolder2) holder).tvTime.setText(answerListBeanList.get(position - 1).getAdd_time());
             //评论总数
-            ((AnswerDetailsViewHolder2) holder).tvPinglunNum.setText(answerListBeanList.get(position - 1).getComment_count());
-            ((AnswerDetailsViewHolder2) holder).imageDianzanIcon.setTag(position - 1);
-            ((AnswerDetailsViewHolder2) holder).llDianzan.setTag(position - 1);
+            ((AnswerDetailsViewHolder2) holder).tvCommentNum.setText((answerListBeanList.get(position - 1).getComment_count().equals("0") || answerListBeanList.get(position - 1).getComment_count().isEmpty()) ? "评论" : answerListBeanList.get(position - 1).getComment_count());
+            ((AnswerDetailsViewHolder2) holder).imageLikeIcon.setTag(position - 1);
+            ((AnswerDetailsViewHolder2) holder).llLike.setTag(position - 1);
+            if (position == answerListBeanList.size()) { //隐藏最后一个底部下划线
+                ((AnswerDetailsViewHolder2) holder).viewBottomLine.setVisibility(View.GONE);
+            } else {
+                ((AnswerDetailsViewHolder2) holder).viewBottomLine.setVisibility(View.VISIBLE);
+            }
             if (answerListBeanList.get(position - 1).getIs_agree() == 1) {   //是否点赞：1、是 2、否
                 //已点赞
-                ((AnswerDetailsViewHolder2) holder).imageDianzanIcon.setImageResource(R.drawable.like_selected);
+                ((AnswerDetailsViewHolder2) holder).imageLikeIcon.setImageResource(R.drawable.like_selected);
                 //已点赞字体颜色
-                ((AnswerDetailsViewHolder2) holder).tvDianzanNum.setTextColor(Color.parseColor("#ff6b14"));
+                ((AnswerDetailsViewHolder2) holder).tvLikeNum.setTextColor(Color.parseColor("#ff6b14"));
             } else {
                 //未点赞
-                ((AnswerDetailsViewHolder2) holder).imageDianzanIcon.setImageResource(R.drawable.like);
+                ((AnswerDetailsViewHolder2) holder).imageLikeIcon.setImageResource(R.drawable.like);
                 //未点赞字体颜色
-                ((AnswerDetailsViewHolder2) holder).tvDianzanNum.setTextColor(Color.parseColor("#6f6f8f"));
+                ((AnswerDetailsViewHolder2) holder).tvLikeNum.setTextColor(Color.parseColor("#6f6f8f"));
             }
-            ((AnswerDetailsViewHolder2) holder).tvDianzanNum.setText(answerListBeanList.get(position - 1).getAgree_count());
+            //点赞个数
+            ((AnswerDetailsViewHolder2) holder).tvLikeNum.setText((answerListBeanList.get(position - 1).getAgree_count().equals("0") || answerListBeanList.get(position - 1).getAgree_count().isEmpty()) ? "点赞" : answerListBeanList.get(position - 1).getAgree_count());
 
             if (!answerListBeanList.get(position - 1).getImg_urls()[0].trim().isEmpty() && answerListBeanList.get(position - 1).getImg_urls() != null) {
                 ((AnswerDetailsViewHolder2) holder).gvAnswer.setVisibility(View.VISIBLE);
@@ -318,7 +338,7 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
             }
 
             //回复按钮父布局点击跳转
-            ((AnswerDetailsViewHolder2) holder).llHuifu.setOnClickListener(new View.OnClickListener() {
+            ((AnswerDetailsViewHolder2) holder).llReply.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     showAnswerTotalView(position - 1);
@@ -340,8 +360,13 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
             }
 
         } else if (holder instanceof AnswerDetailsViewHolder4) {
-            ((AnswerDetailsViewHolder4) holder).tvRHZXQuestionItem.setText(relationListBeanList.get(position - (answerListBeanList.size() + 2)).getTitle());
-//            ((AnswerDetailsViewHolder4) holder).tvRHZXQuestionItem.setOnClickListener(new View.OnClickListener() {
+            ((AnswerDetailsViewHolder4) holder).tvRelatedQuestionItem.setText(relationListBeanList.get(position - (answerListBeanList.size() + 2)).getTitle());
+            if (relationListBeanList.get(position - (answerListBeanList.size() + 2)) == relationListBeanList.get(0)) {
+                ((AnswerDetailsViewHolder4) holder).tv_related_question.setVisibility(View.VISIBLE);
+            } else {
+                ((AnswerDetailsViewHolder4) holder).tv_related_question.setVisibility(View.GONE);
+            }
+//            ((AnswerDetailsViewHolder4) holder).tvRelatedQuestionItem.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
 //                    Toast.makeText(context, "相关问题" + relationListBeanList.get(position - (answerListBeanList.size() + 2)).getQuestion_id(), Toast.LENGTH_SHORT).show();
@@ -388,6 +413,7 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
         replyPosition = position;
         commentView = LayoutInflater.from(context).inflate(R.layout.dialog_show_pinglun, null);
         dialogImageClose = commentView.findViewById(R.id.image_close);
+        TextView tv_send = commentView.findViewById(R.id.tv_send);
         dialogTvCommentTotal = commentView.findViewById(R.id.tv_pinglun_total_num);
         dialogRecycle = commentView.findViewById(R.id.rv_pinglun);
         dialogLinear = commentView.findViewById(R.id.ll_bottom);
@@ -409,11 +435,23 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
             }
         });
 
+        tv_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(AppInfoUtil.getUserid(activity))) {
+                    Toast.makeText(activity, "您还没有登录", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(activity, NewLoginActivity.class);
+                    activity.startActivityForResult(intent, 0);
+                    return;
+                }
+                showHuiFuEdit(-1);
+            }
+        });
         dialogLinear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(AppInfoUtil.getUserid(activity))) {
-                    Toast.makeText(activity, "您还没有登陆", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "您还没有登录", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(activity, NewLoginActivity.class);
                     activity.startActivityForResult(intent, 0);
                     return;
@@ -446,7 +484,7 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
             public void onResponse(Call call, Response response) throws IOException {
                 String json = Objects.requireNonNull(response.body()).string();
                 try {
-                    JSONObject jsonObject = new JSONObject(json);
+                    final JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.optString("status");
                     if (status.equals("200")) {
                         askListBeanList = gson.fromJson(jsonObject.optString("data"), AskListDataBean.class);
@@ -457,6 +495,13 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
                                 replyAdapter = new ReplyAdapter(context, askListBeanList);
                                 dialogRecycle.setAdapter(replyAdapter);
                                 replyAdapter.setOnReplyClickListener(onReplyClickListener);
+                            }
+                        });
+                    } else {
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.showShort(context, jsonObject.optString("msg"));
                             }
                         });
                     }
@@ -481,6 +526,8 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
 
     /**
      * 点击弹出回复文本框
+     *
+     * @param position -1代表直接回复评论人
      */
     private void showHuiFuEdit(int position) {
         entrancePosition = position;
@@ -495,8 +542,10 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
         editBottom.setFocusable(true);
         editBottom.setFocusableInTouchMode(true);
         editBottom.requestFocus();
+
         InputMethodManager im = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         im.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+
         animation = AnimationUtils.loadAnimation(context, R.anim.push_bottom_in1);
         viewBg.startAnimation(animation);
         viewBg.setVisibility(View.VISIBLE);
@@ -523,13 +572,11 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     /**
-     * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
+     * 设置带展开内容
+     *
+     * @param holder
+     * @param position
      */
-    public static int px2dip(Context context, float pxValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (pxValue / scale + 0.5f);
-    }
-
     private void setExpandableTextItem(RecyclerView.ViewHolder holder, int position) {
         ((AnswerDetailsViewHolder2) holder).expandableTextView.setTag(position - 1);
         ((AnswerDetailsViewHolder2) holder).expandableTextView.setExpandListener(this);
@@ -578,7 +625,7 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
     @Override
     public void onClick(View v) {
         if (onDianZanAdapterClickLister != null) {
-            onDianZanAdapterClickLister.onDianZanAdapterClick(v, (int) v.getTag());
+            onDianZanAdapterClickLister.onDianZanAdapterClick(v, (Integer) v.getTag());
         }
     }
 
@@ -590,71 +637,77 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
         private ImageView imageDetailsIcon; //头像
         private GridView gvDetails; //九宫格图片
         private LinearLayout llNoAnswer; //暂无回答父布局
+        private RelativeLayout rl_answer_detail1;
 
         public AnswerDetailsViewHolder1(View itemView) {
             super(itemView);
-            tvDetailsTittle = itemView.findViewById(R.id.tv_details_tittlt);
+            tvDetailsTittle = itemView.findViewById(R.id.tv_details_tittle);
             tvDetailsContext = itemView.findViewById(R.id.tv_details_context);
             tvDetailsName = itemView.findViewById(R.id.tv_details_name);
             tvDetailsDate = itemView.findViewById(R.id.tv_details_date);
             imageDetailsIcon = itemView.findViewById(R.id.image_details_icon);
             gvDetails = itemView.findViewById(R.id.gv_details);
             llNoAnswer = itemView.findViewById(R.id.ll_no_answer);
+            rl_answer_detail1 = itemView.findViewById(R.id.rl_answer_detail1);
         }
     }
 
     private class AnswerDetailsViewHolder2 extends RecyclerView.ViewHolder {
         private RelativeLayout rlAnswerNum;     //回答个数父布局
         private TextView tvAnswerNum;   //回答个数
-        private CardView cardView; //头像父布局
         private ImageView imageAnswerIcon;  //头像控件
         private TextView tvAnswerName;  //名字
         private ExpandableTextView expandableTextView; //内容
         private GridView gvAnswer;  //图片
         private TextView tvTime;    //回答时间
-        private TextView tvPinglunNum;  //评论个数
-        private ImageView imageDianzanIcon; //点赞图标
-        private ImageView imageHuifu; //回复图标
-        private TextView tvDianzanNum; //点赞个数
+        private TextView tvCommentNum;  //评论个数
+        private ImageView imageLikeIcon; //点赞图标
+        private TextView tvLikeNum; //点赞个数
         private View viewBottomLine;    //底部下划线
-        private LinearLayout llHuifu;    //回复父布局
-        private LinearLayout llDianzan;    //点赞父布局
+        private LinearLayout llReply;    //回复父布局
+        private LinearLayout llLike;    //点赞父布局
+        private RelativeLayout rl_answer_detail2;
 
         public AnswerDetailsViewHolder2(View itemView) {
             super(itemView);
             rlAnswerNum = itemView.findViewById(R.id.rl_answer_num);
             tvAnswerNum = itemView.findViewById(R.id.tv_answer_num);
-            cardView = itemView.findViewById(R.id.cardview_answer);
             imageAnswerIcon = itemView.findViewById(R.id.image_answer_icon);
             tvAnswerName = itemView.findViewById(R.id.tv_answer_name);
             expandableTextView = itemView.findViewById(R.id.expandable_text);
             gvAnswer = itemView.findViewById(R.id.gv_answer_details);
             tvTime = itemView.findViewById(R.id.tv_answer_time);
-            tvPinglunNum = itemView.findViewById(R.id.tv_pinglun_num);
-            imageHuifu = itemView.findViewById(R.id.image_huifu);
-            imageDianzanIcon = itemView.findViewById(R.id.image_dianzan_icon);
-            tvDianzanNum = itemView.findViewById(R.id.tv_dianzan_num);
+            tvCommentNum = itemView.findViewById(R.id.tv_comment_num);
+            imageLikeIcon = itemView.findViewById(R.id.image_like_icon);
+            tvLikeNum = itemView.findViewById(R.id.tv_like_num);
             viewBottomLine = itemView.findViewById(R.id.view_bottom_line);
-            llHuifu = itemView.findViewById(R.id.ll_huifu);
-            llDianzan = itemView.findViewById(R.id.ll_dianzan);
+            llReply = itemView.findViewById(R.id.ll_reply);
+            llLike = itemView.findViewById(R.id.ll_like);
+            rl_answer_detail2 = itemView.findViewById(R.id.rl_answer_detail2);
         }
     }
 
     private class AnswerDetailsViewHolder3 extends RecyclerView.ViewHolder {
         private ViewPager viewPagerBottom;
+        private RelativeLayout rl_answer_detail3;
 
         public AnswerDetailsViewHolder3(View itemView) {
             super(itemView);
             viewPagerBottom = itemView.findViewById(R.id.viewpager_bottom);
+            rl_answer_detail3 = itemView.findViewById(R.id.rl_answer_detail3);
         }
     }
 
     private class AnswerDetailsViewHolder4 extends RecyclerView.ViewHolder {
-        private TextView tvRHZXQuestionItem;
+        private TextView tvRelatedQuestionItem;
+        private TextView tv_related_question;
+        private RelativeLayout rl_answer_detail4;
 
         public AnswerDetailsViewHolder4(View itemView) {
             super(itemView);
-            tvRHZXQuestionItem = itemView.findViewById(R.id.tv_xiangguan_question_item);
+            tvRelatedQuestionItem = itemView.findViewById(R.id.tv_related_question_item);
+            tv_related_question = itemView.findViewById(R.id.tv_related_question);
+            rl_answer_detail4 = itemView.findViewById(R.id.rl_answer_detail4);
         }
     }
 

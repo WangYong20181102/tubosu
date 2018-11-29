@@ -56,7 +56,7 @@ public class AnswerDetailsViewPagerAdapter extends PagerAdapter {
                 activity.hindViewPagerImage();
             }
         });
-        GlideUtils.glideLoader(context, integerList.get(position), imageView);
+        GlideUtils.glideLoader(context, integerList.get(position), imageView,"");
         container.addView(view);
         return view;
     }
