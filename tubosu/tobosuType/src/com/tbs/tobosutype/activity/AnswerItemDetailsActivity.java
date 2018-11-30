@@ -57,6 +57,8 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
     RecyclerView rvAnswerDetails;   //滑动布局
     @BindView(R.id.rl_cover_ad_bg)
     RelativeLayout rlCoverAdBg;
+    @BindView(R.id.ll_bottom_num)
+    LinearLayout llBottomNum;
     @BindView(R.id.iv_ad)
     ViewPager ivAd;     //滑动图片显示
     @BindView(R.id.tv_current_num)
@@ -390,6 +392,11 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
         }
         tvTotalNum.setText("/" + stringList.size());
         rlCoverAdBg.setVisibility(View.VISIBLE);
+        if (stringList.size() == 1){
+            llBottomNum.setVisibility(View.GONE);
+        }else {
+            llBottomNum.setVisibility(View.VISIBLE);
+        }
     }
 
     /**

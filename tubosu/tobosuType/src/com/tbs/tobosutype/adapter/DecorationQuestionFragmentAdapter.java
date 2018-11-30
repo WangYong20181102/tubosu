@@ -90,7 +90,7 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
             if (stringList.get(position).getTitle().isEmpty()) {
                 ((DQViewHolder) holder).rlRvLayout.setVisibility(View.GONE);
                 ((DQViewHolder) holder).cardViewAdImage.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(context, stringList.get(position).getImg_urls()[0], ((DQViewHolder) holder).imageAdPhoto);
+                GlideUtils.glideLoader(context, stringList.get(position).getImg_urls()[0], R.drawable.iamge_loading,((DQViewHolder) holder).imageAdPhoto);
             } else {
                 ((DQViewHolder) holder).rlRvLayout.setVisibility(View.VISIBLE);
                 ((DQViewHolder) holder).cardViewAdImage.setVisibility(View.GONE);

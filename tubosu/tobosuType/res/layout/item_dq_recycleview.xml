@@ -119,7 +119,7 @@
             android:id="@+id/image_ad_photo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:src="@drawable/img_about_details" />
     </android.support.v7.widget.CardView>
 </RelativeLayout>

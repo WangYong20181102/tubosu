@@ -50,13 +50,13 @@ class ViewPagerBottomAdapter extends PagerAdapter {
         final int newPosition = position % strImageUrlList.size();
         View view = View.inflate(container.getContext(), R.layout.ask_ad_viewpager, null);
         ImageView imageView = view.findViewById(R.id.image_bottom);
-        GlideUtils.glideLoader(context, strImageUrlList.get(newPosition).getImg_url(), imageView);
+        GlideUtils.glideLoader(context, strImageUrlList.get(newPosition).getImg_url(), R.drawable.iamge_loading, imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, NewWebViewActivity.class);
-                intent.putExtra("mLoadingUrl", strImageUrlList.get(position).getJump_url());
-                intent.putExtra("bAnswer",true);
+                intent.putExtra("mLoadingUrl", strImageUrlList.get(newPosition).getJump_url());
+                intent.putExtra("bAnswer", true);
                 context.startActivity(intent);
             }
         });

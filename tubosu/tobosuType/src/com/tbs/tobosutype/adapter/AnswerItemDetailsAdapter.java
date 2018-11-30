@@ -366,12 +366,14 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
             } else {
                 ((AnswerDetailsViewHolder4) holder).tv_related_question.setVisibility(View.GONE);
             }
-//            ((AnswerDetailsViewHolder4) holder).tvRelatedQuestionItem.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Toast.makeText(context, "相关问题" + relationListBeanList.get(position - (answerListBeanList.size() + 2)).getQuestion_id(), Toast.LENGTH_SHORT).show();
-//                }
-//            });
+            ((AnswerDetailsViewHolder4) holder).tvRelatedQuestionItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, AnswerItemDetailsActivity.class);
+                    intent.putExtra("question_id", relationListBeanList.get(position - (answerListBeanList.size() + 2)).getQuestion_id());
+                    context.startActivity(intent);
+                }
+            });
         }
 
 

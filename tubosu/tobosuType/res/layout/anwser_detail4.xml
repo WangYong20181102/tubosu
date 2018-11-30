@@ -17,6 +17,7 @@
             android:text="@string/str_related_question"
             android:textColor="@color/FC_363650"
             android:layout_marginBottom="25dp"
+            android:layout_marginTop="15dp"
             android:textSize="17sp"
             android:textStyle="bold" />
         <TextView

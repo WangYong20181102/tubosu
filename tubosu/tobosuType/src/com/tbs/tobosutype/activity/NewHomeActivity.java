@@ -454,7 +454,11 @@ public class NewHomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         home_kefu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showZixunPopwindow();
+//                showZixunPopwindow();
+                Intent intent = new Intent(NewHomeActivity.this, NewWebViewActivity.class);
+                intent.putExtra("mLoadingUrl", "https://webchat.7moor.com/wapchat.html?accessId=0e1ca6b0-ec8e-11e8-a1ba-07d6a6237cdc");
+                intent.putExtra("bAnswer",true);
+                startActivity(intent);
             }
         });
     }

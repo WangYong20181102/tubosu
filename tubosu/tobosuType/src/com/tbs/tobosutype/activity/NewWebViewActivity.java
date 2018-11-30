@@ -46,7 +46,7 @@ public class NewWebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
     private String TAG = "NewWebViewActivity";
     private Intent mIntent;
     private String mLoadingUrl = "";//加载数据的URL
-    private boolean b = false;  //用来区分装饰问答界面传过来url
+    private boolean b = false;  //false不拼接，true拼接
     private Gson mGson;
     private _AppEvent mAppEvent;
 

@@ -5,10 +5,9 @@
     android:layout_height="match_parent"
     android:background="@color/alpha_bg_color">
 
-    <ImageView
+    <com.tbs.tobosutype.model.MatrixImageView
         android:id="@+id/image_viewPager_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
         android:src="@drawable/b_home_style"/>
 </RelativeLayout>
