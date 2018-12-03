@@ -103,7 +103,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
      * 1 业主标记
      * 3 装修公司标记
      */
-    private String mark = "0";
+//    private String mark = "0";
 
     /**
      * 底部[我]的红色订单数提示
@@ -518,14 +518,16 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
          **/
 //        intent = new Intent().setClass(this, MyActivity.class);
 //        intent = new Intent().setClass(this, NoneLoginOfMineActivity.class);//3.7新增
-        intent = new Intent().setClass(this, NewMineNoneLoginActivity.class);//新增
-        spec = tabHost.newTabSpec("FOUR").setIndicator("我").setContent(intent);
-        tabHost.addTab(spec);
+
+//        intent = new Intent().setClass(this, NewMineNoneLoginActivity.class);//新增
+//        spec = tabHost.newTabSpec("FOUR").setIndicator("我").setContent(intent);
+//        tabHost.addTab(spec);
 
 //        intent = new Intent().setClass(this, MyCompanyActivity.class);
-        intent = new Intent().setClass(this, CompanyOfMineActivity.class);//3.7新增
-        spec = tabHost.newTabSpec("FOUR2").setIndicator("我").setContent(intent);
-        tabHost.addTab(spec);
+
+//        intent = new Intent().setClass(this, CompanyOfMineActivity.class);//3.7新增
+//        spec = tabHost.newTabSpec("FOUR2").setIndicator("我").setContent(intent);
+//        tabHost.addTab(spec);
 
 //        intent = new Intent().setClass(this, MyOwnerActivity.class);
 //        intent = new Intent().setClass(this, CustomOfMineActivity.class);//3.7新增
@@ -586,8 +588,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     private void initData() {
         Log.e(TAG, "MainActivity=============执行========initData=====");
         token = AppInfoUtil.getToekn(getApplicationContext());
-        mark = userInfo.getString("mark", "0");
-        initNet();
+//        mark = userInfo.getString("mark", "0");
+//        initNet();
 
         if ("5".equals(getSharedPreferences("Go_PopOrderActivity_SP", Context.MODE_PRIVATE).getString("go_poporder_string", "0"))) {
             // 首次安装执行下面代码 否则略过
@@ -629,7 +631,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 
 
     private void setFragmentPosition(int fragmentPostion) {
-        mark = userInfo.getString("mark", "0");
+//        mark = userInfo.getString("mark", "0");
         switch (fragmentPostion) {
             case 0:
                 tabHost.setCurrentTab(fragmentPostion);
@@ -683,47 +685,47 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                  * 1 业主标记       FOUR2.登陆的是装修公司界面
                  * 3 装修公司标记   FOUR3.登陆的是业主界面
                  */
-                if ("1".equals(mark)) {
-                    // 业主
-                    tabHost.setCurrentTabByTag("FOUR3");
-                    tabPosition = 3;
-                    img_home.setBackgroundResource(R.drawable.home_black);
-                    img_image.setBackgroundResource(R.drawable.tu_black);
-                    img_decorate.setBackgroundResource(R.drawable.company_black);
-                    img_my.setBackgroundResource(R.drawable.me_orange);
+//                if ("1".equals(mark)) {
+                // 业主
+                tabHost.setCurrentTabByTag("FOUR3");
+                tabPosition = 3;
+                img_home.setBackgroundResource(R.drawable.home_black);
+                img_image.setBackgroundResource(R.drawable.tu_black);
+                img_decorate.setBackgroundResource(R.drawable.company_black);
+                img_my.setBackgroundResource(R.drawable.me_orange);
 
-                    tv_home_textview.setTextColor(Color.parseColor("#A8AAAC"));
-                    tv_image_textview.setTextColor(Color.parseColor("#A8AAAC"));
-                    tv_decorate_textview.setTextColor(Color.parseColor("#A8AAAC"));
-                    tv_my_textview.setTextColor(Color.parseColor("#ff9c00"));
-                } else if ("3".equals(mark)) {
-                    // 装修公司
-                    tabHost.setCurrentTabByTag("FOUR2");
-                    tabPosition = 3;
-                    img_home.setBackgroundResource(R.drawable.home_black);
-                    img_image.setBackgroundResource(R.drawable.tu_black);
-                    img_decorate.setBackgroundResource(R.drawable.company_black);
-                    img_my.setBackgroundResource(R.drawable.me_orange);
-
-                    tv_home_textview.setTextColor(Color.parseColor("#A8AAAC"));
-                    tv_image_textview.setTextColor(Color.parseColor("#A8AAAC"));
-                    tv_decorate_textview.setTextColor(Color.parseColor("#A8AAAC"));
-                    tv_my_textview.setTextColor(Color.parseColor("#ff9c00"));
-                } else if ("0".equals(mark)) {
-                    Util.setLog(TAG, "==========mark 0 =========");
-                    tabHost.setCurrentTab(fragmentPostion);
-                    tabHost.setCurrentTabByTag("FOUR");
-
-                    img_home.setBackgroundResource(R.drawable.home_black);
-                    img_image.setBackgroundResource(R.drawable.tu_black);
-                    img_decorate.setBackgroundResource(R.drawable.company_black);
-                    img_my.setBackgroundResource(R.drawable.me_orange);
-
-                    tv_home_textview.setTextColor(Color.parseColor("#A8AAAC"));
-                    tv_image_textview.setTextColor(Color.parseColor("#A8AAAC"));
-                    tv_decorate_textview.setTextColor(Color.parseColor("#A8AAAC"));
-                    tv_my_textview.setTextColor(Color.parseColor("#ff9c00"));
-                }
+                tv_home_textview.setTextColor(Color.parseColor("#A8AAAC"));
+                tv_image_textview.setTextColor(Color.parseColor("#A8AAAC"));
+                tv_decorate_textview.setTextColor(Color.parseColor("#A8AAAC"));
+                tv_my_textview.setTextColor(Color.parseColor("#ff9c00"));
+//                } else if ("3".equals(mark)) {
+//                    // 装修公司
+//                    tabHost.setCurrentTabByTag("FOUR2");
+//                    tabPosition = 3;
+//                    img_home.setBackgroundResource(R.drawable.home_black);
+//                    img_image.setBackgroundResource(R.drawable.tu_black);
+//                    img_decorate.setBackgroundResource(R.drawable.company_black);
+//                    img_my.setBackgroundResource(R.drawable.me_orange);
+//
+//                    tv_home_textview.setTextColor(Color.parseColor("#A8AAAC"));
+//                    tv_image_textview.setTextColor(Color.parseColor("#A8AAAC"));
+//                    tv_decorate_textview.setTextColor(Color.parseColor("#A8AAAC"));
+//                    tv_my_textview.setTextColor(Color.parseColor("#ff9c00"));
+//                } else if ("0".equals(mark)) {
+//                    Util.setLog(TAG, "==========mark 0 =========");
+//                    tabHost.setCurrentTab(fragmentPostion);
+//                    tabHost.setCurrentTabByTag("FOUR");
+//
+//                    img_home.setBackgroundResource(R.drawable.home_black);
+//                    img_image.setBackgroundResource(R.drawable.tu_black);
+//                    img_decorate.setBackgroundResource(R.drawable.company_black);
+//                    img_my.setBackgroundResource(R.drawable.me_orange);
+//
+//                    tv_home_textview.setTextColor(Color.parseColor("#A8AAAC"));
+//                    tv_image_textview.setTextColor(Color.parseColor("#A8AAAC"));
+//                    tv_decorate_textview.setTextColor(Color.parseColor("#A8AAAC"));
+//                    tv_my_textview.setTextColor(Color.parseColor("#ff9c00"));
+//                }
                 SpUtil.setMainTabPosition(mContext, 3);
                 break;
         }
@@ -779,14 +781,14 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
          * 3 装修公司标记   FOUR3.登陆的是业主界面
          */
         if (AppInfoUtil.ISJUSTLOGIN) {
-            if ("1".equals(mark)) {
+//            if ("1".equals(mark)) {
                 tabHost.setCurrentTabByTag("FOUR3");
-            } else if ("3".equals(mark)) {
-                tabHost.setCurrentTabByTag("FOUR2");
-            } else {
-                // 未登录
-                tabHost.setCurrentTabByTag("FOUR");
-            }
+//            } else if ("3".equals(mark)) {
+//                tabHost.setCurrentTabByTag("FOUR2");
+//            } else {
+//                // 未登录
+//            tabHost.setCurrentTabByTag("FOUR");
+//            }
             AppInfoUtil.ISJUSTLOGIN = false;
         }
         initEvent();
@@ -795,77 +797,75 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
     /***
      * 检测网络状况 ；若登陆 则获取订单数目
      */
-    private void initNet() {
-        requestParams = AppInfoUtil.getPublicHashMapParams(mContext);
-        if (mark.equals("0")) {
-            not_see_orders_count.setVisibility(View.GONE);
-            Log.d(TAG, "--MainActivity没有登陆--");
-        } else {
-            Log.d(TAG, "--MainActivity已经登陆--");
-            requestParams.put("token", token);
-
-            OKHttpUtil.post(requsetUrl, requestParams, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Util.setToast(mContext, "请求错误，请稍后再试~");
-                        }
-                    });
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    final String result = response.body().string();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.d(TAG, result);
-                            try {
-                                JSONObject object = new JSONObject(result);
-                                if (object.getInt("error_code") == 0) {
-                                    JSONObject jsonObject = object.getJSONObject("data");
-                                    // 系统消息只显示红点，订单数据要显示数目 两者共存的话，显示订单数目就是了
-                                    int num = 0; //订单数目
-                                    int sys_message_flag = 0;
-                                    if (mark.equals("3")) {
-                                        num = Integer.parseInt(jsonObject.getString("not_see_orders_count"));
-                                        sys_message_flag = jsonObject.getInt("sysmesscount");
-                                        Log.d(TAG, "--订单数目是[" + num + "]--");
-                                        if (num > 0 && sys_message_flag >= 0) { // 订单有数目 有系统消息
-                                            not_see_orders_count.setText(num + "");
-//                                            not_see_orders_count.setVisibility(View.VISIBLE);
-                                            not_see_orders_count.setVisibility(View.GONE);
-                                        } else if (num <= 0 && sys_message_flag > 0) {
-                                            not_see_orders_count.setText("");
-//                                            not_see_orders_count.setVisibility(View.VISIBLE);
-                                            not_see_orders_count.setVisibility(View.GONE);
-                                        } else {
-                                            not_see_orders_count.setVisibility(View.GONE);
-                                        }
-                                    } else if (mark.equals("1")) {
-                                        sys_message_flag = jsonObject.getInt("sysmesscount");
-                                        if (sys_message_flag > 0) {
-//                                            not_see_orders_count.setVisibility(View.VISIBLE);
-                                            not_see_orders_count.setVisibility(View.GONE);
-                                        } else {
-                                            not_see_orders_count.setVisibility(View.GONE);
-                                        }
-                                    }
-
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                }
-            });
-        }
-    }
-
-
+//    private void initNet() {
+//        requestParams = AppInfoUtil.getPublicHashMapParams(mContext);
+//        if (mark.equals("0")) {
+//            not_see_orders_count.setVisibility(View.GONE);
+//            Log.d(TAG, "--MainActivity没有登陆--");
+//        } else {
+//            Log.d(TAG, "--MainActivity已经登陆--");
+//            requestParams.put("token", token);
+//
+//            OKHttpUtil.post(requsetUrl, requestParams, new Callback() {
+//                @Override
+//                public void onFailure(Call call, IOException e) {
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Util.setToast(mContext, "请求错误，请稍后再试~");
+//                        }
+//                    });
+//                }
+//
+//                @Override
+//                public void onResponse(Call call, Response response) throws IOException {
+//                    final String result = response.body().string();
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Log.d(TAG, result);
+//                            try {
+//                                JSONObject object = new JSONObject(result);
+//                                if (object.getInt("error_code") == 0) {
+//                                    JSONObject jsonObject = object.getJSONObject("data");
+//                                    // 系统消息只显示红点，订单数据要显示数目 两者共存的话，显示订单数目就是了
+//                                    int num = 0; //订单数目
+//                                    int sys_message_flag = 0;
+//                                    if (mark.equals("3")) {
+//                                        num = Integer.parseInt(jsonObject.getString("not_see_orders_count"));
+//                                        sys_message_flag = jsonObject.getInt("sysmesscount");
+//                                        Log.d(TAG, "--订单数目是[" + num + "]--");
+//                                        if (num > 0 && sys_message_flag >= 0) { // 订单有数目 有系统消息
+//                                            not_see_orders_count.setText(num + "");
+////                                            not_see_orders_count.setVisibility(View.VISIBLE);
+//                                            not_see_orders_count.setVisibility(View.GONE);
+//                                        } else if (num <= 0 && sys_message_flag > 0) {
+//                                            not_see_orders_count.setText("");
+////                                            not_see_orders_count.setVisibility(View.VISIBLE);
+//                                            not_see_orders_count.setVisibility(View.GONE);
+//                                        } else {
+//                                            not_see_orders_count.setVisibility(View.GONE);
+//                                        }
+//                                    } else if (mark.equals("1")) {
+//                                        sys_message_flag = jsonObject.getInt("sysmesscount");
+//                                        if (sys_message_flag > 0) {
+////                                            not_see_orders_count.setVisibility(View.VISIBLE);
+//                                            not_see_orders_count.setVisibility(View.GONE);
+//                                        } else {
+//                                            not_see_orders_count.setVisibility(View.GONE);
+//                                        }
+//                                    }
+//
+//                                }
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    });
+//                }
+//            });
+//        }
+//    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -908,18 +908,18 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
             case R.id.main_tab_my:
                 //点击了我的模块
                 MobclickAgent.onEvent(mContext, "click_app_preson_center");
-                if ("1".equals(mark)) {
-                    tabHost.setCurrentTabByTag("FOUR3");
+//                if ("1".equals(mark)) {
+                tabHost.setCurrentTabByTag("FOUR3");
 //                    setFragmentPosition(3);
-                } else if ("3".equals(mark)) {
-                    tabHost.setCurrentTabByTag("FOUR2");
-//                    setFragmentPosition(3);
-                    tabPosition = 3;
-                } else if ("0".equals(mark)) {
-                    tabHost.setCurrentTabByTag("FOUR");
-//                    setFragmentPosition(3);
-                    tabPosition = 3;
-                }
+//                } else if ("3".equals(mark)) {
+//                    tabHost.setCurrentTabByTag("FOUR2");
+////                    setFragmentPosition(3);
+//                    tabPosition = 3;
+//                } else if ("0".equals(mark)) {
+//                    tabHost.setCurrentTabByTag("FOUR");
+////                    setFragmentPosition(3);
+//                    tabPosition = 3;
+//                }
                 setFragmentPosition(3);
                 SpUtil.setMainTabPosition(mContext, 3);
                 break;

@@ -159,7 +159,7 @@ android.applicationVariants.all { variant ->
     variant.outputs.all { output ->
         def outputFile = output.outputFile
         if (outputFile != null && outputFile.name.endsWith('.apk')) {
-            File outputDirectory = new File(outputFile.parent);
+            File outputDirectory = new File(outputFile.parent)
             def fileName
             if (variant.buildType.name == "release") {
 //                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_${variant.productFlavors[0].name}.apk"

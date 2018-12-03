@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.adapter.MessageCenterAdapter;
 import com.tbs.tobosutype.base.BaseActivity;
 import com.tbs.tobosutype.bean._PresonerInfo;
 import com.tbs.tobosutype.customview.CustomDialog;
@@ -63,10 +64,10 @@ public class NewMineActivity extends BaseActivity {
     ImageView newMineNextImg;
     @BindView(R.id.new_mine_shoucang_ll)
     LinearLayout newMineShoucangLl;
-    @BindView(R.id.new_mine_jizhang_ll)
-    LinearLayout newMineJizhangLl;
-    @BindView(R.id.new_mine_dingdan_ll)
-    LinearLayout newMineDingdanLl;
+    @BindView(R.id.new_mine_reply_ll)
+    LinearLayout newMineReplyLl;
+    @BindView(R.id.new_mine_message_ll)
+    LinearLayout newMineMessageLl;
     @BindView(R.id.new_mine_kefu_num_tv)
     TextView newMineKefuNumTv;
     @BindView(R.id.new_mine_kefu_rl)
@@ -83,6 +84,12 @@ public class NewMineActivity extends BaseActivity {
     RelativeLayout newMineShezhiRl;
     @BindView(R.id.new_mine_ll)
     LinearLayout newMineLl;
+    @BindView(R.id.rl_unlogin)
+    RelativeLayout rlUnLogin;
+    @BindView(R.id.rl_login)
+    RelativeLayout rlLogin;
+    @BindView(R.id.message_red_dot)
+    View messageRedDot; //消息红点
     private Context mContext;
     private String TAG = "NewMineActivity";
     private Gson mGson;
@@ -109,6 +116,13 @@ public class NewMineActivity extends BaseActivity {
         super.onResume();
         newMineLl.setBackgroundColor(Color.parseColor("#ffffff"));
 //        Log.e(TAG, "数据更新==========onResume======");
+        if (AppInfoUtil.getMark(mContext).equals("0")) {
+            rlUnLogin.setVisibility(View.VISIBLE);
+            rlLogin.setVisibility(View.GONE);
+        } else {
+            rlUnLogin.setVisibility(View.GONE);
+            rlLogin.setVisibility(View.VISIBLE);
+        }
         if (Util.isNetAvailable(mContext)) {
             //有网
             HttpGetUserInfo();
@@ -205,9 +219,9 @@ public class NewMineActivity extends BaseActivity {
 
 
     @OnClick({R.id.new_mine_icon_img, R.id.new_mine_next_img, R.id.new_mine_shoucang_ll,
-            R.id.new_mine_jizhang_ll, R.id.new_mine_dingdan_ll, R.id.new_mine_kefu_rl,
+            R.id.new_mine_reply_ll, R.id.new_mine_message_ll, R.id.new_mine_kefu_rl,
             R.id.new_mine_fuwuhao_rl, R.id.new_mine_fenxiang_rl, R.id.new_mine_pingjia_rl,
-            R.id.new_mine_shezhi_rl})
+            R.id.new_mine_shezhi_rl, R.id.rl_unlogin})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.new_mine_icon_img:
@@ -223,17 +237,17 @@ public class NewMineActivity extends BaseActivity {
                 }
                 startActivity(it);
                 break;
-            case R.id.new_mine_jizhang_ll:
-                //进入记账界面
-                if (CacheManager.getDecorateBudget(mContext) <= 0) {
-                    startActivity(new Intent(mContext, KeepAccountActivity.class));
-                } else {
-                    startActivity(new Intent(mContext, DecorateAccountActivity.class));
-                }
+            case R.id.new_mine_reply_ll:    //我的提问
+//                if (CacheManager.getDecorateBudget(mContext) <= 0) {
+//                    startActivity(new Intent(mContext, KeepAccountActivity.class));
+//                } else {
+//                    startActivity(new Intent(mContext, DecorateAccountActivity.class));
+//                }
+                startActivity(new Intent(mContext,MyReplyActivity.class));
                 break;
-            case R.id.new_mine_dingdan_ll:
-                //进入查看订单界面
-                chaKanDingdan();
+            case R.id.new_mine_message_ll:  //消息中心
+//                chaKanDingdan();
+                startActivity(new Intent(mContext,MessageCenterActivity.class));
                 break;
             case R.id.new_mine_kefu_rl:
                 //开启客服电话
@@ -253,6 +267,11 @@ public class NewMineActivity extends BaseActivity {
                 break;
             case R.id.new_mine_shezhi_rl:
                 startActivity(new Intent(mContext, NewSettingActivity.class));
+                break;
+            case R.id.rl_unlogin:
+                Intent intentToRegister = new Intent(mContext, NewLoginActivity.class);
+                intentToRegister.putExtra("mWhereComeFrom", "NoneLoginOfMineActivity");
+                startActivity(intentToRegister);
                 break;
         }
     }

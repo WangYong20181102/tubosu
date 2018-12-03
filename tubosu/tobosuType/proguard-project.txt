@@ -22,6 +22,7 @@
 -keep public class * extends android.content.BroadcastReceiver
 -keep class com.tencent.android.tpush.**  {*;}
 -keep class com.tencent.mid.**  {*;}
+-keep class android.support.design.widget.** { *; }
 -keepclassmembers class * {
    public <init>(org.json.JSONObject);
 }

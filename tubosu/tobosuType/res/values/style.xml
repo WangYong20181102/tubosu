@@ -136,6 +136,9 @@
     <style name="TabLayoutTextStyle">
         <item name="android:textSize">16sp</item>
     </style>
+    <style name="TabLayoutTextStyle1">
+        <item name="android:textSize">18sp</item>
+    </style>
 
 
     <style name="ActionSheetDialogStyle" parent="@android:style/Theme.Dialog">

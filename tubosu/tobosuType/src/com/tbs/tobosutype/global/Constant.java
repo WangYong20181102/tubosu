@@ -19,7 +19,7 @@ public class Constant {
      * todo 全局正式环境**********************************************************************************
      */
     //接口地址
-    public static final String TOBOSU_URL = "https://www.tobosu.com/";
+//    public static final String TOBOSU_URL = "https://www.tobosu.com/";
     //数据流上传接口 正式
     public static final String TBS_DATA_STREAM = "https://www.tobosu.com/trace";
     //M站 发单跳转 线上环境
@@ -30,7 +30,7 @@ public class Constant {
      * 局测试test环境**********************************************************************************
      */
     //接口地址
-//    public static final String TOBOSU_URL = "http://www.test.tobosu.com/";
+    public static final String TOBOSU_URL = "http://www.test.tobosu.com/";
     //dev点击流上传接口
 //    public static final String TBS_DATA_STREAM = "http://trace.dev.tobosu.com/";
     //M站test接口

@@ -19,60 +19,98 @@
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
             android:src="@drawable/bg" />
-        <!--头像-->
         <RelativeLayout
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="30dp">
-
+            android:id="@+id/rl_unlogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!--头像-->
             <ImageView
+                android:id="@+id/none_login_icon"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/avatar" />
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/user" />
+            <!--名称-->
+            <TextView
+                android:id="@+id/none_login_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="92dp"
+                android:layout_marginTop="51dp"
+                android:text="登录/注册"
+                android:textColor="#ffffff"
+                android:textSize="19sp" />
 
             <ImageView
-                android:id="@+id/new_mine_icon_img"
-                android:layout_width="58dp"
-                android:layout_height="58dp"
-                android:layout_centerInParent="true" />
+                android:id="@+id/none_login_icon_right"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="52dp"
+                android:src="@drawable/next" />
         </RelativeLayout>
-        <!--名称-->
-        <TextView
-            android:id="@+id/new_mine_name_tv"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/rl_login"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="92dp"
-            android:layout_marginTop="35dp"
-            android:text=""
-            android:singleLine="true"
-            android:textColor="#ffffff"
-            android:textSize="19sp" />
-        <!--用户的地址-->
-        <TextView
-            android:id="@+id/new_mine_address_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="92dp"
-            android:layout_marginTop="64dp"
-            android:background="@drawable/shape_address"
-            android:gravity="center"
-            android:paddingBottom="3dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="3dp"
-            android:text=""
-            android:textColor="#ffffff"
-            android:textSize="12sp" />
+            android:visibility="gone">
+            <!--头像-->
+            <RelativeLayout
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="30dp">
 
-        <ImageView
-            android:id="@+id/new_mine_next_img"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="52dp"
-            android:src="@drawable/next" />
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/avatar" />
+
+                <ImageView
+                    android:id="@+id/new_mine_icon_img"
+                    android:layout_width="58dp"
+                    android:layout_height="58dp"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
+            <!--名称-->
+            <TextView
+                android:id="@+id/new_mine_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="92dp"
+                android:layout_marginTop="35dp"
+                android:text=""
+                android:singleLine="true"
+                android:textColor="#ffffff"
+                android:textSize="19sp" />
+            <!--用户的地址-->
+            <TextView
+                android:id="@+id/new_mine_address_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="92dp"
+                android:layout_marginTop="64dp"
+                android:background="@drawable/shape_address"
+                android:gravity="center"
+                android:paddingBottom="3dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="3dp"
+                android:text=""
+                android:textColor="#ffffff"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/new_mine_next_img"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="52dp"
+                android:src="@drawable/next" />
+        </RelativeLayout>
         <!--选项按钮-->
         <RelativeLayout
             android:layout_width="match_parent"
@@ -112,7 +150,7 @@
                 </LinearLayout>
                 <!--记账本-->
                 <LinearLayout
-                    android:id="@+id/new_mine_jizhang_ll"
+                    android:id="@+id/new_mine_reply_ll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="137dp"
@@ -124,18 +162,18 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/tally" />
+                        android:src="@drawable/message_question" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="记账本"
+                        android:text="我的提问"
                         android:textColor="#363650"
                         android:textSize="15sp" />
                 </LinearLayout>
                 <!--我的订单-->
                 <LinearLayout
-                    android:id="@+id/new_mine_dingdan_ll"
+                    android:id="@+id/new_mine_message_ll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -148,15 +186,26 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/indent" />
+                        android:src="@drawable/news" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="我的订单"
+                        android:text="消息中心"
                         android:textColor="#363650"
                         android:textSize="15sp" />
                 </LinearLayout>
+                <View
+                    android:id="@+id/message_red_dot"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/not_see_orders_count_bg"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginRight="53dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="53dp"
+                    android:visibility="gone"/>
             </RelativeLayout>
         </RelativeLayout>
 
