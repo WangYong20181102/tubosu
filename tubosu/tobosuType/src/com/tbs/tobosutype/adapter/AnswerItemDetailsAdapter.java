@@ -44,6 +44,7 @@ import com.tbs.tobosutype.bean.RelationListBean;
 import com.tbs.tobosutype.customview.BaseSelectPopupWindow;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.model.WrapContentHeightViewPager;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.DialogUtil;
 import com.tbs.tobosutype.utils.EventBusUtil;
@@ -260,9 +261,9 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
             //用户的头像
             GlideUtils.glideLoader(context, askQuestionBean.getIcon(), R.drawable.iamge_loading, R.drawable.iamge_loading, ((AnswerDetailsViewHolder1) holder).imageDetailsIcon, 0);
             ((AnswerDetailsViewHolder1) holder).tvDetailsTittle.setText(askQuestionBean.getTitle());//标题
-            if (askQuestionBean.getContent().isEmpty()){
+            if (askQuestionBean.getContent().isEmpty()) {
                 ((AnswerDetailsViewHolder1) holder).tvDetailsContext.setVisibility(View.GONE);
-            }else {
+            } else {
                 ((AnswerDetailsViewHolder1) holder).tvDetailsContext.setVisibility(View.VISIBLE);
             }
             ((AnswerDetailsViewHolder1) holder).tvDetailsContext.setText(askQuestionBean.getContent());//   内容
@@ -353,10 +354,14 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
             } else {
                 ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setVisibility(View.VISIBLE);
                 viewPagerAdapter = new ViewPagerBottomAdapter(context, advertBeans);
-                ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setOffscreenPageLimit(3);
-                ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setCurrentItem(Integer.MAX_VALUE / 2);  //开始为中间位置，实现左右滑动轮播
-                ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setAdapter(viewPagerAdapter);
-                startViewPagerThread(holder);
+                if (advertBeans.size() == 1) {
+                    ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setAdapter(viewPagerAdapter);
+                } else {
+                    ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setOffscreenPageLimit(3);
+                    ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setCurrentItem(Integer.MAX_VALUE / 2);  //开始为中间位置，实现左右滑动轮播
+                    ((AnswerDetailsViewHolder3) holder).viewPagerBottom.setAdapter(viewPagerAdapter);
+                    startViewPagerThread(holder);
+                }
             }
 
         } else if (holder instanceof AnswerDetailsViewHolder4) {
@@ -690,7 +695,7 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
     }
 
     private class AnswerDetailsViewHolder3 extends RecyclerView.ViewHolder {
-        private ViewPager viewPagerBottom;
+        private WrapContentHeightViewPager viewPagerBottom;
         private RelativeLayout rl_answer_detail3;
 
         public AnswerDetailsViewHolder3(View itemView) {

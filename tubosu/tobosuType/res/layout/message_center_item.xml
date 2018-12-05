@@ -45,6 +45,8 @@
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/tv_data_time"
                         android:text="小热巴回答了你的问题"
+                        android:maxLines="1"
+                        android:ellipsize="end"
                         android:textColor="@color/FC_6F6F8F"
                         android:textSize="15sp"/>
                     <TextView
@@ -65,6 +67,8 @@
                     android:text="小热巴回答了你的问题小热巴回答了你的问题小热巴回答了你的问题"
                     android:textSize="15sp"
                     android:textColor="@color/FC_363650"
+                    android:maxLines="3"
+                    android:ellipsize="end"
                     android:lineSpacingExtra="3dp"/>
                 
             </LinearLayout>

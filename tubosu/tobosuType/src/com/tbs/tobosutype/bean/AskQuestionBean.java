@@ -19,6 +19,15 @@ public class AskQuestionBean implements Serializable {
     private String icon; //回答者头像
     private String published_uid; //提问者ID
     private String name;
+    private String view_count;  //浏览量
+
+    public String getView_count() {
+        return view_count;
+    }
+
+    public void setView_count(String view_count) {
+        this.view_count = view_count;
+    }
 
     public String getName() {
         return name;

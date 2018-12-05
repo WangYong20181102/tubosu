@@ -33,7 +33,11 @@ class ViewPagerBottomAdapter extends PagerAdapter {
     @Override
     public int getCount() {
         if (strImageUrlList.size() != 0) {
-            return Integer.MAX_VALUE;
+            if (strImageUrlList.size() == 1){
+                return strImageUrlList.size();
+            }else {
+                return Integer.MAX_VALUE;
+            }
         } else {
             return 0;
         }
@@ -50,7 +54,7 @@ class ViewPagerBottomAdapter extends PagerAdapter {
         final int newPosition = position % strImageUrlList.size();
         View view = View.inflate(container.getContext(), R.layout.ask_ad_viewpager, null);
         ImageView imageView = view.findViewById(R.id.image_bottom);
-        GlideUtils.glideLoader(context, strImageUrlList.get(newPosition).getImg_url(), R.drawable.iamge_loading, imageView);
+        GlideUtils.glideLoaderImage(context, strImageUrlList.get(newPosition).getImg_url(), imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

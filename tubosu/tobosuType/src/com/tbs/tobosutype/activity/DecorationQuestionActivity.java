@@ -201,6 +201,8 @@ public class DecorationQuestionActivity extends BaseActivity implements ViewPage
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         searchList.setLayoutManager(layoutManager);
         searchSwip.setOnRefreshListener(onRefreshListener);
+        //设置缓存个数
+        searchList.setItemViewCacheSize(15);
         searchList.setOnScrollListener(onScrollListener);
         searchSwip.setEnabled(false);
         etSearchGongsi.addTextChangedListener(this);

@@ -13,6 +13,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -39,7 +40,7 @@ public class WebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
     private WebView webView;
     private TextView detailslideshow_title;
     private String title;
-    private ImageView detail_share;
+    private LinearLayout llShare;
     private ImageView iv_back;
     private String url;
     private String currentUrl = "";
@@ -94,7 +95,7 @@ public class WebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
         mAppEvent = new _AppEvent();
         webView = (WebView) findViewById(R.id.my_webview);
         detailslideshow_title = (TextView) findViewById(R.id.detailslideshow_title);
-        detail_share = (ImageView) findViewById(R.id.detail_share);
+        llShare = (LinearLayout) findViewById(R.id.ll_share);
         iv_back = (ImageView) findViewById(R.id.iv_back_webview_activity);
         rl_banner = (RelativeLayout) findViewById(R.id.rl_banner);
         rl_banner.setBackgroundColor(Color.parseColor("#ffffff"));
@@ -141,20 +142,32 @@ public class WebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
         webView.setWebChromeClient(new WebChromeClient());
 
 
-        // 分享本页面到朋友圈去
-        detail_share.setOnClickListener(new OnClickListener() {
+//        // 分享本页面到朋友圈去
+//        detail_share.setOnClickListener(new OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                //封装好的分享工具类
+//                Log.d(TAG, "====- 好了没有 " + url + "】");
+//                boolean flag = url.equals(currentUrl);
+//                if (flag) {
+//                    new ShareUtil(WebViewActivity.this, detail_share, title, title, url, flag);
+//                } else {
+//                    new ShareUtil(WebViewActivity.this, detail_share, title, title, currentUrl, flag);
+//                }
+//
+//            }
+//        });
 
+        llShare.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //封装好的分享工具类
-                Log.d(TAG, "====- 好了没有 " + url + "】");
                 boolean flag = url.equals(currentUrl);
                 if (flag) {
-                    new ShareUtil(WebViewActivity.this, detail_share, title, title, url, flag);
+                    new ShareUtil(WebViewActivity.this, llShare, title, "嘿，好东西分享给你，快打开看看", url, flag);
                 } else {
-                    new ShareUtil(WebViewActivity.this, detail_share, title, title, currentUrl, flag);
+                    new ShareUtil(WebViewActivity.this, llShare, title, "嘿，好东西分享给你，快打开看看", currentUrl, flag);
                 }
-
             }
         });
 

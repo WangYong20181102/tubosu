@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -243,10 +244,22 @@ public class NewMineActivity extends BaseActivity {
 //                } else {
 //                    startActivity(new Intent(mContext, DecorateAccountActivity.class));
 //                }
+                if (TextUtils.isEmpty(AppInfoUtil.getUserid(this))) {
+                    Toast.makeText(this, "您还没有登录", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, NewLoginActivity.class);
+                    startActivityForResult(intent, 0);
+                    return;
+                }
                 startActivity(new Intent(mContext,MyReplyActivity.class));
                 break;
             case R.id.new_mine_message_ll:  //消息中心
 //                chaKanDingdan();
+                if (TextUtils.isEmpty(AppInfoUtil.getUserid(this))) {
+                    Toast.makeText(this, "您还没有登录", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, NewLoginActivity.class);
+                    startActivityForResult(intent, 0);
+                    return;
+                }
                 startActivity(new Intent(mContext,MessageCenterActivity.class));
                 break;
             case R.id.new_mine_kefu_rl:

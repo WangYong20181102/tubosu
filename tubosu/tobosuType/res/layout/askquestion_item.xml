@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:text="小户型，如何装修才好看?"
         android:textColor="@color/FC_363650"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:textSize="17sp"
         android:textStyle="bold" />
 
@@ -22,6 +24,8 @@
         android:lineSpacingExtra="3dp"
         android:text="小户型，如何装修才好看?小户型，如何装修才好看?小户型，如何装修才好看?小户型，如何装修才好看?"
         android:textColor="@color/FC_363650"
+        android:maxLines="3"
+        android:ellipsize="end"
         android:textSize="15sp" />
 
     <RelativeLayout

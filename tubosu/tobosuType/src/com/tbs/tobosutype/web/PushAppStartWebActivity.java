@@ -22,9 +22,10 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.activity.NewWebViewActivity;
+import com.tbs.tobosutype.base.BaseActivity;
 import com.tbs.tobosutype.bean._AppEvent;
-import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.utils.AppManager;
+import com.tbs.tobosutype.utils.ShareUtil;
 import com.tbs.tobosutype.utils.SpUtil;
 
 import butterknife.BindView;
@@ -36,7 +37,7 @@ import butterknife.OnClick;
  * 在App启动的情况下查看的页面
  * create by lin
  */
-public class PushAppStartWebActivity extends com.tbs.tobosutype.base.BaseActivity {
+public class PushAppStartWebActivity extends BaseActivity {
     @BindView(R.id.pas_webview_back)
     LinearLayout pasWebviewBack;
     @BindView(R.id.pas_webview_title)
@@ -47,6 +48,8 @@ public class PushAppStartWebActivity extends com.tbs.tobosutype.base.BaseActivit
     WebView pasWebviewWeb;
     @BindView(R.id.push_start_fadan)
     ImageView pushStartFadan;
+    @BindView(R.id.ll_share)
+    LinearLayout llShare;
 
     private String TAG = "PushAppStartWebActivity";
     private Context mContext;
@@ -56,6 +59,7 @@ public class PushAppStartWebActivity extends com.tbs.tobosutype.base.BaseActivit
     private String mEnableStatistics = "";//是否拼接点击流
     private Gson mGson;
     private _AppEvent mAppEvent;
+    private String tittle = "";  //标题
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,24 +115,27 @@ public class PushAppStartWebActivity extends com.tbs.tobosutype.base.BaseActivit
         if (mLoadingUrl.contains("?")) {
             if (mEnableStatistics != null && mEnableStatistics.equals("0")) {
                 //不拼接
-                pasWebviewWeb.loadUrl(mLoadingUrl);
+//                pasWebviewWeb.loadUrl(mLoadingUrl);
                 Log.e(TAG, "bu拼接===============" + mEnableStatistics);
             } else {
                 //拼接
-                pasWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+                mLoadingUrl = mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName();
                 Log.e(TAG, "拼接===============" + mEnableStatistics);
             }
         } else {
             if (mEnableStatistics != null && mEnableStatistics.equals("0")) {
                 //不拼接
-                pasWebviewWeb.loadUrl(mLoadingUrl);
+//                pasWebviewWeb.loadUrl(mLoadingUrl);
                 Log.e(TAG, "bu拼接===============" + mEnableStatistics);
             } else {
                 //拼接
-                pasWebviewWeb.loadUrl(mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+                mLoadingUrl = mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName();
                 Log.e(TAG, "拼接===============" + mEnableStatistics);
             }
         }
+
+        pasWebviewWeb.loadUrl(mLoadingUrl);
+
         Log.e(TAG, "测试传值和H5交互========" + mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
     }
 
@@ -142,6 +149,7 @@ public class PushAppStartWebActivity extends com.tbs.tobosutype.base.BaseActivit
     private WebChromeClient webChromeClient = new WebChromeClient() {
         @Override
         public void onReceivedTitle(WebView view, String title) {
+            tittle = title;
             pasWebviewTitle.setText(title);
         }
     };
@@ -181,7 +189,7 @@ public class PushAppStartWebActivity extends com.tbs.tobosutype.base.BaseActivit
     }
 
 
-    @OnClick({R.id.pas_webview_back, R.id.push_start_fadan})
+    @OnClick({R.id.pas_webview_back, R.id.push_start_fadan, R.id.ll_share})
     public void onViewClickedInPASActivity(View view) {
         switch (view.getId()) {
             case R.id.pas_webview_back:
@@ -192,6 +200,9 @@ public class PushAppStartWebActivity extends com.tbs.tobosutype.base.BaseActivit
                 Intent intent = new Intent(mContext, NewWebViewActivity.class);
                 intent.putExtra("mLoadingUrl", SpUtil.getTbsAj31(mContext));
                 mContext.startActivity(intent);
+                break;
+            case R.id.ll_share:
+                new ShareUtil(this, tittle, "嘿，好东西分享给你，快打开看看", "", mLoadingUrl);
                 break;
         }
     }

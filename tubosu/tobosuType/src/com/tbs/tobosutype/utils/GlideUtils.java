@@ -43,6 +43,13 @@ public class GlideUtils {
     public static void glideLoader(Context context, String imgUrl,int erroImg,ImageView imageView) {
         Glide.with(context).load(imgUrl).asBitmap().placeholder(erroImg).error(erroImg).into(imageView);
     }
+    public static void glideLoaderImage(Context context, String imgUrl,ImageView imageView) {
+        Glide.with(context).load(imgUrl).asBitmap().into(imageView);
+    }
+    public static void glideLoaderGif(Context context, String imgUrl,ImageView imageView) {
+        Glide.with(context).load(imgUrl).asGif().placeholder(R.drawable.iamge_loading).error(R.drawable.iamge_loading).into(imageView);
+    }
+
 
     /**
      * 处理圆角图片或者圆形图片

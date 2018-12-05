@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -18,10 +19,15 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.base.*;
+import com.tbs.tobosutype.base.BaseActivity;
 import com.tbs.tobosutype.bean._AppEvent;
 import com.tbs.tobosutype.utils.AppManager;
+import com.tbs.tobosutype.utils.ShareUtil;
 import com.tbs.tobosutype.utils.SpUtil;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +37,7 @@ import butterknife.OnClick;
  * creat by lin  发单跳转页面
  * 新的webview页面
  */
-public class NewWebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
+public class NewWebViewActivity extends BaseActivity {
 
     @BindView(R.id.new_webview_back)
     LinearLayout newWebviewBack;
@@ -41,6 +47,8 @@ public class NewWebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
     WebView newWebviewWeb;
     @BindView(R.id.new_webview_banner_rl)
     RelativeLayout newWebviewBannerRl;
+    @BindView(R.id.ll_share)
+    LinearLayout llShare;
 
     private Context mContext;
     private String TAG = "NewWebViewActivity";
@@ -49,6 +57,7 @@ public class NewWebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
     private boolean b = false;  //false不拼接，true拼接
     private Gson mGson;
     private _AppEvent mAppEvent;
+    private String tittle = "";//标题
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +87,7 @@ public class NewWebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
         mAppEvent = new _AppEvent();
         newWebviewBannerRl.setBackgroundColor(Color.parseColor("#ffffff"));
         mLoadingUrl = mIntent.getStringExtra("mLoadingUrl");
-        b = mIntent.getBooleanExtra("bAnswer",false);
+        b = mIntent.getBooleanExtra("bAnswer", false);
         newWebviewWeb.getSettings().setJavaScriptEnabled(true);
         newWebviewWeb.getSettings().setBuiltInZoomControls(true);
         newWebviewWeb.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
@@ -92,38 +101,32 @@ public class NewWebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
 
         newWebviewWeb.setWebChromeClient(webChromeClient);
         newWebviewWeb.setWebViewClient(webViewClient);
-        if (!b){
+        if (!b) {
             //统计用
             if (mLoadingUrl.contains("?")) {
-                newWebviewWeb.loadUrl(mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+                mLoadingUrl = mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName();
             } else {
-                newWebviewWeb.loadUrl(mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
+                mLoadingUrl = mLoadingUrl + "?equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName();
             }
-        }else {
-            newWebviewWeb.loadUrl(mLoadingUrl);
         }
+        newWebviewWeb.loadUrl(mLoadingUrl);
         Log.e(TAG, "统计传值=====" + mLoadingUrl + "&equipmentInfo=" + mGson.toJson(mAppEvent) + "&app_ref=" + AppManager.lastSecoundActivityName());
     }
 
     private WebViewClient webViewClient = new WebViewClient() {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
+                view.loadUrl(url);
             return true;
         }
     };
     private WebChromeClient webChromeClient = new WebChromeClient() {
         @Override
         public void onReceivedTitle(WebView view, String title) {
+            tittle = title;
             newWebviewTitle.setText(title);
         }
     };
-
-    @OnClick(R.id.new_webview_back)
-    public void onViewClickedInNewWebView() {
-        //返回按钮
-        finish();
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -145,5 +148,18 @@ public class NewWebViewActivity extends com.tbs.tobosutype.base.BaseActivity {
             newWebviewWeb = null;
         }
         super.onDestroy();
+    }
+
+    @OnClick({R.id.new_webview_back, R.id.ll_share})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.new_webview_back:
+                //返回按钮
+                finish();
+                break;
+            case R.id.ll_share: //分享
+                new ShareUtil(this, tittle, "嘿，好东西分享给你，快打开看看", "", mLoadingUrl);
+                break;
+        }
     }
 }

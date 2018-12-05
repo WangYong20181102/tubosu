@@ -746,7 +746,11 @@ public class NewHomePageAdapter
 
         @Override
         public void onBind(Context context, int i, _HomePage.DataBean.IndexAdvert2Bean indexAdvert2Bean) {
-            GlideUtils.glideLoader(context, indexAdvert2Bean.getImg_url(), item_home_page_adv2_mz_banner_img);
+            if (indexAdvert2Bean.getImg_url().equals(".gif")){
+                GlideUtils.glideLoaderGif(context,indexAdvert2Bean.getImg_url(),item_home_page_adv2_mz_banner_img);
+            }else {
+                GlideUtils.glideLoader(context, indexAdvert2Bean.getImg_url(), item_home_page_adv2_mz_banner_img);
+            }
         }
     }
 
@@ -780,7 +784,11 @@ public class NewHomePageAdapter
 
         @Override
         public void onBind(Context context, int i, _HomePage.DataBean.IndexAdvert1Bean indexAdvert1Bean) {
-            GlideUtils.glideLoader(context, indexAdvert1Bean.getImg_url(), item_home_page_adv1_mz_banner_img);
+            if (indexAdvert1Bean.getImg_url().equals(".gif")){
+                GlideUtils.glideLoaderGif(context,indexAdvert1Bean.getImg_url(),item_home_page_adv1_mz_banner_img);
+            }else {
+                GlideUtils.glideLoader(context, indexAdvert1Bean.getImg_url(), item_home_page_adv1_mz_banner_img);
+            }
         }
     }
 

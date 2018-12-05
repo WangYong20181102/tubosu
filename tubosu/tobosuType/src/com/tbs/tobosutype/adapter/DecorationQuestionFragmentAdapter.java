@@ -1,9 +1,11 @@
 package com.tbs.tobosutype.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +32,12 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
      */
     private Context context;
     private List<AskQuestionBean> stringList;
+    private Activity activity;
 
     public DecorationQuestionFragmentAdapter(Context context, List<AskQuestionBean> list) {
         this.context = context;
         this.stringList = list;
+        activity = (Activity) context;
     }
 
     @Override
@@ -65,9 +69,9 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
                 }
             });
             //设置内容
-            if (stringList.get(position).getContent().isEmpty()){
+            if (stringList.get(position).getContent().isEmpty()) {
                 ((DQViewHolder) holder).tvContext.setVisibility(View.GONE);
-            }else {
+            } else {
                 ((DQViewHolder) holder).tvContext.setVisibility(View.VISIBLE);
             }
             ((DQViewHolder) holder).tvContext.setText(stringList.get(position).getContent());
@@ -90,7 +94,7 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
             if (stringList.get(position).getTitle().isEmpty()) {
                 ((DQViewHolder) holder).rlRvLayout.setVisibility(View.GONE);
                 ((DQViewHolder) holder).cardViewAdImage.setVisibility(View.VISIBLE);
-                GlideUtils.glideLoader(context, stringList.get(position).getImg_urls()[0], R.drawable.iamge_loading,((DQViewHolder) holder).imageAdPhoto);
+                GlideUtils.glideLoaderImage(context, stringList.get(position).getImg_urls()[0],((DQViewHolder) holder).imageAdPhoto);
             } else {
                 ((DQViewHolder) holder).rlRvLayout.setVisibility(View.VISIBLE);
                 ((DQViewHolder) holder).cardViewAdImage.setVisibility(View.GONE);
@@ -117,6 +121,40 @@ public class DecorationQuestionFragmentAdapter extends RecyclerView.Adapter<Recy
             });
         }
     }
+
+
+//    public void setImageScaleType(ImageView holder) {
+//        DisplayMetrics dm = new DisplayMetrics();
+//        activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
+//        int screenWidth = dm.widthPixels;
+//        ViewGroup.LayoutParams lp = holder.getLayoutParams();
+//        lp.width = screenWidth;
+//        lp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+//
+//        holder.setLayoutParams(lp);
+//
+//        float imageWidth = dp2px(context, 330);
+//        float imageHeight = dp2px(context, 80);
+//        holder.setAdjustViewBounds(true);
+//        holder.setMaxWidth(screenWidth);
+//        holder.setMaxHeight((int) (screenWidth * (imageWidth / imageHeight)));
+//    }
+//
+//    /**
+//     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
+//     */
+//    public static float dp2px(Context context, float dpValue) {
+//        final float scale = context.getResources().getDisplayMetrics().density;
+//        return dpValue * scale + 0.5f;
+//    }
+//
+//    /**
+//     * 根据手机的分辨率从 px(像素) 的单位 转成为 dp
+//     */
+//    public static float px2dp(Context context, float pxValue) {
+//        final float scale = context.getResources().getDisplayMetrics().density;
+//        return pxValue / scale + 0.5f;
+//    }
 
     @Override
     public int getItemCount() {

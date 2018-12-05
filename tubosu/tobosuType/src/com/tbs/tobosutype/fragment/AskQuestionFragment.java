@@ -38,7 +38,7 @@ public class AskQuestionFragment extends BaseFragment {
     private Unbinder unbinder;
     private int mPage = 1;//用于分页的数据
     private boolean isDownRefresh = false;//是否是下拉刷新
-    private int mPageSize = 15;//用于分页的数据
+    private int mPageSize = 10;//用于分页的数据
     private LinearLayoutManager layoutManager;
     private AskQuestionAdapter adapter;
 
