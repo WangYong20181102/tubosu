@@ -381,6 +381,12 @@ public class Constant {
     public static final String ASK_ADDANSWERCOMMMENT = TOBOSU_URL + "mapp/answerComments/addAnswerCommment";
     //我的提问
     public static final String ASK_MYQUESTIONLIST = TOBOSU_URL + "mapp/question/MyQuestionList";
+    //我的回答
+    public static final String MAPP_ANSWER_MYANSWERLIST = TOBOSU_URL + "mapp/answer/MyAnswerList";
+    //消息中心
+    public static final String MAPP_APPWENDAPUSH_MESSAGECENTER = TOBOSU_URL + "mapp/appWendaPush/messageCenter";
+    //消息已查看
+    public static final String MAPP_APPWENDAPUSH_ISSEE = TOBOSU_URL + "mapp/appWendaPush/isSee";
 
 
 

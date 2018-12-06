@@ -13,16 +13,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.AskQuestionAdapter;
 import com.tbs.tobosutype.base.BaseFragment;
+import com.tbs.tobosutype.bean.AnswerListBean;
+import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.ToastUtil;
+import com.tbs.tobosutype.utils.Util;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by Mr.Wang on 2018/12/3 13:55.
@@ -34,19 +51,21 @@ public class AskQuestionFragment extends BaseFragment {
     SwipeRefreshLayout dqSwipe;
     @BindView(R.id.rl_no_content)
     RelativeLayout rlNoContent;
-    private List<String> stringList;
+    private List<AnswerListBean> beanList;
     private Unbinder unbinder;
     private int mPage = 1;//用于分页的数据
     private boolean isDownRefresh = false;//是否是下拉刷新
     private int mPageSize = 10;//用于分页的数据
     private LinearLayoutManager layoutManager;
     private AskQuestionAdapter adapter;
+    private Gson gson;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_askquestion, null);
         unbinder = ButterKnife.bind(this, view);
+        gson = new Gson();
         initData();
         return view;
     }
@@ -56,16 +75,14 @@ public class AskQuestionFragment extends BaseFragment {
      */
     private void initData() {
         recyclerView.setBackgroundColor(Color.WHITE);
+        rlNoContent.setBackgroundColor(Color.WHITE);
         //下拉刷新
         dqSwipe.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE);
         dqSwipe.setBackgroundColor(Color.WHITE);
         dqSwipe.setSize(SwipeRefreshLayout.DEFAULT);
         dqSwipe.setOnRefreshListener(onRefreshListener);
 
-        stringList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            stringList.add("afads");
-        }
+        beanList = new ArrayList<>();
 
         layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -73,9 +90,7 @@ public class AskQuestionFragment extends BaseFragment {
         recyclerView.setOnTouchListener(onTouchListener);
         recyclerView.setOnScrollListener(onScrollListener);
 
-
-        adapter = new AskQuestionAdapter(getActivity(), stringList);
-        recyclerView.setAdapter(adapter);
+        askQuestionHttpRequest();
 
     }
 
@@ -106,7 +121,7 @@ public class AskQuestionFragment extends BaseFragment {
     //加载更多数据
     private void LoadMore() {
         mPage++;
-//        HttpGetImageList(mPage);
+        askQuestionHttpRequest();
     }
 
     //下拉刷新
@@ -122,6 +137,90 @@ public class AskQuestionFragment extends BaseFragment {
         mPage = 1;
         isDownRefresh = true;
         dqSwipe.setRefreshing(true);
+        if (adapter != null){
+            adapter = null;
+        }
+        if (!beanList.isEmpty()){
+            beanList.clear();
+        }
+        askQuestionHttpRequest();
+    }
+
+    /**
+     * 网络请求
+     */
+    private void askQuestionHttpRequest() {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("token", Util.getDateToken());
+        params.put("uid", AppInfoUtil.getUserid(getActivity()));
+        params.put("page", mPage);
+        params.put("pagesize", mPageSize);
+        OKHttpUtil.post(Constant.MAPP_ANSWER_MYANSWERLIST, params, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dqSwipe.setRefreshing(false);
+                        isDownRefresh = false;
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = Objects.requireNonNull(response.body()).string();
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.optString("status");
+                    final String msg = jsonObject.optString("msg");
+                    if (status.equals("200")) {
+                        JSONArray jsonArray = jsonObject.optJSONArray("data");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            AnswerListBean listBean = gson.fromJson(jsonArray.get(i).toString(), AnswerListBean.class);
+                            beanList.add(listBean);
+                        }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (adapter == null) {
+                                    adapter = new AskQuestionAdapter(getActivity(), beanList);
+                                    recyclerView.setAdapter(adapter);
+                                }
+                                if (isDownRefresh) {
+                                    isDownRefresh = false;
+                                    recyclerView.scrollToPosition(0);
+                                    adapter.notifyDataSetChanged();
+                                } else {
+                                    adapter.notifyItemInserted(beanList.size() - mPageSize);
+                                }
+                                dqSwipe.setRefreshing(false);
+                            }
+                        });
+                    }else if (status.equals("201")){
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (!beanList.isEmpty()){
+                                    ToastUtil.showShort(getActivity(),msg);
+                                }else {
+                                    rlNoContent.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        });
+                    }else {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.showShort(getActivity(),msg);
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override

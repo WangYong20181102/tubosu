@@ -1,13 +1,16 @@
 package com.tbs.tobosutype.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.activity.AnswerItemDetailsActivity;
 import com.tbs.tobosutype.bean.AskQuestionBean;
 
 import java.util.List;
@@ -31,7 +34,7 @@ public class ReplyFragmentAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof MyViewHolder){
             //标题
             ((MyViewHolder) holder).tvTittle.setText(questionBeanList.get(position).getTitle());
@@ -41,6 +44,14 @@ public class ReplyFragmentAdapter extends RecyclerView.Adapter<RecyclerView.View
             ((MyViewHolder) holder).tvViewNum.setText(questionBeanList.get(position).getView_count());
             //时间
             ((MyViewHolder) holder).tvDataTime.setText(questionBeanList.get(position).getAdd_time());
+            ((MyViewHolder) holder).llReply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, AnswerItemDetailsActivity.class);
+                    intent.putExtra("question_id", questionBeanList.get(position).getQuestion_id());
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 
@@ -51,6 +62,7 @@ public class ReplyFragmentAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     private class MyViewHolder extends RecyclerView.ViewHolder{
 
+        private LinearLayout llReply;//父布局
         private TextView tvTittle;  //标题
         private TextView tvAnswerNum;  //回答数
         private TextView tvViewNum;  //浏览数
@@ -62,6 +74,7 @@ public class ReplyFragmentAdapter extends RecyclerView.Adapter<RecyclerView.View
             tvAnswerNum = itemView.findViewById(R.id.tv_answer_num);
             tvViewNum = itemView.findViewById(R.id.tv_view_num);
             tvDataTime = itemView.findViewById(R.id.tv_data_time);
+            llReply = itemView.findViewById(R.id.ll_reply);
         }
     }
 }

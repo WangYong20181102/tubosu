@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_reply"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="15dp"
@@ -10,7 +11,6 @@
         android:id="@+id/tv_tittle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="小户型，如何装修才好看？"
         android:textColor="@color/FC_363650"
         android:textSize="17sp"
         android:maxLines="1"
@@ -35,7 +35,6 @@
                 android:id="@+id/tv_answer_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3"
                 android:textColor="#999999"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -53,7 +52,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:text="3"
                 android:textColor="#999999"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -74,7 +72,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:text="2018-12-03"
             android:textColor="#999999"
             android:textSize="12sp" />
     </RelativeLayout>

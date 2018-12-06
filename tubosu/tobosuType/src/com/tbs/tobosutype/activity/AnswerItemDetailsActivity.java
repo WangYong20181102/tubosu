@@ -347,7 +347,7 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
                 } else {
                     imageUrl = "";
                 }
-                new ShareUtil(this, beanList.getQuestionList().getTitle(), beanList.getQuestionList().getContent(), imageUrl, "");
+                new ShareUtil(this, beanList.getQuestionList().getTitle(), beanList.getQuestionList().getContent(), imageUrl, beanList.getShare_url());
                 break;
             case R.id.linear_askquestion:   //我要回答
                 if (TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {

@@ -34,6 +34,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -198,7 +199,7 @@ public class DecorationQuestionFragment extends BaseFragment {
         OKHttpUtil.post(Constant.ASK_QUESTION_LIST, params, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                getActivity().runOnUiThread(new Runnable() {
+                Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         isDownRefresh = false;
@@ -209,7 +210,7 @@ public class DecorationQuestionFragment extends BaseFragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String json = new String(response.body().string());
+                String json = Objects.requireNonNull(response.body()).string();
                 try {
                     final JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.optString("status");
@@ -220,7 +221,7 @@ public class DecorationQuestionFragment extends BaseFragment {
                             AskQuestionBean askQuestionBean = gson.fromJson(jsonArray.get(i).toString(), AskQuestionBean.class);
                             asklist.add(askQuestionBean);
                         }
-                        getActivity().runOnUiThread(new Runnable() {
+                        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 if (decorationQuestionFragmentAdapter == null) {
@@ -240,7 +241,7 @@ public class DecorationQuestionFragment extends BaseFragment {
 
 
                     } else if (status.equals("201")) {
-                        getActivity().runOnUiThread(new Runnable() {
+                        Objects.requireNonNull(getActivity()).runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 Toast.makeText(getActivity(), jsonObject.optString("msg"), Toast.LENGTH_SHORT).show();

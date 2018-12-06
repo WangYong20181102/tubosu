@@ -76,6 +76,7 @@ public class ReplyFragment extends BaseFragment {
      */
     private void initData() {
         recyclerView.setBackgroundColor(Color.WHITE);
+        rlNoContent.setBackgroundColor(Color.WHITE);
         //下拉刷新
         dqSwipe.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE);
         dqSwipe.setBackgroundColor(Color.WHITE);
@@ -140,7 +141,7 @@ public class ReplyFragment extends BaseFragment {
         if (adapter != null) {
             adapter = null;
         }
-        if (!questionBeanList.isEmpty()){
+        if (!questionBeanList.isEmpty()) {
             questionBeanList.clear();
         }
         replyHttpRequest();
@@ -153,6 +154,8 @@ public class ReplyFragment extends BaseFragment {
         HashMap<String, Object> params = new HashMap<>();
         params.put("token", Util.getDateToken());
         params.put("uid", AppInfoUtil.getUserid(getActivity()));
+        params.put("page", mPage);
+        params.put("pagesize", mPageSize);
         OKHttpUtil.post(Constant.ASK_MYQUESTIONLIST, params, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -171,6 +174,7 @@ public class ReplyFragment extends BaseFragment {
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.optString("status");
+                    final String meg = jsonObject.optString("msg");
                     if (status.equals("200")) {
                         JSONArray jsonArray = jsonObject.optJSONArray("data");
                         for (int i = 0; i < jsonArray.length(); i++) {
@@ -197,21 +201,34 @@ public class ReplyFragment extends BaseFragment {
                         });
 
 
-                    }else {
-                        final String meg = jsonObject.optString("msg");
+                    } else if (status.equals("201")) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ToastUtil.showShort(getActivity(),meg);
+                                if (!questionBeanList.isEmpty()) {
+                                    ToastUtil.showShort(getActivity(), meg);
+                                } else {
+                                    rlNoContent.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        });
+                }else {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.showShort(getActivity(), meg);
                             }
                         });
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+            } catch(
+            JSONException e)
+
+            {
+                e.printStackTrace();
             }
-        });
-    }
+        }
+    });
+}
 
     @Override
     public void onDestroyView() {

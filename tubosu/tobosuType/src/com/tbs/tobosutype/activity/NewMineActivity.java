@@ -131,6 +131,11 @@ public class NewMineActivity extends BaseActivity {
             //无网
             initUserInfoInNotNet();
         }
+        if (AppInfoUtil.getHotDot(mContext).equals("1")){
+            messageRedDot.setVisibility(View.VISIBLE);
+        }else {
+            messageRedDot.setVisibility(View.GONE);
+        }
     }
 
     //没有网络的情况下
@@ -239,11 +244,6 @@ public class NewMineActivity extends BaseActivity {
                 startActivity(it);
                 break;
             case R.id.new_mine_reply_ll:    //我的提问
-//                if (CacheManager.getDecorateBudget(mContext) <= 0) {
-//                    startActivity(new Intent(mContext, KeepAccountActivity.class));
-//                } else {
-//                    startActivity(new Intent(mContext, DecorateAccountActivity.class));
-//                }
                 if (TextUtils.isEmpty(AppInfoUtil.getUserid(this))) {
                     Toast.makeText(this, "您还没有登录", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(this, NewLoginActivity.class);
@@ -253,13 +253,15 @@ public class NewMineActivity extends BaseActivity {
                 startActivity(new Intent(mContext,MyReplyActivity.class));
                 break;
             case R.id.new_mine_message_ll:  //消息中心
-//                chaKanDingdan();
                 if (TextUtils.isEmpty(AppInfoUtil.getUserid(this))) {
                     Toast.makeText(this, "您还没有登录", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(this, NewLoginActivity.class);
                     startActivityForResult(intent, 0);
                     return;
                 }
+                //点击消息中心隐藏红点显示
+                MainActivity.showOrHideHotDot("0"); //调用mainactivity方法，隐藏我的底部红点
+                AppInfoUtil.setHotDot(mContext,"0");    //改变本地消息红点状态
                 startActivity(new Intent(mContext,MessageCenterActivity.class));
                 break;
             case R.id.new_mine_kefu_rl:
@@ -384,54 +386,6 @@ public class NewMineActivity extends BaseActivity {
 
         }
     };
-
-    //业主查看订单
-    private void chaKanDingdan() {
-        if (AppInfoUtil.getUserCellphone_check(mContext).equals("1")) {
-            //用户已经绑定手机号
-            Intent myOwnerOrderIntent = new Intent(mContext, MyOwnerOrderActivity.class);
-            startActivity(myOwnerOrderIntent);
-        } else if (AppInfoUtil.getUserCellphone_check(mContext).equals("0")) {
-            //用户未绑定手机号码弹窗绑定
-            showBindPhone();
-        }
-    }
-
-    //绑定弹窗
-    private void showBindPhone() {
-        View popview = View.inflate(mContext, R.layout.pop_bind_phone, null);
-        TextView bind_phone_quxiao = (TextView) popview.findViewById(R.id.bind_phone_quxiao);
-        TextView bind_phone_ok = (TextView) popview.findViewById(R.id.bind_phone_ok);
-        RelativeLayout pop_bind_phone_rl = (RelativeLayout) popview.findViewById(R.id.pop_bind_phone_rl);
-        LinearLayout bind_phone_pop_window_ll = popview.findViewById(R.id.bind_phone_pop_window_ll);
-        bind_phone_pop_window_ll.setBackgroundColor(Color.parseColor("#ffffff"));
-        final PopupWindow popupWindow = new PopupWindow(popview, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        popupWindow.setFocusable(true);
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.update();
-        //去绑定
-        bind_phone_ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mContext.startActivity(new Intent(mContext, BandPhoneActivity.class));
-                popupWindow.dismiss();
-            }
-        });
-        //取消
-        bind_phone_quxiao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
-        pop_bind_phone_rl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
-        popupWindow.showAtLocation(popview, Gravity.CENTER, 0, 0);
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

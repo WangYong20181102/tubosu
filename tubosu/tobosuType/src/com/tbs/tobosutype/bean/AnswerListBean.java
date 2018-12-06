@@ -16,6 +16,15 @@ public class AnswerListBean {
     private String add_time;    //回答添加时间
     private String icon;    //回答者头像
     private int is_agree;    //是否点赞：1、是 2、否
+    private String title;   //标题
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getName() {
         return name;

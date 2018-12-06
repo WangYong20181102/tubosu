@@ -1,5 +1,6 @@
 package com.tbs.tobosutype.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,16 +11,33 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.MessageCenterAdapter;
 import com.tbs.tobosutype.base.BaseActivity;
+import com.tbs.tobosutype.bean.MessageCenterBean;
+import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.ToastUtil;
+import com.tbs.tobosutype.utils.Util;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by Mr.Wang on 2018/12/3 16:47.
@@ -37,14 +55,16 @@ public class MessageCenterActivity extends BaseActivity {
     private int mPage = 1;//用于分页的数据
     private boolean isDownRefresh = false;//是否是下拉刷新
     private int mPageSize = 15;//用于分页的数据
-    private List<String> stringList;
+    private List<MessageCenterBean> messageCenterBeanList;
     private MessageCenterAdapter adapter;
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_center);
         ButterKnife.bind(this);
+        gson = new Gson();
         initData();
     }
 
@@ -53,12 +73,7 @@ public class MessageCenterActivity extends BaseActivity {
      */
     private void initData() {
         llMessageCenter.setBackgroundColor(Color.WHITE);
-
-        stringList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            stringList.add("afads");
-        }
-
+        messageCenterBeanList = new ArrayList<>();
 
         //下拉刷新
         dqSwipe.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE);
@@ -72,11 +87,10 @@ public class MessageCenterActivity extends BaseActivity {
         recyclerView.setOnTouchListener(onTouchListener);
         recyclerView.setOnScrollListener(onScrollListener);
 
-
-        adapter = new MessageCenterAdapter(this,stringList);
-        recyclerView.setAdapter(adapter);
+        messageCenterHttpRequest();
 
     }
+
     //touch
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         @Override
@@ -100,11 +114,13 @@ public class MessageCenterActivity extends BaseActivity {
             }
         }
     };
+
     //加载更多数据
     private void LoadMore() {
         mPage++;
-//        HttpGetImageList(mPage);
+        messageCenterHttpRequest();
     }
+
     //下拉刷新
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
@@ -113,11 +129,123 @@ public class MessageCenterActivity extends BaseActivity {
         }
 
     };
+
+    /**
+     * 下拉刷新
+     */
     private void initRequest() {
         mPage = 1;
         isDownRefresh = true;
         dqSwipe.setRefreshing(true);
+        if (adapter != null) {
+            adapter = null;
+        }
+        if (!messageCenterBeanList.isEmpty()) {
+            messageCenterBeanList.clear();
+        }
+        messageCenterHttpRequest();
     }
+
+    /**
+     * 网络请求
+     */
+    private void messageCenterHttpRequest() {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("token", Util.getDateToken());
+        params.put("uid", AppInfoUtil.getUserid(mContext));
+        params.put("page", mPage);
+        params.put("pagesize", mPageSize);
+        OKHttpUtil.post(Constant.MAPP_APPWENDAPUSH_MESSAGECENTER, params, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        isDownRefresh = false;
+                        dqSwipe.setRefreshing(false);
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = Objects.requireNonNull(response.body()).string();
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.optString("status");
+                    final String msg = jsonObject.optString("msg");
+                    if (status.equals("200")) {
+                        JSONArray jsonArray = jsonObject.optJSONArray("data");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            MessageCenterBean bean = gson.fromJson(jsonArray.get(i).toString(), MessageCenterBean.class);
+                            messageCenterBeanList.add(bean);
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (adapter == null) {
+                                    adapter = new MessageCenterAdapter(MessageCenterActivity.this, messageCenterBeanList);
+                                    adapter.setOnMessageCenterClickListener(onMessageCenterClickListener);
+                                    recyclerView.setAdapter(adapter);
+                                }
+                                if (isDownRefresh) {
+                                    isDownRefresh = false;
+                                    recyclerView.scrollToPosition(0);
+                                    adapter.notifyDataSetChanged();
+                                } else {
+                                    adapter.notifyItemInserted(messageCenterBeanList.size() - mPageSize);
+                                }
+                                dqSwipe.setRefreshing(false);
+                            }
+                        });
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.showShort(mContext, msg);
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private MessageCenterAdapter.OnMessageCenterClickListener onMessageCenterClickListener = new MessageCenterAdapter.OnMessageCenterClickListener() {
+        @Override
+        public void onClickPosition(int mPosition) {
+            if (messageCenterBeanList.get(mPosition).getIs_see().equals("1")) {  //1代表消息未查看，进行消息查看网络请求
+                isSeeHttpRequest(mPosition);
+            }
+            Intent intent = new Intent(mContext, AnswerItemDetailsActivity.class);
+            intent.putExtra("question_id", messageCenterBeanList.get(mPosition).getQuestion_id());
+            startActivity(intent);
+        }
+    };
+
+    /**
+     * 消息已查看网络请求
+     *
+     * @param position
+     */
+    private void isSeeHttpRequest(int position) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("token", Util.getDateToken());
+        params.put("id", messageCenterBeanList.get(position).getId());
+        OKHttpUtil.post(Constant.MAPP_APPWENDAPUSH_ISSEE, params, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+            }
+        });
+    }
+
     @OnClick({R.id.rl_back, R.id.ll_message_center})
     public void onViewClicked(View view) {
         switch (view.getId()) {

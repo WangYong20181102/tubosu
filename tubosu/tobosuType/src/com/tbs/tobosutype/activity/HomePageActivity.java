@@ -666,6 +666,12 @@ public class HomePageActivity extends BaseActivity {
                             isLoading = false;
                             hpSwipe.setRefreshing(false);
                             homePageClickRl.setVisibility(View.GONE);
+
+                            //我 的 底部红点
+                            MainActivity.showOrHideHotDot(mHomePage.getData().getIs_see());
+                            AppInfoUtil.setHotDot(mContext,mHomePage.getData().getIs_see());
+
+
                         }
                     });
 

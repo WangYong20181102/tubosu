@@ -209,6 +209,14 @@ public class AppInfoUtil {
     public static void setUserCity(Context context, String cityname) {
         context.getSharedPreferences("userInfo", 0).edit().putString("cityname", cityname).commit();
     }
+    //红点显示
+    public static String getHotDot(Context context) {
+        return context.getSharedPreferences("userInfo", 0).getString("hotDot", "");
+    }
+
+    public static void setHotDot(Context context, String hotDot) {
+        context.getSharedPreferences("userInfo", 0).edit().putString("hotDot", hotDot).commit();
+    }
 
     //用户所在的省份
     public static String getUserProvince(Context context) {

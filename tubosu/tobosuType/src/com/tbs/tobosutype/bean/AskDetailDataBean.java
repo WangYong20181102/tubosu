@@ -10,6 +10,15 @@ public class AskDetailDataBean {
     private List<AnswerListBean> answerList;
     private List<RelationListBean> relationList;
     private List<AdvertBean> advert;
+    private String share_url;//分享url
+
+    public String getShare_url() {
+        return share_url;
+    }
+
+    public void setShare_url(String share_url) {
+        this.share_url = share_url;
+    }
 
     public List<AdvertBean> getAdvert() {
         return advert;
