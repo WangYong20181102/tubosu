@@ -15,6 +15,8 @@ import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.MessageCenterAdapter;
 import com.tbs.tobosutype.base.BaseActivity;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.bean.MessageCenterBean;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
@@ -54,7 +56,7 @@ public class MessageCenterActivity extends BaseActivity {
     private LinearLayoutManager layoutManager;
     private int mPage = 1;//用于分页的数据
     private boolean isDownRefresh = false;//是否是下拉刷新
-    private int mPageSize = 15;//用于分页的数据
+    private int mPageSize = 10;//用于分页的数据
     private List<MessageCenterBean> messageCenterBeanList;
     private MessageCenterAdapter adapter;
     private Gson gson;
@@ -125,6 +127,7 @@ public class MessageCenterActivity extends BaseActivity {
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
+            dqSwipe.setRefreshing(true);
             initRequest();
         }
 
@@ -136,7 +139,6 @@ public class MessageCenterActivity extends BaseActivity {
     private void initRequest() {
         mPage = 1;
         isDownRefresh = true;
-        dqSwipe.setRefreshing(true);
         if (adapter != null) {
             adapter = null;
         }
@@ -144,6 +146,21 @@ public class MessageCenterActivity extends BaseActivity {
             messageCenterBeanList.clear();
         }
         messageCenterHttpRequest();
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        super.receiveEvent(event);
+        switch (event.getCode()) {
+            case EC.EventCode.SEND_SUCCESS_REPLY:
+                initRequest();
+                break;
+        }
     }
 
     /**

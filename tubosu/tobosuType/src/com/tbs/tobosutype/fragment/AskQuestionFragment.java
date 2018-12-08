@@ -18,6 +18,8 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.AskQuestionAdapter;
 import com.tbs.tobosutype.base.BaseFragment;
 import com.tbs.tobosutype.bean.AnswerListBean;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
@@ -128,6 +130,7 @@ public class AskQuestionFragment extends BaseFragment {
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
+            dqSwipe.setRefreshing(true);
             initRequest();
         }
 
@@ -136,7 +139,6 @@ public class AskQuestionFragment extends BaseFragment {
     private void initRequest() {
         mPage = 1;
         isDownRefresh = true;
-        dqSwipe.setRefreshing(true);
         if (adapter != null){
             adapter = null;
         }
@@ -146,13 +148,27 @@ public class AskQuestionFragment extends BaseFragment {
         askQuestionHttpRequest();
     }
 
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        super.receiveEvent(event);
+        switch (event.getCode()){
+            case EC.EventCode.SEND_SUCCESS_REPLY:
+                initRequest();
+                break;
+        }
+    }
     /**
      * 网络请求
      */
     private void askQuestionHttpRequest() {
         HashMap<String, Object> params = new HashMap<>();
         params.put("token", Util.getDateToken());
-        params.put("uid", AppInfoUtil.getUserid(getActivity()));
+        params.put("uid", AppInfoUtil.getUserid(Objects.requireNonNull(getActivity())));
         params.put("page", mPage);
         params.put("pagesize", mPageSize);
         OKHttpUtil.post(Constant.MAPP_ANSWER_MYANSWERLIST, params, new Callback() {

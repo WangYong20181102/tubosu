@@ -187,35 +187,42 @@
                     android:layout_marginTop="13dp"
                     android:background="#e5e5e5" />
                 <!--装修公司地址-->
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/dec_com_address_ll"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:gravity="center_vertical">
                     <!--位置图标-->
                     <ImageView
+                        android:id="@+id/image_location"
                         android:layout_width="14dp"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/co_address_sign" />
+                        android:src="@drawable/co_address_sign"
+                        android:layout_centerVertical="true"/>
                     <!--具体地址-->
                     <TextView
                         android:id="@+id/dec_com_address_tv"
-                        android:layout_width="180dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:ellipsize="marquee"
                         android:maxEms="13"
                         android:singleLine="true"
-                        android:text=""
                         android:textColor="#666666"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:layout_toRightOf="@+id/image_location"
+                        android:layout_toLeftOf="@+id/dec_com_address_jiantou_iv"
+                        android:layout_centerVertical="true"/>
                     <!--显示的箭头-->
                     <ImageView
                         android:id="@+id/dec_com_address_jiantou_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:src="@drawable/address_right" />
+                        android:src="@drawable/address_right"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:layout_centerVertical="true"/>
                     <!--和装修公司联系-->
                     <LinearLayout
                         android:id="@+id/dec_com_cone_rl"
@@ -224,7 +231,9 @@
                         android:layout_gravity="right"
                         android:layout_marginLeft="10dp"
                         android:gravity="right|center"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone">
                         <!--电话联系-->
                         <ImageView
                             android:layout_marginRight="20dp"
@@ -241,7 +250,7 @@
                             android:src="@drawable/co_qq"
                             android:visibility="gone" />
                     </LinearLayout>
-                </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
             <!--大分割线-->
             <View

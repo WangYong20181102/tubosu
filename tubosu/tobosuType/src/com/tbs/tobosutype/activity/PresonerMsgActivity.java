@@ -885,6 +885,8 @@ public class PresonerMsgActivity extends com.tbs.tobosutype.base.BaseActivity {
                 dialog.cancel();
                 umShareAPI.deleteOauth(PresonerMsgActivity.this, SHARE_MEDIA.WEIXIN, null);
                 MobclickAgent.onProfileSignOff();
+                //设置底部红点显示状态
+                MainActivity.showOrHideHotDot("0");
                 finish();
             }
         }).setNegativeButton("取消", new DialogInterface.OnClickListener() {

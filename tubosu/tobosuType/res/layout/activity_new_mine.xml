@@ -148,13 +148,13 @@
                         android:textColor="#363650"
                         android:textSize="15sp" />
                 </LinearLayout>
-                <!--记账本-->
+                <!--我的提问-->
                 <LinearLayout
                     android:id="@+id/new_mine_reply_ll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="137dp"
                     android:layout_marginTop="15dp"
+                    android:layout_centerHorizontal="true"
                     android:gravity="center"
                     android:orientation="vertical">
 

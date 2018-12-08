@@ -18,6 +18,8 @@ import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.ReplyFragmentAdapter;
 import com.tbs.tobosutype.base.BaseFragment;
 import com.tbs.tobosutype.bean.AskQuestionBean;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
@@ -94,7 +96,20 @@ public class ReplyFragment extends BaseFragment {
         replyHttpRequest();
 
     }
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
 
+    @Override
+    protected void receiveEvent(Event event) {
+        super.receiveEvent(event);
+        switch (event.getCode()){
+            case EC.EventCode.SEND_SUCCESS_REPLY:
+                initRequest();
+                break;
+        }
+    }
     //touch
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         @Override
@@ -129,6 +144,7 @@ public class ReplyFragment extends BaseFragment {
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
+            dqSwipe.setRefreshing(true);
             initRequest();
         }
 
@@ -137,7 +153,6 @@ public class ReplyFragment extends BaseFragment {
     private void initRequest() {
         mPage = 1;
         isDownRefresh = true;
-        dqSwipe.setRefreshing(true);
         if (adapter != null) {
             adapter = null;
         }
