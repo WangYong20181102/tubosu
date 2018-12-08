@@ -81,11 +81,11 @@ public class GongSiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     .placeholder(R.drawable.new_home_loading)
                     .error(R.drawable.new_home_loading).into(gongsiViewHodler.iv);
 
-            if (dataList.get(position).getRecommend() != null && "1".equals(dataList.get(position).getRecommend())) {
-                gongsiViewHodler.tuijianGongsi.setVisibility(View.VISIBLE);
-            } else {
-                gongsiViewHodler.tuijianGongsi.setVisibility(View.GONE);
-            }
+//            if (dataList.get(position).getRecommend() != null && "1".equals(dataList.get(position).getRecommend())) {
+//                gongsiViewHodler.tuijianGongsi.setVisibility(View.VISIBLE);
+//            } else {
+//                gongsiViewHodler.tuijianGongsi.setVisibility(View.GONE);
+//            }
 
             if (dataList.get(position).getCertification() != null && "1".equals(dataList.get(position).getCertification())) {
                 gongsiViewHodler.vGongsi.setVisibility(View.VISIBLE);

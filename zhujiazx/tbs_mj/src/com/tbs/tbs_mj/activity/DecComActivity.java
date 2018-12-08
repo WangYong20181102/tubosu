@@ -106,7 +106,7 @@ public class DecComActivity extends com.tbs.tbs_mj.base.BaseActivity {
     @BindView(R.id.dec_com_cone_rl)
     LinearLayout decComConeRl;//联系图层
     @BindView(R.id.dec_com_address_ll)
-    LinearLayout decComAddressLl;//公司地址图层
+    RelativeLayout decComAddressLl;//公司地址图层
     @BindView(R.id.dec_com_youhui_fenge)
     View decComYouhuiFenge;//优惠条上面的分割线
     @BindView(R.id.dec_com_youhui_lunbo_tv)
