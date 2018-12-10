@@ -66,6 +66,7 @@ public class MessageCenterAdapter extends RecyclerView.Adapter<RecyclerView.View
             ((MyViewHolder) holder).tvContent.setText(messageCenterBeanList.get(position).getContent());
             //日期
             ((MyViewHolder) holder).tvData.setText(messageCenterBeanList.get(position).getAdd_time());
+            //详情页跳转
             ((MyViewHolder) holder).llMessageCenter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
