@@ -51,9 +51,9 @@ public class ReplyFragment extends BaseFragment {
     @BindView(R.id.rv_reply)
     RecyclerView recyclerView;
     @BindView(R.id.dq_swipe)
-    SwipeRefreshLayout dqSwipe;
+    SwipeRefreshLayout dqSwipe;     //下拉刷新
     @BindView(R.id.rl_no_content)
-    RelativeLayout rlNoContent;
+    RelativeLayout rlNoContent;     //无内容展示
     private ReplyFragmentAdapter adapter;
     private List<AskQuestionBean> questionBeanList;
     private Unbinder unbinder;

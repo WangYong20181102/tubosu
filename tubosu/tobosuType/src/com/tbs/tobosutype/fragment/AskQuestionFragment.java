@@ -50,10 +50,10 @@ public class AskQuestionFragment extends BaseFragment {
     @BindView(R.id.rv_reply)
     RecyclerView recyclerView;
     @BindView(R.id.dq_swipe)
-    SwipeRefreshLayout dqSwipe;
+    SwipeRefreshLayout dqSwipe; //刷新控件
     @BindView(R.id.rl_no_content)
     RelativeLayout rlNoContent;
-    private List<AnswerListBean> beanList;
+    private List<AnswerListBean> beanList;  //数据集合
     private Unbinder unbinder;
     private int mPage = 1;//用于分页的数据
     private boolean isDownRefresh = false;//是否是下拉刷新
@@ -190,7 +190,7 @@ public class AskQuestionFragment extends BaseFragment {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.optString("status");
                     final String msg = jsonObject.optString("msg");
-                    if (status.equals("200")) {
+                    if (status.equals("200")) { //状态码
                         JSONArray jsonArray = jsonObject.optJSONArray("data");
                         for (int i = 0; i < jsonArray.length(); i++) {
                             AnswerListBean listBean = gson.fromJson(jsonArray.get(i).toString(), AnswerListBean.class);

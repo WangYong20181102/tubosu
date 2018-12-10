@@ -54,7 +54,7 @@ public class MessageCenterAdapter extends RecyclerView.Adapter<RecyclerView.View
         if (holder instanceof MyViewHolder) {
             //头像
             GlideUtils.glideLoader(context, messageCenterBeanList.get(position).getIcon(), R.drawable.iamge_loading, R.drawable.iamge_loading, ((MyViewHolder) holder).imageHeadIcon, 0);
-            //消息红点(0未读，显示红点，1已读隐藏红点)
+            //消息红点(0未读，1已读)
             if (messageCenterBeanList.get(position).getIs_see().equals("0")) {
                 ((MyViewHolder) holder).vHotDot.setVisibility(View.VISIBLE);
             } else {
@@ -66,6 +66,7 @@ public class MessageCenterAdapter extends RecyclerView.Adapter<RecyclerView.View
             ((MyViewHolder) holder).tvContent.setText(messageCenterBeanList.get(position).getContent());
             //日期
             ((MyViewHolder) holder).tvData.setText(messageCenterBeanList.get(position).getAdd_time());
+            //详情页跳转
             ((MyViewHolder) holder).llMessageCenter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
