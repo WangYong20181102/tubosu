@@ -249,7 +249,8 @@
             android:layout_marginRight="32dp"
             android:text="400-696-2221"
             android:textColor="#6f6f8f"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:visibility="gone"/>
 
         <ImageView
             android:layout_width="12dp"

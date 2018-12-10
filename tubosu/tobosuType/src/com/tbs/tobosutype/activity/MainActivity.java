@@ -873,7 +873,7 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
      * 显示隐藏底部 我 的红点显示
      */
     public static void showOrHideHotDot(String isSee) {
-        if (isSee.equals("1")) {
+        if (isSee.equals("0")) {
             not_see_orders_count.setVisibility(View.VISIBLE);
         } else {
             not_see_orders_count.setVisibility(View.GONE);

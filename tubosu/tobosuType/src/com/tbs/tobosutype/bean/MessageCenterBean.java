@@ -11,7 +11,7 @@ public class MessageCenterBean {
     private String content;//内容
     private String is_see;//是否查看
     private String add_time;    //日期
-    private String icon;    //头像 (0查看，未查看)
+    private String icon;    //头像 (0未查看，1查看)
 
     public String getId() {
         return id;

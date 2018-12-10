@@ -131,7 +131,7 @@ public class NewMineActivity extends BaseActivity {
             //无网
             initUserInfoInNotNet();
         }
-        if (AppInfoUtil.getHotDot(mContext).equals("1")){
+        if (AppInfoUtil.getHotDot(mContext).equals("0")){
             messageRedDot.setVisibility(View.VISIBLE);
         }else {
             messageRedDot.setVisibility(View.GONE);
@@ -260,13 +260,17 @@ public class NewMineActivity extends BaseActivity {
                     return;
                 }
                 //点击消息中心隐藏红点显示
-                MainActivity.showOrHideHotDot("0"); //调用mainactivity方法，隐藏我的底部红点
-                AppInfoUtil.setHotDot(mContext,"0");    //改变本地消息红点状态
+                MainActivity.showOrHideHotDot("1"); //调用mainactivity方法，隐藏我的底部红点
+                AppInfoUtil.setHotDot(mContext,"1");    //改变本地消息红点状态
                 startActivity(new Intent(mContext,MessageCenterActivity.class));
                 break;
             case R.id.new_mine_kefu_rl:
                 //开启客服电话
-                showKefuPopWindow();
+//                showKefuPopWindow();
+                Intent intent = new Intent(NewMineActivity.this, NewWebViewActivity.class);
+                intent.putExtra("mLoadingUrl", "https://webchat.7moor.com/wapchat.html?accessId=0e1ca6b0-ec8e-11e8-a1ba-07d6a6237cdc");
+                intent.putExtra("bAnswer",true);
+                startActivity(intent);
                 break;
             case R.id.new_mine_fuwuhao_rl:
                 //复制服务号

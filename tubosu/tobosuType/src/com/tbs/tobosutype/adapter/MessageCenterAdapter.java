@@ -55,7 +55,7 @@ public class MessageCenterAdapter extends RecyclerView.Adapter<RecyclerView.View
             //头像
             GlideUtils.glideLoader(context, messageCenterBeanList.get(position).getIcon(), R.drawable.iamge_loading, R.drawable.iamge_loading, ((MyViewHolder) holder).imageHeadIcon, 0);
             //消息红点
-            if (messageCenterBeanList.get(position).getIs_see().equals("1")) {
+            if (messageCenterBeanList.get(position).getIs_see().equals("0")) {
                 ((MyViewHolder) holder).vHotDot.setVisibility(View.VISIBLE);
             } else {
                 ((MyViewHolder) holder).vHotDot.setVisibility(View.GONE);
@@ -71,7 +71,7 @@ public class MessageCenterAdapter extends RecyclerView.Adapter<RecyclerView.View
                 public void onClick(View v) {
                     if (onMessageCenterClickListener != null){
                         onMessageCenterClickListener.onClickPosition(position);
-                        if (messageCenterBeanList.get(position).getIs_see().equals("1")){
+                        if (messageCenterBeanList.get(position).getIs_see().equals("0")){
                             ((MyViewHolder) holder).vHotDot.setVisibility(View.GONE);
                         }
                     }
