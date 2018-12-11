@@ -679,7 +679,11 @@ public class DecorateComActivity extends BaseActivity {
             case R.id.decorate_com_kefu_ll:
             case R.id.decorate_com_kefu_ll_1:
                 //客服
-                showZixunPopwindow();
+//                showZixunPopwindow();
+                Intent intent = new Intent(DecorateComActivity.this, NewWebViewActivity.class);
+                intent.putExtra("mLoadingUrl", "https://webchat.7moor.com/wapchat.html?accessId=0e1ca6b0-ec8e-11e8-a1ba-07d6a6237cdc");
+                intent.putExtra("bAnswer",true);
+                startActivity(intent);
                 break;
             case R.id.decorate_com_free_cv:
                 //免费报价

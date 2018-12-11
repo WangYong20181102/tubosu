@@ -24,6 +24,7 @@ import com.baidu.location.LocationClientOption;
 import com.bumptech.glide.Glide;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.MyApplication;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
@@ -174,18 +175,17 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
     }
 
     private void initView() {
-        Glide.with(mContext).load(R.drawable.welcome_image)
-                .asBitmap().centerCrop().placeholder(R.drawable.welcome_image)
-                .error(R.drawable.welcome_image).into(welcomeImage);
-//        welcomeImage.setImageResource(R.drawable.welcome_image);
         //区分市场
-//        if("appxiaomi".equals(AppInfoUtil.getChannType(MyApplication.getContext()))){
-//            Glide.with(mContext).load(R.drawable.wel_xiaomi).placeholder(R.drawable.wel_xiaomi).error(R.drawable.wel_xiaomi).into(welcomeImage);
-//        }else if("ali".equals(AppInfoUtil.getChannType(MyApplication.getContext()))){
-//            Glide.with(mContext).load(R.drawable.wel_new_ali_img).placeholder(R.drawable.wel_new_ali_img).error(R.drawable.wel_new_ali_img).into(welcomeImage);
-//        }else{
-//            Glide.with(mContext).load(R.drawable.welcome_image).placeholder(R.drawable.welcome_image).error(R.drawable.welcome_image).into(welcomeImage);
-//        }
+        if ("ali".equals(AppInfoUtil.getChannType(MyApplication.getContext()))) { //ali推广启动图片
+            Glide.with(mContext).load(R.drawable.welcome_image_ali)
+                    .asBitmap().centerCrop().placeholder(R.drawable.welcome_image_ali)
+                    .error(R.drawable.welcome_image_ali).into(welcomeImage);
+        } else {
+            Glide.with(mContext).load(R.drawable.welcome_image)
+                    .asBitmap().centerCrop().placeholder(R.drawable.welcome_image)
+                    .error(R.drawable.welcome_image).into(welcomeImage);
+        }
+
     }
 
     private String MAC_CODE = "";
@@ -200,8 +200,7 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
         // 获取mac地址：
         String macAddress = "000000000000";
         try {
-            WifiManager wifiMgr = (WifiManager) context
-                    .getSystemService(Context.WIFI_SERVICE);
+            WifiManager wifiMgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
             WifiInfo info = (null == wifiMgr ? null : wifiMgr
                     .getConnectionInfo());
             if (null != info) {

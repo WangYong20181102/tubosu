@@ -40,7 +40,7 @@ public class _HomePage {
     public static class DataBean {
 
         private String course_list_url;
-        private String is_see;
+        private String is_see = "";
         private List<BannerBean> banner;
         private List<CasesBean> cases;
         private List<ImpressionBean> impression;
