@@ -56,10 +56,11 @@
             <!--透明搜索框-->
             <RelativeLayout
                 android:id="@+id/hp_search_tm_rl"
-                android:layout_width="233dp"
+                android:layout_width="match_parent"
                 android:layout_height="26dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="78dp"
+                android:layout_marginRight="18dp"
                 android:background="@drawable/shape_homepage_seach_white">
 
                 <ImageView
@@ -82,10 +83,11 @@
             <!--搜索框-->
             <RelativeLayout
                 android:id="@+id/hp_search_rl"
-                android:layout_width="233dp"
+                android:layout_width="match_parent"
                 android:layout_height="26dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="78dp"
+                android:layout_marginRight="18dp"
                 android:background="@drawable/shape_homepage_seach_black"
                 android:visibility="gone">
 
@@ -114,7 +116,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="18dp"
-                android:background="@drawable/kefu_black" />
+                android:background="@drawable/kefu_black"
+                android:visibility="gone"/>
 
         </RelativeLayout>
     </RelativeLayout>

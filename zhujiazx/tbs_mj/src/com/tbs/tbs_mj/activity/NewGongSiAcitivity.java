@@ -28,7 +28,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -101,10 +100,8 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
     private RelativeLayout relTopSearch;
     private RelativeLayout relTopSearch1;// 顶部View
     private RelativeLayout relGoClick, relGoClick1, nothingData;
-    private ImageView ivGoFadan, ivFuwuquyu;
+    private ImageView ivGoFadan;
     private TextView tvZonghe, tvLiulanzuiduo, tvAnlizuiduo, tvLiwozuijin;
-    private TextView shitirenzheng, ctuijian, fuwuquyu;
-    private RelativeLayout reSearvice;
     private RelativeLayout reCompanDataEmpty, relYouxuan;
     private AppBarLayout mainAppbar;
     private RelativeLayout slideRelayout;
@@ -124,8 +121,7 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
     private ImageView cancelFindComIcon;
     private RelativeLayout relfindComLayout;
     private RelativeLayout gongsi_all_rl;
-    private RelativeLayout reUpSelectLayout;
-    private LinearLayout reDownSelectLayout;
+    private LinearLayout reUpSelectLayout;
     private LinearLayout gongsilayout1;//选择公司的定位按钮
     private LinearLayout gongsilayout;//选择公司的定位按钮
 
@@ -150,8 +146,6 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
     private String lng = "";                   // 经度lng
 
 
-    private boolean isChooseShiTiRenZheng = false;
-    private boolean isChooseTuijian = false;
 
     private ArrayList<CompanyDistrictBean> discList = new ArrayList<CompanyDistrictBean>();
 
@@ -188,7 +182,6 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
         super.onResume();
         slideRelayout.setBackgroundColor(Color.parseColor("#ffffff"));
         reUpSelectLayout.setBackgroundColor(Color.parseColor("#ffffff"));
-        reDownSelectLayout.setBackgroundColor(Color.parseColor("#ffffff"));
     }
 
     private void bindViews() {
@@ -212,7 +205,6 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
         tvGongsiCity = (TextView) findViewById(R.id.tvGongsiCity);
         tvGongsiCity1 = (TextView) findViewById(R.id.tvGongsiCity1);
         ivGoFadan = (ImageView) findViewById(R.id.ivGoFadan);
-        ivFuwuquyu = (ImageView) findViewById(R.id.ivFuwuquyu);
 
         tvZonghe = (TextView) findViewById(R.id.tvZonghe);
         tvLiulanzuiduo = (TextView) findViewById(R.id.tvLiulanzuiduo);
@@ -223,10 +215,6 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
         cancelFindComIcon = (ImageView) findViewById(R.id.cancelFindComIcon);
         relfindComLayout = (RelativeLayout) findViewById(R.id.relfindComLayout);
 
-        shitirenzheng = (TextView) findViewById(R.id.shitirenzheng);
-        ctuijian = (TextView) findViewById(R.id.ctuijian);
-        fuwuquyu = (TextView) findViewById(R.id.fuwuquyu);
-        reSearvice = (RelativeLayout) findViewById(R.id.reSearvice);
         reCompanDataEmpty = (RelativeLayout) findViewById(R.id.reCompanDataEmpty);
         relYouxuan = (RelativeLayout) findViewById(R.id.relYouxuan);
 
@@ -239,8 +227,7 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
         findCompanyLayout = (RelativeLayout) findViewById(R.id.findCompanyLayout);
         relShaiXuan = (RelativeLayout) findViewById(R.id.relShaiXuan);
         slideRelayout = (RelativeLayout) findViewById(R.id.slideRelayout);
-        reUpSelectLayout = (RelativeLayout) findViewById(R.id.reUpSelectLayout);
-        reDownSelectLayout = (LinearLayout) findViewById(R.id.reDownSelectLayout);
+        reUpSelectLayout = (LinearLayout) findViewById(R.id.reUpSelectLayout);
     }
 
     private void initViews() {
@@ -260,10 +247,6 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
         tvAnlizuiduo.setOnClickListener(this);
         tvLiwozuijin.setOnClickListener(this);
 
-        shitirenzheng.setOnClickListener(this);
-        ctuijian.setOnClickListener(this);
-        fuwuquyu.setOnClickListener(this);
-        reSearvice.setOnClickListener(this);
         tvGongsiCity.setOnClickListener(this);
         tvGongsiCity1.setOnClickListener(this);
         gongsilayout.setOnClickListener(this);
@@ -318,10 +301,8 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, State state) {
                 if (state == State.EXPANDED) {
-//                    Util.setToast(mContext, "展开");
                     relTopSearch.setVisibility(View.VISIBLE);
                 } else if (state == State.COLLAPSED) {
-//                    Util.setToast(mContext, "折叠");
                     relTopSearch.setVisibility(View.GONE);
                 }
             }
@@ -511,10 +492,8 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
                                     }
 
                                 } else if (bannerObject.getInt("status") == 201) {
-//                                    Util.setToast(mContext, msg);
                                     Util.setErrorLog(TAG, msg);
                                 } else if (bannerObject.getInt("status") == 0) {
-//                                    Util.setToast(mContext, msg);
                                     Util.setErrorLog(TAG, msg);
                                 }
                             } catch (JSONException e) {
@@ -602,7 +581,6 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
                                     }
 
                                 } else if (jsonObject.getInt("status") == 201) {
-//                                    Util.setToast(mContext, msg);
                                     Util.setErrorLog(TAG, "加载更多  " + msg);
                                     if (companyAdapter != null) {
                                         companyAdapter.setHideMore(true);
@@ -659,13 +637,6 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
                 tvGongsiCity.setText(gongsiCity);
                 tvGongsiCity1.setText(gongsiCity);
                 discList.clear();
-                fuwuquyu.setText("服务区域");
-
-                ctuijian.setBackgroundResource(R.drawable.select_item_textview_bg);
-                ctuijian.setTextColor(Color.parseColor("#4D4D4D"));
-                shitirenzheng.setBackgroundResource(R.drawable.select_item_textview_bg);
-                shitirenzheng.setTextColor(Color.parseColor("#4D4D4D"));
-
                 tvZonghe.setTextColor(getResources().getColor(R.color.gongsi_selected));
                 tvLiulanzuiduo.setTextColor(getResources().getColor(R.color.gongsi_unselected));
                 tvAnlizuiduo.setTextColor(getResources().getColor(R.color.gongsi_unselected));
@@ -701,7 +672,6 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
                     // 没有选择城市
                     Util.setErrorLog(TAG, "你没有筛选城市");
                 } else {
-//                    Util.setToast(mContext, "你筛选了城市，该城市是=" +shaixuanCity);
                     sortDistrict(shaixuanCity);
                     gongsiCity = shaixuanCity;
                     shaixuanDialog.setCity(shaixuanCity);
@@ -713,9 +683,6 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
                     }
                 }
 
-                break;
-            case EC.EventCode.CHOOSE_PROVINCE_CODE:
-                clickProvince = 1;
                 break;
             case EC.EventCode.CHOOSE_PROVINCE_CODE1:
                 String city = (String) event.getData();
@@ -843,105 +810,6 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
                 page = 1;
                 sort_type = "4";
                 getNetData();
-                break;
-
-            case R.id.shitirenzheng:
-                if (!isChooseShiTiRenZheng) {
-                    // 未选中， 就选中
-                    shitirenzheng.setBackgroundResource(R.drawable.select_item_textview_bg_selected);
-                    shitirenzheng.setTextColor(Color.parseColor("#54b3b3"));
-                    certification = "1";
-                } else {
-                    // 已选中， 就别选中
-                    shitirenzheng.setBackgroundResource(R.drawable.select_item_textview_bg);
-                    shitirenzheng.setTextColor(Color.parseColor("#4D4D4D"));
-                    certification = "0";
-                }
-                gongsiList.clear();
-                if (companyAdapter != null) {
-                    companyAdapter.notifyDataSetChanged();
-                    companyAdapter = null;
-                }
-                page = 1;
-                getNetData();
-                isChooseShiTiRenZheng = !isChooseShiTiRenZheng;
-                break;
-            case R.id.ctuijian:
-                if (!isChooseTuijian) {
-                    ctuijian.setBackgroundResource(R.drawable.select_item_textview_bg_selected);
-                    ctuijian.setTextColor(Color.parseColor("#54b3b3"));
-                    recommend = "1";
-                } else {
-                    ctuijian.setBackgroundResource(R.drawable.select_item_textview_bg);
-                    ctuijian.setTextColor(Color.parseColor("#4D4D4D"));
-                    recommend = "0";
-                }
-                gongsiList.clear();
-                if (companyAdapter != null) {
-                    companyAdapter.notifyDataSetChanged();
-                    companyAdapter = null;
-                }
-                page = 1;
-                getNetData();
-                isChooseTuijian = !isChooseTuijian;
-                break;
-            case R.id.fuwuquyu:
-            case R.id.reSearvice:
-
-                if (isClose) {
-                    // 弹出 弹框
-                    sortDistrict(gongsiCity);
-                    View contentView = LayoutInflater.from(NewGongSiAcitivity.this).inflate(R.layout.popuplayout_district_layout, null);
-                    popWnd = new PopupWindow(NewGongSiAcitivity.this);
-                    popWnd.setContentView(contentView);
-                    popWnd.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-                    popWnd.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-                    popWnd.setOutsideTouchable(true);
-                    popWnd.setTouchable(true);
-                    popWnd.setBackgroundDrawable(getResources().getDrawable(R.drawable.color_dra_white));
-
-                    GridView disctrictGrid = (GridView) contentView.findViewById(R.id.disctrictGrid);
-
-                    ComDisctrictAdapter adapter = new ComDisctrictAdapter(mContext, discList);
-                    disctrictGrid.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                    disctrictGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            district_id = discList.get(i).getDistrict_id();
-                            page = 1;
-                            if (i > 0) {
-                                fuwuquyu.setText(discList.get(i).getDistrict_name());
-                                fuwuquyu.setTextColor(Color.parseColor("#54b3b3"));
-                                reSearvice.setBackgroundResource(R.drawable.selected_servicearea_textview_bg);
-                                ivFuwuquyu.setBackgroundResource(R.drawable.sanjiaoxia34);
-                            } else {
-                                fuwuquyu.setText("服务区域");
-                                fuwuquyu.setTextColor(Color.parseColor("#666666"));
-                                reSearvice.setBackgroundResource(R.drawable.select_servicearea_textview_bg);
-                                ivFuwuquyu.setBackgroundResource(R.drawable.jiantou0);
-                            }
-
-                            gongsiList.clear();
-                            if (companyAdapter != null) {
-                                companyAdapter.notifyDataSetChanged();
-                                companyAdapter = null;
-                            }
-                            popWnd.dismiss();
-                            getNetData();
-                        }
-                    });
-
-                    for (int i = 0; i < discList.size(); i++) {
-                        String tempText = fuwuquyu.getText().toString().trim();
-                        if (tempText.equals(discList.get(i).getDistrict_name())) {
-                            adapter.setSelectedPosition(i);
-                        }
-                    }
-                    popWnd.showAsDropDown(reSearvice, 0, 10);
-                }
-                isClose = !isClose;
                 break;
             case R.id.relGoClick:
             case R.id.relGoClick1:
@@ -1144,10 +1012,6 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
                     EventBusUtil.sendEvent(new Event(EC.EventCode.HOMEACTIVITY_CITY_CODE, gongsiCity));
                 }
 
-                fuwuquyu.setText("服务区域");
-                fuwuquyu.setTextColor(Color.parseColor("#666666"));
-                reSearvice.setBackgroundResource(R.drawable.select_servicearea_textview_bg);
-                ivFuwuquyu.setBackgroundResource(R.drawable.jiantou0);
                 gongsiList.clear();
                 if (companyAdapter != null) {
                     companyAdapter.notifyDataSetChanged();
@@ -1161,108 +1025,6 @@ public class NewGongSiAcitivity extends com.tbs.tbs_mj.base.BaseActivity impleme
             }
         });
         shaixuanDialog.show();//显示对话框
-    }
-
-
-    private Dialog cityDialog;
-    private int clickProvince = 0;
-
-    /**
-     * 第二层dialog
-     */
-    private void showChooseCity() {
-        clickProvince = 0;
-        cityDialog = new Dialog(this, R.style.ActionSheetDialogStyle);
-        //填充对话框的布局
-        View view = LayoutInflater.from(NewGongSiAcitivity.this).inflate(R.layout.city_layout, null);
-
-        RelativeLayout relBackDialog = (RelativeLayout) view.findViewById(R.id.relBackDialog);
-        final TextView chooseProvince = (TextView) view.findViewById(R.id.chooseProvince);
-        final TextView chooseCity = (TextView) view.findViewById(R.id.chooseCity);
-        final View provincebar = (View) view.findViewById(R.id.provincebar);
-        final View citybar = (View) view.findViewById(R.id.citybar);
-        final ListView provincedatalist = (ListView) view.findViewById(R.id.provincedatalist);
-        final ListView citydatalist = (ListView) view.findViewById(R.id.citydatalist);
-
-        final ChoseProvinceAdapter choseProvinceAdapter = new ChoseProvinceAdapter(mContext, companyProvinceBeanArrayList);
-        provincedatalist.setAdapter(choseProvinceAdapter);
-        choseProvinceAdapter.notifyDataSetChanged();
-        provincedatalist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int provincePosition, long l) {
-                EventBusUtil.sendEvent(new Event(EC.EventCode.CHOOSE_PROVINCE_CODE));
-                choseProvinceAdapter.setSelectPosition(provincePosition);
-                citydatalist.setVisibility(View.VISIBLE);
-                provincedatalist.setVisibility(View.GONE);
-                chooseProvince.setTextColor(Color.parseColor("#999999"));
-                provincebar.setVisibility(View.GONE);
-                citybar.setVisibility(View.VISIBLE);
-                chooseCity.setTextColor(Color.parseColor("#FF6F20"));
-
-                final ArrayList<CompanyCityBean> cityList = companyProvinceBeanArrayList.get(provincePosition).getCityBeanList();
-                final ChoseCityAdapter choseCityAdapter = new ChoseCityAdapter(mContext, cityList);
-                citydatalist.setAdapter(choseCityAdapter);
-                choseCityAdapter.notifyDataSetChanged();
-                citydatalist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int cityPosition, long l) {
-                        choseCityAdapter.setSelectPosition(cityPosition);
-                        EventBusUtil.sendEvent(new Event(EC.EventCode.SHAIXUAN_CITY_CODE, cityList.get(cityPosition).getCity_name()));
-                    }
-                });
-            }
-        });
-
-        chooseProvince.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                provincedatalist.setVisibility(View.VISIBLE);
-                citydatalist.setVisibility(View.GONE);
-                chooseProvince.setTextColor(Color.parseColor("#FF6F20"));
-                provincebar.setVisibility(View.VISIBLE);
-                citybar.setVisibility(View.GONE);
-                chooseCity.setTextColor(Color.parseColor("#999999"));
-            }
-        });
-        chooseCity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (clickProvince > 0) {
-                    provincedatalist.setVisibility(View.GONE);
-                    citydatalist.setVisibility(View.VISIBLE);
-                    chooseProvince.setTextColor(Color.parseColor("#999999"));
-                    provincebar.setVisibility(View.GONE);
-                    citybar.setVisibility(View.VISIBLE);
-                    chooseCity.setTextColor(Color.parseColor("#FF6F20"));
-                } else {
-                    Util.setToast(mContext, "请选择省份");
-                }
-            }
-        });
-
-        relBackDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventBusUtil.sendEvent(new Event(EC.EventCode.QUEDING_SHAIXUAN_CITY_CODE));
-                cityDialog.dismiss();
-            }
-        });
-
-
-        //将布局设置给Dialog
-        cityDialog.setContentView(view);
-        //获取当前Activity所在的窗体
-        Window cityWindow = cityDialog.getWindow();
-        //设置Dialog从窗体底部弹出
-        cityWindow.setGravity(Gravity.RIGHT);
-        //获得窗体的属性
-        WindowManager.LayoutParams lp = cityWindow.getAttributes();
-        lp.y = 20;//设置Dialog距离底部的距离
-//       将属性设置给窗体
-        cityWindow.setAttributes(lp);
-        cityDialog.show();//显示对话框
     }
 
     private void getSearchData(String text) {

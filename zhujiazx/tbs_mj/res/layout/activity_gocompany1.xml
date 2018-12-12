@@ -21,7 +21,8 @@
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/mainAppbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:elevation="0dp">
 
                 <!--顶部-->
                 <RelativeLayout
@@ -98,6 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
+                    android:minHeight="43dp"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                     <RelativeLayout
@@ -117,7 +119,7 @@
                                 <android.support.v4.view.ViewPager
                                     android:id="@+id/gongsiViewpager"
                                     android:layout_width="match_parent"
-                                    android:layout_height="136dp"></android.support.v4.view.ViewPager>
+                                    android:layout_height="136dp" />
                             </FrameLayout>
 
                             <LinearLayout
@@ -127,7 +129,7 @@
                                 android:layout_alignParentBottom="true"
                                 android:gravity="center"
                                 android:orientation="horizontal"
-                                android:padding="10dp"></LinearLayout>
+                                android:padding="10dp" />
                         </RelativeLayout>
 
 
@@ -167,7 +169,7 @@
                                 android:id="@+id/gongsiRecyclerViewTuijian"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@+id/ivRecomandsficon"></android.support.v7.widget.RecyclerView>
+                                android:layout_below="@+id/ivRecomandsficon" />
                         </RelativeLayout>
 
                         <View
@@ -177,190 +179,84 @@
                             android:background="#F7F7F7" />
                     </RelativeLayout>
                 </android.support.design.widget.CollapsingToolbarLayout>
-                <!--中间栏-->
 
-                <!--上选择项-->
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/reUpSelectLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    app:layout_scrollFlags="scroll|enterAlways">
+                    android:background="@drawable/white_bg"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:id="@+id/headLayoutSelectUp"
+                    <TextView
+                        android:id="@+id/tvZonghe"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_height="43dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="综合"
+                        android:textColor="@color/app_theme_color"
+                        android:textSize="12sp" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tvLiulanzuiduo"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="浏览量"
+                        android:textColor="@color/gongsi_unselected"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvAnlizuiduo"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="方案数"
+                        android:textColor="@color/gongsi_unselected"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvLiwozuijin"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="离我最近"
+                        android:textColor="@color/gongsi_unselected"
+                        android:textSize="12sp" />
+
+                    <RelativeLayout
+                        android:id="@+id/relShaiXuan"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:layout_weight="1"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tvShaixuan"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/tvZonghe"
-                                android:layout_width="match_parent"
-                                android:layout_height="43dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="综合"
-                                android:textColor="@color/app_theme_color"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/tvLiulanzuiduo"
-                                android:layout_width="match_parent"
-                                android:layout_height="43dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="浏览量"
-                                android:textColor="@color/gongsi_unselected"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/tvAnlizuiduo"
-                                android:layout_width="match_parent"
-                                android:layout_height="43dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="方案数"
-                                android:textColor="@color/gongsi_unselected"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/tvLiwozuijin"
-                                android:layout_width="match_parent"
-                                android:layout_height="43dp"
-                                android:layout_gravity="center_vertical"
-                                android:layout_weight="1"
-                                android:gravity="center"
-                                android:text="离我最近"
-                                android:textColor="@color/gongsi_unselected"
-                                android:textSize="12sp" />
-
-                            <RelativeLayout
-                                android:id="@+id/relShaiXuan"
-                                android:layout_width="match_parent"
-                                android:layout_height="43dp"
-                                android:layout_weight="1"
-                                android:gravity="center">
-
-                                <TextView
-                                    android:id="@+id/tvShaixuan"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginRight="4dp"
-                                    android:gravity="center"
-                                    android:text="筛选"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp" />
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_toRightOf="@+id/tvShaixuan"
-                                    android:background="@drawable/loudou" />
-                            </RelativeLayout>
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_below="@+id/headLayoutSelectUp"
-                        android:background="#EBEBEB" />
-
-                </RelativeLayout>
-                <!--上选择项-->
-
-                <!--下选择项-->
-                <LinearLayout
-                    android:id="@+id/reDownSelectLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:background="@color/white"
-                    android:orientation="horizontal"
-                    app:layout_scrollFlags="scroll|enterAlways">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <TextView
-                            android:id="@+id/shitirenzheng"
-                            android:layout_width="101dp"
-                            android:layout_height="27dp"
-                            android:layout_centerInParent="true"
-                            android:background="@drawable/select_item_textview_bg"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="4dp"
                             android:gravity="center"
-                            android:text="实体认证"
-                            android:textColor="#4D4D4D"
-                            android:textSize="11sp" />
+                            android:text="筛选"
+                            android:textColor="@color/gongsi_unselected"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/tvShaixuan"
+                            android:background="@drawable/loudou" />
                     </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <TextView
-                            android:id="@+id/ctuijian"
-                            android:layout_width="101dp"
-                            android:layout_height="27dp"
-                            android:layout_centerInParent="true"
-                            android:background="@drawable/select_item_textview_bg"
-                            android:gravity="center"
-                            android:text="推荐"
-                            android:textColor="#4D4D4D"
-                            android:textSize="11sp" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <RelativeLayout
-                            android:id="@+id/reSearvice"
-                            android:layout_width="101dp"
-                            android:layout_height="27dp"
-                            android:layout_centerInParent="true"
-                            android:background="@drawable/select_item_textview_bg"
-                            android:gravity="center">
-
-                            <TextView
-                                android:id="@+id/fuwuquyu"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:ellipsize="end"
-                                android:gravity="center"
-                                android:maxEms="6"
-                                android:text="服务区域"
-                                android:textColor="#4D4D4D"
-                                android:textSize="11sp" />
-
-                            <ImageView
-                                android:id="@+id/ivFuwuquyu"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginLeft="4dp"
-                                android:layout_toRightOf="@+id/fuwuquyu"
-                                android:background="@drawable/jiantou0" />
-                        </RelativeLayout>
-                    </RelativeLayout>
-
                 </LinearLayout>
-                <!--下选择项-->
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -451,9 +347,9 @@
                         android:layout_centerVertical="true"
                         android:background="@color/transparent"
                         android:hint="请输入装修公司关键字"
-                        android:singleLine="true"
                         android:lines="1"
                         android:maxLines="1"
+                        android:singleLine="true"
                         android:textColorHint="#999999"
                         android:textSize="12sp" />
 
@@ -558,7 +454,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/ifyouxuan"
-                        android:divider="@null"></com.tbs.tbs_mj.customview.MyListView>
+                        android:divider="@null" />
                 </RelativeLayout>
             </ScrollView>
         </RelativeLayout>
@@ -572,7 +468,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/searchList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+                android:layout_height="match_parent" />
         </android.support.v4.widget.SwipeRefreshLayout>
 
         <RelativeLayout
@@ -635,8 +531,8 @@
         android:id="@+id/relTopSearch1"
         android:layout_width="match_parent"
         android:layout_height="43dp"
-        android:background="@drawable/wht"
-        app:layout_scrollFlags="scroll|enterAlways">
+        android:animateLayoutChanges="true"
+        android:background="@drawable/wht">
 
         <LinearLayout
             android:id="@+id/gongsilayout1"
