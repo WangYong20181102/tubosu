@@ -94,6 +94,7 @@ public class NewHomeActivity extends BaseActivity {
     private View rel_newhomebar;
     private ImageView iv_sanjiaoxing;
     private ImageView iv_add;
+//    private ImageView home_kefu;
     private TextView newhomeCity;
     private String findCompanyChosenCity;
     private TextView app_title_text;
@@ -374,6 +375,7 @@ public class NewHomeActivity extends BaseActivity {
 
         iv_sanjiaoxing = (ImageView) findViewById(R.id.iv_sanjiaoxing);
         iv_add = (ImageView) findViewById(R.id.iv_add);
+//        home_kefu = (ImageView) findViewById(R.id.home_kefu);
         app_title_text = (TextView) findViewById(R.id.app_title_text);
 
         recyclerView = (RecyclerView) findViewById(R.id.newhome_recyclerview);
@@ -421,6 +423,7 @@ public class NewHomeActivity extends BaseActivity {
                         rel_newhomebar.setVisibility(View.VISIBLE);
                         iv_sanjiaoxing.setBackgroundResource(R.drawable.tt);
                         iv_add.setBackgroundResource(R.drawable.sdf);
+//                        home_kefu.setBackgroundResource(R.drawable.kefu_black);
                         newhomeCity.setTextColor(Color.parseColor("#000000"));
                         app_title_text.setTextColor(Color.parseColor("#000000"));
                         rel_newhomebar.setBackgroundColor(Color.parseColor("#FFFFFF"));
@@ -436,6 +439,7 @@ public class NewHomeActivity extends BaseActivity {
                         rel_newhomebar.setVisibility(View.INVISIBLE);
                         iv_sanjiaoxing.setBackgroundResource(R.drawable.sanjiaoxing);
                         iv_add.setBackgroundResource(R.drawable.ad_icon);
+//                        home_kefu.setBackgroundResource(R.drawable.home_kefu);
                         newhomeCity.setTextColor(Color.parseColor("#FFFFFF"));
                         app_title_text.setTextColor(Color.parseColor("#FFFFFF"));
                         rel_newhomebar.setBackgroundColor(Color.parseColor("#00FFFFFF"));
@@ -447,6 +451,12 @@ public class NewHomeActivity extends BaseActivity {
             }
         });
         newhomeCity.setText("" + SpUtil.getCity(mContext));
+//        home_kefu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showZixunPopwindow();
+//            }
+//        });
     }
 
     private View zixunPopView;
