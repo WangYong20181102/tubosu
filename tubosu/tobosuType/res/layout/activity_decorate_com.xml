@@ -122,7 +122,7 @@
 
                             <RelativeLayout
                                 android:layout_width="165dp"
-                                android:layout_height="62dp"
+                                android:layout_height="68dp"
                                 android:layout_alignParentLeft="true"
                                 android:layout_marginLeft="11dp"
                                 android:background="@color/white">
@@ -148,6 +148,7 @@
                                             android:id="@+id/decorate_com_free_img"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
+                                            android:scaleType="fitXY"
                                             android:src="@drawable/banner_free" />
                                     </android.support.v7.widget.CardView>
                                 </RelativeLayout>
@@ -155,7 +156,7 @@
 
                             <RelativeLayout
                                 android:layout_width="165dp"
-                                android:layout_height="62dp"
+                                android:layout_height="68dp"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginRight="11dp"
                                 android:background="@color/white">
@@ -181,6 +182,7 @@
                                             android:id="@+id/decorate_com_zero_img"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
+                                            android:scaleType="fitXY"
                                             android:src="@drawable/banner_zero" />
                                     </android.support.v7.widget.CardView>
                                 </RelativeLayout>
@@ -194,7 +196,7 @@
 
                             <RelativeLayout
                                 android:layout_width="165dp"
-                                android:layout_height="62dp"
+                                android:layout_height="68dp"
                                 android:layout_alignParentLeft="true"
                                 android:layout_marginLeft="11dp"
                                 android:background="@color/white">
@@ -220,6 +222,7 @@
                                             android:id="@+id/decorate_com_hot_img"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
+                                            android:scaleType="fitXY"
                                             android:src="@drawable/banner_hot" />
                                     </android.support.v7.widget.CardView>
                                 </RelativeLayout>
@@ -227,7 +230,7 @@
 
                             <RelativeLayout
                                 android:layout_width="165dp"
-                                android:layout_height="62dp"
+                                android:layout_height="68dp"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginRight="11dp"
                                 android:background="@color/white">
@@ -252,6 +255,7 @@
                                             android:id="@+id/decorate_com_test_img"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
+                                            android:scaleType="fitXY"
                                             android:src="@drawable/banner_test" />
                                     </android.support.v7.widget.CardView>
                                 </RelativeLayout>

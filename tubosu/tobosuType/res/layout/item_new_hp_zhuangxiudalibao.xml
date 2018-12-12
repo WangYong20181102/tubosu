@@ -9,9 +9,8 @@
 
     <RelativeLayout
         android:background="@drawable/shape_yin_ying"
-        android:padding="1dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
         <android.support.v7.widget.CardView
             android:id="@+id/newihph_zhuangxiudalibao_cv"
             android:layout_width="match_parent"
@@ -20,6 +19,8 @@
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:visibility="visible"
+            android:layout_margin="1dp"
+            app:cardPreventCornerOverlap="false"
             app:cardCornerRadius="4dp"
             app:cardElevation="0dp">
 
@@ -27,7 +28,8 @@
                 android:id="@+id/newihph_zhuangxiudalibao_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/home_pager_dalibao" />
+                android:scaleType="fitXY"
+                android:src="@drawable/home_pager_dalibao"/>
         </android.support.v7.widget.CardView>
     </RelativeLayout>
 </RelativeLayout>

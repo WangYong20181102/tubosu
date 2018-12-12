@@ -387,7 +387,8 @@ public class Constant {
     public static final String MAPP_APPWENDAPUSH_MESSAGECENTER = TOBOSU_URL + "mapp/appWendaPush/messageCenter";
     //消息已查看
     public static final String MAPP_APPWENDAPUSH_ISSEE = TOBOSU_URL + "mapp/appWendaPush/isSee";
-
+    //消息红点
+    public static final String MAPP_APPWENDAPUSH_IS_SEE = TOBOSU_URL + "mapp/appWendaPush/is_see";
 
 
 }

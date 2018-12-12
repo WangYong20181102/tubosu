@@ -40,7 +40,6 @@ public class _HomePage {
     public static class DataBean {
 
         private String course_list_url;
-        private String is_see = "";
         private List<BannerBean> banner;
         private List<CasesBean> cases;
         private List<ImpressionBean> impression;
@@ -49,14 +48,6 @@ public class _HomePage {
         private List<TopicBean> topic;
         private List<IndexAdvert1Bean> index_advert_1;
         private List<IndexAdvert2Bean> index_advert_2;
-
-        public String getIs_see() {
-            return is_see;
-        }
-
-        public void setIs_see(String is_see) {
-            this.is_see = is_see;
-        }
 
         public String getCourse_list_url() {
             return course_list_url;

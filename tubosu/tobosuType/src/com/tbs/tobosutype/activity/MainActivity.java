@@ -49,6 +49,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import cn.jpush.android.api.JPushInterface;
 import okhttp3.Call;
@@ -475,6 +476,8 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
      * 初始化页面和底部按钮
      */
     private void initView() {
+        //初始化进行消息红点网络请求
+        messageRedHotRequest();
 
         not_see_orders_count = (TextView) findViewById(R.id.not_see_orders_count);
         rl_checkNet = (RelativeLayout) findViewById(R.id.rl_checkNet);
@@ -796,6 +799,46 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
 
         initData();
         operTab();
+        messageRedHotRequest();
+    }
+
+    /**
+     * 消息红点网络请求
+     */
+    private void messageRedHotRequest() {
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("token",Util.getDateToken());
+        params.put("uid",AppInfoUtil.getUserid(mContext));
+        OKHttpUtil.post(Constant.MAPP_APPWENDAPUSH_IS_SEE, params, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = Objects.requireNonNull(response.body()).string();
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.optString("status");
+                    if (status.equals("200")){
+                        final String is_see = jsonObject.getJSONObject("data").optString("is_see");
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //我 的 底部红点
+                                showOrHideHotDot(is_see);
+                                AppInfoUtil.setHotDot(mContext,is_see);
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+
+
+                }
+
+            }
+        });
     }
 
 

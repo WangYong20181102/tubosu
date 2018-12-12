@@ -338,7 +338,8 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
                 finish();
                 break;
             case R.id.image_top_share:  //分享
-                String imageUrl;
+                String imageUrl;    //图片url
+                String desc;    //内容
                 if (beanList == null) {    //是空就返回，防止没数据时用户点击闪退
                     return;
                 }
@@ -347,7 +348,12 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
                 } else {
                     imageUrl = "";
                 }
-                new ShareUtil(this, beanList.getQuestionList().getTitle(), beanList.getQuestionList().getContent(), imageUrl, beanList.getShare_url());
+                if (!beanList.getAnswerList().isEmpty()){
+                    desc = beanList.getAnswerList().get(0).getAnswer_content();
+                }else {
+                    desc = "这里的内容很不错，分享给你哟~";
+                }
+                new ShareUtil(this, beanList.getQuestionList().getTitle(), desc, imageUrl, beanList.getShare_url());
                 break;
             case R.id.linear_askquestion:   //我要回答
                 if (TextUtils.isEmpty(AppInfoUtil.getUserid(mContext))) {

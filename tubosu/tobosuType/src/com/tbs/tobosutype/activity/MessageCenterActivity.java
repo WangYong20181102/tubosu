@@ -233,7 +233,7 @@ public class MessageCenterActivity extends BaseActivity {
     private MessageCenterAdapter.OnMessageCenterClickListener onMessageCenterClickListener = new MessageCenterAdapter.OnMessageCenterClickListener() {
         @Override
         public void onClickPosition(int mPosition) {
-            if (messageCenterBeanList.get(mPosition).getIs_see().equals("1")) {  //1代表消息未查看，进行消息查看网络请求
+            if (messageCenterBeanList.get(mPosition).getIs_see().equals("0")) {  //0代表消息未查看，进行消息查看网络请求
                 isSeeHttpRequest(mPosition);
             }
             Intent intent = new Intent(mContext, AnswerItemDetailsActivity.class);
@@ -259,6 +259,7 @@ public class MessageCenterActivity extends BaseActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+
             }
         });
     }
