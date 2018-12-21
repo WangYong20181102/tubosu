@@ -166,6 +166,20 @@ public class OrderAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 ((OrderItemViewHolder) holder).item_order_right_01.setBackgroundDrawable(gradientDrawable01);
                 ((OrderItemViewHolder) holder).item_order_right_02.setVisibility(View.GONE);
                 ((OrderItemViewHolder) holder).item_order_right_03.setVisibility(View.GONE);
+            }else if (mOrderItemArrayList.get(position).getState().equals("7")) {
+
+                ((OrderItemViewHolder) holder).item_order_state.setText("撤单已返款");
+                ((OrderItemViewHolder) holder).item_order_state.setTextColor(Color.parseColor("#ff6c14"));
+                //右一的按钮
+                ((OrderItemViewHolder) holder).item_order_right_01.setText("查看");
+                ((OrderItemViewHolder) holder).item_order_right_01.setTextColor(Color.parseColor("#666666"));
+                GradientDrawable gradientDrawable01 = new GradientDrawable();
+                gradientDrawable01.setColor(Color.parseColor("#ffffff"));//背景
+                gradientDrawable01.setCornerRadius(50);//角度
+                gradientDrawable01.setStroke(1, Color.parseColor("#d8d8d8"));//边框以及颜色
+                ((OrderItemViewHolder) holder).item_order_right_01.setBackgroundDrawable(gradientDrawable01);
+                ((OrderItemViewHolder) holder).item_order_right_02.setVisibility(View.GONE);
+                ((OrderItemViewHolder) holder).item_order_right_03.setVisibility(View.GONE);
             }
             //设置是否赠送
             if (mOrderItemArrayList.get(position).getIs_give().equals("1")) {

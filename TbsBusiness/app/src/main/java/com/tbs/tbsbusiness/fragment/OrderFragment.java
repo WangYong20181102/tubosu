@@ -404,6 +404,13 @@ public class OrderFragment extends BaseFragment {
                     intentToFeedBack.putExtra("mOrderType", mOrderType);
                     intentToFeedBack.putExtra("mViewPagerPosition", "1");
                     mContext.startActivity(intentToFeedBack);
+                }else if (mOrderItemArrayList.get(position).getState().equals("7")){    //已撤单
+                    //进入详情页
+                    Intent intent1 = new Intent(mContext, OrderDetailActivity.class);
+                    intent1.putExtra("mOrderId", mOrderItemArrayList.get(position).getId());
+                    intent1.putExtra("mShowingOrderId", mOrderItemArrayList.get(position).getOrder_id());//显示的订单id
+                    intent1.putExtra("mOrderType", mOrderType);
+                    startActivity(intent1);
                 }
                 break;
             case 2:

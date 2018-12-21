@@ -131,6 +131,9 @@ public class OrderActivity extends BaseActivity {
         //未签单
         _AllOrderTab orderTab5 = new _AllOrderTab("未签单", "5");
         allOrderTabArrayList.add(orderTab5);
+        //已撤单
+        _AllOrderTab orderTab7 = new _AllOrderTab("已撤单", "7");
+        allOrderTabArrayList.add(orderTab7);
     }
 
     //初始化页面的相关事件

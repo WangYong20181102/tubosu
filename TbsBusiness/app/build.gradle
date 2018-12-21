@@ -97,14 +97,13 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     //极光推送
-    implementation 'cn.jiguang.sdk:jpush:3.1.1'
-    // 此处以JPush 3.1.1 版本为例。
-    implementation 'cn.jiguang.sdk:jcore:1.1.9'
-    // 此处以JCore 1.1.9 版本为例。
+    implementation 'cn.jiguang.sdk:jpush:3.1.8'
+    // 此处以JPush 3.1.8 版本为例。
+    implementation 'cn.jiguang.sdk:jcore:1.2.6'
+    // 此处以JCore 1.2.6 版本为例。
     //友盟相关
     implementation 'com.umeng.sdk:utdid:1.1.5.3'
     implementation 'com.umeng.sdk:analytics:7.5.0'
-    implementation files('libs/umeng-common-1.5.3.jar')
     implementation files('libs/umeng-share-core-6.9.2.jar')
     implementation files('libs/umeng-share-QQ-simplify-6.9.2.jar')
     implementation files('libs/umeng-share-wechat-simplify-6.9.2.jar')
@@ -123,4 +122,5 @@ dependencies {
     implementation 'com.github.lovetuzitong:MultiImageSelector:1.2'
     implementation 'com.contrarywind:Android-PickerView:4.1.3'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    implementation files('libs/umeng-common-1.5.4.jar')
 }

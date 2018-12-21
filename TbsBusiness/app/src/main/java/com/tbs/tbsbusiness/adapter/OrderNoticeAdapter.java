@@ -63,11 +63,10 @@ public class OrderNoticeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             //设置内容
             ((OrderNoticeItemViewHolder) holder).item_order_notice_conten_tv.setText("" + mOrderNoticeArrayList.get(position).getContent());
             //设置消息的类型  新消息 客服反馈消息
-            if (mOrderNoticeArrayList.get(position).getNotice_type().equals("4")) {
-                //普通订单消息
+            if (mOrderNoticeArrayList.get(position).getNotice_type().equals("1")) {
+                //新订单消息
                 ((OrderNoticeItemViewHolder) holder).item_order_type.setText("新订单");
-            } else if (mOrderNoticeArrayList.get(position).getNotice_type().equals("5")) {
-                //客服反馈消息
+            } else {
                 ((OrderNoticeItemViewHolder) holder).item_order_type.setText("订单" + mOrderNoticeArrayList.get(position).getOrder_id());
             }
         }

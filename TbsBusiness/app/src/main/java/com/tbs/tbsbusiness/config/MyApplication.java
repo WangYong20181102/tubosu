@@ -1,11 +1,9 @@
 package com.tbs.tbsbusiness.config;
 
-import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
 import com.umeng.commonsdk.UMConfigure;
-import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 
