@@ -19,7 +19,9 @@ import android.view.ViewTreeObserver;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
-
+/**
+ * Created by Mr.Wang on 2017/12/7 10:35.
+ */
 @SuppressLint("AppCompatCustomView")
 public class ExpandableTextView extends TextView {
 

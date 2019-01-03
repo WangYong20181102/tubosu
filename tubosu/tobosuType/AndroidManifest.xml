@@ -370,6 +370,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.HistoryRecordActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.MapMarkersActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
@@ -672,7 +676,14 @@
         <activity android:name=".activity.HomePageActivity" />
         <activity android:name=".activity.DecorateComActivity" />
         <activity android:name=".activity.NewMineActivity" />
-        <activity android:name=".activity.NewMineNoneLoginActivity"></activity>
+        <activity android:name=".activity.PaintCalculationActivity" />
+        <activity android:name=".activity.FloorTileCalculationActivity" />
+        <activity android:name=".activity.WallBrickCalculationActivity" />
+        <activity android:name=".activity.FloorCalculationActivity" />
+        <activity android:name=".activity.WallpaperCalculationActivity" />
+        <activity android:name=".activity.CurtainCalculationActivity" />
+        <activity android:name=".activity.DecorationCalculationResultActivity" />
+        <activity android:name=".activity.NewMineNoneLoginActivity"/>
     </application>
 
 </manifest>

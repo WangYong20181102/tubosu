@@ -86,4 +86,18 @@ public class ToastUtil {
 		toast.setView(view);
 		toast.show();
 	}
+	/**
+	 * 自定义吐司
+	 * 屏幕中间显示
+	 */
+	public static void customizeToast1(Context context,String content){
+		View view = LayoutInflater.from(context).inflate(R.layout.custommize_toast1,null);
+		TextView tvToastContent = view.findViewById(R.id.tv_toast_content);	//吐司内容
+        tvToastContent.setText(content);
+		Toast toast = new Toast(context);
+		toast.setGravity(Gravity.CENTER,0,0);   //吐司显示位置
+		toast.setDuration(Toast.LENGTH_SHORT);  //吐司显示时间
+		toast.setView(view);
+		toast.show();
+	}
 }

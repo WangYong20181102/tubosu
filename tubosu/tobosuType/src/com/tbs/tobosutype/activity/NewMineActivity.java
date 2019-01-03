@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
-import com.tbs.tobosutype.adapter.MessageCenterAdapter;
 import com.tbs.tobosutype.base.BaseActivity;
 import com.tbs.tobosutype.bean._PresonerInfo;
 import com.tbs.tobosutype.customview.CustomDialog;
@@ -35,6 +34,7 @@ import com.tbs.tobosutype.utils.GlideUtils;
 import com.tbs.tobosutype.utils.SpUtil;
 import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
+import com.tbs.tobosutype.widget.DecorationToolItem;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -91,6 +91,22 @@ public class NewMineActivity extends BaseActivity {
     RelativeLayout rlLogin;
     @BindView(R.id.message_red_dot)
     View messageRedDot; //消息红点
+    @BindView(R.id.dti_renovation_offer)
+    DecorationToolItem dtiRenovationOffer;
+    @BindView(R.id.dti_decoration_bookkeeping)
+    DecorationToolItem dtiDecorationBookkeeping;
+    @BindView(R.id.dti_floor_tile_calculation)
+    DecorationToolItem dtiFloorTileCalculation;
+    @BindView(R.id.dti_wall_brick_calculation)
+    DecorationToolItem dtiWallBrickCalculation;
+    @BindView(R.id.dti_floor_calculation)
+    DecorationToolItem dtiFloorCalculation;
+    @BindView(R.id.dti_wallpaper_calculation)
+    DecorationToolItem dtiWallpaperCalculation;
+    @BindView(R.id.dti_paint_calculation)
+    DecorationToolItem dtiPaintCalculation;
+    @BindView(R.id.dti_curtain_calculation)
+    DecorationToolItem dtiCurtainCalculation;
     private Context mContext;
     private String TAG = "NewMineActivity";
     private Gson mGson;
@@ -131,9 +147,9 @@ public class NewMineActivity extends BaseActivity {
             //无网
             initUserInfoInNotNet();
         }
-        if (AppInfoUtil.getHotDot(mContext).equals("0")){
+        if (AppInfoUtil.getHotDot(mContext).equals("0")) {
             messageRedDot.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             messageRedDot.setVisibility(View.GONE);
         }
     }
@@ -223,11 +239,11 @@ public class NewMineActivity extends BaseActivity {
         });
     }
 
-
     @OnClick({R.id.new_mine_icon_img, R.id.new_mine_next_img, R.id.new_mine_shoucang_ll,
             R.id.new_mine_reply_ll, R.id.new_mine_message_ll, R.id.new_mine_kefu_rl,
             R.id.new_mine_fuwuhao_rl, R.id.new_mine_fenxiang_rl, R.id.new_mine_pingjia_rl,
-            R.id.new_mine_shezhi_rl, R.id.rl_unlogin})
+            R.id.new_mine_shezhi_rl, R.id.rl_unlogin,R.id.dti_renovation_offer, R.id.dti_decoration_bookkeeping, R.id.dti_floor_tile_calculation, R.id.dti_wall_brick_calculation,
+            R.id.dti_floor_calculation, R.id.dti_wallpaper_calculation, R.id.dti_paint_calculation, R.id.dti_curtain_calculation})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.new_mine_icon_img:
@@ -250,7 +266,7 @@ public class NewMineActivity extends BaseActivity {
                     startActivityForResult(intent, 0);
                     return;
                 }
-                startActivity(new Intent(mContext,MyReplyActivity.class));
+                startActivity(new Intent(mContext, MyReplyActivity.class));
                 break;
             case R.id.new_mine_message_ll:  //消息中心
                 if (TextUtils.isEmpty(AppInfoUtil.getUserid(this))) {
@@ -261,15 +277,15 @@ public class NewMineActivity extends BaseActivity {
                 }
                 //点击消息中心隐藏红点显示
                 MainActivity.showOrHideHotDot("1"); //调用mainactivity方法，隐藏我的底部红点
-                AppInfoUtil.setHotDot(mContext,"1");    //改变本地消息红点状态
-                startActivity(new Intent(mContext,MessageCenterActivity.class));
+                AppInfoUtil.setHotDot(mContext, "1");    //改变本地消息红点状态
+                startActivity(new Intent(mContext, MessageCenterActivity.class));
                 break;
             case R.id.new_mine_kefu_rl:
                 //开启客服电话
 //                showKefuPopWindow();
                 Intent intent = new Intent(NewMineActivity.this, NewWebViewActivity.class);
                 intent.putExtra("mLoadingUrl", "https://webchat.7moor.com/wapchat.html?accessId=0e1ca6b0-ec8e-11e8-a1ba-07d6a6237cdc");
-                intent.putExtra("bAnswer",true);
+                intent.putExtra("bAnswer", true);
                 startActivity(intent);
                 break;
             case R.id.new_mine_fuwuhao_rl:
@@ -291,6 +307,35 @@ public class NewMineActivity extends BaseActivity {
                 Intent intentToRegister = new Intent(mContext, NewLoginActivity.class);
                 intentToRegister.putExtra("mWhereComeFrom", "NoneLoginOfMineActivity");
                 startActivity(intentToRegister);
+                break;
+            case R.id.dti_renovation_offer: //装修报价
+
+                break;
+            case R.id.dti_decoration_bookkeeping:   //装修记账
+                //进入记账界面
+                if (CacheManager.getDecorateBudget(mContext) <= 0) {
+                    startActivity(new Intent(mContext, KeepAccountActivity.class));
+                } else {
+                    startActivity(new Intent(mContext, DecorateAccountActivity.class));
+                }
+                break;
+            case R.id.dti_floor_tile_calculation:   //地砖计算
+                startActivity(new Intent(mContext, FloorTileCalculationActivity.class));
+                break;
+            case R.id.dti_wall_brick_calculation:   //墙砖计算
+                startActivity(new Intent(mContext, WallBrickCalculationActivity.class));
+                break;
+            case R.id.dti_floor_calculation:    //地板计算
+                startActivity(new Intent(mContext, FloorCalculationActivity.class));
+                break;
+            case R.id.dti_wallpaper_calculation:    //壁纸计算
+                startActivity(new Intent(mContext, WallpaperCalculationActivity.class));
+                break;
+            case R.id.dti_paint_calculation:    //涂料计算
+                startActivity(new Intent(mContext, PaintCalculationActivity.class));
+                break;
+            case R.id.dti_curtain_calculation:  //窗帘计算
+                startActivity(new Intent(mContext, CurtainCalculationActivity.class));
                 break;
         }
     }
@@ -425,4 +470,5 @@ public class NewMineActivity extends BaseActivity {
 
         return super.onKeyDown(keyCode, event);
     }
+
 }

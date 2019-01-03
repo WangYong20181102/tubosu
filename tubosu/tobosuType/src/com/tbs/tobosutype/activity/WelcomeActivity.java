@@ -176,15 +176,15 @@ public class WelcomeActivity extends com.tbs.tobosutype.base.BaseActivity {
 
     private void initView() {
         //区分市场
-        if ("ali".equals(AppInfoUtil.getChannType(MyApplication.getContext()))) { //ali推广启动图片
-            Glide.with(mContext).load(R.drawable.welcome_image_ali)
-                    .asBitmap().centerCrop().placeholder(R.drawable.welcome_image_ali)
-                    .error(R.drawable.welcome_image_ali).into(welcomeImage);
-        } else {
+//        if ("ali".equals(AppInfoUtil.getChannType(MyApplication.getContext()))) { //ali推广启动图片
+//            Glide.with(mContext).load(R.drawable.welcome_image_ali)
+//                    .asBitmap().centerCrop().placeholder(R.drawable.welcome_image_ali)
+//                    .error(R.drawable.welcome_image_ali).into(welcomeImage);
+//        } else {
             Glide.with(mContext).load(R.drawable.welcome_image)
                     .asBitmap().centerCrop().placeholder(R.drawable.welcome_image)
                     .error(R.drawable.welcome_image).into(welcomeImage);
-        }
+//        }
 
     }
 

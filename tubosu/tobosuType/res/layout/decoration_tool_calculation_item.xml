@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/text_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="长度"
+            android:textColor="@color/FC_363650"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/text_no_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:textColor="@color/FC_6F6F8F"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/text_left"/>
+
+        <EditText
+            android:id="@+id/et_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="12dp"
+            android:layout_toLeftOf="@+id/text_right"
+            android:background="@null"
+            android:hint="请输入长度"
+            android:textColorHint="#cccccc"
+            android:gravity="right"
+            android:textSize="15sp"
+            android:inputType="number|numberDecimal"
+            android:textColor="@color/FC_6F6F8F"/>
+
+        <TextView
+            android:id="@+id/text_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="米"
+            android:textColor="@color/FC_363650"
+            android:textSize="15sp" />
+    </RelativeLayout>
+</RelativeLayout>
