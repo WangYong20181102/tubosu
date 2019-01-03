@@ -334,7 +334,7 @@ public class NewMineActivity extends BaseActivity {
             case R.id.dti_paint_calculation:    //涂料计算
                 startActivity(new Intent(mContext, PaintCalculationActivity.class));
                 break;
-            case R.id.dti_curtain_calculation:  //窗帘计算
+            case R.id.dti_curtain_calculation:  //窗帘计算a
                 startActivity(new Intent(mContext, CurtainCalculationActivity.class));
                 break;
         }

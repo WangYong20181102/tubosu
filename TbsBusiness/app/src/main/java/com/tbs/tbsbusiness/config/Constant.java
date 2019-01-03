@@ -5,10 +5,10 @@ package com.tbs.tbsbusiness.config;
  */
 public class Constant {
     // TODO: 2018/6/2 正式环境
-//    public static final String TOBOSU_URL = "https://www.tobosu.com/";
+    public static final String TOBOSU_URL = "https://www.tobosu.com/";
 
     // TODO: 2018/6/2 dev环境
-    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
+//    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
 
 
     //微信的Appid
