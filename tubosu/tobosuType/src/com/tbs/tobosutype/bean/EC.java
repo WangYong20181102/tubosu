@@ -52,6 +52,9 @@ public class EC {
         public static final int SEND_SUCCESS_CLOSE_ASKANSWER = 0x000042;    //关闭我要提问界面，同时更新详情界面数据(详情页进入)
         public static final int SEND_SUCCESS_CLOSE_ASKANSWER_HOME = 0x000043;    //关闭我要提问界面，同时更新详情界面数据(问答首页入口进入)
         public static final int SEND_SUCCESS_REPLY = 0x000044;  //回答、评论成功，更新详情界面数据
+        /*装修工具*/
+        public static final int DECORATION_TOOL = 0x000045; //历史记录跳转
+        public static final int DECORATION_TOOL_RECORDID = 0x000046; //更新recordId
 
 
 

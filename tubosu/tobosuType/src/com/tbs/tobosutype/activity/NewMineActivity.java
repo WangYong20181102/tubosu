@@ -309,7 +309,9 @@ public class NewMineActivity extends BaseActivity {
                 startActivity(intentToRegister);
                 break;
             case R.id.dti_renovation_offer: //装修报价
-
+                Intent mIntent = new Intent(mContext, NewWebViewActivity.class);
+                mIntent.putExtra("mLoadingUrl", SpUtil.getTbsAj43(mContext));
+                mContext.startActivity(mIntent);
                 break;
             case R.id.dti_decoration_bookkeeping:   //装修记账
                 //进入记账界面
@@ -334,7 +336,7 @@ public class NewMineActivity extends BaseActivity {
             case R.id.dti_paint_calculation:    //涂料计算
                 startActivity(new Intent(mContext, PaintCalculationActivity.class));
                 break;
-            case R.id.dti_curtain_calculation:  //窗帘计算a
+            case R.id.dti_curtain_calculation:  //窗帘计算
                 startActivity(new Intent(mContext, CurtainCalculationActivity.class));
                 break;
         }

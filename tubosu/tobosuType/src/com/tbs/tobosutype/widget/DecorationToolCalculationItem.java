@@ -60,7 +60,7 @@ public class DecorationToolCalculationItem extends RelativeLayout {
         CharSequence strHint = array.getText(R.styleable.DecorationToolCalculationItem_decoration_tool_text_hint);
         etInput.setHint(strHint);
         //设置文本输入框默认输入两位小数
-        setPointNum(4,2);
+        setPointNum(4, 2);
         array.recycle();
 
     }
@@ -87,6 +87,13 @@ public class DecorationToolCalculationItem extends RelativeLayout {
      */
     public String getEditContent() {
         return etInput.getText().toString().trim();
+    }
+
+    /**
+     * 设置edit输入内容
+     */
+    public void setEditContent(String content) {
+        etInput.setText(content);
     }
 
     /**

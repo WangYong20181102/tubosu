@@ -63,7 +63,7 @@
         <!--左边文字-->
         <attr name="decoration_tool_text_left" format="string"/>
         <attr name="decoration_tool_text_no_input" format="string"/>
-        <!--右边文字文字-->
+        <!--右边文字-->
         <attr name="decoration_tool_text_right" format="string"/>
         <!--输入框hint文字-->
         <attr name="decoration_tool_text_hint" format="string"/>

@@ -749,6 +749,22 @@ public class SpUtil {
     }
 
     //存储
+    public static void setTbsAj43(Context context, String tbsaj43) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj43", tbsaj43).commit();
+    }
+    public static String getTbsAj43(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj43", Constant.FREE_PRICE_PAGE_MINE);
+    }
+
+    //存储
+    public static void setTbsAj44(Context context, String tbsaj44) {
+        context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj44", tbsaj44).commit();
+    }
+    public static String getTbsAj44(Context context) {
+        return context.getSharedPreferences("BjAj", 0).getString("tbsaj44", Constant.FREE_PRICE_PAGE_TEN);
+    }
+
+    //存储
     public static void setTbsAj42(Context context, String tbsaj42) {
         context.getSharedPreferences("BjAj", 0).edit().putString("tbsaj42", tbsaj42).commit();
     }
@@ -836,5 +852,21 @@ public class SpUtil {
 
     public static void setDecComCheckInfo(Context context, String mDecComCheckInfo) {
         context.getSharedPreferences("DecComCheckInfo", 0).edit().putString("DecComCheckInfo", mDecComCheckInfo).commit();
+    }
+    //我的-装修报价
+    public static String getMineDecorationPrice(Context context) {
+        return context.getSharedPreferences("DecorationPriceInfo", 0).getString("DecorationPrice", "");
+    }
+
+    public static void setMineDecorationPrice(Context context, String MineDecorationPrice) {
+        context.getSharedPreferences("DecorationPriceInfo", 0).edit().putString("DecorationPrice", MineDecorationPrice).commit();
+    }
+    //10秒报价
+    public static String getTenDecorationPrice(Context context) {
+        return context.getSharedPreferences("TenDecorationPrice", 0).getString("TenDecorationPrice", "");
+    }
+
+    public static void setTenDecorationPrice(Context context, String TenDecorationPrice) {
+        context.getSharedPreferences("TenDecorationPrice", 0).edit().putString("TenDecorationPrice", TenDecorationPrice).commit();
     }
 }

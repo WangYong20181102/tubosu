@@ -12,22 +12,41 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.HistoryRecordAdapter;
 import com.tbs.tobosutype.base.BaseActivity;
 import com.tbs.tobosutype.base.HistoryRecordBean;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
+import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
+import com.tbs.tobosutype.utils.EventBusUtil;
+import com.tbs.tobosutype.utils.ToastUtil;
+import com.tbs.tobosutype.utils.Util;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by Mr.Wang on 2019/1/2 13:57.
  */
-public class HistoryRecordActivity extends BaseActivity implements HistoryRecordAdapter.OnItenClickListener {
+public class HistoryRecordActivity extends BaseActivity {
     @BindView(R.id.rlBack)
     RelativeLayout rlBack;
     @BindView(R.id.tv_edit)
@@ -48,12 +67,20 @@ public class HistoryRecordActivity extends BaseActivity implements HistoryRecord
     TextView tvAllSelect;
     @BindView(R.id.image_no_data)
     ImageView imageNoData;
-    private HistoryRecordAdapter adapter;
-    private LinearLayoutManager manager;
+    private HistoryRecordAdapter adapter;   //历史记录适配器
+    private LinearLayoutManager manager;    //recycleView样式
     private List<HistoryRecordBean> recordBeanList;
     private boolean editorStatus = false;//编辑状态
-    private int index = 0;
-    private boolean isSelectAll = false;
+    private int index = 0;//删除选中个数
+    private boolean isSelectAll = false;//true全选  false非全选
+    /**
+     * 删除操作储存要删除的数据
+     */
+    private List<String> userIdList;//用来存放选中计算结果id
+    private Gson gson;
+    private int mPage = 1;//用于分页的数据
+    private int mPageSize = 10;//用于分页的数据
+    private int type = 0;   //1地砖  2墙砖  3地板   4壁纸   5涂料   6窗帘
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,47 +88,120 @@ public class HistoryRecordActivity extends BaseActivity implements HistoryRecord
         setContentView(R.layout.activity_historyrecord);
         ButterKnife.bind(this);
         initData();
+        gson = new Gson();
     }
 
     /**
      * 初始化数据
      */
     private void initData() {
+        //获取type值判断哪个界面跳转历史记录
+        type = getIntent().getIntExtra("historyType", 0);
+        userIdList = new ArrayList<>();
         recordBeanList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            HistoryRecordBean bean = new HistoryRecordBean();
-            bean.setCheck(false);
-            bean.setData("2019.1.1" + "-->" + i);
-            bean.setValue("100" + "-->" + i);
-            bean.setNum("1000" + "-num->" + i);
-            recordBeanList.add(bean);
-        }
         //下拉刷新
         dqSwipe.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE);
         dqSwipe.setBackgroundColor(Color.WHITE);
         dqSwipe.setSize(SwipeRefreshLayout.DEFAULT);
+        dqSwipe.setEnabled(false);
 //        dqSwipe.setOnRefreshListener(onRefreshListener);
         manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         rvHistoryRecord.setLayoutManager(manager);
 
-        adapter = new HistoryRecordAdapter(this, recordBeanList);
-        adapter.setOnItenClickListener(this);
-        rvHistoryRecord.setAdapter(adapter);
+        rvHistoryRecord.setOnTouchListener(onTouchListener);
+        rvHistoryRecord.setOnScrollListener(onScrollListener);
 
 
-//        rvHistoryRecord.setOnTouchListener(onTouchListener);
-//        rvHistoryRecord.setOnScrollListener(onScrollListener);
+        //网络请求
+        httpRequestHistory();
+
 
     }
 
-    //下拉刷新
-    private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
-        @Override
-        public void onRefresh() {
-//            initData();
-        }
-    };
+    /**
+     * 开始网络请求
+     */
+    private void httpRequestHistory() {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("token", Util.getDateToken());
+        params.put("uid", AppInfoUtil.getUserid(mContext));
+        params.put("type", type);
+        params.put("page", mPage);
+        params.put("pageSize", mPageSize);
+        OKHttpUtil.post(Constant.MAPP_DECORATIONTOOL_COMPUTE_RECORD, params, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = Objects.requireNonNull(response.body()).string();
+                try {
+                    final JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.optString("status");
+                    if (status.equals("200")) {
+                        JSONArray jsonArray = jsonObject.optJSONArray("data");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            HistoryRecordBean historyRecordBean = gson.fromJson(jsonArray.get(i).toString(), HistoryRecordBean.class);
+                            historyRecordBean.setCheck(false);
+                            recordBeanList.add(historyRecordBean);
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (adapter == null) {
+                                    adapter = new HistoryRecordAdapter(mContext, recordBeanList);
+                                    adapter.setOnItenClickListener(onItenClickListener);
+                                    adapter.setOnReNewClickListener(onReNewClickListener);
+                                    rvHistoryRecord.setAdapter(adapter);
+                                }
+                                if (mPage != 1) {   //不等于1上拉加载
+                                    adapter.notifyItemInserted(recordBeanList.size() - mPageSize);
+                                }
+                            }
+                        });
+
+
+                    } else if (status.equals("201")) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (recordBeanList.size() == 0) {   //无历史记录
+                                    imageNoData.setVisibility(View.VISIBLE);
+                                    rvHistoryRecord.setVisibility(View.GONE);
+                                    rlBottom.setVisibility(View.GONE);
+                                    tvEdit.setText("编辑");
+                                    tvEdit.setClickable(false); //设置标题栏右边按钮不可点击
+                                    dqSwipe.setVisibility(View.GONE);
+                                } else {
+                                    ToastUtil.showShort(mContext, jsonObject.optString("msg"));
+                                }
+                            }
+                        });
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.showShort(mContext, jsonObject.optString("msg"));
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    //    //下拉刷新
+//    private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+//        @Override
+//        public void onRefresh() {
+//
+//        }
+//    };
     //上拉加载更多
     private RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -119,7 +219,8 @@ public class HistoryRecordActivity extends BaseActivity implements HistoryRecord
      * 加载更多
      */
     private void LoadMore() {
-
+        mPage++;
+        httpRequestHistory();
     }
 
     //touch
@@ -171,31 +272,72 @@ public class HistoryRecordActivity extends BaseActivity implements HistoryRecord
      */
     private void deleteData() {
         if (index == 0) {
+            ToastUtil.customizeToast1(this, "选择需要删除的历史记录");
             return;
         }
-        for (int i = adapter.getHistoryRecordList().size(); i > 0; i--) {
-            HistoryRecordBean bean = adapter.getHistoryRecordList().get(i - 1);
-            if (bean.isCheck()) {
-                adapter.getHistoryRecordList().remove(bean);
+
+
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("token", Util.getDateToken());
+        params.put("id", userIdList.toString().replace("[", "").replace("]", "").trim());
+        if (userIdList.size() == 1) {    //单条删除
+            params.put("type", 1);
+        } else { //多条删除
+            params.put("type", 2);
+        }
+        OKHttpUtil.post(Constant.MAPP_DECORATIONTOOL_DEL_RECORD, params, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
             }
-        }
-        index = 0;
-        imageBottomIcon.setImageResource(R.drawable.edit_unselected);
-        adapter.notifyDataSetChanged();
-        if (isSelectAll) {
-            imageNoData.setVisibility(View.VISIBLE);
-            rvHistoryRecord.setVisibility(View.GONE);
-            rlBottom.setVisibility(View.GONE);
-            tvEdit.setText("编辑");
-            tvEdit.setClickable(false);
-            dqSwipe.setVisibility(View.GONE);
-        } else {
-            rlBottom.setVisibility(View.VISIBLE);
-            imageNoData.setVisibility(View.GONE);
-            rvHistoryRecord.setVisibility(View.VISIBLE);
-            tvEdit.setClickable(true);
-            dqSwipe.setVisibility(View.VISIBLE);
-        }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = Objects.requireNonNull(response.body()).string();
+                try {
+                    final JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.optString("status");
+                    if (status.equals("200")) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                for (int i = adapter.getHistoryRecordList().size(); i > 0; i--) {
+                                    HistoryRecordBean bean = adapter.getHistoryRecordList().get(i - 1);
+                                    if (bean.isCheck()) {
+                                        adapter.getHistoryRecordList().remove(bean);
+                                    }
+                                }
+                                index = 0;
+                                imageBottomIcon.setImageResource(R.drawable.edit_unselected);
+                                adapter.notifyDataSetChanged();
+                                if (isSelectAll) {
+                                    imageNoData.setVisibility(View.VISIBLE);
+                                    rvHistoryRecord.setVisibility(View.GONE);
+                                    rlBottom.setVisibility(View.GONE);
+                                    tvEdit.setText("编辑");
+                                    tvEdit.setClickable(false);
+                                    dqSwipe.setVisibility(View.GONE);
+                                    //删除所有记录之后通知上一界面将recordId置为空，否则计算没有新数据插入
+                                    EventBusUtil.sendEvent(new Event(EC.EventCode.DECORATION_TOOL_RECORDID));
+                                }
+                                ToastUtil.customizeToast1(mContext, "删除成功");
+                            }
+                        });
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.customizeToast1(mContext, jsonObject.optString("msg"));
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
     }
 
     /**
@@ -205,9 +347,11 @@ public class HistoryRecordActivity extends BaseActivity implements HistoryRecord
         if (adapter == null) {
             return;
         }
+        userIdList.clear();
         if (!isSelectAll) {
             for (int i = 0; i < adapter.getHistoryRecordList().size(); i++) {
                 adapter.getHistoryRecordList().get(i).setCheck(true);
+                userIdList.add(adapter.getHistoryRecordList().get(i).getId());
             }
             index = adapter.getHistoryRecordList().size();
             tvAllSelect.setText("取消全选");
@@ -219,6 +363,7 @@ public class HistoryRecordActivity extends BaseActivity implements HistoryRecord
             index = 0;
             tvAllSelect.setText("全选");
             isSelectAll = false;
+            userIdList.clear();
         }
         if (index == 0) {
             imageBottomIcon.setImageResource(R.drawable.edit_unselected);
@@ -228,30 +373,48 @@ public class HistoryRecordActivity extends BaseActivity implements HistoryRecord
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void onItemClickListener(int position, List<HistoryRecordBean> beanList) {
-        if (editorStatus) {
-            HistoryRecordBean bean = beanList.get(position);
-            boolean isCheck = bean.isCheck();
-            if (!isCheck) {
-                index++;
-                bean.setCheck(true);
-                if (index == beanList.size()) {
-                    isSelectAll = true;
-                    tvAllSelect.setText("取消全选");
+    private HistoryRecordAdapter.OnItenClickListener onItenClickListener = new HistoryRecordAdapter.OnItenClickListener() {
+        @Override
+        public void onItemClickListener(int position, List<HistoryRecordBean> beanList) {
+            if (editorStatus) {
+                HistoryRecordBean bean = beanList.get(position);
+                boolean isCheck = bean.isCheck();
+                if (!isCheck) {
+                    index++;
+                    bean.setCheck(true);
+                    if (index == beanList.size()) {
+                        isSelectAll = true;
+                        tvAllSelect.setText("取消全选");
+                    }
+                    userIdList.add(bean.getId());
+                } else {
+                    index--;
+                    bean.setCheck(false);
+                    isSelectAll = false;
+                    tvAllSelect.setText("全选");
+
+                    for (int i = userIdList.size() - 1; i >= 0; i--) {
+                        String item = userIdList.get(i);
+                        if (bean.getId().equals(item)) {
+                            userIdList.remove(item);
+                        }
+                    }
                 }
-            } else {
-                index--;
-                bean.setCheck(false);
-                isSelectAll = false;
-                tvAllSelect.setText("全选");
+                if (index == 0) {
+                    imageBottomIcon.setImageResource(R.drawable.edit_unselected);
+                } else {
+                    imageBottomIcon.setImageResource(R.drawable.edit_selected);
+                }
+                adapter.notifyDataSetChanged();
             }
-            if (index == 0) {
-                imageBottomIcon.setImageResource(R.drawable.edit_unselected);
-            } else {
-                imageBottomIcon.setImageResource(R.drawable.edit_selected);
-            }
-            adapter.notifyDataSetChanged();
         }
-    }
+    };
+
+    private HistoryRecordAdapter.OnReNewClickListener onReNewClickListener = new HistoryRecordAdapter.OnReNewClickListener() {
+        @Override
+        public void onReNewClick(HistoryRecordBean recordBean) {
+            EventBusUtil.sendEvent(new Event(EC.EventCode.DECORATION_TOOL, recordBean));
+            finish();
+        }
+    };
 }

@@ -7,14 +7,34 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.base.BaseActivity;
+import com.tbs.tobosutype.base.HistoryRecordBean;
+import com.tbs.tobosutype.bean.AskDetailDataBean;
+import com.tbs.tobosutype.bean.CalculationResultsBean;
+import com.tbs.tobosutype.bean.EC;
+import com.tbs.tobosutype.bean.Event;
+import com.tbs.tobosutype.global.Constant;
+import com.tbs.tobosutype.global.OKHttpUtil;
+import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.ToastUtil;
+import com.tbs.tobosutype.utils.Util;
 import com.tbs.tobosutype.widget.DecorationToolCalculationItem;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by Mr.Wang on 2019/1/3 09:36.
@@ -37,12 +57,15 @@ public class FloorTileCalculationActivity extends BaseActivity {
     DecorationToolCalculationItem editPrice;
     @BindView(R.id.btn_start_calculation)
     Button btnStartCalculation;
+    private Gson gson;
+    private String recordId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_floor_tile_calculation);
         ButterKnife.bind(this);
+        gson = new Gson();
     }
 
     @OnClick({R.id.rlBack, R.id.tv_edit, R.id.btn_start_calculation})
@@ -52,6 +75,9 @@ public class FloorTileCalculationActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_edit:  //历史记录
+                Intent intent = new Intent(mContext, HistoryRecordActivity.class);
+                intent.putExtra("historyType", 1);
+                startActivity(intent);
                 break;
             case R.id.btn_start_calculation:    //开始计算
                 if (editRoomLong.getEditContent().isEmpty()) {
@@ -70,9 +96,91 @@ public class FloorTileCalculationActivity extends BaseActivity {
                     ToastUtil.customizeToast1(this, "输入地砖厚度");
                     return;
                 }
-
-                startActivity(new Intent(FloorTileCalculationActivity.this, DecorationCalculationResultActivity.class));
+                httpResultRequest(recordId);
                 break;
         }
+    }
+
+    @Override
+    protected boolean isRegisterEventBus() {
+        return true;
+    }
+
+    @Override
+    protected void receiveEvent(Event event) {
+        super.receiveEvent(event);
+        switch (event.getCode()) {
+            case EC.EventCode.DECORATION_TOOL:
+                HistoryRecordBean bean = (HistoryRecordBean) event.getData();
+                editRoomLong.setEditContent(bean.getDataX().getRoom_length());
+                editRoomWidth.setEditContent(bean.getDataX().getRoom_width());
+                editBrickLong.setEditContent(bean.getDataX().getTile_length());
+                editBrickThickness.setEditContent(bean.getDataX().getTile_width());
+                if (!bean.getDataX().getTile_price().trim().equals("0")) {
+                    editPrice.setEditContent(bean.getDataX().getTile_price());
+                }else {
+                    editPrice.setEditContent("");
+                }
+                recordId = bean.getId();
+                break;
+            case EC.EventCode.DECORATION_TOOL_RECORDID:
+                recordId = "";
+                break;
+        }
+    }
+
+    /**
+     * 计算结果请求
+     */
+    private void httpResultRequest(String record_id) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("token", Util.getDateToken());
+        params.put("uid", AppInfoUtil.getUserid(mContext));
+        params.put("room_length", editRoomLong.getEditContent());
+        params.put("room_width", editRoomWidth.getEditContent());
+        params.put("tile_length", editBrickLong.getEditContent());
+        params.put("tile_width", editBrickThickness.getEditContent());
+        params.put("tile_price", editPrice.getEditContent());
+        params.put("record_id", record_id);
+        OKHttpUtil.post(Constant.MAPP_DECORATIONTOOL_FLOOR_TILE, params, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = Objects.requireNonNull(response.body()).string();
+                try {
+                    final JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.optString("status");
+                    if (status.equals("200")) {
+                        String data = jsonObject.optString("data");
+                        final CalculationResultsBean resultsBean = gson.fromJson(data, CalculationResultsBean.class);
+                        if (!resultsBean.getRecord_id().trim().isEmpty()) {
+                            recordId = resultsBean.getRecord_id();
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(mContext, DecorationCalculationResultActivity.class);
+                                intent.putExtra(CalculationResultsBean.class.getName(), resultsBean);
+                                intent.putExtra("type", 1);
+                                startActivity(intent);
+                            }
+                        });
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ToastUtil.showShort(FloorTileCalculationActivity.this, jsonObject.optString("msg"));
+                            }
+                        });
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

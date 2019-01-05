@@ -602,7 +602,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/ifyouxuan"
-                        android:divider="@null"></com.tbs.tobosutype.customview.MyListView>
+                        android:divider="@null" />
                 </RelativeLayout>
             </ScrollView>
         </RelativeLayout>
@@ -616,7 +616,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/searchList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+                android:layout_height="match_parent" />
         </android.support.v4.widget.SwipeRefreshLayout>
 
         <RelativeLayout

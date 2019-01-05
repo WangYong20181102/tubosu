@@ -225,6 +225,15 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                             //存储图片
                             SpUtil.setDecComYuSuanCeiShiImgUrl(mContext, mAppConfig.getOrder_links().get(i).getImg_url());
                         }
+                        if (mAppConfig.getOrder_links().get(i).getCode().equals("tbsaj43")) {
+//                            Log.e(TAG, "我的-装修报价========4");
+                            SpUtil.setMineDecorationPrice(mContext, mAppConfig.getOrder_links().get(i).getImg_url());
+                        }
+                        if (mAppConfig.getOrder_links().get(i).getCode().equals("tbsaj44")) {
+//                            Log.e(TAG, "10秒报价========4");
+                            //10秒报价
+                            SpUtil.setTenDecorationPrice(mContext, mAppConfig.getOrder_links().get(i).getImg_url());
+                        }
                     }
                     //存储
                     if (urlMap.containsKey("tbsaj01") &&
@@ -360,6 +369,12 @@ public class MainActivity extends TabActivity implements View.OnClickListener {
                     }
                     if (urlMap.containsKey("tbsaj42") && !TextUtils.isEmpty(urlMap.get("tbsaj42"))) {
                         SpUtil.setTbsAj42(mContext, urlMap.get("tbsaj42"));
+                    }
+                    if (urlMap.containsKey("tbsaj43") && !TextUtils.isEmpty(urlMap.get("tbsaj43"))) {
+                        SpUtil.setTbsAj43(mContext, urlMap.get("tbsaj43"));
+                    }
+                    if (urlMap.containsKey("tbsaj44") && !TextUtils.isEmpty(urlMap.get("tbsaj44"))) {
+                        SpUtil.setTbsAj44(mContext, urlMap.get("tbsaj44"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

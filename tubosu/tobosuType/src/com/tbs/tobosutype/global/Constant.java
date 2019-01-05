@@ -30,7 +30,8 @@ public class Constant {
      * 局测试test环境**********************************************************************************
      */
     //接口地址
-    public static final String TOBOSU_URL = "http://www.test.tobosu.com/";
+//    public static final String TOBOSU_URL = "http://www.test.tobosu.com/";
+    public static final String TOBOSU_URL = "http://www.dev.tobosu.com/";
     //dev点击流上传接口
 //    public static final String TBS_DATA_STREAM = "http://trace.dev.tobosu.com/";
     //M站test接口
@@ -263,6 +264,10 @@ public class Constant {
     public static final String BUDGET_TEST = M_TOBOSU_URL + "budget_test?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
     //零元设计
     public static final String FREE_DESIGN = M_TOBOSU_URL + "free_design?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
+    //我的-装修报价
+    public static final String FREE_PRICE_PAGE_MINE = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
+    //10秒报价
+    public static final String FREE_PRICE_PAGE_TEN = M_TOBOSU_URL + "free_price_page?channel=app&subchannel=android&chcode=" + AppInfoUtil.getChannType(MyApplication.getContext()) + APP_TYPE + "&tbschcode=" + AppInfoUtil.getNewChannType(MyApplication.getContext());
 
 
     //新的逛图库 套图  add time 20171111
@@ -389,6 +394,22 @@ public class Constant {
     public static final String MAPP_APPWENDAPUSH_ISSEE = TOBOSU_URL + "mapp/appWendaPush/isSee";
     //消息红点
     public static final String MAPP_APPWENDAPUSH_IS_SEE = TOBOSU_URL + "mapp/appWendaPush/is_see";
-
+    /*******************************************************装修工具******************************************************/
+    //历史记录
+    public static final String MAPP_DECORATIONTOOL_COMPUTE_RECORD = TOBOSU_URL + "mapp/DecorationTool/compute_record";
+    //地砖计算
+    public static final String MAPP_DECORATIONTOOL_FLOOR_TILE = TOBOSU_URL + "mapp/DecorationTool/floor_tile";
+    //墙砖计算
+    public static final String MAPP_DECORATIONTOOL_WALL_TILE = TOBOSU_URL + "mapp/DecorationTool/wall_tile";
+    //地板计算
+    public static final String MAPP_DECORATIONTOOL_FLOOR = TOBOSU_URL + "mapp/DecorationTool/floor";
+    //壁纸计算
+    public static final String MAPP_DECORATIONTOOL_WALL_PAPER = TOBOSU_URL + "mapp/DecorationTool/wall_paper";
+    //涂料计算
+    public static final String MAPP_DECORATIONTOOL_COATING = TOBOSU_URL + "mapp/DecorationTool/coating";
+    //窗帘计算
+    public static final String MAPP_DECORATIONTOOL_WINDOW_CURTAINS = TOBOSU_URL + "mapp/DecorationTool/window_curtains";
+    //删除记录
+    public static final String MAPP_DECORATIONTOOL_DEL_RECORD = TOBOSU_URL + "mapp/DecorationTool/del_record";
 
 }
