@@ -2,6 +2,7 @@ package com.tbs.tobosutype.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -118,7 +119,7 @@ public class FloorTileCalculationActivity extends BaseActivity {
                 editBrickThickness.setEditContent(bean.getDataX().getTile_width());
                 if (!bean.getDataX().getTile_price().trim().equals("0")) {
                     editPrice.setEditContent(bean.getDataX().getTile_price());
-                }else {
+                } else {
                     editPrice.setEditContent("");
                 }
                 recordId = bean.getId();
@@ -135,7 +136,12 @@ public class FloorTileCalculationActivity extends BaseActivity {
     private void httpResultRequest(String record_id) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("token", Util.getDateToken());
-        params.put("uid", AppInfoUtil.getUserid(mContext));
+        if (TextUtils.isEmpty(AppInfoUtil.getUserid(this))) {
+            params.put("uid", "0");
+        } else {
+            params.put("uid", AppInfoUtil.getUserid(mContext));
+        }
+        params.put("device_id", AppInfoUtil.getNewMac());
         params.put("room_length", editRoomLong.getEditContent());
         params.put("room_width", editRoomWidth.getEditContent());
         params.put("tile_length", editBrickLong.getEditContent());

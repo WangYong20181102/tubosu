@@ -78,8 +78,8 @@ android {
         applicationId "com.tbs.tobosutype" // 程序的包名
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 36
-        versionName "4.2.1"
+        versionCode 37
+        versionName "4.2.2"
         flavorDimensions "versionCode"
         multiDexEnabled true  // 消去重复的jar 引用
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "ali"]//多渠道打包标识 默认阿里
@@ -160,10 +160,10 @@ android.applicationVariants.all { variant ->
             def fileName
             if (variant.buildType.name == "release") {
 //                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_${variant.productFlavors[0].name}.apk"
-                fileName = "tobosuType_v4.2.1_${variant.productFlavors[0].name}.apk"
+                fileName = "tobosuType_v4.2.2_${variant.productFlavors[0].name}.apk"
             } else {
 //                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_beta.apk"
-                fileName = "tobosuType_v4.2.1_${variant.productFlavors[0].name}_beta.apk"
+                fileName = "tobosuType_v4.2.2_${variant.productFlavors[0].name}_beta.apk"
             }
 //            output.outputFile = new File(outputDirectory, fileName)
 //            outputFileName="${variant.applicationId}-${ buildType.name}-${variant.productFlavors[0].name}.apk"

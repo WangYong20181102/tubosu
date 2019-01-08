@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -103,7 +104,7 @@ public class HistoryRecordActivity extends BaseActivity {
         dqSwipe.setColorSchemeColors(Color.RED, Color.GREEN, Color.BLUE);
         dqSwipe.setBackgroundColor(Color.WHITE);
         dqSwipe.setSize(SwipeRefreshLayout.DEFAULT);
-        dqSwipe.setEnabled(false);
+        dqSwipe.setEnabled(false);//禁止下拉刷新
 //        dqSwipe.setOnRefreshListener(onRefreshListener);
         manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -125,7 +126,12 @@ public class HistoryRecordActivity extends BaseActivity {
     private void httpRequestHistory() {
         HashMap<String, Object> params = new HashMap<>();
         params.put("token", Util.getDateToken());
-        params.put("uid", AppInfoUtil.getUserid(mContext));
+        if (TextUtils.isEmpty(AppInfoUtil.getUserid(this))) {
+            params.put("uid", "0");
+        } else {
+            params.put("uid", AppInfoUtil.getUserid(mContext));
+        }
+        params.put("device_id", AppInfoUtil.getNewMac());
         params.put("type", type);
         params.put("page", mPage);
         params.put("pageSize", mPageSize);
@@ -172,8 +178,7 @@ public class HistoryRecordActivity extends BaseActivity {
                                     imageNoData.setVisibility(View.VISIBLE);
                                     rvHistoryRecord.setVisibility(View.GONE);
                                     rlBottom.setVisibility(View.GONE);
-                                    tvEdit.setText("编辑");
-                                    tvEdit.setClickable(false); //设置标题栏右边按钮不可点击
+                                    tvEdit.setVisibility(View.GONE);
                                     dqSwipe.setVisibility(View.GONE);
                                 } else {
                                     ToastUtil.showShort(mContext, jsonObject.optString("msg"));
@@ -314,8 +319,7 @@ public class HistoryRecordActivity extends BaseActivity {
                                     imageNoData.setVisibility(View.VISIBLE);
                                     rvHistoryRecord.setVisibility(View.GONE);
                                     rlBottom.setVisibility(View.GONE);
-                                    tvEdit.setText("编辑");
-                                    tvEdit.setClickable(false);
+                                    tvEdit.setVisibility(View.GONE);
                                     dqSwipe.setVisibility(View.GONE);
                                     //删除所有记录之后通知上一界面将recordId置为空，否则计算没有新数据插入
                                     EventBusUtil.sendEvent(new Event(EC.EventCode.DECORATION_TOOL_RECORDID));

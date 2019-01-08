@@ -23,7 +23,13 @@ import com.tbs.tobosutype.global.SystemStatusManager;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 
 public class AppInfoUtil {
     private static final String TAG = AppInfoUtil.class.getSimpleName();
@@ -75,49 +81,141 @@ public class AppInfoUtil {
         return macAddress;
     }
 
+    /**
+     * 根据IP地址获取MAC地址
+     *
+     * @return
+     */
+    public static String getLocalMacAddressFromIp() {
+        String strMacAddr = null;
+        try {
+            //获得IpD地址
+            InetAddress ip = getLocalInetAddress();
+            byte[] b = NetworkInterface.getByInetAddress(ip).getHardwareAddress();
+            StringBuffer buffer = new StringBuffer();
+            for (int i = 0; i < b.length; i++) {
+                if (i != 0) {
+                    buffer.append(':');
+                }
+                String str = Integer.toHexString(b[i] & 0xFF);
+                buffer.append(str.length() == 1 ? 0 + str : str);
+            }
+            strMacAddr = buffer.toString().toUpperCase();
+        } catch (Exception e) {
+
+        }
+
+        return strMacAddr;
+    }
+
+    /**
+     * 获取移动设备本地IP
+     *
+     * @return
+     */
+    private static InetAddress getLocalInetAddress() {
+        InetAddress ip = null;
+        try {
+            //列举
+            Enumeration<NetworkInterface> en_netInterface = NetworkInterface.getNetworkInterfaces();
+            while (en_netInterface.hasMoreElements()) {//是否还有元素
+                NetworkInterface ni = (NetworkInterface) en_netInterface.nextElement();//得到下一个元素
+                Enumeration<InetAddress> en_ip = ni.getInetAddresses();//得到一个ip地址的列举
+                while (en_ip.hasMoreElements()) {
+                    ip = en_ip.nextElement();
+                    if (!ip.isLoopbackAddress() && ip.getHostAddress().indexOf(":") == -1)
+                        break;
+                    else
+                        ip = null;
+                }
+
+                if (ip != null) {
+                    break;
+                }
+            }
+        } catch (SocketException e) {
+
+            e.printStackTrace();
+        }
+        return ip;
+    }
+
+    /**
+     * 通过网络接口取
+     *
+     * @return
+     */
+    public static String getNewMac() {
+        String strMacAddr = "000000000000";
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return strMacAddr;
+                }
+
+                StringBuilder res1 = new StringBuilder();
+                for (byte b : macBytes) {
+                    res1.append(String.format("%02X:", b));
+                }
+
+                if (res1.length() > 0) {
+                    strMacAddr = res1.deleteCharAt(res1.length() - 1).toString();
+                }
+                return strMacAddr;
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return strMacAddr;
+    }
+
     //获取新的渠道代码值 链接中的tbschcode
     public static String getNewChannType(Context context) {
         if (AppInfoUtil.getChannType(context).equals("ali")) {
             return "al_yysc_tbs";
         } else if (AppInfoUtil.getChannType(context).equals("anzhi")) {
             return "az_yysc_tbs";
-        }else if (AppInfoUtil.getChannType(context).equals("appbaidu")) {
+        } else if (AppInfoUtil.getChannType(context).equals("appbaidu")) {
             return "bd_yysc_tbs";
-        }else if (AppInfoUtil.getChannType(context).equals("apphuawei")) {
+        } else if (AppInfoUtil.getChannType(context).equals("apphuawei")) {
             return "hw_yysc_tbs";
-        }else if (AppInfoUtil.getChannType(context).equals("applenovo")) {
+        } else if (AppInfoUtil.getChannType(context).equals("applenovo")) {
             return "lx_yysc_tbs";
-        }else if (AppInfoUtil.getChannType(context).equals("appmeizu")) {
+        } else if (AppInfoUtil.getChannType(context).equals("appmeizu")) {
             return "mz_yysc_tbs";
-        }else if (AppInfoUtil.getChannType(context).equals("appoppo")) {
+        } else if (AppInfoUtil.getChannType(context).equals("appoppo")) {
             return "oppo_yysc_tbs";
-        }else if (AppInfoUtil.getChannType(context).equals("appqihu")) {
+        } else if (AppInfoUtil.getChannType(context).equals("appqihu")) {
             return "360_yysc_tbs";
-        }else if (AppInfoUtil.getChannType(context).equals("appttt")) {
+        } else if (AppInfoUtil.getChannType(context).equals("appttt")) {
             return "cz_yysc_tbs";
-        }else if (AppInfoUtil.getChannType(context).equals("appvivo")) {
+        } else if (AppInfoUtil.getChannType(context).equals("appvivo")) {
             return "vivo_yysc_tbs";
-        }else if (AppInfoUtil.getChannType(context).equals("appxiaomi")) {
+        } else if (AppInfoUtil.getChannType(context).equals("appxiaomi")) {
             return "xm_yysc_tbs";
-        }else if (AppInfoUtil.getChannType(context).equals("appyyb")) {
+        } else if (AppInfoUtil.getChannType(context).equals("appyyb")) {
             return "tx_yysc_tbs";
-        }else if (AppInfoUtil.getChannType(context).equals("yybff")) {
+        } else if (AppInfoUtil.getChannType(context).equals("yybff")) {
             return "tx_yysc_yybff";
-        }else if (AppInfoUtil.getChannType(context).equals("jinli")) {
+        } else if (AppInfoUtil.getChannType(context).equals("jinli")) {
             return "jl_yysc_tbs";
-        }else if (AppInfoUtil.getChannType(context).equals("leshi")) {
+        } else if (AppInfoUtil.getChannType(context).equals("leshi")) {
             return "tbs";
-        }else if (AppInfoUtil.getChannType(context).equals("sougou")) {
+        } else if (AppInfoUtil.getChannType(context).equals("sougou")) {
             return "sg_yysc_tbs";
-        }else if (AppInfoUtil.getChannType(context).equals("sumsung")) {
+        } else if (AppInfoUtil.getChannType(context).equals("sumsung")) {
             return "sx_yysc_tbs";
-        }else if (AppInfoUtil.getChannType(context).equals("youyi")) {
+        } else if (AppInfoUtil.getChannType(context).equals("youyi")) {
             return "yysc_yysc_tbs";
-        }else if (AppInfoUtil.getChannType(context).equals("zhuanghaojia")) {
+        } else if (AppInfoUtil.getChannType(context).equals("zhuanghaojia")) {
             return "";
-        }else if (AppInfoUtil.getChannType(context).equals("tbspc")) {
+        } else if (AppInfoUtil.getChannType(context).equals("tbspc")) {
             return "tbspc_pczy";
-        }else {
+        } else {
             return "";
         }
     }
@@ -209,6 +307,7 @@ public class AppInfoUtil {
     public static void setUserCity(Context context, String cityname) {
         context.getSharedPreferences("userInfo", 0).edit().putString("cityname", cityname).commit();
     }
+
     //红点显示
     public static String getHotDot(Context context) {
         return context.getSharedPreferences("userInfo", 0).getString("hotDot", "");

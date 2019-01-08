@@ -242,7 +242,7 @@ public class NewMineActivity extends BaseActivity {
     @OnClick({R.id.new_mine_icon_img, R.id.new_mine_next_img, R.id.new_mine_shoucang_ll,
             R.id.new_mine_reply_ll, R.id.new_mine_message_ll, R.id.new_mine_kefu_rl,
             R.id.new_mine_fuwuhao_rl, R.id.new_mine_fenxiang_rl, R.id.new_mine_pingjia_rl,
-            R.id.new_mine_shezhi_rl, R.id.rl_unlogin,R.id.dti_renovation_offer, R.id.dti_decoration_bookkeeping, R.id.dti_floor_tile_calculation, R.id.dti_wall_brick_calculation,
+            R.id.new_mine_shezhi_rl, R.id.rl_unlogin, R.id.dti_renovation_offer, R.id.dti_decoration_bookkeeping, R.id.dti_floor_tile_calculation, R.id.dti_wall_brick_calculation,
             R.id.dti_floor_calculation, R.id.dti_wallpaper_calculation, R.id.dti_paint_calculation, R.id.dti_curtain_calculation})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -251,6 +251,12 @@ public class NewMineActivity extends BaseActivity {
                 startActivity(new Intent(mContext, PresonerMsgActivity.class));
                 break;
             case R.id.new_mine_shoucang_ll:
+                if (TextUtils.isEmpty(AppInfoUtil.getUserid(this))) {
+                    Toast.makeText(this, "您还没有登录", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, NewLoginActivity.class);
+                    startActivityForResult(intent, 0);
+                    return;
+                }
                 Intent it = null;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     it = new Intent(mContext, ShoucangAcitivity.class);
