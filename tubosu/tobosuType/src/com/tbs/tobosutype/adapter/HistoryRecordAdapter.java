@@ -28,10 +28,12 @@ public class HistoryRecordAdapter extends RecyclerView.Adapter<RecyclerView.View
     private boolean bEdit = false;
     private OnItenClickListener onItenClickListener;
     private OnReNewClickListener onReNewClickListener;
+    private int type;
 
-    public HistoryRecordAdapter(Context context, List<HistoryRecordBean> recordBeanList) {
+    public HistoryRecordAdapter(Context context, List<HistoryRecordBean> recordBeanList, int type) {
         this.context = context;
         this.recordBeanList = recordBeanList;
+        this.type = type;
     }
 
     @Override
@@ -72,17 +74,25 @@ public class HistoryRecordAdapter extends RecyclerView.Adapter<RecyclerView.View
                 ((MyViewHolder) holder).btnRecalculate.setEnabled(true);
                 ((MyViewHolder) holder).btnRecalculate.setTextColor(Color.WHITE);
             }
-
             //数量
-            ((MyViewHolder) holder).tvNum.setText(recordBeanList.get(position).getNumber());
+            if (type == 1 || type == 2 || type == 3) { //地砖、墙砖、地板
+                ((MyViewHolder) holder).tvNum.setText(recordBeanList.get(position).getNumber() + "块");
+            } else if (type == 4) { //壁纸
+                ((MyViewHolder) holder).tvNum.setText(recordBeanList.get(position).getNumber() + "卷");
+            } else if (type == 5) { //涂料
+                ((MyViewHolder) holder).tvNum.setText(recordBeanList.get(position).getNumber() + "升");
+            } else if (type == 6) { //窗帘
+                ((MyViewHolder) holder).tvNum.setText(recordBeanList.get(position).getNumber() + "米");
+            }
+
             //日期
             ((MyViewHolder) holder).tvDataTime.setText(recordBeanList.get(position).getAdd_time());
+            //价格
             if (recordBeanList.get(position).getTotal_price().trim().isEmpty() || recordBeanList.get(position).getTotal_price().trim().equals("0")) {
                 ((MyViewHolder) holder).llPrice.setVisibility(View.GONE);
             } else {
                 double price = Double.parseDouble(recordBeanList.get(position).getTotal_price());
                 ((MyViewHolder) holder).llPrice.setVisibility(View.VISIBLE);
-                //价格
                 if (price > 10000) {
                     ((MyViewHolder) holder).tvPrice.setText(MoneyFormatUtil.format2(price / 10000) + "万元");
                 } else {

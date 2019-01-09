@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tbs.tobosutype.R;
+import com.tbs.tobosutype.utils.ToastUtil;
 
 /**
  * Created by Mr.Wang on 2019/1/3 10:03.
@@ -94,6 +95,21 @@ public class DecorationToolCalculationItem extends RelativeLayout {
      */
     public void setEditContent(String content) {
         etInput.setText(content);
+        etInput.setSelection(content.length());
+    }
+
+    /**
+     * 输入内容判断
+     */
+    public boolean setInputContentJudge(Context context, String msg) {
+        if (etInput.getText().toString().trim().isEmpty()) {
+            ToastUtil.customizeToast1(context, "输入" + msg);
+            return false;
+        } else if (etInput.getText().toString().equals("0")) {
+            ToastUtil.customizeToast1(context, msg + "不能为0");
+            return false;
+        }
+        return true;
     }
 
     /**

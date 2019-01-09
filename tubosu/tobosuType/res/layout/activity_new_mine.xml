@@ -394,7 +394,7 @@
                         android:layout_marginLeft="52dp"
                         android:text="土拨鼠客服"
                         android:textColor="#363650"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/new_mine_kefu_num_tv"
@@ -444,7 +444,7 @@
                         android:layout_marginLeft="52dp"
                         android:text="土拨鼠服务号"
                         android:textColor="#363650"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/new_mine_fuwuhao_num_tv"
@@ -493,7 +493,7 @@
                         android:layout_marginLeft="52dp"
                         android:text="分享给好友"
                         android:textColor="#363650"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
                     <ImageView
                         android:layout_width="12dp"
@@ -531,7 +531,7 @@
                         android:layout_marginLeft="52dp"
                         android:text="给小鼠好评"
                         android:textColor="#363650"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
                     <ImageView
                         android:layout_width="12dp"

@@ -103,48 +103,38 @@ public class WallBrickCalculationActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.btn_start_calculation:    //开始计算
-                if (editRoomLong.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入房间长度");
+
+                if (!editRoomLong.setInputContentJudge(mContext, "房间长度")) {
                     return;
                 }
-                if (editRoomWidth.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入房间宽度");
+                if (!editRoomWidth.setInputContentJudge(mContext, "房间宽度")) {
                     return;
                 }
-                if (editRoomHeight.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入房间高度");
+                if (!editRoomHeight.setInputContentJudge(mContext, "房间高度")) {
                     return;
                 }
-                if (editRoomDoorHeight.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入房门长度");
+                if (!editRoomDoorHeight.setInputContentJudge(mContext, "房门高度")) {
                     return;
                 }
-                if (editRoomDoorWidth.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入房门宽度");
+                if (!editRoomDoorWidth.setInputContentJudge(mContext, "房门宽度")) {
                     return;
                 }
-                if (editRoomDoorNum.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入房门数量");
+                if (!editRoomDoorNum.setInputContentJudge(mContext, "房门数量")) {
                     return;
                 }
-                if (editWindowHeight.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入窗户高度");
+                if (!editWindowHeight.setInputContentJudge(mContext, "窗户高度")) {
                     return;
                 }
-                if (editWindowWidth.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入窗户宽度");
+                if (!editWindowWidth.setInputContentJudge(mContext, "窗户宽度")) {
                     return;
                 }
-                if (editWindowNum.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入窗户数量");
+                if (!editWindowNum.setInputContentJudge(mContext, "窗户数量")) {
                     return;
                 }
-                if (editWallBrickLong.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入墙砖长度");
+                if (!editWallBrickLong.setInputContentJudge(mContext, "墙砖长度")) {
                     return;
                 }
-                if (editWallBrickWidth.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入墙砖宽度");
+                if (!editWallBrickWidth.setInputContentJudge(mContext, "墙砖宽度")) {
                     return;
                 }
 
@@ -246,7 +236,7 @@ public class WallBrickCalculationActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ToastUtil.showShort(WallBrickCalculationActivity.this, jsonObject.optString("msg"));
+                                ToastUtil.customizeToast1(WallBrickCalculationActivity.this, jsonObject.optString("msg"));
                             }
                         });
                     }

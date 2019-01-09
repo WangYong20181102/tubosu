@@ -64,6 +64,14 @@ public class CurtainCalculationActivity extends BaseActivity {
         setContentView(R.layout.activity_curtain_calculation);
         ButterKnife.bind(this);
         gson = new Gson();
+        initData();
+    }
+
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        editCurtainWidth.setEditContent("1.5");
     }
 
     @OnClick({R.id.rlBack, R.id.tv_edit, R.id.btn_start_calculation})
@@ -78,16 +86,13 @@ public class CurtainCalculationActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.btn_start_calculation:
-                if (editWindowHeight.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入窗户高度");
+                if (!editWindowHeight.setInputContentJudge(mContext, "窗户高度")) {
                     return;
                 }
-                if (editWindowWidth.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入窗户宽度");
+                if (!editWindowWidth.setInputContentJudge(mContext, "窗户宽度")) {
                     return;
                 }
-                if (editCurtainWidth.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入布料宽度");
+                if (!editCurtainWidth.setInputContentJudge(mContext, "布料宽度")) {
                     return;
                 }
                 httpResultRequest(recordId);
@@ -170,7 +175,7 @@ public class CurtainCalculationActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ToastUtil.showShort(CurtainCalculationActivity.this, jsonObject.optString("msg"));
+                                ToastUtil.customizeToast1(CurtainCalculationActivity.this, jsonObject.optString("msg"));
                             }
                         });
                     }

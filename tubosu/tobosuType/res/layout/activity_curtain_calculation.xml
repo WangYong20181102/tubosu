@@ -92,6 +92,8 @@
                     android:id="@+id/edit_window_height"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     app:decoration_tool_text_hint="请输入高度"
                     app:decoration_tool_text_left="高度"
                     app:decoration_tool_text_right="米" />
@@ -208,7 +210,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    app:decoration_tool_text_hint="请输入壁纸单价"
+                    app:decoration_tool_text_hint="请输入窗帘单价"
                     app:decoration_tool_text_left="窗帘单价"
                     app:decoration_tool_text_no_input="(非必填)"
                     app:decoration_tool_text_right="元/米" />

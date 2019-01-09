@@ -80,26 +80,23 @@ public class FloorCalculationActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.btn_start_calculation:
-                if (editRoomLong.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入房间长度");
+                if (!editRoomLong.setInputContentJudge(mContext, "房间长度")) {
                     return;
                 }
-                if (editRoomWidth.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入房间宽度");
+                if (!editRoomWidth.setInputContentJudge(mContext, "房间宽度")) {
                     return;
                 }
-                if (editFloorLong.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入地板宽度");
+                if (!editFloorLong.setInputContentJudge(mContext, "地板长度")) {
                     return;
                 }
-                if (editFloorThickness.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入地板厚度");
+                if (!editFloorThickness.setInputContentJudge(mContext, "地板厚度")) {
                     return;
                 }
                 httpResultRequest(recordId);
                 break;
         }
     }
+
     @Override
     protected boolean isRegisterEventBus() {
         return true;
@@ -117,7 +114,7 @@ public class FloorCalculationActivity extends BaseActivity {
                 editFloorThickness.setEditContent(bean.getDataX().getTile_width());
                 if (!bean.getDataX().getTile_price().trim().equals("0")) {
                     editPrice.setEditContent(bean.getDataX().getTile_price());
-                }else {
+                } else {
                     editPrice.setEditContent("");
                 }
                 recordId = bean.getId();
@@ -127,6 +124,7 @@ public class FloorCalculationActivity extends BaseActivity {
                 break;
         }
     }
+
     /**
      * 计算结果请求
      */
@@ -160,7 +158,7 @@ public class FloorCalculationActivity extends BaseActivity {
                     if (status.equals("200")) {
                         String data = jsonObject.optString("data");
                         final CalculationResultsBean resultsBean = gson.fromJson(data, CalculationResultsBean.class);
-                        if (!resultsBean.getRecord_id().trim().isEmpty()){
+                        if (!resultsBean.getRecord_id().trim().isEmpty()) {
                             recordId = resultsBean.getRecord_id();
                         }
                         runOnUiThread(new Runnable() {
@@ -176,7 +174,7 @@ public class FloorCalculationActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ToastUtil.showShort(FloorCalculationActivity.this, jsonObject.optString("msg"));
+                                ToastUtil.customizeToast1(FloorCalculationActivity.this, jsonObject.optString("msg"));
                             }
                         });
                     }

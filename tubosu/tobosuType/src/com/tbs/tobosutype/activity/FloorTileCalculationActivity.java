@@ -12,7 +12,6 @@ import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.base.BaseActivity;
 import com.tbs.tobosutype.base.HistoryRecordBean;
-import com.tbs.tobosutype.bean.AskDetailDataBean;
 import com.tbs.tobosutype.bean.CalculationResultsBean;
 import com.tbs.tobosutype.bean.EC;
 import com.tbs.tobosutype.bean.Event;
@@ -81,22 +80,19 @@ public class FloorTileCalculationActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.btn_start_calculation:    //开始计算
-                if (editRoomLong.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入房间长度");
+                if (!editRoomLong.setInputContentJudge(mContext, "房间长度")) {
                     return;
                 }
-                if (editRoomWidth.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入房间宽度");
+                if (!editRoomWidth.setInputContentJudge(mContext, "房间宽度")) {
                     return;
                 }
-                if (editBrickLong.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入地砖宽度");
+                if (!editBrickLong.setInputContentJudge(mContext, "地砖长度")) {
                     return;
                 }
-                if (editBrickThickness.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入地砖厚度");
+                if (!editBrickThickness.setInputContentJudge(mContext, "地砖厚度")) {
                     return;
                 }
+
                 httpResultRequest(recordId);
                 break;
         }
@@ -179,7 +175,7 @@ public class FloorTileCalculationActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ToastUtil.showShort(FloorTileCalculationActivity.this, jsonObject.optString("msg"));
+                                ToastUtil.customizeToast1(FloorTileCalculationActivity.this, jsonObject.optString("msg"));
                             }
                         });
                     }

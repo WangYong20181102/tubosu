@@ -95,7 +95,9 @@
                     android:layout_height="wrap_content"
                     app:decoration_tool_text_hint="请输入长度"
                     app:decoration_tool_text_left="长度"
-                    app:decoration_tool_text_right="米" />
+                    app:decoration_tool_text_right="米"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"/>
 
                 <View
                     android:layout_width="match_parent"

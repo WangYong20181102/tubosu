@@ -66,6 +66,14 @@ public class WallpaperCalculationActivity extends BaseActivity {
         setContentView(R.layout.activity_wallpaper_calculation);
         ButterKnife.bind(this);
         gson = new Gson();
+        initData();
+    }
+
+    /**
+     * 初始化数据
+     */
+    private void initData() {
+        editWallpaperSpecification.setEditContent("5.2");
     }
 
     @OnClick({R.id.rlBack, R.id.tv_edit, R.id.btn_start_calculation})
@@ -80,20 +88,16 @@ public class WallpaperCalculationActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.btn_start_calculation:
-                if (editRoomLong.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入房间长度");
+                if (!editRoomLong.setInputContentJudge(mContext, "房间长度")) {
                     return;
                 }
-                if (editRoomWidth.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入房间宽度");
+                if (!editRoomWidth.setInputContentJudge(mContext, "房间宽度")) {
                     return;
                 }
-                if (editRoomHeight.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入房间高度");
+                if (!editRoomHeight.setInputContentJudge(mContext, "房间高度")) {
                     return;
                 }
-                if (editWallpaperSpecification.getEditContent().isEmpty()) {
-                    ToastUtil.customizeToast1(this, "输入壁纸规格");
+                if (!editWallpaperSpecification.setInputContentJudge(mContext, "壁纸规格")) {
                     return;
                 }
                 httpResultRequest(recordId);
@@ -176,7 +180,7 @@ public class WallpaperCalculationActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ToastUtil.showShort(WallpaperCalculationActivity.this, jsonObject.optString("msg"));
+                                ToastUtil.customizeToast1(WallpaperCalculationActivity.this, jsonObject.optString("msg"));
                             }
                         });
                     }

@@ -40,7 +40,8 @@
             android:gravity="right"
             android:textSize="15sp"
             android:inputType="number|numberDecimal"
-            android:textColor="@color/FC_6F6F8F"/>
+            android:textColor="@color/FC_6F6F8F"
+            android:textCursorDrawable="@null" />
 
         <TextView
             android:id="@+id/text_right"

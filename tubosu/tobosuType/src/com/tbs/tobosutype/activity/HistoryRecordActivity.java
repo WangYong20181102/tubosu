@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -68,6 +69,8 @@ public class HistoryRecordActivity extends BaseActivity {
     TextView tvAllSelect;
     @BindView(R.id.image_no_data)
     ImageView imageNoData;
+    @BindView(R.id.ll_bottom)
+    LinearLayout llBottom;
     private HistoryRecordAdapter adapter;   //历史记录适配器
     private LinearLayoutManager manager;    //recycleView样式
     private List<HistoryRecordBean> recordBeanList;
@@ -157,8 +160,9 @@ public class HistoryRecordActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                tvEdit.setVisibility(View.VISIBLE); //有数据显示编辑按钮
                                 if (adapter == null) {
-                                    adapter = new HistoryRecordAdapter(mContext, recordBeanList);
+                                    adapter = new HistoryRecordAdapter(mContext, recordBeanList, type);
                                     adapter.setOnItenClickListener(onItenClickListener);
                                     adapter.setOnReNewClickListener(onReNewClickListener);
                                     rvHistoryRecord.setAdapter(adapter);
@@ -177,8 +181,9 @@ public class HistoryRecordActivity extends BaseActivity {
                                 if (recordBeanList.size() == 0) {   //无历史记录
                                     imageNoData.setVisibility(View.VISIBLE);
                                     rvHistoryRecord.setVisibility(View.GONE);
-                                    rlBottom.setVisibility(View.GONE);
-                                    tvEdit.setVisibility(View.GONE);
+                                    rlBottom.setVisibility(View.GONE);  //删除按钮父布局
+                                    llBottom.setVisibility(View.GONE);  //底部阴影
+                                    tvEdit.setVisibility(View.GONE);    //编辑按钮
                                     dqSwipe.setVisibility(View.GONE);
                                 } else {
                                     ToastUtil.showShort(mContext, jsonObject.optString("msg"));
@@ -252,11 +257,13 @@ public class HistoryRecordActivity extends BaseActivity {
                 if (text.equals("编辑")) {
                     tvEdit.setText("完成");
                     rlBottom.setVisibility(View.VISIBLE);
+                    llBottom.setVisibility(View.VISIBLE);
                     adapter.isEditState(true);
                     editorStatus = true;
                 } else {
                     tvEdit.setText("编辑");
                     rlBottom.setVisibility(View.GONE);
+                    llBottom.setVisibility(View.GONE);
                     adapter.isEditState(false);
                     editorStatus = false;
                     isSelectAll = true;
@@ -318,8 +325,9 @@ public class HistoryRecordActivity extends BaseActivity {
                                 if (isSelectAll) {
                                     imageNoData.setVisibility(View.VISIBLE);
                                     rvHistoryRecord.setVisibility(View.GONE);
-                                    rlBottom.setVisibility(View.GONE);
-                                    tvEdit.setVisibility(View.GONE);
+                                    rlBottom.setVisibility(View.GONE);  //底部删除父布局
+                                    llBottom.setVisibility(View.GONE);  //底部阴影
+                                    tvEdit.setVisibility(View.GONE);    //编辑按钮
                                     dqSwipe.setVisibility(View.GONE);
                                     //删除所有记录之后通知上一界面将recordId置为空，否则计算没有新数据插入
                                     EventBusUtil.sendEvent(new Event(EC.EventCode.DECORATION_TOOL_RECORDID));

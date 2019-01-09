@@ -49,16 +49,8 @@ public class DecorationCalculationResultActivity extends BaseActivity {
     TextView textResultPriceNum;
     @BindView(R.id.text_result_price_num_unit)
     TextView textResultPriceNumUnit;
-    @BindView(R.id.linear_two)
-    LinearLayout linearTwo;
-    @BindView(R.id.text_result_num_tittle1)
-    TextView textResultNumTittle1;
-    @BindView(R.id.text_result_num1)
-    TextView textResultNum1;
-    @BindView(R.id.text_result_num_unit1)
-    TextView textResultNumUnit1;
-    @BindView(R.id.linear_one)
-    LinearLayout linearOne;
+    @BindView(R.id.linear_price)
+    LinearLayout linearPrice;
     @BindView(R.id.btn_renew_calculation)
     Button btnRenewCalculation;
     @BindView(R.id.image_bottom_ad)
@@ -104,13 +96,9 @@ public class DecorationCalculationResultActivity extends BaseActivity {
             }
         }
         if (total_price.trim().isEmpty() || total_price.trim().equals("0")) {
-            linearOne.setVisibility(View.VISIBLE);
-            linearTwo.setVisibility(View.GONE);
-            textResultNum1.setText(number);
+            linearPrice.setVisibility(View.GONE);
         } else {
-            linearOne.setVisibility(View.GONE);
-            linearTwo.setVisibility(View.VISIBLE);
-            textResultNum.setText(number);
+            linearPrice.setVisibility(View.VISIBLE);
             if (Double.parseDouble(total_price) > 10000) {
                 textResultPriceNum.setText(MoneyFormatUtil.format2(Double.parseDouble(total_price) / 10000));
                 textResultPriceNumUnit.setText("万元");
@@ -120,17 +108,17 @@ public class DecorationCalculationResultActivity extends BaseActivity {
             }
         }
         if (type == 1) { //地砖
-            setTextContent("地砖","块");
+            setTextContent("地砖", "块");
         } else if (type == 2) {//墙砖
-            setTextContent("墙砖","块");
+            setTextContent("墙砖", "块");
         } else if (type == 3) { //地板
-            setTextContent("地板","块");
+            setTextContent("地板", "块");
         } else if (type == 4) { //壁纸
-            setTextContent("壁纸","卷");
+            setTextContent("壁纸", "卷");
         } else if (type == 5) { //涂料
-            setTextContent("涂料","升");
+            setTextContent("涂料", "升");
         } else if (type == 6) { //窗帘
-            setTextContent("窗帘","米");
+            setTextContent("窗帘", "米");
         }
 
 
@@ -141,10 +129,12 @@ public class DecorationCalculationResultActivity extends BaseActivity {
      */
     @SuppressLint("SetTextI18n")
     private void setTextContent(String sType, String sUnit) {
-        textResultNumTittle1.setText(sType + "的数量为");
+        //标题
+        textResultTittle.setText(sType + "计算结果");
+
         textResultNumTittle.setText(sType + "的数量为");
+        textResultNum.setText(number);
         textResultPriceTittle.setText(sType + "的价格为");
-        textResultNumUnit1.setText(sUnit);
         textResultNumUnit.setText(sUnit);
     }
 
