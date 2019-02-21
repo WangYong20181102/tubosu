@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -24,7 +26,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.adapter.SImageLookingAdapter;
-import com.tbs.tobosutype.base.*;
 import com.tbs.tobosutype.bean.EC;
 import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.bean._ImageD;
@@ -226,14 +227,23 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             public void onClick(View v) {
                 mDownLoadImagePopWindow.dismiss();
                 //创建文件夹
-                File dirFile = new File(Constant.DOWNLOAD_IMG_PATH);
+                final File dirFile = new File(Constant.DOWNLOAD_IMG_PATH);
                 if (!dirFile.exists()) {
                     dirFile.mkdir();
                 }
-                String fileName = System.currentTimeMillis() + ".jpg";
+                final String fileName = System.currentTimeMillis() + ".jpg";
                 OKHttpUtil.downFile(mContext, downloadUrl, dirFile.getPath(), fileName);
                 if (Util.isNetAvailable(mContext)) {
                     Toast.makeText(mContext, "图片下载成功!", Toast.LENGTH_SHORT).show();
+                    //发送广播更新本地相册
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(dirFile, fileName)));
+                            sendBroadcast(intent);
+                        }
+                    });
+
                 } else {
                     Toast.makeText(mContext, "图片下载失败！", Toast.LENGTH_SHORT).show();
                 }
@@ -558,9 +568,9 @@ public class DImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             ShowFadanTanChuang();
         }
         //装修公司屏蔽收藏按钮
-        if(AppInfoUtil.getTypeid(mContext).equals("3")){
+        if (AppInfoUtil.getTypeid(mContext).equals("3")) {
             dImgLookShoucanLl.setVisibility(View.GONE);
-        }else {
+        } else {
             dImgLookShoucanLl.setVisibility(View.VISIBLE);
         }
         super.onResume();

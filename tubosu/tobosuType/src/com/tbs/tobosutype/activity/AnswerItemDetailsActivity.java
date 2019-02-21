@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,7 +25,6 @@ import com.tbs.tobosutype.bean.Event;
 import com.tbs.tobosutype.global.Constant;
 import com.tbs.tobosutype.global.OKHttpUtil;
 import com.tbs.tobosutype.utils.AppInfoUtil;
-import com.tbs.tobosutype.utils.SharePreferenceUtil;
 import com.tbs.tobosutype.utils.ShareUtil;
 import com.tbs.tobosutype.utils.ToastUtil;
 import com.tbs.tobosutype.utils.Util;
@@ -69,6 +69,10 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
     LinearLayout linearAskQuestion;
     @BindView(R.id.linear_reply)
     LinearLayout linearReply;
+    @BindView(R.id.answer_tittle)
+    TextView answerTittle;
+    @BindView(R.id.ll_bottom)
+    LinearLayout llBottom;
 
     private Gson gson;
 
@@ -104,7 +108,6 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
 
         initHttpRequest(question_id);
         initStatisticsRequest();
-
 
     }
 
@@ -190,14 +193,46 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
                                     rvAnswerDetails.scrollToPosition(0);
                                     adapter.notifyDataSetChanged();
                                 }
+
+                                rvAnswerDetails.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                                    @Override
+                                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                                        super.onScrolled(recyclerView, dx, dy);
+                                        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();//获取LayoutManager
+                                        //找到即将移出屏幕Item的position,position是移出屏幕item的数量
+                                        int firstPosition = ((LinearLayoutManager) manager).findFirstVisibleItemPosition();
+                                        //根据position找到这个Item
+                                        View firstVisiableChildView = manager.findViewByPosition(firstPosition);
+                                        //获取Item的高
+                                        int itemHeight = firstVisiableChildView.getHeight();
+                                        //算出该Item还未移出屏幕的高度
+                                        int itemTop = firstVisiableChildView.getTop();
+                                        //position移出屏幕的数量*高度得出移动的距离
+                                        int iposition = firstPosition * itemHeight;
+                                        //减去该Item还未移出屏幕的部分可得出滑动的距离
+                                        int iResult = iposition - itemTop;
+                                        if (adapter != null) {
+                                            int tittleHeight = adapter.getTittleHeight();
+                                            answerTittle.setText(beanList.getQuestionList().getTitle());
+                                            if (iResult > tittleHeight + 30) {
+                                                answerTittle.setVisibility(View.VISIBLE);
+                                            }else if (iResult < 30){
+                                                answerTittle.setVisibility(View.GONE);
+                                            }
+                                        }
+
+                                    }
+                                });
+
+
                             }
                         });
 
-                    }else{
+                    } else {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ToastUtil.showShort(mContext,jsonObject.optString("msg"));
+                                ToastUtil.showShort(mContext, jsonObject.optString("msg"));
                             }
                         });
                     }
@@ -348,9 +383,9 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
                 } else {
                     imageUrl = "";
                 }
-                if (!beanList.getAnswerList().isEmpty()){
+                if (!beanList.getAnswerList().isEmpty()) {
                     desc = beanList.getAnswerList().get(0).getAnswer_content();
-                }else {
+                } else {
                     desc = "这里的内容很不错，分享给你哟~";
                 }
                 new ShareUtil(this, beanList.getQuestionList().getTitle(), desc, imageUrl, beanList.getShare_url());
@@ -398,9 +433,9 @@ public class AnswerItemDetailsActivity extends BaseActivity implements ViewPager
         }
         tvTotalNum.setText("/" + stringList.size());
         rlCoverAdBg.setVisibility(View.VISIBLE);
-        if (stringList.size() == 1){
+        if (stringList.size() == 1) {
             llBottomNum.setVisibility(View.GONE);
-        }else {
+        } else {
             llBottomNum.setVisibility(View.VISIBLE);
         }
     }

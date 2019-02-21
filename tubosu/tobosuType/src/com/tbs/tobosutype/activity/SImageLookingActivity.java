@@ -3,6 +3,7 @@ package com.tbs.tobosutype.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -375,14 +376,22 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
             public void onClick(View v) {
                 mDownLoadImagePopWindow.dismiss();
                 //创建文件夹
-                File dirFile = new File(Constant.DOWNLOAD_IMG_PATH);
+                final File dirFile = new File(Constant.DOWNLOAD_IMG_PATH);
                 if (!dirFile.exists()) {
                     dirFile.mkdir();
                 }
-                String fileName = System.currentTimeMillis() + ".jpg";
+                final String fileName = System.currentTimeMillis() + ".jpg";
                 OKHttpUtil.downFile(mContext, downloadUrl, dirFile.getPath(), fileName);
                 if (Util.isNetAvailable(mContext)) {
                     Toast.makeText(mContext, "图片下载成功!", Toast.LENGTH_SHORT).show();
+                    //发送广播更新本地相册
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(dirFile, fileName)));
+                            sendBroadcast(intent);
+                        }
+                    });
                 } else {
                     Toast.makeText(mContext, "图片下载失败！", Toast.LENGTH_SHORT).show();
                 }

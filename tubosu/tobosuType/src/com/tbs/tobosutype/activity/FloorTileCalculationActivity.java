@@ -89,7 +89,7 @@ public class FloorTileCalculationActivity extends BaseActivity {
                 if (!editBrickLong.setInputContentJudge(mContext, "地砖长度")) {
                     return;
                 }
-                if (!editBrickThickness.setInputContentJudge(mContext, "地砖厚度")) {
+                if (!editBrickThickness.setInputContentJudge(mContext, "地砖宽度")) {
                     return;
                 }
 

@@ -20,6 +20,7 @@ import com.tbs.tobosutype.customview.wheelview.WheelView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
 import com.tbs.tobosutype.R;
 import com.tbs.tobosutype.customview.wheelview.adapters.AbstractWheelTextAdapter;
 
@@ -27,7 +28,6 @@ import com.tbs.tobosutype.customview.wheelview.adapters.AbstractWheelTextAdapter
  * 使用说明：1.showLongTerm()是否显示长期选项
  * 2.setTimePickerGone隐藏时间选择
  * 3.接口DateChooseInterface
- *
  */
 public class DateChooseWheelViewDialog extends Dialog implements View.OnClickListener {
     //控件
@@ -75,7 +75,7 @@ public class DateChooseWheelViewDialog extends Dialog implements View.OnClickLis
         super(context);
         this.mContext = context;
         this.dateChooseInterface = dateChooseInterface;
-        mDialog = new Dialog(context,R.style.dialog);
+        mDialog = new Dialog(context, R.style.dialog);
         initView();
         initData();
     }
@@ -204,7 +204,7 @@ public class DateChooseWheelViewDialog extends Dialog implements View.OnClickLis
         arry_minute.clear();
         for (int i = 0; i <= 59; i++) {
             arry_minute.add(i + "");
-            if (nowMinite == i){
+            if (nowMinite == i) {
                 nowMinuteId = arry_minute.size() - 1;
             }
         }
@@ -227,7 +227,7 @@ public class DateChooseWheelViewDialog extends Dialog implements View.OnClickLis
         arry_hour.clear();
         for (int i = 0; i <= 23; i++) {
             arry_hour.add(i + "");
-            if (nowHour == i){
+            if (nowHour == i) {
                 nowHourId = arry_hour.size() - 1;
             }
         }
@@ -248,7 +248,7 @@ public class DateChooseWheelViewDialog extends Dialog implements View.OnClickLis
         int nowYear = nowCalendar.get(Calendar.YEAR);
         arry_year.clear();
         for (int i = 0; i <= 99; i++) {
-            int year = nowYear -30 + i;
+            int year = nowYear - 30 + i;
             arry_year.add(year + "年");
             if (nowYear == year) {
                 nowYearId = arry_year.size() - 1;
@@ -303,11 +303,11 @@ public class DateChooseWheelViewDialog extends Dialog implements View.OnClickLis
     public void setTimePickerGone(boolean isGone) {
         mBlnTimePickerGone = isGone;
         if (isGone) {
-            LinearLayout.LayoutParams yearParams = new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams yearParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
             yearParams.rightMargin = 22;
 
-            LinearLayout.LayoutParams dateParams = new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams dateParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
             mYearWheelView.setLayoutParams(yearParams);
             mDateWheelView.setLayoutParams(dateParams);
@@ -331,45 +331,69 @@ public class DateChooseWheelViewDialog extends Dialog implements View.OnClickLis
     }
 
 
-
     /**
      * 将改年的所有日期写入数组
+     *
      * @param year
      */
-    private void setDate(int year){
+    private void setDate(int year) {
         boolean isRun = isRunNian(year);
         Calendar nowCalendar = Calendar.getInstance();
         int nowMonth = nowCalendar.get(Calendar.MONTH) + 1;
         int nowDay = nowCalendar.get(Calendar.DAY_OF_MONTH);
-        for (int month = 1; month <= 12; month++){
-            switch (month){
+        for (int month = 1; month <= 12; month++) {
+            switch (month) {
                 case 1:
                 case 3:
                 case 5:
                 case 7:
                 case 8:
+                    for (int day = 1; day <= 31; day++) {
+                        if (day < 10) {
+                            arry_date.add("0" + month + "月" + "0" + day + "日");
+                        } else {
+                            arry_date.add("0" + month + "月" + day + "日");
+                        }
+
+                        if (month == nowMonth && day == nowDay) {
+                            nowDateId = arry_date.size() - 1;
+                        }
+                    }
+                    break;
                 case 10:
                 case 12:
-                    for (int day = 1; day <= 31; day++){
-                        arry_date.add(month + "月" + day + "日");
+                    for (int day = 1; day <= 31; day++) {
+                        if (day < 10) {
+                            arry_date.add(month + "月" + "0" + day + "日");
+                        } else {
+                            arry_date.add(month + "月" + day + "日");
+                        }
 
-                        if (month == nowMonth && day == nowDay){
+                        if (month == nowMonth && day == nowDay) {
                             nowDateId = arry_date.size() - 1;
                         }
                     }
                     break;
                 case 2:
-                    if (isRun){
-                        for (int day = 1; day <= 29; day++){
-                            arry_date.add(month + "月" + day + "日");
-                            if (month == nowMonth && day == nowDay){
+                    if (isRun) {
+                        for (int day = 1; day <= 29; day++) {
+                            if (day < 10) {
+                                arry_date.add("0" + month + "月" + "0" + day + "日");
+                            } else {
+                                arry_date.add("0" + month + "月" + day + "日");
+                            }
+                            if (month == nowMonth && day == nowDay) {
                                 nowDateId = arry_date.size() - 1;
                             }
                         }
-                    }else {
-                        for (int day = 1; day <= 28; day++){
-                            arry_date.add(month + "月" + day + "日");
-                            if (month == nowMonth && day == nowDay){
+                    } else {
+                        for (int day = 1; day <= 28; day++) {
+                            if (day < 10) {
+                                arry_date.add("0" + month + "月" + "0" + day + "日");
+                            } else {
+                                arry_date.add("0" + month + "月" + day + "日");
+                            }
+                            if (month == nowMonth && day == nowDay) {
                                 nowDateId = arry_date.size() - 1;
                             }
                         }
@@ -378,10 +402,25 @@ public class DateChooseWheelViewDialog extends Dialog implements View.OnClickLis
                 case 4:
                 case 6:
                 case 9:
+                    for (int day = 1; day <= 30; day++) {
+                        if (day < 10) {
+                            arry_date.add("0" + month + "月" + "0" + day + "日");
+                        } else {
+                            arry_date.add("0" + month + "月" + day + "日");
+                        }
+                        if (month == nowMonth && day == nowDay) {
+                            nowDateId = arry_date.size() - 1;
+                        }
+                    }
+                    break;
                 case 11:
-                    for (int day = 1; day <= 30; day++){
-                        arry_date.add(month + "月" + day + "日");
-                        if (month == nowMonth && day == nowDay){
+                    for (int day = 1; day <= 30; day++) {
+                        if (day < 10) {
+                            arry_date.add(month + "月" + "0" + day + "日");
+                        } else {
+                            arry_date.add(month + "月" + day + "日");
+                        }
+                        if (month == nowMonth && day == nowDay) {
                             nowDateId = arry_date.size() - 1;
                         }
                     }
@@ -394,19 +433,21 @@ public class DateChooseWheelViewDialog extends Dialog implements View.OnClickLis
 
     /**
      * 判断是否是闰年
+     *
      * @param year
      * @return
      */
-    private boolean isRunNian(int year){
-        if(year % 4 == 0 && year % 100 !=0 || year % 400 == 0){
+    private boolean isRunNian(int year) {
+        if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
     /**
      * 设置文字的大小
+     *
      * @param curriteItemText
      * @param adapter
      */
@@ -434,7 +475,7 @@ public class DateChooseWheelViewDialog extends Dialog implements View.OnClickLis
                 if (mBlnTimePickerGone) {
                     dateChooseInterface.getDateTime(strTimeToDateFormat(mYearStr, mDateStr), mBlnBeLongTerm);
                 } else {
-                    dateChooseInterface.getDateTime(strTimeToDateFormat(mYearStr, mDateStr , mHourStr , mMinuteStr), mBlnBeLongTerm);
+                    dateChooseInterface.getDateTime(strTimeToDateFormat(mYearStr, mDateStr, mHourStr, mMinuteStr), mBlnBeLongTerm);
                 }
                 dismissDialog();
                 break;
@@ -493,7 +534,7 @@ public class DateChooseWheelViewDialog extends Dialog implements View.OnClickLis
         if (null != mDialog) {
 
             Window dialogWindow = mDialog.getWindow();
-            dialogWindow.setGravity( Gravity.BOTTOM);
+            dialogWindow.setGravity(Gravity.BOTTOM);
             WindowManager.LayoutParams lp = dialogWindow.getAttributes();
             lp.y = 20;
             dialogWindow.setAttributes(lp);
@@ -509,7 +550,7 @@ public class DateChooseWheelViewDialog extends Dialog implements View.OnClickLis
         mDialog.setCanceledOnTouchOutside(true);
 
         Window dialogWindow = mDialog.getWindow();
-        dialogWindow.setGravity( Gravity.BOTTOM);
+        dialogWindow.setGravity(Gravity.BOTTOM);
         WindowManager.LayoutParams lp = dialogWindow.getAttributes();
         lp.y = 20;
         dialogWindow.setAttributes(lp);
@@ -518,7 +559,8 @@ public class DateChooseWheelViewDialog extends Dialog implements View.OnClickLis
     }
 
     /**
-     *  xx年xx月xx日xx时xx分转成yyyy-MM-dd HH:mm
+     * xx年xx月xx日xx时xx分转成yyyy-MM-dd HH:mm
+     *
      * @param yearStr
      * @param dateStr
      * @param hourStr
@@ -539,7 +581,7 @@ public class DateChooseWheelViewDialog extends Dialog implements View.OnClickLis
     /**
      * 滚轮的adapter
      */
-    private class CalendarTextAdapter extends AbstractWheelTextAdapter{
+    private class CalendarTextAdapter extends AbstractWheelTextAdapter {
         ArrayList<String> list;
 
         protected CalendarTextAdapter(Context context, ArrayList<String> list, int currentItem, int maxsize, int minsize) {
@@ -568,7 +610,7 @@ public class DateChooseWheelViewDialog extends Dialog implements View.OnClickLis
     /**
      * 回调选中的时间（默认时间格式"yyyy-MM-dd HH:mm:ss"）
      */
-    public interface DateChooseInterface{
+    public interface DateChooseInterface {
         void getDateTime(String time, boolean longTimeChecked);
     }
 

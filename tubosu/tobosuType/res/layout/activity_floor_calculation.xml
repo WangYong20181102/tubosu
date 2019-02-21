@@ -177,8 +177,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    app:decoration_tool_text_hint="请输入厚度"
-                    app:decoration_tool_text_left="厚度"
+                    app:decoration_tool_text_hint="请输入宽度"
+                    app:decoration_tool_text_left="宽度"
                     app:decoration_tool_text_right="毫米" />
 
             </LinearLayout>

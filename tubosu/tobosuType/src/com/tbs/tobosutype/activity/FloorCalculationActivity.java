@@ -89,7 +89,7 @@ public class FloorCalculationActivity extends BaseActivity {
                 if (!editFloorLong.setInputContentJudge(mContext, "地板长度")) {
                     return;
                 }
-                if (!editFloorThickness.setInputContentJudge(mContext, "地板厚度")) {
+                if (!editFloorThickness.setInputContentJudge(mContext, "地板宽度")) {
                     return;
                 }
                 httpResultRequest(recordId);

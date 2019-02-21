@@ -186,6 +186,8 @@ public class NewImageSFragment extends BaseFragment {
         fragNewImgSingleRecycler.addOnScrollListener(onScrollListener);//上拉加载更多
         //初始化popview
         popView = getActivity().getLayoutInflater().inflate(R.layout.pop_window_layout, null);
+        LinearLayout linearPop = popView.findViewById(R.id.linear_pop);
+        linearPop.setBackgroundColor(Color.parseColor("#f5f3f2"));
         mGridView = (GridView) popView.findViewById(R.id.pop_window_show);
         //请求筛选条件数据
         HttpGetSelectData();

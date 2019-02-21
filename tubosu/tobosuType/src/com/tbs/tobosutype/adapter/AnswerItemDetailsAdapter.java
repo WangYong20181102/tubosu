@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -98,6 +99,7 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
     private Gson gson;
     private AskListDataBean askListBeanList;  //回答列表集合
     private ViewPagerBottomAdapter viewPagerAdapter;    //底部广告轮播适配器
+    private int tittleHeight ;
 
     private boolean isLooper = false;
     private View replyView; //回复文本输入框视图
@@ -261,6 +263,13 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
             //用户的头像
             GlideUtils.glideLoader(context, askQuestionBean.getIcon(), R.drawable.iamge_loading, R.drawable.iamge_loading, ((AnswerDetailsViewHolder1) holder).imageDetailsIcon, 0);
             ((AnswerDetailsViewHolder1) holder).tvDetailsTittle.setText(askQuestionBean.getTitle());//标题
+            //获取问题标题高度
+            ((AnswerDetailsViewHolder1) holder).tvDetailsTittle.post(new Runnable() {
+                @Override
+                public void run() {
+                    tittleHeight = ((AnswerDetailsViewHolder1) holder).tvDetailsTittle.getMeasuredHeight();
+                }
+            });
             if (askQuestionBean.getContent().isEmpty()) {
                 ((AnswerDetailsViewHolder1) holder).tvDetailsContext.setVisibility(View.GONE);
             } else {
@@ -730,6 +739,13 @@ public class AnswerItemDetailsAdapter extends RecyclerView.Adapter<RecyclerView.
         advertBeans = beanList.getAdvert();
     }
 
+    /**
+     * 获取详情页问题高度
+     * @return
+     */
+    public int  getTittleHeight(){
+        return tittleHeight;
+    }
     /**
      * 停止轮播
      */

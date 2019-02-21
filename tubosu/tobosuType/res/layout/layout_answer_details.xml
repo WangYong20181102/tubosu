@@ -10,6 +10,7 @@
         android:layout_height="39dp"
         android:background="@drawable/white_bg"
         android:paddingLeft="15dp"
+        android:animateLayoutChanges="true"
         android:paddingRight="15dp">
 
         <RelativeLayout
@@ -24,6 +25,18 @@
                 android:src="@drawable/back" />
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/answer_tittle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="15sp"
+            android:textColor="@color/FC_363650"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/image_top_share"
