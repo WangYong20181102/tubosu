@@ -149,6 +149,10 @@ public class Constant {
      * 第三方绑定接口
      */
     public static final String BIND_THIRD_PARTY_URL = TOBOSU_URL + "tapp/passport/bindThirdParty";
+    /**
+     * 城市信息
+     */
+    public static final String CHANGE_CITY = TOBOSU_URL + "https://www.tobosu.com/tapp/util/change_city";
 
 
     public static final String MYFAV_URL = TOBOSU_URL + "mapp/collect/my_collect";

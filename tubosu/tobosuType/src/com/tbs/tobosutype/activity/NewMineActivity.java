@@ -320,6 +320,13 @@ public class NewMineActivity extends BaseActivity {
                 mContext.startActivity(mIntent);
                 break;
             case R.id.dti_decoration_bookkeeping:   //装修记账
+                if (TextUtils.isEmpty(AppInfoUtil.getUserid(this))) {
+                    Toast.makeText(this, "您还没有登录", Toast.LENGTH_SHORT).show();
+                    Intent intent1 = new Intent(this, NewLoginActivity.class);
+                    startActivityForResult(intent1, 0);
+                    return;
+                }
+
                 //进入记账界面
                 if (CacheManager.getDecorateBudget(mContext) <= 0) {
                     startActivity(new Intent(mContext, KeepAccountActivity.class));

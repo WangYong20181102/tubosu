@@ -357,7 +357,19 @@ public class Util {
         int nowYear = nowCalendar.get(Calendar.YEAR);
         int nowMonth = nowCalendar.get(Calendar.MONTH) + 1;
         int nowDay = nowCalendar.get(Calendar.DAY_OF_MONTH);
-        return nowYear + "-" + nowMonth + "-" + nowDay;
+        if (nowMonth < 10) {
+            if (nowDay < 10) {
+                return nowYear + "-0" + nowMonth + "-0" + nowDay;
+            } else {
+                return nowYear + "-0" + nowMonth + "-" + nowDay;
+            }
+        } else {
+            if (nowDay < 10) {
+                return nowYear + "-" + nowMonth + "-0" + nowDay;
+            } else {
+                return nowYear + "-" + nowMonth + "-" + nowDay;
+            }
+        }
     }
 
 
@@ -530,10 +542,22 @@ public class Util {
     }
 
     //获取手机的IMEI
+    @SuppressLint({"MissingPermission", "HardwareIds"})
     public static String getIMEI() {
-        TelephonyManager TelephonyMgr = (TelephonyManager) MyApplication.getContext().getSystemService(TELEPHONY_SERVICE);
-        @SuppressLint("MissingPermission") String szImei = TelephonyMgr.getDeviceId();
-        return szImei;
+        try {
+            String szImei;
+            TelephonyManager TelephonyMgr = (TelephonyManager) MyApplication.getContext().getSystemService(TELEPHONY_SERVICE);
+            assert TelephonyMgr != null;
+            if (TelephonyMgr.getDeviceId() != null) {
+                szImei = TelephonyMgr.getDeviceId();
+            } else {
+                szImei = Settings.Secure.getString(context.getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+            }
+            return szImei;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     //获取Android的 api   数据流中的ani
@@ -586,10 +610,9 @@ public class Util {
     public static String getOperator() {
 
         String ProvidersName = "";
-        TelephonyManager telephonyManager = (TelephonyManager) MyApplication.getContext().getSystemService(Context.TELEPHONY_SERVICE);
-        @SuppressLint("MissingPermission") String IMSI = telephonyManager.getSubscriberId();
+        String IMSI = getIMEI();
         Log.i("qweqwes", "运营商代码" + IMSI);
-        if (IMSI != null) {
+        if (!TextUtils.isEmpty(IMSI)) {
             if (IMSI.startsWith("46000") || IMSI.startsWith("46002") || IMSI.startsWith("46007")) {
                 ProvidersName = "CMCC";
             } else if (IMSI.startsWith("46001") || IMSI.startsWith("46006")) {

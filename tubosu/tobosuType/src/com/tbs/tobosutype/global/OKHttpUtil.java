@@ -1,7 +1,11 @@
 package com.tbs.tobosutype.global;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.tbs.tobosutype.utils.AppInfoUtil;
 import com.tbs.tobosutype.utils.CacheManager;
@@ -138,13 +142,19 @@ public class OKHttpUtil {
      * @param fileDir  保存文件的路径名
      * @param fileName 保存文件的文件名
      */
-    public static void downFile(final Context context, String url, final String fileDir, final String fileName) {
+    public static void downFile(final Context context, String url, final File fileDir, final String fileName) {
         Request request = new Request.Builder().url(url).build();
         Call call = getInstance().newCall(request);
+        final Activity activity = (Activity) context;
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context, "图片下载失败!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
@@ -155,24 +165,38 @@ public class OKHttpUtil {
                 FileOutputStream fos = null;
                 try {
                     is = response.body().byteStream();
-                    File dirFile = new File(fileDir);
+                    File dirFile = new File(fileDir.getPath());
                     if (!dirFile.exists()) {
                         //没有该文件夹的时候创建该文件夹
                         dirFile.mkdir();
                     }
                     //创建图片文件
-                    File file = new File(fileDir, fileName);
+                    File file = new File(fileDir.getPath(), fileName);
                     fos = new FileOutputStream(file);
                     while ((len = is.read(buf)) != -1) {
                         fos.write(buf, 0, len);
                     }
                     fos.flush();
                     //保存下载文件路径
-                    CacheManager.setLoadingAdPath(context, fileDir + "/" + fileName);
+                    CacheManager.setLoadingAdPath(context, fileDir.getPath() + "/" + fileName);
                     Log.e("HttpUtils", "下载文件成功！===" + file.getPath());
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "图片下载成功!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(fileDir, fileName)));
+                            activity.sendBroadcast(intent);
+                        }
+                    });
                 } catch (IOException e) {
                     e.printStackTrace();
                     Log.e("HttpUtils", "下载出错===" + e.toString());
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "图片下载失败!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 } finally {
                     if (is != null) is.close();
                     if (fos != null) fos.close();

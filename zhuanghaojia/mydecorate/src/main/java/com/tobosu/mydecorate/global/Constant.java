@@ -17,7 +17,7 @@ public class Constant {
     /**
      * 测试环境
      */
-//    public static final String ZHJ = "http://www.dev.tobosu.com/";
+//    public static final String ZHJ = "http://www.test.tobosu.com/";
 
     /**
      * M站 发单跳转 线上环境

@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,6 +133,7 @@ public class VerifyCodeDialog extends Dialog {
                             if (headerMap != null) {
                                 header = (String) headerMap.get("header");
                                 final byte[] result = (byte[]) headerMap.get("body");
+                                Log.e("=========>>",result.toString()+"---------------"+header+"=====");
                                 imageVerifHandler.post(new Runnable() {
                                     @Override
                                     public void run() {

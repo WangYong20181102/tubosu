@@ -231,12 +231,7 @@ public class DImageLookingActivity extends com.tbs.tbs_mj.base.BaseActivity {
                     dirFile.mkdir();
                 }
                 String fileName = System.currentTimeMillis() + ".jpg";
-                OKHttpUtil.downFile(mContext, downloadUrl, dirFile.getPath(), fileName);
-                if (Util.isNetAvailable(mContext)) {
-                    Toast.makeText(mContext, "图片下载成功!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(mContext, "图片下载失败！", Toast.LENGTH_SHORT).show();
-                }
+                OKHttpUtil.downFile(mContext, downloadUrl, dirFile, fileName);
             }
         });
         //取消

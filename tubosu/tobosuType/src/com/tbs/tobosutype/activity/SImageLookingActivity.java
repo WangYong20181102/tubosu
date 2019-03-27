@@ -381,20 +381,7 @@ public class SImageLookingActivity extends com.tbs.tobosutype.base.BaseActivity 
                     dirFile.mkdir();
                 }
                 final String fileName = System.currentTimeMillis() + ".jpg";
-                OKHttpUtil.downFile(mContext, downloadUrl, dirFile.getPath(), fileName);
-                if (Util.isNetAvailable(mContext)) {
-                    Toast.makeText(mContext, "图片下载成功!", Toast.LENGTH_SHORT).show();
-                    //发送广播更新本地相册
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(dirFile, fileName)));
-                            sendBroadcast(intent);
-                        }
-                    });
-                } else {
-                    Toast.makeText(mContext, "图片下载失败！", Toast.LENGTH_SHORT).show();
-                }
+                OKHttpUtil.downFile(mContext, downloadUrl, dirFile, fileName);
             }
         });
         //取消
