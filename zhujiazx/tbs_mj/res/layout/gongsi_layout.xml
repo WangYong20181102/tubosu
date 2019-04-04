@@ -78,7 +78,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="4dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <com.tbs.tbs_mj.customview.MyRatingBar
                     android:id="@+id/ratingBar"

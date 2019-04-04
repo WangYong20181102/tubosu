@@ -83,74 +83,74 @@ public class DecorateComAdapter
                 ((DecorateViewHolder) holder).item_dec_com_youhui_tv.setText("" + mDecorateComList.get(position).getPromotion_title());
             }
             //设置公司星级
-            if (mDecorateComList.get(position).getGrade() == 0) {
-                //没有星级
-//                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_1);
+//            if (mDecorateComList.get(position).getGrade() == 0) {
+//                //没有星级
+////                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_1);
+//////                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_2);
+//////                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_3);
+//////                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_4);
+//////                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_5);
+//                ((DecorateViewHolder) holder).item_dec_com_start_1.setImageResource(R.drawable.star_grey);
+//                ((DecorateViewHolder) holder).item_dec_com_start_2.setImageResource(R.drawable.star_grey);
+//                ((DecorateViewHolder) holder).item_dec_com_start_3.setImageResource(R.drawable.star_grey);
+//                ((DecorateViewHolder) holder).item_dec_com_start_4.setImageResource(R.drawable.star_grey);
+//                ((DecorateViewHolder) holder).item_dec_com_start_5.setImageResource(R.drawable.star_grey);
+//            } else if (mDecorateComList.get(position).getGrade() == 1) {
+////                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_1);
 ////                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_2);
 ////                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_3);
 ////                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_4);
 ////                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_5);
-                ((DecorateViewHolder) holder).item_dec_com_start_1.setImageResource(R.drawable.star_grey);
-                ((DecorateViewHolder) holder).item_dec_com_start_2.setImageResource(R.drawable.star_grey);
-                ((DecorateViewHolder) holder).item_dec_com_start_3.setImageResource(R.drawable.star_grey);
-                ((DecorateViewHolder) holder).item_dec_com_start_4.setImageResource(R.drawable.star_grey);
-                ((DecorateViewHolder) holder).item_dec_com_start_5.setImageResource(R.drawable.star_grey);
-            } else if (mDecorateComList.get(position).getGrade() == 1) {
-//                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_1);
-//                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_2);
-//                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_3);
-//                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_4);
-//                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_5);
-                ((DecorateViewHolder) holder).item_dec_com_start_1.setImageResource(R.drawable.star_green);
-                ((DecorateViewHolder) holder).item_dec_com_start_2.setImageResource(R.drawable.star_grey);
-                ((DecorateViewHolder) holder).item_dec_com_start_3.setImageResource(R.drawable.star_grey);
-                ((DecorateViewHolder) holder).item_dec_com_start_4.setImageResource(R.drawable.star_grey);
-                ((DecorateViewHolder) holder).item_dec_com_start_5.setImageResource(R.drawable.star_grey);
-            } else if (mDecorateComList.get(position).getGrade() == 2) {
-//                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_1);
-//                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_2);
-//                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_3);
-//                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_4);
-//                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_5);
-                ((DecorateViewHolder) holder).item_dec_com_start_1.setImageResource(R.drawable.star_green);
-                ((DecorateViewHolder) holder).item_dec_com_start_2.setImageResource(R.drawable.star_green);
-                ((DecorateViewHolder) holder).item_dec_com_start_3.setImageResource(R.drawable.star_grey);
-                ((DecorateViewHolder) holder).item_dec_com_start_4.setImageResource(R.drawable.star_grey);
-                ((DecorateViewHolder) holder).item_dec_com_start_5.setImageResource(R.drawable.star_grey);
-            } else if (mDecorateComList.get(position).getGrade() == 3) {
-//                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_1);
-//                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_2);
-//                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_3);
-//                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_4);
-//                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_5);
-                ((DecorateViewHolder) holder).item_dec_com_start_1.setImageResource(R.drawable.star_green);
-                ((DecorateViewHolder) holder).item_dec_com_start_2.setImageResource(R.drawable.star_green);
-                ((DecorateViewHolder) holder).item_dec_com_start_3.setImageResource(R.drawable.star_green);
-                ((DecorateViewHolder) holder).item_dec_com_start_4.setImageResource(R.drawable.star_grey);
-                ((DecorateViewHolder) holder).item_dec_com_start_5.setImageResource(R.drawable.star_grey);
-            } else if (mDecorateComList.get(position).getGrade() == 4) {
-//                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_1);
-//                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_2);
-//                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_3);
-//                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_4);
-//                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_5);
-                ((DecorateViewHolder) holder).item_dec_com_start_1.setImageResource(R.drawable.star_green);
-                ((DecorateViewHolder) holder).item_dec_com_start_2.setImageResource(R.drawable.star_green);
-                ((DecorateViewHolder) holder).item_dec_com_start_3.setImageResource(R.drawable.star_green);
-                ((DecorateViewHolder) holder).item_dec_com_start_4.setImageResource(R.drawable.star_green);
-                ((DecorateViewHolder) holder).item_dec_com_start_5.setImageResource(R.drawable.star_grey);
-            } else if (mDecorateComList.get(position).getGrade() == 5) {
-//                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_1);
-//                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_2);
-//                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_3);
-//                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_4);
-//                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_5);
-                ((DecorateViewHolder) holder).item_dec_com_start_1.setImageResource(R.drawable.star_green);
-                ((DecorateViewHolder) holder).item_dec_com_start_2.setImageResource(R.drawable.star_green);
-                ((DecorateViewHolder) holder).item_dec_com_start_3.setImageResource(R.drawable.star_green);
-                ((DecorateViewHolder) holder).item_dec_com_start_4.setImageResource(R.drawable.star_green);
-                ((DecorateViewHolder) holder).item_dec_com_start_5.setImageResource(R.drawable.star_green);
-            }
+//                ((DecorateViewHolder) holder).item_dec_com_start_1.setImageResource(R.drawable.star_green);
+//                ((DecorateViewHolder) holder).item_dec_com_start_2.setImageResource(R.drawable.star_grey);
+//                ((DecorateViewHolder) holder).item_dec_com_start_3.setImageResource(R.drawable.star_grey);
+//                ((DecorateViewHolder) holder).item_dec_com_start_4.setImageResource(R.drawable.star_grey);
+//                ((DecorateViewHolder) holder).item_dec_com_start_5.setImageResource(R.drawable.star_grey);
+//            } else if (mDecorateComList.get(position).getGrade() == 2) {
+////                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_1);
+////                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_2);
+////                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_3);
+////                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_4);
+////                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_5);
+//                ((DecorateViewHolder) holder).item_dec_com_start_1.setImageResource(R.drawable.star_green);
+//                ((DecorateViewHolder) holder).item_dec_com_start_2.setImageResource(R.drawable.star_green);
+//                ((DecorateViewHolder) holder).item_dec_com_start_3.setImageResource(R.drawable.star_grey);
+//                ((DecorateViewHolder) holder).item_dec_com_start_4.setImageResource(R.drawable.star_grey);
+//                ((DecorateViewHolder) holder).item_dec_com_start_5.setImageResource(R.drawable.star_grey);
+//            } else if (mDecorateComList.get(position).getGrade() == 3) {
+////                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_1);
+////                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_2);
+////                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_3);
+////                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_4);
+////                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_5);
+//                ((DecorateViewHolder) holder).item_dec_com_start_1.setImageResource(R.drawable.star_green);
+//                ((DecorateViewHolder) holder).item_dec_com_start_2.setImageResource(R.drawable.star_green);
+//                ((DecorateViewHolder) holder).item_dec_com_start_3.setImageResource(R.drawable.star_green);
+//                ((DecorateViewHolder) holder).item_dec_com_start_4.setImageResource(R.drawable.star_grey);
+//                ((DecorateViewHolder) holder).item_dec_com_start_5.setImageResource(R.drawable.star_grey);
+//            } else if (mDecorateComList.get(position).getGrade() == 4) {
+////                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_1);
+////                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_2);
+////                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_3);
+////                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_4);
+////                Glide.with(mContext).load(R.drawable.star_grey).into(((DecorateViewHolder) holder).item_dec_com_start_5);
+//                ((DecorateViewHolder) holder).item_dec_com_start_1.setImageResource(R.drawable.star_green);
+//                ((DecorateViewHolder) holder).item_dec_com_start_2.setImageResource(R.drawable.star_green);
+//                ((DecorateViewHolder) holder).item_dec_com_start_3.setImageResource(R.drawable.star_green);
+//                ((DecorateViewHolder) holder).item_dec_com_start_4.setImageResource(R.drawable.star_green);
+//                ((DecorateViewHolder) holder).item_dec_com_start_5.setImageResource(R.drawable.star_grey);
+//            } else if (mDecorateComList.get(position).getGrade() == 5) {
+////                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_1);
+////                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_2);
+////                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_3);
+////                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_4);
+////                Glide.with(mContext).load(R.drawable.star_green).into(((DecorateViewHolder) holder).item_dec_com_start_5);
+//                ((DecorateViewHolder) holder).item_dec_com_start_1.setImageResource(R.drawable.star_green);
+//                ((DecorateViewHolder) holder).item_dec_com_start_2.setImageResource(R.drawable.star_green);
+//                ((DecorateViewHolder) holder).item_dec_com_start_3.setImageResource(R.drawable.star_green);
+//                ((DecorateViewHolder) holder).item_dec_com_start_4.setImageResource(R.drawable.star_green);
+//                ((DecorateViewHolder) holder).item_dec_com_start_5.setImageResource(R.drawable.star_green);
+//            }
         }
     }
 
