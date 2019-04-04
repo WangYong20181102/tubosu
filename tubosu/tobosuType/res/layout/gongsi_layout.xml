@@ -14,8 +14,8 @@
             android:id="@+id/yumingshi"
             android:layout_width="73dp"
             android:layout_height="73dp"
-            android:layout_marginTop="18dp"
             android:layout_marginLeft="14dp"
+            android:layout_marginTop="18dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/shape_image_bg">
 
@@ -24,19 +24,19 @@
                 android:layout_width="72dp"
                 android:layout_height="72dp"
                 android:layout_centerInParent="true"
-                android:scaleType="centerCrop"
-                android:background="@drawable/new_home_loading"/>
+                android:background="@drawable/new_home_loading"
+                android:scaleType="centerCrop" />
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/sdfjil"
             android:layout_width="match_parent"
             android:layout_height="62dp"
-            android:layout_toRightOf="@+id/yumingshi"
             android:layout_alignTop="@+id/yumingshi"
             android:layout_alignBottom="@+id/yumingshi"
             android:layout_marginLeft="12dp"
-            android:layout_marginRight="16dp">
+            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@+id/yumingshi">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -47,28 +47,28 @@
                     android:id="@+id/tvGongsiName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="4dp"
                     android:gravity="center"
-                    android:textSize="13sp"
-                    android:layout_gravity="center_vertical"
                     android:text="阡陌装饰"
-                    android:textColor="@color/color_black"/>
+                    android:textColor="@color/color_black"
+                    android:textSize="13sp" />
 
                 <ImageView
                     android:id="@+id/vGongsi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/renzheng"/>
+                    android:layout_marginLeft="6dp"
+                    android:background="@drawable/renzheng" />
 
                 <ImageView
                     android:id="@+id/tuijianGongsi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/tuijian"/>
+                    android:layout_marginLeft="4dp"
+                    android:background="@drawable/tuijian" />
 
             </LinearLayout>
 
@@ -83,50 +83,51 @@
                     android:id="@+id/ratingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:starCount="5"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
+                    android:visibility="gone"
+                    app:starCount="5"
                     app:starEmpty="@drawable/nopingfen"
                     app:starFill="@drawable/pinfen"
                     app:starImageSize="10dp"
                     app:starPadding="4dp"
-                    app:starStep="1"/>
+                    app:starStep="1" />
 
                 <TextView
                     android:id="@+id/zixunNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="(4444咨询)"
-                    android:textSize="10sp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="6dp"
-                    android:textColor="#8F8F8F"/>
+                    android:text="(4444咨询)"
+                    android:textColor="#8F8F8F"
+                    android:textSize="10sp" />
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_alignParentBottom="true">
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="4dp">
 
                 <TextView
                     android:id="@+id/tvCaseAndCase"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:textSize="11sp"
                     android:text="方案：4      案例：44"
-                    android:textColor="#8F8F8F"/>
+                    android:textColor="#8F8F8F"
+                    android:textSize="11sp" />
 
                 <TextView
                     android:id="@+id/ccDistance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:textSize="10sp"
-                    android:textColor="#999999"
                     android:layout_alignParentRight="true"
-                    android:text="44km"/>
+                    android:layout_centerVertical="true"
+                    android:text="44km"
+                    android:textColor="#999999"
+                    android:textSize="10sp" />
             </RelativeLayout>
         </RelativeLayout>
 
@@ -136,16 +137,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/sdfjil"
-            android:layout_marginBottom="16dp"
-            android:layout_marginTop="13dp"
             android:layout_alignLeft="@+id/sdfjil"
             android:layout_marginLeft="4dp"
-            android:text=" 这个是优惠哦"
-            android:maxLines="1"
-            android:textSize="11sp"
-            android:maxEms="16"
+            android:layout_marginTop="13dp"
+            android:layout_marginBottom="16dp"
+            android:drawableLeft="@drawable/hui00"
             android:ellipsize="end"
-            android:drawableLeft="@drawable/hui00"/>
+            android:maxEms="16"
+            android:maxLines="1"
+            android:text=" 这个是优惠哦"
+            android:textSize="11sp" />
     </RelativeLayout>
 
     <View
@@ -154,5 +155,5 @@
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:background="#F2F2F2"/>
+        android:background="#F2F2F2" />
 </RelativeLayout>
