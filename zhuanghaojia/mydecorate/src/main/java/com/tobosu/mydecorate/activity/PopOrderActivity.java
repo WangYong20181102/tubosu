@@ -1305,6 +1305,7 @@ public class PopOrderActivity extends BaseActivity {
         hashMap.put("style", style); // 风格
         hashMap.put("device", "android");
         hashMap.put("source", "1016");
+        hashMap.put("page_tag", "9_2_2_1_1");
         hashMap.put("city", "0".equals(chosenCity) ? CacheManager.getCity(mContext) : chosenCity);
         hashMap.put("version", Util.getAppVersionName(mContext));
         hashMap.put("urlhistory", Constant.PIPE_CODE); // 渠道代码

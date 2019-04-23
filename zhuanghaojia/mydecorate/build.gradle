@@ -11,8 +11,8 @@ android {
         applicationId "com.tobosu.mydecorate" // 程序的包名
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 9
-        versionName "1.3.4"
+        versionCode 11
+        versionName "1.3.6"
         multiDexEnabled true  // 消去重复的jar 引用
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "ali"]//多渠道打包标识 默认爱思 到时候可以修改
         ndk {
@@ -155,10 +155,10 @@ android.applicationVariants.all { variant ->
             def fileName
             if (variant.buildType.name == "release") {
 //                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_${variant.productFlavors[0].name}.apk"
-                fileName = "zhuanghaojia_v1.3.4_${variant.productFlavors[0].name}.apk"
+                fileName = "zhuanghaojia_v1.3.6_${variant.productFlavors[0].name}.apk"
             } else {
 //                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_beta.apk"
-                fileName = "zhuanghaojia_v1.3.4_${variant.productFlavors[0].name}_beta.apk"
+                fileName = "zhuanghaojia_v1.3.6_${variant.productFlavors[0].name}_beta.apk"
             }
             output.outputFile = new File(outputDirectory, fileName)
         }
