@@ -1376,6 +1376,7 @@ public class PopOrderActivity extends com.tbs.tobosutype.base.BaseActivity {
             hashMap.put("style", style); // 风格
             hashMap.put("device", "android");
             hashMap.put("source", "942");
+            hashMap.put("page_tag", "4_2_6_1_1");
             hashMap.put("device_id", Util.getDeviceID());
             hashMap.put("city", SpUtil.getCity(mContext));
             hashMap.put("version", AppInfoUtil.getAppVersionName(mContext));
