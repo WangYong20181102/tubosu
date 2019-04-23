@@ -61,6 +61,7 @@ public class OrderFeedBackFragment extends BaseFragment {
     private String TAG = "OrderFeedBackFragment";
     private Context mContext;
     private String mOrderId;
+    private String mShowingOrderId;
     private LinearLayoutManager mLinearLayoutManager;
     private int mPage = 1;
     private int mPageSize = 20;
@@ -91,10 +92,11 @@ public class OrderFeedBackFragment extends BaseFragment {
         mNewOrderDetailActivity = null;
     }
 
-    public static OrderFeedBackFragment newInstance(String mOrderId) {
+    public static OrderFeedBackFragment newInstance(String orderId, String mShowingOrderId) {
         OrderFeedBackFragment orderFeedBackFragment = new OrderFeedBackFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("mOrderId", mOrderId);
+        bundle.putString("mOrderId", orderId);
+        bundle.putString("mShowingOrderId", mShowingOrderId);
         orderFeedBackFragment.setArguments(bundle);
         return orderFeedBackFragment;
     }
@@ -105,6 +107,7 @@ public class OrderFeedBackFragment extends BaseFragment {
         Bundle args = getArguments();
         if (args != null) {
             this.mOrderId = args.getString("mOrderId");
+            this.mShowingOrderId = args.getString("mShowingOrderId");
         }
     }
 
@@ -228,6 +231,7 @@ public class OrderFeedBackFragment extends BaseFragment {
         param.put("token", Util.getDateToken());
         param.put("id", mOrderId);
         param.put("comid", SpUtil.getCompany_id(mContext));
+        param.put("orderid", mShowingOrderId);
         param.put("page", mPage);
         param.put("page_size", mPageSize);
         OKHttpUtil.post(Constant.FEEDBACK_LIST, param, new Callback() {

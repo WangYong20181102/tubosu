@@ -12,6 +12,14 @@ public class _OrderNotice {
     private String notice_type;//通知类型
     private String add_time;//消息推送时间
     private String order_id;//订单id
+    private String com_id;//公司id
+    public String getCom_id() {
+        return com_id;
+    }
+
+    public void setCom_id(String com_id) {
+        this.com_id = com_id;
+    }
 
     public String getId() {
         return id;

@@ -235,7 +235,7 @@ public class OrderDetailFragment extends BaseFragment {
             newOrderFragStatusTv.setText("" + "已签单");
         } else if (mOrderDetail.getState().equals("5")) {
             newOrderFragStatusTv.setText("" + "未签单");
-        }else if (mOrderDetail.getState().equals("7")) {
+        } else if (mOrderDetail.getState().equals("7")) {
             newOrderFragStatusTv.setText("" + "撤单已返款");
         }
 
@@ -412,7 +412,7 @@ public class OrderDetailFragment extends BaseFragment {
             gradientDrawable01.setStroke(1, Color.parseColor("#d8d8d8"));//边框以及颜色
             newOrderFragRight01.setBackgroundDrawable(gradientDrawable01);
 
-        }else if (mOrderDetail.getState().equals("7")) {
+        } else if (mOrderDetail.getState().equals("7")) {
             //已撤单
             newOrderFragRight01.setVisibility(View.GONE);
             newOrderFragRight02.setVisibility(View.GONE);
@@ -458,7 +458,7 @@ public class OrderDetailFragment extends BaseFragment {
                     //未签单处理模式 没有这个按钮
                 } else if (mOrderDetail.getState().equals("5")) {
                     //已签单处理模式 没有这个按钮
-                }else if (mOrderDetail.getState().equals("7")) {
+                } else if (mOrderDetail.getState().equals("7")) {
                     //已撤单处理模式 没有这个按钮
                 }
                 break;
@@ -483,7 +483,7 @@ public class OrderDetailFragment extends BaseFragment {
                     //已签单处理模式 没有这个按钮
                 } else if (mOrderDetail.getState().equals("5")) {
                     //未签单处理模式  没有这个按钮
-                }else if (mOrderDetail.getState().equals("7")) {
+                } else if (mOrderDetail.getState().equals("7")) {
                     //已撤单处理模式 没有这个按钮
                 }
                 break;
@@ -515,7 +515,7 @@ public class OrderDetailFragment extends BaseFragment {
                     //未签单处理模式
 //                    Toast.makeText(mContext, "反馈", Toast.LENGTH_SHORT).show();
                     EventBusUtil.sendEvent(new Event(EC.EventCode.CHANGE_ORDER_DETAIL_ACTIVITY_TO_FEEDBACK_VIEW));
-                }else if (mOrderDetail.getState().equals("7")) {
+                } else if (mOrderDetail.getState().equals("7")) {
                     //已撤单处理模式 没有这个按钮
                 }
                 break;

@@ -99,7 +99,7 @@ public class OrderDetailActivity extends BaseActivity {
         //显示订单号码
         newOrderIdTv.setText("" + "订单 " + mShowingOrderId);
         mFragmentArrayList.add(OrderDetailFragment.newInstance(mOrderId));
-        mFragmentArrayList.add(OrderFeedBackFragment.newInstance(mOrderId));
+        mFragmentArrayList.add(OrderFeedBackFragment.newInstance(mOrderId,mShowingOrderId));
         myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragmentArrayList);
         newOrderDetailViewpager.setAdapter(myFragmentPagerAdapter);
         newOrderDetailViewpager.setCurrentItem(0);
