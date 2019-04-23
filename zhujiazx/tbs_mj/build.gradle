@@ -54,14 +54,14 @@ android {
             storePassword 'tbszjzx'
         }
     }
-    compileSdkVersion 26
+    compileSdkVersion 27
     buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.tbs.tbs_mj" // 程序的包名
         minSdkVersion 16
-        targetSdkVersion 26
-        versionCode 11
-        versionName "1.2.8"
+        targetSdkVersion 27
+        versionCode 12
+        versionName "1.2.9"
         flavorDimensions "versionCode"
         multiDexEnabled true  // 消去重复的jar 引用
         manifestPlaceholders = [UMENG_CHANNEL_VALUE: "ali"]//多渠道打包标识 默认阿里
@@ -142,10 +142,10 @@ android.applicationVariants.all { variant ->
             def fileName
             if (variant.buildType.name == "release") {
 //                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_${variant.productFlavors[0].name}.apk"
-                fileName = "zhujiazhuangxiu_v1.2.8_${variant.productFlavors[0].name}.apk"
+                fileName = "zhujiazhuangxiu_v1.2.9_${variant.productFlavors[0].name}.apk"
             } else {
 //                    fileName = "app_v${defaultConfig.versionName}_${packageTime()}_beta.apk"
-                fileName = "zhujiazhuangxiu_v1.2.8_${variant.productFlavors[0].name}_beta.apk"
+                fileName = "zhujiazhuangxiu_v1.2.9_${variant.productFlavors[0].name}_beta.apk"
             }
 //            output.outputFile = new File(outputDirectory, fileName)
 //            outputFileName="${variant.applicationId}-${ buildType.name}-${variant.productFlavors[0].name}.apk"
